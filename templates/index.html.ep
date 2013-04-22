@@ -33,7 +33,7 @@
     <th>Path</th>
   </tr>
   %= $walk->($walk, $_, 0) for @{app->routes->children};
-  </table>
+ </table>
 
 % if ($trying) {
     % my $defaults = $trying->pattern->defaults;
