@@ -47,9 +47,9 @@ post 'calculate_url' => sub {
     $c->render_json({path => $rendered});
 } => 'calculate_url';
 
-#--------
-# Routes
-#--------
+#--------#
+# Routes #
+#--------#
 get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
 => { report_id => 'nca2013' }
 => sub {
@@ -57,8 +57,8 @@ get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
     my ($ch,$fig) = ($c->stash('chapter_id'), $c->stash('figure_id'));
     $c->respond_to(
         json => sub { shift->render_json({chapter => $ch, figure => $fig}) },
-        html => sub { shift->render_text("this is chapter $ch, figure $fig") },
-        any  => sub { shift->render_text('request type is not supported') },
+        html => sub { shift->render({text => "this is html chapter <b>$ch</b> figure $fig", format => 'html'}) },
+        any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
     );
 } => 'figure';
 

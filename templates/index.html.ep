@@ -51,7 +51,8 @@
         % }
         <div class="control-group">
             <div class="controls">
-            %= submit_button 'Issue GET request', class => 'btn btn-primary', onclick => '{return tryit();}'
+            %= submit_button 'GET json', class => 'btn btn-primary', onclick => '{return tryit("json");}'
+            %= submit_button 'GET html', class => 'btn btn-primary', onclick => '{return tryit("text");}'
             </div>
         </div>
     %= end
@@ -67,13 +68,17 @@
 % $base = "/$base" unless $base =~ m[^/];
 
 %= javascript begin
-function tryit() {
+function tryit(request_data_type) {
     $.post('<%= url_for('calculate_url') %>', $('#theform').serialize(),
         function(data) {
     }).done(function(data) {
          var request_url = '<%= $base %>' + data.path;
          $('#request_url').text('GET ' + request_url);
-         try_get(request_url);
+         if (request_data_type == 'json') {
+            try_get_json(request_url);
+         } else {
+            try_get_html(request_url);
+         }
     })
     .fail(function(d) {
          $('#results').text('error computing URL : ' + JSON.stringify(d));
@@ -86,14 +91,30 @@ function tryit() {
     return false;
 }
 
-function try_get(url) {
-    $.get(url)
-     .done(function(data) {
-        $('#results').text(JSON.stringify(data))
+function try_get_json(request_url) {
+    $.ajax({
+        type : "GET",
+        url : request_url,
+        dataType : "json"
+   }).done(function(data) {
+        $('#results').text(JSON.stringify(data,null,'\t'))
    }).fail(function(d) {
          $('#results').text('error getting data : ' + JSON.stringify(d));
    });
 }
+
+function try_get_html(request_url) {
+    $.ajax({
+        type : "GET",
+        url : request_url,
+        dataType : "html"
+   }).done(function(data) {
+        $('#results').text(data)
+   }).fail(function(d) {
+         $('#results').text('error getting data : ' + JSON.stringify(d));
+   });
+}
+
 
 %= end
 </html>
