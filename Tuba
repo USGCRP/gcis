@@ -1,25 +1,65 @@
 #!/usr/bin/env perl
+
+=head1 NAME
+
+Tuba -- Tremendously Useful Backend API
+
+=head1 DESCRIPTION
+
+Tuba provides a RESTful API to GCIS data.
+
+=cut
+
 use Mojolicious::Lite;
 
-# Documentation browser under "/perldoc"
-plugin 'PODRenderer';
+app->secret(rand);
+
+app->hook(before_dispatch => sub {
+    # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
+    my $c = shift;
+    push @{$c->req->url->base->path}, shift @{$c->req->url->path};
+});
 
 get '/' => sub {
-  my $self = shift;
-  $self->render('index');
-};
+  my $c = shift;
+  my $trying;
+  if (my $try = $c->param('try')) {
+      $trying = $c->app->routes->lookup($try);
+  }
+  $c->stash(trying => $trying);
+  return unless $trying;
+  my @placeholders;
+  for my $n (@{ $trying->pattern->tree }) {
+      next unless @$n==2;
+      next unless $n->[0] =~ /^(placeholder|wildcard|relaxed)$/;
+      push @placeholders, $n->[1];
+  }
+  $c->stash(placeholders => \@placeholders);
+} => 'index';
+
+post 'try' => sub {
+
+} => 'try';
+
+# Routes
+get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
+=> { report_id => 'nca2013' }
+=> sub {
+    my $c = shift;
+    my ($ch,$fig) = ($c->stash('chapter_id'), $c->stash('figure_id'));
+    $c->respond_to(
+        json => sub { shift->render_json({chapter => $ch, figure => $fig}) },
+        html => sub { shift->render_text("this is chapter $ch, figure $fig") },
+        any  => sub { shift->render_text('request type is not supported') },
+    );
+} => 'figure';
+
+get '/report/:report_id/:figure_token'
+=> { report_id => 'nca2013' }
+=> sub {
+    my $c = shift;
+    return $c->redirect('figure', { chapter_id => 10, figure_id => 5 } );
+} => 'figure_token';
 
 app->start;
-__DATA__
 
-@@ index.html.ep
-% layout 'default';
-% title 'Welcome';
-Welcome to the Mojolicious real-time web framework!
-
-@@ layouts/default.html.ep
-<!DOCTYPE html>
-<html>
-  <head><title><%= title %></title></head>
-  <body><%= content %></body>
-</html>

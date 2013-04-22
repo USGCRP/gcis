@@ -1,0 +1,63 @@
+% layout 'default';
+<h2><%= link_to 'index' => begin %>API Explorer<%= end %></h2>
+
+%#-----------------------------------------------------------------
+% my $walk = begin
+  % my ($walk, $node, $depth) = @_;
+  
+ % unless ($node->name =~ /^(index|try)$/) {
+     <tr <%== $trying && $trying->name eq $node->name ? q[class="info"] : '' %>>
+        <td> <%= link_to url_for->query(try => $node->name) => begin %><%= $node->name %><%= end %> </td>
+
+        <td> <%= uc(join ',', @{$node->via || []}) || '*' %> </td>
+
+        <td>
+          % my $pattern = $node->pattern->pattern || '/';
+          % $pattern = "+$pattern" if $depth;
+          <%= '&nbsp;' x $depth %><%= $pattern %>
+        </td>
+
+      </tr>
+  % }
+
+  % $depth++;
+  %= $walk->($walk, $_, $depth) for @{$node->children};
+  % $depth--;
+% end
+%#-----------------------------------------------------------------
+
+<table class='table table-condensed table-bordered table-striped'>
+  <tr>
+    <th>Route</th>
+    <th>Methods</th>
+    <th>Path</th>
+  </tr>
+  %= $walk->($walk, $_, 0) for @{app->routes->children};
+  </table>
+
+% if ($trying) {
+    % my $defaults = $trying->pattern->defaults;
+    <div class='well'>
+    <h2><%= $trying->name %></h2>
+    %= form_for 'try', method => 'POST', class => "form-horizontal" => begin
+        % for my $p (@{ (stash 'placeholders') }) {
+            <div class="control-group">
+                <label class="control-label" for="<%= $p %>"><%= $p %></label>
+                <div class="controls">
+                    <%= text_field '$p', value => $defaults->{$p} || ''%>
+                </div>
+            </div>
+        % }
+        <div class="control-group">
+            <div class="controls">
+            %= submit_button 'Try it!', class => 'btn btn-primary';
+            </div>
+        </div>
+    %= end
+    </div>
+% }
+
+</body>
+</html>
+
+
