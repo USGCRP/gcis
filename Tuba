@@ -37,11 +37,19 @@ get '/' => sub {
   $c->stash(placeholders => \@placeholders);
 } => 'index';
 
-post 'try' => sub {
+post 'calculate_url' => sub {
+    my $c = shift;
+    my $for = $c->param('_route_name');
+    my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
+    my $params = $c->req->params->to_hash;
+    delete $params->{_route_name};
+    my $rendered = $route->pattern->render($params);
+    $c->render_json({path => $rendered});
+} => 'calculate_url';
 
-} => 'try';
-
+#--------
 # Routes
+#--------
 get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
 => { report_id => 'nca2013' }
 => sub {
@@ -54,11 +62,11 @@ get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
     );
 } => 'figure';
 
-get '/report/:report_id/:figure_token'
+get '/report/:report_id/figure/:figure_token'
 => { report_id => 'nca2013' }
 => sub {
     my $c = shift;
-    return $c->redirect('figure', { chapter_id => 10, figure_id => 5 } );
+    return $c->redirect_to('figure', { chapter_id => 10, figure_id => 5 } );
 } => 'figure_token';
 
 app->start;
