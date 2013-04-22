@@ -12,7 +12,7 @@ Tuba provides a RESTful API to GCIS data.
 
 use Mojolicious::Lite;
 
-app->secret(rand);
+app->secret('aePhoox5Iegh6toeay3ooV9n');
 
 app->hook(before_dispatch => sub {
     # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
@@ -57,7 +57,7 @@ get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
     my ($ch,$fig) = ($c->stash('chapter_id'), $c->stash('figure_id'));
     $c->respond_to(
         json => sub { shift->render_json({chapter => $ch, figure => $fig}) },
-        html => sub { shift->render({text => "this is html chapter <b>$ch</b> figure $fig", format => 'html'}) },
+        html => sub { shift->render({text => "<html>chapter <b>$ch</b> figure $fig</html>", format => 'html'}) },
         any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
     );
 } => 'figure';
@@ -68,6 +68,41 @@ get '/report/:report_id/figure/:figure_token'
     my $c = shift;
     return $c->redirect_to('figure', { chapter_id => 10, figure_id => 5 } );
 } => 'figure_token';
+
+for my $path (qw[
+    /activity/:activity_type/report/:report_id/:entity_type/:entity_id                                                                                  
+    /algorithm/:algorithm_name/abbreviation                                                                                                             
+    /chapter/:chapter_id/key_message/:key_message_id                                                                                                    
+    /country/:country_abbreviation                                                                                                                      
+    /dataset/:dataset_id                                                                                                                                
+    /image/:image_id                                                                                                                                    
+    /instrument/:instrument_name                                                                                                                        
+    /journal/:journal_abbreviation                                                                                                                      
+    /model/:model_abbreviation                                                                                                                          
+    /organization/:organization_name                                                                                                                    
+    /paper/:paper_id                                                                                                                                    
+    /person/:full_name                                                                                                                                  
+    /platform/:platform_name/abbreviation                                                                                                               
+    /project/:project_abbreviation                                                                                                                      
+    /project/:project_name                                                                                                                              
+    /publication/:publication_id                                                                                                                        
+    /publisher/:publisher_name                                                                                                                          
+    /report/:report_id                                                                                                                                  
+    /report/:report_id/chapter/:chapter_id                                                                                                              
+    /report/:report_id/chapter/:chapter_id/traceable_account/:traceable_account_id                                                                      
+    /report/:report_id/committee/:committee_abbreviations                                                                                               
+    /report/:report_id/key_finding/:key_finding_id                                                                                                      
+    /role/:role_name                                                                                                                                    
+    /software/:software_name                                
+    ]) {
+    get $path => sub { shift->respond_to(
+            json => sub { shift->render_json({demo => 'data', 'you_requested' => $path }) },
+            html => sub { shift->render({text => "<html>demo data, you requested $path</html>", format => 'html'}) },
+            any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
+        )
+    };
+};
+
 
 app->start;
 
