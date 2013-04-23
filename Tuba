@@ -12,12 +12,14 @@ Tuba provides a RESTful API to GCIS data.
 
 use Mojolicious::Lite;
 
+plugin 'yaml_config' => { file => './Tuba.conf' };
+
 app->secret('aePhoox5Iegh6toeay3ooV9n');
 
 app->hook(before_dispatch => sub {
     # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
     my $c = shift;
-    push @{$c->req->url->base->path}, shift @{$c->req->url->path};
+    push @{$c->req->url->base->path}, shift @{$c->req->url->path} if @{ $c->req->url->path };
 });
 
 get '/' => sub {
