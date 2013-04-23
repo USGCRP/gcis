@@ -73,7 +73,7 @@ function tryit(request_data_type) {
         function(data) {
     }).done(function(data) {
          var request_url = '<%= $base %>' + data.path;
-         $('#request_url').text('GET ' + request_url);
+         $('#request_url').html('GET <a href="' + request_url.htmlEscape() + '">' + request_url.htmlEscape() + '</a>');
          if (request_data_type == 'json') {
             try_get_json(request_url);
          } else {
