@@ -50,38 +50,22 @@ post 'calculate_url' => sub {
 #--------#
 # Routes #
 #--------#
-get '/report/:report_id/chapter/:chapter_id/figure/:figure_id'
-=> { report_id => 'nca2013' }
-=> sub {
-    my $c = shift;
-    my ($ch,$fig) = ($c->stash('chapter_id'), $c->stash('figure_id'));
-    $c->respond_to(
-        json => sub { shift->render_json({chapter => $ch, figure => $fig}) },
-        html => sub { shift->render({text => "<html>chapter <b>$ch</b> figure $fig</html>", format => 'html'}) },
-        any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
-    );
-} => 'figure';
-
-get '/report/:report_id/figure/:figure_token'
-=> { report_id => 'nca2013' }
-=> sub {
-    my $c = shift;
-    return $c->redirect_to('figure', { chapter_id => 10, figure_id => 5 } );
-} => 'figure_token';
-
 sub demo {
  my $c = shift;
  my $path = $c->req->url->path;
  $c->respond_to(
             json => sub { shift->render_json({demo => 'data', 'you_requested' => $path }) },
-            html => sub { shift->render({text => "<html>demo data, you requested $path</html>", format => 'html'}) },
+            html => sub { shift->render({text => "<html>demo data, you requested <b>$path</b></html>", format => 'html'}) },
             any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
         )
 };
 
+
+get '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure';
+get '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token';
 get '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity';
 get '/algorithm/:algorithm_name/abbreviation' => \&demo => 'algorithm';
-get '/chapter/:chapter_id/key_message/:key_message_id' => \&demo => 'key_message';
+get '/chapter/:chapter_id/key-message/:key_message_id' => \&demo => 'key_message';
 get '/country/:country_abbreviation' => \&demo => 'country';
 get '/dataset/:dataset_id' => \&demo => 'dataset';
 get '/image/:image_id' => \&demo => 'image';
@@ -97,9 +81,9 @@ get '/publication/:publication_id' => \&demo => 'publication';
 get '/publisher/:publisher_name' => \&demo => 'publisher';
 get '/report/:report_id' => \&demo => 'report';
 get '/report/:report_id/chapter/:chapter_id' => \&demo => 'report_chapter';
-get '/report/:report_id/chapter/:chapter_id/traceable_account/:traceable_account_id' => \&demo => 'traceable_account';
+get '/report/:report_id/chapter/:chapter_id/traceable-account/:traceable_account_id' => \&demo => 'traceable_account';
 get '/report/:report_id/committee/:committee_abbreviations' => \&demo => 'committee';;
-get '/report/:report_id/key_finding/:key_finding_id' => \&demo => 'key_finding';
+get '/report/:report_id/key-finding/:key_finding_id' => \&demo => 'key_finding';
 get '/role/:role_name' => \&demo => 'role';
 get '/software/:software_name' => \&demo => 'software';
 
