@@ -73,7 +73,7 @@ get '/dataset/:dataset_id' => \&demo => 'dataset';
 get '/image/:image_id' => \&demo => 'image';
 get '/instrument/:instrument_name' => \&demo => 'instrument';
 get '/journal/:journal_abbreviation' => \&demo => 'journal';
-get '/model/:model_abbreviation' => \&demo => 'mode';
+get '/model/:model_abbreviation' => \&demo => 'model';
 get '/organization/:organization_name' => \&demo => 'organization';
 get '/paper/:paper_id' => \&demo => 'paper';
 get '/person/:full_name' => \&demo => 'person';
