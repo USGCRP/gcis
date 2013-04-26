@@ -1,4 +1,9 @@
+Build
+*.swp
 *.bak
 *.pid
 log/
+blib
+_build
+MYMETA.*
 

@@ -16,6 +16,8 @@ my $builder = Module::Build->new(
         'Test::More' => 0,
     },
     requires => {
+        'Mojolicious::Plugin::YamlConfig' => 0,
+        'Mojolicious' => 0,
         #'ABC'              => 1.6,
         #'Foo::Bar::Module' => 5.0401,
     },
