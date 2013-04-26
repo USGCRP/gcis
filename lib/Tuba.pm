@@ -11,10 +11,9 @@ Tuba provides a RESTful API to GCIS data.
 =cut
 
 package Tuba;
+use Mojo::Base qw/Mojolicious/;
 
 our $VERSION = 0.01;
-
-use Mojo::Base qw/Mojolicious/;
 
 sub demo {
  my $c = shift;
@@ -27,19 +26,21 @@ sub demo {
 };
 
 sub startup {
-    my $self = shift;
+    my $app = shift;
 
-    $self->plugin( 'yaml_config' => { file => './Tuba.conf' } );
+    $app->plugin( 'yaml_config' => { file => './Tuba.conf' } );
+    unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
+    $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
 
-    $self->secret('aePhoox5Iegh6toeay3ooV9n');
+    $app->secret('aePhoox5Iegh6toeay3ooV9n');
 
-    $self->hook(before_dispatch => sub {
+    $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
         my $c = shift;
         push @{$c->req->url->base->path}, shift @{$c->req->url->path} if @{ $c->req->url->path };
-    }) if $self->mode eq 'production';
+    }) if $app->mode eq 'production';
 
-    my $r = $self->routes;
+    my $r = $app->routes;
 
     $r->get('/' => sub {
       my $c = shift;
@@ -58,7 +59,7 @@ sub startup {
       $c->stash(placeholders => \@placeholders);
     } => 'index');
 
-    $r->post('calculate_url' => sub {
+    $r->post('/calculate_url' => sub {
         my $c = shift;
         my $for = $c->param('_route_name');
         my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
@@ -68,6 +69,7 @@ sub startup {
         $c->render_json({path => $rendered});
     } => 'calculate_url');
 
+    $r->post( '/image/metadata/:image_id')->to('Image#metadata')->name('image_metadata');
     $r->get( '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure');
     $r->get( '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token');
     $r->get( '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity');
@@ -94,6 +96,7 @@ sub startup {
     $r->get( '/role/:role_name' => \&demo => 'role');
     $r->get( '/software/:software_name' => \&demo => 'software');
 
+    $app->plugin('debug') if $app->mode eq 'development';
 }
 
 1;
