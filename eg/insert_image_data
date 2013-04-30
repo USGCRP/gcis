@@ -1,0 +1,12 @@
+#!/usr/bin/env perl
+
+use lib '../lib';
+use Tuba::DB::Objects;
+use Path::Class qw/dir/;
+
+my $dir = dir '/var/local/projects/tuba/data/images';
+for my $file ($dir->children) {
+    my $f = Tuba::DB::Object::File->new(file => $file->basename);
+    $f->save or die $f->error;
+}
+

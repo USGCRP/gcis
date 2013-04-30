@@ -1,11 +1,32 @@
+=head1 NAME
+
+Tuba::Plugin::Db - Set up some helpers to be used in controllers.
+
+=head1 SYNOPSIS
+
+ app->plugin('db');
+
+=head1 DESCRIPTION
+
+This plugin sets up the following helpers :
+
+ db : a DBIx::Connector object
+ dbs : a DBIx::Simple object
+ orm : a hashref mapping table names to class names.
+
+=head1 SEE ALSO
+
+L<Tuba::DB::Objects>, L<DBIx::Connector>, L<DBIx::Simple>
+
+=cut
+
 package Tuba::Plugin::Db;
 use Mojo::Base qw/Mojolicious::Plugin/;
 use DBIx::Connector;
 use DBIx::Simple;
 use SQL::Abstract;
 use SQL::Interp;
-use Rose::DB::Object::Loader;
-use Tuba::DB;
+use Tuba::DB::Objects(); # do not call import since we call init explicitly
 
 {
 my $dbix;
@@ -27,20 +48,9 @@ sub register {
     $app->helper( db => sub { $dbix } );
     $app->helper( dbs => sub { DBIx::Simple->new( shift->db->dbh ) } );
 
-    my $rose_db = Tuba::DB->new();
-    my $loader = Rose::DB::Object::Loader->new( class_prefix => 'Tuba::Obj', db_schema => $conf->{schema} );
-    my @made = $loader->make_classes(db_class => 'Tuba::DB' );
-    $app->log->info("Loaded ".@made." classes");
+    Tuba::DB::Objects->init( $app );
 
-    my %orm; # Map table names to class names.
-    for (@made) {
-        if ($_->isa("Rose::DB::Object::Manager")) {
-            $orm{$_->object_class->meta->table}{mng} = $_;
-        } else {
-            $orm{$_->meta->table}{obj} = $_;
-        }
-    }
-    $app->helper(orm => sub { \%orm });
+    $app->helper( orm => sub { Tuba::DB::Objects->table2class });
 
     1;
 }

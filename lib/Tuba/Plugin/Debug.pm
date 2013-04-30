@@ -27,11 +27,16 @@ sub _render_debug {
 
     my $orm = $c->orm;
     for my $table (sort keys %$orm) {
-        push @output, "$table : ".join ' ', $orm->{$table}{obj}->meta->columns;
+        my $class = $orm->{$table}{obj};
+        my $line = "<tr><td>$table</td><td>$class</td>";
+        for my $col ($orm->{$table}{obj}->meta->columns) {
+            $line .= "<td>$col</td>";
+        }
+        $line.="</tr>";
+        push @output, $line;
     }
 
-    $c->res->headers->content_type('text/plain');
-    $c->render_text(join "\n", @output);
+    $c->render_text("<table border=1 style='border-collapse:collapse;'>".(join "\n", @output)."</table>");
 }
 
 sub register {

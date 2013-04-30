@@ -28,11 +28,17 @@ sub demo {
 sub startup {
     my $app = shift;
 
-    $app->plugin( 'yaml_config' => { file => './Tuba.conf' } );
+    my $conf = './Tuba.conf';
+    $app->plugin( 'yaml_config' => { file => $conf } );
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
 
     $app->secret('aePhoox5Iegh6toeay3ooV9n');
+
+    $app->hook(after_dispatch => sub {
+        my $c = shift;
+        $c->res->headers->header('Access-Control-Allow-Origin' => '*');
+    } );
 
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
@@ -69,7 +75,11 @@ sub startup {
         $c->render_json({path => $rendered});
     } => 'calculate_url');
 
-    $r->post( '/image/metadata/:image_id')->to('Image#metadata')->name('image_metadata');
+    $r->post( '/image/met/:image_id')->to('Image#setmet')->name('image_setmet');
+    $r->get( '/image/met/:image_id')->to('Image#met')->name('image_met');
+    $r->get( '/image/:image_id')->to('Image#display')->name("image");
+    $r->get( '/image' )->to('Image#list')->name("image_list");
+
     $r->get( '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure');
     $r->get( '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token');
     $r->get( '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity');
@@ -77,7 +87,6 @@ sub startup {
     $r->get( '/chapter/:chapter_id/key-message/:key_message_id' => \&demo => 'key_message');
     $r->get( '/country/:country_abbreviation' => \&demo => 'country');
     $r->get( '/dataset/:dataset_id' => \&demo => 'dataset');
-    $r->get( '/image/:image_id' => \&demo => 'image');
     $r->get( '/instrument/:instrument_name' => \&demo => 'instrument');
     $r->get( '/journal/:journal_abbreviation' => \&demo => 'journal');
     $r->get( '/model/:model_abbreviation' => \&demo => 'model');

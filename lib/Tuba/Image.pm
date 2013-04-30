@@ -8,10 +8,35 @@ package Tuba::Image;
 
 use Mojo::Base qw/Mojolicious::Controller/;
 
-sub metadata {
-    my $c = shift;
-    $c->render_text("testing");
-}
+=head1 ROUTES
+
+=head2 list
+
+Get a list of images.
+
+=cut
+
+sub list { }
+
+=head2 setmeta
+
+=cut
+
+
+=head2 met
+
+=cut
+
+sub met { }
+
+=head2 display
+
+=cut
+
+sub display { }
+
+
+sub setmet { }
 
 1;
 
