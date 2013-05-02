@@ -16,18 +16,14 @@ Get a list of images.
 
 =cut
 
-sub list { }
-
-=head2 setmeta
-
-=cut
-
-
 =head2 met
 
 =cut
 
-sub met { }
+sub met {
+    my $c = shift;
+    $c->respond_to(json => sub { shift->render_json({ todo => 'todo' }) }, html => sub { shift->render_text("todo")});
+}
 
 =head2 display
 

@@ -1,12 +1,18 @@
 =head1 NAME
 
-Tuba::DB::Objects -- objects which correspond exactly to the database schema.
+Tuba::DB::Objects -- Make Rose::DB::Object-derived classes for tuba.
 
 =head1 SYNOPSIS
 
  use Tuba::DB::Objects;
-
+ Tuba::DB::Object::Image->delete_objects(all => 1);
  my $file = Tuba::DB::Object::File->new(file => 'foo');
+ $file->save or die $file->error;
+
+ # Optionally create nicknames which are easier to type :
+ use Tuba::DB::Objects qw/-nicknames/;
+ Images->delete_objects(all => 1);
+ my $file = File->new(file => 'foo');
  $file->save or die $file->error;
 
 =head1 DESCRIPTION
@@ -33,7 +39,28 @@ use warnings;
 our %table2class;
 
 sub import {
-    shift->init();
+    my $class = shift;
+    my $caller = caller;
+    $class->init();
+    no strict 'refs';
+    if (grep /-nicknames/, @_) {
+        for my $table (keys %table2class) {
+            {
+                my $manager_class = $table2class{$table}{mng};
+                my $alias = $manager_class;
+                $alias =~ s/Tuba::DB::Object:://;
+                $alias =~ s/::Manager$/s/;
+                *{$caller.'::'.$alias} = sub { $manager_class };
+            }
+
+            {
+                my $object_class = $table2class{$table}{obj};
+                my $alias = $object_class;
+                $alias =~ s/Tuba::DB::Object:://;
+                *{$caller.'::'.$alias} = sub { $object_class };
+            }
+        }
+    }
 }
 
 sub init {

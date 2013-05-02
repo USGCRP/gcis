@@ -1,0 +1,11 @@
+% layout 'default';
+
+debug
+<pre>
+% for my $table (keys %{ orm() }) {
+% my $mng = orm->{$table}{mng};
+% my $obj = orm->{$table}{obj};
+<b><%= $table %></b>
+  %= join ',', $obj->meta->columns;
+% }
+</pre>

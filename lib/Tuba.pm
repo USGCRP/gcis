@@ -28,26 +28,35 @@ sub demo {
 sub startup {
     my $app = shift;
 
+    $app->secret('aePhoox5Iegh6toeay3ooV9n');
+
+    # Plugins, configuration
     my $conf = './Tuba.conf';
     $app->plugin( 'yaml_config' => { file => $conf } );
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
 
-    $app->secret('aePhoox5Iegh6toeay3ooV9n');
+    # Helpers
+    $app->helper(base => sub {
+        my $c = shift;
+        my $base = $c->url_for('index')->path;
+        $base =~ s[/$][];
+        return $base;
+    } );
 
+    # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
     } );
-
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
         my $c = shift;
         push @{$c->req->url->base->path}, shift @{$c->req->url->path} if @{ $c->req->url->path };
     }) if $app->mode eq 'production';
 
+    # Routes
     my $r = $app->routes;
-
     $r->get('/' => sub {
       my $c = shift;
       my $trying;
@@ -70,13 +79,15 @@ sub startup {
         my $for = $c->param('_route_name');
         my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
         my $params = $c->req->params->to_hash;
+        use Data::Dumper;
+        $c->app->log->warn("params : ".Dumper($params));
         delete $params->{_route_name};
         my $rendered = $route->pattern->render($params);
+        $c->app->log->warn("rendered : $rendered");
         $c->render_json({path => $rendered});
     } => 'calculate_url');
 
-    $r->post( '/image/met/:image_id')->to('Image#setmet')->name('image_setmet');
-    $r->get( '/image/met/:image_id')->to('Image#met')->name('image_met');
+    $r->any( [qw/GET POST/], '/image/met/:image_id')->to('Image#met')->name('image_met');
     $r->get( '/image/:image_id')->to('Image#display')->name("image");
     $r->get( '/image' )->to('Image#list')->name("image_list");
 
@@ -105,7 +116,7 @@ sub startup {
     $r->get( '/role/:role_name' => \&demo => 'role');
     $r->get( '/software/:software_name' => \&demo => 'software');
 
-    $app->plugin('debug') if $app->mode eq 'development';
+    $app->routes->get('/debug') if $ENV{TUBA_DEBUG};
 }
 
 1;

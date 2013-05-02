@@ -1,5 +1,6 @@
 % layout 'default';
-<h2><%= link_to 'index' => begin %>API Explorer<%= end %></h2>
+<h2><%= link_to 'index' => begin %>GCIS API<%= end %></h2>
+<h5>version <%= $Tuba::VERSION %></h5>
 
 %#-----------------------------------------------------------------
 % my $walk = begin
@@ -64,15 +65,12 @@
 % }
 </body>
 
-% my $base = $self->req->url->base->path;
-% $base = "/$base" unless $base =~ m[^/];
-
 %= javascript begin
 function tryit(request_data_type) {
     $.post('<%= url_for('calculate_url') %>', $('#theform').serialize(),
         function(data) {
     }).done(function(data) {
-         var request_url = '<%= $base %>' + data.path;
+         var request_url = '<%= base %>' + data.path;
          $('#request_url').html('GET <a href="' + request_url.htmlEscape() + '">' + request_url.htmlEscape() + '</a>');
          if (request_data_type == 'json') {
             try_get_json(request_url);
