@@ -91,6 +91,12 @@ sub startup {
     $r->get( '/image/:image_id')->to('Image#display')->name("image");
     $r->get( '/image' )->to('Image#list')->name("image_list");
 
+    $r->get( '/chapter' )->to('Chapter#list')->name("chapter_list");
+    $r->get( '/chapter/:short_name' )->to('Chapter#view')->name("chapter");
+    $r->get( '/chapter/:chapter_name/figure' )->to('Figure#list')->name("chapter_figures");
+
+    $r->get( '/figure' )->to('Figure#list')->name("figure_list");
+
     $r->get( '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure');
     $r->get( '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token');
     $r->get( '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity');

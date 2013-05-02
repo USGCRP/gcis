@@ -9,9 +9,14 @@ String.prototype.htmlEscape = function() {
 };
 %= end
 
-<title>Backend API</title>
+<title>api browser</title>
 </head>
     <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <%= link_to 'index', class => 'brand' => begin %>api browser<%= end %>
+            </div>
+        </div>
         <div class='container'>
             <%= content %>
         </div>

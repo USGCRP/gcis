@@ -32,6 +32,7 @@ package Tuba::DB::Objects;
 use Rose::DB::Object::Loader;
 use Tuba;
 use Tuba::DB;
+use YAML::Syck;
 
 use strict;
 use warnings;
@@ -72,7 +73,11 @@ sub init {
 
     my $db_schema = $conf->{database}{schema};
 
-    my $loader = Rose::DB::Object::Loader->new( class_prefix => 'Tuba::DB::Object', db_schema => $db_schema );
+    my $loader = Rose::DB::Object::Loader->new(
+        class_prefix => 'Tuba::DB::Object',
+        db_schema => $db_schema,
+        base_classes => [qw/Rose::DB::Object Rose::DB::Object::Helpers/ ]
+    );
 
     my @made = $loader->make_classes(db_class => 'Tuba::DB' );
     die "Could not make classes" unless @made;

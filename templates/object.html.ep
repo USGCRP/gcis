@@ -1,0 +1,22 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= $meta->table
+</h2>
+</center>
+
+<pre>
+Unique keys : <%= join ', ', $meta->primary_key, $meta->unique_keys %>
+</pre>
+
+<table class='table table-condensed table-bordered table-striped'>
+% for my $c ($meta->columns) {
+% my $accessor = $c->accessor_method_name;
+    <tr>
+        <td><%= $accessor %></td>
+        <td><%= $object->$accessor %></td>
+    </tr>
+% }
+</table>
