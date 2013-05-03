@@ -7,7 +7,8 @@ Tuba::Image : Controller class for images.
 package Tuba::Image;
 use Mojo::Base qw/Mojolicious::Controller/;
 use File::Temp;
-use YAML::XS qw/DumpFile/;
+use YAML::XS qw/DumpFile LoadFile/;
+use File::Basename qw/basename/;
 
 =head1 ROUTES
 
@@ -34,7 +35,7 @@ sub display { }
 
 =head2 setmet
 
-Set the metadata for this image.
+Upload metadata for this image.
 
 =cut
 
@@ -49,18 +50,34 @@ sub setmet {
     my $up_dir = $c->app->config->{data_dir} . '/upload';
     -d $up_dir or mkdir $up_dir or die "couldn't mkdir $up_dir : $!";
     my $temp = File::Temp->newdir( "setmet_XXXXXX", CLEANUP => 0, DIR => $up_dir );
+    my $token = basename("$temp");
+    $token =~ s/setmet_//;
     $file->move_to("$temp/atrac.xml") or die "failed";
     my $meta = { params => $c->req->params->to_hash };
     $meta->{timestamp} = time;
     $meta->{remote_ip} = $c->tx->remote_address;
-    $meta->{dir} = "$temp";
-    $meta->{filename} = $name;
-    $meta->{filesize} = $size;
-    DumpFile("$temp/meta.yaml", $meta) or die "could not write yaml";
-    $c->render( text => "Successfully uploaded <b>$name</b> ($size bytes) ".
-                        "for chapter <b>$chapter</b>, figure <b>$figure</b>, image <b>$image</b>."
-              );
+    $meta->{dir}       = "$temp";
+    $meta->{filename}  = $name;
+    $meta->{filesize}  = $size;
+    DumpFile("$temp/met.yaml", $meta) or die "could not write yaml";
+    $c->render( token => $token, name => $name, size => $size, chapter => $chapter, figure => $figure, image => $image);
 }
+
+=head2 checkmet
+
+Check that metadata was uploaded.
+
+=cut
+
+sub checkmet {
+    my $c = shift;
+    my $token = $c->stash('token');
+    my $dir = sprintf('%s/upload/setmet_%s',$c->app->config->{data_dir},$token);
+    my $met = LoadFile("$dir/met.yaml");
+    my $xml = Mojo::Asset::File->new(path => "$dir/atrac.xml")->slurp;
+    $c->render(met => $met, xml => $xml);
+}
+
 
 1;
 

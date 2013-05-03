@@ -89,6 +89,7 @@ sub startup {
 
     $r->get( '/image/met/:image_id')->to('Image#met')->name('image_met');
     $r->post( '/image_setmet' )->to('Image#setmet')->name('image_setmet');
+    $r->get( '/image_checkmet/:token' )->to('Image#checkmet')->name('image_checkmet');
     $r->get( '/image/:image_id')->to('Image#display')->name("image");
     $r->get( '/image' )->to('Image#list')->name("image_list");
 

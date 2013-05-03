@@ -1,0 +1,10 @@
+% layout 'default';
+
+ATRAC xml 
+<pre>
+%= $xml
+</pre>
+
+<pre>
+%= dumper($met)
+</pre>
