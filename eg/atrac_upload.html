@@ -10,21 +10,34 @@
 <body>
     <h1>ATRAC Image Metadata Upload Form</h1>
     <div class="content">
-    <form class="form-horizontal">
+    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="http://localhost:3000/image_setmet">
         <div class="control-group">
-        <label class="control-label" for="chapter">Chapter</label>
-        <div class="controls"> <select name='chapter' id="chapter">
-                <option value="">--select--</option>
-        </select> </div>
+            <label class="control-label" for="chapter">Chapter</label>
+            <div class="controls"> <select name='chapter' id="chapter">
+                    <option value="">--select--</option>
+            </select>
+            </div>
         </div>
         <div class="control-group">
-        <label class="control-label" for="figure">Figure</label>
-        <div class="controls"> <select name='figure' id="figure"></select> </div>
+            <label class="control-label" for="figure">Figure</label>
+            <div class="controls"> <input type="text" name='figure' id="figure" placeholder="figure identifier"></input> </div>
         </div>
         <div class="control-group">
-        <label class="control-label" for="image">Image</label>
-        <div class="controls"> <select name='image' id="image"></select> </div>
+            <label class="control-label" for="image">Image</label>
+            <div class="controls"> <input type="text" name='image' id="image" placeholder="image identifier"></input> </div>
         </div>
+        <div class="control-group">
+            <label class="control-label" for="atracfile">ATRAC File</label>
+            <div class="controls">
+                <span class="btn btn-file"><input type="file" name='atracfile' /></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+            <input type="submit" class="btn btn-primary" name="upload" value="Upload"></input>
+            </div>
+        </div>
+
     </form>
     </div>
     <script type='text/javascript'>

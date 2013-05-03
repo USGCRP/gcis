@@ -87,7 +87,8 @@ sub startup {
         $c->render_json({path => $rendered});
     } => 'calculate_url');
 
-    $r->any( [qw/GET POST/], '/image/met/:image_id')->to('Image#met')->name('image_met');
+    $r->get( '/image/met/:image_id')->to('Image#met')->name('image_met');
+    $r->post( '/image_setmet' )->to('Image#setmet')->name('image_setmet');
     $r->get( '/image/:image_id')->to('Image#display')->name("image");
     $r->get( '/image' )->to('Image#list')->name("image_list");
 

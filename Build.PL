@@ -19,6 +19,7 @@ my $builder = Module::Build->new(
         'Mojolicious::Plugin::YamlConfig' => 0,
         'Mojolicious' => 0,
         'YAML::Syck'  => 0,
+        'YAML::XS'    => 0,
         #'ABC'              => 1.6,
         #'Foo::Bar::Module' => 5.0401,
     },
