@@ -56,6 +56,7 @@ sub register {
 }
 
 sub connection {
+    $dbix->dbh->{private_pid} = $$;
     $dbix;    
 }
 }
