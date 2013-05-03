@@ -13,12 +13,12 @@ sub list {
     my $figures;
     if (my $ch = $c->stash('chapter_name')) {
         my $chapter = Chapter->new(short_name => $ch)->load;
-        $figures = Figures->get_objects(query => [chapter_id => $chapter->id]);
+        $figures = Figures->get_objects(query => [chapter_id => $chapter->id], with_objects => ['chapter']);
     } else {
-        $figures = Figures->get_objects;
+        $figures = Figures->get_objects(with_objects => ['chapter']);
     }
     $c->respond_to(
-        json => sub { $c->render_json([ map $_->as_json, @$figures ]) },
+        json => sub { $c->render_json([ map $_->as_tree, @$figures ]) },
         html => sub { $c->render(template => 'objects', meta => Figure->meta, objects => $figures ) }
     );
 }

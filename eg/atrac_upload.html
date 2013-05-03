@@ -39,7 +39,6 @@
                 }
               ).success(function(results){
                   $.each(results, function(i,result){
-                      result = JSON.parse(result);
                       $('#chapter').append(
                           '<option value="' + result.short_name + '">' + result.short_name + '</option>');
                   })
