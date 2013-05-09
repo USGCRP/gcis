@@ -12,7 +12,7 @@ SET client_min_messages = warning;
 -- Name: gcis_metadata; Type: SCHEMA; Schema: -; Owner: -
 --
 
--- CREATE SCHEMA gcis_metadata;
+CREATE SCHEMA gcis_metadata;
 
 
 --
