@@ -12,7 +12,7 @@ SET client_min_messages = warning;
 -- Name: gcis_metadata; Type: SCHEMA; Schema: -; Owner: -
 --
 
-CREATE SCHEMA gcis_metadata;
+-- CREATE SCHEMA gcis_metadata;
 
 
 --
@@ -1751,10 +1751,10 @@ ALTER TABLE ONLY publication_ref
 -- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
+--REVOKE ALL ON SCHEMA public FROM PUBLIC;
+--REVOKE ALL ON SCHEMA public FROM postgres;
+--GRANT ALL ON SCHEMA public TO postgres;
+--GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --

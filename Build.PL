@@ -1,9 +1,14 @@
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
-use Module::Build;
+use Module::Build::Database;
 
-my $builder = Module::Build->new(
+my $builder = Module::Build::Database->new(
+    database_type       => 'PostgreSQL',
+    database_options    => {
+        name => "gcis",
+        schema => "gcis_metadata",
+    },
     module_name         => 'Tuba',
     license             => 'perl',
     dist_version_from   => 'lib/Tuba.pm',
