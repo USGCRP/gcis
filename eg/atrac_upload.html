@@ -10,7 +10,7 @@
 <body>
     <h1>ATRAC Image Metadata Upload Form</h1>
     <div class="content">
-    <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="http://localhost:3000/image_setmet">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="http://gcis-dev-front.joss.ucar.edu/api/image_setmet">
         <div class="control-group">
             <label class="control-label" for="chapter">Chapter</label>
             <div class="controls"> <select name='chapter' id="chapter">
@@ -41,7 +41,7 @@
     </form>
     </div>
     <script type='text/javascript'>
-    var tuba = 'http://localhost:3000';
+    var tuba = 'http://gcis-dev-front.joss.ucar.edu/api';
     function populate_chapter() {
         $.ajax({
                 type     : "GET",
