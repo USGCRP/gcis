@@ -12,4 +12,5 @@ ok $dbh, "connected to $host";
 my $rows = $dbh->selectall_arrayref('select 42');
 is $rows->[0][0], 42, 'ran select statement';
 
-Test::MBD->stop;
+1;
+

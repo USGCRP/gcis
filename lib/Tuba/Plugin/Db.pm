@@ -26,6 +26,7 @@ use DBIx::Connector;
 use DBIx::Simple;
 use SQL::Abstract;
 use SQL::Interp;
+use Module::Build::Database;
 use Tuba::DB::Objects(); # do not call import since we call init explicitly
 
 {
@@ -33,13 +34,20 @@ my $dbix;
 
 sub register {
     my ($self, $app, $conf) = @_;
-    my $dbname = $conf->{dbname} or die "no dbname in config file";
 
-    $app->log->info("Registering database $dbname");
-
-    my $dsn = "dbi:Pg:dbname=$dbname";
-    $dsn .= ":host=$conf->{host}" if $conf->{host};
-    $dsn .= ":port=$conf->{port}" if $conf->{port};
+    my $dsn;
+    if ($ENV{HARNESS_ACTIVE}) {
+        my $mbd = Module::Build::Database->current;
+        my $dbname = $mbd->database_options->{name} or die "no dbname in mbd object";
+        my $host = $mbd->notes( 'dbtest_host' );
+        $dsn = "dbi:Pg:dbname=gcis;host=$host";
+    } else {
+        my $dbname = $conf->{dbname} or die "no dbname in config file";
+        $dsn = "dbi:Pg:dbname=$dbname";
+        $dsn .= ":host=$conf->{host}" if $conf->{host};
+        $dsn .= ":port=$conf->{port}" if $conf->{port};
+        $app->log->info("Registering database $dbname");
+    }
 
     $dbix = DBIx::Connector->new( $dsn, ($conf->{user} || ''),
        ( $conf->{password} || '' ),
