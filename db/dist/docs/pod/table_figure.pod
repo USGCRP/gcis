@@ -1,0 +1,66 @@
+
+=head1 NAME
+
+figure
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ uuid (character varying(36)) - 
+ chapter_id (integer) - 
+ title (character varying(256)) - 
+ caption (character varying(2048)) - 
+ attributes (character varying(512)) - 
+ time_start (timestamp(3) without time zone) - 
+ time_end (timestamp(3) without time zone) - 
+ lat_max (character varying(45)) - 
+ lat_min (character varying(45)) - 
+ lon_max (character varying(45)) - 
+ lon_min (character varying(45)) - 
+ keywords (character varying(512)) - 
+ usage_limits (character varying(512)) - 
+ submission_dt (timestamp(3) without time zone) - 
+ create_dt (timestamp(3) without time zone) - 
+ source_citation (character varying(256)) - 
+ ordinal (integer) - 
+
+
+=head1 SCHEMA
+
+                                                   Table "gcis_metadata.figure"
+      Column      |              Type              |                      Modifiers                      | Storage  | Description 
+ -----------------+--------------------------------+-----------------------------------------------------+----------+-------------
+  id              | integer                        | not null default nextval('figure_id_seq'::regclass) | plain    | 
+  uuid            | character varying(36)          |                                                     | extended | 
+  chapter_id      | integer                        |                                                     | plain    | 
+  title           | character varying(256)         |                                                     | extended | 
+  caption         | character varying(2048)        |                                                     | extended | 
+  attributes      | character varying(512)         |                                                     | extended | 
+  time_start      | timestamp(3) without time zone |                                                     | plain    | 
+  time_end        | timestamp(3) without time zone |                                                     | plain    | 
+  lat_max         | character varying(45)          |                                                     | extended | 
+  lat_min         | character varying(45)          |                                                     | extended | 
+  lon_max         | character varying(45)          |                                                     | extended | 
+  lon_min         | character varying(45)          |                                                     | extended | 
+  keywords        | character varying(512)         |                                                     | extended | 
+  usage_limits    | character varying(512)         |                                                     | extended | 
+  submission_dt   | timestamp(3) without time zone |                                                     | plain    | 
+  create_dt       | timestamp(3) without time zone |                                                     | plain    | 
+  source_citation | character varying(256)         |                                                     | extended | 
+  ordinal         | integer                        |                                                     | plain    | 
+ Indexes:
+     "figure_pkey" PRIMARY KEY, btree (id)
+ Foreign-key constraints:
+     "figure_ibfk_1" FOREIGN KEY (chapter_id) REFERENCES chapter(id) MATCH FULL
+ Referenced by:
+     TABLE "image" CONSTRAINT "image_ibfk_1" FOREIGN KEY (figure_id) REFERENCES figure(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

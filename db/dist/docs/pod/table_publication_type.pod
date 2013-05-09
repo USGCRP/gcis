@@ -1,0 +1,34 @@
+
+=head1 NAME
+
+publication_type
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ name (character varying(64)) - 
+ table (character varying(64)) - 
+
+
+=head1 SCHEMA
+
+                                          Table "gcis_metadata.publication_type"
+  Column |         Type          |                           Modifiers                           | Storage  | Description 
+ --------+-----------------------+---------------------------------------------------------------+----------+-------------
+  id     | integer               | not null default nextval('publication_type_id_seq'::regclass) | plain    | 
+  name   | character varying(64) |                                                               | extended | 
+  table  | character varying(64) |                                                               | extended | 
+ Indexes:
+     "publication_type_pkey" PRIMARY KEY, btree (id)
+ Referenced by:
+     TABLE "publication" CONSTRAINT "publication_ibfk_2" FOREIGN KEY (publication_type_id) REFERENCES publication_type(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

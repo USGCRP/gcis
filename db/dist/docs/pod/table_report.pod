@@ -1,0 +1,34 @@
+
+=head1 NAME
+
+report
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ short_name (character varying(45)) - 
+ title (character varying(256)) - 
+
+
+=head1 SCHEMA
+
+                                             Table "gcis_metadata.report"
+    Column   |          Type          |                      Modifiers                      | Storage  | Description 
+ ------------+------------------------+-----------------------------------------------------+----------+-------------
+  id         | integer                | not null default nextval('report_id_seq'::regclass) | plain    | 
+  short_name | character varying(45)  |                                                     | extended | 
+  title      | character varying(256) |                                                     | extended | 
+ Indexes:
+     "report_pkey" PRIMARY KEY, btree (id)
+ Referenced by:
+     TABLE "chapter" CONSTRAINT "chapter_report_id_fkey" FOREIGN KEY (report_id) REFERENCES report(id)
+ Has OIDs: no
+ 
+
+=cut
+
+

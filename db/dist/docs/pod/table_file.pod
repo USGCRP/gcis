@@ -1,0 +1,38 @@
+
+=head1 NAME
+
+file
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ image_id (integer) - 
+ file_type (character varying(45)) - 
+ dir (character varying(512)) - 
+ file (character varying(512)) - 
+
+
+=head1 SCHEMA
+
+                                            Table "gcis_metadata.file"
+   Column   |          Type          |                     Modifiers                     | Storage  | Description 
+ -----------+------------------------+---------------------------------------------------+----------+-------------
+  id        | integer                | not null default nextval('file_id_seq'::regclass) | plain    | 
+  image_id  | integer                |                                                   | plain    | 
+  file_type | character varying(45)  |                                                   | extended | 
+  dir       | character varying(512) |                                                   | extended | 
+  file      | character varying(512) |                                                   | extended | 
+ Indexes:
+     "file_pkey" PRIMARY KEY, btree (id)
+ Foreign-key constraints:
+     "file_ibfk_1" FOREIGN KEY (image_id) REFERENCES image(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

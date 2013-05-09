@@ -1,0 +1,41 @@
+
+=head1 NAME
+
+chapter
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ title (character varying(256)) - 
+ report_id (integer) - 
+ number (integer) - 
+ short_name (character varying) - 
+
+
+=head1 SCHEMA
+
+                                             Table "gcis_metadata.chapter"
+    Column   |          Type          |                      Modifiers                       | Storage  | Description 
+ ------------+------------------------+------------------------------------------------------+----------+-------------
+  id         | integer                | not null default nextval('chapter_id_seq'::regclass) | plain    | 
+  title      | character varying(256) |                                                      | extended | 
+  report_id  | integer                |                                                      | plain    | 
+  number     | integer                |                                                      | plain    | 
+  short_name | character varying      | not null                                             | extended | 
+ Indexes:
+     "chapter_pkey" PRIMARY KEY, btree (id)
+     "chapter_short_name_key" UNIQUE CONSTRAINT, btree (short_name)
+ Foreign-key constraints:
+     "chapter_report_id_fkey" FOREIGN KEY (report_id) REFERENCES report(id)
+ Referenced by:
+     TABLE "figure" CONSTRAINT "figure_ibfk_1" FOREIGN KEY (chapter_id) REFERENCES chapter(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

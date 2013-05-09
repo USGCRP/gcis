@@ -1,0 +1,32 @@
+
+=head1 NAME
+
+dataset_lineage
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ dataset_id (integer) - 
+ parent_id (integer) - 
+
+
+=head1 SCHEMA
+
+                                     Table "gcis_metadata.dataset_lineage"
+    Column   |  Type   |                          Modifiers                           | Storage | Description 
+ ------------+---------+--------------------------------------------------------------+---------+-------------
+  id         | integer | not null default nextval('dataset_lineage_id_seq'::regclass) | plain   | 
+  dataset_id | integer |                                                              | plain   | 
+  parent_id  | integer |                                                              | plain   | 
+ Indexes:
+     "dataset_lineage_pkey" PRIMARY KEY, btree (id)
+ Has OIDs: no
+ 
+
+=cut
+
+
