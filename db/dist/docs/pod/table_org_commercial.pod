@@ -20,16 +20,16 @@ org_commercial
 
 =head1 SCHEMA
 
-                                             Table "gcis_metadata.org_commercial"
-    Column   |          Type           |                          Modifiers                          | Storage  | Description 
- ------------+-------------------------+-------------------------------------------------------------+----------+-------------
-  id         | integer                 | not null default nextval('org_commercial_id_seq'::regclass) | plain    | 
-  short_name | character varying(45)   |                                                             | extended | 
-  long_name  | character varying(256)  |                                                             | extended | 
-  address    | character varying(45)   |                                                             | extended | 
-  email      | character varying(45)   |                                                             | extended | 
-  url        | character varying(128)  |                                                             | extended | 
-  notes      | character varying(1024) |                                                             | extended | 
+                                                     Table "gcis_metadata.org_commercial"
+    Column   |          Type           |                          Modifiers                          | Storage  | Stats target | Description 
+ ------------+-------------------------+-------------------------------------------------------------+----------+--------------+-------------
+  id         | integer                 | not null default nextval('org_commercial_id_seq'::regclass) | plain    |              | 
+  short_name | character varying(45)   |                                                             | extended |              | 
+  long_name  | character varying(256)  |                                                             | extended |              | 
+  address    | character varying(45)   |                                                             | extended |              | 
+  email      | character varying(45)   |                                                             | extended |              | 
+  url        | character varying(128)  |                                                             | extended |              | 
+  notes      | character varying(1024) |                                                             | extended |              | 
  Indexes:
      "org_commercial_pkey" PRIMARY KEY, btree (id)
  Has OIDs: no

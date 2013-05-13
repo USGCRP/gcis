@@ -10,7 +10,7 @@ article
 =head1 FIELDS
 
  id (serial) - 
- short_name (character varying(64)) - 
+ short_name (character varying) - 
  title (character varying(256)) - 
  doi (character varying(64)) - 
  year (integer) - 
@@ -23,19 +23,19 @@ article
 
 =head1 SCHEMA
 
-                                               Table "gcis_metadata.article"
-     Column     |          Type           |                      Modifiers                       | Storage  | Description 
- ---------------+-------------------------+------------------------------------------------------+----------+-------------
-  id            | integer                 | not null default nextval('article_id_seq'::regclass) | plain    | 
-  short_name    | character varying(64)   |                                                      | extended | 
-  title         | character varying(256)  |                                                      | extended | 
-  doi           | character varying(64)   |                                                      | extended | 
-  year          | integer                 |                                                      | plain    | 
-  journal_id    | integer                 |                                                      | plain    | 
-  journal_vol   | character varying(32)   |                                                      | extended | 
-  journal_pages | character varying(32)   |                                                      | extended | 
-  url           | character varying(128)  |                                                      | extended | 
-  notes         | character varying(1024) |                                                      | extended | 
+                                                      Table "gcis_metadata.article"
+     Column     |          Type           |                      Modifiers                       | Storage  | Stats target | Description 
+ ---------------+-------------------------+------------------------------------------------------+----------+--------------+-------------
+  id            | integer                 | not null default nextval('article_id_seq'::regclass) | plain    |              | 
+  short_name    | character varying       |                                                      | extended |              | 
+  title         | character varying(256)  |                                                      | extended |              | 
+  doi           | character varying(64)   |                                                      | extended |              | 
+  year          | integer                 |                                                      | plain    |              | 
+  journal_id    | integer                 |                                                      | plain    |              | 
+  journal_vol   | character varying(32)   |                                                      | extended |              | 
+  journal_pages | character varying(32)   |                                                      | extended |              | 
+  url           | character varying(128)  |                                                      | extended |              | 
+  notes         | character varying(1024) |                                                      | extended |              | 
  Indexes:
      "article_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

@@ -31,27 +31,27 @@ figure
 
 =head1 SCHEMA
 
-                                                   Table "gcis_metadata.figure"
-      Column      |              Type              |                      Modifiers                      | Storage  | Description 
- -----------------+--------------------------------+-----------------------------------------------------+----------+-------------
-  id              | integer                        | not null default nextval('figure_id_seq'::regclass) | plain    | 
-  uuid            | character varying(36)          |                                                     | extended | 
-  chapter_id      | integer                        |                                                     | plain    | 
-  title           | character varying(256)         |                                                     | extended | 
-  caption         | character varying(2048)        |                                                     | extended | 
-  attributes      | character varying(512)         |                                                     | extended | 
-  time_start      | timestamp(3) without time zone |                                                     | plain    | 
-  time_end        | timestamp(3) without time zone |                                                     | plain    | 
-  lat_max         | character varying(45)          |                                                     | extended | 
-  lat_min         | character varying(45)          |                                                     | extended | 
-  lon_max         | character varying(45)          |                                                     | extended | 
-  lon_min         | character varying(45)          |                                                     | extended | 
-  keywords        | character varying(512)         |                                                     | extended | 
-  usage_limits    | character varying(512)         |                                                     | extended | 
-  submission_dt   | timestamp(3) without time zone |                                                     | plain    | 
-  create_dt       | timestamp(3) without time zone |                                                     | plain    | 
-  source_citation | character varying(256)         |                                                     | extended | 
-  ordinal         | integer                        |                                                     | plain    | 
+                                                           Table "gcis_metadata.figure"
+      Column      |              Type              |                      Modifiers                      | Storage  | Stats target | Description 
+ -----------------+--------------------------------+-----------------------------------------------------+----------+--------------+-------------
+  id              | integer                        | not null default nextval('figure_id_seq'::regclass) | plain    |              | 
+  uuid            | character varying(36)          |                                                     | extended |              | 
+  chapter_id      | integer                        |                                                     | plain    |              | 
+  title           | character varying(256)         |                                                     | extended |              | 
+  caption         | character varying(2048)        |                                                     | extended |              | 
+  attributes      | character varying(512)         |                                                     | extended |              | 
+  time_start      | timestamp(3) without time zone |                                                     | plain    |              | 
+  time_end        | timestamp(3) without time zone |                                                     | plain    |              | 
+  lat_max         | character varying(45)          |                                                     | extended |              | 
+  lat_min         | character varying(45)          |                                                     | extended |              | 
+  lon_max         | character varying(45)          |                                                     | extended |              | 
+  lon_min         | character varying(45)          |                                                     | extended |              | 
+  keywords        | character varying(512)         |                                                     | extended |              | 
+  usage_limits    | character varying(512)         |                                                     | extended |              | 
+  submission_dt   | timestamp(3) without time zone |                                                     | plain    |              | 
+  create_dt       | timestamp(3) without time zone |                                                     | plain    |              | 
+  source_citation | character varying(256)         |                                                     | extended |              | 
+  ordinal         | integer                        |                                                     | plain    |              | 
  Indexes:
      "figure_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

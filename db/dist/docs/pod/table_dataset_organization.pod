@@ -16,12 +16,12 @@ dataset_organization
 
 =head1 SCHEMA
 
-                                       Table "gcis_metadata.dataset_organization"
-      Column      |  Type   |                             Modifiers                             | Storage | Description 
- -----------------+---------+-------------------------------------------------------------------+---------+-------------
-  id              | integer | not null default nextval('dataset_organization_id_seq'::regclass) | plain   | 
-  dataset_id      | integer |                                                                   | plain   | 
-  organization_id | integer |                                                                   | plain   | 
+                                               Table "gcis_metadata.dataset_organization"
+      Column      |  Type   |                             Modifiers                             | Storage | Stats target | Description 
+ -----------------+---------+-------------------------------------------------------------------+---------+--------------+-------------
+  id              | integer | not null default nextval('dataset_organization_id_seq'::regclass) | plain   |              | 
+  dataset_id      | integer |                                                                   | plain   |              | 
+  organization_id | integer |                                                                   | plain   |              | 
  Indexes:
      "dataset_organization_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

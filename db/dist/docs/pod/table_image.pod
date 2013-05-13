@@ -29,25 +29,25 @@ image
 
 =head1 SCHEMA
 
-                                                  Table "gcis_metadata.image"
-     Column     |              Type              |                     Modifiers                      | Storage  | Description 
- ---------------+--------------------------------+----------------------------------------------------+----------+-------------
-  id            | integer                        | not null default nextval('image_id_seq'::regclass) | plain    | 
-  figure_id     | integer                        | not null                                           | plain    | 
-  position      | character varying(45)          |                                                    | extended | 
-  title         | character varying(256)         |                                                    | extended | 
-  description   | character varying(2048)        |                                                    | extended | 
-  attributes    | character varying(128)         |                                                    | extended | 
-  time_start    | timestamp(3) without time zone |                                                    | plain    | 
-  time_end      | timestamp(3) without time zone |                                                    | plain    | 
-  lat_max       | character varying(45)          |                                                    | extended | 
-  lat_min       | character varying(45)          |                                                    | extended | 
-  lon_max       | character varying(45)          |                                                    | extended | 
-  lon_min       | character varying(45)          |                                                    | extended | 
-  keywords      | character varying(512)         |                                                    | extended | 
-  usage_limits  | character varying(128)         |                                                    | extended | 
-  submission_dt | timestamp(3) without time zone |                                                    | plain    | 
-  create_dt     | timestamp(3) without time zone |                                                    | plain    | 
+                                                          Table "gcis_metadata.image"
+     Column     |              Type              |                     Modifiers                      | Storage  | Stats target | Description 
+ ---------------+--------------------------------+----------------------------------------------------+----------+--------------+-------------
+  id            | integer                        | not null default nextval('image_id_seq'::regclass) | plain    |              | 
+  figure_id     | integer                        | not null                                           | plain    |              | 
+  position      | character varying(45)          |                                                    | extended |              | 
+  title         | character varying(256)         |                                                    | extended |              | 
+  description   | character varying(2048)        |                                                    | extended |              | 
+  attributes    | character varying(128)         |                                                    | extended |              | 
+  time_start    | timestamp(3) without time zone |                                                    | plain    |              | 
+  time_end      | timestamp(3) without time zone |                                                    | plain    |              | 
+  lat_max       | character varying(45)          |                                                    | extended |              | 
+  lat_min       | character varying(45)          |                                                    | extended |              | 
+  lon_max       | character varying(45)          |                                                    | extended |              | 
+  lon_min       | character varying(45)          |                                                    | extended |              | 
+  keywords      | character varying(512)         |                                                    | extended |              | 
+  usage_limits  | character varying(128)         |                                                    | extended |              | 
+  submission_dt | timestamp(3) without time zone |                                                    | plain    |              | 
+  create_dt     | timestamp(3) without time zone |                                                    | plain    |              | 
  Indexes:
      "image_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

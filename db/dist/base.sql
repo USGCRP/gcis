@@ -16,7 +16,7 @@ SET default_with_oids = false;
 
 CREATE TABLE article (
     id integer NOT NULL,
-    short_name character varying(64),
+    short_name character varying,
     title character varying(256),
     doi character varying(64),
     year integer,

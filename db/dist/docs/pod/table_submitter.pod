@@ -18,14 +18,14 @@ submitter
 
 =head1 SCHEMA
 
-                                               Table "gcis_metadata.submitter"
-      Column      |         Type          |                       Modifiers                        | Storage  | Description 
- -----------------+-----------------------+--------------------------------------------------------+----------+-------------
-  id              | integer               | not null default nextval('submitter_id_seq'::regclass) | plain    | 
-  person_id       | integer               |                                                        | plain    | 
-  organization_id | integer               |                                                        | plain    | 
-  table           | character varying(64) |                                                        | extended | 
-  fk              | integer               |                                                        | plain    | 
+                                                      Table "gcis_metadata.submitter"
+      Column      |         Type          |                       Modifiers                        | Storage  | Stats target | Description 
+ -----------------+-----------------------+--------------------------------------------------------+----------+--------------+-------------
+  id              | integer               | not null default nextval('submitter_id_seq'::regclass) | plain    |              | 
+  person_id       | integer               |                                                        | plain    |              | 
+  organization_id | integer               |                                                        | plain    |              | 
+  table           | character varying(64) |                                                        | extended |              | 
+  fk              | integer               |                                                        | plain    |              | 
  Indexes:
      "submitter_pkey" PRIMARY KEY, btree (id)
  Has OIDs: no

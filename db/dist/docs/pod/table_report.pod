@@ -16,12 +16,12 @@ report
 
 =head1 SCHEMA
 
-                                             Table "gcis_metadata.report"
-    Column   |          Type          |                      Modifiers                      | Storage  | Description 
- ------------+------------------------+-----------------------------------------------------+----------+-------------
-  id         | integer                | not null default nextval('report_id_seq'::regclass) | plain    | 
-  short_name | character varying(45)  |                                                     | extended | 
-  title      | character varying(256) |                                                     | extended | 
+                                                    Table "gcis_metadata.report"
+    Column   |          Type          |                      Modifiers                      | Storage  | Stats target | Description 
+ ------------+------------------------+-----------------------------------------------------+----------+--------------+-------------
+  id         | integer                | not null default nextval('report_id_seq'::regclass) | plain    |              | 
+  short_name | character varying(45)  |                                                     | extended |              | 
+  title      | character varying(256) |                                                     | extended |              | 
  Indexes:
      "report_pkey" PRIMARY KEY, btree (id)
  Referenced by:

@@ -16,12 +16,12 @@ ref_type
 
 =head1 SCHEMA
 
-                                          Table "gcis_metadata.ref_type"
-  Column |         Type          |                       Modifiers                       | Storage  | Description 
- --------+-----------------------+-------------------------------------------------------+----------+-------------
-  id     | integer               | not null default nextval('ref_type_id_seq'::regclass) | plain    | 
-  name   | character varying(64) |                                                       | extended | 
-  table  | character varying(64) |                                                       | extended | 
+                                                  Table "gcis_metadata.ref_type"
+  Column |         Type          |                       Modifiers                       | Storage  | Stats target | Description 
+ --------+-----------------------+-------------------------------------------------------+----------+--------------+-------------
+  id     | integer               | not null default nextval('ref_type_id_seq'::regclass) | plain    |              | 
+  name   | character varying(64) |                                                       | extended |              | 
+  table  | character varying(64) |                                                       | extended |              | 
  Indexes:
      "ref_type_pkey" PRIMARY KEY, btree (id)
  Referenced by:

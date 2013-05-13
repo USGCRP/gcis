@@ -16,12 +16,12 @@ organization
 
 =head1 SCHEMA
 
-                                        Table "gcis_metadata.organization"
-       Column       |  Type   |                         Modifiers                         | Storage | Description 
- -------------------+---------+-----------------------------------------------------------+---------+-------------
-  id                | integer | not null default nextval('organization_id_seq'::regclass) | plain   | 
-  organization_type | integer |                                                           | plain   | 
-  fk                | integer |                                                           | plain   | 
+                                                Table "gcis_metadata.organization"
+       Column       |  Type   |                         Modifiers                         | Storage | Stats target | Description 
+ -------------------+---------+-----------------------------------------------------------+---------+--------------+-------------
+  id                | integer | not null default nextval('organization_id_seq'::regclass) | plain   |              | 
+  organization_type | integer |                                                           | plain   |              | 
+  fk                | integer |                                                           | plain   |              | 
  Indexes:
      "organization_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

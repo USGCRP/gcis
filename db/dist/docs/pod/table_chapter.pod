@@ -18,14 +18,14 @@ chapter
 
 =head1 SCHEMA
 
-                                             Table "gcis_metadata.chapter"
-    Column   |          Type          |                      Modifiers                       | Storage  | Description 
- ------------+------------------------+------------------------------------------------------+----------+-------------
-  id         | integer                | not null default nextval('chapter_id_seq'::regclass) | plain    | 
-  title      | character varying(256) |                                                      | extended | 
-  report_id  | integer                |                                                      | plain    | 
-  number     | integer                |                                                      | plain    | 
-  short_name | character varying      | not null                                             | extended | 
+                                                    Table "gcis_metadata.chapter"
+    Column   |          Type          |                      Modifiers                       | Storage  | Stats target | Description 
+ ------------+------------------------+------------------------------------------------------+----------+--------------+-------------
+  id         | integer                | not null default nextval('chapter_id_seq'::regclass) | plain    |              | 
+  title      | character varying(256) |                                                      | extended |              | 
+  report_id  | integer                |                                                      | plain    |              | 
+  number     | integer                |                                                      | plain    |              | 
+  short_name | character varying      | not null                                             | extended |              | 
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (id)
      "chapter_short_name_key" UNIQUE CONSTRAINT, btree (short_name)
