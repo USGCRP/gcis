@@ -43,25 +43,11 @@ ALTER SEQUENCE article_id_seq OWNED BY article.id;
 
 
 CREATE TABLE chapter (
-    id integer NOT NULL,
     title character varying(256),
-    report_id integer,
     number integer,
-    short_name character varying NOT NULL
+    identifier character varying NOT NULL,
+    report character varying
 );
-
-
-
-CREATE SEQUENCE chapter_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE chapter_id_seq OWNED BY chapter.id;
 
 
 
@@ -188,9 +174,6 @@ ALTER SEQUENCE dataset_organization_id_seq OWNED BY dataset_organization.id;
 
 
 CREATE TABLE figure (
-    id integer NOT NULL,
-    uuid character varying(36),
-    chapter_id integer,
     title character varying(256),
     caption character varying(2048),
     attributes character varying(512),
@@ -205,30 +188,19 @@ CREATE TABLE figure (
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
     source_citation character varying(256),
-    ordinal integer
+    ordinal integer,
+    identifier character varying NOT NULL,
+    chapter character varying
 );
-
-
-
-CREATE SEQUENCE figure_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE figure_id_seq OWNED BY figure.id;
 
 
 
 CREATE TABLE file (
     id integer NOT NULL,
-    image_id integer,
     file_type character varying(45),
     dir character varying(512),
-    file character varying(512)
+    file character varying(512),
+    image character varying
 );
 
 
@@ -247,8 +219,6 @@ ALTER SEQUENCE file_id_seq OWNED BY file.id;
 
 
 CREATE TABLE image (
-    id integer NOT NULL,
-    figure_id integer NOT NULL,
     "position" character varying(45),
     title character varying(256),
     description character varying(2048),
@@ -262,21 +232,10 @@ CREATE TABLE image (
     keywords character varying(512),
     usage_limits character varying(128),
     submission_dt timestamp(3) without time zone,
-    create_dt timestamp(3) without time zone
+    create_dt timestamp(3) without time zone,
+    identifier character varying NOT NULL,
+    figure character varying
 );
-
-
-
-CREATE SEQUENCE image_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE image_id_seq OWNED BY image.id;
 
 
 
@@ -581,23 +540,9 @@ ALTER SEQUENCE ref_type_id_seq OWNED BY ref_type.id;
 
 
 CREATE TABLE report (
-    id integer NOT NULL,
-    short_name character varying(45),
-    title character varying(256)
+    title character varying(256),
+    identifier character varying NOT NULL
 );
-
-
-
-CREATE SEQUENCE report_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE report_id_seq OWNED BY report.id;
 
 
 
@@ -628,10 +573,6 @@ ALTER TABLE ONLY article ALTER COLUMN id SET DEFAULT nextval('article_id_seq'::r
 
 
 
-ALTER TABLE ONLY chapter ALTER COLUMN id SET DEFAULT nextval('chapter_id_seq'::regclass);
-
-
-
 ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id_seq'::regclass);
 
 
@@ -652,15 +593,7 @@ ALTER TABLE ONLY dataset_organization ALTER COLUMN id SET DEFAULT nextval('datas
 
 
 
-ALTER TABLE ONLY figure ALTER COLUMN id SET DEFAULT nextval('figure_id_seq'::regclass);
-
-
-
 ALTER TABLE ONLY file ALTER COLUMN id SET DEFAULT nextval('file_id_seq'::regclass);
-
-
-
-ALTER TABLE ONLY image ALTER COLUMN id SET DEFAULT nextval('image_id_seq'::regclass);
 
 
 
@@ -716,10 +649,6 @@ ALTER TABLE ONLY ref_type ALTER COLUMN id SET DEFAULT nextval('ref_type_id_seq':
 
 
 
-ALTER TABLE ONLY report ALTER COLUMN id SET DEFAULT nextval('report_id_seq'::regclass);
-
-
-
 ALTER TABLE ONLY submitter ALTER COLUMN id SET DEFAULT nextval('submitter_id_seq'::regclass);
 
 
@@ -730,12 +659,7 @@ ALTER TABLE ONLY article
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_pkey PRIMARY KEY (id);
-
-
-
-ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_short_name_key UNIQUE (short_name);
+    ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier);
 
 
 
@@ -765,7 +689,7 @@ ALTER TABLE ONLY dataset
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier);
 
 
 
@@ -775,7 +699,7 @@ ALTER TABLE ONLY file
 
 
 ALTER TABLE ONLY image
-    ADD CONSTRAINT image_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT image_pkey PRIMARY KEY (identifier);
 
 
 
@@ -845,7 +769,7 @@ ALTER TABLE ONLY ref_type
 
 
 ALTER TABLE ONLY report
-    ADD CONSTRAINT report_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT report_pkey PRIMARY KEY (identifier);
 
 
 
@@ -860,7 +784,7 @@ ALTER TABLE ONLY article
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_report_id_fkey FOREIGN KEY (report_id) REFERENCES report(id);
+    ADD CONSTRAINT chapter_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
 
 
 
@@ -890,17 +814,17 @@ ALTER TABLE ONLY dataset_organization
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_ibfk_1 FOREIGN KEY (chapter_id) REFERENCES chapter(id) MATCH FULL;
+    ADD CONSTRAINT figure_chapter_fkey FOREIGN KEY (chapter) REFERENCES chapter(identifier);
 
 
 
 ALTER TABLE ONLY file
-    ADD CONSTRAINT file_ibfk_1 FOREIGN KEY (image_id) REFERENCES image(id) MATCH FULL;
+    ADD CONSTRAINT file_image_fkey FOREIGN KEY (image) REFERENCES image(identifier);
 
 
 
 ALTER TABLE ONLY image
-    ADD CONSTRAINT image_ibfk_1 FOREIGN KEY (figure_id) REFERENCES figure(id) MATCH FULL;
+    ADD CONSTRAINT image_figure_fkey FOREIGN KEY (figure) REFERENCES figure(identifier);
 
 
 

@@ -36,7 +36,7 @@ SELECT pg_catalog.setval('article_id_seq', 1, false);
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (id, short_name, title) FROM stdin;
+COPY report (title, identifier) FROM stdin;
 \.
 
 
@@ -44,15 +44,8 @@ COPY report (id, short_name, title) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (id, title, report_id, number, short_name) FROM stdin;
+COPY chapter (title, number, identifier, report) FROM stdin;
 \.
-
-
---
--- Name: chapter_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('chapter_id_seq', 1, false);
 
 
 --
@@ -158,22 +151,15 @@ SELECT pg_catalog.setval('dataset_organization_id_seq', 1, false);
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (id, uuid, chapter_id, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal) FROM stdin;
+COPY figure (title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal, identifier, chapter) FROM stdin;
 \.
-
-
---
--- Name: figure_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('figure_id_seq', 1, false);
 
 
 --
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image (id, figure_id, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
+COPY image ("position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, identifier, figure) FROM stdin;
 \.
 
 
@@ -181,7 +167,7 @@ COPY image (id, figure_id, "position", title, description, attributes, time_star
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (id, image_id, file_type, dir, file) FROM stdin;
+COPY file (id, file_type, dir, file, image) FROM stdin;
 \.
 
 
@@ -190,13 +176,6 @@ COPY file (id, image_id, file_type, dir, file) FROM stdin;
 --
 
 SELECT pg_catalog.setval('file_id_seq', 1, false);
-
-
---
--- Name: image_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('image_id_seq', 1, false);
 
 
 --
@@ -360,13 +339,6 @@ SELECT pg_catalog.setval('publication_type_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('ref_type_id_seq', 1, false);
-
-
---
--- Name: report_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('report_id_seq', 1, false);
 
 
 --

@@ -2,3 +2,4 @@
 0020_constraints.sql	f4dd47191073543c3353facad1772de5
 0030_chapter.sql	cc49579bd4af28520f19ba983d0b7e04
 0040_article_shortname.sql	21f355302360ba120d278749108d06b5
+0050_identifier.sql	3205e4f5e11b37b3ec98a4c256bb65fc
