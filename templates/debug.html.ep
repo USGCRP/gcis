@@ -6,6 +6,8 @@ debug
 % my $mng = orm->{$table}{mng};
 % my $obj = orm->{$table}{obj};
 <b><%= $table %></b>
-  %= join ',', $obj->meta->columns;
+columns :  <%= join ',', $obj->meta->columns; %>
+relationships :
+ <% for my $rel ($obj->meta->relationships) { %> <%= $rel->name %> <% } %>
 % }
 </pre>

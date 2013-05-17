@@ -99,6 +99,8 @@ sub startup {
 
     $r->get( '/figure' )->to('Figure#list')->name("figure_list");
 
+    $r->get( '/image' )->to('Image#list')->name("image_list");
+
     $r->get( '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure');
     $r->get( '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token');
     $r->get( '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity');

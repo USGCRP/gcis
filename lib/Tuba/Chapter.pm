@@ -10,7 +10,6 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    my $objects;
     my $objects = Chapters->get_objects;
     $c->respond_to(
         json => sub { shift->render_json([ map $_->as_tree, @$objects ]) },

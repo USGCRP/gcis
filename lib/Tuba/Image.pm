@@ -10,6 +10,8 @@ use File::Temp;
 use YAML::XS qw/DumpFile LoadFile/;
 use File::Basename qw/basename/;
 
+use Tuba::DB::Objects qw/-nicknames/;
+
 =head1 ROUTES
 
 =head2 list
@@ -78,6 +80,20 @@ sub checkmet {
     $c->render(met => $met, xml => $xml);
 }
 
+=head1 list
+
+List images
+
+=cut
+
+sub list {
+    my $c = shift;
+    my $images = Images->get_objects(with_objects => ['figure_obj']);
+    $c->respond_to(
+        json => sub { $c->render_json([ map $_->as_tree, @$images ]) },
+        html => sub { $c->render(template => 'objects', meta => Image->meta, objects => $images ) }
+    );
+}
 
 1;
 

@@ -22,7 +22,7 @@ Unique keys : <%= join ', ', $meta->primary_key, $meta->unique_keys %>
     % for my $c ($meta->columns) {
          <td>
              % my $accessor = $c->accessor_method_name;
-             %= $o->$accessor;
+             %= $o->can($accessor) ? $o->$accessor : 'error';
          </td>
     % }
     </tr>

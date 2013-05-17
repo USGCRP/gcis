@@ -13,9 +13,9 @@ sub list {
     my $figures;
     if (my $ch = $c->stash('chapter_name')) {
         my $chapter = Chapter->new(short_name => $ch)->load(speculative => 1) or return $c->render_not_found;
-        $figures = Figures->get_objects(query => [chapter_id => $chapter->id], with_objects => ['chapter']);
+        $figures = Figures->get_objects(query => [chapter => $chapter->id], with_objects => ['chapter_obj']);
     } else {
-        $figures = Figures->get_objects(with_objects => ['chapter']);
+        $figures = Figures->get_objects(with_objects => ['chapter_obj']);
     }
     $c->respond_to(
         json => sub { $c->render_json([ map $_->as_tree, @$figures ]) },
