@@ -1,0 +1,59 @@
+#!/usr/bin/env perl
+
+use lib '../../raw/lib';
+use lib '../lib';
+
+use Data::Dumper;
+use Tuba::DB::Objects qw/-nicknames/;
+use Goog;
+use feature qw/:all/;
+
+use strict;
+use warnings;
+
+Files->delete_objects(all => 1);
+Images->delete_objects(all => 1);
+Figures->delete_objects(all => 1);
+Chapters->delete_objects(all => 1);
+Reports->delete_objects(all => 1);
+
+my $goog = Goog->new(datafile => q[/var/local/projects/raw/data/goog/goog.json])->load;
+
+# Report
+my $report = Report->new(
+    identifier => "nca3",
+    title      => "National Climate Assessment number three",
+);
+$report->save or die $report->error;
+
+# Chapters
+for my $row ($goog->hashrefs(q[nca3draft.canonicalURIs.chapters],'Sheet 1')) {
+    my $ch = Chapter->new(
+        report     => $report->identifier,
+        identifier => $row->{q[identifier]},
+        number     => $row->{q[chapter-number]},
+        title      => $row->{q[chapter-long-name]},
+    )->save;
+}
+
+# Figures
+FIGURES :
+for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
+    my $figure_id = $row->[6] or next;
+    $figure_id =~ s[/figure/][] or next;
+    next if $figure_id =~ m[/];
+    my $image = $row->[7];
+    $image =~ s[/image/][] or next;
+    my $figure = Figure->new(identifier => $figure_id);
+    my $chapter_number = $row->[1];
+    $figure->load(speculative => 1);
+    if ($chapter_number  && $chapter_number =~ qr[^\d+$]) {
+        #say "figure $figure_id image $image chapter $chapter_number";
+        my $found = Chapters->get_objects({'number' => $chapter_number});
+        $figure->chapter($found->[0]->identifier) if @$found;
+    }
+    $figure->image($image);
+    $figure->save;
+}
+
+
