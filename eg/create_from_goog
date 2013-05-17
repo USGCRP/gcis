@@ -31,6 +31,7 @@ for my $row ($goog->hashrefs(q[nca3draft.canonicalURIs.chapters],'Sheet 1')) {
     my $ch = Chapter->new(
         report     => $report->identifier,
         title      => $row->{q[chapter-long-name]},
+        number     => $row->{q[chapter-number]},
         identifier => $row->{q[identifier]},
     )->save;
 }
