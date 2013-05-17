@@ -8,7 +8,15 @@ WriteMakefile
   'EXE_FILES' => [],
   'VERSION_FROM' => 'lib/Tuba.pm',
   'PREREQ_PM' => {
-                   'Test::More' => 0
+                   'SQL::Abstract' => 0,
+                   'Mojolicious::Plugin::YamlConfig' => 0,
+                   'YAML::Syck' => 0,
+                   'DBIx::Simple' => 0,
+                   'YAML::XS' => 0,
+                   'Rose::DB::Object' => 0,
+                   'Mojolicious' => 0,
+                   'Test::More' => 0,
+                   'SQL::Interp' => 0
                  }
 )
 ;

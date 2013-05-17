@@ -13,7 +13,7 @@ Tuba provides a RESTful API to GCIS data.
 package Tuba;
 use Mojo::Base qw/Mojolicious/;
 
-our $VERSION = 0.01;
+our $VERSION = 0.02;
 
 sub demo {
  my $c = shift;
