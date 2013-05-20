@@ -1,7 +1,9 @@
 % layout 'default';
-<h2><%= link_to 'index' => begin %>GCIS API<%= end %></h2>
+<h2><%= link_to 'index' => begin %>GCIS API Reference<%= end %></h2>
 <h5>version <%= $Tuba::VERSION %></h5>
 
+<div class="row-fluid">
+<div class="span6">
 %#-----------------------------------------------------------------
 % my $walk = begin
   % my ($walk, $node, $depth) = @_;
@@ -35,35 +37,35 @@
   </tr>
   %= $walk->($walk, $_, 0) for @{app->routes->children};
  </table>
-
+</div>
+<div class="span6">
 % if ($trying) {
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
-    <h2><%= $trying->name %></h2>
-    %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
-        %= hidden_field '_route_name' => $trying->name;
-        % for my $p (@{ (stash 'placeholders') }) {
+        <h2><%= $trying->name %></h2>
+        %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
+            %= hidden_field '_route_name' => $trying->name;
+            % for my $p (@{ (stash 'placeholders') }) {
+                <div class="control-group">
+                    <label class="control-label" for="<%= $p %>"><%= $p %></label>
+                    <div class="controls">
+                        <%= text_field $p, value => $defaults->{$p} || ''%>
+                    </div>
+                </div>
+            % }
             <div class="control-group">
-                <label class="control-label" for="<%= $p %>"><%= $p %></label>
                 <div class="controls">
-                    <%= text_field $p, value => $defaults->{$p} || ''%>
+                %= submit_button 'GET json', class => 'btn btn-primary', onclick => '{return tryit("json");}'
+                %= submit_button 'GET html', class => 'btn btn-primary', onclick => '{return tryit("text");}'
                 </div>
             </div>
-        % }
-        <div class="control-group">
-            <div class="controls">
-            %= submit_button 'GET json', class => 'btn btn-primary', onclick => '{return tryit("json");}'
-            %= submit_button 'GET html', class => 'btn btn-primary', onclick => '{return tryit("text");}'
-            </div>
+        %= end
+        <pre id='request_url' style='display:none;'></pre>
+        <pre id='results' style='display:none;'></pre>
         </div>
-    %= end
-    </div>
-
-<pre id='request_url' style='display:none;'></pre>
-<pre id='results' style='display:none;'></pre>
-
 % }
-</body>
+</div>
+</div>
 
 %= javascript begin
 function tryit(request_data_type) {
