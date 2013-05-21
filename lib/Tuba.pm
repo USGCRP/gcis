@@ -63,7 +63,7 @@ sub startup {
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
       $resource->get(":$identifier")->to('#show')->name("show_$name");
-      $resource->bridge(":$identifier")->name("select_$name");
+      $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
       return $resource;
     });
 
@@ -72,7 +72,7 @@ sub startup {
 
     for my $resource (qw/
         report journal paper
-        image figure
+        image
         dataset
         model software
         instrument
@@ -83,6 +83,7 @@ sub startup {
     }
 
     $r->lookup('select_report')->resource('chapter');
+    $r->lookup('select_report')->resource('figure');
 
 
     $r->get('/' => sub {

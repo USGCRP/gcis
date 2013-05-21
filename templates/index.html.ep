@@ -51,9 +51,13 @@ POST
          </td>
          <td>
            % if (my $p = $node->parent) {
+           % my @p;
            %    while ($p) {
-             <%= $show_node->($p) %>
-             <% $p = $p->parent; %>
+           %        unshift @p, $p;
+           %        $p = $p->parent;
+           %    }
+           % for my $q (@p) {
+                 <%= $show_node->($q) %>
            %    }
            % }
            %= $show_node->($node)
