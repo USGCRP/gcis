@@ -10,7 +10,7 @@ journal
 =head1 FIELDS
 
  id (serial) - 
- short_name (character varying(64)) - 
+ identifier (character varying) - 
  title (character varying(128)) - 
  print_issn (character varying(128)) - 
  online_issn (character varying(32)) - 
@@ -26,7 +26,7 @@ journal
     Column    |          Type           |                      Modifiers                       | Storage  | Stats target | Description 
  -------------+-------------------------+------------------------------------------------------+----------+--------------+-------------
   id          | integer                 | not null default nextval('journal_id_seq'::regclass) | plain    |              | 
-  short_name  | character varying(64)   |                                                      | extended |              | 
+  identifier  | character varying       |                                                      | extended |              | 
   title       | character varying(128)  |                                                      | extended |              | 
   print_issn  | character varying(128)  |                                                      | extended |              | 
   online_issn | character varying(32)   |                                                      | extended |              | 

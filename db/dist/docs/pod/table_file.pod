@@ -10,10 +10,10 @@ file
 =head1 FIELDS
 
  id (serial) - 
- image_id (integer) - 
  file_type (character varying(45)) - 
  dir (character varying(512)) - 
  file (character varying(512)) - 
+ image (character varying) - 
 
 
 =head1 SCHEMA
@@ -22,14 +22,14 @@ file
    Column   |          Type          |                     Modifiers                     | Storage  | Stats target | Description 
  -----------+------------------------+---------------------------------------------------+----------+--------------+-------------
   id        | integer                | not null default nextval('file_id_seq'::regclass) | plain    |              | 
-  image_id  | integer                |                                                   | plain    |              | 
   file_type | character varying(45)  |                                                   | extended |              | 
   dir       | character varying(512) |                                                   | extended |              | 
   file      | character varying(512) |                                                   | extended |              | 
+  image     | character varying      |                                                   | extended |              | 
  Indexes:
      "file_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:
-     "file_ibfk_1" FOREIGN KEY (image_id) REFERENCES image(id) MATCH FULL
+     "file_image_fkey" FOREIGN KEY (image) REFERENCES image(identifier)
  Has OIDs: no
  
 

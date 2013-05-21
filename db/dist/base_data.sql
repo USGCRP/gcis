@@ -13,7 +13,7 @@ SET client_min_messages = warning;
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY journal (id, short_name, title, print_issn, online_issn, publisher, country, url, notes) FROM stdin;
+COPY journal (id, identifier, title, print_issn, online_issn, publisher, country, url, notes) FROM stdin;
 \.
 
 

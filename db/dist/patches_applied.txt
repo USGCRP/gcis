@@ -3,3 +3,4 @@
 0030_chapter.sql	cc49579bd4af28520f19ba983d0b7e04
 0040_article_shortname.sql	21f355302360ba120d278749108d06b5
 0050_identifier.sql	3205e4f5e11b37b3ec98a4c256bb65fc
+0060_journal_shortname.sql	b56c15012cc37db5bcc7e1ecb6202733

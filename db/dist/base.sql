@@ -241,7 +241,7 @@ CREATE TABLE image (
 
 CREATE TABLE journal (
     id integer NOT NULL,
-    short_name character varying(64),
+    identifier character varying,
     title character varying(128),
     print_issn character varying(128),
     online_issn character varying(32),
