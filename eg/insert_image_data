@@ -18,7 +18,7 @@ Reports->delete_objects(all => 1);
 
 # One ring to rule them all
 my $report = Report->new(
-    short_name => "nca3",
+    identifier => "nca3",
     title      => "National Climate Assessment number three",
 );
 $report->save or die $report->error;
@@ -33,7 +33,7 @@ my %row;
 while (my $row = $csv->getline($fh)) {
     @row{@$header} = @$row;
     my $ch = Chapter->new(
-        short_name => $row{q[chapter-short-name]},
+        identifier => $row{q[chapter-short-name]},
         title      => $row{q[chapter-long-name]},
         report_id  => $report->id
     );

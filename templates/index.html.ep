@@ -23,6 +23,18 @@ POST
 <div class="row-fluid">
 <div class="span6">
 %#-----------------------------------------------------------------
+% my $show_node = begin
+  % my $node = shift;
+    <% for my $piece (@{ $node->pattern->tree }) {
+    %><%= !ref $piece                  ? $piece
+        : $piece->[0] eq 'slash'       ? '/'
+        : $piece->[0] eq 'text'        ? $piece->[1]
+        : $piece->[0] eq 'placeholder' ? $placeholder_link->($piece->[1])
+        : $piece->[0] eq 'wildcard'    ? $wildcard_link->($piece->[1])
+        : $piece->[0] eq 'relaxed'     ? $relaxed_link->($piece->[1])
+        : 'other'; =%><% } %>
+% end
+
 % my $show_methods = param 'show_methods';
 % my $walk = begin
   % my ($walk, $node, $depth, $parent_pattern) = @_;
@@ -38,17 +50,13 @@ POST
              <%= end %>
          </td>
          <td>
-           % if ($parent_pattern) {
-             <%= $parent_pattern %>
+           % if (my $p = $node->parent) {
+           %    while ($p) {
+             <%= $show_node->($p) %>
+             <% $p = $p->parent; %>
+           %    }
            % }
-           <% for my $piece (@{ $node->pattern->tree }) {
-           %><%= !ref $piece                  ? $piece
-               : $piece->[0] eq 'slash'       ? '/'
-               : $piece->[0] eq 'text'        ? $piece->[1]
-               : $piece->[0] eq 'placeholder' ? $placeholder_link->($piece->[1])
-               : $piece->[0] eq 'wildcard'    ? $wildcard_link->($piece->[1])
-               : $piece->[0] eq 'relaxed'     ? $relaxed_link->($piece->[1])
-               : 'other'; =%><% } %>
+           %= $show_node->($node)
          </td>
        </tr>
    % }

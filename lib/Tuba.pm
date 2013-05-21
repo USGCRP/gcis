@@ -63,11 +63,15 @@ sub startup {
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
       $resource->get(":$identifier")->to('#show')->name("show_$name");
+      $resource->bridge(":$identifier")->name("select_$name");
       return $resource;
     });
 
+    # Routes
+    my $r = $app->routes;
+
     for my $resource (qw/
-        report chapter journal paper
+        report journal paper
         image figure
         dataset
         model software
@@ -75,15 +79,15 @@ sub startup {
         platform
         person organization role
         /) {
-        $app->routes->resource($resource);
+        $r->resource($resource);
     }
 
-    # Routes
-    my $r = $app->routes;
+    $r->lookup('select_report')->resource('chapter');
+
+
     $r->get('/' => sub {
       my $c = shift;
-      my $trying;
-      if (my $try = $c->param('try')) {
+      my $trying; if (my $try = $c->param('try')) {
           $trying = $c->app->routes->lookup($try);
       }
       $c->stash(trying => $trying);
