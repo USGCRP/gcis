@@ -94,10 +94,13 @@ sub startup {
       $c->stash(trying => $trying);
       return unless $trying;
       my @placeholders;
-      for my $n (@{ $trying->pattern->tree }) {
-          next unless @$n==2;
-          next unless $n->[0] =~ /^(placeholder|wildcard|relaxed)$/;
-          push @placeholders, $n->[1];
+      while ($trying) {
+          for my $n (@{ $trying->pattern->tree }) {
+              next unless @$n==2;
+              next unless $n->[0] =~ /^(placeholder|wildcard|relaxed)$/;
+              push @placeholders, $n->[1];
+          }
+          $trying = $trying->parent;
       }
       $c->stash(placeholders => \@placeholders);
     } => 'index');
