@@ -1,0 +1,38 @@
+
+=head1 NAME
+
+file
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ image (character varying) - 
+ file_type (character varying) - 
+ dir (character varying) - 
+ file (character varying) - 
+
+
+=head1 SCHEMA
+
+                              Table "gcis_metadata.file"
+    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------+-------------------+-----------+----------+--------------+-------------
+  identifier | character varying | not null  | extended |              | 
+  image      | character varying | not null  | extended |              | 
+  file_type  | character varying |           | extended |              | 
+  dir        | character varying |           | extended |              | 
+  file       | character varying |           | extended |              | 
+ Indexes:
+     "file_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "file_ibfk_1" FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

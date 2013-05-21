@@ -1,0 +1,62 @@
+
+=head1 NAME
+
+image
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ figure (character varying) - 
+ position (character varying) - 
+ title (character varying) - 
+ description (character varying) - 
+ attributes (character varying) - 
+ time_start (timestamp(3) without time zone) - 
+ time_end (timestamp(3) without time zone) - 
+ lat_max (character varying) - 
+ lat_min (character varying) - 
+ lon_max (character varying) - 
+ lon_min (character varying) - 
+ keywords (character varying) - 
+ usage_limits (character varying) - 
+ submission_dt (timestamp(3) without time zone) - 
+ create_dt (timestamp(3) without time zone) - 
+
+
+=head1 SCHEMA
+
+                                     Table "gcis_metadata.image"
+     Column     |              Type              | Modifiers | Storage  | Stats target | Description 
+ ---------------+--------------------------------+-----------+----------+--------------+-------------
+  identifier    | character varying              | not null  | extended |              | 
+  figure        | character varying              | not null  | extended |              | 
+  position      | character varying              |           | extended |              | 
+  title         | character varying              |           | extended |              | 
+  description   | character varying              |           | extended |              | 
+  attributes    | character varying              |           | extended |              | 
+  time_start    | timestamp(3) without time zone |           | plain    |              | 
+  time_end      | timestamp(3) without time zone |           | plain    |              | 
+  lat_max       | character varying              |           | extended |              | 
+  lat_min       | character varying              |           | extended |              | 
+  lon_max       | character varying              |           | extended |              | 
+  lon_min       | character varying              |           | extended |              | 
+  keywords      | character varying              |           | extended |              | 
+  usage_limits  | character varying              |           | extended |              | 
+  submission_dt | timestamp(3) without time zone |           | plain    |              | 
+  create_dt     | timestamp(3) without time zone |           | plain    |              | 
+ Indexes:
+     "image_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "image_ibfk_1" FOREIGN KEY (figure) REFERENCES figure(identifier) MATCH FULL
+ Referenced by:
+     TABLE "file" CONSTRAINT "file_ibfk_1" FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

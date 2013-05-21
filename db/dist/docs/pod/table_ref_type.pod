@@ -1,0 +1,32 @@
+
+=head1 NAME
+
+ref_type
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ table (character varying) - 
+
+
+=head1 SCHEMA
+
+                            Table "gcis_metadata.ref_type"
+    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------+-------------------+-----------+----------+--------------+-------------
+  identifier | character varying | not null  | extended |              | 
+  table      | character varying |           | extended |              | 
+ Indexes:
+     "ref_type_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "publication_ref" CONSTRAINT "publication_ref_ibfk_1" FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

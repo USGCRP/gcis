@@ -1,0 +1,66 @@
+
+=head1 NAME
+
+figure
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ uuid (character varying) - 
+ chapter (character varying) - 
+ title (character varying) - 
+ caption (character varying) - 
+ attributes (character varying) - 
+ time_start (timestamp(3) without time zone) - 
+ time_end (timestamp(3) without time zone) - 
+ lat_max (character varying) - 
+ lat_min (character varying) - 
+ lon_max (character varying) - 
+ lon_min (character varying) - 
+ keywords (character varying) - 
+ usage_limits (character varying) - 
+ submission_dt (timestamp(3) without time zone) - 
+ create_dt (timestamp(3) without time zone) - 
+ source_citation (character varying) - 
+ ordinal (integer) - 
+
+
+=head1 SCHEMA
+
+                                      Table "gcis_metadata.figure"
+      Column      |              Type              | Modifiers | Storage  | Stats target | Description 
+ -----------------+--------------------------------+-----------+----------+--------------+-------------
+  identifier      | character varying              | not null  | extended |              | 
+  uuid            | character varying              |           | extended |              | 
+  chapter         | character varying              |           | extended |              | 
+  title           | character varying              |           | extended |              | 
+  caption         | character varying              |           | extended |              | 
+  attributes      | character varying              |           | extended |              | 
+  time_start      | timestamp(3) without time zone |           | plain    |              | 
+  time_end        | timestamp(3) without time zone |           | plain    |              | 
+  lat_max         | character varying              |           | extended |              | 
+  lat_min         | character varying              |           | extended |              | 
+  lon_max         | character varying              |           | extended |              | 
+  lon_min         | character varying              |           | extended |              | 
+  keywords        | character varying              |           | extended |              | 
+  usage_limits    | character varying              |           | extended |              | 
+  submission_dt   | timestamp(3) without time zone |           | plain    |              | 
+  create_dt       | timestamp(3) without time zone |           | plain    |              | 
+  source_citation | character varying              |           | extended |              | 
+  ordinal         | integer                        |           | plain    |              | 
+ Indexes:
+     "figure_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "figure_ibfk_1" FOREIGN KEY (chapter) REFERENCES chapter(identifier) MATCH FULL
+ Referenced by:
+     TABLE "image" CONSTRAINT "image_ibfk_1" FOREIGN KEY (figure) REFERENCES figure(identifier) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

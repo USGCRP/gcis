@@ -1,0 +1,37 @@
+
+=head1 NAME
+
+organization
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ organization_type (character varying) - 
+ fk (character varying) - 
+
+
+=head1 SCHEMA
+
+                                                     Table "gcis_metadata.organization"
+       Column       |       Type        |                         Modifiers                         | Storage  | Stats target | Description 
+ -------------------+-------------------+-----------------------------------------------------------+----------+--------------+-------------
+  id                | integer           | not null default nextval('organization_id_seq'::regclass) | plain    |              | 
+  organization_type | character varying | not null                                                  | extended |              | 
+  fk                | character varying | not null                                                  | extended |              | 
+ Indexes:
+     "organization_pkey" PRIMARY KEY, btree (id)
+ Foreign-key constraints:
+     "organization_ibfk_1" FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) MATCH FULL
+ Referenced by:
+     TABLE "contributor" CONSTRAINT "contributor_ibfk_2" FOREIGN KEY (organization_id) REFERENCES organization(id) MATCH FULL
+     TABLE "dataset_organization" CONSTRAINT "dataset_organization_ibfk_2" FOREIGN KEY (organization_id) REFERENCES organization(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+

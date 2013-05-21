@@ -1,0 +1,40 @@
+
+=head1 NAME
+
+person
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ id (serial) - 
+ name (character varying) - 
+ address (character varying) - 
+ phone (character varying) - 
+ email (character varying) - 
+ url (character varying) - 
+
+
+=head1 SCHEMA
+
+                                                Table "gcis_metadata.person"
+  Column  |       Type        |                      Modifiers                      | Storage  | Stats target | Description 
+ ---------+-------------------+-----------------------------------------------------+----------+--------------+-------------
+  id      | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | 
+  name    | character varying |                                                     | extended |              | 
+  address | character varying |                                                     | extended |              | 
+  phone   | character varying |                                                     | extended |              | 
+  email   | character varying |                                                     | extended |              | 
+  url     | character varying |                                                     | extended |              | 
+ Indexes:
+     "person_pkey" PRIMARY KEY, btree (id)
+ Referenced by:
+     TABLE "contributor" CONSTRAINT "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL
+ Has OIDs: no
+ 
+
+=cut
+
+
