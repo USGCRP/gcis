@@ -95,5 +95,22 @@ sub list {
     );
 }
 
+=head1 show
+
+Show metadata about an image.
+
+=cut
+
+sub show {
+    my $c = shift;
+    my $identifier = $c->stash('image_identifier');
+    my $meta = Image->meta;
+    my $object = Image->new(identifier => $identifier)->load(speculative => 1) or return $c->render_not_found;
+    $c->respond_to(
+        json => sub { shift->render(json => $object->as_tree) },
+        html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }
+    );
+}
+
 1;
 

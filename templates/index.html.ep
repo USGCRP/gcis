@@ -1,37 +1,66 @@
+<% my $placeholder_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+<% my $wildcard_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+<% my $relaxed_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+
 % layout 'default';
 <h2><%= link_to 'index' => begin %>GCIS API Reference<%= end %></h2>
 <h5>version <%= $Tuba::VERSION %></h5>
 
+% my $show_method = ( (param 'show_method') || 'GET');
+<ul class='nav nav-tabs'>
+<li <%== $show_method eq 'GET' ? q[class="active"] : "" %>>
+%= link_to $self->req->url->clone->query(show_method => 'GET') => begin
+GET
+%= end
+</li>
+<li <%== $show_method eq 'POST' ? q[class="active"] : "" %>>
+%= link_to $self->req->url->clone->query(show_method => 'POST') => begin
+POST
+%= end
+</li>
+</ul>
+
 <div class="row-fluid">
 <div class="span6">
 %#-----------------------------------------------------------------
+% my $show_methods = param 'show_methods';
 % my $walk = begin
-  % my ($walk, $node, $depth) = @_;
-  
- % unless ($node->name =~ /^(index|try|calculate_url)$/) {
-     <tr <%== $trying && $trying->name eq $node->name ? q[class="info"] : '' %>>
-        <td> <%= link_to url_for->query(try => $node->name) => begin %><%= $node->name %><%= end %> </td>
+  % my ($walk, $node, $depth, $parent_pattern) = @_;
+  % return if $node->name =~ /^(index|try|calculate_url)$/;
+  % my $pattern = $node->pattern->pattern || '/';
+  % $pattern = "$parent_pattern/$pattern" if $parent_pattern;
+  % my @via = @{ $node->via || [] };
+  % if ($node->is_endpoint && grep /$show_method/, @via) {
+      <tr <%== $trying && $trying->name eq $node->name ? q[class="info"] : '' %>>
+         <td>
+             <%= link_to $self->req->url->clone->query([try => $node->name]) => begin %>
+             <%= uc(join ',', @via) %>
+             <%= end %>
+         </td>
+         <td>
+           % if ($parent_pattern) {
+             <%= $parent_pattern %>
+           % }
+           <% for my $piece (@{ $node->pattern->tree }) {
+           %><%= !ref $piece                  ? $piece
+               : $piece->[0] eq 'slash'       ? '/'
+               : $piece->[0] eq 'text'        ? $piece->[1]
+               : $piece->[0] eq 'placeholder' ? $placeholder_link->($piece->[1])
+               : $piece->[0] eq 'wildcard'    ? $wildcard_link->($piece->[1])
+               : $piece->[0] eq 'relaxed'     ? $relaxed_link->($piece->[1])
+               : 'other'; =%><% } %>
+         </td>
+       </tr>
+   % }
 
-        <td> <%= uc(join ',', @{$node->via || []}) || '*' %> </td>
-
-        <td>
-          % my $pattern = $node->pattern->pattern || '/';
-          % $pattern = "+$pattern" if $depth;
-          <%= '&nbsp;' x $depth %><%= $pattern %>
-        </td>
-
-      </tr>
-  % }
-
-  % $depth++;
-  %= $walk->($walk, $_, $depth) for @{$node->children};
-  % $depth--;
+   % $depth++;
+   %= $walk->($walk, $_, $depth, $pattern) for @{$node->children};
+   % $depth--;
 % end
 %#-----------------------------------------------------------------
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-condensed table-striped'>
   <tr>
-    <th>Route</th>
     <th>Methods</th>
     <th>Path</th>
   </tr>

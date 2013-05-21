@@ -1,11 +1,11 @@
 =head1 NAME
 
-Tuba::Chapter : Controller class for chapters.
+Tuba::Report : Controller class for chapters.
 
 =cut
 
 package Tuba::Chapter;
-use Mojo::Base qw/Mojolicious::Controller/;
+use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
@@ -17,10 +17,10 @@ sub list {
     );
 }
 
-sub view {
+sub show {
     my $c = shift;
-    my $short_name = $c->stash('short_name');
-    my $chapter = Chapter->new(short_name => $short_name)->load;
+    my $identifier = $c->stash('chapter_identifier');
+    my $chapter = Chapter->new(identifier => $identifier)->load;
     $c->respond_to(
         json => sub { shift->render_json($chapter->as_tree) },
         html => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) }

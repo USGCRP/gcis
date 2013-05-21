@@ -55,6 +55,29 @@ sub startup {
         push @{$c->req->url->base->path}, shift @{$c->req->url->path} if @{ $c->req->url->path };
     }) if $app->mode eq 'production';
 
+    # Shortcuts (see Mojolicious::Guides::Routing)
+    $app->routes->add_shortcut(resource => sub {
+      my ($r, $name) = @_;
+      my $resource = $r->route("/$name")->to("$name#");
+      $resource->post->to('#create')->name("create_$name");
+      $resource->get->to('#list')->name("list_$name");
+      my $identifier = join '_', $name, 'identifier';
+      $resource->get(":$identifier")->to('#show')->name("show_$name");
+      return $resource;
+    });
+
+    for my $resource (qw/
+        report chapter journal paper
+        image figure
+        dataset
+        model software
+        instrument
+        platform
+        person organization role
+        /) {
+        $app->routes->resource($resource);
+    }
+
     # Routes
     my $r = $app->routes;
     $r->get('/' => sub {
@@ -79,52 +102,47 @@ sub startup {
         my $for = $c->param('_route_name');
         my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
         my $params = $c->req->params->to_hash;
-        use Data::Dumper;
-        $c->app->log->warn("params : ".Dumper($params));
         delete $params->{_route_name};
-        my $rendered = $route->pattern->render($params);
-        $c->app->log->warn("rendered : $rendered");
-        $c->render_json({path => $rendered});
+        my $got = $c->url_for($for, $params);
+        $c->render(json => { path => $got->path });
     } => 'calculate_url');
 
-    $r->get( '/image/met/:image_id')->to('Image#met')->name('image_met');
-    $r->post( '/image_setmet' )->to('Image#setmet')->name('image_setmet');
-    $r->get( '/image_checkmet/:token' )->to('Image#checkmet')->name('image_checkmet');
-    $r->get( '/image/:image_id')->to('Image#display')->name("image");
-    $r->get( '/image' )->to('Image#list')->name("image_list");
+#    $r->get( '/image/met/:image_identifier')->to('Image#met')->name('image_met');
+#    $r->post( '/image_setmet' )->to('Image#setmet')->name('image_setmet');
+#    $r->get( '/image_checkmet/:token' )->to('Image#checkmet')->name('image_checkmet');
+#    $r->get( '/image/:image_identifier')->to('Image#display')->name("image");
+#    $r->get( '/image' )->to('Image#list')->name("image_list");
 
-    $r->get( '/chapter' )->to('Chapter#list')->name("chapter_list");
-    $r->get( '/chapter/:short_name' )->to('Chapter#view')->name("chapter");
-    $r->get( '/chapter/:chapter_name/figure' )->to('Figure#list')->name("chapter_figures");
+#    $r->get( '/chapter' )->to('Chapter#list')->name("chapter_list");
+#    $r->get( '/chapter/:identifier' )->to('Chapter#view')->name("chapter");
+#    $r->get( '/chapter/:chapter_identifier/figure' )->to('Figure#list')->name("chapter_figures");
 
-    $r->get( '/figure' )->to('Figure#list')->name("figure_list");
+#    $r->get( '/figure' )->to('Figure#list')->name("figure_list");
 
-    $r->get( '/image' )->to('Image#list')->name("image_list");
-
-    $r->get( '/report/:report_id/chapter/:chapter_id/figure/:figure_id' => { report_id => 'nca2013' } => \&demo => 'figure');
-    $r->get( '/report/:report_id/figure/:figure_token' => { report_id => 'nca2013' } => \&demo => 'figure_token');
-    $r->get( '/activity/:activity_type/report/:report_id/:entity_type/:entity_id' => \&demo => 'activity');
-    $r->get( '/algorithm/:algorithm_name/abbreviation' => \&demo => 'algorithm');
-    $r->get( '/chapter/:chapter_id/key-message/:key_message_id' => \&demo => 'key_message');
-    $r->get( '/country/:country_abbreviation' => \&demo => 'country');
-    $r->get( '/dataset/:dataset_id' => \&demo => 'dataset');
-    $r->get( '/instrument/:instrument_name' => \&demo => 'instrument');
-    $r->get( '/journal/:journal_abbreviation' => \&demo => 'journal');
-    $r->get( '/model/:model_abbreviation' => \&demo => 'model');
-    $r->get( '/organization/:organization_name' => \&demo => 'organization');
-    $r->get( '/paper/:paper_id' => \&demo => 'paper');
-    $r->get( '/person/:full_name' => \&demo => 'person');
-    $r->get( '/platform/:platform_name/abbreviation' => \&demo => 'platform');
-    $r->get( '/project/:project_abbreviation' => \&demo => 'project');
-    $r->get( '/publication/:publication_id' => \&demo => 'publication');
-    $r->get( '/publisher/:publisher_name' => \&demo => 'publisher');
-    $r->get( '/report/:report_id' => \&demo => 'report');
-    $r->get( '/report/:report_id/chapter/:chapter_id' => \&demo => 'report_chapter');
-    $r->get( '/report/:report_id/chapter/:chapter_id/traceable-account/:traceable_account_id' => \&demo => 'traceable_account');
-    $r->get( '/report/:report_id/committee/:committee_abbreviations' => \&demo => 'committee');;
-    $r->get( '/report/:report_id/key-finding/:key_finding_id' => \&demo => 'key_finding');
-    $r->get( '/role/:role_name' => \&demo => 'role');
-    $r->get( '/software/:software_name' => \&demo => 'software');
+#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier/figure/:figure_identifier' => { report_identifier => 'nca2013' } => \&demo => 'figure');
+#    $r->get( '/report/:report_identifier/figure/:figure_token' => { report_identifier => 'nca2013' } => \&demo => 'figure_token');
+#    $r->get( '/activity/:activity_type/report/:report_identifier/:entity_type/:entity_identifier' => \&demo => 'activity');
+#    $r->get( '/algorithm/:algorithm_identifier/abbreviation' => \&demo => 'algorithm');
+#    $r->get( '/chapter/:chapter_identifier/key-message/:key_message_identifier' => \&demo => 'key_message');
+#    $r->get( '/country/:country_identifier' => \&demo => 'country');
+#    $r->get( '/dataset/:dataset_identifier' => \&demo => 'dataset');
+#    $r->get( '/instrument/:instrument_identifier' => \&demo => 'instrument');
+#    $r->get( '/journal/:journal_identifier' => \&demo => 'journal');
+#    $r->get( '/model/:model_identifier' => \&demo => 'model');
+#    $r->get( '/organization/:organization_identifier' => \&demo => 'organization');
+#    $r->get( '/paper/:paper_identifier' => \&demo => 'paper');
+#    $r->get( '/person/:person_identifier' => \&demo => 'person');
+#    $r->get( '/platform/:platform_identifier/abbreviation' => \&demo => 'platform');
+#    $r->get( '/project/:project_identifier' => \&demo => 'project');
+#    $r->get( '/publication/:publication_identifier' => \&demo => 'publication');
+#    $r->get( '/publisher/:publisher_identifier' => \&demo => 'publisher');
+#    $r->get( '/report/:report_identifier' => \&demo => 'report');
+#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier' => \&demo => 'report_chapter');
+#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier/traceable-account/:traceable_account_identifier' => \&demo => 'traceable_account');
+#    $r->get( '/report/:report_identifier/committee/:committee_identifier' => \&demo => 'committee');;
+#    $r->get( '/report/:report_identifier/key-finding/:keyfinding_identifier' => \&demo => 'keyfinding');
+#    $r->get( '/role/:role_identifier' => \&demo => 'role');
+#    $r->get( '/software/:software_identifier' => \&demo => 'software');
 
     $app->routes->get('/debug') if $ENV{TUBA_DEBUG};
 }
