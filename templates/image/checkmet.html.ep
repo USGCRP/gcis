@@ -1,10 +1,14 @@
 % layout 'default';
 
-ATRAC xml 
-<pre>
-%= $xml
-</pre>
+% for my $file (@$uploads) {
+    <pre>
+    <b>xml</b>
+    %= $file->{xml}
+    </pre>
 
-<pre>
-%= dumper($met)
-</pre>
+    <pre>
+    <b>met</b>
+    %= dumper($file->{met})
+    </pre>
+% }
+

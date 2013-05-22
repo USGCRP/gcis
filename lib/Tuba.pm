@@ -43,6 +43,13 @@ sub startup {
         $base =~ s[/$][];
         return $base;
     } );
+    $app->helper(obj_link => sub {
+            my $c = shift;
+            my $obj = shift;
+            return "" unless defined($obj);
+            return $c->link_to($obj->stringify, $obj->uri($c) );
+        } );
+
 
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -71,12 +78,12 @@ sub startup {
     my $r = $app->routes;
 
     # API
-    $r->resource('publication');
     $r->resource('report');
     $r->lookup('select_report')->resource('chapter');
     $r->lookup('select_report')->resource('figure');
     $r->lookup('select_report')->resource('key-message');
     $r->lookup('select_report')->resource('traceable-account');
+    $r->resource('publication');
     $r->resource($_) for qw/journal paper/;
     $r->resource('image');
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');

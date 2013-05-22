@@ -76,10 +76,15 @@ sub init {
     my $loader = Rose::DB::Object::Loader->new(
         class_prefix => 'Tuba::DB::Object',
         db_schema => $db_schema,
-        base_classes => [qw/Rose::DB::Object Rose::DB::Object::Helpers/ ]
+        base_classes => [qw/Rose::DB::Object Rose::DB::Object::Helpers Tuba::DB::Object/ ]
     );
 
     my @made = $loader->make_classes(db_class => 'Tuba::DB' );
+    for my $made (@made) {
+        my $mixin = $made;
+        $mixin =~ s/Tuba::DB/Tuba::DB::Mixin/;
+        eval " require $mixin";
+    }
     die "Could not make classes" unless @made;
     for (@made) {
         if ($_->isa("Rose::DB::Object::Manager")) {

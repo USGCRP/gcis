@@ -1,8 +1,8 @@
 Successfully uploaded <b><%= $name %></b> (<%= $size %> bytes)
-for chapter <b><%= $chapter %></b>, figure <b><%= $figure %></b>, image <b><%= $image %></b>.
+for chapter <b><%= $chapter %></b>, figure <b><%= $figure %></b>, image <b><%= $image->identifier %></b>.
 
 <br>
 <br>
-%= link_to 'image_checkmet', { token => $token } => begin
+%= link_to 'image_checkmet', { image_identifier => $image_identifier } => begin
 View upload
 %= end

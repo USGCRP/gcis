@@ -7,24 +7,43 @@
 </h2>
 </center>
 
+% my $base = $self->req->url->to_abs;
+% $base =~ s/.html$$//;
 <pre>
-Unique keys : <%= join ', ', $meta->primary_key, $meta->unique_keys %>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
-    % for my $c ($meta->columns) {
-        <th><%= $c %></th>
+    <th><%= $meta->primary_key %></th>
+    % for my $c ($meta->relationships) {
+        <th><%= $c->name %></th>
     % }
 </tr>
 % for my $o (@$objects) {
+% my $pk = $meta->primary_key;
     <tr>
-    % for my $c ($meta->columns) {
-         <td>
-             % my $accessor = $c->accessor_method_name;
-             %= $o->can($accessor) ? $o->$accessor : 'error';
-         </td>
-    % }
+        <td>
+            %= link_to "show_".$meta->table, { $meta->table.'_'.$pk => $o->$pk } => begin
+            <%= $o->$pk %>
+            %= end
+        </td>
+        % for my $r ( @{ $meta->relationships } ) {
+        % my $method = $r->name;
+        % my $got = $o->$method;
+        <td>
+        % if (ref($got) eq 'ARRAY') {
+        %    for (@$got) {
+        %= obj_link($_);
+        %    }
+        % } else {
+        %= obj_link($got);
+        % }
+        </td>
+        % }
     </tr>
 % }
 </table>
