@@ -57,3 +57,10 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
 }
 
 
+# Images
+# my $dir = dir '/var/local/projects/tuba/data/images';
+# for my $file ($dir->children) {
+#     my $f = Tuba::DB::Object::File->new(file => $file->basename);
+#         $f->save or die $f->error;
+#  }
+#
