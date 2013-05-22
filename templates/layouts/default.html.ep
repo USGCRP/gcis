@@ -8,13 +8,18 @@ String.prototype.htmlEscape = function() {
      return $('<div/>').text(this.toString()).html();
 };
 %= end
-
 <title>api browser</title>
 </head>
     <body>
         <div class="navbar">
             <div class="navbar-inner">
                 <%= link_to 'index', class => 'brand' => begin %>api browser<%= end %>
+                <ul class="nav">
+                    <li><%= link_to 'list_report'  => begin %>report<%= end %></li>
+                    <li><%= link_to 'list_chapter' => { report_identifier => "nca2013" } => begin %>chapter<%= end %></li>
+                    <li><%= link_to 'list_figure'  => { report_identifier => "nca2013" } => begin %>figure<%= end %></li>
+                    <li><%= link_to 'list_image'   => { report_identifier => "nca2013" } => begin %>image<%= end %></li>
+                </ul>
             </div>
         </div>
         <div class='container'>

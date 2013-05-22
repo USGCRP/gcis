@@ -7,7 +7,7 @@ use warnings;
 sub stringify {
     my $s = shift;
     my $pk = $s->meta->primary_key;
-    return $s->$pk;
+    return $s->meta->table.' : '.$s->$pk;
 }
 
 sub uri {
