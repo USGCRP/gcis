@@ -20,7 +20,11 @@ sub list {
 sub show {
     my $c = shift;
     my $identifier = $c->stash('chapter_identifier');
-    my $chapter = Chapter->new(identifier => $identifier)->load;
+    my $chapter =
+      Chapter->new( identifier => $identifier )
+      ->load( speculative => 1, with => [qw/figure report_obj/] )
+      or return $c->render_not_found;
+
     $c->respond_to(
         json => sub { shift->render_json($chapter->as_tree) },
         html => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) }

@@ -10,7 +10,13 @@
 <body>
     <h1>ATRAC Image Metadata Upload Form</h1>
     <div class="content">
-        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="http://gcis-dev-front.joss.ucar.edu/api/image_setmet">
+        <form class="form-horizontal" method="POST" enctype="multipart/form-data" action="" onsubmit="alert('HI')">
+        <div class="control-group">
+            <label class="control-label" for="chapter">Report</label>
+            <div class="controls"> <select name='report' id="report"></select>
+            </div>
+        </div>
+
         <div class="control-group">
             <label class="control-label" for="chapter">Chapter</label>
             <div class="controls"> <select name='chapter' id="chapter">
@@ -41,22 +47,43 @@
     </form>
     </div>
     <script type='text/javascript'>
-    var tuba = 'http://gcis-dev-front.joss.ucar.edu/api';
+    var tuba = 'http://localhost:3000';
+
     function populate_chapter() {
         $.ajax({
                 type     : "GET",
-                url      : tuba + '/chapter',
+                url      : tuba + '/report/' + $('#report').val() + '/chapter',
                 dataType : 'json',
                 headers  : { Accept : "application/json" },
-                error    : function(e,z) { console.log('error',e,z); alert('error') },
+                error    : function(e,z) { console.log('error',e,z); alert('error getting chapters (see console)') },
                 }
               ).success(function(results){
                   $.each(results, function(i,result){
                       $('#chapter').append(
-                          '<option value="' + result.short_name + '">' + result.short_name + '</option>');
+                          '<option value="' + result.identifier + '">' + result.identifier + '</option>');
                   })
                });
     }
+
+    function populate_report() {
+        $.ajax({
+                type     : "GET",
+                url      : tuba + '/report',
+                dataType : 'json',
+                headers  : { Accept : "application/json" },
+                error    : function(e,z) { console.log('error',e,z); alert('error getting report (see console)') },
+                }
+              ).success(function(results){
+                  $.each(results, function(i,result){
+                      $('#report').append(
+                          '<option value="' + result.identifier + '" selected>' + result.identifier + '</option>');
+                  });
+                  populate_chapter();
+                }
+                );
+    }
+
+
     $(document).ready(function() {
             $(function() {
                 $.ajaxSetup({
@@ -79,7 +106,7 @@
                     }
                 });
             });
-            populate_chapter();
+            populate_report();
     });
     </script>
 </body>

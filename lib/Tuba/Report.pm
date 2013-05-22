@@ -22,7 +22,11 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
     my $meta = Report->meta;
-    my $object = Report->new(identifier => $identifier)->load(speculative => 1) or return $c->render_not_found;
+    my $object =
+      Report->new( identifier => $identifier )
+      ->load( speculative => 1, with => [qw/chapter/] )
+      or return $c->render_not_found;
+    $c->stash(object => $object);
     $c->respond_to(
         json => sub { shift->render(json => $object->as_tree) },
         html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }

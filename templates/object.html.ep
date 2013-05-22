@@ -11,12 +11,35 @@
 Unique keys : <%= join ', ', $meta->primary_key, $meta->unique_keys %>
 </pre>
 
+% my $dumplist = begin
+% my $k = shift;
+% my $list = shift;
+% for my $row (@$list) {
+%= link_to "show_$k", { "$k\_identifier" => $row->{identifier} } => begin
+%= $row->{identifier}
+%= end
+% }
+% end
+
+% my $dumphash = begin
+% my $k = shift;
+% my $h = shift;
+% $k =~ s/_obj//;
+%= link_to "show_$k", { "$k\_identifier" => $h->{identifier} } => begin
+%= $h->{identifier}
+%= end
+% end
+
+% my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
-% for my $c ($meta->columns) {
-% my $accessor = $c->accessor_method_name;
+% for my $k (keys %$tree) {
     <tr>
-        <td><%= $accessor %></td>
-        <td><%= $object->$accessor %></td>
+        <td><%= $k %></td>
+        <td><%= ref($tree->{$k}) eq 'ARRAY' ? $dumplist->($k,$tree->{$k})
+              : ref($tree->{$k}) eq 'HASH'  ? $dumphash->($k,$tree->{$k})
+              : ref($tree->{$k})            ? dumper($tree->{$k})
+              : $tree->{$k} %>
+        </td>
     </tr>
 % }
 </table>
