@@ -62,30 +62,30 @@ sub startup {
       $resource->post->to('#create')->name("create_$name");
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
+      $identifier =~ s/-/_/g;
       $resource->get(":$identifier")->to('#show')->name("show_$name");
       $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
       return $resource;
     });
 
-    # Routes
     my $r = $app->routes;
 
-    for my $resource (qw/
-        report journal paper
-        image
-        dataset
-        model software
-        instrument
-        platform
-        person organization role
-        /) {
-        $r->resource($resource);
-    }
-
+    # API
+    $r->resource('publication');
+    $r->resource('report');
     $r->lookup('select_report')->resource('chapter');
     $r->lookup('select_report')->resource('figure');
+    $r->lookup('select_report')->resource('key-message');
+    $r->lookup('select_report')->resource('traceable-account');
+    $r->resource($_) for qw/journal paper/;
+    $r->resource('image');
+    $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
+    $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+    $r->resource($_) for qw/dataset model software algorithm activity
+                            instrument platform
+                            person role organization country/;
 
-
+    # Tuba-specific routes
     $r->get('/' => sub {
       my $c = shift;
       my $trying; if (my $try = $c->param('try')) {
@@ -114,43 +114,6 @@ sub startup {
         my $got = $c->url_for($for, $params);
         $c->render(json => { path => $got->path });
     } => 'calculate_url');
-
-#    $r->get( '/image/met/:image_identifier')->to('Image#met')->name('image_met');
-#    $r->post( '/image_setmet' )->to('Image#setmet')->name('image_setmet');
-#    $r->get( '/image_checkmet/:token' )->to('Image#checkmet')->name('image_checkmet');
-#    $r->get( '/image/:image_identifier')->to('Image#display')->name("image");
-#    $r->get( '/image' )->to('Image#list')->name("image_list");
-
-#    $r->get( '/chapter' )->to('Chapter#list')->name("chapter_list");
-#    $r->get( '/chapter/:identifier' )->to('Chapter#view')->name("chapter");
-#    $r->get( '/chapter/:chapter_identifier/figure' )->to('Figure#list')->name("chapter_figures");
-
-#    $r->get( '/figure' )->to('Figure#list')->name("figure_list");
-
-#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier/figure/:figure_identifier' => { report_identifier => 'nca2013' } => \&demo => 'figure');
-#    $r->get( '/report/:report_identifier/figure/:figure_token' => { report_identifier => 'nca2013' } => \&demo => 'figure_token');
-#    $r->get( '/activity/:activity_type/report/:report_identifier/:entity_type/:entity_identifier' => \&demo => 'activity');
-#    $r->get( '/algorithm/:algorithm_identifier/abbreviation' => \&demo => 'algorithm');
-#    $r->get( '/chapter/:chapter_identifier/key-message/:key_message_identifier' => \&demo => 'key_message');
-#    $r->get( '/country/:country_identifier' => \&demo => 'country');
-#    $r->get( '/dataset/:dataset_identifier' => \&demo => 'dataset');
-#    $r->get( '/instrument/:instrument_identifier' => \&demo => 'instrument');
-#    $r->get( '/journal/:journal_identifier' => \&demo => 'journal');
-#    $r->get( '/model/:model_identifier' => \&demo => 'model');
-#    $r->get( '/organization/:organization_identifier' => \&demo => 'organization');
-#    $r->get( '/paper/:paper_identifier' => \&demo => 'paper');
-#    $r->get( '/person/:person_identifier' => \&demo => 'person');
-#    $r->get( '/platform/:platform_identifier/abbreviation' => \&demo => 'platform');
-#    $r->get( '/project/:project_identifier' => \&demo => 'project');
-#    $r->get( '/publication/:publication_identifier' => \&demo => 'publication');
-#    $r->get( '/publisher/:publisher_identifier' => \&demo => 'publisher');
-#    $r->get( '/report/:report_identifier' => \&demo => 'report');
-#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier' => \&demo => 'report_chapter');
-#    $r->get( '/report/:report_identifier/chapter/:chapter_identifier/traceable-account/:traceable_account_identifier' => \&demo => 'traceable_account');
-#    $r->get( '/report/:report_identifier/committee/:committee_identifier' => \&demo => 'committee');;
-#    $r->get( '/report/:report_identifier/key-finding/:keyfinding_identifier' => \&demo => 'keyfinding');
-#    $r->get( '/role/:role_identifier' => \&demo => 'role');
-#    $r->get( '/software/:software_identifier' => \&demo => 'software');
 
     $app->routes->get('/debug') if $ENV{TUBA_DEBUG};
 }

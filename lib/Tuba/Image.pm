@@ -20,21 +20,6 @@ Get a list of images.
 
 =cut
 
-=head2 met
-
-=cut
-
-sub met {
-    my $c = shift;
-    $c->respond_to(json => sub { shift->render_json({ todo => 'todo' }) }, html => sub { shift->render_text("todo")});
-}
-
-=head2 display
-
-=cut
-
-sub display { }
-
 =head2 setmet
 
 Upload metadata for this image.
