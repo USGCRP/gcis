@@ -47,7 +47,10 @@ sub startup {
             my $c = shift;
             my $obj = shift;
             return "" unless defined($obj);
-            return $c->link_to($obj->stringify, $obj->uri($c) );
+            my $val = $obj->stringify;
+            my $uri = $obj->uri($c);
+            return $val unless $uri;
+            return $c->link_to($val, $uri );
         } );
 
 

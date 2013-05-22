@@ -112,7 +112,6 @@ sub show {
       ->load( speculative => 1, with => [qw/figure_obj file/] )
       or return $c->render_not_found;
     $c->stash(object => $object);
-    $c->stash(report_identifier => $object->figure_obj->chapter_obj->report_obj->identifier);
     $c->respond_to(
         json => sub { shift->render(json => $object->as_tree) },
         html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }

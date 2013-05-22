@@ -38,14 +38,32 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 
 % my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
-% for my $k (keys %$tree) {
+
+% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% my $k = $col->accessor_method_name;
+% my $val = $object->$k;
     <tr>
         <td><%= $k %></td>
-        <td><%= ref($tree->{$k}) eq 'ARRAY' ? $dumplist->($k,$tree->{$k})
-              : ref($tree->{$k}) eq 'HASH'  ? $dumphash->($k,$tree->{$k})
-              : ref($tree->{$k})            ? dumper($tree->{$k})
-              : $tree->{$k} %>
-        </td>
+        <td><%= $val %></td>
     </tr>
 % }
-</table>
+
+
+% for my $rel ($meta->relationships) {
+% my $method = $rel->name;
+<tr>
+<td><%= $method %></td>
+<td>
+% my $got = $object->$method;
+% if (ref($got) eq 'ARRAY') {
+%    for (@$got) {
+%= obj_link($_);
+%    }
+% } else {
+%= obj_link($got);
+% }
+</td>
+
+</tr>
+% }
+
