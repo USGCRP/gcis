@@ -9,12 +9,12 @@
 % my $show_method = ( (param 'show_method') || 'GET');
 <ul class='nav nav-tabs'>
 <li <%== $show_method eq 'GET' ? q[class="active"] : "" %>>
-%= link_to $self->req->url->clone->query(show_method => 'GET') => begin
+%= link_to url_for('current')->query(show_method => 'GET') => begin
 GET
 %= end
 </li>
 <li <%== $show_method eq 'POST' ? q[class="active"] : "" %>>
-%= link_to $self->req->url->clone->query(show_method => 'POST') => begin
+%= link_to url_for('current')->query(show_method => 'POST') => begin
 POST
 %= end
 </li>
@@ -45,7 +45,7 @@ POST
   % if ($node->is_endpoint && grep /$show_method/, @via) {
       <tr <%== $trying && $trying->name eq $node->name ? q[class="info"] : '' %>>
          <td>
-             <%= link_to $self->req->url->clone->query([try => $node->name]) => begin %>
+             <%= link_to url_for('current')->query([try => $node->name]) => begin %>
              <%= uc(join ',', @via) %>
              <%= end %>
          </td>
@@ -113,7 +113,7 @@ function tryit(request_data_type) {
     $.post('<%= url_for('calculate_url') %>', $('#theform').serialize(),
         function(data) {
     }).done(function(data) {
-         var request_url = '<%= base %>' + data.path;
+         var request_url = data.path;
          $('#request_url').html('GET <a href="' + request_url.htmlEscape() + '">' + request_url.htmlEscape() + '</a>');
          if (request_data_type == 'json') {
             try_get_json(request_url);
