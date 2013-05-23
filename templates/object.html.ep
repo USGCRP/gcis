@@ -7,7 +7,7 @@
 </h2>
 </center>
 
-% my $base = $self->req->url->to_abs;
+% my $base = url_for('current')->to_abs;
 % $base =~ s/.html$//;
 <pre>
 URI  : <%= $self->req->url %>

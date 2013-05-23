@@ -7,7 +7,7 @@
 </h2>
 </center>
 
-% my $base = $self->req->url->to_abs;
+% my $base = url_for('current')->to_abs;
 % $base =~ s/.html$$//;
 <pre>
 JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
