@@ -47,7 +47,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
         <td>
         <% for my $f ($o->file) { %>
         %= link_to 'show_file', { file_identifier => $f->identifier } => begin
-            <img width="100px" height="100px" src='img/<%= $f->file %>' />
+            <img width="100px" height="100px" src='<%= base %>/img/<%= $f->file %>' />
         %= end
         <% } %>
         </td>
