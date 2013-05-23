@@ -66,5 +66,16 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 
 </tr>
 % }
-</table>
 
+<tr><td>File(s)</td>
+<td>
+% my %done;
+% for my $image ($object->image) {
+%  for my $file ($image->file) {
+%   unless ($done{$file->file}++) {
+<img width="600" height="600" style='border:1px solid #aaa;' src='<%= base %>/img/<%= $file->file %>' />
+% }
+% }
+% }
+</td></tr>
+</table>
