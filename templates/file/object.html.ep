@@ -68,7 +68,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % }
 </table>
 
-%= link_to base().'/img/'.$object->file => begin
+%= link_to '/img/'.$object->file => begin
 <img width="600" height="600" style='border:1px solid #aaa;' src='<%= base %>/img/<%= $object->file %>' />
 %= end
 
