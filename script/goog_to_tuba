@@ -49,6 +49,7 @@ my $image_map = $j->decode(scalar file($map)->slurp);
 #}
 
 my $file_seq = 1;
+my $image_seq = 1;
 
 # Figures
 FIGURES :
@@ -59,7 +60,8 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
     $figure_identifier =~ s[/figure/][] or next;
     next if $figure_identifier =~ m[/];
     my $image_identifier = $row->[7];
-    $image_identifier =~ s[/image/][] or next;
+    $image_identifier ||= 'missing_uuid'.($image_seq++);
+    $image_identifier =~ s[/image/][];
     my $figure = Figure->new(identifier => $figure_identifier);
     $figure->load(speculative => 1);
     $figure->save;
