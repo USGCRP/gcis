@@ -57,8 +57,11 @@ my %figure_number_to_id;  #
 my $last_chapter_number;
 for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
     my $figure_identifier = $row->[6] or next;
-    $figure_identifier =~ s[/figure/][] or next;
-    next if $figure_identifier =~ m[/];
+    $figure_identifier =~ s[/figure/][] or do { warn " no figure identifier\n"; next; };
+    if ($figure_identifier =~ m[/]) {
+        warn "skipping $figure_identifier\n";
+        next; 
+    }
     my $image_identifier = $row->[7];
     $image_identifier ||= 'missing_uuid'.($image_seq++);
     $image_identifier =~ s[/image/][];
@@ -82,20 +85,20 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
         # Now look for 'ordinal'.
         my ($ordinal) = $row->[5] =~ /$chapter_number\.(\d+)/;
         if ($ordinal) {
-            # warn "found ordinal $chapter_number.$ordinal for $figure_identifier";
+            # say "found ordinal $chapter_number.$ordinal for $figure_identifier";
         } else {
-            warn "could not find ordinal for chapter $chapter_number in $row->[5]";
+            say "could not find ordinal for chapter $chapter_number in $row->[5]";
             next;
         }
         $figure->ordinal($ordinal);
         # Now look for a file.  The first image for this figure with no file gets this one.
         my $file_uri = sprintf( "<http://data.globalchange.gov/report/nca2013/chapter/%d/figure/%d>", $chapter_number, $ordinal );
         if (my $filename = $image_map->{$file_uri}) {
-            warn "found file $filename for figure $figure_identifier";
+            say "found file $filename for figure $figure_identifier";
             my $file = File->new(identifier => $file_seq++, image => $image->identifier, file => $filename );
             $file->save;
         } else {
-            # warn "no file for $file_uri";
+            # say "no file for $file_uri";
         }
 
     }
