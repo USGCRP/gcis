@@ -1,0 +1,75 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= $object->stringify
+</h2>
+</center>
+
+% my $base = $self->req->url->to_abs;
+% $base =~ s/.html$//;
+<pre>
+URI  : <%= $self->req->url %>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+% my $dumplist = begin
+% my $k = shift;
+% my $list = shift;
+% for my $row (@$list) {
+%= link_to "show_$k", { "$k\_identifier" => $row->{identifier} } => begin
+%= $row->{identifier}
+%= end
+% }
+% end
+
+% my $dumphash = begin
+% my $k = shift;
+% my $h = shift;
+% $k =~ s/_obj//;
+%= link_to "show_$k", { %{ $self->stash() }, "$k\_identifier" => $h->{identifier} } => begin
+%= $h->{identifier}
+%= end
+% end
+
+% my $tree = $object->as_tree;
+<table class='table table-condensed table-bordered table-striped'>
+
+% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% my $k = $col->accessor_method_name;
+% my $val = $object->$k;
+    <tr>
+        <td><%= $k %></td>
+        <td><%= $val %></td>
+    </tr>
+% }
+
+
+% for my $rel ($meta->relationships) {
+% my $method = $rel->name;
+<tr>
+<td><%= $method %></td>
+<td>
+% my $got = $object->$method;
+% if (ref($got) eq 'ARRAY') {
+%    for (@$got) {
+%= obj_link($_);
+%    }
+% } else {
+%= obj_link($got);
+% }
+</td>
+
+</tr>
+% }
+</table>
+
+%= link_to '/img/'.$object->file => begin
+<img width="600" height="600" style='border:1px solid #aaa;' src='/img/<%= $object->file %>' />
+%= end
+
+

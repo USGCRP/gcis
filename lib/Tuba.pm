@@ -94,6 +94,7 @@ sub startup {
     $r->resource($_) for qw/dataset model software algorithm activity
                             instrument platform
                             person role organization country/;
+    $r->resource("file");
 
     # Tuba-specific routes
     $r->get('/' => sub {

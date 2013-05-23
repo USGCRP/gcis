@@ -1,0 +1,56 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= $meta->table
+</h2>
+</center>
+
+% my $base = $self->req->url->to_abs;
+% $base =~ s/.html$$//;
+<pre>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th><%= $meta->primary_key %></th>
+    % for my $c ($meta->relationships) {
+        <th><%= $c->name %></th>
+    % }
+</tr>
+% for my $o (@$objects) {
+% my $pk = $meta->primary_key;
+    <tr>
+        <td>
+            %= link_to "show_".$meta->table, { $meta->table.'_'.$pk => $o->$pk } => begin
+            <%= $o->$pk %>
+            %= end
+        </td>
+        % for my $r ( @{ $meta->relationships } ) {
+            % my $method = $r->name;
+            % my $got = $o->$method;
+            <td>
+            % if (ref($got) eq 'ARRAY') {
+            %    for (@$got) {
+            %= obj_link($_);
+            %    }
+            % } else {
+            %= obj_link($got);
+            % }
+            </td>
+        % }
+        <td>
+        <% for my $f ($o->file) { %>
+        %= link_to 'show_file', { file_identifier => $f->identifier } => begin
+            <img width="100px" height="100px" src='img/<%= $f->file %>' />
+        %= end
+        <% } %>
+        </td>
+    </tr>
+% }
+</table>

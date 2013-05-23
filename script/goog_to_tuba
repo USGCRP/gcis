@@ -4,20 +4,22 @@ use lib '../../raw/lib';
 use lib '../lib';
 
 use Data::Dumper;
+use Path::Class qw/dir file/;
 use Tuba::DB::Objects qw/-nicknames/;
+use JSON::XS;
 use Goog;
 use feature qw/:all/;
 
 use strict;
 use warnings;
 
+my $goog = Goog->new(datafile => q[/var/local/projects/raw/data/goog/goog.json])->load;
+
 Files->delete_objects(all => 1);
 Images->delete_objects(all => 1);
 Figures->delete_objects(all => 1);
 Chapters->delete_objects(all => 1);
 Reports->delete_objects(all => 1);
-
-my $goog = Goog->new(datafile => q[/var/local/projects/raw/data/goog/goog.json])->load;
 
 # Report
 my $report = Report->new(
@@ -36,31 +38,70 @@ for my $row ($goog->hashrefs(q[nca3draft.canonicalURIs.chapters],'Sheet 1')) {
     )->save;
 }
 
+IMAGES :
+
+my $map = q[/var/local/projects/tuba/data/image_map.json];
+my $dir = dir '/var/local/projects/tuba/data/images';
+my $j = JSON::XS->new();
+my $image_map = $j->decode(scalar file($map)->slurp);
+#for my $uri (sort keys %$image_map) {
+#    my ($chapter_number, $figure_number) = $uri =~ m|chapter/(\d+)/figure/(\d+)|;
+#}
+
+my $file_seq = 1;
+
 # Figures
 FIGURES :
+my %figure_number_to_id;  # 
+my $last_chapter_number;
 for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
-    my $figure_id = $row->[6] or next;
-    $figure_id =~ s[/figure/][] or next;
-    next if $figure_id =~ m[/];
-    my $image = $row->[7];
-    $image =~ s[/image/][] or next;
-    my $figure = Figure->new(identifier => $figure_id);
-    my $chapter_number = $row->[1];
+    my $figure_identifier = $row->[6] or next;
+    $figure_identifier =~ s[/figure/][] or next;
+    next if $figure_identifier =~ m[/];
+    my $image_identifier = $row->[7];
+    $image_identifier =~ s[/image/][] or next;
+    my $figure = Figure->new(identifier => $figure_identifier);
     $figure->load(speculative => 1);
-    if ($chapter_number  && $chapter_number =~ qr[^\d+$]) {
-        #say "figure $figure_id image $image chapter $chapter_number";
-        my $found = Chapters->get_objects({'number' => $chapter_number});
-        $figure->chapter($found->[0]->identifier) if @$found;
+    $figure->save;
+
+    # Image
+    my $image = Image->new(identifier => $image_identifier, figure => $figure_identifier);
+    $image->save;
+
+    # Chapter, ordinal
+    my $chapter_number = $row->[1];
+    $chapter_number = $last_chapter_number unless $chapter_number  && $chapter_number =~ qr[^\d+$];
+    $last_chapter_number = $chapter_number;
+
+    #say "figure $figure_identifier image $image chapter $chapter_number";
+    my $found = Chapters->get_objects({'number' => $chapter_number});
+    if ($chapter_number && @$found) {
+        $figure->chapter($found->[0]->identifier);
+        # Now look for 'ordinal'.
+        my ($ordinal) = $row->[5] =~ /$chapter_number\.(\d+)/;
+        if ($ordinal) {
+            # warn "found ordinal $chapter_number.$ordinal for $figure_identifier";
+        } else {
+            warn "could not find ordinal for chapter $chapter_number in $row->[5]";
+            next;
+        }
+        $figure->ordinal($ordinal);
+        # Now look for a file.  The first image for this figure with no file gets this one.
+        my $file_uri = sprintf( "<http://data.globalchange.gov/report/nca2013/chapter/%d/figure/%d>", $chapter_number, $ordinal );
+        if (my $filename = $image_map->{$file_uri}) {
+            warn "found file $filename for figure $figure_identifier";
+            my $file = File->new(identifier => $file_seq++, image => $image->identifier, file => $filename );
+            $file->save;
+        } else {
+            # warn "no file for $file_uri";
+        }
+
     }
-    $figure->image($image);
+
+    # title, description, caption
+    my ($title, $description, $caption) = @$row[8,9,10];
+    $figure->title($title);
+    $figure->caption($caption);
     $figure->save;
 }
 
-
-# Images
-# my $dir = dir '/var/local/projects/tuba/data/images';
-# for my $file ($dir->children) {
-#     my $f = Tuba::DB::Object::File->new(file => $file->basename);
-#         $f->save or die $f->error;
-#  }
-#
