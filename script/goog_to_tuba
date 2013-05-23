@@ -21,7 +21,7 @@ my $goog = Goog->new(datafile => q[/var/local/projects/raw/data/goog/goog.json])
 
 # Report
 my $report = Report->new(
-    identifier => "nca2013",
+    identifier => "nca3",
     title      => "National Climate Assessment number three",
 );
 $report->save or die $report->error;
