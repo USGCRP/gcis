@@ -104,7 +104,7 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
     }
 
     # title, description, caption
-    my ($title, $description, $caption) = @$row[8,9,10];
+    my ($title, $description, $caption) = @$row[9,10,11];
     $figure->title($title);
     $figure->caption($caption);
     $figure->save;
