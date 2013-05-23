@@ -55,14 +55,14 @@ my $image_seq = 1;
 FIGURES :
 my %figure_number_to_id;  # 
 my $last_chapter_number;
-for my $row ($goog->rows(q[NCA Graphics Tracking],'METADATA_NCO_2')) {
+for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
     my $figure_identifier = $row->[6] or next;
     $figure_identifier =~ s[/figure/][] or do { warn " no figure identifier\n"; next; };
     if ($figure_identifier =~ m[/]) {
         warn "skipping $figure_identifier\n";
         next; 
     }
-    my $image_identifier = $row->[7];
+    my $image_identifier = $row->[8];
     $image_identifier ||= 'missing_uuid'.($image_seq++);
     $image_identifier =~ s[/image/][];
     my $figure = Figure->new(identifier => $figure_identifier);
