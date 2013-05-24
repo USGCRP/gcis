@@ -65,6 +65,7 @@ sub register {
 
 sub connection {
     $dbix->dbh->{private_pid} = $$;
+    $dbix->dbh->{pg_enable_utf8} = 1;
     $dbix;    
 }
 }

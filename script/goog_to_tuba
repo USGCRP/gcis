@@ -42,7 +42,7 @@ IMAGES :
 
 my $map = q[/var/local/projects/tuba/data/image_map.json];
 my $dir = dir '/var/local/projects/tuba/data/images';
-my $j = JSON::XS->new();
+my $j = JSON::XS->new()->utf8;
 my $image_map = $j->decode(scalar file($map)->slurp);
 #for my $uri (sort keys %$image_map) {
 #    my ($chapter_number, $figure_number) = $uri =~ m|chapter/(\d+)/figure/(\d+)|;
