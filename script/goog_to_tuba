@@ -56,13 +56,21 @@ FIGURES :
 my %figure_number_to_id;  # 
 my $last_chapter_number;
 for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
-    my $figure_identifier = $row->[6] or next;
+    my %cols = (
+        figure_identifier => 6,
+        image_identifier => 10,
+        chapter_number => 1,
+        figure_ordinal => 5,
+        figure_title => 7,
+        figure_caption => 8,
+    );
+    my $figure_identifier = $row->[$cols{figure_identifier}] or next;
     $figure_identifier =~ s[/figure/][] or do { warn " no figure identifier\n"; next; };
     if ($figure_identifier =~ m[/]) {
         warn "skipping $figure_identifier\n";
         next; 
     }
-    my $image_identifier = $row->[8];
+    my $image_identifier = $row->[$cols{image_identifier}];
     $image_identifier ||= 'missing_uuid'.($image_seq++);
     $image_identifier =~ s[/image/][];
     my $figure = Figure->new(identifier => $figure_identifier);
@@ -74,7 +82,7 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
     $image->save;
 
     # Chapter, ordinal
-    my $chapter_number = $row->[1];
+    my $chapter_number = $row->[$cols{chapter_number}];
     $chapter_number = $last_chapter_number unless $chapter_number  && $chapter_number =~ qr[^\d+$];
     $last_chapter_number = $chapter_number;
 
@@ -83,11 +91,11 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
     if ($chapter_number && @$found) {
         $figure->chapter($found->[0]->identifier);
         # Now look for 'ordinal'.
-        my ($ordinal) = $row->[5] =~ /$chapter_number\.(\d+)/;
+        my ($ordinal) = $row->[$cols{figure_ordinal}] =~ /$chapter_number\.(\d+)/;
         if ($ordinal) {
             # say "found ordinal $chapter_number.$ordinal for $figure_identifier";
         } else {
-            say "could not find ordinal for chapter $chapter_number in $row->[5]";
+            say "could not find ordinal for chapter $chapter_number in $row->[$cols{figure_ordinal}]";
             next;
         }
         $figure->ordinal($ordinal);
@@ -104,7 +112,8 @@ for my $row ($goog->rows(q[NCA Graphics Tracking],'GCIS Provenance')) {
     }
 
     # title, description, caption
-    my ($title, $description, $caption) = @$row[9,10,11];
+    my $title = $row->[$cols{figure_title}];
+    my $caption = $row->[$cols{figure_caption}];
     $figure->title($title);
     $figure->caption($caption);
     $figure->save;
