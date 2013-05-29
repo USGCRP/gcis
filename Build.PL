@@ -2,8 +2,16 @@ use 5.006;
 use strict;
 use warnings FATAL => 'all';
 use Module::Build::Database;
+BEGIN {
+    eval qq{
+    use Module::Build::Mojolicious clean_install => 1;
+    push \@Module::Build::Database::PostgreSQL::ISA, 'Module::Build::Mojolicious';
+    };
+    die $@ if $@;
+}
 
 my $builder = Module::Build::Database->new(
+    install_base        => '/usr/local/gcis',
     database_type       => 'PostgreSQL',
     database_options    => {
         name => "gcis",
@@ -15,7 +23,8 @@ my $builder = Module::Build::Database->new(
     dist_abstract       => "The Useful Backend API",
     release_status      => 'stable',
     configure_requires => {
-        'Module::Build' => 0,
+        'Module::Build' => 0.38,
+        'Module::Build::Mojolicious' => 0,
     },
     build_requires => {
         'Test::More' => 0,

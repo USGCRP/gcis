@@ -29,6 +29,7 @@ sub startup {
     my $app = shift;
 
     $app->secret('aePhoox5Iegh6toeay3ooV9n');
+    $app->plugin('InstallablePaths');
 
     # Plugins, configuration
     my $conf = './Tuba.conf';
