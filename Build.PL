@@ -9,6 +9,7 @@ BEGIN {
     };
     die $@ if $@;
 }
+use File::ShareDir qw/dist_dir/;
 
 my $builder = Module::Build::Database->new(
     install_base        => '/usr/local/gcis',
@@ -43,4 +44,8 @@ my $builder = Module::Build::Database->new(
     create_makefile_pl => 'traditional',
 );
 
+my $dir = dist_dir('Tuba');
+-l "$dir/public/img" or do {
+    warn "\n\nPlease run ln -s /var/local/projects/raw/data/images $dir/public/img\n\n";
+};
 $builder->create_build_script();
