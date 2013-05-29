@@ -5,7 +5,8 @@ author:
 build_requires:
   Test::More: 0
 configure_requires:
-  Module::Build: 0
+  Module::Build: 0.38
+  Module::Build::Mojolicious: 0
 dynamic_config: 1
 generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.120630'
 license: perl
@@ -16,9 +17,46 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.06
+    version: 0.07
+  Tuba::Chapter:
+    file: lib/Tuba/Chapter.pm
+    version: 0
+  Tuba::Controller:
+    file: lib/Tuba/Controller.pm
+    version: 0
+  Tuba::DB:
+    file: lib/Tuba/DB.pm
+    version: 0
+  Tuba::DB::Object:
+    file: lib/Tuba/DB/Object.pm
+    version: 0
+  Tuba::DB::Object::Chapter:
+    file: lib/Tuba/DB/Mixin/Object/Chapter.pm
+    version: 0
+  Tuba::DB::Object::Figure:
+    file: lib/Tuba/DB/Mixin/Object/Figure.pm
+    version: 0
+  Tuba::DB::Objects:
+    file: lib/Tuba/DB/Objects.pm
+    version: 0
+  Tuba::Figure:
+    file: lib/Tuba/Figure.pm
+    version: 0
+  Tuba::File:
+    file: lib/Tuba/File.pm
+    version: 0
+  Tuba::Image:
+    file: lib/Tuba/Image.pm
+    version: 0
+  Tuba::Plugin::Db:
+    file: lib/Tuba/Plugin/Db.pm
+    version: 0
+  Tuba::Report:
+    file: lib/Tuba/Report.pm
+    version: 0
 requires:
   DBIx::Simple: 0
+  File::ShareDir: 1.00
   Mojolicious: 0
   Mojolicious::Plugin::YamlConfig: 0
   Rose::DB::Object: 0
@@ -28,4 +66,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.06
+version: 0.07

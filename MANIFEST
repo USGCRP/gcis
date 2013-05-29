@@ -97,7 +97,6 @@ Makefile.PL
 MANIFEST			This list of files
 META.json
 META.yml
-postmaster.log
 t/001_start_db.t
 t/002_basic.t
 t/003_lists.t

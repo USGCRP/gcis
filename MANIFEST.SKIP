@@ -71,3 +71,6 @@
 
 # Avoid archives of this distribution
 \bTuba-[\d\.\_]+
+postmaster.log
+Tuba.conf
+

@@ -5,7 +5,12 @@ WriteMakefile
   'PL_FILES' => {},
   'INSTALLDIRS' => 'site',
   'NAME' => 'Tuba',
-  'EXE_FILES' => [],
+  'EXE_FILES' => [
+                   'bin/tuba',
+                   'bin/tuba_import_goog',
+                   'bin/tuba_start_httpd',
+                   'bin/tuba_stop_httpd'
+                 ],
   'VERSION_FROM' => 'lib/Tuba.pm',
   'PREREQ_PM' => {
                    'SQL::Abstract' => 0,
@@ -16,6 +21,7 @@ WriteMakefile
                    'Rose::DB::Object' => 0,
                    'Mojolicious' => 0,
                    'Test::More' => 0,
+                   'File::ShareDir' => '1.00',
                    'SQL::Interp' => 0
                  }
 )
