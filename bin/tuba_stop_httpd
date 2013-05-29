@@ -1,5 +1,5 @@
 #!/bin/sh
 
 cd `dirname $0`
-kill `cat hypnotoad.pid`
+hypnotoad -s ./tuba
 

@@ -32,10 +32,17 @@ sub startup {
     $app->plugin('InstallablePaths');
 
     # Plugins, configuration
-    my $conf = './Tuba.conf';
+    my $conf =
+        $ENV{TUBA_CONFIG}             ? $ENV{TUBA_CONFIG}
+      : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
+      :                                 './Tuba.conf';
     $app->plugin( 'yaml_config' => { file => $conf } );
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
+    if (my $path = $app->config('log_path')) {
+        $app->log->info("logging to $path");
+        $app->log(Mojo::Log->new(path => $path));
+    }
 
     # Helpers
     $app->helper(base => sub {
