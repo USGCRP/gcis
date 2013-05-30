@@ -44,8 +44,13 @@ my $builder = Module::Build::Database->new(
     create_makefile_pl => 'traditional',
 );
 
-my $dir = dist_dir('Tuba');
--l "$dir/public/img" or do {
-    warn "\n\nPlease run ln -s /var/local/projects/raw/data/images $dir/public/img\n\n";
-};
+# Temporary bootstrapping until we have real images; just check to see
+# if this little symlink is in place.
+my $dir = eval { dist_dir('Tuba'); };
+if ($dir && !$@) {
+    -l "$dir/public/img" or do {
+        warn "\n\nPlease run ln -s /var/local/projects/raw/data/images $dir/public/img\n\n";
+    };
+}
+
 $builder->create_build_script();
