@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.08
+    version: 0.09
   Tuba::Chapter:
     file: lib/Tuba/Chapter.pm
     version: 0
@@ -66,4 +66,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.08
+version: 0.09
