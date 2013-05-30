@@ -70,7 +70,8 @@ sub startup {
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
         my $c = shift;
-        push @{$c->req->url->base->path}, shift @{$c->req->url->path} if @{ $c->req->url->path };
+        push @{$c->req->url->base->path}, shift @{$c->req->url->path}
+          if @{ $c->req->url->path->parts } && $c->req->url->path->parts->[0] eq 'api';
     }) if $app->mode eq 'production';
 
     # Shortcuts (see Mojolicious::Guides::Routing)
