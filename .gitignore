@@ -7,3 +7,4 @@ blib
 _build
 MYMETA.*
 postmaster.log
+*.tar.gz
