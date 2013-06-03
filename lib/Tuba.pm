@@ -96,7 +96,7 @@ sub startup {
     $r->lookup('select_report')->resource('key-message');
     $r->lookup('select_report')->resource('traceable-account');
     $r->resource('publication');
-    $r->resource($_) for qw/journal paper/;
+    $r->resource($_) for qw/article journal paper/;
     $r->resource('image');
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
