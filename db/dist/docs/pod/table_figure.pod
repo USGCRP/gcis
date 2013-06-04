@@ -31,27 +31,27 @@ figure
 
 =head1 SCHEMA
 
-                                      Table "gcis_metadata.figure"
-      Column      |              Type              | Modifiers | Storage  | Stats target | Description 
- -----------------+--------------------------------+-----------+----------+--------------+-------------
-  identifier      | character varying              | not null  | extended |              | 
-  uuid            | character varying              |           | extended |              | 
-  chapter         | character varying              |           | extended |              | 
-  title           | character varying              |           | extended |              | 
-  caption         | character varying              |           | extended |              | 
-  attributes      | character varying              |           | extended |              | 
-  time_start      | timestamp(3) without time zone |           | plain    |              | 
-  time_end        | timestamp(3) without time zone |           | plain    |              | 
-  lat_max         | character varying              |           | extended |              | 
-  lat_min         | character varying              |           | extended |              | 
-  lon_max         | character varying              |           | extended |              | 
-  lon_min         | character varying              |           | extended |              | 
-  keywords        | character varying              |           | extended |              | 
-  usage_limits    | character varying              |           | extended |              | 
-  submission_dt   | timestamp(3) without time zone |           | plain    |              | 
-  create_dt       | timestamp(3) without time zone |           | plain    |              | 
-  source_citation | character varying              |           | extended |              | 
-  ordinal         | integer                        |           | plain    |              | 
+                              Table "gcis_metadata.figure"
+      Column      |              Type              | Modifiers | Storage  | Description 
+ -----------------+--------------------------------+-----------+----------+-------------
+  identifier      | character varying              | not null  | extended | 
+  uuid            | character varying              |           | extended | 
+  chapter         | character varying              |           | extended | 
+  title           | character varying              |           | extended | 
+  caption         | character varying              |           | extended | 
+  attributes      | character varying              |           | extended | 
+  time_start      | timestamp(3) without time zone |           | plain    | 
+  time_end        | timestamp(3) without time zone |           | plain    | 
+  lat_max         | character varying              |           | extended | 
+  lat_min         | character varying              |           | extended | 
+  lon_max         | character varying              |           | extended | 
+  lon_min         | character varying              |           | extended | 
+  keywords        | character varying              |           | extended | 
+  usage_limits    | character varying              |           | extended | 
+  submission_dt   | timestamp(3) without time zone |           | plain    | 
+  create_dt       | timestamp(3) without time zone |           | plain    | 
+  source_citation | character varying              |           | extended | 
+  ordinal         | integer                        |           | plain    | 
  Indexes:
      "figure_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:

@@ -20,16 +20,16 @@ org_project
 
 =head1 SCHEMA
 
-                          Table "gcis_metadata.org_project"
-    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
- ------------+-------------------+-----------+----------+--------------+-------------
-  identifier | character varying | not null  | extended |              | 
-  title      | character varying |           | extended |              | 
-  address    | character varying |           | extended |              | 
-  email      | character varying |           | extended |              | 
-  url        | character varying |           | extended |              | 
-  country    | character varying |           | extended |              | 
-  notes      | character varying |           | extended |              | 
+                   Table "gcis_metadata.org_project"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  title      | character varying |           | extended | 
+  address    | character varying |           | extended | 
+  email      | character varying |           | extended | 
+  url        | character varying |           | extended | 
+  country    | character varying |           | extended | 
+  notes      | character varying |           | extended | 
  Indexes:
      "org_project_pkey" PRIMARY KEY, btree (identifier)
  Has OIDs: no

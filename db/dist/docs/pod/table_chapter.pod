@@ -17,15 +17,16 @@ chapter
 
 =head1 SCHEMA
 
-                            Table "gcis_metadata.chapter"
-    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
- ------------+-------------------+-----------+----------+--------------+-------------
-  identifier | character varying | not null  | extended |              | 
-  title      | character varying |           | extended |              | 
-  report     | character varying |           | extended |              | 
-  number     | integer           |           | plain    |              | 
+                     Table "gcis_metadata.chapter"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  title      | character varying |           | extended | 
+  report     | character varying |           | extended | 
+  number     | integer           |           | plain    | 
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (identifier)
+     "uk_number" UNIQUE CONSTRAINT, btree (number)
  Foreign-key constraints:
      "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
  Referenced by:
