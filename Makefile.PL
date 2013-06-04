@@ -7,7 +7,6 @@ WriteMakefile
   'NAME' => 'Tuba',
   'EXE_FILES' => [
                    'bin/tuba',
-                   'bin/tuba_import_goog',
                    'bin/tuba_start_httpd',
                    'bin/tuba_stop_httpd'
                  ],

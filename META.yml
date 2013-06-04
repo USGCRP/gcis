@@ -17,7 +17,10 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.09
+    version: 0.1
+  Tuba::Article:
+    file: lib/Tuba/Article.pm
+    version: 0
   Tuba::Chapter:
     file: lib/Tuba/Chapter.pm
     version: 0
@@ -30,11 +33,17 @@ provides:
   Tuba::DB::Object:
     file: lib/Tuba/DB/Object.pm
     version: 0
+  Tuba::DB::Object::Article:
+    file: lib/Tuba/DB/Mixin/Object/Article.pm
+    version: 0
   Tuba::DB::Object::Chapter:
     file: lib/Tuba/DB/Mixin/Object/Chapter.pm
     version: 0
   Tuba::DB::Object::Figure:
     file: lib/Tuba/DB/Mixin/Object/Figure.pm
+    version: 0
+  Tuba::DB::Object::Image:
+    file: lib/Tuba/DB/Mixin/Object/Image.pm
     version: 0
   Tuba::DB::Objects:
     file: lib/Tuba/DB/Objects.pm
@@ -66,4 +75,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.09
+version: 0.1
