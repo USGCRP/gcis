@@ -24,10 +24,6 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
     ( map $_->name, map $_->columns, $meta->unique_keys ),
   );
 %>
-<pre>
-cols
-%= dumper([ map ref $_ ? $_->name : $_, @cols]);
-</pre>
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
 % for my $c (@cols) {
