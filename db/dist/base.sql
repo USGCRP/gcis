@@ -586,6 +586,11 @@ ALTER TABLE ONLY submitter
 
 
 
+ALTER TABLE ONLY chapter
+    ADD CONSTRAINT uk_number UNIQUE (number);
+
+
+
 ALTER TABLE ONLY article
     ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL;
 

@@ -30,7 +30,6 @@ COPY article (identifier, title, doi, year, journal, journal_vol, journal_pages,
 --
 
 COPY report (identifier, title) FROM stdin;
-NCA2013	NCA2013
 \.
 
 
@@ -55,12 +54,6 @@ COPY contributor_role_type (identifier, "table") FROM stdin;
 --
 
 COPY organization_type (identifier, "table") FROM stdin;
-academic	org_academic
-government	org_government
-commercial	org_commercial
-project	org_project
-research	org_research
-ngo	org_ngo
 \.
 
 
@@ -217,11 +210,6 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
-journal	journal
-article	article
-report	report
-chapter	chapter
-figure	figure
 \.
 
 
@@ -230,7 +218,6 @@ figure	figure
 --
 
 COPY publication (id, parent_id, publication_type, fk) FROM stdin;
-1	\N	report	1
 \.
 
 
@@ -253,7 +240,7 @@ SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 -- Name: publication_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
 --
 
-SELECT pg_catalog.setval('publication_id_seq', 1, true);
+SELECT pg_catalog.setval('publication_id_seq', 1, false);
 
 
 --
