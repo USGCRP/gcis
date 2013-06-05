@@ -43,6 +43,7 @@ sub startup {
         $app->log->info("logging to $path");
         $app->log(Mojo::Log->new(path => $path));
     }
+    $app->plugin('Auth');
 
     # Helpers
     $app->helper(base => sub {
@@ -61,7 +62,6 @@ sub startup {
             return $c->link_to($val, $uri );
         } );
 
-
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;
@@ -78,7 +78,8 @@ sub startup {
     $app->routes->add_shortcut(resource => sub {
       my ($r, $name) = @_;
       my $resource = $r->route("/$name")->to("$name#");
-      $resource->post->to('#create')->name("create_$name");
+      my $authed = $resource->bridge(cb => sub { shift->auth });
+      $authed->post->to('#create')->name("create_$name");
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
       $identifier =~ s/-/_/g;
@@ -124,6 +125,8 @@ sub startup {
       }
       $c->stash(placeholders => \@placeholders);
     } => 'index');
+
+    $r->get('/login');
 
     $r->post('/calculate_url' => sub {
         my $c = shift;

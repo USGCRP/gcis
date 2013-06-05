@@ -3,8 +3,9 @@
 <% my $relaxed_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
 
 % layout 'default';
-<h2><%= link_to 'index' => begin %>GCIS API Reference<%= end %></h2>
-<h5>version <%= $Tuba::VERSION %></h5>
+<h2>API Reference</h2>
+<p>This is the reference page for the API for the Global Change Information System.
+  The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
 
 % my $show_method = ( (param 'show_method') || 'GET');
 <ul class='nav nav-tabs'>

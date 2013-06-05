@@ -8,13 +8,20 @@ String.prototype.htmlEscape = function() {
      return $('<div/>').text(this.toString()).html();
 };
 %= end
-<title>GCIS API version <%= $Tuba::VERSION %></title>
+<title>GCIS <%= $Tuba::VERSION %></title>
 </head>
     <body>
         <div class="navbar">
             <div class="navbar-inner">
-                <%= link_to 'index', class => 'brand' => begin %>api browser<%= end %>
-                <div class='pull-right'>version <%= $Tuba::VERSION %></div>
+                <%= link_to 'index', class => 'brand' => begin %>GCIS<%= end %>
+                <ul class='nav pull-right'>
+                    <li><% if (my $user = user) { %>
+                            <%= link_to 'logout' => begin %><%= $user %><%= end %>
+                        <% } else { %>
+                            <%= link_to 'login' => begin %>log in<%= end %>
+                        <% } %>
+                    </li>
+                </ul>
                 <ul class="nav">
                     <li><%= link_to 'list_report'  => begin %>report<%= end %></li>
                     <li><%= link_to 'list_chapter' => { report_identifier => "nca3" } => begin %>chapter<%= end %></li>
