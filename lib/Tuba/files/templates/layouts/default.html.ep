@@ -9,6 +9,21 @@ String.prototype.htmlEscape = function() {
 };
 %= end
 <title>GCIS <%= $Tuba::VERSION %></title>
+<style>
+    form label.required:after {
+        color: #e32;
+        content: '*';
+        display:inline;
+    }
+    .required_note {
+        float:right;
+    }
+    div.required_note:before {
+        color: #e32;
+        content: '*';
+        display:inline;
+    }
+</style>
 </head>
     <body>
         <div class="navbar">
