@@ -4,12 +4,16 @@
 
 <legend>New <%= $meta->table %></legend>
 
+% if (my $error = (flash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+
 % for my $column ($meta->columns) {
 % my $required = $column->not_null ? ' required' : "";
     <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            <input type="text" id="<%= $column->name %>" placeholder="<%= $column->type %>">
+            <input type="text" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>">
             <span class="help-inline">
             %= $column->remarks || ""
             </span>
@@ -18,8 +22,7 @@
 <div class='required_note'>required</div>
 
 <div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="button" class="btn">Cancel</button>
+    <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
 </div>
 
 %= end

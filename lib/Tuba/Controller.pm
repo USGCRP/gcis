@@ -17,7 +17,6 @@ These virtual methods should be implemented by subclasses.
 sub check { die "not implemented" };
 sub list { die "not implemented" };
 sub show { die "not implemented" };
-sub create { die "not implemented" };
 
 sub _guess_object_class {
     my $c = shift;
@@ -53,6 +52,23 @@ sub create {
     my $class = ref $c;
     my ($object_class) = $class =~ /::(.*)$/;
     $object_class = 'Tuba::DB::Object::'.$object_class;
+    my %obj;
+    for my $col ($object_class->meta->columns) {
+        my $got = $c->param($col->name);
+        $obj{$col->name} = defined($got) && length($got) ? $got : undef;
+    }
+    my $new = $object_class->new(%obj);
+    $new->meta->error_mode('return');
+    my $table = $object_class->meta->table;
+    if ($new->save) {
+        if ($new->can('identifier')) {
+            return $c->redirect_to("show_$table", $table.'_identifier' => $new->identifier );
+        }
+        # TODO look up primary key
+        return $c->render(text => "created new object : ".Dumper(\%obj));
+    }
+    $c->flash(error => $new->error);
+    $c->redirect_to("create_form_$table");
 }
 
 1;

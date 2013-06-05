@@ -79,7 +79,7 @@ sub startup {
       my ($r, $name) = @_;
       my $resource = $r->route("/$name")->to("$name#");
       my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
-      $authed->post->to('#create')->name("create_$name");
+      $authed->post->to("$name#create")->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
