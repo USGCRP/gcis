@@ -8,7 +8,7 @@
     <div class='alert alert-error'><%= $error %></div>
 % }
 
-% for my $column ($meta->columns) {
+% for my $column (sort { $a->name cmp $b->name } $meta->columns) {
 % my $required = $column->not_null ? ' required' : "";
     <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>

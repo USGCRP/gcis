@@ -12,6 +12,7 @@ Tuba provides a RESTful API to GCIS data.
 
 package Tuba;
 use Mojo::Base qw/Mojolicious/;
+use Mojo::ByteStream qw/b/;
 
 our $VERSION = '0.12';
 
@@ -30,6 +31,7 @@ sub startup {
 
     $app->secret('aePhoox5Iegh6toeay3ooV9n');
     $app->plugin('InstallablePaths');
+    $app->defaults->{report_identifier} = "nca3";
 
     # Plugins, configuration
     my $conf =
@@ -75,10 +77,20 @@ sub startup {
     }) if $app->mode eq 'production';
 
     # Shortcuts (see Mojolicious::Guides::Routing)
+    my @forms;
     $app->routes->add_shortcut(resource => sub {
       my ($r, $name) = @_;
       my $resource = $r->route("/$name")->to("$name#");
       my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
+
+      my $controller = 'Tuba::'.b($name)->camelize;
+      eval " use $controller ";
+      if (!$@) {
+         push @forms, "create_form_$name";
+      } else {
+          warn "no dice for $controller";
+      }
+
       $authed->post->to("$name#create")->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
       $resource->get->to('#list')->name("list_$name");
@@ -126,6 +138,7 @@ sub startup {
       }
       $c->stash(placeholders => \@placeholders);
     } => 'index');
+    $r->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
 
     $r->get('/login')->to('auth#login')->name('login');
     $r->post('/login')->to('auth#check_login')->name('check_login');

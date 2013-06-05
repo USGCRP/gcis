@@ -39,9 +39,10 @@ String.prototype.htmlEscape = function() {
                 </ul>
                 <ul class="nav">
                     <li><%= link_to 'list_report'  => begin %>report<%= end %></li>
-                    <li><%= link_to 'list_chapter' => { report_identifier => "nca3" } => begin %>chapter<%= end %></li>
-                    <li><%= link_to 'list_figure'  => { report_identifier => "nca3" } => begin %>figure<%= end %></li>
-                    <li><%= link_to 'list_image'   => { report_identifier => "nca3" } => begin %>image<%= end %></li>
+                    <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapter<%= end %></li>
+                    <li><%= link_to 'list_figure'  => { report_identifier => $report_identifier } => begin %>figure<%= end %></li>
+                    <li><%= link_to 'list_image'   => { report_identifier => $report_identifier } => begin %>image<%= end %></li>
+                    <li><%= link_to 'forms'                                           => begin %>forms<%= end %></li>
                 </ul>
             </div>
         </div>
