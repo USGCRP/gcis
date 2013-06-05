@@ -30,8 +30,8 @@ String.prototype.htmlEscape = function() {
             <div class="navbar-inner">
                 <%= link_to 'index', class => 'brand' => begin %>GCIS<%= end %>
                 <ul class='nav pull-right'>
-                    <li><% if (my $user = (stash 'user')) { %>
-                            <%= link_to 'logout' => begin %><%= $user %><%= end %>
+                    <li><% if (my $user = user()) { %>
+                        <%= link_to 'logout' => begin %>log out <%= $user %><%= end %>
                         <% } else { %>
                             <%= link_to 'login' => begin %>log in<%= end %>
                         <% } %>

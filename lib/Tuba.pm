@@ -129,6 +129,7 @@ sub startup {
 
     $r->get('/login')->to('auth#login')->name('login');
     $r->post('/login')->to('auth#check_login')->name('check_login');
+    $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
 
     $r->post('/calculate_url' => sub {
         my $c = shift;
