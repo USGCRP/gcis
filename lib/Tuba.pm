@@ -79,7 +79,7 @@ sub startup {
       my ($r, $name) = @_;
       my $resource = $r->route("/$name")->to("$name#");
       my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
-      $authed->post->to('#create')->name("$name#create");
+      $authed->post->to('#create')->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
@@ -127,7 +127,8 @@ sub startup {
       $c->stash(placeholders => \@placeholders);
     } => 'index');
 
-    $r->get('/login');
+    $r->get('/login')->to('auth#login')->name('login');
+    $r->post('/login')->to('auth#check_login')->name('check_login');
 
     $r->post('/calculate_url' => sub {
         my $c = shift;

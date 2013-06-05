@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head><%= title =%>
+%= stylesheet "http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css";
+%= javascript '/mojo/jquery/jquery.js';
+</head>
+
+<body>
+<div class='container-fluid'>
+<br>
+<br>
+<br>
+%= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
+        <legend>
+            Please log in to the Global Change Information System.
+        </legend>
+        % if (my $error = (flash 'error')) {
+            <div class='alert alert-error'><%= $error %></div>
+        % }
+
+        <div class="control-group">
+            <label class="control-label" for="inputUser">User</label>
+            <div class="controls">
+                <input type="text" id="inputUser" name='user' placeholder="username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">Password</label>
+            <div class="controls">
+                <input type="password" id="inputPassword" name='password' placeholder="secret">
+            </div>
+        </div>
+<div class="form-actions">
+    %= hidden_field 'destination' => ( (param 'destination') || (flash 'destination') || '' );
+    <button type="submit" class="btn btn-primary">Sign in</button>
+</div>
+%= end
+
+</div>
+
+</body>
+</html>
+
+

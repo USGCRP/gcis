@@ -20,19 +20,14 @@ sub register {
 
     $app->helper(user => sub {
             my $c = shift;
-            $c->stash('user');
+            $c->session('user');
         } );
     $app->helper(auth => sub {
             my $c = shift;
-            return 1 if $c->stash('user');
-            my $user = $c->param('user');
-            return 1;
-            unless ($user && $user eq 'brian') {
-                $c->redirect_to('login');
-                return 0;
-            }
-            $c->stash(user => $user);
-            return 1;
+            return 1 if $c->session('user');
+            $c->flash(destination => $c->req->url);
+            $c->redirect_to('login');
+            return 0;
         });
 }
 
