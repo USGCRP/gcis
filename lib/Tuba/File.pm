@@ -5,7 +5,7 @@ Tuba::File : Controller class for files.
 =cut
 
 package Tuba::File;
-use Mojo::Base qw/Mojolicious::Controller/;
+use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
 #sub list {

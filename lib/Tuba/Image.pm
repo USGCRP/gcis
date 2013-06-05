@@ -5,7 +5,7 @@ Tuba::Image : Controller class for images.
 =cut
 
 package Tuba::Image;
-use Mojo::Base qw/Mojolicious::Controller/;
+use Mojo::Base qw/Tuba::Controller/;
 use File::Temp;
 use YAML::XS qw/DumpFile LoadFile/;
 use Path::Class qw/file dir/;

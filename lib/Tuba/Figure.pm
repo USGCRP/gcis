@@ -5,7 +5,7 @@ Tuba::Figure : Controller class for figures.
 =cut
 
 package Tuba::Figure;
-use Mojo::Base qw/Mojolicious::Controller/;
+use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
