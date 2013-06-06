@@ -70,6 +70,7 @@ eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article
 lib/Tuba/Article.pm
+lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
 lib/Tuba/Controller.pm
 lib/Tuba/DB.pm
@@ -83,10 +84,13 @@ lib/Tuba/Figure.pm
 lib/Tuba/File.pm
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
+lib/Tuba/files/templates/auth/login.html.ep
+lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
 lib/Tuba/files/templates/file/object.html.ep
+lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
@@ -95,7 +99,9 @@ lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/not_found.development.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
+lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/Image.pm
+lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
 lib/Tuba/Report.pm
 Makefile.PL

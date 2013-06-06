@@ -42,10 +42,14 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.12"
+         "version" : "0.13"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm",
+         "version" : 0
+      },
+      "Tuba::Auth" : {
+         "file" : "lib/Tuba/Auth.pm",
          "version" : 0
       },
       "Tuba::Chapter" : {
@@ -96,6 +100,10 @@
          "file" : "lib/Tuba/Image.pm",
          "version" : 0
       },
+      "Tuba::Plugin::Auth" : {
+         "file" : "lib/Tuba/Plugin/Auth.pm",
+         "version" : 0
+      },
       "Tuba::Plugin::Db" : {
          "file" : "lib/Tuba/Plugin/Db.pm",
          "version" : 0
@@ -111,5 +119,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.12"
+   "version" : "0.13"
 }
