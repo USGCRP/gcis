@@ -7,6 +7,12 @@
 </h2>
 </center>
 
+<span style='float:right;'>
+%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin
+update
+%= end
+</span>
+
 % my $base = url_for('current')->to_abs;
 % $base =~ s/.html$//;
 <pre>
