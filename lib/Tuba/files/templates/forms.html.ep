@@ -1,0 +1,13 @@
+% layout 'default';
+
+<h3>Forms</h3>
+<ul>
+% for my $form (sort @$forms) {
+% my $name = $form; $name =~ s/create_form_//;
+<li>
+    %= link_to $form => { report_identifier => $report_identifier } => begin
+        %= $name
+    %= end
+</li>
+% }
+</ul>
