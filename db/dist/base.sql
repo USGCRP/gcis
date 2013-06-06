@@ -37,6 +37,10 @@ CREATE TABLE chapter (
 
 
 
+COMMENT ON COLUMN chapter.identifier IS 'A unique identifier for the chapter.';
+
+
+
 CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
@@ -142,6 +146,10 @@ CREATE TABLE figure (
 
 
 
+COMMENT ON COLUMN figure.identifier IS 'A unique identifier for the figure.';
+
+
+
 CREATE TABLE file (
     identifier character varying NOT NULL,
     image character varying NOT NULL,
@@ -170,6 +178,10 @@ CREATE TABLE image (
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone
 );
+
+
+
+COMMENT ON COLUMN image.identifier IS 'A unique identifier for the image.';
 
 
 
@@ -393,6 +405,10 @@ CREATE TABLE report (
     identifier character varying NOT NULL,
     title character varying
 );
+
+
+
+COMMENT ON COLUMN report.identifier IS 'A unique identifier for the report.';
 
 
 
