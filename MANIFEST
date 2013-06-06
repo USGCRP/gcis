@@ -66,6 +66,7 @@ db/dist/patches_applied.txt
 db/patches/0010_start.sql
 db/patches/0030_chapter.sql
 db/patches/0040_chapter_number.sql
+db/patches/0050_comments.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article
