@@ -1,0 +1,30 @@
+% layout 'default';
+
+%= form_for 'update_'.$meta->table => class => 'form-horizontal well' => begin
+
+<legend>Update <%= $meta->table %></legend>
+
+% if (my $error = (flash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+
+% for my $column (sort { $a->name cmp $b->name } $meta->columns) {
+% my $required = $column->not_null ? ' required' : "";
+% my $accessor = $column->accessor_method_name;
+    <div class="control-group">
+        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
+        <div class="controls">
+            <input type="text" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+            <span class="help-inline">
+            %= $column->remarks || ""
+            </span>
+    </div>
+% }
+<div class='required_note'>required</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes to <%= $meta->table %></button>
+</div>
+
+%= end
+

@@ -78,37 +78,58 @@ sub startup {
 
     # Shortcuts (see Mojolicious::Guides::Routing)
     my @forms;
+    # For a given resource we create several routes.  As an
+    # example, for the resource 'report' we create :
+    #    name           method, path, controller
+    #    -----------   --------------------------
+    #    list_report        : GET /report                    calls Tuba::Report::list
+    #    show_report        : GET /report/:report_identifier calls Tuba;:Report::show
+    #  * create_report      : POST /report                   calls Tuba::Report::create
+    #  * create_form_report : GET /report/form/create        calls Tuba::Report::create_form
+    #  * update_form_report : GET /report/:report_identifier/form/update calls Tuba::Report::update_form
+    #  * update_report      : POST /report/:report_identifier/ calls Tuba::Report::update
+    #
+    #    Also we create and return a route named 'select_report'.  This can be used to
+    #    attach other resources lower in the URL path hierarchy.
+    #
+    #  * Require authentication.
+    #
     $app->routes->add_shortcut(resource => sub {
       my ($r, $name) = @_;
-      my $resource = $r->route("/$name")->to("$name#");
-      my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
 
+      # Keep stubs out of @forms.
       my $controller = 'Tuba::'.b($name)->camelize;
       eval " use $controller ";
       if (!$@) {
          push @forms, "create_form_$name";
       } else {
-          warn "no dice for $controller";
+          die $@ unless $@ =~ /^Can't locate/;
+          $app->log->debug("did not load $controller");
       }
 
+      # Build bridges and routes.
+      my $resource = $r->route("/$name")->to("$name#");
+      my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
       $authed->post->to("$name#create")->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
       $resource->get->to('#list')->name("list_$name");
       my $identifier = join '_', $name, 'identifier';
       $identifier =~ s/-/_/g;
       $resource->get(":$identifier")->to('#show')->name("show_$name");
-      $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
-      return $resource;
+      $authed->get(":$identifier/form/update")->to("$name#update_form")->name("update_form_$name");
+      $authed->post(":$identifier")->to("$name#update")->name("update_$name");
+      my $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
+      return $select;
     });
 
     my $r = $app->routes;
 
     # API
-    $r->resource('report');
-    $r->lookup('select_report')->resource('chapter');
-    $r->lookup('select_report')->resource('figure');
-    $r->lookup('select_report')->resource('key-message');
-    $r->lookup('select_report')->resource('traceable-account');
+    my $report = $r->resource('report');
+    $report->resource('chapter');
+    $report->resource('figure');
+    $report->resource('key-message');
+    $report->resource('traceable-account');
     $r->resource('publication');
     $r->resource($_) for qw/article journal paper/;
     $r->resource('image');
