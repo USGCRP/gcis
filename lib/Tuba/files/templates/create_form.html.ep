@@ -1,5 +1,7 @@
 % layout 'default';
 
+<div class="row-fluid">
+
 %= form_for 'create_'.$meta->table => class => 'form-horizontal well' => begin
 
 <legend>New <%= $meta->table %></legend>
@@ -13,7 +15,7 @@
     <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            <input type="text" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>">
+            <input type="text" class="span4" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>">
             <span class="help-inline">
             %= $column->remarks || ""
             </span>
@@ -26,4 +28,6 @@
 </div>
 
 %= end
+
+</div>
 
