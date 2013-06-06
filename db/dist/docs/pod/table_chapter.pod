@@ -9,7 +9,7 @@ chapter
 
 =head1 FIELDS
 
- identifier (character varying) - 
+ identifier (character varying) - A unique identifier for the chapter.
  title (character varying) - 
  report (character varying) - 
  number (integer) - 
@@ -17,10 +17,10 @@ chapter
 
 =head1 SCHEMA
 
-                     Table "gcis_metadata.chapter"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
+                                 Table "gcis_metadata.chapter"
+    Column   |       Type        | Modifiers | Storage  |             Description              
+ ------------+-------------------+-----------+----------+--------------------------------------
+  identifier | character varying | not null  | extended | A unique identifier for the chapter.
   title      | character varying |           | extended | 
   report     | character varying |           | extended | 
   number     | integer           |           | plain    | 

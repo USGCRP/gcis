@@ -9,7 +9,7 @@ figure
 
 =head1 FIELDS
 
- identifier (character varying) - 
+ identifier (character varying) - A unique identifier for the figure.
  uuid (character varying) - 
  chapter (character varying) - 
  title (character varying) - 
@@ -31,10 +31,10 @@ figure
 
 =head1 SCHEMA
 
-                              Table "gcis_metadata.figure"
-      Column      |              Type              | Modifiers | Storage  | Description 
- -----------------+--------------------------------+-----------+----------+-------------
-  identifier      | character varying              | not null  | extended | 
+                                          Table "gcis_metadata.figure"
+      Column      |              Type              | Modifiers | Storage  |             Description             
+ -----------------+--------------------------------+-----------+----------+-------------------------------------
+  identifier      | character varying              | not null  | extended | A unique identifier for the figure.
   uuid            | character varying              |           | extended | 
   chapter         | character varying              |           | extended | 
   title           | character varying              |           | extended | 
