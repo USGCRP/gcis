@@ -104,7 +104,7 @@ sub startup {
          push @forms, "create_form_$name";
       } else {
           die $@ unless $@ =~ /^Can't locate/;
-          $app->log->debug("did not load $controller");
+          # $app->log->debug("did not load $controller");
       }
 
       # Build bridges and routes.
@@ -139,6 +139,11 @@ sub startup {
                             instrument platform
                             person role organization country/;
     $r->resource("file");
+
+    # Redirects
+    $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
+        => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]
+      )->to('figure#redirect_to_identifier')->name('figure_redirect');
 
     # Tuba-specific routes
     $r->get('/' => sub {

@@ -34,6 +34,20 @@ sub show {
     );
 }
 
+sub redirect_to_identifier {
+    my $c = shift;
+    my $chapter_number = $c->stash('chapter_number');
+    my $figure_number = $c->stash('figure_number');
+    my $found = Figures->get_objects(
+            with_objects => ['chapter_obj'],
+            query => [
+                'chapter.number' => $chapter_number,
+                'ordinal' => $figure_number,
+            ]
+        );
+    return $c->render_not_found unless $found && @$found;
+    return $c->redirect_to( 'show_figure' => { figure_identifier => $found->[0]->identifier } );
+}
 
 1;
 
