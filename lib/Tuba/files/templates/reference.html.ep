@@ -1,0 +1,164 @@
+<% my $placeholder_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+<% my $wildcard_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+<% my $relaxed_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
+
+% layout 'default';
+<h2>API Reference</h2>
+<p>This is the reference page for the API for the Global Change Information System.
+  The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
+
+% my $show_method = ( (param 'show_method') || 'GET');
+<ul class='nav nav-tabs'>
+<li <%== $show_method eq 'GET' ? q[class="active"] : "" %>>
+%= link_to url_for('current')->query(show_method => 'GET') => begin
+GET
+%= end
+</li>
+<li <%== $show_method eq 'POST' ? q[class="active"] : "" %>>
+%= link_to url_for('current')->query(show_method => 'POST') => begin
+POST
+%= end
+</li>
+</ul>
+
+<div class="row-fluid">
+<div class="span6">
+%#-----------------------------------------------------------------
+% my $show_node = begin
+  % my $node = shift;
+    <% for my $piece (@{ $node->pattern->tree }) {
+    %><%= !ref $piece                  ? $piece
+        : $piece->[0] eq 'slash'       ? '/'
+        : $piece->[0] eq 'text'        ? $piece->[1]
+        : $piece->[0] eq 'placeholder' ? $placeholder_link->($piece->[1])
+        : $piece->[0] eq 'wildcard'    ? $wildcard_link->($piece->[1])
+        : $piece->[0] eq 'relaxed'     ? $relaxed_link->($piece->[1])
+        : 'other'; =%><% } %>
+% end
+
+% my $show_methods = param 'show_methods';
+% my $walk = begin
+  % my ($walk, $node, $depth, $parent_pattern) = @_;
+  % return if $node->name =~ /^(index|try|calculate_url)$/;
+  % my $pattern = $node->pattern->pattern || '/';
+  % $pattern = "$parent_pattern/$pattern" if $parent_pattern;
+  % my @via = @{ $node->via || [] };
+  % if ($node->is_endpoint && grep /$show_method/, @via) {
+      <tr <%== $trying && $trying->name eq $node->name ? q[class="info"] : '' %>>
+         <td>
+             <%= link_to url_for('current')->query([try => $node->name]) => begin %>
+             <%= uc(join ',', @via) %>
+             <%= end %>
+         </td>
+         <td>
+           % if (my $p = $node->parent) {
+           % my @p;
+           %    while ($p) {
+           %        unshift @p, $p;
+           %        $p = $p->parent;
+           %    }
+           % for my $q (@p) {
+                 <%= $show_node->($q) %>
+           %    }
+           % }
+           %= $show_node->($node)
+         </td>
+       </tr>
+   % }
+
+   % $depth++;
+   %= $walk->($walk, $_, $depth, $pattern) for @{$node->children};
+   % $depth--;
+% end
+%#-----------------------------------------------------------------
+
+<table class='table table-condensed table-striped'>
+  <tr>
+    <th>Methods</th>
+    <th>Path</th>
+  </tr>
+  %= $walk->($walk, $_, 0) for @{app->routes->children};
+ </table>
+</div>
+<div class="span6">
+% if ($trying) {
+    % my $defaults = $trying->pattern->defaults;
+    <div class='well'>
+        <h2><%= $trying->name %></h2>
+        %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
+            %= hidden_field '_route_name' => $trying->name;
+            % for my $p (@{ (stash 'placeholders') }) {
+                <div class="control-group">
+                    <label class="control-label" for="<%= $p %>"><%= $p %></label>
+                    <div class="controls">
+                        <%= text_field $p, value => $defaults->{$p} || ''%>
+                    </div>
+                </div>
+            % }
+            <div class="control-group">
+                <div class="controls">
+                %= submit_button 'GET json', class => 'btn btn-primary', onclick => '{return tryit("json");}'
+                %= submit_button 'GET html', class => 'btn btn-primary', onclick => '{return tryit("text");}'
+                </div>
+            </div>
+        %= end
+        <pre id='request_url' style='display:none;'></pre>
+        <pre id='results' style='display:none;'></pre>
+        </div>
+% }
+</div>
+</div>
+
+%= javascript begin
+function tryit(request_data_type) {
+    $.post('<%= url_for('calculate_url') %>', $('#theform').serialize(),
+        function(data) {
+    }).done(function(data) {
+         var request_url = data.path;
+         $('#request_url').html('GET <a href="' + request_url.htmlEscape() + '">' + request_url.htmlEscape() + '</a>');
+         if (request_data_type == 'json') {
+            try_get_json(request_url);
+         } else {
+            try_get_html(request_url);
+         }
+    })
+    .fail(function(d) {
+         $('#results').text('error computing URL : ' + JSON.stringify(d));
+    })
+    .always(function() {
+         $('#request_url').attr('style','display:block;');
+         $('#results').attr('style','display:block;')
+     });
+
+    return false;
+}
+
+function try_get_json(request_url) {
+    $.ajax({
+        type : "GET",
+        url : request_url,
+        dataType : "json"
+   }).done(function(data) {
+        $('#results').text(JSON.stringify(data,null,'\t'))
+   }).fail(function(d) {
+         $('#results').text('error getting data : ' + JSON.stringify(d));
+   });
+}
+
+function try_get_html(request_url) {
+    $.ajax({
+        type : "GET",
+        url : request_url,
+        dataType : "html"
+   }).done(function(data) {
+        $('#results').text(data)
+   }).fail(function(d) {
+         $('#results').text('error getting data : ' + JSON.stringify(d));
+   });
+}
+
+
+%= end
+</html>
+
+

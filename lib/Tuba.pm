@@ -146,7 +146,8 @@ sub startup {
       )->to('figure#redirect_to_identifier')->name('figure_redirect');
 
     # Tuba-specific routes
-    $r->get('/' => sub {
+    $r->get('/' => 'index');
+    $r->get('/reference' => sub {
       my $c = shift;
       my $trying; if (my $try = $c->param('try')) {
           $trying = $c->app->routes->lookup($try);
@@ -163,9 +164,11 @@ sub startup {
           $trying = $trying->parent;
       }
       $c->stash(placeholders => \@placeholders);
-    } => 'index');
-    $r->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
+    } => 'reference');
+    $r->get('/resources' => 'resources');
+    $r->get('/examples' => 'examples');
 
+    $r->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
     $r->get('/login')->to('auth#login')->name('login');
     $r->post('/login')->to('auth#check_login')->name('check_login');
     $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
