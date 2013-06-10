@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-%= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
 %= javascript '/mojo/jquery/jquery.js';
+%= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
 %= javascript begin
 String.prototype.htmlEscape = function() {
      return $('<div/>').text(this.toString()).html();

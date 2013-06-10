@@ -8,6 +8,7 @@ package Tuba::Controller;
 use Mojo::Base qw/Mojolicious::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/unset_state_in_db/;
+use List::Util qw/shuffle/;
 
 =head2 check, list, show
 
@@ -136,4 +137,30 @@ sub update {
     $c->redirect_to("update_form_".$object->meta->table);
 }
 
+=head2 index
+
+Handles / for tuba.
+
+=cut
+
+sub index {
+    my $c = shift;
+    state $count;
+    unless ($count) {
+        $count = Files->get_objects_count;
+    }
+    my $offset = int rand ($count - 50);
+
+    my $demo_files = Files->get_objects(
+            require_objects => [qw/image_obj.figure_obj.chapter_obj/],
+            offset => $offset,
+            limit => 50,
+        );
+    my %uniq;
+    for (@$demo_files) {
+        $uniq{$_->file} //= $_;
+    }
+    $c->stash(demo_files => [ shuffle values %uniq ]);
+    $c->render(template => 'index');
+}
 1;

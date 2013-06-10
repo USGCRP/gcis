@@ -41,12 +41,51 @@
       .marketing p + h4 {
         margin-top: 28px;
       }
+
+
+
+
+/* CUSTOMIZE THE CAROUSEL
+    -------------------------------------------------- */
+
+    /* Carousel base class */
+
+    .carousel .item {
+      height: 500px;
+    }
+
 </style>
+
 
 <div class="jumbotron">
 <h1>GCIS API</h1>
-<p class="lead">The programmatic interface to the Global Change Information System.</p>
+<p class="lead">A programmatic interface to the Global Change Information System.</p>
 </div>
+
+    <div id="myCarousel" class="carousel slide" style='border:1px solid #999;'>
+      <div class="carousel-inner">
+% my $first;
+% my $last = $demo_files->[-1];
+% for my $f (@$demo_files) {
+% my $figure = $f->image_obj->figure_obj;
+        <div class="item<%= !$first++ ? ' active' : '' %>">
+<a href="<%= url_for('show_figure', { figure_identifier => $figure->identifier, report_identifier => $figure->chapter_obj->report }) %>">
+          <img src='<%= url_for('/img/'.$f->file) %>' alt=""/>
+            <div class="carousel-caption">
+              <h4><%= $figure->identifier %></h4>
+              <p><%= $figure->title %></p>
+            </div>
+</a>
+        </div>
+% }
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+    </div>
+</div><!-- /.carousel -->
+
+%= javascript begin
+$('.carousel').carousel({interval : 3500 })
+%= end
 
 <div class="row-fluid">
 
@@ -68,3 +107,4 @@
 </div>
 
 </div>
+

@@ -77,9 +77,13 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 <td>
 % my %done;
 % for my $image ($object->image) {
+%= link_to 'show_image', { image_identifier => $image->identifier } => begin
+image
+%= $image->identifier
+%= end
 %  for my $file ($image->file) {
 %   unless ($done{$file->file}++) {
-<img width="600" height="600" style='border:1px solid #aaa;' src='<%= base %>/img/<%= $file->file %>' />
+<img width="600" height="600" style='border:1px solid #aaa;' src='<%= url_for('/img/'.$file->file) %>' />
 % }
 % }
 % }

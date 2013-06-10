@@ -146,7 +146,7 @@ sub startup {
       )->to('figure#redirect_to_identifier')->name('figure_redirect');
 
     # Tuba-specific routes
-    $r->get('/' => 'index');
+    $r->get('/')->to('controller#index')->name('index');
     $r->get('/reference' => sub {
       my $c = shift;
       my $trying; if (my $try = $c->param('try')) {

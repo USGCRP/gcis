@@ -1,3 +1,12 @@
 % layout 'default';
 
-Resources go here.
+<h2>Resources</h2>
+
+<dl>
+ <dt>Report</dt>
+ <dd>A report, such as the NCA3 has an identifier and a title.</dd>
+
+ <dt>Figure</dt>
+ <dd>A figure has a unique identifier, and is associated with a chapter in a report.</dd>
+
+</dl>
