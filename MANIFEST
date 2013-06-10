@@ -69,6 +69,7 @@ db/patches/0040_chapter_number.sql
 db/patches/0050_comments.sql
 eg/atrac_upload.html
 lib/Tuba.pm
+lib/Tuba/.Controller.pm.swp
 lib/Tuba/Article
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -88,6 +89,7 @@ lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/debug.html.ep
+lib/Tuba/files/templates/examples.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
 lib/Tuba/files/templates/file/object.html.ep
@@ -100,6 +102,8 @@ lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/not_found.development.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
+lib/Tuba/files/templates/reference.html.ep
+lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/Image.pm
 lib/Tuba/Plugin/Auth.pm
