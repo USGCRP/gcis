@@ -96,8 +96,8 @@ $('.carousel').carousel({interval : 3500 })
 
 <div class="span4">
     <h3>Resources</h3>
-    A description of the various <%= link_to 'resources' => begin %>resources<%= end %>
- which are represented, including their current state and provenance.
+    A description of how various <%= link_to 'resources' => begin %>resources<%= end %>
+are represented, including how we represent their current state and provenance.
 </div>
 
 <div class="span4">
