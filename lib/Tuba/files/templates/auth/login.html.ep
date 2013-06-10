@@ -10,9 +10,14 @@
 <br>
 <br>
 <br>
+% my $destination = ( (param 'destination') || (flash 'destination') || '');
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
-            Please log in to the Global Change Information System.
+            % if ($destination) {
+            Please log in to access this page.
+            % } else {
+            Log in to the GCIS.
+            % }
         </legend>
         % if (my $error = (flash 'error')) {
             <div class='alert alert-error'><%= $error %></div>
@@ -31,7 +36,7 @@
             </div>
         </div>
 <div class="form-actions">
-    %= hidden_field 'destination' => ( (param 'destination') || (flash 'destination') || '' );
+    %= hidden_field 'destination' => $destination;
     <button type="submit" class="btn btn-primary">Sign in</button>
 </div>
 %= end
