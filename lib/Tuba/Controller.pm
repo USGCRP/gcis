@@ -150,6 +150,7 @@ sub index {
         $count = Files->get_objects_count;
     }
     my $offset = int rand ($count - 50);
+    $offset = 0 if $offset < 0;
 
     my $demo_files = Files->get_objects(
             require_objects => [qw/image_obj.figure_obj.chapter_obj/],
