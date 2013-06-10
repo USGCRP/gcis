@@ -32,7 +32,7 @@ my $builder = Module::Build::Database->new(
     },
     requires => {
         'Mojolicious::Plugin::YamlConfig' => 0,
-        'Mojolicious' => 0,
+        'Mojolicious' => '4.14',
         'YAML::Syck'  => 0,
         'YAML::XS'    => 0,
         'Rose::DB::Object' => 0,
