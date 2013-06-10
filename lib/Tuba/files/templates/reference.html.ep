@@ -4,7 +4,7 @@
 
 % layout 'default';
 <h2>API Reference</h2>
-<p>This is the reference page for the API for the Global Change Information System.
+<p>Below is a comprehensive list of methods and URLs supported by the GCIS.
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
 
 % my $show_method = ( (param 'show_method') || 'GET');
