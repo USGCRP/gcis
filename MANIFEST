@@ -69,7 +69,6 @@ db/patches/0040_chapter_number.sql
 db/patches/0050_comments.sql
 eg/atrac_upload.html
 lib/Tuba.pm
-lib/Tuba/.Controller.pm.swp
 lib/Tuba/Article
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
