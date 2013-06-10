@@ -23,7 +23,7 @@ use Mojo::Base 'Mojolicious::Controller';
 sub login {
     my $c = shift;
     return $c->render if $c->req->is_secure;
-    return if ($c->app->mode eq 'development' && $c->tx->remote_address eq '127.0.0.1');
+    return $c->render if ($c->app->mode eq 'development' && $c->tx->remote_address eq '127.0.0.1');
     my $secure = $c->req->url->clone->to_abs;
     $secure->base->scheme('https');
     $secure->scheme('https');

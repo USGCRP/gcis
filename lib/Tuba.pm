@@ -64,6 +64,8 @@ sub startup {
         my $c = shift;
         push @{$c->req->url->base->path}, shift @{$c->req->url->path}
           if @{ $c->req->url->path->parts } && $c->req->url->path->parts->[0] eq 'api';
+        my $forward_base = $c->req->headers->header('X-Forwarded-Base');
+        $c->req->url->base(Mojo::URL->new($forward_base)) if $forward_base;
     }) if $app->mode eq 'production';
 
     # Shortcuts (see Mojolicious::Guides::Routing)
