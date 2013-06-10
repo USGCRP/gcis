@@ -16,16 +16,6 @@ use Mojo::ByteStream qw/b/;
 
 our $VERSION = '0.18';
 
-sub demo {
- my $c = shift;
- my $path = $c->req->url->path;
- $c->respond_to(
-            json => sub { shift->render_json({demo => 'data', 'you_requested' => $path }) },
-            html => sub { shift->render({text => "<html>demo data, you requested <b>$path</b></html>", format => 'html'}) },
-            any  => sub {  my $c = shift; $c->render_text('request type is not supported'.$c->req->headers->to_string) },
-        )
-};
-
 sub startup {
     my $app = shift;
 
