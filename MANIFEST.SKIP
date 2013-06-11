@@ -75,3 +75,6 @@
 postmaster.log
 Tuba.conf
 
+# avoid log files
+\.log$
+
