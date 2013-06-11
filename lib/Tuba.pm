@@ -110,6 +110,7 @@ sub startup {
       $resource->get(":$identifier")->to('#show')->name("show_$name");
       $authed->get(":$identifier/form/update")->to("$name#update_form")->name("update_form_$name");
       $authed->post(":$identifier")->to("$name#update")->name("update_$name");
+      $authed->delete(":$identifier")->to("$name#remove")->name("remove_$name");
       my $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
       return $select;
     });

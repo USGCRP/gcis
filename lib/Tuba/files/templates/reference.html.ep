@@ -22,7 +22,7 @@ POST
 </ul>
 
 <div class="row-fluid">
-<div class="span6">
+<div class="span8">
 %#-----------------------------------------------------------------
 % my $show_node = begin
   % my $node = shift;
@@ -80,8 +80,9 @@ POST
   %= $walk->($walk, $_, 0) for @{app->routes->children};
  </table>
 </div>
-<div class="span6">
+</div>
 % if ($trying) {
+<div class="modal">
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
         <h2><%= $trying->name %></h2>
@@ -105,8 +106,8 @@ POST
         <pre id='request_url' style='display:none;'></pre>
         <pre id='results' style='display:none;'></pre>
         </div>
-% }
 </div>
+% }
 </div>
 
 %= javascript begin

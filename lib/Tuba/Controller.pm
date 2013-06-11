@@ -67,16 +67,32 @@ sub create {
     my ($object_class) = $class =~ /::(.*)$/;
     $object_class = 'Tuba::DB::Object::'.$object_class;
     my %obj;
-    for my $col ($object_class->meta->columns) {
-        my $got = $c->param($col->name);
-        $obj{$col->name} = defined($got) && length($got) ? $got : undef;
+    if (my $json = $c->req->json) {
+        %obj = %$json;
+    } else {
+        for my $col ($object_class->meta->columns) {
+            my $got = $c->param($col->name);
+            $obj{$col->name} = defined($got) && length($got) ? $got : undef;
+        }
     }
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
     my $table = $object_class->meta->table;
     $new->save and return $c->_redirect_to_view($new);
-    $c->flash(error => $new->error);
-    $c->redirect_to("create_form_$table");
+    $c->app->log->warn("# done saving");
+    $c->respond_to(
+        json => sub {
+                my $c = shift;
+                $c->app->log->warn("# rendering");
+                $c->res->code(409);
+                $c->render(json => { error => $new->error } );
+            },
+        html => sub {
+                my $c = shift;
+                $c->flash(error => $new->error);
+                $c->redirect_to("create_form_$table");
+            }
+        );
 }
 
 sub _this_object {
@@ -135,6 +151,19 @@ sub update {
     $ok and return $c->_redirect_to_view($object);
     $c->flash(error => $object->error);
     $c->redirect_to("update_form_".$object->meta->table);
+}
+
+=head2 remove
+
+Generic delete
+
+=cut
+
+sub remove {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $object->delete or return $c->render_exception($object->error);
+    return $c->render(text => 'ok');
 }
 
 =head2 index
