@@ -123,6 +123,7 @@ sub startup {
     $report->resource('figure');
     $report->resource('key-message');
     $report->resource('traceable-account');
+    $report->resource('finding');
     $r->resource('publication');
     $r->resource($_) for qw/article journal paper/;
     $r->resource('image');
