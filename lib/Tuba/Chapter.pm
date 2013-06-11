@@ -12,7 +12,7 @@ sub list {
     my $c = shift;
     my $objects = Chapters->get_objects;
     $c->respond_to(
-        json => sub { shift->render_json([ map $_->as_tree, @$objects ]) },
+        json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
         html => sub { shift->render(template => 'objects', meta => Chapter->meta, objects => $objects ) }
     );
 }
@@ -26,7 +26,7 @@ sub show {
       or return $c->render_not_found;
 
     $c->respond_to(
-        json => sub { shift->render_json($chapter->as_tree) },
+        json => sub { shift->render(json => $chapter->as_tree ) },
         html => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) }
     );
 }

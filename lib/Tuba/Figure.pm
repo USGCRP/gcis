@@ -18,7 +18,7 @@ sub list {
         $figures = Figures->get_objects(with_objects => ['chapter_obj']);
     }
     $c->respond_to(
-        json => sub { $c->render_json([ map $_->as_tree, @$figures ]) },
+        json => sub { $c->render(json => [ map $_->as_tree, @$figures ]) },
         html => sub { $c->render(template => 'objects', meta => Figure->meta, objects => $figures ) }
     );
 }

@@ -8,13 +8,14 @@ package Tuba::File;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
-#sub list {
-#    my $c = shift;
-#    $c->respond_to(
-#        json => sub { $c->render_json([ map $_->as_tree, @$files ]) },
-#        html => sub { $c->render(template => 'objects', meta => file->meta, objects => $files ) }
-#    );
-#}
+sub list {
+    my $c = shift;
+    my $files = Files->get_objects(require_objects => 'image_obj');
+    $c->respond_to(
+        json => sub { $c->render(json => [ map $_->as_tree, @$files ]) },
+        html => sub { $c->render(template => 'objects', meta => File->meta, objects => $files ) }
+    );
+}
 
 sub show {
     my $c = shift;
