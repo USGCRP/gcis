@@ -19,6 +19,12 @@ GET
 POST
 %= end
 </li>
+<li <%== $show_method eq 'DELETE' ? q[class="active"] : "" %>>
+%= link_to url_for('current')->query(show_method => 'DELETE') => begin
+DELETE
+%= end
+</li>
+
 </ul>
 
 <div class="row-fluid">
@@ -83,9 +89,12 @@ POST
 </div>
 % if ($trying) {
 <div class="modal">
+    <div class="modal-header">
+        <%= link_to url_for('current') => class => 'close' => begin %>&times;<%= end %>
+        <h3><%= $trying->name %></h3>
+  </div>
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
-        <h2><%= $trying->name %></h2>
         %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
             %= hidden_field '_route_name' => $trying->name;
             % for my $p (@{ (stash 'placeholders') }) {
