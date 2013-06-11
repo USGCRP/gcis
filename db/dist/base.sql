@@ -160,6 +160,14 @@ CREATE TABLE file (
 
 
 
+CREATE TABLE finding (
+    identifier character varying NOT NULL,
+    chapter character varying,
+    statement character varying
+);
+
+
+
 CREATE TABLE image (
     identifier character varying NOT NULL,
     figure character varying NOT NULL,
@@ -512,6 +520,11 @@ ALTER TABLE ONLY file
 
 
 
+ALTER TABLE ONLY finding
+    ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier);
+
+
+
 ALTER TABLE ONLY image
     ADD CONSTRAINT image_pkey PRIMARY KEY (identifier);
 
@@ -649,6 +662,11 @@ ALTER TABLE ONLY figure
 
 ALTER TABLE ONLY file
     ADD CONSTRAINT file_ibfk_1 FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY finding
+    ADD CONSTRAINT finding_chapter_fkey FOREIGN KEY (chapter) REFERENCES chapter(identifier);
 
 
 

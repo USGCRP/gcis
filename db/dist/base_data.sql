@@ -144,6 +144,14 @@ COPY file (identifier, image, file_type, dir, file) FROM stdin;
 
 
 --
+-- Data for Name: finding; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY finding (identifier, chapter, statement) FROM stdin;
+\.
+
+
+--
 -- Data for Name: org_academic; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 

@@ -31,6 +31,7 @@ chapter
      "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
  Referenced by:
      TABLE "figure" CONSTRAINT "figure_ibfk_1" FOREIGN KEY (chapter) REFERENCES chapter(identifier) MATCH FULL
+     TABLE "finding" CONSTRAINT "finding_chapter_fkey" FOREIGN KEY (chapter) REFERENCES chapter(identifier)
  Has OIDs: no
  
 

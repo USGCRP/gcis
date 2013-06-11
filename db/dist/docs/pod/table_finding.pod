@@ -1,0 +1,34 @@
+
+=head1 NAME
+
+finding
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ chapter (character varying) - 
+ statement (character varying) - 
+
+
+=head1 SCHEMA
+
+                     Table "gcis_metadata.finding"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  chapter    | character varying |           | extended | 
+  statement  | character varying |           | extended | 
+ Indexes:
+     "finding_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "finding_chapter_fkey" FOREIGN KEY (chapter) REFERENCES chapter(identifier)
+ Has OIDs: no
+ 
+
+=cut
+
+
