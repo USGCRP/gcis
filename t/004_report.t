@@ -24,6 +24,13 @@ $t->get_ok('/report/test-report' => { Accept => 'application/json' } )->status_i
 $t->get_ok('/report/test-report2' => { Accept => 'application/json' } )->status_is(200)
   ->json_is('/identifier' => 'test-report2');
 
+$t->post_ok("/report/test-report/figure" => json => { identifier => 'test-figure' } )->status_is(200);
+$t->get_ok('/report/test-report/figure/test-figure' => { Accept => 'application/json' } )->status_is(200)
+  ->json_is('/identifier' => 'test-figure');
+
+$t->delete_ok('/report/test-report/figure/test-figure' => { Accept => 'application/json' } )->status_is(200);
+$t->get_ok('/report/test-report/figure/test-figure' => { Accept => 'application/json' } )->status_is(404);
+
 $t->delete_ok('/report/test-report' => { Accept => 'application/json' })->status_is(200);
 $t->delete_ok('/report/test-report2' => { Accept => 'application/json' })->status_is(200);
 
