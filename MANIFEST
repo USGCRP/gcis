@@ -86,6 +86,7 @@ lib/Tuba/File.pm
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
+lib/Tuba/files/templates/auth/login.json.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/examples.html.ep
@@ -115,4 +116,5 @@ META.yml
 t/001_start_db.t
 t/002_basic.t
 t/003_lists.t
+t/004_report.t
 t/999_stop_db.t

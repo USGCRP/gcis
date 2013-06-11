@@ -14,7 +14,7 @@ package Tuba;
 use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 
-our $VERSION = '0.21';
+our $VERSION = '0.22';
 
 sub startup {
     my $app = shift;
