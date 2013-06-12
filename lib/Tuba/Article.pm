@@ -32,6 +32,14 @@ sub show {
     );
 }
 
+sub doi {
+    my $c = shift;
+    my $doi = $c->stash('doi');
+    my $object =
+      Article->new( doi => $doi )->load( speculative => 1)
+      or return $c->render_not_found;
+    $c->redirect_to('show_article' => { article_identifier => $object->identifier } );
+}
 
 1;
 

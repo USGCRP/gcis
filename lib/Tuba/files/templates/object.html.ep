@@ -54,7 +54,19 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % my $val = $object->$k;
     <tr>
         <td><%= $k %></td>
-        <td><%= $val %></td>
+        <td>
+            % if ($k eq 'doi') {
+                %= link_to "http://dx.doi.org/$val" => begin
+                <%= $val %>
+                %= end
+            % } elsif ($k eq 'url') {
+                %= link_to $val => begin
+                <%= $val %>
+                %= end
+            % } else {
+            <%= $val %>
+            % }
+         </td>
     </tr>
 % }
 
