@@ -36,6 +36,7 @@ article
   notes         | character varying |           | extended | 
  Indexes:
      "article_pkey" PRIMARY KEY, btree (identifier)
+     "article_doi_key" UNIQUE CONSTRAINT, btree (doi)
  Foreign-key constraints:
      "article_ibfk_1" FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL
  Has OIDs: no

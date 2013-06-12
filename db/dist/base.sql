@@ -476,6 +476,11 @@ ALTER TABLE ONLY submitter ALTER COLUMN id SET DEFAULT nextval('submitter_id_seq
 
 
 ALTER TABLE ONLY article
+    ADD CONSTRAINT article_doi_key UNIQUE (doi);
+
+
+
+ALTER TABLE ONLY article
     ADD CONSTRAINT article_pkey PRIMARY KEY (identifier);
 
 
