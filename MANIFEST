@@ -70,6 +70,7 @@ db/patches/0030_chapter.sql
 db/patches/0040_chapter_number.sql
 db/patches/0050_comments.sql
 db/patches/0060_finding.sql
+db/patches/0070_doi.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article
