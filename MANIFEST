@@ -17,6 +17,7 @@ db/dist/docs/html/table_gcis_metadata.dataset_lineage.html
 db/dist/docs/html/table_gcis_metadata.dataset_organization.html
 db/dist/docs/html/table_gcis_metadata.figure.html
 db/dist/docs/html/table_gcis_metadata.file.html
+db/dist/docs/html/table_gcis_metadata.finding.html
 db/dist/docs/html/table_gcis_metadata.image.html
 db/dist/docs/html/table_gcis_metadata.journal.html
 db/dist/docs/html/table_gcis_metadata.org_academic.html
@@ -44,6 +45,7 @@ db/dist/docs/pod/table_dataset_lineage.pod
 db/dist/docs/pod/table_dataset_organization.pod
 db/dist/docs/pod/table_figure.pod
 db/dist/docs/pod/table_file.pod
+db/dist/docs/pod/table_finding.pod
 db/dist/docs/pod/table_image.pod
 db/dist/docs/pod/table_journal.pod
 db/dist/docs/pod/table_org_academic.pod
@@ -67,6 +69,7 @@ db/patches/0010_start.sql
 db/patches/0030_chapter.sql
 db/patches/0040_chapter_number.sql
 db/patches/0050_comments.sql
+db/patches/0060_finding.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article
@@ -74,6 +77,7 @@ lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
 lib/Tuba/Controller.pm
+lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
@@ -105,6 +109,7 @@ lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/update_form.html.ep
+lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
