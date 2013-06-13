@@ -1,5 +1,6 @@
 package Tuba::DB::Object;
 use DBIx::Simple;
+use base 'Rose::DB::Object';
 
 use strict;
 use warnings;
@@ -22,6 +23,9 @@ sub uri {
 sub update_primary_key {
     my $object = shift;
     my %changes = @_;
+    my $audit_user = delete $changes{audit_user} or do {
+        Carp::confess "missing audit user in update_primary_key";
+    };
 
     # Save current pk values in case there is a composite primary key and
     # we are only changing one piece.
@@ -38,15 +42,32 @@ sub update_primary_key {
     for my $col (keys %changes) {
         $where{$col} = $object->$col;
     }
-    my $db = DBIx::Simple->new($object->db->dbh);
-    $db->dbh->{RaiseError} = 0;
-    my $result = $db->update($table, \%changes, \%where) or do {
+    my $db = $object->db;
+    $db->do_transaction( sub {
+        $db->dbh->do("set local audit.username = ?",{},$audit_user);
+        my $dbis = DBIx::Simple->new($db->dbh);
+        $dbis->update($table, \%changes, \%where) or die $dbis->error;
+    } ) or do {
         $object->error($db->error);
-        return undef;
+        return;
     };
     my $class = ref $object;
     my $replacement = $class->new( %pk, %changes )->load(speculative => 1);
     return $replacement;
+}
+
+sub save {
+    my $self = shift;
+    my %args = @_;
+    my $status;
+    my $audit_user = delete $args{audit_user} or do {
+        Carp::confess "missing audit user in save";
+    };
+    $self->meta->error_mode('fatal');
+    return $self->db->do_transaction( sub {
+            $self->db->dbh->do("set local audit.username = ?",{},$audit_user);
+            $self->SUPER::save(%args);
+    } );
 }
 
 1;

@@ -25,6 +25,10 @@ sub register {
     $app->helper(auth => sub {
             my $c = shift;
             return 1 if $c->session('user');
+            #if (my $user = $c->session('user')) {
+            #    $c->db->dbh->do('set audit.username = ?',{},$user) if $c->req->method ne 'GET';
+            #    return 1;
+            #}
             $c->flash(destination => $c->req->url);
             $c->redirect_to('login');
             return 0;

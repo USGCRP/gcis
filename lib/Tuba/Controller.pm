@@ -78,8 +78,7 @@ sub create {
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
     my $table = $object_class->meta->table;
-    $new->save and return $c->_redirect_to_view($new);
-    $c->app->log->warn("# done saving");
+    $new->save(audit_user => $c->user) and return $c->_redirect_to_view($new);
     $c->respond_to(
         json => sub {
                 my $c = shift;
@@ -141,13 +140,13 @@ sub update {
     my $ok = 1;
     if (keys %pk_changes) {
         # See Tuba::DB::Object.
-        if (my $new = $object->update_primary_key(%pk_changes)) {
+        if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes)) {
             $object = $new;
         } else {
             $ok = 0;
         }
     }
-    $ok = $object->save(changes_only => 1) if $ok;
+    $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
     $ok and return $c->_redirect_to_view($object);
     $c->flash(error => $object->error);
     $c->redirect_to("update_form_".$object->meta->table);
