@@ -2,6 +2,7 @@
 <html>
 <head>
 %= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
+%= stylesheet "/css/gcis.css";
 %= javascript '/mojo/jquery/jquery.js';
 %= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
 %= javascript begin

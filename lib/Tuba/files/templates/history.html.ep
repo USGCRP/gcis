@@ -1,0 +1,19 @@
+% layout 'default';
+
+<table class='table table-condensed table-bordered squeeze'>
+<tr>
+<th>changes</th>
+<th>when</th>
+<th>by</th>
+<th>notes</th>
+</tr>
+% for my $row (@$change_log) {
+<tr>
+<td><%= $row->{changed_fields} %></td>
+<td><%= format_ago($row->{action_tstamp_tx}) %></td>
+<td><%= $row->{audit_username} %></td>
+<td><%= $row->{audit_note} %></td>
+</tr>
+% }
+</table>
+

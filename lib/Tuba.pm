@@ -13,6 +13,8 @@ Tuba provides a RESTful API to GCIS data.
 package Tuba;
 use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
+use Time::Duration qw/ago/;
+use Date::Parse qw/str2time/;
 
 our $VERSION = '0.24';
 
@@ -53,6 +55,11 @@ sub startup {
             return $val unless $uri;
             return $c->link_to($val, $uri );
         } );
+    $app->helper(format_ago => sub {
+            my $c = shift;
+            my $date = shift;
+            return ago(time - str2time($date));
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -110,6 +117,7 @@ sub startup {
       $resource->get(":$identifier")->to('#show')->name("show_$name");
       $authed->get(":$identifier/form/update")->to("$name#update_form")->name("update_form_$name");
       $authed->post(":$identifier")->to("$name#update")->name("update_$name");
+      $authed->get(":$identifier/history")->to("$name#history")->name("history_$name");
       $authed->delete(":$identifier")->to("$name#remove")->name("remove_$name");
       my $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
       return $select;

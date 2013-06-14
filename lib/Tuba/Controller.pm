@@ -192,4 +192,32 @@ sub index {
     $c->stash(demo_files => [ shuffle values %uniq ]);
     $c->render(template => 'index');
 }
+
+=item history
+
+Generic history of changes to an object.
+
+=cut
+
+sub history {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    my $pk = $object->meta->primary_key;
+    my @columns = $pk->column_names;
+    return $c->render(text => 'unsupported') unless @columns==1;
+    $pk = $columns[0];
+    my $pkval = $object->$pk;
+    my $result = $c->dbc->select(
+        [ 'audit_username', 'audit_note', 'changed_fields', 'action_tstamp_tx' ],
+        table => "audit.logged_actions",
+        where => [
+            qq{row_data->'$pk' = :pkval or changed_fields->'$pk' = :pkval },
+            { pkval => $pkval }
+        ],
+        append => 'order by action_tstamp_tx desc',
+    );
+    $c->render(template => 'history', change_log => $result->all)
+}
+
+
 1;

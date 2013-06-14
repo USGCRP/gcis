@@ -24,6 +24,7 @@ package Tuba::Plugin::Db;
 use Mojo::Base qw/Mojolicious::Plugin/;
 use DBIx::Connector;
 use DBIx::Simple;
+use DBIx::Custom;
 use SQL::Abstract;
 use SQL::Interp;
 use Module::Build::Database;
@@ -55,6 +56,7 @@ sub register {
 
     $app->helper( db => sub { $dbix } );
     $app->helper( dbs => sub { DBIx::Simple->new( shift->db->dbh ) } );
+    $app->helper( dbc => sub { DBIx::Custom->connect( connector => $dbix ) } );
 
     Tuba::DB::Objects->init( $app );
 

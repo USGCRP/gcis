@@ -37,6 +37,7 @@ my $builder = Module::Build::Database->new(
         'YAML::XS'    => 0,
         'Rose::DB::Object' => 0,
         'DBIx::Simple' => 0,
+        'DBIx::Custom' => 0,
         'SQL::Abstract' => 0,
         'SQL::Interp' => 0,
     },
