@@ -216,7 +216,7 @@ sub history {
         ],
         append => 'order by action_tstamp_tx desc',
     );
-    $c->render(template => 'history', change_log => $result->all)
+    $c->render(template => 'history', change_log => $result->all, object => $object, pk => $pk)
 }
 
 

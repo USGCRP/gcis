@@ -2,22 +2,16 @@
 % layout 'default';
 
 <center>
-<h2>
-    %= $object->stringify
-</h2>
+<h2><%= $object->stringify %></h2>
 </center>
 
-% if ($object->can('identifier')) {
-% if (user()) {
-<span style='float:right;'>
-%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin
-edit
-%= end
-%= link_to 'history_'.$object->meta->table => class => "btn" => begin
-history
-%= end
-</span>
-% }
+%= include 'history_modal';
+
+% if ($object->can('identifier') && user()) {
+    <span style='float:right;'>
+    <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+    </span>
 % }
 
 % my $base = url_for('current')->to_abs;

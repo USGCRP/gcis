@@ -1,5 +1,12 @@
 % layout 'default';
 
+% unless (param 'no_header') {
+<h5>
+Change history for
+%= obj_link($object)
+</h5>
+% }
+
 <table class='table table-condensed table-bordered squeeze'>
 <tr>
 <th>changes</th>
