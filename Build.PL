@@ -1,7 +1,7 @@
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
-use Module::Build::Database 0.41;
+use Module::Build::Database 0.42;
 BEGIN {
     eval qq{
     use Module::Build::Mojolicious clean_install => 1;
@@ -11,15 +11,23 @@ BEGIN {
 }
 use File::ShareDir qw/dist_dir/;
 
+my $extra = $ENV{POSTGRES_91} ? qq[\ncustom_variable_classes = 'audit'] : "";
+
+open my $fp, '< db/extra/audit.sql' or die "audit.sql :$!";
+my $audit_sql = join '', <$fp>;
+close $fp;
+
 my $builder = Module::Build::Database->new(
     install_base        => '/usr/local/gcis',
     database_type       => 'PostgreSQL',
     database_options    => {
         name => "gcis",
         schema => "gcis_metadata",
-        append_to_conf => q[
+        post_initdb => $audit_sql,
+        append_to_conf => qq[
             audit.username = 'unknown'
             audit.note = ''
+            $extra
         ],
     },
     module_name         => 'Tuba',
