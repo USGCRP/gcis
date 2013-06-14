@@ -67,11 +67,16 @@ sub save {
     };
     my $audit_note = delete $args{audit_note}; # Optional
     $self->meta->error_mode('fatal');
-    return $self->db->do_transaction( sub {
+    $status = $self->db->do_transaction( sub {
             $self->db->dbh->do("set local audit.username = ?",{},$audit_user);
             $self->db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
             $self->SUPER::save(%args);
     } );
+    unless ($status) {
+        $self->app->log->warn("save failed, obj error : ".($self->error || 'none'));
+        $self->app->log->warn("save failed, db error : ".($self->db->error || 'none'));
+    }
+    return $status;
 }
 
 1;

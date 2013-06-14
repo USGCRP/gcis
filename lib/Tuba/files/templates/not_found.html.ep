@@ -1,0 +1,5 @@
+<!DOCTYPE html>
+<h4>404 Not found</h4>
+<pre>
+Could not find the resource <b><%= $self->req->url %></b> on this server.
+</pre>

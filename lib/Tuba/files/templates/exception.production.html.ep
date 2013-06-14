@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<h5>
+500 Internal Server Error
+</h5>
+
+<pre>
+When reporting this error, please include the information below :
+    request url : <%= $self->req->url->to_abs %>
+    referer : <%= $self->req->headers->header('Referer') || '' %>
+    pid : <%= $$ %>
+    time : <%= time %>
+</pre>
+</html>
+
