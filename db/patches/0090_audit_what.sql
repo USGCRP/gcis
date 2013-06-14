@@ -18,7 +18,6 @@ select audit.audit_table('org_project');
 select audit.audit_table('org_research');
 select audit.audit_table('organization');
 select audit.audit_table('organization_type');
-select audit.audit_table('patches_applied');
 select audit.audit_table('person');
 select audit.audit_table('publication');
 select audit.audit_table('publication_contributor');
