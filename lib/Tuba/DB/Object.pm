@@ -1,5 +1,6 @@
 package Tuba::DB::Object;
 use DBIx::Simple;
+use Tuba::Log;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -73,8 +74,8 @@ sub save {
             $self->SUPER::save(%args);
     } );
     unless ($status) {
-        $self->app->log->warn("save failed, obj error : ".($self->error || 'none'));
-        $self->app->log->warn("save failed, db error : ".($self->db->error || 'none'));
+        logger->warn("save failed, obj error : ".($self->error || 'none'));
+        logger->warn("save failed, db error : ".($self->db->error || 'none'));
     }
     return $status;
 }

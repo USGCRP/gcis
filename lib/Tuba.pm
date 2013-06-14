@@ -15,6 +15,7 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
+use Tuba::Log;
 
 our $VERSION = '0.26';
 
@@ -24,6 +25,8 @@ sub startup {
     $app->secret('aePhoox5Iegh6toeay3ooV9n');
     $app->plugin('InstallablePaths');
     $app->defaults->{report_identifier} = "nca3";
+
+    Tuba::Log->set_logger($app->log);
 
     # Plugins, configuration
     my $conf =
