@@ -1,7 +1,7 @@
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
-use Module::Build::Database;
+use Module::Build::Database 0.41;
 BEGIN {
     eval qq{
     use Module::Build::Mojolicious clean_install => 1;
@@ -17,6 +17,11 @@ my $builder = Module::Build::Database->new(
     database_options    => {
         name => "gcis",
         schema => "gcis_metadata",
+        append_to_conf => q[
+            custom_variable_classes = 'audit'
+            audit.username = 'unknown'
+            audit.note = ''
+        ],
     },
     module_name         => 'Tuba',
     license             => 'perl',
