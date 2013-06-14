@@ -18,7 +18,6 @@ my $builder = Module::Build::Database->new(
         name => "gcis",
         schema => "gcis_metadata",
         append_to_conf => q[
-            custom_variable_classes = 'audit'
             audit.username = 'unknown'
             audit.note = ''
         ],
