@@ -126,6 +126,7 @@ sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
     my %pk_changes;
+
     for my $col ($object->meta->columns) {
         my $param = $c->param($col->name);
         $param = undef unless defined($param) && length($param);
@@ -136,6 +137,7 @@ sub update {
         }
         $object->$acc($param);
     }
+
     $object->meta->error_mode('return');
     my $ok = 1;
     if (keys %pk_changes) {
@@ -146,6 +148,8 @@ sub update {
             $ok = 0;
         }
     }
+
+
     $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
     $ok and return $c->_redirect_to_view($object);
     $c->flash(error => $object->error);

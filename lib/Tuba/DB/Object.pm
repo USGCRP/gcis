@@ -56,6 +56,7 @@ sub update_primary_key {
     };
     my $class = ref $object;
     my $replacement = $class->new( %pk, %changes )->load(speculative => 1);
+    $replacement->db($object->db);
     return $replacement;
 }
 
