@@ -52,7 +52,8 @@ CREATE TABLE audit.logged_actions (
     row_data hstore,
     changed_fields hstore,
     statement_only boolean not null,
-    audit_username varchar
+    audit_username varchar,
+    audit_note varchar
 );
 
 REVOKE ALL ON audit.logged_actions FROM public;
@@ -110,7 +111,8 @@ BEGIN
         substring(TG_OP,1,1),                         -- action
         NULL, NULL,                                   -- row_data, changed_fields
         'f',                                          -- statement_only
-        current_setting('audit.username')             -- session data set by application
+        current_setting('audit.username'),            -- session data set by application
+        current_setting('audit.note')                 -- session data set by application
         );
 
     IF NOT TG_ARGV[0]::boolean IS DISTINCT FROM 'f'::boolean THEN

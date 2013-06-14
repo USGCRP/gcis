@@ -26,6 +26,7 @@ sub update_primary_key {
     my $audit_user = delete $changes{audit_user} or do {
         Carp::confess "missing audit user in update_primary_key";
     };
+    my $audit_note = delete $changes{audit_note}; # Optional
 
     # Save current pk values in case there is a composite primary key and
     # we are only changing one piece.
@@ -45,6 +46,7 @@ sub update_primary_key {
     my $db = $object->db;
     $db->do_transaction( sub {
         $db->dbh->do("set local audit.username = ?",{},$audit_user);
+        $db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
         my $dbis = DBIx::Simple->new($db->dbh);
         $dbis->update($table, \%changes, \%where) or die $dbis->error;
     } ) or do {
@@ -63,9 +65,11 @@ sub save {
     my $audit_user = delete $args{audit_user} or do {
         Carp::confess "missing audit user in save";
     };
+    my $audit_note = delete $args{audit_note}; # Optional
     $self->meta->error_mode('fatal');
     return $self->db->do_transaction( sub {
             $self->db->dbh->do("set local audit.username = ?",{},$audit_user);
+            $self->db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
             $self->SUPER::save(%args);
     } );
 }
