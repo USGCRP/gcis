@@ -143,6 +143,7 @@ sub update {
     if (keys %pk_changes) {
         # See Tuba::DB::Object.
         if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes)) {
+            $new->$_($object->$_) for map { $_->is_primary_key_member ? () : $_->name } $object->meta->columns;
             $object = $new;
         } else {
             $ok = 0;
