@@ -71,6 +71,8 @@ db/patches/0040_chapter_number.sql
 db/patches/0050_comments.sql
 db/patches/0060_finding.sql
 db/patches/0070_doi.sql
+db/patches/0080_audit.sql
+db/patches/0090_audit_what.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article
@@ -88,6 +90,7 @@ lib/Tuba/DB/Object.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
+lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
@@ -99,6 +102,8 @@ lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
 lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/forms.html.ep
+lib/Tuba/files/templates/history.html.ep
+lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep

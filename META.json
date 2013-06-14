@@ -27,6 +27,7 @@
       },
       "runtime" : {
          "requires" : {
+            "DBIx::Custom" : "0",
             "DBIx::Simple" : "0",
             "File::ShareDir" : "1.00",
             "Mojolicious" : "4.14",
@@ -42,7 +43,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.24"
+         "version" : "0.25"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm",
@@ -127,5 +128,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.24"
+   "version" : "0.25"
 }

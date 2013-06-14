@@ -17,6 +17,7 @@ WriteMakefile
                    'YAML::Syck' => 0,
                    'DBIx::Simple' => 0,
                    'YAML::XS' => 0,
+                   'DBIx::Custom' => 0,
                    'Rose::DB::Object' => 0,
                    'Mojolicious' => '4.14',
                    'Test::More' => 0,

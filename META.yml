@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.24
+    version: 0.25
   Tuba::Article:
     file: lib/Tuba/Article.pm
     version: 0
@@ -76,6 +76,7 @@ provides:
     file: lib/Tuba/Report.pm
     version: 0
 requires:
+  DBIx::Custom: 0
   DBIx::Simple: 0
   File::ShareDir: 1.00
   Mojolicious: 4.14
@@ -87,4 +88,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.24
+version: 0.25
