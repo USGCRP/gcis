@@ -45,6 +45,7 @@ my $builder = Module::Build::Database->new(
         'DBIx::Custom' => 0,
         'SQL::Abstract' => 0,
         'SQL::Interp' => 0,
+        'Date::Parse' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
