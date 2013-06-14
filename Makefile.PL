@@ -20,6 +20,7 @@ WriteMakefile
                    'DBIx::Custom' => 0,
                    'Rose::DB::Object' => 0,
                    'Mojolicious' => '4.14',
+                   'Date::Parse' => 0,
                    'Test::More' => 0,
                    'File::ShareDir' => '1.00',
                    'SQL::Interp' => 0

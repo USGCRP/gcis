@@ -65,6 +65,7 @@ db/dist/docs/pod/table_ref_type.pod
 db/dist/docs/pod/table_report.pod
 db/dist/docs/pod/table_submitter.pod
 db/dist/patches_applied.txt
+db/extra/audit.sql
 db/patches/0010_start.sql
 db/patches/0030_chapter.sql
 db/patches/0040_chapter_number.sql

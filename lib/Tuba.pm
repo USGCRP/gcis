@@ -16,7 +16,7 @@ use Mojo::ByteStream qw/b/;
 use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 sub startup {
     my $app = shift;
