@@ -84,24 +84,24 @@
 </div><!-- /.carousel -->
 
 %= javascript begin
-$('.carousel').carousel({interval : 3500 })
+$('.carousel').carousel({interval : 20000 })
 %= end
 
 <div class="row-fluid">
 
 <div class="span4">
-    <h3>API Reference</h3>
+    <h2>API Reference</h2>
     <p>The complete <%= link_to 'reference' => begin %>API Reference<%= end %>.</p>
 </div>
 
 <div class="span4">
-    <h3>Resources</h3>
+    <h2>Resources</h2>
     A description of how various <%= link_to 'resources' => begin %>resources<%= end %>
 are represented, including how we represent their current state and provenance.
 </div>
 
 <div class="span4">
-    <h3>Examples</h3>
+    <h2>Examples</h2>
 <%= link_to 'examples' => begin %>Examples<%= end %>
  and tutorials for using this API.
 </div>
