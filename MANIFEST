@@ -110,7 +110,6 @@ lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
 lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
-lib/Tuba/files/templates/not_found.development.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
