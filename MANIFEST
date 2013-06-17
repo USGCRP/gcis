@@ -100,7 +100,9 @@ lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/examples.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
+lib/Tuba/files/templates/exception.production.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
+lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/history.html.ep
@@ -110,6 +112,7 @@ lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
 lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
+lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
@@ -117,6 +120,7 @@ lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
+lib/Tuba/Log.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
 lib/Tuba/Report.pm
