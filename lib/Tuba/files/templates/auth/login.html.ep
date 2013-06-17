@@ -14,7 +14,7 @@
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
             % if ($destination) {
-            Please log in to access this page.
+            Please log in to continue.
             % } else {
             Log in to the GCIS.
             % }

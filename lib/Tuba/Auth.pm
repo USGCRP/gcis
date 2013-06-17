@@ -58,7 +58,8 @@ sub _login_ok {
     my $user = shift;
     $c->app->log->info("Log in ok for $user");
     $c->session(user => $user);
-    my $dest = $c->param('destination') || 'index';
+    my $dest = $c->param('destination') || $c->flash('destination') || 'index';
+    $dest =~ s/^http(s)?://;
     return $c->redirect_to($dest);
 }
 

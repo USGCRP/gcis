@@ -213,10 +213,10 @@ sub history {
     $pk = $columns[0];
     my $pkval = $object->$pk;
     my $result = $c->dbc->select(
-        [ 'audit_username', 'audit_note', 'changed_fields', 'action_tstamp_tx' ],
+        [ 'audit_username', 'audit_note', 'changed_fields', 'action_tstamp_tx', 'action' ],
         table => "audit.logged_actions",
         where => [
-            qq{row_data->'$pk' = :pkval or changed_fields->'$pk' = :pkval },
+            qq{(row_data->'$pk' = :pkval or changed_fields->'$pk' = :pkval) },
             { pkval => $pkval }
         ],
         append => 'order by action_tstamp_tx desc',

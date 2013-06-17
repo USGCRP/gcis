@@ -38,7 +38,7 @@ String.prototype.htmlEscape = function() {
                     <li><% if (my $user = user()) { %>
                         <%= link_to 'logout' => begin %>log out <%= $user %><%= end %>
                         <% } else { %>
-                            <%= link_to 'login' => begin %>log in<%= end %>
+                            <%= link_to url_for('login')->query(destination => $self->req->url->path) => begin %>log in<%= end %>
                         <% } %>
                     </li>
                 </ul>
