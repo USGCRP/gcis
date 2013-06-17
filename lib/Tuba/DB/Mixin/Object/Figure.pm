@@ -14,5 +14,11 @@ sub uri {
     );
 }
 
+sub numeric {
+    my $c = shift;
+    my $chapter = $c->chapter_obj or return "";
+    return join '.', $chapter->number, $c->ordinal;
+}
+
 1;
 

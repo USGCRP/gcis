@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    %= $meta->table
+Articles
 </h2>
 </center>
 

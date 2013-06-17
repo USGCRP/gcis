@@ -3,7 +3,11 @@
 
 <center>
 <h2>
-    %= ucfirst($meta->table) .'s'
+    % if (stash('chapter_identifier')) { 
+Figures in chapter : <%= stash 'chapter_identifier' %>
+    % } else {
+Figures
+    % }
 </h2>
 </center>
 
@@ -17,13 +21,8 @@ Unique keys : <%= join ',', $meta->unique_keys %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
-<%
-  my @cols = (
-    ( map $_->name, map $_->columns, $meta->primary_key ),
-    ( map $_->name, @{ $meta->relationships } ),
-    ( map $_->name, map $_->columns, $meta->unique_keys ),
-  );
-%>
+% my @cols = qw/identifier numeric chapter_obj image/;
+
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
 % for my $c (@cols) {

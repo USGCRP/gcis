@@ -130,7 +130,7 @@ sub startup {
 
     # API
     my $report = $r->resource('report');
-    $report->resource('chapter');
+    my $chapter = $report->resource('chapter');
     $report->resource('figure');
     $report->resource('key-message');
     $report->resource('traceable-account');
@@ -141,6 +141,7 @@ sub startup {
     $r->get('/article/doi/*doi')->to('article#doi');
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+    $r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
     $r->resource($_) for qw/dataset model software algorithm activity
                             instrument platform
                             person role organization country/;

@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    %= $meta->table
+    Images
 </h2>
 </center>
 

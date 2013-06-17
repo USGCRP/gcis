@@ -12,14 +12,16 @@ sub list {
     my $c = shift;
     my $figures;
     if (my $ch = $c->stash('chapter_identifier')) {
-        my $chapter = Chapter->new(identifier => $ch)->load(speculative => 1) or return $c->render_not_found;
-        $figures = Figures->get_objects(query => [chapter => $chapter->id], with_objects => ['chapter_obj']);
+        $figures = Figures->get_objects(query => [chapter => $ch], with_objects => ['chapter_obj'],
+            sort_by => "number, ordinal, t1.identifier");
+        $c->title('figures in chapter');
     } else {
-        $figures = Figures->get_objects(with_objects => ['chapter_obj']);
+        $figures = Figures->get_objects(with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier" );
     }
+
     $c->respond_to(
         json => sub { $c->render(json => [ map $_->as_tree, @$figures ]) },
-        html => sub { $c->render(template => 'objects', meta => Figure->meta, objects => $figures ) }
+        html => sub { $c->render(template => 'figure/objects', meta => Figure->meta, objects => $figures ) }
     );
 }
 
