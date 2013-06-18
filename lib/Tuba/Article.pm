@@ -1,6 +1,6 @@
 =head1 NAME
 
-Tuba::Article : Controller class for chapters.
+Tuba::Article : Controller class for articles.
 
 =cut
 

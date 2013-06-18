@@ -1,0 +1,69 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= ucfirst($meta->table) .'s'
+</h2>
+</center>
+
+% my $base = url_for('current')->to_abs;
+% $base =~ s/.html$$//;
+<pre>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Unique keys : <%= join ',', $meta->unique_keys %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+<% my @cols = ( qw/organization_type contributor dataset_organization/); %>
+<% my @subs = ( qw/title address email url country notes/ ); %>
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+<th>identifier</th>
+% for my $c (@cols, @subs) {
+    <th><%= $c %></th>
+% }
+</tr>
+% for my $o (@$objects) {
+    <tr>
+        <td>
+            % my $identifier = $o->{org}{identifier};
+            %= link_to show_organization => { organization_identifier => $identifier }  => begin
+            <%= $identifier %>
+            %= end
+        </td>
+% for my $c (@cols) {
+        % my $got = $o->can($c) ? $o->$c : 'error, cannot call $c';
+        <td>
+            % if (ref($got) eq 'ARRAY') {
+            %   for (@$got) {
+                    %= obj_link($_);
+            %   }
+            % } elsif (ref($got)) {
+                %= obj_link($got);
+            % } else {
+                %= $got
+            % }
+        </td>
+% }
+% for my $c (@subs) {
+        % my $got = $o->{org}->$c;
+        <td>
+            % if (ref($got) eq 'ARRAY') {
+            %   for (@$got) {
+                    %= obj_link($_);
+            %   }
+            % } elsif (ref($got)) {
+                %= obj_link($got);
+            % } elsif ($c eq 'url') {
+                <%= link_to $got => begin %><%= $got %><%= end %>
+            % } else {
+                %= $got
+            % }
+        </td>
+% }
+    </tr>
+% }
+</table>

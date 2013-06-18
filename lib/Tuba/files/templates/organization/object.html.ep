@@ -1,0 +1,88 @@
+% layout 'default';
+
+<center>
+<h2><%= $object->stringify %></h2>
+</center>
+
+%= include 'history_modal';
+
+% if ($object->can('identifier') && user()) {
+    <span style='float:right;'>
+    <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+    </span>
+% }
+
+% my $base = url_for('current')->to_abs;
+% $base =~ s/.html$//;
+<pre>
+URI  : <%= $self->req->url %>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+% my $tree = $object->as_tree;
+<table class='table table-condensed table-bordered table-striped'>
+
+% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% my $k = $col->accessor_method_name;
+% my $val = $object->$k;
+    <tr>
+        <td><%= $k %></td>
+        <td>
+            % if ($k eq 'doi') {
+                %= link_to "http://dx.doi.org/$val" => begin
+                <%= $val %>
+                %= end
+            % } elsif ($k eq 'url') {
+                %= link_to $val => begin
+                <%= $val %>
+                %= end
+            % } else {
+            <%= $val %>
+            % }
+         </td>
+    </tr>
+% }
+
+% for my $col (sort {$a->name cmp $b->name} $object->{org}->meta->columns) {
+% my $k = $col->accessor_method_name;
+% my $val = $object->{org}->$k;
+    <tr>
+        <td><%= $k %></td>
+        <td>
+            % if ($k eq 'url') {
+                %= link_to $val => begin
+                <%= $val %>
+                %= end
+            % } else {
+            <%= $val %>
+            % }
+         </td>
+    </tr>
+% }
+
+
+
+% for my $rel ($meta->relationships) {
+% my $method = $rel->name;
+% next if $method =~ /type_obj/;
+<tr>
+<td><%= $method %></td>
+<td>
+% my $got = $object->$method;
+% if (ref($got) eq 'ARRAY') {
+%    for (@$got) {
+%= obj_link($_);
+%    }
+% } else {
+%= obj_link($got);
+% }
+</td>
+
+</tr>
+% }
+</table>
+

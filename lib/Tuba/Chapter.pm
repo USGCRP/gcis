@@ -1,6 +1,6 @@
 =head1 NAME
 
-Tuba::Report : Controller class for chapters.
+Tuba::Chapter : Controller class for chapters.
 
 =cut
 
