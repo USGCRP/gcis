@@ -625,6 +625,11 @@ ALTER TABLE ONLY chapter
 
 
 
+ALTER TABLE ONLY organization
+    ADD CONSTRAINT uk_org_fk UNIQUE (fk);
+
+
+
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON article FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
