@@ -76,7 +76,6 @@ db/patches/0080_audit.sql
 db/patches/0090_audit_what.sql
 eg/atrac_upload.html
 lib/Tuba.pm
-lib/Tuba/Article
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
