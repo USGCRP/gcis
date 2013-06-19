@@ -19,7 +19,6 @@ create table organization (
     identifier varchar not null primary key,
     name varchar,
     url varchar,
-    type varchar,
     country varchar
 );
 

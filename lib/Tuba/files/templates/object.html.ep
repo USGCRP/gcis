@@ -24,25 +24,6 @@ Primary key : <%= $meta->primary_key %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
-% my $dumplist = begin
-% my $k = shift;
-% my $list = shift;
-% for my $row (@$list) {
-%= link_to "show_$k", { "$k\_identifier" => $row->{identifier} } => begin
-%= $row->{identifier}
-%= end
-% }
-% end
-
-% my $dumphash = begin
-% my $k = shift;
-% my $h = shift;
-% $k =~ s/_obj//;
-%= link_to "show_$k", { %{ $self->stash() }, "$k\_identifier" => $h->{identifier} } => begin
-%= $h->{identifier}
-%= end
-% end
-
 % my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
 

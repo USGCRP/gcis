@@ -26,63 +26,20 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
 
-% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
-% my $k = $col->accessor_method_name;
-% my $val = $object->$k;
-    <tr>
-        <td><%= $k %></td>
-        <td>
-            % if ($k eq 'doi') {
-                %= link_to "http://dx.doi.org/$val" => begin
-                <%= $val %>
-                %= end
-            % } elsif ($k eq 'url') {
-                %= link_to $val => begin
-                <%= $val %>
-                %= end
-            % } else {
-            <%= $val %>
-            % }
-         </td>
+<tr><td>identifier</td><td><%= $object->identifier %></td></tr>
+<tr><td>name</td><td><%= $object->name %></td></tr>
+<tr><td>types</td><td><%= join '', map $_->identifier, $object->organization_type_objs %></td></tr>
+<tr><td>country</td><td><%= $object->country %></td></tr>
+<tr><td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td></tr>
+<tr><td>datasets</td>
+    <td><%= join '', $object->dataset_organization %></td>
     </tr>
-% }
-
-% for my $col (sort {$a->name cmp $b->name} $object->{org}->meta->columns) {
-% my $k = $col->accessor_method_name;
-% my $val = $object->{org}->$k;
-    <tr>
-        <td><%= $k %></td>
-        <td>
-            % if ($k eq 'url') {
-                %= link_to $val => begin
-                <%= $val %>
-                %= end
-            % } else {
-            <%= $val %>
-            % }
-         </td>
-    </tr>
-% }
-
-
-
-% for my $rel ($meta->relationships) {
-% my $method = $rel->name;
-% next if $method =~ /type_obj/;
-<tr>
-<td><%= $method %></td>
-<td>
-% my $got = $object->$method;
-% if (ref($got) eq 'ARRAY') {
-%    for (@$got) {
-%= obj_link($_);
-%    }
-% } else {
-%= obj_link($got);
-% }
+<tr><td>people</td>
+<td><% for my $c ($object->contributor) { %>
+<%= obj_link($c->person) %>
+<% } %>
 </td>
-
 </tr>
-% }
+
 </table>
 

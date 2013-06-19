@@ -26,7 +26,7 @@ sub uri {
     my $s = shift;
     my $c = shift;
     my $pk = $s->meta->primary_key;
-    return $c->url_for( 'show_'.$s->meta->table, { $s->meta->table.'_'.$pk => $s->$pk } );
+    return $c->url_for( 'show_'.$s->meta->table, { $s->meta->table.'_identifier' => $s->$pk } );
 }
 
 # https://groups.google.com/forum/?fromgroups#!searchin/rose-db-object/update$20primary$20key/rose-db-object/f8evi1dhp7c/IPhUUFS9aiEJ
