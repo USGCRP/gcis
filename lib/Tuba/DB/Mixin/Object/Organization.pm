@@ -12,5 +12,5 @@ sub load_foreign {
     my $class = Tuba::DB::Objects->table2class->{$table}{obj};
     my $extra = $class->new(identifier => $self->fk)->load(speculative => 1);
     $self->{org} = $extra;
-    return;
+    return $self;
 }

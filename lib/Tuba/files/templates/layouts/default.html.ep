@@ -50,6 +50,7 @@ String.prototype.htmlEscape = function() {
                     <li><%= link_to 'list_article' => { report_identifier => $report_identifier } => begin %>articles<%= end %></li>
                     <li><%= link_to 'list_finding' => { report_identifier => $report_identifier } => begin %>findings<%= end %></li>
                     <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
+                    <li><%= link_to 'list_person' => begin %>people<%= end %></li>
                     <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                     % if (user()) {
                     <li><%= link_to 'forms'                                           => begin %>forms<%= end %></li>

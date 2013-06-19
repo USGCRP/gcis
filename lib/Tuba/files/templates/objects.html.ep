@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    %= ucfirst($meta->table) .'s'
+    %= (stash 'plural') || ucfirst($meta->table) .'s'
 </h2>
 </center>
 
@@ -24,6 +24,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
     ( map $_->name, map $_->columns, $meta->unique_keys ),
   );
 %>
+% push @cols, @{ stash 'extra_cols' } if stash 'extra_cols';
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
 % for my $c (@cols) {
@@ -40,7 +41,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
             %= end
         </td>
 % for my $c (@cols[1..$#cols]) {
-        % my $got = $o->can($c) ? $o->$c : 'error, cannot call $c';
+        % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {

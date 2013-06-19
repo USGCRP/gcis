@@ -1,0 +1,40 @@
+
+% layout 'default';
+
+<center>
+<h2>People </h2>
+</center>
+
+% my $base = url_for('current')->to_abs;
+% $base =~ s/.html$$//;
+<pre>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Unique keys : <%= join ',', $meta->unique_keys %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>Name</th>
+    <th>Organization</th>
+</tr>
+% for my $o (@$objects) {
+    <tr>
+        <td>
+            <%= link_to "show_person", { person_identifier => $o->id } => begin %><%= $o->name %><%= end %>
+        </td>
+        <td>
+            % for my $contributor (@{ $o->contributor }) {
+            % if (my $org = $contributor->organization) {
+            % $org->load_foreign;
+            %= link_to 'show_organization', { organization_identifier => $org->{org}->identifier } => begin
+            <%= $org->{org}->title %>
+            %= end
+            % }
+            % }
+        </td>
+    </tr>
+% }
+</table>

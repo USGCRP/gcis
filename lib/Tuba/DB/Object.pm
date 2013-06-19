@@ -6,6 +6,15 @@ use base 'Rose::DB::Object';
 use strict;
 use warnings;
 
+sub plural {
+    shift->meta->table.'s';
+}
+
+sub load_foreign {
+    # Load foreign information (for data not represented by a foreign key in the schema);
+    die "virtual method";
+}
+
 # Override these in mixin classes, e.g. Tuba::DB::Mixin::Object::Chapter
 sub stringify {
     my $s = shift;
