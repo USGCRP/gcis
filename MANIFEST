@@ -74,6 +74,7 @@ db/patches/0060_finding.sql
 db/patches/0070_doi.sql
 db/patches/0080_audit.sql
 db/patches/0090_audit_what.sql
+db/patches/0100_org_fk.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article.pm
@@ -86,6 +87,8 @@ lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
+lib/Tuba/DB/Mixin/Object/Organization.pm
+lib/Tuba/DB/Mixin/Object/Person.pm
 lib/Tuba/DB/Object.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Figure.pm
@@ -114,12 +117,18 @@ lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
+lib/Tuba/files/templates/organization/object.html.ep
+lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
+lib/Tuba/Journal.pm
 lib/Tuba/Log.pm
+lib/Tuba/Organization.pm
+lib/Tuba/Person.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
 lib/Tuba/Report.pm

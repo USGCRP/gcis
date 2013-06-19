@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.28
+    version: 0.29
   Tuba::Article:
     file: lib/Tuba/Article.pm
     version: 0
@@ -48,6 +48,12 @@ provides:
   Tuba::DB::Object::Image:
     file: lib/Tuba/DB/Mixin/Object/Image.pm
     version: 0
+  Tuba::DB::Object::Organization:
+    file: lib/Tuba/DB/Mixin/Object/Organization.pm
+    version: 0
+  Tuba::DB::Object::Person:
+    file: lib/Tuba/DB/Mixin/Object/Person.pm
+    version: 0
   Tuba::DB::Objects:
     file: lib/Tuba/DB/Objects.pm
     version: 0
@@ -66,8 +72,17 @@ provides:
   Tuba::Image:
     file: lib/Tuba/Image.pm
     version: 0
+  Tuba::Journal:
+    file: lib/Tuba/Journal.pm
+    version: 0
   Tuba::Log:
     file: lib/Tuba/Log.pm
+    version: 0
+  Tuba::Organization:
+    file: lib/Tuba/Organization.pm
+    version: 0
+  Tuba::Person:
+    file: lib/Tuba/Person.pm
     version: 0
   Tuba::Plugin::Auth:
     file: lib/Tuba/Plugin/Auth.pm
@@ -92,4 +107,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.28
+version: 0.29
