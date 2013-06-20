@@ -172,9 +172,11 @@ lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
+lib/Tuba/files/templates/object.nt.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
