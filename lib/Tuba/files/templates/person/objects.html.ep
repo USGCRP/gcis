@@ -27,12 +27,9 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
         </td>
         <td>
             % for my $contributor (@{ $o->contributor }) {
-            % if (my $org = $contributor->organization) {
-            % $org->load_foreign;
-            %= link_to 'show_organization', { organization_identifier => $org->{org}->identifier } => begin
-            <%= $org->{org}->title %>
-            %= end
-            % }
+                % if (my $org = $contributor->organization_obj) {
+                %= obj_link($org);
+                % }
             % }
         </td>
     </tr>
