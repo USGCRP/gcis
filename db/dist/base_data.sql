@@ -50,18 +50,10 @@ COPY contributor_role_type (identifier, "table") FROM stdin;
 
 
 --
--- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization_type (identifier, "table") FROM stdin;
-\.
-
-
---
 -- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY organization (id, organization_type, fk) FROM stdin;
+COPY organization (identifier, name, url, country) FROM stdin;
 \.
 
 
@@ -77,7 +69,7 @@ COPY person (id, name, address, phone, email, url) FROM stdin;
 -- Data for Name: contributor; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY contributor (id, person_id, organization_id, role_type) FROM stdin;
+COPY contributor (id, person_id, role_type, organization) FROM stdin;
 \.
 
 
@@ -115,7 +107,7 @@ SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
 -- Data for Name: dataset_organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset_organization (identifier, dataset, organization_id) FROM stdin;
+COPY dataset_organization (identifier, dataset, organization) FROM stdin;
 \.
 
 
@@ -152,58 +144,19 @@ COPY finding (identifier, chapter, statement) FROM stdin;
 
 
 --
--- Data for Name: org_academic; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+-- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY org_academic (identifier, title, address, email, url, country, notes) FROM stdin;
+COPY organization_type (identifier) FROM stdin;
 \.
 
 
 --
--- Data for Name: org_commercial; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+-- Data for Name: organization_type_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY org_commercial (identifier, title, address, email, url, country, notes) FROM stdin;
+COPY organization_type_map (organization, organization_type) FROM stdin;
 \.
-
-
---
--- Data for Name: org_government; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY org_government (identifier, title, address, email, url, country, notes) FROM stdin;
-\.
-
-
---
--- Data for Name: org_ngo; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY org_ngo (identifier, title, address, email, url, country, notes) FROM stdin;
-\.
-
-
---
--- Data for Name: org_project; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY org_project (identifier, title, address, email, url, country, notes) FROM stdin;
-\.
-
-
---
--- Data for Name: org_research; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY org_research (identifier, title, address, email, url, country, notes) FROM stdin;
-\.
-
-
---
--- Name: organization_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('organization_id_seq', 1, false);
 
 
 --
@@ -278,7 +231,7 @@ SELECT pg_catalog.setval('publication_ref_id_seq', 1, false);
 -- Data for Name: submitter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY submitter (id, person_id, organization_id, "table", fk) FROM stdin;
+COPY submitter (id, person_id, "table", fk, contributor_id) FROM stdin;
 \.
 
 

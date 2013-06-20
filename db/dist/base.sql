@@ -44,8 +44,8 @@ COMMENT ON COLUMN chapter.identifier IS 'A unique identifier for the chapter.';
 CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
-    organization_id integer,
-    role_type character varying NOT NULL
+    role_type character varying NOT NULL,
+    organization character varying
 );
 
 
@@ -118,7 +118,7 @@ ALTER SEQUENCE dataset_lineage_id_seq OWNED BY dataset_lineage.id;
 CREATE TABLE dataset_organization (
     identifier character varying NOT NULL,
     dataset character varying NOT NULL,
-    organization_id integer NOT NULL
+    organization character varying
 );
 
 
@@ -206,102 +206,24 @@ CREATE TABLE journal (
 
 
 
-CREATE TABLE org_academic (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
-CREATE TABLE org_commercial (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
-CREATE TABLE org_government (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
-CREATE TABLE org_ngo (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
-CREATE TABLE org_project (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
-CREATE TABLE org_research (
-    identifier character varying NOT NULL,
-    title character varying,
-    address character varying,
-    email character varying,
-    url character varying,
-    country character varying,
-    notes character varying
-);
-
-
-
 CREATE TABLE organization (
-    id integer NOT NULL,
-    organization_type character varying NOT NULL,
-    fk character varying NOT NULL
+    identifier character varying NOT NULL,
+    name character varying,
+    url character varying,
+    country character varying
 );
-
-
-
-CREATE SEQUENCE organization_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE organization_id_seq OWNED BY organization.id;
 
 
 
 CREATE TABLE organization_type (
-    identifier character varying NOT NULL,
-    "table" character varying
+    identifier character varying NOT NULL
+);
+
+
+
+CREATE TABLE organization_type_map (
+    organization character varying NOT NULL,
+    organization_type character varying NOT NULL
 );
 
 
@@ -423,9 +345,9 @@ COMMENT ON COLUMN report.identifier IS 'A unique identifier for the report.';
 CREATE TABLE submitter (
     id integer NOT NULL,
     person_id integer,
-    organization_id integer,
     "table" character varying,
-    fk integer
+    fk integer,
+    contributor_id integer
 );
 
 
@@ -448,10 +370,6 @@ ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id
 
 
 ALTER TABLE ONLY dataset_lineage ALTER COLUMN id SET DEFAULT nextval('dataset_lineage_id_seq'::regclass);
-
-
-
-ALTER TABLE ONLY organization ALTER COLUMN id SET DEFAULT nextval('organization_id_seq'::regclass);
 
 
 
@@ -540,38 +458,13 @@ ALTER TABLE ONLY journal
 
 
 
-ALTER TABLE ONLY org_academic
-    ADD CONSTRAINT org_academic_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY org_commercial
-    ADD CONSTRAINT org_commercial_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY org_government
-    ADD CONSTRAINT org_government_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY org_ngo
-    ADD CONSTRAINT org_ngo_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY org_project
-    ADD CONSTRAINT org_project_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY org_research
-    ADD CONSTRAINT org_research_pkey PRIMARY KEY (identifier);
-
-
-
 ALTER TABLE ONLY organization
-    ADD CONSTRAINT organization_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT organization_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY organization_type_map
+    ADD CONSTRAINT organization_type_map_pkey PRIMARY KEY (organization, organization_type);
 
 
 
@@ -625,11 +518,6 @@ ALTER TABLE ONLY chapter
 
 
 
-ALTER TABLE ONLY organization
-    ADD CONSTRAINT uk_org_fk UNIQUE (fk);
-
-
-
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON article FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -678,38 +566,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON journal FOR
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_academic FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_commercial FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_government FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_ngo FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_project FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON org_research FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -739,6 +595,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON report FOR 
 
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON submitter FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -790,38 +654,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON journal FOR EACH STATEMENT EX
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_academic FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_commercial FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_government FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_ngo FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_project FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON org_research FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -854,6 +686,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON submitter FOR EACH STATEMENT 
 
 
 
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 ALTER TABLE ONLY article
     ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL;
 
@@ -870,12 +710,12 @@ ALTER TABLE ONLY contributor
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_ibfk_2 FOREIGN KEY (organization_id) REFERENCES organization(id) MATCH FULL;
+    ADD CONSTRAINT contributor_ibfk_3 FOREIGN KEY (role_type) REFERENCES contributor_role_type(identifier) MATCH FULL;
 
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_ibfk_3 FOREIGN KEY (role_type) REFERENCES contributor_role_type(identifier) MATCH FULL;
+    ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
 
 
 
@@ -885,7 +725,7 @@ ALTER TABLE ONLY dataset_organization
 
 
 ALTER TABLE ONLY dataset_organization
-    ADD CONSTRAINT dataset_organization_ibfk_2 FOREIGN KEY (organization_id) REFERENCES organization(id) MATCH FULL;
+    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
 
 
 
@@ -909,8 +749,13 @@ ALTER TABLE ONLY image
 
 
 
-ALTER TABLE ONLY organization
-    ADD CONSTRAINT organization_ibfk_1 FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) MATCH FULL;
+ALTER TABLE ONLY organization_type_map
+    ADD CONSTRAINT organization_type_map_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY organization_type_map
+    ADD CONSTRAINT organization_type_map_organization_type_fkey FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) ON DELETE CASCADE;
 
 
 
@@ -936,6 +781,11 @@ ALTER TABLE ONLY publication
 
 ALTER TABLE ONLY publication_ref
     ADD CONSTRAINT publication_ref_ibfk_1 FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY submitter
+    ADD CONSTRAINT submitter_contributor_id_fkey FOREIGN KEY (contributor_id) REFERENCES contributor(id);
 
 
 
