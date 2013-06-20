@@ -7,6 +7,59 @@ db/dist/base_data.sql
 db/dist/docs/gcis.dot
 db/dist/docs/html/contents.html
 db/dist/docs/html/default.html
+db/dist/docs/html/func_gcis_metadata.akeys(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.avals(gcis_metadata.hstore).html
+'db/dist/docs/html/func_gcis_metadata.defined(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, text[]).html'
+'db/dist/docs/html/func_gcis_metadata.each(hs gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.exist(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.exists_all(gcis_metadata.hstore, text[]).html'
+'db/dist/docs/html/func_gcis_metadata.exists_any(gcis_metadata.hstore, text[]).html'
+'db/dist/docs/html/func_gcis_metadata.fetchval(gcis_metadata.hstore, text).html'
+db/dist/docs/html/func_gcis_metadata.ghstore_compress(internal).html
+'db/dist/docs/html/func_gcis_metadata.ghstore_consistent(internal, internal, integer, oid, internal).html'
+db/dist/docs/html/func_gcis_metadata.ghstore_decompress(internal).html
+db/dist/docs/html/func_gcis_metadata.ghstore_in(cstring).html
+db/dist/docs/html/func_gcis_metadata.ghstore_out(gcis_metadata.ghstore).html
+'db/dist/docs/html/func_gcis_metadata.ghstore_penalty(internal, internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.ghstore_picksplit(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.ghstore_same(internal, internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.ghstore_union(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_consistent_hstore(internal, smallint, internal, integer, internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore_query(internal, internal, smallint, internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.hs_concat(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hs_contained(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hs_contains(gcis_metadata.hstore, gcis_metadata.hstore).html'
+db/dist/docs/html/func_gcis_metadata.hstore(record).html
+'db/dist/docs/html/func_gcis_metadata.hstore(text, text).html'
+db/dist/docs/html/func_gcis_metadata.hstore(text[]).html
+'db/dist/docs/html/func_gcis_metadata.hstore(text[], text[]).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_cmp(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_eq(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_ge(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_gt(gcis_metadata.hstore, gcis_metadata.hstore).html'
+db/dist/docs/html/func_gcis_metadata.hstore_hash(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_in(cstring).html
+'db/dist/docs/html/func_gcis_metadata.hstore_le(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_lt(gcis_metadata.hstore, gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.hstore_ne(gcis_metadata.hstore, gcis_metadata.hstore).html'
+db/dist/docs/html/func_gcis_metadata.hstore_out(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_recv(internal).html
+db/dist/docs/html/func_gcis_metadata.hstore_send(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_array(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_matrix(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_version_diag(gcis_metadata.hstore).html
+'db/dist/docs/html/func_gcis_metadata.isdefined(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.isexists(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.populate_record(anyelement, gcis_metadata.hstore).html'
+db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
+'db/dist/docs/html/func_gcis_metadata.slice(gcis_metadata.hstore, text[]).html'
+'db/dist/docs/html/func_gcis_metadata.slice_array(gcis_metadata.hstore, text[]).html'
+db/dist/docs/html/func_gcis_metadata.svals(gcis_metadata.hstore).html
+'db/dist/docs/html/func_gcis_metadata.tconvert(text, text).html'
 db/dist/docs/html/index.html
 db/dist/docs/html/table_gcis_metadata.article.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
@@ -28,6 +81,7 @@ db/dist/docs/html/table_gcis_metadata.org_project.html
 db/dist/docs/html/table_gcis_metadata.org_research.html
 db/dist/docs/html/table_gcis_metadata.organization.html
 db/dist/docs/html/table_gcis_metadata.organization_type.html
+db/dist/docs/html/table_gcis_metadata.organization_type_map.html
 db/dist/docs/html/table_gcis_metadata.person.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
@@ -56,6 +110,7 @@ db/dist/docs/pod/table_org_project.pod
 db/dist/docs/pod/table_org_research.pod
 db/dist/docs/pod/table_organization.pod
 db/dist/docs/pod/table_organization_type.pod
+db/dist/docs/pod/table_organization_type_map.pod
 db/dist/docs/pod/table_person.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
@@ -75,6 +130,7 @@ db/patches/0070_doi.sql
 db/patches/0080_audit.sql
 db/patches/0090_audit_what.sql
 db/patches/0100_org_fk.sql
+db/patches/0110_organization.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article.pm
@@ -119,6 +175,7 @@ lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/resources.html.ep
