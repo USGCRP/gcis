@@ -27,8 +27,8 @@ create table organization_type (
 );
 
 create table organization_type_map (
-    organization varchar references organization(identifier),
-    organization_type varchar references organization_type(identifier),
+    organization varchar references organization(identifier) on delete cascade,
+    organization_type varchar references organization_type(identifier) on delete cascade,
     primary key (organization, organization_type)
 );
 
