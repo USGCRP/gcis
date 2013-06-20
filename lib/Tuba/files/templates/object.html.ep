@@ -14,12 +14,8 @@
     </span>
 % }
 
-% my $base = url_for('current')->to_abs;
-% $base =~ s/.html$//;
 <pre>
-URI  : <%= $self->req->url %>
-JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
-HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+<%= include 'other_formats'; =%>
 Primary key : <%= $meta->primary_key %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>

@@ -28,6 +28,7 @@ sub show {
 
     $c->respond_to(
         json => sub { shift->render(json => $person->as_tree ) },
+        nt    => sub { shift->render(template => "object", meta => Person->meta, object => $person) },
         html => sub { shift->render(template => "person/object", meta => Person->meta, object => $person) }
     );
 }

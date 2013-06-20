@@ -20,6 +20,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
     <th>identitier</th>
+    <th>name</th>
     <th>types</th>
     <th>people</th>
     <th>datasets</th>
@@ -30,6 +31,9 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
             %= link_to "show_organization", { organization_identifier => $o->identifier } => begin
             <%= $o->identifier %>
             %= end
+        </td>
+        <td>
+            <%= $o->name %>
         </td>
         <td>
             %= join ',', map $_->identifier, $o->organization_type_objs

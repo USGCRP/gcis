@@ -27,6 +27,7 @@ sub show {
 
     $c->respond_to(
         json => sub { shift->render(json => $chapter->as_tree ) },
+        nt   => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) },
         html => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) }
     );
 }

@@ -27,7 +27,8 @@ sub show {
     $c->stash(object => $object);
     $c->respond_to(
         json => sub { shift->render(json => $object->as_tree) }, # TODO
-        html => sub { shift->render(template => 'organization/object', meta => $meta, objects => $object ) }
+        nt   => sub { shift->render(template => 'object') },
+        html => sub { shift->render(template => 'organization/object', meta => $meta, objects => $object ) },
     );
 }
 

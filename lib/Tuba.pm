@@ -63,6 +63,24 @@ sub startup {
             my $date = shift;
             return ago(time - str2time($date));
         });
+    $app->helper(current_resource => sub {
+            my $c = shift;
+            if (my $cached = $c->stash('_current_resource')) {
+                return $cached;
+            }
+            my $str = $c->req->url->clone->to_abs;
+            if (my $format = $c->stash('format')) {
+                $str =~ s/\.$format$//;
+            }
+            $c->stash('_current_resource' => $str);
+            $str;
+        });
+    $app->helper(rdf_resource => sub {
+            my $c = shift;
+            my $frag = shift;
+            return qq[http://www.w3.org/1999/02/22-rdf-syntax-ns#$frag]
+        });
+
 
     # Hooks
     $app->hook(after_dispatch => sub {
