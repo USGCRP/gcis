@@ -1,0 +1,40 @@
+
+% layout 'default';
+
+<center>
+<h2><%= $object->stringify %></h2>
+</center>
+
+%= include 'history_modal';
+
+% if ($object->can('identifier') && user()) {
+    <span style='float:right;'>
+    <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+    </span>
+% }
+
+% my $base = url_for('current')->to_abs;
+% $base =~ s/.html$//;
+<pre>
+URI  : <%= $self->req->url %>
+JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+Primary key : <%= $meta->primary_key %>
+Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+</pre>
+
+% my $tree = $object->as_tree;
+<table class='table table-condensed table-bordered table-striped'>
+
+<tr> <td>id</td><td><%= $object->id %></td> </tr>
+<tr> <td>name</td><td><%= $object->name %></td> </tr>
+<tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
+<tr> <td>org</td><td>
+<% for my $o ($object->contributor) { %>
+<%= obj_link($o->organization_obj) %>
+<% } %>
+</td></tr>
+
+</table>
+
