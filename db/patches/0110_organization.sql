@@ -34,3 +34,7 @@ create table organization_type_map (
 
 alter table contributor add column organization varchar references organization(identifier);
 alter table dataset_organization add column organization varchar references organization(identifier);
+
+select audit.audit_table('organization');
+select audit.audit_table('organization_type');
+
