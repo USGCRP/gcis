@@ -26,6 +26,9 @@ finding
      "finding_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
      "finding_chapter_fkey" FOREIGN KEY (chapter) REFERENCES chapter(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

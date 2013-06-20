@@ -28,6 +28,9 @@ publication_ref
      "publication_ref_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:
      "publication_ref_ibfk_1" FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_ref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON publication_ref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

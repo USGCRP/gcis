@@ -54,6 +54,9 @@ image
      "image_ibfk_1" FOREIGN KEY (figure) REFERENCES figure(identifier) MATCH FULL
  Referenced by:
      TABLE "file" CONSTRAINT "file_ibfk_1" FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON image FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

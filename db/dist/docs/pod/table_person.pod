@@ -32,6 +32,9 @@ person
      "person_pkey" PRIMARY KEY, btree (id)
  Referenced by:
      TABLE "contributor" CONSTRAINT "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

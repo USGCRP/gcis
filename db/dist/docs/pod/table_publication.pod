@@ -32,6 +32,9 @@ publication
  Referenced by:
      TABLE "publication_contributor" CONSTRAINT "publication_contributor_ibfk_3" FOREIGN KEY (publication_id) REFERENCES publication(id) MATCH FULL
      TABLE "publication" CONSTRAINT "publication_ibfk_1" FOREIGN KEY (parent_id) REFERENCES publication(id) MATCH FULL
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

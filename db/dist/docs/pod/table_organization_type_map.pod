@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+organization_type_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ organization (character varying) - 
+ organization_type (character varying) - 
+
+
+=head1 SCHEMA
+
+                 Table "gcis_metadata.organization_type_map"
+       Column       |       Type        | Modifiers | Storage  | Description 
+ -------------------+-------------------+-----------+----------+-------------
+  organization      | character varying | not null  | extended | 
+  organization_type | character varying | not null  | extended | 
+ Indexes:
+     "organization_type_map_pkey" PRIMARY KEY, btree (organization, organization_type)
+ Foreign-key constraints:
+     "organization_type_map_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE
+     "organization_type_map_organization_type_fkey" FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

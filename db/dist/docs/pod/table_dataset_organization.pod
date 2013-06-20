@@ -11,22 +11,25 @@ dataset_organization
 
  identifier (character varying) - 
  dataset (character varying) - 
- organization_id (integer) - 
+ organization (character varying) - 
 
 
 =head1 SCHEMA
 
-                 Table "gcis_metadata.dataset_organization"
-      Column      |       Type        | Modifiers | Storage  | Description 
- -----------------+-------------------+-----------+----------+-------------
-  identifier      | character varying | not null  | extended | 
-  dataset         | character varying | not null  | extended | 
-  organization_id | integer           | not null  | plain    | 
+               Table "gcis_metadata.dataset_organization"
+     Column    |       Type        | Modifiers | Storage  | Description 
+ --------------+-------------------+-----------+----------+-------------
+  identifier   | character varying | not null  | extended | 
+  dataset      | character varying | not null  | extended | 
+  organization | character varying |           | extended | 
  Indexes:
      "dataset_organization_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
      "dataset_organization_ibfk_1" FOREIGN KEY (dataset) REFERENCES dataset(identifier) MATCH FULL
-     "dataset_organization_ibfk_2" FOREIGN KEY (organization_id) REFERENCES organization(id) MATCH FULL
+     "dataset_organization_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON dataset_organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

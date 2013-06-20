@@ -32,6 +32,9 @@ chapter
  Referenced by:
      TABLE "figure" CONSTRAINT "figure_ibfk_1" FOREIGN KEY (chapter) REFERENCES chapter(identifier) MATCH FULL
      TABLE "finding" CONSTRAINT "finding_chapter_fkey" FOREIGN KEY (chapter) REFERENCES chapter(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON chapter FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON chapter FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

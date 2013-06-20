@@ -45,28 +45,13 @@ gcis_metadata
 <a target="data" href="table_gcis_metadata.journal.html">journal</a>
 <br>
 
-<a target="data" href="table_gcis_metadata.org_academic.html">org_academic</a>
-<br>
-
-<a target="data" href="table_gcis_metadata.org_commercial.html">org_commercial</a>
-<br>
-
-<a target="data" href="table_gcis_metadata.org_government.html">org_government</a>
-<br>
-
-<a target="data" href="table_gcis_metadata.org_ngo.html">org_ngo</a>
-<br>
-
-<a target="data" href="table_gcis_metadata.org_project.html">org_project</a>
-<br>
-
-<a target="data" href="table_gcis_metadata.org_research.html">org_research</a>
-<br>
-
 <a target="data" href="table_gcis_metadata.organization.html">organization</a>
 <br>
 
 <a target="data" href="table_gcis_metadata.organization_type.html">organization_type</a>
+<br>
+
+<a target="data" href="table_gcis_metadata.organization_type_map.html">organization_type_map</a>
 <br>
 
 <a target="data" href="table_gcis_metadata.person.html">person</a>
@@ -94,8 +79,167 @@ gcis_metadata
 <br>
 
 
+<a target="data" href="#gcis-metadata.function.akeys-gcis-metadata.hstore">akeys(gcis_metadata.hstore)</a>
+<br>
 
-2013-06-12
+<a target="data" href="#gcis-metadata.function.avals-gcis-metadata.hstore">avals(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.defined-gcis-metadata.hstore-text">defined(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.delete-gcis-metadata.hstore-gcis-metadata.hstore">delete(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.delete-gcis-metadata.hstore-text">delete(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.delete-gcis-metadata.hstore-textARRAY">delete(gcis_metadata.hstore, text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.each-hs-gcis-metadata.hstore">each(hs gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.exist-gcis-metadata.hstore-text">exist(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.exists-all-gcis-metadata.hstore-textARRAY">exists_all(gcis_metadata.hstore, text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.exists-any-gcis-metadata.hstore-textARRAY">exists_any(gcis_metadata.hstore, text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.fetchval-gcis-metadata.hstore-text">fetchval(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-compress-internal">ghstore_compress(internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-consistent-internal-internal-integer-oid-internal">ghstore_consistent(internal, internal, integer, oid, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-decompress-internal">ghstore_decompress(internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-in-cstring">ghstore_in(cstring)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-out-gcis-metadata.ghstore">ghstore_out(gcis_metadata.ghstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-penalty-internal-internal-internal">ghstore_penalty(internal, internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-picksplit-internal-internal">ghstore_picksplit(internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-same-internal-internal-internal">ghstore_same(internal, internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.ghstore-union-internal-internal">ghstore_union(internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.gin-consistent-hstore-internal-smallint-internal-integer-internal-internal">gin_consistent_hstore(internal, smallint, internal, integer, internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.gin-extract-hstore-internal-internal">gin_extract_hstore(internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.gin-extract-hstore-query-internal-internal-smallint-internal-internal">gin_extract_hstore_query(internal, internal, smallint, internal, internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hs-concat-gcis-metadata.hstore-gcis-metadata.hstore">hs_concat(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hs-contained-gcis-metadata.hstore-gcis-metadata.hstore">hs_contained(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hs-contains-gcis-metadata.hstore-gcis-metadata.hstore">hs_contains(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-record">hstore(record)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-text-text">hstore(text, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-textARRAY">hstore(text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-textARRAY-textARRAY">hstore(text[], text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-cmp-gcis-metadata.hstore-gcis-metadata.hstore">hstore_cmp(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-eq-gcis-metadata.hstore-gcis-metadata.hstore">hstore_eq(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-ge-gcis-metadata.hstore-gcis-metadata.hstore">hstore_ge(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-gt-gcis-metadata.hstore-gcis-metadata.hstore">hstore_gt(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-hash-gcis-metadata.hstore">hstore_hash(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-in-cstring">hstore_in(cstring)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-le-gcis-metadata.hstore-gcis-metadata.hstore">hstore_le(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-lt-gcis-metadata.hstore-gcis-metadata.hstore">hstore_lt(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-ne-gcis-metadata.hstore-gcis-metadata.hstore">hstore_ne(gcis_metadata.hstore, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-out-gcis-metadata.hstore">hstore_out(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-recv-internal">hstore_recv(internal)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-send-gcis-metadata.hstore">hstore_send(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-to-array-gcis-metadata.hstore">hstore_to_array(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-to-matrix-gcis-metadata.hstore">hstore_to_matrix(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.hstore-version-diag-gcis-metadata.hstore">hstore_version_diag(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.isdefined-gcis-metadata.hstore-text">isdefined(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.isexists-gcis-metadata.hstore-text">isexists(gcis_metadata.hstore, text)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.populate-record-anyelement-gcis-metadata.hstore">populate_record(anyelement, gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.skeys-gcis-metadata.hstore">skeys(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.slice-gcis-metadata.hstore-textARRAY">slice(gcis_metadata.hstore, text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.slice-array-gcis-metadata.hstore-textARRAY">slice_array(gcis_metadata.hstore, text[])</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.svals-gcis-metadata.hstore">svals(gcis_metadata.hstore)</a>
+<br>
+
+<a target="data" href="#gcis-metadata.function.tconvert-text-text">tconvert(text, text)</a>
+<br>
+
+
+2013-06-20
 </html>
 
 <!-- ------------------------------------------------------------------------- -->
