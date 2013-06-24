@@ -10,7 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
 
-=head2 check, list, show
+=head2 check, list
 
 These virtual methods should be implemented by subclasses.
 
@@ -18,7 +18,33 @@ These virtual methods should be implemented by subclasses.
 
 sub check { die "not implemented" };
 sub list { die "not implemented" };
-sub show { die "not implemented" };
+
+=head2 show
+
+Subclasses should override this but may call it for rendering,
+after setting 'object' and 'meta'.
+
+=cut
+
+sub show {
+    my $c = shift;
+
+    my $object = $c->stash('object') or die "no object";
+    my $meta  = $c->stash('meta') or die "no meta";
+    my $table = $meta->table;
+
+    $c->respond_to(
+        json  => sub { my $c = shift;
+                       $c->render_maybe(template => "$table/object")
+                    or $c->render(json => $object->as_tree ); },
+        nt    => sub { my $c = shift;
+                      $c->render_maybe(template => "$table/object")
+                   or $c->render(template => "object") },
+        html  => sub { my $c = shift;
+                     $c->render_maybe(template => "$table/object")
+                   or $c->render(template => "object") }
+    );
+};
 
 sub _guess_object_class {
     my $c = shift;

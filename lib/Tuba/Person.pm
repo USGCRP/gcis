@@ -26,11 +26,9 @@ sub show {
       ->load( speculative => 1, with => [qw/contributor/] )
       or return $c->render_not_found;
 
-    $c->respond_to(
-        json => sub { shift->render(json => $person->as_tree ) },
-        nt    => sub { shift->render(template => "object", meta => Person->meta, object => $person) },
-        html => sub { shift->render(template => "person/object", meta => Person->meta, object => $person) }
-    );
+    $c->stash(object => $person);
+    $c->stash(meta => Person->meta);
+    return $c->SUPER::show(@_);
 }
 
 1;
