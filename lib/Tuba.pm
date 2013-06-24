@@ -193,12 +193,14 @@ sub startup {
     $r->get('/resources' => 'resources');
     $r->get('/examples' => 'examples');
 
-    $r->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
+    my $authed = $r->bridge->to(cb => sub { shift->auth });
+    $authed->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
     $r->get('/login')->to('auth#login')->name('login');
     $r->post('/login')->to('auth#check_login')->name('check_login');
     $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
 
-    $r->get('/import_spreadsheet')->to('importer#form')->name('import_spreadsheet');
+    $authed->get('/import_form')->to('importer#form')->name('import_form');
+    $authed->post('/process_import')->to('importer#process_import')->name('process_import');
 
     $r->post('/calculate_url' => sub {
         my $c = shift;

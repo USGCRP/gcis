@@ -11,8 +11,8 @@
 </li>
 % }
 <li>
-%= link_to import_spreadsheet => begin
-Import spreadsheet
+%= link_to import_form => begin
+Import
 %= end
 </li>
 </ul>

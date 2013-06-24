@@ -33,6 +33,10 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
                 %= link_to "http://dx.doi.org/$val" => begin
                 <%= $val %>
                 %= end
+            % } elsif ($k =~ /issn/) {
+                %= link_to "http://www.worldcat.org/issn/$val" => begin
+                <%= $val %>
+                %= end
             % } elsif ($k eq 'url') {
                 %= link_to $val => begin
                 <%= $val %>
