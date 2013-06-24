@@ -1,0 +1,45 @@
+% use JSON::XS;
+% layout 'default';
+
+%= form_for 'process_google_spreadsheet' => begin
+<legend>Import google spreadsheet</legend>
+
+<pre>
+%= dumper($worksheets);
+</pre>
+
+
+% if (my $error = (flash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+
+    <div class="control-group">
+        <label class="control-label" for="spreadsheet">Spreadsheet</label>
+        <div class="controls">
+            <%= select_field spreadsheet => [ '--select--', @$spreadsheets], id => 'spreadsheet' %>
+    </div>
+
+    <div class="control-group">
+        <label class="control-label" for="worksheet">Worksheet</label>
+        <div class="controls">
+            <%= select_field worksheet => [ '--select--' ], id => 'worksheet' %>
+    </div>
+
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Import</button>
+</div>
+
+%= end
+
+%= javascript begin
+var sp2wk = <%== JSON::XS->new->encode($worksheets) %>;
+$(document).ready(function() { });
+
+$('#spreadsheet').change(function(){
+   var got = $('#spreadsheet').val();
+   var vals = sp2wk[got];
+   var newhtml = $.map(vals,function(v,i) { return '<option value="' + v + '">' + v + '</option>' }).join('');
+   $('#worksheet').html(newhtml);
+});
+%= end

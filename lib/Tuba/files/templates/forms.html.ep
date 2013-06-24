@@ -6,8 +6,13 @@
 % my $name = $form; $name =~ s/create_form_//;
 <li>
     %= link_to $form => { report_identifier => $report_identifier } => begin
-        %= $name
+        New <%= $name %>
     %= end
 </li>
 % }
+<li>
+%= link_to import_spreadsheet => begin
+Import spreadsheet
+%= end
+</li>
 </ul>

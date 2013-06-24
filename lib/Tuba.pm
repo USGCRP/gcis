@@ -198,6 +198,8 @@ sub startup {
     $r->post('/login')->to('auth#check_login')->name('check_login');
     $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
 
+    $r->get('/import_spreadsheet')->to('importer#form')->name('import_spreadsheet');
+
     $r->post('/calculate_url' => sub {
         my $c = shift;
         my $for = $c->param('_route_name');
