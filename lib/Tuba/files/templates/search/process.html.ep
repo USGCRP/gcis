@@ -1,0 +1,22 @@
+% layout 'default';
+
+% if (@$results==0) {
+No search results.
+% } else  {
+Results :
+<table class='table table-condensed table-bordered'>
+% for my $obj (@$results) {
+<tr>
+<td><%= $obj->meta->table %></td>
+<td>
+    % if (my $uri = $obj->uri($self)) {
+        <%= link_to $uri => begin %><%= $obj->stringify %><%= end %>
+    % } else {
+        <%= $obj->stringify %>
+    % }
+</td>
+</tr>
+% }
+</table>
+
+% }

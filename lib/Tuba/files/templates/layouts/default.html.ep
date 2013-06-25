@@ -35,6 +35,8 @@ String.prototype.htmlEscape = function() {
             <div class="navbar-inner">
                 <%= link_to 'index', class => 'brand' => begin %>GCIS<%= end %>
                 <ul class='nav pull-right'>
+                    <li><%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    </li>
                     <li><% if (my $user = user()) { %>
                         <%= link_to 'logout' => begin %>log out <%= $user %><%= end %>
                         <% } else { %>

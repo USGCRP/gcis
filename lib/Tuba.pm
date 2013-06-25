@@ -153,7 +153,9 @@ sub startup {
     $report->resource('key-message');
     $report->resource('traceable-account');
     $report->resource('finding');
-    $r->resource('publication');
+
+    $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
+
     $r->resource($_) for qw/article journal paper/;
     $r->resource('image');
     $r->get('/article/doi/*doi')->to('article#doi');
@@ -164,6 +166,7 @@ sub startup {
                             instrument platform
                             person role organization country/;
     $r->resource("file");
+    $r->get('/search')->to('search#process')->name('search');
 
     # Redirects
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'

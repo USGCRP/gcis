@@ -15,8 +15,10 @@ has 'audit_user';
 has 'audit_note';
 
 has 'update_only';
+has 'status';
 
 sub process {
+    no warnings 'uninitialized';
     my $self = shift;
     my %a = @_;
     my $data = $a{data} or die "missing data";
@@ -30,7 +32,7 @@ sub process {
             next;
         }
         my %record = mesh @labels, @$row;
-        my $journals = Journals->get_objects(query => [ title => $record{journal_title} ]);
+        my $journals = Journals->get_objects(query => [ title => { ilike => $record{journal_title} } ]);
         if ($journals && @$journals==1) {
             my $journal = $journals->[0];
             $journal->print_issn($record{print_issn});
@@ -51,7 +53,7 @@ sub process {
         $self->rows_processed($self->rows_processed + 1);
     }
 
-    return 'ok';
+    return $self->status('ok');
 }
 
 1;

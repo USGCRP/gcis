@@ -18,15 +18,19 @@ sub load_foreign {
 # Override these in mixin classes, e.g. Tuba::DB::Mixin::Object::Chapter
 sub stringify {
     my $s = shift;
-    my $pk = $s->meta->primary_key;
-    return $s->$pk;
+    my @pk = map $_->accessor_method_name, $s->meta->primary_key->columns;
+    return join '/', map $s->$_, @pk;
 }
 
 sub uri {
     my $s = shift;
     my $c = shift;
-    my $pk = $s->meta->primary_key;
-    return $c->url_for( 'show_'.$s->meta->table, { $s->meta->table.'_identifier' => $s->$pk } );
+    my @pk = map $_->accessor_method_name, $s->meta->primary_key->columns;
+    return unless @pk==1;
+    my $pk = $pk[0];
+    my $route_name = 'show_'.$s->meta->table;
+    return unless $c->app->routes->find($route_name);
+    return $c->url_for( $route_name, { $s->meta->table.'_identifier' => $s->$pk } );
 }
 
 # https://groups.google.com/forum/?fromgroups#!searchin/rose-db-object/update$20primary$20key/rose-db-object/f8evi1dhp7c/IPhUUFS9aiEJ

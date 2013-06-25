@@ -49,7 +49,7 @@ sub process_import {
 
     my $status = $processor->process(data => $c->_data->{$spreadsheet}{$worksheet});
 
-    return $c->render(status => $status, p => $processor, template => 'importer/status');
+    return $c->render(p => $processor, template => 'importer/status');
 }
 
 sub _find_processor {

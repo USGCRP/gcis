@@ -8,10 +8,10 @@ Processing results.
 % my $warnings = $p->warnings;
 
 <pre>
-Status : <%= $status %>
+Status         : <%= $p->status %>
 Rows processed : <%= $p->rows_processed %>
-Warnings : <%= scalar @$warnings %>
-Errors : <%= scalar @$errors %>
+Warnings       : <%= scalar @$warnings %>
+Errors         : <%= scalar @$errors %>
 </pre>
 
 % if (@$errors) {
