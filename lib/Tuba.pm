@@ -115,7 +115,7 @@ sub startup {
     #  * Require authentication.
     #
     $app->routes->add_condition(
-        not_equal => sub {
+        not_match => sub {
             my ($route, $c, $captures, $args) = @_;
             for my $k (keys %$args) {
                 return undef if $captures->{$k} =~ m{$args->{$k}};
@@ -146,7 +146,7 @@ sub startup {
       $resource->get->to('#list')->name("list_$name");
       my $select;
       if ($opts->{wildcard}) {
-        $resource->get("*$identifier")->over(not_equal => { $identifier => 'form/update'})->to('#show')->name("show_$name");
+        $resource->get("*$identifier")->over(not_match => { $identifier => 'form/update'})->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier")->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
