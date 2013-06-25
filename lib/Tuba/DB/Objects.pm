@@ -67,12 +67,9 @@ sub import {
 
 sub init {
     my $class = shift;
-    my $app = shift || 'Tuba';
     return if keys %table2class;
 
-    my $conf = $app->config;
-
-    my $db_schema = $conf->{database}{schema};
+    my $db_schema = Tuba::Plugin::Db->schema;
 
     my $loader = Rose::DB::Object::Loader->new(
         class_prefix => 'Tuba::DB::Object',

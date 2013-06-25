@@ -32,6 +32,7 @@ use Tuba::DB::Objects(); # do not call import since we call init explicitly
 
 {
 my $dbix;
+my $schema;
 
 sub register {
     my ($self, $app, $conf) = @_;
@@ -42,17 +43,20 @@ sub register {
         my $dbname = $mbd->database_options->{name} or die "no dbname in mbd object";
         my $host = $mbd->notes( 'dbtest_host' );
         $dsn = "dbi:Pg:dbname=gcis;host=$host";
+        $dbix = DBIx::Connector->new( $dsn, '', '' , { RaiseError => 1, AutoCommit => 1 } );
+        $schema = $mbd->database_options->{schema} || 'testschema';
     } else {
         my $dbname = $conf->{dbname} or die "no dbname in config file";
+        $schema = $conf->{schema} or die "no schema in config file";
         $dsn = "dbi:Pg:dbname=$dbname";
         $dsn .= ":host=$conf->{host}" if $conf->{host};
         $dsn .= ":port=$conf->{port}" if $conf->{port};
         $app->log->info("Registering database $dbname");
-    }
+        $dbix = DBIx::Connector->new( $dsn, ($conf->{user} || ''),
+           ( $conf->{password} || '' ),
+           { RaiseError => 1, AutoCommit => 1 } );
 
-    $dbix = DBIx::Connector->new( $dsn, ($conf->{user} || ''),
-       ( $conf->{password} || '' ),
-       { RaiseError => 1, AutoCommit => 1 } );
+    }
 
     $app->helper( db => sub { $dbix } );
     $app->helper( dbs => sub { DBIx::Simple->new( shift->db->dbh ) } );
@@ -70,6 +74,11 @@ sub connection {
     $dbix->dbh->{pg_enable_utf8} = 1;
     $dbix;    
 }
+
+sub schema {
+    return $schema;
+}
+
 }
 
 
