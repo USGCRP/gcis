@@ -146,7 +146,7 @@ sub startup {
       $resource->get->to('#list')->name("list_$name");
       my $select;
       if ($opts->{wildcard}) {
-        $resource->get("*$identifier")->over(not_match => { $identifier => q[form/update/|history/]})->to('#show')->name("show_$name");
+        $resource->get("*$identifier")->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier")->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
