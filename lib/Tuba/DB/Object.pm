@@ -30,7 +30,8 @@ sub uri {
     my $pk = $pk[0];
     my $route_name = 'show_'.$s->meta->table;
     return unless $c->app->routes->find($route_name);
-    return $c->url_for( $route_name, { $s->meta->table.'_identifier' => $s->$pk } );
+    my $report_identifier = $c->app->defaults->{report_identifier};
+    return $c->url_for( $route_name, { $s->meta->table.'_identifier' => $s->$pk, report_identifier => $report_identifier } );
 }
 
 # https://groups.google.com/forum/?fromgroups#!searchin/rose-db-object/update$20primary$20key/rose-db-object/f8evi1dhp7c/IPhUUFS9aiEJ
