@@ -114,8 +114,19 @@ sub startup {
     #
     #  * Require authentication.
     #
+    $app->routes->add_condition(
+        not_equal => sub {
+            my ($route, $c, $captures, $args) = @_;
+            for my $k (keys %$args) {
+                return undef if $captures->{$k} =~ m{$args->{$k}};
+            }
+            return 1;
+        }
+    );
     $app->routes->add_shortcut(resource => sub {
-      my ($r, $name) = @_;
+      my ($r, $name, $opts) = @_;
+      my $identifier = join '_', $name, 'identifier';
+      $identifier =~ s/-/_/g;
 
       # Keep stubs out of @forms.
       my $controller = 'Tuba::'.b($name)->camelize;
@@ -123,24 +134,40 @@ sub startup {
       if (!$@) {
          push @forms, "create_form_$name";
       } else {
-          die $@ unless $@ =~ /^Can't locate/;
+          unless ($@ =~ /^Can't locate/) {
+              warn "loading $controller failed ---------- $@\n";
+              die $@;
+          }
           # $app->log->debug("did not load $controller");
       }
 
       # Build bridges and routes.
       my $resource = $r->route("/$name")->to("$name#");
+      $resource->get->to('#list')->name("list_$name");
+      my $select;
+      if ($opts->{wildcard}) {
+        $resource->get("*$identifier")->over(not_equal => { $identifier => 'form/update'})->to('#show')->name("show_$name");
+      } else {
+        $resource->get(":$identifier")->to('#show')->name("show_$name");
+        $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
+      }
+
       my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
       $authed->post->to("$name#create")->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
-      $resource->get->to('#list')->name("list_$name");
-      my $identifier = join '_', $name, 'identifier';
-      $identifier =~ s/-/_/g;
-      $resource->get(":$identifier")->to('#show')->name("show_$name");
-      $authed->get(":$identifier/form/update")->to("$name#update_form")->name("update_form_$name");
-      $authed->post(":$identifier")->to("$name#update")->name("update_$name");
-      $authed->get(":$identifier/history")->to("$name#history")->name("history_$name");
-      $authed->delete(":$identifier")->to("$name#remove")->name("remove_$name");
-      my $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
+
+      if ($opts->{wildcard}) {
+          $authed->get("/form/update/*$identifier")->to("$name#update_form")->name("update_form_$name");
+          $authed->get("/history/*$identifier")    ->to("$name#history")    ->name("history_$name");
+          $authed->delete("*$identifier")          ->to("$name#remove")     ->name("remove_$name");
+          $authed->post("*$identifier")            ->to("$name#update")     ->name("update_$name");
+      } else {
+          $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
+          $authed->get("/history/:$identifier")    ->to("$name#history")    ->name("history_$name");
+          $authed->delete(":$identifier")          ->to("$name#remove")     ->name("remove_$name");
+          $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
+      }
+
       return $select;
     });
 
@@ -156,9 +183,11 @@ sub startup {
 
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
 
-    $r->resource($_) for qw/article journal paper/;
+    $r->resource(article => { wildcard => 1} );
+    $r->resource($_) for qw/journal paper/;
+
     $r->resource('image');
-    $r->get('/article/doi/*doi')->to('article#doi');
+
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
     $r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');

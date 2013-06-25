@@ -28,7 +28,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % my $pk = $meta->primary_key;
     <tr>
         <td>
-            %= link_to "show_".$meta->table, { $meta->table.'_'.$pk => $o->$pk } => begin
+            %= link_to $o->uri($self) => begin
             <%= $o->$pk %>
             %= end
         </td>

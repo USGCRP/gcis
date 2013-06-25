@@ -67,7 +67,7 @@ sub import {
 
 sub init {
     my $class = shift;
-    my $app = shift || Tuba->new();
+    my $app = shift || 'Tuba';
     return if keys %table2class;
 
     my $conf = $app->config;
