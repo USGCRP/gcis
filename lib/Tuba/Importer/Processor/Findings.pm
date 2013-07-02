@@ -33,8 +33,8 @@ sub _audit_info {
 sub process {
     no warnings 'uninitialized';
     my $self = shift;
-    my %a = @_;
-    my $data = $a{data} or die "missing data";
+    my %args = @_;
+    my $data = $args{data} or die "missing data";
     my %a = ( audit_user => $self->audit_user, audit_note => $self->audit_note );
 
     my $index = 0;

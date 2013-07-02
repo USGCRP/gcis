@@ -43,6 +43,12 @@ our %table2class;
 sub import {
     my $class = shift;
     my $caller = caller;
+
+    if (grep /-autoconnect/, @_) {
+        # Load configuration from app.
+        my $app = Tuba->new();
+    }
+
     $class->init();
     no strict 'refs';
     if (grep /-nicknames/, @_) {
