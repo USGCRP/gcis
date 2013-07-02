@@ -145,15 +145,16 @@ sub startup {
       my $resource = $r->route("/$name")->to("$name#");
       $resource->get->to('#list')->name("list_$name");
       my $select;
+      my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
           for my $format (qw/json nt html/) {
-                $resource->get("*$identifier.$format" => { format => $format } )
+                $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => q[^(?:form/update/|history/)]})
                          ->to('#show')->name("_show_${name}_$format");
           }
-        $resource->get("*$identifier")->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
+        $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
       } else {
-        $resource->get(":$identifier")->to('#show')->name("show_$name");
+        $resource->get(":$identifier" => \@restrict )->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
       }
 
@@ -194,9 +195,11 @@ sub startup {
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
     $r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
+    $r->resource(person => { restrict_identifier => qr/\d+/ } );
+    $r->get('/person/:name')->to('person#redirect_by_name');
     $r->resource($_) for qw/dataset model software algorithm activity
                             instrument platform
-                            person role organization country/;
+                            role organization country/;
     $r->resource("file");
     $r->get('/search')->to('search#process')->name('search');
 
