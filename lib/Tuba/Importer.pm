@@ -3,6 +3,7 @@ use Mojo::Base qw/Tuba::Controller/;
 use JSON::XS;
 use Path::Class qw/file/;
 use Tuba::Importer::Processor::Journals;
+use Tuba::Importer::Processor::Findings;
 
 sub _data {
     my $c = shift;
@@ -57,9 +58,10 @@ sub _find_processor {
     my ($spreadsheet, $worksheet) = @_;
 
     for ($spreadsheet) {
-        /journals/i and do {
+        /journals/i and
             return Tuba::Importer::Processor::Journals->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
-        };
+        /findings/ and
+            return Tuba::Importer::Processor::Findings->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
     }
     return;
 }
