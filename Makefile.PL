@@ -15,6 +15,7 @@ WriteMakefile
                    'SQL::Abstract' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
                    'YAML::Syck' => 0,
+                   'JSON::XS' => 0,
                    'DBIx::Simple' => 0,
                    'YAML::XS' => 0,
                    'DBIx::Custom' => 0,

@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.32
+    version: 0.33
   Tuba::Article:
     file: lib/Tuba/Article.pm
     version: 0
@@ -45,14 +45,29 @@ provides:
   Tuba::DB::Object::Figure:
     file: lib/Tuba/DB/Mixin/Object/Figure.pm
     version: 0
+  Tuba::DB::Object::Finding::Manager:
+    file: lib/Tuba/DB/Mixin/Object/Finding/Manager.pm
+    version: 0
   Tuba::DB::Object::Image:
     file: lib/Tuba/DB/Mixin/Object/Image.pm
+    version: 0
+  Tuba::DB::Object::Journal:
+    file: lib/Tuba/DB/Mixin/Object/Journal.pm
+    version: 0
+  Tuba::DB::Object::Keyword:
+    file: lib/Tuba/DB/Mixin/Object/Keyword.pm
+    version: 0
+  Tuba::DB::Object::Manager:
+    file: lib/Tuba/DB/Object/Manager.pm
     version: 0
   Tuba::DB::Object::Organization:
     file: lib/Tuba/DB/Mixin/Object/Organization.pm
     version: 0
   Tuba::DB::Object::Person:
     file: lib/Tuba/DB/Mixin/Object/Person.pm
+    version: 0
+  Tuba::DB::Object::Publication:
+    file: lib/Tuba/DB/Mixin/Object/Publication.pm
     version: 0
   Tuba::DB::Objects:
     file: lib/Tuba/DB/Objects.pm
@@ -72,6 +87,15 @@ provides:
   Tuba::Image:
     file: lib/Tuba/Image.pm
     version: 0
+  Tuba::Importer:
+    file: lib/Tuba/Importer.pm
+    version: 0
+  Tuba::Importer::Processor::Findings:
+    file: lib/Tuba/Importer/Processor/Findings.pm
+    version: 0
+  Tuba::Importer::Processor::Journals:
+    file: lib/Tuba/Importer/Processor/Journals.pm
+    version: 0
   Tuba::Journal:
     file: lib/Tuba/Journal.pm
     version: 0
@@ -90,14 +114,21 @@ provides:
   Tuba::Plugin::Db:
     file: lib/Tuba/Plugin/Db.pm
     version: 0
+  Tuba::Publication:
+    file: lib/Tuba/Publication.pm
+    version: 0
   Tuba::Report:
     file: lib/Tuba/Report.pm
+    version: 0
+  Tuba::Search:
+    file: lib/Tuba/Search.pm
     version: 0
 requires:
   DBIx::Custom: 0
   DBIx::Simple: 0
   Date::Parse: 0
   File::ShareDir: 1.00
+  JSON::XS: 0
   Mojolicious: 4.14
   Mojolicious::Plugin::YamlConfig: 0
   Rose::DB::Object: 0
@@ -107,4 +138,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.32
+version: 0.33
