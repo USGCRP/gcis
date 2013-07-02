@@ -139,8 +139,31 @@ COPY file (identifier, image, file_type, dir, file) FROM stdin;
 -- Data for Name: finding; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding (identifier, chapter, statement) FROM stdin;
+COPY finding (identifier, chapter, statement, ordinal, report) FROM stdin;
 \.
+
+
+--
+-- Data for Name: keyword; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY keyword (id, category, topic, term, level1, level2, level3) FROM stdin;
+\.
+
+
+--
+-- Data for Name: finding_keyword_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY finding_keyword_map (finding, keyword) FROM stdin;
+\.
+
+
+--
+-- Name: keyword_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
+--
+
+SELECT pg_catalog.setval('keyword_id_seq', 1, false);
 
 
 --

@@ -163,7 +163,16 @@ CREATE TABLE file (
 CREATE TABLE finding (
     identifier character varying NOT NULL,
     chapter character varying,
-    statement character varying
+    statement character varying,
+    ordinal integer,
+    report character varying
+);
+
+
+
+CREATE TABLE finding_keyword_map (
+    finding character varying NOT NULL,
+    keyword integer NOT NULL
 );
 
 
@@ -203,6 +212,31 @@ CREATE TABLE journal (
     url character varying,
     notes character varying
 );
+
+
+
+CREATE TABLE keyword (
+    id integer NOT NULL,
+    category character varying NOT NULL,
+    topic character varying,
+    term character varying,
+    level1 character varying,
+    level2 character varying,
+    level3 character varying
+);
+
+
+
+CREATE SEQUENCE keyword_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+ALTER SEQUENCE keyword_id_seq OWNED BY keyword.id;
 
 
 
@@ -373,6 +407,10 @@ ALTER TABLE ONLY dataset_lineage ALTER COLUMN id SET DEFAULT nextval('dataset_li
 
 
 
+ALTER TABLE ONLY keyword ALTER COLUMN id SET DEFAULT nextval('keyword_id_seq'::regclass);
+
+
+
 ALTER TABLE ONLY person ALTER COLUMN id SET DEFAULT nextval('person_id_seq'::regclass);
 
 
@@ -443,6 +481,11 @@ ALTER TABLE ONLY file
 
 
 
+ALTER TABLE ONLY finding_keyword_map
+    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding, keyword);
+
+
+
 ALTER TABLE ONLY finding
     ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier);
 
@@ -455,6 +498,11 @@ ALTER TABLE ONLY image
 
 ALTER TABLE ONLY journal
     ADD CONSTRAINT journal_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY keyword
+    ADD CONSTRAINT keyword_pkey PRIMARY KEY (id);
 
 
 
@@ -510,6 +558,11 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY submitter
     ADD CONSTRAINT submitter_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY keyword
+    ADD CONSTRAINT uk_gcmd UNIQUE (category, topic, term, level1, level2, level3);
 
 
 
@@ -741,6 +794,21 @@ ALTER TABLE ONLY file
 
 ALTER TABLE ONLY finding
     ADD CONSTRAINT finding_chapter_fkey FOREIGN KEY (chapter) REFERENCES chapter(identifier);
+
+
+
+ALTER TABLE ONLY finding_keyword_map
+    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding) REFERENCES finding(identifier);
+
+
+
+ALTER TABLE ONLY finding_keyword_map
+    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword) REFERENCES keyword(id);
+
+
+
+ALTER TABLE ONLY finding
+    ADD CONSTRAINT finding_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
 
 
 

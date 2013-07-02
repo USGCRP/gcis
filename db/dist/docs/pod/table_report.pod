@@ -24,6 +24,7 @@ report
      "report_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
      TABLE "chapter" CONSTRAINT "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
+     TABLE "finding" CONSTRAINT "finding_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON report FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON report FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

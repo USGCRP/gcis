@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.report">report</a>
+            <a name="gcis-metadata.table.keyword">keyword</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>report Structure</caption>
+                <caption>keyword Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,8 +135,8 @@
                   
                 
                 </td>
-                <td>identifier</td>
-                <td>character varying</td>
+                <td>id</td>
+                <td>serial</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -148,17 +148,145 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
+                
                 </td>
              </tr>
             
             <tr class="tr1">
                 <td>
                 
+                  
+                
                 </td>
-                <td>title</td>
+                <td>category</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+
+                NOT NULL
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>topic</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                </td>
+                <td>term</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>level1</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                </td>
+                <td>level2</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>level3</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
                 
 
                 
@@ -180,9 +308,7 @@
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata.chapter.html">chapter</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
+                <a href="table_gcis_metadata.finding_keyword_map.html">finding_keyword_map</a><br>
         
         
 

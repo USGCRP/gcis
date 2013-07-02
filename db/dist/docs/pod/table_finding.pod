@@ -12,6 +12,8 @@ finding
  identifier (character varying) - 
  chapter (character varying) - 
  statement (character varying) - 
+ ordinal (integer) - 
+ report (character varying) - 
 
 
 =head1 SCHEMA
@@ -22,10 +24,15 @@ finding
   identifier | character varying | not null  | extended | 
   chapter    | character varying |           | extended | 
   statement  | character varying |           | extended | 
+  ordinal    | integer           |           | plain    | 
+  report     | character varying |           | extended | 
  Indexes:
      "finding_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
      "finding_chapter_fkey" FOREIGN KEY (chapter) REFERENCES chapter(identifier)
+     "finding_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
+ Referenced by:
+     TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_finding_fkey" FOREIGN KEY (finding) REFERENCES finding(identifier)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

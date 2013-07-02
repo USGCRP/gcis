@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.report">report</a>
+            <a name="gcis-metadata.table.finding-keyword-map">finding_keyword_map</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>report Structure</caption>
+                <caption>finding_keyword_map Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -133,11 +133,19 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.finding.html#gcis-metadata.table.finding">finding.identifier</a>
+                  
+                
+                  
                 
                 </td>
-                <td>identifier</td>
+                <td>finding</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
                 
                     PRIMARY KEY
                     
@@ -148,17 +156,32 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
+                
                 </td>
              </tr>
             
             <tr class="tr1">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.keyword.html#gcis-metadata.table.keyword">keyword.id</a>
+                  
+                
+                  
+                
                 </td>
-                <td>title</td>
-                <td>character varying</td>
+                <td>keyword</td>
+                <td>integer</td>
                 <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
                 
 
                 
@@ -177,13 +200,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.chapter.html">chapter</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
         
 
     <!-- Indexes -->

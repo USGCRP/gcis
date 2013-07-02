@@ -8,3 +8,4 @@
 0090_audit_what.sql	a269c2ae2e93d5e29e36ed51f44a73e0
 0100_org_fk.sql	f4d8b10ff050b9203e652fa53b37cfe9
 0110_organization.sql	cef8cfea7f29cf249aedfba0b87533d5
+0120_findings_keywords.sql	02a378f61a04032196889d6e8b0f9445

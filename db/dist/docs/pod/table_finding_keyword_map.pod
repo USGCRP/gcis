@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+finding_keyword_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ finding (character varying) - 
+ keyword (integer) - 
+
+
+=head1 SCHEMA
+
+             Table "gcis_metadata.finding_keyword_map"
+  Column  |       Type        | Modifiers | Storage  | Description 
+ ---------+-------------------+-----------+----------+-------------
+  finding | character varying | not null  | extended | 
+  keyword | integer           | not null  | plain    | 
+ Indexes:
+     "finding_keyword_map_pkey" PRIMARY KEY, btree (finding, keyword)
+ Foreign-key constraints:
+     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding) REFERENCES finding(identifier)
+     "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id)
+ Has OIDs: no
+ 
+
+=cut
+
+
