@@ -177,8 +177,6 @@ sub startup {
     my $report = $r->resource('report');
     my $chapter = $report->resource('chapter');
     $report->resource('figure');
-    $report->resource('key-message');
-    $report->resource('traceable-account');
     $report->resource('finding');
 
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
