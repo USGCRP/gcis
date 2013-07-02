@@ -1,34 +1,8 @@
 package Tuba::Importer::Processor::Findings;
-use Mojo::Base qw/-base/;
+use Mojo::Base qw/Tuba::Importer::Processor/;
 use Tuba::DB::Objects qw/-nicknames/;
 use List::MoreUtils qw/mesh/;
 use Data::Dumper;
-
-has 'spreadsheet';
-has 'worksheet';
-
-has rows_processed => 0;
-has errors => sub { [] };
-has warnings => sub { [] };
-
-has 'audit_user';
-has 'audit_note';
-
-has 'update_only';
-has 'status';
-
-sub _note_error {
-    my $self = shift;
-    my ($msg,$index) = @_;
-    push @{ $self->errors }, { row => $index, message => $msg };
-}
-
-sub _audit_info {
-    my $self = shift;
-    my $index = shift;
-    return ( audit_user => $self->audit_user, audit_note => $self->audit_note." row $index" ) if $index;
-    return ( audit_user => $self->audit_user, audit_note => $self->audit_note);
-}
 
 sub process {
     no warnings 'uninitialized';

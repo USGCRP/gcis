@@ -4,6 +4,7 @@ use JSON::XS;
 use Path::Class qw/file/;
 use Tuba::Importer::Processor::Journals;
 use Tuba::Importer::Processor::Findings;
+use Tuba::Importer::Processor::Datasets;
 
 sub _data {
     my $c = shift;
@@ -62,6 +63,8 @@ sub _find_processor {
             return Tuba::Importer::Processor::Journals->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
         /findings/ and
             return Tuba::Importer::Processor::Findings->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
+        /a-level datasets/i and
+            return Tuba::Importer::Processor::Datasets->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
     }
     return;
 }

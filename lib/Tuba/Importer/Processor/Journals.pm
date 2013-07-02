@@ -1,21 +1,8 @@
 package Tuba::Importer::Processor::Journals;
-use Mojo::Base qw/-base/;
+use Mojo::Base qw/Tuba::Importer::Processor/;
 use Tuba::DB::Objects qw/-nicknames/;
 use List::MoreUtils qw/mesh/;
 use Data::Dumper;
-
-has 'spreadsheet';
-has 'worksheet';
-
-has rows_processed => 0;
-has errors => sub { [] };
-has warnings => sub { [] };
-
-has 'audit_user';
-has 'audit_note';
-
-has 'update_only';
-has 'status';
 
 sub process {
     no warnings 'uninitialized';
