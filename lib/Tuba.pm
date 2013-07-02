@@ -146,6 +146,11 @@ sub startup {
       $resource->get->to('#list')->name("list_$name");
       my $select;
       if ($opts->{wildcard}) {
+          for my $format (qw/json nt html/) {
+                $resource->get("*$identifier.$format" => { format => $format } )
+                         ->over(not_match => { $identifier => q[^(?:form/update/|history/)]})
+                         ->to('#show')->name("_show_${name}_$format");
+          }
         $resource->get("*$identifier")->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier")->to('#show')->name("show_$name");

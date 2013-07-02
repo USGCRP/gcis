@@ -45,6 +45,7 @@ DELETE
 % my $show_methods = param 'show_methods';
 % my $walk = begin
   % my ($walk, $node, $depth, $parent_pattern) = @_;
+  % return if $node->name =~ /^_/;
   % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|reference|resources|import_form)$/;
   % unless (user()) {
   %     return if $node->name =~ m[^((create|update)_form)];
