@@ -1,9 +1,12 @@
 % layout 'default';
 
+<center>
+Searched for <b><%= param 'q' %></b>.
+</center>
+<br>
 % if (@$results==0) {
 No search results.
 % } else  {
-Results :
 <table class='table table-condensed table-bordered'>
 % for my $obj (@$results) {
 <tr>
