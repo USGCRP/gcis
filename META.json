@@ -27,6 +27,7 @@
       },
       "runtime" : {
          "requires" : {
+            "Algorithm::Permute" : "0",
             "DBIx::Custom" : "0",
             "DBIx::Simple" : "0",
             "Date::Parse" : "0",
@@ -45,7 +46,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.35"
+         "version" : "0.36"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm",
@@ -194,5 +195,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.35"
+   "version" : "0.36"
 }

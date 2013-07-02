@@ -193,6 +193,7 @@ lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/object.nt.ep
 lib/Tuba/files/templates/person/objects.html.ep
+lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/process.html.ep
