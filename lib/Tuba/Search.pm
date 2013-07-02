@@ -12,9 +12,7 @@ sub process {
     for my $table (keys %$all) {
         next if $table eq 'publication';
         my $manager = $all->{$table}->{mng};
-        warn "will I search $table?";
         next unless $manager->has_urls($c);
-        warn "searching $table";
         push @results, $manager->dbgrep(query_string => $q, limit => 10);
     }
 

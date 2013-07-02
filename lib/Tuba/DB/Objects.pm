@@ -83,6 +83,10 @@ sub init {
         my $mixin = $made;
         $mixin =~ s/Tuba::DB/Tuba::DB::Mixin/;
         eval " require $mixin";
+        warn "loading $mixin";
+        if ($@ and $@ !~ /can't locate/i) {
+            die $@;
+        }
     }
     die "Could not make classes" unless @made;
     for (@made) {

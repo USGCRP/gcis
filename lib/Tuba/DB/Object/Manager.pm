@@ -21,11 +21,13 @@ sub has_urls {
 sub dbgrep {
     my $self = shift;
     my %a = @_;
+
     my $query_string = $a{query_string} or return;
+    my $limit = $a{limit} || 10;
+
     chomp $query_string;
     $query_string =~ s/^\s+//;
     $query_string =~ s/\s+$//;
-    my $limit = $a{limit} || 10;
     my @query;
     for my $col ($self->object_class->meta->columns) {
         next if $col->type =~ /time/;
@@ -36,8 +38,6 @@ sub dbgrep {
     }
     return [] unless @query;
     my $found = $self->get_objects( query => [ or => \@query ], limit => $limit, );
-    use Data::Dumper;
-    warn "$self tried : ".Dumper(\@query);
     return @$found;
 }
 
