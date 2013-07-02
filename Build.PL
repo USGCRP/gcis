@@ -54,7 +54,7 @@ my $builder = Module::Build::Database->new(
         'SQL::Interp' => 0,
         'Date::Parse' => 0,
         'JSON::XS'    => 0,
-        'Algorith::Permute' => 0,
+        'Algorithm::Permute' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
