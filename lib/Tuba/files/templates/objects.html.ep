@@ -45,7 +45,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {
-                    <span class='btn squeezevert'><%= obj_link($_); %></btn>
+                    <span class='btn squeezevert'><%= obj_link($_); %></span>
             %   }
             % } elsif (ref($got)) {
                 %= obj_link($got);

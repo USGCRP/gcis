@@ -13,7 +13,9 @@ No search results.
 <td><%= $obj->meta->table %></td>
 <td>
     % if (my $uri = $obj->uri($self)) {
-        <%= link_to $uri => begin %><%= $obj->stringify %><%= end %>
+        <%= link_to $uri => begin %>
+            <%= $obj->stringify(long => 1) %>
+        <%= end %>
     % } else {
         <%= $obj->stringify %>
     % }
