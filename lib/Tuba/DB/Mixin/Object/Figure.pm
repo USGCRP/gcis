@@ -1,6 +1,11 @@
 package Tuba::DB::Object::Figure;
 # Tuba::DB::Mixin::Object::Figure;
 
+sub stringify {
+    my $c = shift;
+    return $c->title || $c->identifier;
+}
+
 sub uri {
     my $s = shift;
     my $c = shift;

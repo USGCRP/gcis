@@ -57,7 +57,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % my $got = $object->$method;
 % if (ref($got) eq 'ARRAY') {
 %    for (@$got) {
-%= obj_link($_);
+    <span class='btn squeezevert'><%= obj_link($_); %></span>
 %    }
 % } else {
 %= obj_link($got);

@@ -28,6 +28,10 @@ String.prototype.htmlEscape = function() {
         content: '*';
         display:inline;
     }
+    .squeezevert {
+        padding-top:0px;
+        padding-bottom:0px;
+    }
 </style>
 </head>
     <body>
