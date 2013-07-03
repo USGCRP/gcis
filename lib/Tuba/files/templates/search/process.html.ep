@@ -15,9 +15,11 @@ No search results.
     % if (my $uri = $obj->uri($self)) {
         <%= link_to $uri => begin %>
             <%= $obj->stringify(long => 1) %>
+            <span style='float:right;'><%== $obj->thumbnail($self) %></span>
         <%= end %>
     % } else {
         <%= $obj->stringify %>
+        <span style='float:right;'><%== $obj->thumbnail($self) %></span>
     % }
 </td>
 </tr>

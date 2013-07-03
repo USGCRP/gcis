@@ -9,5 +9,11 @@ sub stringify {
     return $1;
 }
 
+sub thumbnail {
+    my $s = shift;
+    my $c = shift;
+    return join '', map $_->thumbnail($c), $s->file;
+}
+
 1;
 

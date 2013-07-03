@@ -121,5 +121,12 @@ sub foaf_name {
     return $self->identifier;
 }
 
+sub thumbnail {
+    my $self = shift;
+    my $c = shift;
+    # overload if you can generate a thumbnail image
+    return "";
+}
+
 1;
 
