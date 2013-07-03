@@ -5,6 +5,7 @@ alter table dataset_organization add primary key (dataset,organization);
 alter table dataset_organization rename to dataset_organization_map;
 
 insert into publication_type (identifier, "table") values ('dataset','dataset');
+insert into publication_type (identifier, "table") values ('image','image');
 
 alter table publication add column parent_rel varchar;
 

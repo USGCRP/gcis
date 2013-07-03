@@ -46,7 +46,7 @@ sub process {
             my $match = Organizations->get_objects(query => [ identifier => { ilike => $creator } ]);
             if ($match && @$match==1) {
                 my $organization = $match->[0]->identifier;
-                my $new = DatasetOrganization->new(organization => $organization, dataset => $id);
+                my $new = DatasetOrganizationMap->new(organization => $organization, dataset => $id);
                 unless ($new->load(speculative => 1)) {
                     $new->save($self->_audit_info($index));
                 }
@@ -68,6 +68,22 @@ sub process {
                 $figure_publication->parent_id($dataset_publication->id);
                 $figure_publication->parent_rel('prov:wasDerivedFrom');
                 $figure_publication->save($self->_audit_info($index));
+            }
+        }
+        if (my $images = $record{C}) {
+            for my $image (split /\s*,\s*/, $images) {
+                $image =~ s[/image/][];
+                my $img = Image->new(identifier => $image);
+                $img->load(speculative => 1) or do {
+                    $self->_note_error("could not load image $image", $index);
+                    next;
+                };
+                my $dataset_publication = $dataset->get_publication(autocreate => 1);
+                $dataset_publication->save($self->_audit_info($index));
+                my $image_publication = $img->get_publication(autocreate => 1) or die "could not make publication for image";
+                $image_publication->parent_id($dataset_publication->id);
+                $image_publication->parent_rel('prov:wasDerivedFrom');
+                $image_publication->save($self->_audit_info($index));
             }
         }
     } continue {
