@@ -49,24 +49,40 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % }
 
 
-% for my $rel ($meta->relationships) {
-% my $method = $rel->name;
 <tr>
-<td><%= $method %></td>
+<td>Organizations</td>
 <td>
-% my $got = $object->$method;
-% if (ref($got) eq 'ARRAY') {
-%    for (@$got) {
-    <span class='btn squeezevert'><%= obj_link($_); %></span>
-%    }
-% } else {
-%= obj_link($got);
+% for my $o (@{ $object->organization_objs }) {
+<span class='btn squeezevert'><%= obj_link($o); %></span>
 % }
 </td>
-
 </tr>
-% }
+
 </table>
 
-%= include 'prov';
+<table class='table table-condensed table-bordered table-striped'>
+<caption>
+<h4>Provenance</h4>
+</caption>
+% my $pub = $object->get_publication;
+% if ($pub) {
+%   if (my $parent = $pub->parent_id) {
+        <tr>
+        <td><%= $pub->parent_rel %></td>
+        <td><%= $parent %></td>
+        </tr>
+%   }
+%   my $children = $pub->children;
+%   if ($children && @$children) {
+%       for my $child (@$children) {
+        <tr>
+        <td><%= obj_link($child) %></td>
+        <td><%= $child->parent_rel %></td>
+        <td><%= $object->stringify %></td>
+        </tr>
+%       }
+%   }
+% }
+
+</table>
 

@@ -87,3 +87,5 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % }
 </td></tr>
 </table>
+
+%= include 'prov';

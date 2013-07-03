@@ -28,7 +28,11 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 <tr><td>country</td><td><%= $object->country %></td></tr>
 <tr><td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td></tr>
 <tr><td>datasets</td>
-    <td><%= join '', $object->dataset_organization %></td>
+    <td>
+<% for (@{ $object->dataset_objs }) { %>
+<span class='btn squeezevert'><%= obj_link($_) %></span>
+<% } %>
+    </td>
     </tr>
 <tr><td>people</td>
 <td><% for my $c ($object->contributor) { %>

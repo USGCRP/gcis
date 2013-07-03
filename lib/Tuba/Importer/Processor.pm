@@ -31,6 +31,12 @@ sub _note_error {
     push @{ $self->errors }, { row => $index, message => $msg };
 }
 
+sub _note_warning {
+    my $self = shift;
+    my ($msg,$index) = @_;
+    push @{ $self->warnings }, { row => $index, message => $msg };
+}
+
 sub _audit_info {
     my $self = shift;
     my $index = shift;

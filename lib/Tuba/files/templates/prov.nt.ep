@@ -1,0 +1,7 @@
+% my $pub = $object->get_publication;
+% if ($pub) {
+%   if (my $parent = $pub->parent_id) {
+<<%= current_resource %>> <<%= property_to_iri($pub->parent_rel) %>> <<%= $pub->parent->uri($self)->to_abs %>> .
+%   }
+% }
+

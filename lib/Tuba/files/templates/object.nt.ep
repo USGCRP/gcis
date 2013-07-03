@@ -4,3 +4,4 @@
 % }
 <<%= current_resource %>> <http://www.w3.org/ns/prov#label> "<%= $object->prov_label %>" .
 <<%= current_resource %>> <http://xmlns.com/foaf/0.1/name> "<%= $object->foaf_name %>" .
+%= include 'prov';

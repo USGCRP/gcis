@@ -80,6 +80,14 @@ sub startup {
             my $frag = shift;
             return qq[http://www.w3.org/1999/02/22-rdf-syntax-ns#$frag]
         });
+    $app->helper(property_to_iri => sub {
+            my $c = shift;
+            my $prop = shift;
+            if ($prop =~ /^(prov):(.*)$/) {
+                return qq[http://www.w3.org/ns/$1#$2];
+            }
+            return 'notimplemented';
+        });
 
 
     # Hooks
