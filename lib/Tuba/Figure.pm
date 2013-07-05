@@ -30,11 +30,9 @@ sub show {
     my $identifier = $c->stash('figure_identifier');
     my $meta = Figure->meta;
     my $object = Figure->new(identifier => $identifier)->load(speculative => 1, with => [qw/chapter_obj image/]) or return $c->render_not_found;
-    $c->respond_to(
-        json => sub { shift->render(json => $object->as_tree) },
-        nt   => sub { shift->render(template => 'object',        meta => $meta, object => $object ) },
-        html => sub { shift->render(template => 'figure/object', meta => $meta, object => $object ) }
-    );
+    $c->stash(object => $object);
+    $c->stash(meta => $meta);
+    $c->SUPER::show(@_);
 }
 
 sub redirect_to_identifier {

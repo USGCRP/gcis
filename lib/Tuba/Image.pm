@@ -107,16 +107,12 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('image_identifier');
     my $meta = Image->meta;
-    my $object =
-      Image->new( identifier => $identifier )
+    my $object = Image->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/figure_obj file/] )
       or return $c->render_not_found;
     $c->stash(object => $object);
-    $c->respond_to(
-        json => sub { shift->render(json => $object->as_tree) },
-        nt   => sub { shift->render(template => 'object', meta => $meta, objects => $object ) },
-        html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }
-    );
+    $c->stash(meta => $meta);
+    $c->SUPER::show(@_);
 }
 
 1;
