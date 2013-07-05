@@ -115,10 +115,9 @@ ALTER SEQUENCE dataset_lineage_id_seq OWNED BY dataset_lineage.id;
 
 
 
-CREATE TABLE dataset_organization (
-    identifier character varying NOT NULL,
+CREATE TABLE dataset_organization_map (
     dataset character varying NOT NULL,
-    organization character varying
+    organization character varying NOT NULL
 );
 
 
@@ -290,7 +289,8 @@ CREATE TABLE publication (
     id integer NOT NULL,
     parent_id integer,
     publication_type character varying NOT NULL,
-    fk character varying NOT NULL
+    fk character varying NOT NULL,
+    parent_rel character varying
 );
 
 
@@ -461,8 +461,8 @@ ALTER TABLE ONLY dataset_lineage
 
 
 
-ALTER TABLE ONLY dataset_organization
-    ADD CONSTRAINT dataset_organization_pkey PRIMARY KEY (identifier);
+ALTER TABLE ONLY dataset_organization_map
+    ADD CONSTRAINT dataset_organization_pkey PRIMARY KEY (dataset, organization);
 
 
 
@@ -571,6 +571,11 @@ ALTER TABLE ONLY chapter
 
 
 
+ALTER TABLE ONLY publication
+    ADD CONSTRAINT uk_publication_type_fk UNIQUE (publication_type, fk);
+
+
+
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON article FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -595,7 +600,7 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_lin
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -683,7 +688,7 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset_lineage FOR EACH STAT
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset_organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset_organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -772,12 +777,12 @@ ALTER TABLE ONLY contributor
 
 
 
-ALTER TABLE ONLY dataset_organization
+ALTER TABLE ONLY dataset_organization_map
     ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset) REFERENCES dataset(identifier) MATCH FULL;
 
 
 
-ALTER TABLE ONLY dataset_organization
+ALTER TABLE ONLY dataset_organization_map
     ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
 
 

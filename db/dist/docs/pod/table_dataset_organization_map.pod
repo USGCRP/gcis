@@ -1,0 +1,36 @@
+
+=head1 NAME
+
+dataset_organization_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ dataset (character varying) - 
+ organization (character varying) - 
+
+
+=head1 SCHEMA
+
+             Table "gcis_metadata.dataset_organization_map"
+     Column    |       Type        | Modifiers | Storage  | Description 
+ --------------+-------------------+-----------+----------+-------------
+  dataset      | character varying | not null  | extended | 
+  organization | character varying | not null  | extended | 
+ Indexes:
+     "dataset_organization_pkey" PRIMARY KEY, btree (dataset, organization)
+ Foreign-key constraints:
+     "dataset_organization_ibfk_1" FOREIGN KEY (dataset) REFERENCES dataset(identifier) MATCH FULL
+     "dataset_organization_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON dataset_organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

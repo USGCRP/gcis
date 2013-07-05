@@ -13,6 +13,7 @@ publication
  parent_id (integer) - 
  publication_type (character varying) - 
  fk (character varying) - 
+ parent_rel (character varying) - 
 
 
 =head1 SCHEMA
@@ -24,8 +25,10 @@ publication
   parent_id        | integer           |                                                          | plain    | 
   publication_type | character varying | not null                                                 | extended | 
   fk               | character varying | not null                                                 | extended | 
+  parent_rel       | character varying |                                                          | extended | 
  Indexes:
      "publication_pkey" PRIMARY KEY, btree (id)
+     "uk_publication_type_fk" UNIQUE CONSTRAINT, btree (publication_type, fk)
  Foreign-key constraints:
      "publication_ibfk_1" FOREIGN KEY (parent_id) REFERENCES publication(id) MATCH FULL
      "publication_ibfk_2" FOREIGN KEY (publication_type) REFERENCES publication_type(identifier) MATCH FULL

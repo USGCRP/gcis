@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.organization">organization</a>
+            <a name="gcis-metadata.table.dataset-organization-map">dataset_organization_map</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>organization Structure</caption>
+                <caption>dataset_organization_map Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -133,11 +133,19 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.dataset.html#gcis-metadata.table.dataset">dataset.identifier</a>
+                  
+                
+                  
                 
                 </td>
-                <td>identifier</td>
+                <td>dataset</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
                 
                     PRIMARY KEY
                     
@@ -155,42 +163,25 @@
             <tr class="tr1">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
+                  
+                
+                  
+                
                 </td>
-                <td>name</td>
+                <td>organization</td>
                 <td>character varying</td>
                 <td><i>
                 
+                    
 
+                    
                 
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>url</td>
-                <td>character varying</td>
-                <td><i>
-                
+                    PRIMARY KEY
+                    
 
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>country</td>
-                <td>character varying</td>
-                <td><i>
+                    
                 
 
                 
@@ -209,15 +200,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.contributor.html">contributor</a><br>
-        
-                <a href="table_gcis_metadata.dataset_organization_map.html">dataset_organization_map</a><br>
-        
-                <a href="table_gcis_metadata.organization_type_map.html">organization_type_map</a><br>
-        
         
 
     <!-- Indexes -->

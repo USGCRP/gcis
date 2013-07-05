@@ -104,10 +104,10 @@ SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
 
 
 --
--- Data for Name: dataset_organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+-- Data for Name: dataset_organization_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset_organization (identifier, dataset, organization) FROM stdin;
+COPY dataset_organization_map (dataset, organization) FROM stdin;
 \.
 
 
@@ -194,6 +194,8 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+dataset	dataset
+image	image
 \.
 
 
@@ -201,7 +203,7 @@ COPY publication_type (identifier, "table") FROM stdin;
 -- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication (id, parent_id, publication_type, fk) FROM stdin;
+COPY publication (id, parent_id, publication_type, fk, parent_rel) FROM stdin;
 \.
 
 
