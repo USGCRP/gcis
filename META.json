@@ -46,7 +46,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.36"
+         "version" : "0.37"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm",
@@ -82,6 +82,14 @@
       },
       "Tuba::DB::Object::Figure" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Figure.pm",
+         "version" : 0
+      },
+      "Tuba::DB::Object::File" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/File.pm",
+         "version" : 0
+      },
+      "Tuba::DB::Object::Finding" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Finding.pm",
          "version" : 0
       },
       "Tuba::DB::Object::Finding::Manager" : {
@@ -144,6 +152,18 @@
          "file" : "lib/Tuba/Importer.pm",
          "version" : 0
       },
+      "Tuba::Importer::Processor" : {
+         "file" : "lib/Tuba/Importer/Processor.pm",
+         "version" : 0
+      },
+      "Tuba::Importer::Processor::Ant" : {
+         "file" : "lib/Tuba/Importer/Processor/Ant.pm",
+         "version" : 0
+      },
+      "Tuba::Importer::Processor::Datasets" : {
+         "file" : "lib/Tuba/Importer/Processor/Datasets.pm",
+         "version" : 0
+      },
       "Tuba::Importer::Processor::Findings" : {
          "file" : "lib/Tuba/Importer/Processor/Findings.pm",
          "version" : 0
@@ -195,5 +215,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.36"
+   "version" : "0.37"
 }
