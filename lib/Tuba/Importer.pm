@@ -5,6 +5,7 @@ use Path::Class qw/file/;
 use Tuba::Importer::Processor::Journals;
 use Tuba::Importer::Processor::Findings;
 use Tuba::Importer::Processor::Datasets;
+use Tuba::Importer::Processor::Ant;
 
 sub _data {
     my $c = shift;
@@ -58,13 +59,21 @@ sub _find_processor {
     my $c = shift;
     my ($spreadsheet, $worksheet) = @_;
 
+    #Spreadsheet, worksheet, Ant target                                                                                                                                                 
+    #'NCA Graphics Tracking','GCIS Provenance', sync-figures                                                                                                                            
+    #'Journals_perBrian','Sheet1', sync-journals #Broken                                                                                                                                
+    #'Articles','Sheet1', sync-articles                                                                                                                                                 
+    #'Organizations','Sheet1', sync-organizations #Broken                                                                                                                               
+    #'nca3draft.canonicalURIs.chapters','Sheet 1', sync-chapters                                                                                                                        
+    #];
+
+    my @a = ( spreadsheet => $spreadsheet, worksheet => $worksheet );
     for ($spreadsheet) {
-        /journals/i and
-            return Tuba::Importer::Processor::Journals->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
-        /findings/ and
-            return Tuba::Importer::Processor::Findings->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
-        /a-level datasets/i and
-            return Tuba::Importer::Processor::Datasets->new(spreadsheet => $spreadsheet, worksheet => $worksheet);
+        /journals/i               and return Tuba::Importer::Processor::Journals->new(@a);
+        /findings/                and return Tuba::Importer::Processor::Findings->new(@a);
+        /a-level datasets/i       and return Tuba::Importer::Processor::Datasets->new(@a);
+        /nca graphics tracking/i  and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-figures", antdir => $c->config('ant_dir'));
+        /canonicalURIs.chapters/i and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-chapters", antdir => $c->config('ant_dir'));
     }
     return;
 }

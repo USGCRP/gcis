@@ -6,6 +6,7 @@ Processing results.
 
 % my $errors = $p->errors;
 % my $warnings = $p->warnings;
+% my $info = $p->info;
 
 <pre>
 Status         : <%= $p->status %>
@@ -13,6 +14,13 @@ Rows processed : <%= $p->rows_processed %>
 Warnings       : <%= scalar @$warnings %>
 Errors         : <%= scalar @$errors %>
 </pre>
+
+% if (@$info) {
+    <center><b>Processor info</b></center>
+<pre>
+<% for my $info (@$info) { %><%= $info->{message} %><% } %>
+</pre>
+% }
 
 % if (@$errors) {
     <center><b>Errors</b></center>

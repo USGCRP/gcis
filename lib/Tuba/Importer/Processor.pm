@@ -13,6 +13,7 @@ has 'worksheet';
 has rows_processed => 0;
 has errors => sub { [] };
 has warnings => sub { [] };
+has info => sub { [] };
 
 has 'audit_user';
 has 'audit_note';
@@ -36,6 +37,13 @@ sub _note_warning {
     my ($msg,$index) = @_;
     push @{ $self->warnings }, { row => $index, message => $msg };
 }
+
+sub _note_info {
+    my $self = shift;
+    my ($msg,$index) = @_;
+    push @{ $self->info }, { row => $index, message => $msg };
+}
+
 
 sub _audit_info {
     my $self = shift;

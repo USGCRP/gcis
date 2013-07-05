@@ -44,7 +44,7 @@ sub import {
     my $class = shift;
     my $caller = caller;
 
-    if ($ENV{TUBA_CLI} or grep /-autoconnect/, @_) {
+    if ($ENV{TUBA_CLI} or (grep /-autoconnect/, @_)) {
         # Load configuration from app.
         my $app = Tuba->new();
     }
