@@ -32,6 +32,9 @@ sub process {
             $id = 'unnamed-dataset-'.$index;
         }
 
+        $id =~ s/^\s+//;
+        $id =~ s/\s+$//;
+
         my $dataset = Dataset->new(identifier => $id);
         $dataset->load(speculative => 1);
         $dataset->name($record{E});
