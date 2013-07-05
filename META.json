@@ -46,7 +46,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.37"
+         "version" : "0.38"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm",
@@ -215,5 +215,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.37"
+   "version" : "0.38"
 }
