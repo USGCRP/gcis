@@ -4,7 +4,7 @@ use File::Temp;
 use Path::Class qw/file/;
 
 has 'target';
-has 'antdir' => '/var/local/projects/release/gcisbaseline';
+has 'antdir' => '/usr/local/projects/release/gcisbaseline';
 
 sub process {
     my $self = shift;
@@ -26,8 +26,8 @@ sub process {
         return $self->status('ok');
     }
 
-    $self->_note_warning(scalar file("$stdout")->slurp);
-    $self->_note_error(scalar file("$stderr")->slurp);
+    $self->_note_info(scalar file("$stdout")->slurp);
+    $self->_note_info(scalar file("$stderr")->slurp);
 
     return $self->status('ok');
 }
