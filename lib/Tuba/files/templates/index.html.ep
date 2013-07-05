@@ -50,6 +50,10 @@
 
     /* Carousel base class */
 
+    .jumbotron {
+        margin-bottom:10px;
+        margin-top:10px;
+    }
     .carousel .item {
       height: 500px;
     }
@@ -60,6 +64,12 @@
 <div class="jumbotron">
 <h1>GCIS API</h1>
 <p class="lead">A programmatic interface to the Global Change Information System.</p>
+<p>This is the preliminary API for the Global Change Information System (GCIS).  The
+current version of this API is <%= $Tuba::VERSION %>.  If you'd like to be informed
+of updates and/or be involved in the evolution of this API, please
+subscribe to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>
+mailing list<%= end %>.
+</p>
 </div>
 
     <div id="myCarousel" class="carousel slide" style='border:1px solid #999;'>
@@ -91,7 +101,7 @@ $('.carousel').carousel({interval : 20000 })
 
 <div class="span4">
     <h2>API Reference</h2>
-    <p>The complete <%= link_to 'reference' => begin %>API Reference<%= end %>.</p>
+    <p>The current complete <%= link_to 'reference' => begin %>API Reference<%= end %>.</p>
 </div>
 
 <div class="span4">
