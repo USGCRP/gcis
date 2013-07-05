@@ -1,26 +1,26 @@
-<table class='table table-condensed table-bordered table-striped'>
-<caption>
-<h4>Provenance</h4>
-</caption>
 % my $pub = $object->get_publication;
 % if ($pub) {
-%   if (my $parent = $pub->parent_id) {
-        <tr>
-        <td><%= $object->stringify %></td>
-        <td><%= $pub->parent_rel %></td>
-        <td><%= obj_link($pub->parent) %></td>
-        </tr>
-%   }
-%   my $children = $pub->children;
-%   if ($children && @$children) {
-%       for my $child (@$children) {
-        <tr>
-        <td><%= obj_link($child) %></td>
-        <td><%= $child->parent_rel %></td>
-        <td><%= $object->stringify %></td>
-        </tr>
-%       }
-%   }
+    <table class='table table-condensed table-bordered table-striped'>
+    <caption>
+    <h4>Provenance</h4>
+    </caption>
+    %   if (my $parent = $pub->parent_id) {
+            <tr>
+            <td><%= $object->stringify %></td>
+            <td><%= $pub->parent_rel %></td>
+            <td><%= obj_link($pub->parent) %></td>
+            </tr>
+    %   }
+    %   my $children = $pub->children;
+    %   if ($children && @$children) {
+    %       for my $child (@$children) {
+            <tr>
+            <td><%= obj_link($child) %></td>
+            <td><%= $child->parent_rel %></td>
+            <td><%= $object->stringify %></td>
+            </tr>
+    %       }
+    %   }
 % }
 
 </table>

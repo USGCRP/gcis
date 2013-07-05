@@ -25,11 +25,9 @@ sub show {
       ->load( speculative => 1, with => [qw/figure report_obj/] )
       or return $c->render_not_found;
 
-    $c->respond_to(
-        json => sub { shift->render(json => $chapter->as_tree ) },
-        nt   => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) },
-        html => sub { shift->render(template => "object", meta => Chapter->meta, object => $chapter) }
-    );
+    $c->stash(object => $chapter);
+    $c->stash(meta => Chapter->meta);
+    $c->SUPER::show(@_);
 }
 
 1;
