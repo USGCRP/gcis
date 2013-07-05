@@ -161,7 +161,6 @@ lib/Tuba/DB/Objects.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
 lib/Tuba/files/public/css/gcis.css
-lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
