@@ -68,12 +68,14 @@ sub _find_processor {
     #];
 
     my @a = ( spreadsheet => $spreadsheet, worksheet => $worksheet );
+    my %antdir;
+    $antdir{antdir} = $c->config('ant_dir') if $c->config('ant_dir');
     for ($spreadsheet) {
         /journals/i               and return Tuba::Importer::Processor::Journals->new(@a);
         /findings/                and return Tuba::Importer::Processor::Findings->new(@a);
         /a-level datasets/i       and return Tuba::Importer::Processor::Datasets->new(@a);
-        /nca graphics tracking/i  and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-figures", antdir => $c->config('ant_dir'));
-        /canonicalURIs.chapters/i and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-chapters", antdir => $c->config('ant_dir'));
+        /nca graphics tracking/i  and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-figures", %antdir);
+        /canonicalURIs.chapters/i and return Tuba::Importer::Processor::Ant->new(@a, target => "sync-chapters", %antdir);
     }
     return;
 }
