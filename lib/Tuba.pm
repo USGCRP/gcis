@@ -262,6 +262,7 @@ sub startup {
     } => 'calculate_url');
 
     $app->routes->get('/debug') if $ENV{TUBA_DEBUG};
+    $app->routes->get('/open-search')->name('opensearch');
 }
 
 1;

@@ -8,6 +8,7 @@
 %= stylesheet "/css/gcis.css";
 %= javascript '/mojo/jquery/jquery.js';
 %= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
+<link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
 %= javascript begin
 String.prototype.htmlEscape = function() {
      return $('<div/>').text(this.toString()).html();
