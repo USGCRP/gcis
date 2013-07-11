@@ -44,8 +44,8 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
             % }
         </td>
         <td>
-            % for my $d (@{ $o->dataset_organization }) {
-            %= $d
+            % for my $d (@{ $o->dataset_objs }) {
+            %= obj_link($d)
             % }
         </td>
     </tr>
