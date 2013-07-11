@@ -30,7 +30,9 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 <tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
 <tr> <td>org</td><td>
 <% for my $o ($object->contributor) { %>
+<span class='btn squeezevert'>
 <%= obj_link($o->organization_obj) %>
+</span>
 <% } %>
 </td></tr>
 
