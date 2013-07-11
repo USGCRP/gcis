@@ -86,7 +86,10 @@ sub startup {
             if ($prop =~ /^(prov):(.*)$/) {
                 return qq[http://www.w3.org/ns/$1#$2];
             }
-            return 'notimplemented';
+            if ($prop =~ /^(dc):(.*)$/) {
+                return qq[http://purl.org/$1/terms/$2];
+            }
+            return $prop;
         });
 
 
