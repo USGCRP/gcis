@@ -36,7 +36,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
     </tr>
 <tr><td>people</td>
 <td><% for my $c ($object->contributor) { %>
-<%= obj_link($c->person) %>
+<span class='btn squeezevert'><%= obj_link($c->person) %></span>
 <% } %>
 </td>
 </tr>

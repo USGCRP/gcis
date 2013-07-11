@@ -40,12 +40,12 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
         </td>
         <td>
             % for my $c (@{ $o->contributor }) {
-            %= obj_link($c->person)
+    <span class='btn squeezevert'><%= obj_link($c->person) %></span>
             % }
         </td>
         <td>
             % for my $d (@{ $o->dataset_objs }) {
-            %= obj_link($d)
+    <span class='btn squeezevert'><%= obj_link($d) %></span>
             % }
         </td>
     </tr>
