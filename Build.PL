@@ -1,7 +1,7 @@
 use 5.006;
 use strict;
 use warnings FATAL => 'all';
-use Module::Build::Database 0.42;
+use Module::Build::Database 0.47;
 BEGIN {
     eval qq{
     use Module::Build::Mojolicious clean_install => 1;
@@ -23,7 +23,7 @@ my $builder = Module::Build::Database->new(
     database_options    => {
         name => "gcis",
         schema => "gcis_metadata",
-        post_initdb => $audit_sql,
+        after_create => $audit_sql,
         append_to_conf => qq[
             audit.username = 'unknown'
             audit.note = ''
