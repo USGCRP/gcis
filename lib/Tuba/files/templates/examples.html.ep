@@ -4,7 +4,7 @@
 
 <h3>1. Retrieve the data used to produce a figure.</h3>
 <p>Retrieve the actual data used to produce
-<%= link_to 'show_figure', { figure_identifier => 'temperature-increase-projected', report_identifier => 'nca3' } => begin %>
+<%= link_to 'show_figure', { figure_identifier => 'temperature-increase-projected', report_identifier => default_report_identifier() } => begin %>
 Figure 20.1: Projected Temperature Increases.
 %= end
 .

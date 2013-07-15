@@ -50,6 +50,7 @@ String.prototype.htmlEscape = function() {
                     </li>
                 </ul>
                 <ul class="nav">
+                    % my $report_identifier = ( ( stash 'report_identifier' ) || default_report_identifier );
                     <li><%= link_to 'list_report'  => begin %>report<%= end %></li>
                     <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapters<%= end %></li>
                     <li><%= link_to 'list_figure'  => { report_identifier => $report_identifier } => begin %>figures<%= end %></li>

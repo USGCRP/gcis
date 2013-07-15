@@ -46,6 +46,24 @@ sub show {
     );
 };
 
+=head2 select
+
+Called as a bridge, e.g. for /report/:report_identifier/figure/:figure_identifier
+
+=cut
+
+sub select {
+    my $c = shift;
+    my $loaded = $c->_this_object;
+    if ($loaded) {
+        my $table = $loaded->meta->table;
+        $c->stash($table => $loaded);
+        return 1;
+    }
+    $c->render_not_found;
+    return 0;
+}
+
 sub _guess_object_class {
     my $c = shift;
     my $class = ref $c;

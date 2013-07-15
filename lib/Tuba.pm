@@ -24,7 +24,6 @@ sub startup {
 
     $app->secret('aePhoox5Iegh6toeay3ooV9n');
     $app->plugin('InstallablePaths');
-    $app->defaults->{report_identifier} = "nca3";
 
     Tuba::Log->set_logger($app->log);
 
@@ -90,6 +89,13 @@ sub startup {
                 return qq[http://purl.org/$1/terms/$2];
             }
             return $prop;
+        });
+    $app->helper(default_report_identifier => sub {
+            state $id;
+            return $id if $id;
+            ($id) = @{ Tuba::DB::Object::Report::Manager->get_objects(limit => 1, sort_by => 'identifier') };
+            $id = $id->identifier;
+            return $id;
         });
 
 
@@ -166,7 +172,7 @@ sub startup {
         $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier" => \@restrict )->to('#show')->name("show_$name");
-        $select = $resource->bridge(":$identifier")->to(cb => sub { 1; } )->name("select_$name");
+        $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
       }
 
       my $authed = $r->bridge("/$name")->to(cb => sub { shift->auth });
