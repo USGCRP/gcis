@@ -57,10 +57,11 @@ sub _google_secrets {
 
 sub _redirect_uri {
     my $c = shift;
-    my $url = $c->req->url->clone->to_abs;
+    my $url = $c->req->url->to_abs->clone;
     $url->path('/oauth2callback');
     $url->scheme('https');
-    return $url;
+    $url->query(Mojo::Parameters->new());
+    return $url->to_abs;
 }
 
 sub check_login {
@@ -130,12 +131,13 @@ sub oauth2callback {
             client_id     => $s->{client_id},
             client_secret => $s->{client_secret},
             redirect_uri  => $c->_redirect_uri,
-            grant_type    => 'authorization_code'
+            grant_type    => 'authorization_code',
         }
     );
     my $res = $tx->success or do {
         my ($err,$code) = $tx->error;
-        $c->app->log->error("error with google auth : ".$tx->res->to_string);
+        $c->app->log->error("error with google auth ($token_url) : ".$tx->res->to_string);
+        $c->app->log->error("request : ".$tx->req->to_string);
         return $c->render(code => 401, text => "$code response : $err") if $code;
         return $c->render(code => 401, text => "Connection error : $err");
     };
