@@ -37,6 +37,11 @@ sub login {
     if (my $dest = ($c->param('destination') || $c->flash('destination') ) ) {
         $secure->query(destination => $dest);
     }
+    if ($secure->host =~ /www.gcis-dev-front/) {
+        my $host = $secure->host;
+        $host =~ s/www/data/;
+        $secure->host($host);
+    }
     return $c->redirect_to($secure);
 }
 
