@@ -55,6 +55,8 @@ my $builder = Module::Build::Database->new(
         'Date::Parse' => 0,
         'JSON::XS'    => 0,
         'Algorithm::Permute' => 0,
+        'JSON::WebToken' => 0,
+        'Crypt::OpenSSL::RSA' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
