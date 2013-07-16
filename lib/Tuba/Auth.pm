@@ -47,7 +47,7 @@ sub _google_secrets {
     return $google_secrets->{web} if $google_secrets;
     my $secrets_file = $c->config->{auth}{google_secrets_file};
     if ($secrets_file and !-e $secrets_file) {
-        $c->app->warn("could not open google_secrets_file $secrets_file");
+        $c->app->log->warn("could not open google_secrets_file $secrets_file");
         $google_secrets = 'none';
         return;
     }
