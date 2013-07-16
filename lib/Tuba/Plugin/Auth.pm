@@ -4,11 +4,11 @@ Tuba::Plugin::Auth - Authentication
 
 =head1 SYNOPSIS
 
- app->plugin('auth');
+ app->plugin('auth' => $config);
 
 =head1 DESCRIPTION
 
-Authenticate users.
+Set up helpers for auth, and set $app->secret using config->{auth}{secret}.
 
 =cut
 
@@ -22,6 +22,13 @@ sub register {
             my $c = shift;
             $c->session('user');
         } );
+    $app->helper(user_short => sub {
+            my $c = shift;
+            my $u = $c->session('user');
+            $u =~ s/@.*$//;
+            return $u;
+        } );
+
     $app->helper(auth => sub {
             my $c = shift;
             return 1 if $c->session('user');
@@ -29,6 +36,7 @@ sub register {
             $c->redirect_to('login');
             return 0;
         });
+    $app->secret($conf->{secret});
 }
 
 

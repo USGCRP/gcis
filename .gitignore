@@ -8,3 +8,5 @@ _build
 MYMETA.*
 postmaster.log
 *.tar.gz
+client_secrets.json
+

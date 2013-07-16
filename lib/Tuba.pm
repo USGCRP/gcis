@@ -22,7 +22,6 @@ our $VERSION = '0.38';
 sub startup {
     my $app = shift;
 
-    $app->secret('aePhoox5Iegh6toeay3ooV9n');
     $app->plugin('InstallablePaths');
 
     Tuba::Log->set_logger($app->log);
@@ -39,7 +38,7 @@ sub startup {
         $app->log->info("logging to $path");
         $app->log(Mojo::Log->new(path => $path));
     }
-    $app->plugin('Auth');
+    $app->plugin('Auth' => $app->config('auth'));
 
     # Helpers
     $app->helper(base => sub {
@@ -252,6 +251,7 @@ sub startup {
     $authed->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
     $r->get('/login')->to('auth#login')->name('login');
     $r->post('/login')->to('auth#check_login')->name('check_login');
+    $r->get('/oauth2callback')->to('auth#oauth2callback')->name('_oauth2callback');
     $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
 
     $authed->get('/import_form')->to('importer#form')->name('import_form');

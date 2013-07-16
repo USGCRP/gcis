@@ -43,7 +43,10 @@ String.prototype.htmlEscape = function() {
                     <li><%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
                     </li>
                     <li><% if (my $user = user()) { %>
-                        <%= link_to 'logout' => begin %>log out <%= $user %><%= end %>
+                        <a class="dropdown-toggle" data-toggle="dropdown"><%= user_short() %></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><%= link_to 'logout' => begin %>logout <%= $user %><%= end %>
+                        </ul>
                         <% } else { %>
                             <%= link_to url_for('login')->query(destination => $self->req->url->path) => begin %>log in<%= end %>
                         <% } %>

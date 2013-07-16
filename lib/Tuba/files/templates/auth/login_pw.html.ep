@@ -24,14 +24,20 @@
         % }
 
         <div class="control-group">
-            <label class="control-label" for="inputUser">User</label>
+            <label class="control-label" for="inputUser">Email address</label>
             <div class="controls">
-                <input type="text" id="inputUser" name='user' placeholder="email address">
+                <input type="text" id="inputUser" name='user' placeholder="username">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputPassword">Password</label>
+            <div class="controls">
+                <input type="password" id="inputPassword" name='password' placeholder="secret">
             </div>
         </div>
 <div class="form-actions">
     %= hidden_field 'destination' => $destination;
-    <button type="submit" class="btn btn-primary">Sign in with your Google account</button>
+    <button type="submit" class="btn btn-primary">Sign in</button>
 </div>
 %= end
 
