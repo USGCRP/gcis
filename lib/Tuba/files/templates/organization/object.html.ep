@@ -6,7 +6,7 @@
 
 %= include 'history_modal';
 
-% if ($object->can('identifier') && user()) {
+% if ($object->can('identifier') && user_can('update')) {
     <span style='float:right;'>
     <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
     <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>

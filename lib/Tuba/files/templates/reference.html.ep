@@ -47,7 +47,7 @@ DELETE
   % my ($walk, $node, $depth, $parent_pattern) = @_;
   % return if $node->name =~ /^_/;
   % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|reference|resources|import_form)$/;
-  % unless (user()) {
+  % unless (user_can('update')) {
   %     return if $node->name =~ m[^((create|update)_form)];
   %     return if $node->name =~ m[^history_];
   % }
