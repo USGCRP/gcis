@@ -57,8 +57,10 @@ sub _google_secrets {
 
 sub _redirect_uri {
     my $c = shift;
-    # TODO
-    return"https://data.globalchange.gov/oauth2callback";
+    my $url = $c->req->url->clone->to_abs;
+    $url->path('/oauth2callback');
+    $url->scheme('https');
+    return $url;
 }
 
 sub check_login {

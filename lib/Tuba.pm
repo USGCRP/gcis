@@ -250,6 +250,7 @@ sub startup {
     my $authed = $r->bridge->to(cb => sub { shift->auth });
     $authed->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
     $r->get('/login')->to('auth#login')->name('login');
+    $r->get('/login_pw')->to('auth#login_pw')->name('_login_pw');
     $r->post('/login')->to('auth#check_login')->name('check_login');
     $r->get('/oauth2callback')->to('auth#oauth2callback')->name('_oauth2callback');
     $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
