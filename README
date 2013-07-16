@@ -18,4 +18,9 @@ Also, to install the database :
 
     ./Build dbinstall
 
+To run :
+
+   cp eg/Tuba.conf.sample Tuba.conf
+   # modify it, change the users, etc.
+   hypnotoad tuba
 
