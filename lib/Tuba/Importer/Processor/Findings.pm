@@ -35,7 +35,8 @@ sub process {
             $finding->chapter(undef);
         }
         if ($pub =~ m[report/([^/]+)/]) {
-            $finding->report($1);
+            my $report = $1.'draft';
+            $finding->report($report);
         } else {
             $finding->report(undef);
         }

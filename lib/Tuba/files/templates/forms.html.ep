@@ -5,7 +5,7 @@
 % for my $form (sort @$forms) {
 % my $name = $form; $name =~ s/create_form_//;
 <li>
-    %= link_to $form => { report_identifier => $report_identifier } => begin
+    %= link_to $form => { report_identifier => ( (stash 'report_identifier') || default_report_identifier() ) } => begin
         New <%= $name %>
     %= end
 </li>
