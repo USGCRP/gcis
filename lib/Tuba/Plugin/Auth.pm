@@ -39,8 +39,8 @@ sub register {
     $app->helper(authz => sub {
             my $c = shift;
             my %a = @_;
-            my $role = $a{role} or die "missing role in authz helper";
-            my $user = $c->user() or die "missing user";
+            my $role = $a{role} or return 0;
+            my $user = $c->user() or return 0;
             # Just uses the config file for now.
             my $authz = $c->config->{authz};
             return 1 if $authz->{$role}{$user};
