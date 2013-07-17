@@ -93,6 +93,7 @@ sub startup {
             state $id;
             return $id if $id;
             ($id) = @{ Tuba::DB::Object::Report::Manager->get_objects(limit => 1, sort_by => 'identifier') };
+            return unless $id;
             $id = $id->identifier;
             return $id;
         });
