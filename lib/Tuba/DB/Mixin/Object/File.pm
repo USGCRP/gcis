@@ -6,7 +6,7 @@ use strict;
 sub thumbnail {
     my $s = shift;
     my $c = shift || Carp::confess 'foo';
-    return $c->image( '/img/'.$s->file, width =>"100px", height => "100px" );
+    return $c->image( '/img/'.$s->file, width =>"100", height => "100" );
 }
 
 1;
