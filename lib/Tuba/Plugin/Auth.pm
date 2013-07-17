@@ -51,7 +51,7 @@ sub register {
             my $role = shift;
             return $c->authz(role => $role);
         });
-    $app->secret($conf->{secret});
+    $app->secret($ENV{HARNESS_ACTIVE} ? 1 : $conf->{secret});
 }
 
 
