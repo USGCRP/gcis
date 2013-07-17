@@ -778,12 +778,12 @@ ALTER TABLE ONLY contributor
 
 
 ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset) REFERENCES dataset(identifier) MATCH FULL;
+    ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset) REFERENCES dataset(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
+    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE;
 
 
 
@@ -803,12 +803,12 @@ ALTER TABLE ONLY finding
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding) REFERENCES finding(identifier);
+    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding) REFERENCES finding(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword) REFERENCES keyword(id);
+    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE;
 
 
 

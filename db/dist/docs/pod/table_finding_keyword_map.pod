@@ -23,8 +23,8 @@ finding_keyword_map
  Indexes:
      "finding_keyword_map_pkey" PRIMARY KEY, btree (finding, keyword)
  Foreign-key constraints:
-     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding) REFERENCES finding(identifier)
-     "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id)
+     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding) REFERENCES finding(identifier) ON DELETE CASCADE
+     "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE
  Has OIDs: no
  
 

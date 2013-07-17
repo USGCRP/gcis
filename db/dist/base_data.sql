@@ -171,6 +171,14 @@ SELECT pg_catalog.setval('keyword_id_seq', 1, false);
 --
 
 COPY organization_type (identifier) FROM stdin;
+ngo
+federal
+municipal
+state
+research
+commercial
+private
+academic
 \.
 
 
@@ -194,8 +202,6 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
-dataset	dataset
-image	image
 \.
 
 
