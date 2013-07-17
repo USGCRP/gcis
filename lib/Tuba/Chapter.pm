@@ -22,7 +22,7 @@ sub show {
     my $identifier = $c->stash('chapter_identifier');
     my $chapter =
       Chapter->new( identifier => $identifier )
-      ->load( speculative => 1, with => [qw/figure report_obj/] )
+      ->load( speculative => 1, with => [qw/figure finding report_obj/] )
       or return $c->render_not_found;
 
     $c->stash(object => $chapter);
