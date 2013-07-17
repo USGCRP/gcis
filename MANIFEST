@@ -2,6 +2,7 @@ bin/tuba
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
+client_secrets.json
 db/dist/base.sql
 db/dist/base_data.sql
 db/dist/docs/gcis.dot
@@ -139,6 +140,8 @@ db/patches/0100_org_fk.sql
 db/patches/0110_organization.sql
 db/patches/0120_findings_keywords.sql
 db/patches/0130_dataset.sql
+db/patches/0140_org_types.sql
+db/patches/0150_cascade.sql
 eg/atrac_upload.html
 lib/Search.pm
 lib/Tuba.pm
@@ -170,6 +173,7 @@ lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
+lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/chapter/object.nt.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/debug.html.ep
@@ -194,6 +198,7 @@ lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.nt.ep
 lib/Tuba/files/templates/objects.html.ep
+lib/Tuba/files/templates/opensearch.xml.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
@@ -228,6 +233,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.json
 META.yml
+README
 t/001_start_db.t
 t/002_basic.t
 t/003_lists.t

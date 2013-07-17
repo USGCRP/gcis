@@ -12,19 +12,21 @@ WriteMakefile
                  ],
   'VERSION_FROM' => 'lib/Tuba.pm',
   'PREREQ_PM' => {
-                   'SQL::Abstract' => 0,
-                   'Mojolicious::Plugin::YamlConfig' => 0,
-                   'YAML::Syck' => 0,
                    'JSON::XS' => 0,
                    'DBIx::Simple' => 0,
                    'YAML::XS' => 0,
                    'DBIx::Custom' => 0,
                    'Rose::DB::Object' => 0,
+                   'Algorithm::Permute' => 0,
+                   'File::ShareDir' => '1.00',
+                   'SQL::Abstract' => 0,
+                   'Mojolicious::Plugin::YamlConfig' => 0,
+                   'JSON::WebToken' => 0,
+                   'YAML::Syck' => 0,
+                   'Crypt::OpenSSL::RSA' => 0,
                    'Mojolicious' => '4.14',
                    'Date::Parse' => 0,
-                   'Algorithm::Permute' => 0,
                    'Test::More' => 0,
-                   'File::ShareDir' => '1.00',
                    'SQL::Interp' => 0
                  }
 )
