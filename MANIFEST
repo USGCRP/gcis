@@ -2,7 +2,6 @@ bin/tuba
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
-client_secrets.json
 db/dist/base.sql
 db/dist/base_data.sql
 db/dist/docs/gcis.dot

@@ -77,4 +77,5 @@ Tuba.conf
 
 # avoid log files
 \.log$
+\bclient_secrets.json
 
