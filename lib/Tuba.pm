@@ -212,6 +212,7 @@ sub startup {
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
     $r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
+    $r->lookup('select_chapter')->get('/finding')->to('Finding#list')->name('list_findings_in_chapter');
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:name')->to('person#redirect_by_name');
     $r->resource($_) for qw/dataset model software algorithm activity

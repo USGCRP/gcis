@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    %= (stash 'plural') || ucfirst($meta->table) .'s'
+    %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
 </h2>
 </center>
 

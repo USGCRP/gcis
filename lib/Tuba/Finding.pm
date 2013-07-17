@@ -10,8 +10,17 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    my $objects = Findings->get_objects;
+    my $objects;
     my $meta = Finding->meta;
+
+    if (my $ch = $c->stash('chapter_identifier')) {
+        $objects = Findings->get_objects(query => [chapter => $ch], with_objects => ['chapter_obj'],
+            sort_by => "ordinal, t1.identifier");
+        $c->title('Findings in chapter : '.$ch);
+    } else {
+        $objects = Findings->get_objects(with_objects => ['chapter_obj'], sort_by => "ordinal, t1.identifier" );
+    }
+
     $c->respond_to(
         json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
         html => sub { shift->render(template => 'objects', meta => $meta, objects => $objects ) }
