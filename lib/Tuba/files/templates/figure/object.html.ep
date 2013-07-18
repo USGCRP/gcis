@@ -42,6 +42,12 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
 
+<tr>
+<td>chapter.ordinal</td>
+<td><%= $object->chapter ? $object->chapter_obj->number : "[no chapter]" %>.<%= $object->ordinal %>
+</td>
+</tr>
+
 % for my $col (sort {$a->name cmp $b->name} $meta->columns) {
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
