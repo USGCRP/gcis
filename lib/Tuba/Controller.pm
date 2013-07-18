@@ -230,7 +230,7 @@ sub index {
     $offset = 0 if $offset < 0;
 
     my $demo_files = Files->get_objects(
-            require_objects => [qw/image_obj.figure_obj.chapter_obj/],
+            require_objects => [qw/image_obj.figure_objs.chapter_obj/],
             offset => $offset,
             limit => 50,
         );

@@ -90,7 +90,7 @@ List images
 
 sub list {
     my $c = shift;
-    my $images = Images->get_objects(with_objects => ['figure_obj']);
+    my $images = Images->get_objects(with_objects => ['figure_objs']);
     $c->respond_to(
         json => sub { $c->render(json => [ map $_->as_tree, @$images ]) },
         html => sub { $c->render(template => 'image/objects', meta => Image->meta, objects => $images ) }
@@ -108,7 +108,7 @@ sub show {
     my $identifier = $c->stash('image_identifier');
     my $meta = Image->meta;
     my $object = Image->new( identifier => $identifier )
-      ->load( speculative => 1, with => [qw/figure_obj file/] )
+      ->load( speculative => 1, with => [qw/figure_objs file/] )
       or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);

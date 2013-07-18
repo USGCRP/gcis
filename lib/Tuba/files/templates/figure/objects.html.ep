@@ -21,7 +21,7 @@ Unique keys : <%= join ',', $meta->unique_keys %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
-% my @cols = qw/identifier numeric chapter_obj image/;
+% my @cols = qw/identifier numeric chapter_obj image_objs/;
 
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
@@ -39,7 +39,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
             %= end
         </td>
 % for my $c (@cols[1..$#cols]) {
-        % my $got = $o->can($c) ? $o->$c : 'error, cannot call $c';
+        % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {

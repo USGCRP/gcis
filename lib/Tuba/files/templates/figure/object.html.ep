@@ -79,7 +79,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 <tr><td>File(s)</td>
 <td>
 % my %done;
-% for my $image ($object->image) {
+% for my $image ($object->image_objs) {
 <span class='btn squeezevert'>
 %= link_to 'show_image', { image_identifier => $image->identifier } => begin
 %= $image->identifier

@@ -74,14 +74,35 @@ sub update_primary_key {
     return $replacement;
 }
 
+our $_audit_user;
+our $_audit_note;
+sub _am_recursing { # am I recursing?
+    my $i = 1;
+    my %seen;
+    my ($lastpkg,$lastfile,$lastline,$lastsub) = caller $i;
+    while (my @c = caller ++$i) {
+        my ($package,$file,$line,$sub) = @c;
+        return 1 if $sub eq $lastsub;
+    }
+    return 0;
+}
 sub save {
     my $self = shift;
     my %args = @_;
     my $status;
-    my $audit_user = delete $args{audit_user} or do {
-        Carp::confess "missing audit user in save";
-    };
+    # This function will be called several times during a nested save (e.g. $figure->add_image(..) ).
+    # But %args are not propogated.  So, store $audit_info in a package var which we use
+    # if and only if this function is part of the call stack.
+    my $audit_user = delete $args{audit_user};
     my $audit_note = delete $args{audit_note}; # Optional
+    if (!$audit_user && $_audit_user && _am_recursing()) {
+        $audit_user = $_audit_user;
+        $audit_note = $_audit_note;
+    }
+
+    Carp::confess "missing audit user in save" unless $audit_user;
+    $_audit_user = $audit_user;
+    $_audit_note = $audit_note;
     $self->meta->error_mode('fatal');
     $status = $self->db->do_transaction( sub {
             $self->db->dbh->do("set local audit.username = ?",{},$audit_user);

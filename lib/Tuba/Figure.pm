@@ -29,7 +29,7 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('figure_identifier');
     my $meta = Figure->meta;
-    my $object = Figure->new(identifier => $identifier)->load(speculative => 1, with => [qw/chapter_obj image/]) or return $c->render_not_found;
+    my $object = Figure->new(identifier => $identifier)->load(speculative => 1, with => [qw/chapter_obj image_objs/]) or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->SUPER::show(@_);
