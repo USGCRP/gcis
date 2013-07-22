@@ -11,6 +11,13 @@
 <br>
 <br>
 % my $destination = ( (param 'destination') || (flash 'destination') || '');
+% if ($self->app->mode eq 'development') {
+<ul class="nav nav-tabs">
+<li class='active'><%= link_to 'login' => begin %>google<%= end %></li>
+<li><%= link_to 'login_pw'=> begin %>password<%= end %></li>
+</ul>
+% }
+
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
             % if ($destination) {
@@ -18,6 +25,7 @@
             % } else {
             Log in to the GCIS.
             % }
+
         </legend>
         % if (my $error = (flash 'error')) {
             <div class='alert alert-error'><%= $error %></div>

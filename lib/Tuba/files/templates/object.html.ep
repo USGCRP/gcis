@@ -68,5 +68,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % }
 </table>
 
+%== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
+
 %= include 'prov';
 

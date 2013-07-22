@@ -32,7 +32,7 @@ sub thumbnail {
     my %seen;
     my @files = grep { !$seen{$_->file}++ } map $_->file, $s->image_objs;
 
-    return join '', map $_->thumbnail($c), @files;
+    return join '', map $_->thumbnail($c, @_), @files;
 }
 1;
 

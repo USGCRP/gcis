@@ -13,7 +13,7 @@ sub stringify {
 sub thumbnail {
     my $s = shift;
     my $c = shift;
-    return join '', map $_->thumbnail($c), $s->file;
+    return join '', map $_->thumbnail($c, @_), $s->file;
 }
 
 1;

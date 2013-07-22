@@ -5,8 +5,9 @@ use strict;
 
 sub thumbnail {
     my $s = shift;
-    my $c = shift || Carp::confess 'foo';
-    return $c->image( '/img/'.$s->file, width =>"100", height => "100" );
+    my $c = shift || Carp::confess 'missing controller';
+    my %args = (width => 100, height => 100, @_);
+    return $c->image( '/img/'.$s->file, %args);
 }
 
 1;
