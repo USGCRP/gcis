@@ -141,8 +141,20 @@ sub create {
 sub _this_object {
     my $c = shift;
     my $object_class = $c->_guess_object_class;
-    my $identifier = $c->stash($object_class->meta->table.'_identifier') or die "no identifier";
-    my $object = $object_class->new(identifier => $identifier)->load(speculative => 1);
+    my $meta = $object_class->meta;
+    my %pk;
+    for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report
+        my $stash_name = $name;
+        $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
+        $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
+        my $val = $c->stash($stash_name) or do {
+            $c->app->log->warn("No values for $name when loading $object_class");
+            return;
+        };
+        $pk{$name} = $val;
+    }
+
+    my $object = $object_class->new(%pk)->load(speculative => 1);
     return $object;
 }
 
@@ -253,16 +265,14 @@ sub history {
     my $object = $c->_this_object or return $c->render_not_found;
     my $pk = $object->meta->primary_key;
     my @columns = $pk->column_names;
-    return $c->render(text => 'unsupported') unless @columns==1;
-    $pk = $columns[0];
-    my $pkval = $object->$pk;
+
+    my %bind  = map {( "pkval_$_" => $object->$_ )} @columns;
+    my $where = join ' and ', map qq{ row_data->'$_' = :pkval_$_ }, @columns;
+    # TODO: also look for pk changes in changed_fields->'$pk' = :pkval_$pk) };
     my $result = $c->dbc->select(
         [ 'audit_username', 'audit_note', 'changed_fields', 'action_tstamp_tx', 'action' ],
         table => "audit.logged_actions",
-        where => [
-            qq{(row_data->'$pk' = :pkval or changed_fields->'$pk' = :pkval) },
-            { pkval => $pkval }
-        ],
+        where => [ $where, \%bind ],
         append => 'order by action_tstamp_tx desc',
     );
     $c->render(template => 'history', change_log => $result->all, object => $object, pk => $pk)

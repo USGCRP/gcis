@@ -20,8 +20,9 @@ sub list {
 sub show {
     my $c = shift;
     my $identifier = $c->stash('chapter_identifier');
+    my $report = $c->stash('report_identifier');
     my $chapter =
-      Chapter->new( identifier => $identifier )
+      Chapter->new( identifier => $identifier, report => $report )
       ->load( speculative => 1, with => [qw/figure finding report_obj/] )
       or return $c->render_not_found;
 

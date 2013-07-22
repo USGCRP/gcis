@@ -11,6 +11,8 @@ sub process {
     my $data = $args{data} or die "missing data";
     my %a = ( audit_user => $self->audit_user, audit_note => $self->audit_note );
 
+    my $report = 'nca3draft'; # TODO allow others
+
     my $index = 0;
     my @labels;
     for my $row (@$data) {
@@ -24,7 +26,7 @@ sub process {
             $self->_note_error("no identifier for finding", $index);
             next;
         }
-        my $finding = Finding->new(identifier => $record{identifier});
+        my $finding = Finding->new(identifier => $record{identifier}, report => $report);
         $finding->load(speculative => 1);
         $finding->ordinal($record{ordinal});
         $finding->statement($record{finding});
@@ -34,23 +36,21 @@ sub process {
         } else {
             $finding->chapter(undef);
         }
-        if ($pub =~ m[report/([^/]+)/]) {
-            my $report = $1.'draft';
-            $finding->report($report);
-        } else {
-            $finding->report(undef);
-        }
+        $finding->report($report);
         $finding->save(changes_only => 1, $self->_audit_info($index)) or do {
             $self->_note_error($finding->error, $index);
             next;
         };
         if (my $kws = $record{'gcmd science keywords'} ) {
+            $self->_note_info("found keywords for $record{identifier} : $kws\n");
              for my $kw (split /\s*,\s*/, $kws) {
                  my ($category, $topic, $term, $one, $two, $three) = split /\s*>\s*/, $kw;
                  my $k = Keyword->new(category => $category, topic => $topic, term => $term, level1 => $one, level2 => $two, level3 => $three);
                  $k->load(speculative => 1) or $k->save($self->_audit_info) or do { $self->_note_error($k->error, $index); next };
-                 FindingKeywordMap->new(finding => $record{identifier}, keyword => $k->id)->save($self->_audit_info)
-                    or $self->_note_error("could not add keywords to findings");
+                 $finding->add_keyword_objs($k);
+                 $finding->save($self->_audit_info) or do {
+                     $self->_note_error($finding->error, $index);
+                 };
              }
         }
     } continue {
