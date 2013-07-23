@@ -74,6 +74,7 @@ db/dist/docs/html/table_gcis_metadata.file.html
 db/dist/docs/html/table_gcis_metadata.finding.html
 db/dist/docs/html/table_gcis_metadata.finding_keyword_map.html
 db/dist/docs/html/table_gcis_metadata.image.html
+db/dist/docs/html/table_gcis_metadata.image_figure_map.html
 db/dist/docs/html/table_gcis_metadata.journal.html
 db/dist/docs/html/table_gcis_metadata.keyword.html
 db/dist/docs/html/table_gcis_metadata.org_academic.html
@@ -106,6 +107,7 @@ db/dist/docs/pod/table_file.pod
 db/dist/docs/pod/table_finding.pod
 db/dist/docs/pod/table_finding_keyword_map.pod
 db/dist/docs/pod/table_image.pod
+db/dist/docs/pod/table_image_figure_map.pod
 db/dist/docs/pod/table_journal.pod
 db/dist/docs/pod/table_keyword.pod
 db/dist/docs/pod/table_org_academic.pod
@@ -141,6 +143,8 @@ db/patches/0120_findings_keywords.sql
 db/patches/0130_dataset.sql
 db/patches/0140_org_types.sql
 db/patches/0150_cascade.sql
+db/patches/0160_image_figure.sql
+db/patches/0170_multi_reports.sql
 eg/atrac_upload.html
 lib/Search.pm
 lib/Tuba.pm

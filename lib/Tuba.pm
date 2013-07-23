@@ -17,7 +17,7 @@ use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
 use Tuba::Log;
 
-our $VERSION = '0.42';
+our $VERSION = '0.43';
 
 sub startup {
     my $app = shift;
