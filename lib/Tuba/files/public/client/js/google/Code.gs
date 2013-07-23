@@ -35,7 +35,7 @@ function connect_to(which) {
 
 function runit(what) {
    var api_base = CacheService.getPrivateCache().get('api_base');
-   var fun = eval(UrlFetchApp.fetch(api_base + '/client/js/google/' + what).getContentText());
+   var fun = eval(UrlFetchApp.fetch(api_base + '/client/js/google/' + what + '.gs').getContentText());
    fun();
 }
 
