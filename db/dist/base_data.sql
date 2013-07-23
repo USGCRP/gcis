@@ -115,7 +115,7 @@ COPY dataset_organization_map (dataset, organization) FROM stdin;
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, uuid, chapter, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal) FROM stdin;
+COPY figure (identifier, uuid, chapter, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal, report) FROM stdin;
 \.
 
 
@@ -123,7 +123,7 @@ COPY figure (identifier, uuid, chapter, title, caption, attributes, time_start, 
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image (identifier, figure, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
+COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
 \.
 
 
@@ -155,7 +155,15 @@ COPY keyword (id, category, topic, term, level1, level2, level3) FROM stdin;
 -- Data for Name: finding_keyword_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding_keyword_map (finding, keyword) FROM stdin;
+COPY finding_keyword_map (finding, keyword, report) FROM stdin;
+\.
+
+
+--
+-- Data for Name: image_figure_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY image_figure_map (image, figure, report) FROM stdin;
 \.
 
 
@@ -171,14 +179,6 @@ SELECT pg_catalog.setval('keyword_id_seq', 1, false);
 --
 
 COPY organization_type (identifier) FROM stdin;
-ngo
-federal
-municipal
-state
-research
-commercial
-private
-academic
 \.
 
 

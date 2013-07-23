@@ -11,6 +11,7 @@ finding_keyword_map
 
  finding (character varying) - 
  keyword (integer) - 
+ report (character varying) - 
 
 
 =head1 SCHEMA
@@ -20,10 +21,11 @@ finding_keyword_map
  ---------+-------------------+-----------+----------+-------------
   finding | character varying | not null  | extended | 
   keyword | integer           | not null  | plain    | 
+  report  | character varying | not null  | extended | 
  Indexes:
-     "finding_keyword_map_pkey" PRIMARY KEY, btree (finding, keyword)
+     "finding_keyword_map_pkey" PRIMARY KEY, btree (finding, keyword, report)
  Foreign-key constraints:
-     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding) REFERENCES finding(identifier) ON DELETE CASCADE
+     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE
      "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE
  Has OIDs: no
  

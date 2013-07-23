@@ -10,7 +10,6 @@ image
 =head1 FIELDS
 
  identifier (character varying) - A unique identifier for the image.
- figure (character varying) - 
  position (character varying) - 
  title (character varying) - 
  description (character varying) - 
@@ -33,7 +32,6 @@ image
      Column     |              Type              | Modifiers | Storage  |            Description             
  ---------------+--------------------------------+-----------+----------+------------------------------------
   identifier    | character varying              | not null  | extended | A unique identifier for the image.
-  figure        | character varying              | not null  | extended | 
   position      | character varying              |           | extended | 
   title         | character varying              |           | extended | 
   description   | character varying              |           | extended | 
@@ -50,10 +48,9 @@ image
   create_dt     | timestamp(3) without time zone |           | plain    | 
  Indexes:
      "image_pkey" PRIMARY KEY, btree (identifier)
- Foreign-key constraints:
-     "image_ibfk_1" FOREIGN KEY (figure) REFERENCES figure(identifier) MATCH FULL
  Referenced by:
      TABLE "file" CONSTRAINT "file_ibfk_1" FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL
+     TABLE "image_figure_map" CONSTRAINT "image_figure_map_image_fkey" FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON image FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

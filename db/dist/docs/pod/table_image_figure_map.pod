@@ -1,0 +1,35 @@
+
+=head1 NAME
+
+image_figure_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ image (character varying) - 
+ figure (character varying) - 
+ report (character varying) - 
+
+
+=head1 SCHEMA
+
+              Table "gcis_metadata.image_figure_map"
+  Column |       Type        | Modifiers | Storage  | Description 
+ --------+-------------------+-----------+----------+-------------
+  image  | character varying | not null  | extended | 
+  figure | character varying | not null  | extended | 
+  report | character varying | not null  | extended | 
+ Indexes:
+     "image_figure_map_pkey" PRIMARY KEY, btree (image, figure, report)
+ Foreign-key constraints:
+     "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON DELETE CASCADE
+     "image_figure_map_image_fkey" FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

@@ -31,7 +31,7 @@ CREATE TABLE article (
 CREATE TABLE chapter (
     identifier character varying NOT NULL,
     title character varying,
-    report character varying,
+    report character varying NOT NULL,
     number integer
 );
 
@@ -140,7 +140,8 @@ CREATE TABLE figure (
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
     source_citation character varying,
-    ordinal integer
+    ordinal integer,
+    report character varying NOT NULL
 );
 
 
@@ -164,21 +165,21 @@ CREATE TABLE finding (
     chapter character varying,
     statement character varying,
     ordinal integer,
-    report character varying
+    report character varying NOT NULL
 );
 
 
 
 CREATE TABLE finding_keyword_map (
     finding character varying NOT NULL,
-    keyword integer NOT NULL
+    keyword integer NOT NULL,
+    report character varying NOT NULL
 );
 
 
 
 CREATE TABLE image (
     identifier character varying NOT NULL,
-    figure character varying NOT NULL,
     "position" character varying,
     title character varying,
     description character varying,
@@ -198,6 +199,14 @@ CREATE TABLE image (
 
 
 COMMENT ON COLUMN image.identifier IS 'A unique identifier for the image.';
+
+
+
+CREATE TABLE image_figure_map (
+    image character varying NOT NULL,
+    figure character varying NOT NULL,
+    report character varying NOT NULL
+);
 
 
 
@@ -442,7 +451,7 @@ ALTER TABLE ONLY article
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier);
+    ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier, report);
 
 
 
@@ -472,7 +481,7 @@ ALTER TABLE ONLY dataset
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier);
+    ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier, report);
 
 
 
@@ -482,12 +491,17 @@ ALTER TABLE ONLY file
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding, keyword);
+    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding, keyword, report);
 
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier);
+    ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier, report);
+
+
+
+ALTER TABLE ONLY image_figure_map
+    ADD CONSTRAINT image_figure_map_pkey PRIMARY KEY (image, figure, report);
 
 
 
@@ -788,7 +802,12 @@ ALTER TABLE ONLY dataset_organization_map
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_ibfk_1 FOREIGN KEY (chapter) REFERENCES chapter(identifier) MATCH FULL;
+    ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report);
+
+
+
+ALTER TABLE ONLY figure
+    ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
 
 
 
@@ -798,12 +817,12 @@ ALTER TABLE ONLY file
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_chapter_fkey FOREIGN KEY (chapter) REFERENCES chapter(identifier);
+    ADD CONSTRAINT finding_chapter_report FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report);
 
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding) REFERENCES finding(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE;
 
 
 
@@ -817,8 +836,13 @@ ALTER TABLE ONLY finding
 
 
 
-ALTER TABLE ONLY image
-    ADD CONSTRAINT image_ibfk_1 FOREIGN KEY (figure) REFERENCES figure(identifier) MATCH FULL;
+ALTER TABLE ONLY image_figure_map
+    ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY image_figure_map
+    ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE;
 
 
 
