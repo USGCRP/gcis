@@ -1,5 +1,5 @@
 [
-      { "name" : "test 1", "functionName" : "menu_item_1" },
-      { "name" : "test 2", "functionName" : "menu_item_2" }
+      { "name" : "lookup figure", "functionName" : "menu_item_1" },
+      { "name" : "test 2",        "functionName" : "menu_item_2" }
 ]
 
