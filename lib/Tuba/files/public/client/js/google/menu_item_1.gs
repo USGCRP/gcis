@@ -3,6 +3,7 @@ function() {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = SpreadsheetApp.getActiveSheet();
     var api_base = CacheService.getPrivateCache().get('api_base');
+
      
     var range = SpreadsheetApp.getActiveRange();
     var rows = range.getLastRow();
@@ -13,7 +14,7 @@ function() {
     var res = UrlFetchApp.fetch(url + '.json');
     var txt = res.getContentText();
     var json = JSON.parse(txt);
-    var first_image = json.image[0].identifier;
+    var first_image = json.image_objs[0].identifier;
     var img_txt = UrlFetchApp.fetch(api_base + '/image/' + first_image + '.json');
     var img_json = JSON.parse(img_txt);
     var file = img_json.file[0].file;
