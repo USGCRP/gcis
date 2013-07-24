@@ -2,10 +2,6 @@
 /*
  * To use this : open a google spreadsheet, choose 'script editor' and
  * then copy and paste this file into "Code.gs".
- *
- * menu_item_1 through 10 are configured with a GET /client/js/google/menu_items.gs
- * The code for each menu item is retrieved with GET /client/js/google/menu_item_1.gs
- *
  */
 
 function onOpen() {
@@ -18,6 +14,11 @@ function onOpen() {
   ss.addMenu('Connect to GCIS', items);
 }
 
+/*
+ * The list of menu items is configured with a GET /client/js/google/menuitems.json.
+ * The code for each menu item is retrieved with GET /client/js/google/menu_item_1.gs (or 2, 3, ...etc )
+ */
+ 
 function connect_to(which) {
   var api_base = (
       which == 'dev'  ? 'http://data.gcis-dev-front.joss.ucar.edu'
