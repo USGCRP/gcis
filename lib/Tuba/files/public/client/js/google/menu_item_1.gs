@@ -10,10 +10,19 @@ function() {
     var values = range.getValues();
     var cols=range.getLastColumn();
     var val = values[0][0];
+    if (!val || !val.match(/figure/)) {
+        Browser.msgBox('Please select a cell which contains /figure/:identifier');
+        return;
+    }
+
     var url = api_base + '/report/nca3draft' + val;
     var res = UrlFetchApp.fetch(url + '.json');
     var txt = res.getContentText();
     var json = JSON.parse(txt);
+    if (!json || !json.image_objs) {
+        Browser.msgBox('Cannot find any images for figure ' + val);
+        return;
+    }
     var first_image = json.image_objs[0].identifier;
     var img_txt = UrlFetchApp.fetch(api_base + '/image/' + first_image + '.json');
     var img_json = JSON.parse(img_txt);
