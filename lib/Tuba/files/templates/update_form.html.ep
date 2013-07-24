@@ -14,19 +14,19 @@
     <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %>"</textarea>
 % end
 
-
-<div class="row-fluid">
+<div class='row-fluid'>
+<ul class='nav nav-tabs'>
+<li class='active'><a href='#'>Update <%= $meta->table %></a></li>
+<li><%= link_to 'update_prov_form_'.$meta->table => begin %>Update provenance<%= end %></li>
+</ul>
+<div class='tab-content'>
 %= form_for 'update_'.$meta->table => class => 'form-horizontal well' => begin
-
-<legend>Update <%= $meta->table %></legend>
-
 % if (my $error = (flash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
 
 % for my $column (sort { $a->name cmp $b->name } $meta->columns) {
 % my $required = $column->not_null ? ' required' : "";
-    <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
             % my $accessor = $column->accessor_method_name;
@@ -39,7 +39,7 @@
             <span class="help-inline">
             %= $column->remarks || ""
             </span>
-    </div>
+        </div>
 % }
 <div class='required_note'>required</div>
 
@@ -49,5 +49,6 @@
 </div>
 
 %= end
+</div>
 </div>
 

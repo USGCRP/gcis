@@ -97,6 +97,13 @@ sub startup {
             $id = $id->identifier;
             return $id;
         });
+    $app->helper(elide => sub {
+            my $c = shift;
+            my $str = shift;
+            my $len = shift;
+            return $str if !$str || length($str) < $len;
+            return substr($str,0,$len-3).'...';
+        });
 
 
     # Hooks
@@ -166,7 +173,7 @@ sub startup {
       if ($opts->{wildcard}) {
           for my $format (qw/json nt html/) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
-                         ->over(not_match => { $identifier => q[^(?:form/update/|history/)]})
+                         ->over(not_match => { $identifier => q[^(?:form/update/|form/update_prov|history/)]})
                          ->to('#show')->name("_show_${name}_$format");
           }
         $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
@@ -181,14 +188,18 @@ sub startup {
 
       if ($opts->{wildcard}) {
           $authed->get("/form/update/*$identifier")->to("$name#update_form")->name("update_form_$name");
+          $authed->get("/form/update_prov/*$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/history/*$identifier")    ->to("$name#history")    ->name("history_$name");
           $authed->delete("*$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post("*$identifier")            ->to("$name#update")     ->name("update_$name");
+          $authed->post("/prov/*$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
       } else {
           $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
+          $authed->get("/form/update_prov/:$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/history/:$identifier")    ->to("$name#history")    ->name("history_$name");
           $authed->delete(":$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
+          $authed->post("/prov/:$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
       }
 
       return $select;
@@ -219,7 +230,7 @@ sub startup {
                             instrument platform
                             role organization country/;
     $r->resource("file");
-    $r->get('/search')->to('search#process')->name('search');
+    $r->get('/search')->to('search#keyword')->name('search');
 
     # Redirects
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
@@ -248,6 +259,7 @@ sub startup {
     } => 'reference');
     $r->get('/resources' => 'resources');
     $r->get('/examples' => 'examples');
+    $r->get('/autocomplete')->to('search#autocomplete');
 
     my $authed = $r->bridge->to(cb => sub { shift->auth });
     $authed->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');

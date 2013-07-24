@@ -1,13 +1,13 @@
 package Tuba::Search;
 
-use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Mojo::Base qw/Tuba::Controller/;
 
-sub process {
+sub keyword {
     my $c = shift;
     my $q = $c->param('q') or return $c->render(results => []);
 
-    my $all = Tuba::DB::Objects->table2class;
+    my $all = $c->orm;
     my @results;
     for my $table (keys %$all) {
         next if $table eq 'publication';
@@ -19,5 +19,23 @@ sub process {
     $c->render(results => \@results);
 }
 
-1;
+sub autocomplete {
+    my $c = shift;
+    my $q = $c->param('q') || $c->json->{q};
+    return $c->render(json => []) unless $q && length($q) >= 2;
 
+    my @results;
+    for my $type (@{ PublicationTypes->get_objects(all => 1) }) {
+        my $table = $type->table;
+        my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
+        my @got = $manager->dbgrep(query_string => $q, limit => 10);
+        for (@got) {
+            push @results, sprintf('%10s %s : %s',$table, $_->identifier, $c->elide($_->stringify,80));
+        }
+    }
+
+    $c->app->log->warn("got : @results");
+    return $c->render(json => \@results );
+}
+
+1;

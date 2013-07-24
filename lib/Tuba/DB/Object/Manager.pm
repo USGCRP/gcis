@@ -36,7 +36,7 @@ sub dbgrep {
         next if $col->type =~ /serial/;
         push @query, $col->accessor_method_name => { ilike => '%'.$query_string.'%' };
     }
-    return [] unless @query;
+    return unless @query;
     my $found = $self->get_objects( query => [ or => \@query ], limit => $limit, );
     return @$found;
 }

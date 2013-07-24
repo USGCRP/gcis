@@ -172,6 +172,41 @@ sub update_form {
     $c->render(template => "update_form");
 }
 
+=head2 update_prov_form
+
+Generic update_prov_form.
+
+=cut
+
+sub update_prov_form {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $c->stash(object => $object);
+    $c->stash(meta => $object->meta);
+    my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => 'no publication entry');
+    $c->stash(publication => $pub);
+    $c->render(template => "update_prov_form");
+}
+
+=head2 update_prov
+
+Update the provenance for this object.
+
+=cut
+
+sub update_prov {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $c->stash(object => $object);
+    $c->stash(meta => $object->meta);
+    my $pub = $object->get_publication(autocreate => 1);
+    $c->stash(publication => $pub);
+    $pub->save(changes_only => 1, audit_user => $c->user)
+        or return $c->render(template => "update_prov_form", error => $pub->error);
+
+    $c->redirect_to("update_prov_form_".$object->meta->table);
+}
+
 =head2 update
 
 Generic update for an object.

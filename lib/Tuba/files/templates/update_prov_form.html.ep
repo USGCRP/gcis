@@ -1,0 +1,45 @@
+% layout 'default';
+<div class='row-fluid'>
+<ul class='nav nav-tabs'>
+<li><%= link_to 'update_form_'.$meta->table => begin %>Update <%= $meta->table %><%= end %></li>
+<li class='active'><a href='#'>Update provenance</a></li>
+</ul>
+<div class='tab-content'>
+
+%= form_for 'update_prov_'.$meta->table => class => 'form-horizontal well' => begin
+% if (my $error = (stash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+
+<pre>
+Publication : <%= $publication->id || '[none]' %>
+Type : <%= $publication->publication_type %>
+Parent : <%= $publication->parent_id || '[none]' %>
+Relation to parent : <%= $publication->parent_rel || '[none]' %>
+</pre>
+
+<label class="control-label" for="parent">derived from :</label>
+<div class="controls">
+%= text_field 'parent', class => 'span8', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type to search publications';
+</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn">Reset</button>
+</div>
+
+%= end
+</div>
+</div>
+
+%= javascript begin
+$('#parent').typeahead({
+    minLength : 2,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end
