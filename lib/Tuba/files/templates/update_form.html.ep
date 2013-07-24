@@ -1,5 +1,20 @@
 % layout 'default';
 
+% my $textfield = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <input type="text" class="span4" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+% end
+
+% my $textarea = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %>"</textarea>
+% end
+
+
 <div class="row-fluid">
 %= form_for 'update_'.$meta->table => class => 'form-horizontal well' => begin
 
@@ -11,11 +26,16 @@
 
 % for my $column (sort { $a->name cmp $b->name } $meta->columns) {
 % my $required = $column->not_null ? ' required' : "";
-% my $accessor = $column->accessor_method_name;
     <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            <input type="text" class="span4" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+            % my $accessor = $column->accessor_method_name;
+            % my $val = $object->$accessor;
+            % if ($val && length($val) > 30) {
+            %= $textarea->($column,$object);
+            % } else {
+            %= $textfield->($column,$object);
+            % }
             <span class="help-inline">
             %= $column->remarks || ""
             </span>
