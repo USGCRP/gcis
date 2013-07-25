@@ -9,6 +9,7 @@ use Mojo::Base qw/Mojolicious::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
+use Tuba::Search;
 
 =head2 check, list
 
@@ -188,6 +189,11 @@ sub update_prov_form {
     $c->render(template => "update_prov_form");
 }
 
+sub _text_to_object {
+    my $c = shift;
+    my $str = shift or return;
+    return $c->Tuba::Search::autocomplete_str_to_object($str);
+}
 =head2 update_prov
 
 Update the provenance for this object.
@@ -201,8 +207,19 @@ sub update_prov {
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1);
     $c->stash(publication => $pub);
+    $c->stash->{template} = 'update_prov_form';
+
+    my $rel = $c->param('parent_rel')    or return $c->render(error => "missing relation");
+    my $parent_str = $c->param('parent') or return $c->render(error => "missing parent");
+    my $parent = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
+    my $parent_pub = $parent->get_publication(autocreate => 1);
+    $parent_pub->save(changes_only => 1, audit_user => $c->user)
+        or return $c->render(error => $pub->error);
+
+    $pub->parent_rel($rel);
+    $pub->parent_id($parent_pub->id);
     $pub->save(changes_only => 1, audit_user => $c->user)
-        or return $c->render(template => "update_prov_form", error => $pub->error);
+        or return $c->render(error => $pub->error);
 
     $c->redirect_to("update_prov_form_".$object->meta->table);
 }

@@ -23,19 +23,41 @@ sub autocomplete {
     my $c = shift;
     my $q = $c->param('q') || $c->json->{q};
     return $c->render(json => []) unless $q && length($q) >= 2;
+    my $max = $c->param('items') || 20;
 
     my @results;
     for my $type (@{ PublicationTypes->get_objects(all => 1) }) {
         my $table = $type->table;
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
-        my @got = $manager->dbgrep(query_string => $q, limit => 10);
+        my @got = $manager->dbgrep(query_string => $q, limit => $max);
         for (@got) {
-            push @results, sprintf('%10s %s : %s',$table, $_->identifier, $c->elide($_->stringify,80));
+            push @results, sprintf('[%s] {%s} %s',$table, $_->identifier, $c->elide($_->stringify,80));
         }
     }
 
-    $c->app->log->warn("got : @results");
     return $c->render(json => \@results );
+}
+
+sub autocomplete_str_to_object {
+    # Reverse the above.
+    my $c = shift;
+    my $str = shift;
+    my ($type,$identifier) =
+    $str =~ /^
+               \[
+                   ( [^]]+ )
+               \]
+               \ 
+               \{
+                   ( [^}]+ )
+               \}
+              /x;
+    return unless $type && $identifier;
+    my $table = PublicationType->new(identifier => $type)->load->table or die "no table for $type";
+    my $class = $c->orm->{$table}->{obj} or die "no class for $table";
+    my $obj = $class->new(identifier => $identifier);
+    $obj->load(speculative => 1);
+    return $obj;
 }
 
 1;

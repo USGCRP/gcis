@@ -11,16 +11,26 @@
     <div class='alert alert-error'><%= $error %></div>
 % }
 
-<pre>
-Publication : <%= $publication->id || '[none]' %>
-Type : <%= $publication->publication_type %>
-Parent : <%= $publication->parent_id || '[none]' %>
-Relation to parent : <%= $publication->parent_rel || '[none]' %>
-</pre>
+<h4>Enter triples below</h4>
+<label class="control-label" for="_url">
+This resource
+</label>
+<div class='controls'>
+%= text_field '_url', class => 'span10', value => $object->uri($self), disabled => 1
+</div>
 
-<label class="control-label" for="parent">derived from :</label>
-<div class="controls">
-%= text_field 'parent', class => 'span8', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type to search publications';
+<label class="control-label" for="parent_rel">
+Relationship
+</label>
+<div class='controls'>
+%= select_field parent_rel => ['prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy' ], class => 'input span10',
+</div>
+
+<label class="control-label" for="parent">
+Predicate
+</label>
+<div class='controls'>
+%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type to search publications';
 </div>
 
 <div class="form-actions">
@@ -35,8 +45,9 @@ Relation to parent : <%= $publication->parent_rel || '[none]' %>
 %= javascript begin
 $('#parent').typeahead({
     minLength : 2,
+    items : 15,
     source : function(query,process) {
-            return $.get('/autocomplete', { q : query }, function(data) {
+            return $.get('/autocomplete', { q : query, items : 15 }, function(data) {
                  return process(data);
             });
         }
