@@ -14,7 +14,7 @@
 % if ($self->app->mode eq 'development') {
 <ul class="nav nav-tabs">
 <li class='active'><%= link_to 'login' => begin %>google<%= end %></li>
-<li><%= link_to 'login_pw'=> begin %>password<%= end %></li>
+<li><%= link_to url_for('login_pw')->query(destination => (param 'destination')) => begin %>password<%= end %></li>
 </ul>
 % }
 
