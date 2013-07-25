@@ -1,4 +1,8 @@
 % layout 'default';
+<center>
+<h2><%= $object->stringify %></h2>
+</center>
+
 <div class='row-fluid'>
 <ul class='nav nav-tabs'>
 <li><%= link_to $object->uri($self) => begin %> &larr; View<%= end %></li>
@@ -7,12 +11,16 @@
 </ul>
 <div class='tab-content'>
 
-%= include 'prov', object => $object;
-
 %= form_for 'update_prov_'.$meta->table => class => 'form-horizontal well' => begin
 % if (my $error = (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
+% if (my $info = (stash 'info')) {
+    <div class='alert alert-success'><b><%= $info %></b></div>
+% }
+
+
+%= include 'prov', object => $object, add_delete_buttons => 1;
 
 <h4>Associate this <%= $meta->table %> with another resource :</h4>
 <label class="control-label" for="_url">
@@ -26,14 +34,14 @@ This resource
 Relationship
 </label>
 <div class='controls'>
-%= select_field parent_rel => ['prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy' ], class => 'input span10',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom' ], class => 'input span10',
 </div>
 
 <label class="control-label" for="parent">
-Predicate
+Other resource
 </label>
 <div class='controls'>
-%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type to search publications';
+%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
 </div>
 
 <div class="form-actions">

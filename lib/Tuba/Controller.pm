@@ -184,7 +184,7 @@ sub update_prov_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
-    my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => 'no publication entry');
+    my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => 'cannot make publication entry');
     $c->stash(publication => $pub);
     my $parents = [];
     if ($pub) {
@@ -215,8 +215,18 @@ sub update_prov {
     $c->stash(publication => $pub);
     $c->stash->{template} = 'update_prov_form';
 
-    my $rel = $c->param('parent_rel')    or return $c->render(error => "missing relation");
-    my $parent_str = $c->param('parent') or return $c->render(error => "missing parent");
+    if (my $delete = $c->param('delete_publication')) {
+        my $rel = $c->param('delete_relationship');
+        my $other_pub = Publication->new(id => $delete)->load(speculative => 1);
+        my $map = PublicationMap->new(child => $pub->id, parent => $delete, relationship => $rel);
+        $map->load(speculative => 1) or return $c->render(error => "could not find relationship");
+        $map->delete(audit_user => $c->user) or return $c->render(error => $map->error);
+        $c->stash(info => "Deleted $rel ".($other_pub ? $other_pub->stringify : ""));
+        return $c->render;
+    }
+
+    my $parent_str = $c->param('parent') or return $c->render;
+    my $rel = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
     my $parent = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
     my $parent_pub = $parent->get_publication(autocreate => 1);
     $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
@@ -229,7 +239,8 @@ sub update_prov {
 
     $map->save(audit_user => $c->user) or return $c->render(error => $map->error);
 
-    $c->redirect_to("update_prov_form_".$object->meta->table);
+    $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
+    return $c->render;
 }
 
 =head2 update

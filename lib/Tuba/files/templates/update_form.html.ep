@@ -1,4 +1,8 @@
 % layout 'default';
+<center>
+<h2><%= $object->stringify %></h2>
+</center>
+
 
 % my $textfield = begin
     % my $column = shift;

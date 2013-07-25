@@ -13,6 +13,7 @@ sub stringify {
 sub to_object {
     my $self = shift;
     my $orm = Tuba::DB::Objects->table2class;
+    my $type = $self->publication_type_obj or die "no type for ".$self->id;
     my $obj_class = $orm->{$self->publication_type_obj->table}->{obj};
     my @pkcols = $obj_class->meta->primary_key_columns;
     my $pkvals = hstore_decode($self->fk);

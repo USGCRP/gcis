@@ -39,9 +39,10 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 %= end
 % end
 
-% my $tree = $object->as_tree;
-<table class='table table-condensed table-bordered table-striped'>
+%= include 'relationships', object => $object, meta => $meta;
 
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Fields</caption>
 <tr>
 <td>chapter.ordinal</td>
 <td><%= $object->chapter ? $object->chapter_obj->number : "[no chapter]" %>.<%= $object->ordinal %>
@@ -57,37 +58,17 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
     </tr>
 % }
 
-
-% for my $rel ($meta->relationships) {
-% my $method = $rel->name;
+<table class='table table-condensed table-bordered table-striped'>
+<caption>File(s)</caption>
 <tr>
-<td><%= $method %></td>
-<td>
-% my $got = $object->$method;
-% if (ref($got) eq 'ARRAY') {
-%    for (@$got) {
-    <span class='btn squeezevert'><%= obj_link($_); %></span>
-%    }
-% } else {
-%= obj_link($got);
-% }
-</td>
-
-</tr>
-% }
-
-<tr><td>File(s)</td>
 <td>
 % my %done;
 % for my $image ($object->image_objs) {
-<span class='btn squeezevert'>
-%= link_to 'show_image', { image_identifier => $image->identifier } => begin
-%= $image->identifier
-%= end
-</span>
 %  for my $file ($image->file) {
 %   unless ($done{$file->file}++) {
+%= link_to 'show_file', { file_identifier => $file->identifier } => begin
 <img width="600" height="600" style='border:1px solid #aaa;' src='<%= url_for('/img/'.$file->file) %>' />
+%= end
 % }
 % }
 % }

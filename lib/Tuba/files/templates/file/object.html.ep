@@ -39,9 +39,10 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 %= end
 % end
 
-% my $tree = $object->as_tree;
-<table class='table table-condensed table-bordered table-striped'>
+%= include 'relationships', object => $object, meta => $meta;
 
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Fields</caption>
 % for my $col (sort {$a->name cmp $b->name} $meta->columns) {
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
@@ -51,24 +52,6 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
     </tr>
 % }
 
-
-% for my $rel ($meta->relationships) {
-% my $method = $rel->name;
-<tr>
-<td><%= $method %></td>
-<td>
-% my $got = $object->$method;
-% if (ref($got) eq 'ARRAY') {
-%    for (@$got) {
-%= obj_link($_);
-%    }
-% } else {
-%= obj_link($got);
-% }
-</td>
-
-</tr>
-% }
 </table>
 
 %= link_to '/img/'.$object->file => begin

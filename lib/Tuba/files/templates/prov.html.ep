@@ -2,18 +2,29 @@
 % my @parents;
 % @parents = $pub->get_parents if $pub;
 % if (@parents) {
-<div class='well squeezevert'>
+
+% if (stash 'add_delete_buttons') {
+%= hidden_field 'delete_publication';
+%= hidden_field 'delete_relationship';
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Provenance</caption>
 % for my $parent (@parents) {
-    <dl class='dl-horizontal'>
-    <dt>This resource</dt><dd><%= $object->uri($self) %></dd>
-    <dt>has relationship</dt> <dd><%= $parent->{relationship} || 'unknown' %></dd>
-    <dt>to</dt>
-    <dd>
+<tr>
+<td><%= $parent->{relationship} %></td>
+<td>
     % my $parent_pub = $parent->{publication};
     <%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %>
-    </dd>
-    </dl>
+</td>
+% if (stash 'add_delete_buttons') {
+<td>
+<%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+</td>
 % }
-</div>
+</tr>
+% }
+</table>
+
 % }
 
