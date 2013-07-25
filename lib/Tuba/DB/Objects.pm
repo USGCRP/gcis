@@ -92,6 +92,7 @@ sub init {
         if ($@ and $@ !~ /can't locate/i) {
             die $@;
         }
+        $made->add_extra if $made->can('add_extra');
     }
     die "Could not make classes" unless @made;
     for (@made) {

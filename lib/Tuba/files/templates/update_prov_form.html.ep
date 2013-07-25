@@ -1,17 +1,20 @@
 % layout 'default';
 <div class='row-fluid'>
 <ul class='nav nav-tabs'>
+<li><%= link_to $object->uri($self) => begin %> &larr; View<%= end %></li>
 <li><%= link_to 'update_form_'.$meta->table => begin %>Update <%= $meta->table %><%= end %></li>
 <li class='active'><a href='#'>Update provenance</a></li>
 </ul>
 <div class='tab-content'>
+
+%= include 'prov', object => $object;
 
 %= form_for 'update_prov_'.$meta->table => class => 'form-horizontal well' => begin
 % if (my $error = (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
 
-<h4>Enter triples below</h4>
+<h4>Associate this <%= $meta->table %> with another resource :</h4>
 <label class="control-label" for="_url">
 This resource
 </label>

@@ -1,27 +1,19 @@
 % my $pub = $object->get_publication;
-% if ($pub) {
-    <table class='table table-condensed table-bordered table-striped'>
-    <caption>
-    <h4>Provenance</h4>
-    </caption>
-    %   if (my $parent = $pub->parent_id) {
-            <tr>
-            <td><%= $object->stringify %></td>
-            <td><%= $pub->parent_rel %></td>
-            <td><%= obj_link($pub->parent) %></td>
-            </tr>
-    %   }
-    %   my $children = $pub->children;
-    %   if ($children && @$children) {
-    %       for my $child (@$children) {
-            <tr>
-            <td><%= obj_link($child) %></td>
-            <td><%= $child->parent_rel %></td>
-            <td><%= $object->stringify %></td>
-            </tr>
-    %       }
-    %   }
+% my @parents;
+% @parents = $pub->get_parents if $pub;
+% if (@parents) {
+<div class='well squeezevert'>
+% for my $parent (@parents) {
+    <dl class='dl-horizontal'>
+    <dt>This resource</dt><dd><%= $object->uri($self) %></dd>
+    <dt>has relationship</dt> <dd><%= $parent->{relationship} || 'unknown' %></dd>
+    <dt>to</dt>
+    <dd>
+    % my $parent_pub = $parent->{publication};
+    <%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %>
+    </dd>
+    </dl>
 % }
-
-</table>
+</div>
+% }
 

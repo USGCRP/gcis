@@ -186,6 +186,11 @@ sub update_prov_form {
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => 'no publication entry');
     $c->stash(publication => $pub);
+    my $parents = [];
+    if ($pub) {
+        $parents = [ $pub->get_parents ];
+    }
+    $c->stash( parents => $parents );
     $c->render(template => "update_prov_form");
 }
 
@@ -206,6 +211,7 @@ sub update_prov {
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1);
+    $pub->save(changes_only => 1, audit_user => $c->user); # might be new.
     $c->stash(publication => $pub);
     $c->stash->{template} = 'update_prov_form';
 
@@ -213,13 +219,15 @@ sub update_prov {
     my $parent_str = $c->param('parent') or return $c->render(error => "missing parent");
     my $parent = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
     my $parent_pub = $parent->get_publication(autocreate => 1);
-    $parent_pub->save(changes_only => 1, audit_user => $c->user)
-        or return $c->render(error => $pub->error);
+    $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
 
-    $pub->parent_rel($rel);
-    $pub->parent_id($parent_pub->id);
-    $pub->save(changes_only => 1, audit_user => $c->user)
-        or return $c->render(error => $pub->error);
+    my $map = PublicationMap->new(
+        child        => $pub->id,
+        parent       => $parent_pub->id,
+        relationship => $rel
+    );
+
+    $map->save(audit_user => $c->user) or return $c->render(error => $map->error);
 
     $c->redirect_to("update_prov_form_".$object->meta->table);
 }

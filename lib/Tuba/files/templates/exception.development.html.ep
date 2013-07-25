@@ -9,14 +9,15 @@ pre.mypre {
 
 </style>
 
-%= ref($exception);
+<h5>there was an error</h5>
 <pre class='mypre'>
 <%= $exception =%>
-</div>
+</pre>
 
 % for my $frame (@{ $exception->frames}) {
 <pre class='mypre'>
-<%= dumper($frame) =%>
+<%= $frame->[1] %>, line <%= $frame->[2] %>
+<%= $frame->[0] %> <%= $frame->[3] %>
 </pre>
 % }
 

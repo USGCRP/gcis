@@ -1,5 +1,6 @@
 package Tuba::DB::Object;
 use DBIx::Simple;
+use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
 use base 'Rose::DB::Object';
 
@@ -152,16 +153,19 @@ sub thumbnail {
 sub get_publication {
     my $self = shift;
     my %args = @_;
-    my $table = $self->meta->table;
-    # TODO am assuming table==identifier for now
-    my $type = Tuba::DB::Object::PublicationType->new(identifier => $table)->load(speculative => 1) or return;
-    return unless $self->can('identifier');
-    my $pub = Tuba::DB::Object::Publication->new(publication_type => $type->identifier, fk => $self->identifier);
+    my $types = Tuba::DB::Object::PublicationType::Manager->get_objects({table => $self->meta->table});
+    return unless $types && @$types==1;
+    my $type = $types->[0];
+    my %pk = map {( $_ => $self->$_ )} $self->meta->primary_key_columns;
+    my $pub = Tuba::DB::Object::Publication->new(
+        publication_type => $type->identifier,
+        fk               => hstore_encode( \%pk )
+    );
     if ($pub->load(speculative => 1)) {
         return $pub;
     }
     return unless $args{autocreate};
-    return Tuba::DB::Object::Publication->new(publication_type => $type->identifier, fk => $self->identifier);
+    return $pub;
 }
 
 1;
