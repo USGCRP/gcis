@@ -239,7 +239,7 @@ SELECT pg_catalog.setval('publication_id_seq', 1, false);
 -- Data for Name: publication_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_map (child, relationship, parent) FROM stdin;
+COPY publication_map (child, relationship, parent, note) FROM stdin;
 \.
 
 

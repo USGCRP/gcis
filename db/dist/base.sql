@@ -339,7 +339,8 @@ ALTER SEQUENCE publication_id_seq OWNED BY publication.id;
 CREATE TABLE publication_map (
     child integer NOT NULL,
     relationship character varying NOT NULL,
-    parent integer NOT NULL
+    parent integer NOT NULL,
+    note character varying
 );
 
 

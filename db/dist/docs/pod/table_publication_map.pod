@@ -12,6 +12,7 @@ publication_map
  child (integer) - 
  relationship (character varying) - 
  parent (integer) - 
+ note (character varying) - 
 
 
 =head1 SCHEMA
@@ -22,6 +23,7 @@ publication_map
   child        | integer           | not null  | plain    | 
   relationship | character varying | not null  | extended | 
   parent       | integer           | not null  | plain    | 
+  note         | character varying |           | extended | 
  Indexes:
      "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
  Foreign-key constraints:
