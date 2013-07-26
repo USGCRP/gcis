@@ -1,0 +1,22 @@
+%# send $object and $meta
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Relationships</caption>
+% for my $rel ($meta->relationships) {
+% my $method = $rel->name;
+<tr>
+<td><%= $method %></td>
+<td>
+% my $got = $object->$method;
+% if (ref($got) eq 'ARRAY') {
+%    for (@$got) {
+    <span class='btn squeezevert'><%= obj_link($_); %></span>
+%    }
+% } else {
+%= obj_link($got);
+% }
+</td>
+</tr>
+% }
+</table>
+

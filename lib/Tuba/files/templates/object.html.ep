@@ -24,6 +24,10 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 
 %= include 'relationships', object => $object, meta => $meta;
 
+<div class='row-fluid' style='text-align:center;'>
+%== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
+</div>
+
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
 
@@ -54,5 +58,4 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 
 </table>
 
-%== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
 

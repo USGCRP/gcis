@@ -20,24 +20,9 @@ Primary key : <%= $meta->primary_key %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
-% my $dumplist = begin
-% my $k = shift;
-% my $list = shift;
-% for my $row (@$list) {
-%= link_to "show_$k", { "$k\_identifier" => $row->{identifier} } => begin
-%= $row->{identifier}
-%= end
-% }
-% end
-
-% my $dumphash = begin
-% my $k = shift;
-% my $h = shift;
-% $k =~ s/_obj//;
-%= link_to "show_$k", { %{ $self->stash() }, "$k\_identifier" => $h->{identifier} } => begin
-%= $h->{identifier}
-%= end
-% end
+<div class='row-fluid' style='text-align:center;'>
+%== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
+</div>
 
 %= include 'relationships', object => $object, meta => $meta;
 
@@ -57,22 +42,7 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
         <td><%= $val %></td>
     </tr>
 % }
-
-<table class='table table-condensed table-bordered table-striped'>
-<caption>File(s)</caption>
-<tr>
-<td>
-% my %done;
-% for my $image ($object->image_objs) {
-%  for my $file ($image->file) {
-%   unless ($done{$file->file}++) {
-%= link_to 'show_file', { file_identifier => $file->identifier } => begin
-<img width="600" height="600" style='border:1px solid #aaa;' src='<%= url_for('/img/'.$file->file) %>' />
-%= end
-% }
-% }
-% }
-</td></tr>
 </table>
+
 
 %= include 'prov';
