@@ -235,7 +235,8 @@ sub update_prov {
     my $map = PublicationMap->new(
         child        => $pub->id,
         parent       => $parent_pub->id,
-        relationship => $rel
+        relationship => $rel,
+        note         => ( ($c->param('note') || undef) ),
     );
 
     $map->save(audit_user => $c->user) or return $c->render(error => $map->error);

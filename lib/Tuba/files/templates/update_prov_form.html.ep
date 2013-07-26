@@ -38,6 +38,14 @@ Relationship
 </div>
 
 <label class="control-label" for="parent">
+Note
+</label>
+<div class='controls'>
+%= text_field 'note', class => 'span10', id => 'note', placeholder => 'Note about the relationship';
+</div>
+
+
+<label class="control-label" for="parent">
 Other resource
 </label>
 <div class='controls'>
