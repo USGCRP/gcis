@@ -296,10 +296,8 @@ ALTER SEQUENCE person_id_seq OWNED BY person.id;
 
 CREATE TABLE publication (
     id integer NOT NULL,
-    parent_id integer,
     publication_type character varying NOT NULL,
-    fk character varying NOT NULL,
-    parent_rel character varying
+    fk hstore
 );
 
 
@@ -335,6 +333,14 @@ CREATE SEQUENCE publication_id_seq
 
 
 ALTER SEQUENCE publication_id_seq OWNED BY publication.id;
+
+
+
+CREATE TABLE publication_map (
+    child integer NOT NULL,
+    relationship character varying NOT NULL,
+    parent integer NOT NULL
+);
 
 
 
@@ -545,6 +551,11 @@ ALTER TABLE ONLY publication_contributor
 
 
 
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_pkey PRIMARY KEY (child, relationship, parent);
+
+
+
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_pkey PRIMARY KEY (id);
 
@@ -552,6 +563,11 @@ ALTER TABLE ONLY publication
 
 ALTER TABLE ONLY publication_ref
     ADD CONSTRAINT publication_ref_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY publication
+    ADD CONSTRAINT publication_type_fk UNIQUE (publication_type, fk);
 
 
 
@@ -582,11 +598,6 @@ ALTER TABLE ONLY keyword
 
 ALTER TABLE ONLY chapter
     ADD CONSTRAINT uk_number UNIQUE (number);
-
-
-
-ALTER TABLE ONLY publication
-    ADD CONSTRAINT uk_publication_type_fk UNIQUE (publication_type, fk);
 
 
 
@@ -867,12 +878,17 @@ ALTER TABLE ONLY publication_contributor
 
 
 ALTER TABLE ONLY publication
-    ADD CONSTRAINT publication_ibfk_1 FOREIGN KEY (parent_id) REFERENCES publication(id) MATCH FULL;
-
-
-
-ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_ibfk_2 FOREIGN KEY (publication_type) REFERENCES publication_type(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_child_fkey FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_parent_fkey FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE;
 
 
 

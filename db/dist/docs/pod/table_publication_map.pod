@@ -1,0 +1,35 @@
+
+=head1 NAME
+
+publication_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ child (integer) - 
+ relationship (character varying) - 
+ parent (integer) - 
+
+
+=head1 SCHEMA
+
+                  Table "gcis_metadata.publication_map"
+     Column    |       Type        | Modifiers | Storage  | Description 
+ --------------+-------------------+-----------+----------+-------------
+  child        | integer           | not null  | plain    | 
+  relationship | character varying | not null  | extended | 
+  parent       | integer           | not null  | plain    | 
+ Indexes:
+     "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
+ Foreign-key constraints:
+     "publication_map_child_fkey" FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE
+     "publication_map_parent_fkey" FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

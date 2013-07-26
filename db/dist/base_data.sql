@@ -202,6 +202,7 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+finding	finding
 \.
 
 
@@ -209,7 +210,7 @@ COPY publication_type (identifier, "table") FROM stdin;
 -- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication (id, parent_id, publication_type, fk, parent_rel) FROM stdin;
+COPY publication (id, publication_type, fk) FROM stdin;
 \.
 
 
@@ -233,6 +234,14 @@ SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('publication_id_seq', 1, false);
+
+
+--
+-- Data for Name: publication_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_map (child, relationship, parent) FROM stdin;
+\.
 
 
 --
