@@ -27,6 +27,9 @@ image_figure_map
  Foreign-key constraints:
      "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON DELETE CASCADE
      "image_figure_map_image_fkey" FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image_figure_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON image_figure_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

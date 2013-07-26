@@ -27,6 +27,9 @@ finding_keyword_map
  Foreign-key constraints:
      "finding_keyword_map_finding_fkey" FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE
      "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding_keyword_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON finding_keyword_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

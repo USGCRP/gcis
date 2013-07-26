@@ -25,6 +25,9 @@ organization_type_map
  Foreign-key constraints:
      "organization_type_map_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE
      "organization_type_map_organization_type_fkey" FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON organization_type_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

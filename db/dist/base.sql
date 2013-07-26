@@ -689,6 +689,26 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organizatio
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON keyword FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding_keyword_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image_figure_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -774,6 +794,26 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEME
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON keyword FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON finding_keyword_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON image_figure_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 

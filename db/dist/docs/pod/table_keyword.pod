@@ -35,6 +35,9 @@ keyword
      "uk_gcmd" UNIQUE CONSTRAINT, btree (category, topic, term, level1, level2, level3)
  Referenced by:
      TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON keyword FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON keyword FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

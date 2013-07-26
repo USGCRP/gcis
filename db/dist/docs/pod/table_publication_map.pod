@@ -27,6 +27,9 @@ publication_map
  Foreign-key constraints:
      "publication_map_child_fkey" FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE
      "publication_map_parent_fkey" FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON publication_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 
