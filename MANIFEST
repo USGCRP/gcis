@@ -146,7 +146,6 @@ db/patches/0150_cascade.sql
 db/patches/0160_image_figure.sql
 db/patches/0170_multi_reports.sql
 eg/atrac_upload.html
-lib/Search.pm
 lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -213,7 +212,6 @@ lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.nt.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/resources.html.ep
-lib/Tuba/files/templates/search/process.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
