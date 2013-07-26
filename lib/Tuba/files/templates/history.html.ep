@@ -12,6 +12,7 @@ Change history for
 <th>changes</th>
 <th>when</th>
 <th>by</th>
+<th>table</th>
 <th>notes</th>
 </tr>
 % for my $row (@$change_log) {
@@ -19,6 +20,7 @@ Change history for
 <td><%= $row->{action} eq 'I' ? 'insert' : $row->{action} eq 'D' ? 'delete' : $row->{changed_fields} %></td>
 <td><%= format_ago($row->{action_tstamp_tx}) %></td>
 <td><%= $row->{audit_username} %></td>
+<td><%= $row->{table_name} %></td>
 <td><%= $row->{audit_note} %></td>
 </tr>
 % }

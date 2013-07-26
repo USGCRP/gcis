@@ -10,6 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
 use Tuba::Search;
+use Pg::hstore qw/hstore_encode/;
 
 =head2 check, list
 
@@ -329,6 +330,8 @@ sub index {
 
 Generic history of changes to an object.
 
+[ 'audit_username', 'audit_note', 'table_name', 'changed_fields', 'action_tstamp_tx', 'action' ],
+
 =cut
 
 sub history {
@@ -341,12 +344,28 @@ sub history {
     my $where = join ' and ', map qq{ row_data->'$_' = :pkval_$_ }, @columns;
     # TODO: also look for pk changes in changed_fields->'$pk' = :pkval_$pk) };
     my $result = $c->dbc->select(
-        [ 'audit_username', 'audit_note', 'changed_fields', 'action_tstamp_tx', 'action' ],
+        [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
         table => "audit.logged_actions",
         where => [ $where, \%bind ],
         append => 'order by action_tstamp_tx desc',
     );
-    $c->render(template => 'history', change_log => $result->all, object => $object, pk => $pk)
+    my $change_log = $result->all;
+
+    # Also look for provenance changes.
+    if (my $pub = $object->get_publication) {
+        my $id = $pub->id;
+        my $more = $c->dbc->select(
+            [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
+            table  => "audit.logged_actions",
+            where  => [ "row_data->'child' = :id", { id => $id } ],
+            append => 'order by action_tstamp_tx desc',
+        );
+
+        $change_log = [ @{ $more->all }, @$change_log ];
+        @$change_log = sort { $b->{sort_key} cmp $a->{sort_key} } @$change_log;
+    }
+
+    $c->render(template => 'history', change_log => $change_log, object => $object, pk => $pk)
 }
 
 
