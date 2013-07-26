@@ -15,7 +15,7 @@
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %>"</textarea>
+    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
 % end
 
 <div class='row-fluid'>
@@ -36,7 +36,7 @@
         <div class="controls">
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
-            % if ($val && length($val) > 30) {
+            % if ($val && length($val) > 50) {
             %= $textarea->($column,$object);
             % } else {
             %= $textfield->($column,$object);
