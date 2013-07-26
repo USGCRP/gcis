@@ -24,6 +24,8 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 %== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
 </div>
 
+%= include 'prov';
+
 %= include 'relationships', object => $object, meta => $meta;
 
 <table class='table table-condensed table-bordered table-striped'>
@@ -44,5 +46,3 @@ Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 % }
 </table>
 
-
-%= include 'prov';
