@@ -3,7 +3,7 @@ create table publication_map (
     relationship varchar not null,
     parent integer references publication(id) on delete cascade not null,
     primary key (child, relationship, parent)
-)
+);
 
 
 alter table publication drop column parent_id;
