@@ -89,6 +89,7 @@ db/dist/docs/html/table_gcis_metadata.organization_type_map.html
 db/dist/docs/html/table_gcis_metadata.person.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
+db/dist/docs/html/table_gcis_metadata.publication_map.html
 db/dist/docs/html/table_gcis_metadata.publication_ref.html
 db/dist/docs/html/table_gcis_metadata.publication_type.html
 db/dist/docs/html/table_gcis_metadata.ref_type.html
@@ -122,6 +123,7 @@ db/dist/docs/pod/table_organization_type_map.pod
 db/dist/docs/pod/table_person.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
+db/dist/docs/pod/table_publication_map.pod
 db/dist/docs/pod/table_publication_ref.pod
 db/dist/docs/pod/table_publication_type.pod
 db/dist/docs/pod/table_ref_type.pod
@@ -145,6 +147,8 @@ db/patches/0140_org_types.sql
 db/patches/0150_cascade.sql
 db/patches/0160_image_figure.sql
 db/patches/0170_multi_reports.sql
+db/patches/0180_multi_pub.sql
+db/patches/0190_finding_pub.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article.pm
@@ -170,6 +174,11 @@ lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
+lib/Tuba/files/public/client/js/google/Code.gs
+lib/Tuba/files/public/client/js/google/Demo.gs
+lib/Tuba/files/public/client/js/google/menu_item_1.gs
+lib/Tuba/files/public/client/js/google/menu_item_2.gs
+lib/Tuba/files/public/client/js/google/menuitems.json
 lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
@@ -211,8 +220,11 @@ lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.nt.ep
 lib/Tuba/files/templates/reference.html.ep
+lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/resources.html.ep
+lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/update_form.html.ep
+lib/Tuba/files/templates/update_prov_form.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
 lib/Tuba/Importer.pm

@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.43
+    version: 0.44
   Tuba::Article:
     file: lib/Tuba/Article.pm
     version: 0
@@ -149,6 +149,7 @@ requires:
   JSON::XS: 0
   Mojolicious: 4.14
   Mojolicious::Plugin::YamlConfig: 0
+  Pg::hstore: 0
   Rose::DB::Object: 0
   SQL::Abstract: 0
   SQL::Interp: 0
@@ -156,4 +157,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.43
+version: 0.44

@@ -12,6 +12,7 @@ WriteMakefile
                  ],
   'VERSION_FROM' => 'lib/Tuba.pm',
   'PREREQ_PM' => {
+                   'Pg::hstore' => 0,
                    'JSON::XS' => 0,
                    'DBIx::Simple' => 0,
                    'YAML::XS' => 0,
