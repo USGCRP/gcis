@@ -1,3 +1,11 @@
+=head1 NAME
+
+Tuba::DB::Object -- base class for objects.
+
+=head1 METHODS
+
+=cut
+
 package Tuba::DB::Object;
 use DBIx::Simple;
 use Pg::hstore qw/hstore_encode hstore_decode/;
@@ -7,13 +15,14 @@ use base 'Rose::DB::Object';
 use strict;
 use warnings;
 
+=head2 plural
+    
+    The plural form of the moniker for this object type.
+
+=cut
+
 sub plural {
     shift->meta->table.'s';
-}
-
-sub load_foreign {
-    # Load foreign information (for data not represented by a foreign key in the schema);
-    die "virtual method";
 }
 
 # Override these in mixin classes, e.g. Tuba::DB::Mixin::Object::Chapter
@@ -26,13 +35,18 @@ sub stringify {
 sub uri {
     my $s = shift;
     my $c = shift;
-    my @pk = map $_->accessor_method_name, $s->meta->primary_key->columns;
-    return unless @pk==1;
-    my $pk = $pk[0];
-    my $route_name = 'show_'.$s->meta->table;
+    my %pk = map {( $_ => $s->$_ )} $s->meta->primary_key_columns;
+    my $table = $s->meta->table;
+    my $route_name = 'show_'.$table;
     return unless $c->app->routes->find($route_name);
-    my $report_identifier = $c->default_report_identifier;
-    return $c->url_for( $route_name, { $s->meta->table.'_identifier' => $s->$pk, report_identifier => $report_identifier } );
+    my %url_params;
+    for my $column_name (keys %pk) {
+        my $param_name = $column_name;
+        $param_name = $table.'_identifier' if $column_name eq 'identifier'; 
+        $param_name = $param_name.'_identifier' if $column_name !~ /identifier/;
+        $url_params{$param_name} = $pk{$column_name};
+    }
+    return $c->url_for( $route_name, \%url_params );
 }
 
 # https://groups.google.com/forum/?fromgroups#!searchin/rose-db-object/update$20primary$20key/rose-db-object/f8evi1dhp7c/IPhUUFS9aiEJ
@@ -166,6 +180,50 @@ sub get_publication {
     }
     return unless $args{autocreate};
     return $pub;
+}
+
+sub find_or_make {
+    my $class = shift;
+    die "find_or_make not implemented for $class";
+}
+
+sub make_identifier {
+    my $class = shift;
+    my %args = @_;
+    return $args{doi} if $args{doi};
+    my $str = $args{name} or die "need doi or name to make an identifier";
+    my $abbrev = $args{abbrev};
+    my $max_length = $args{max_length} || 100;
+    my $min_length = $args{min_length} || 3;
+    my $exclude_short = $args{exclude_short} || 0;
+    $exclude_short = 1 if $abbrev;
+
+    my @words = split /\s+/, $str;
+    my $id = '';
+    my $next;
+    while (length($id) < $max_length && ($next = shift @words)) {
+        my $stop;
+        $next = lc $next;
+        $stop = 1 if $next eq ':';
+        $stop = 1 if $next =~ /[:]$/;
+        $stop = 1 if $next =~ /[.]$/ && $next !~ /[.](?!$)/;
+        $next =~ tr/a-z0-9-//dc;
+        next if $exclude_short && $next =~ /^(a|the|from|and|for|to|with|of)$/;
+        next unless length($next);
+        if ($abbrev) {
+            if ($next =~ /^\d+$/) {
+                $id .= $next ;
+            } else {
+                $id .= substr($next,0,1);
+            }
+        } else {
+            $id .= '-' if length($id);
+            $id .= $next;
+        }
+        last if $stop && length($id) > $min_length;
+    }
+    die "could not make an identifier for $str" unless $id;
+    return $id;
 }
 
 1;

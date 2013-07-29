@@ -12,7 +12,6 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     my $objects = Persons->get_objects;
-    $_->load_foreign for @$objects;
     $c->respond_to(
         json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
         html => sub { shift->render(template => 'person/objects', meta => Person->meta, objects => $objects ) }

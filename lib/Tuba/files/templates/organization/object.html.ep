@@ -19,27 +19,9 @@ Primary key : <%= $meta->primary_key %>
 Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
 </pre>
 
-% my $tree = $object->as_tree;
-<table class='table table-condensed table-bordered table-striped'>
+%= include 'prov';
 
-<tr><td>identifier</td><td><%= $object->identifier %></td></tr>
-<tr><td>name</td><td><%= $object->name %></td></tr>
-<tr><td>types</td><td><%= join '', map $_->identifier, $object->organization_type_objs %></td></tr>
-<tr><td>country</td><td><%= $object->country %></td></tr>
-<tr><td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td></tr>
-<tr><td>datasets</td>
-    <td>
-<% for (@{ $object->dataset_objs }) { %>
-<span class='btn squeezevert'><%= obj_link($_) %></span>
-<% } %>
-    </td>
-    </tr>
-<tr><td>people</td>
-<td><% for my $c ($object->contributor) { %>
-<span class='btn squeezevert'><%= obj_link($c->person) %></span>
-<% } %>
-</td>
-</tr>
+%= include 'relationships';
 
-</table>
+%= include 'fields';
 
