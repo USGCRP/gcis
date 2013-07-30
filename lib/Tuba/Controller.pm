@@ -306,6 +306,7 @@ sub update {
     my $object = $c->_this_object or return $c->render_not_found;
     my %pk_changes;
     my $table = $object->meta->table;
+    $object->meta->error_mode('return');
 
     if ($c->param('delete')) {
         if ($object->delete) {
@@ -313,7 +314,7 @@ sub update {
             return $c->redirect_to('list_'.$table);
         }
         $c->flash(error => $object->error);
-        $c->redirect_to("update_form_".$object->meta->table);
+        return $c->redirect_to("update_form_".$object->meta->table);
     }
 
     for my $col ($object->meta->columns) {
@@ -327,7 +328,6 @@ sub update {
         $object->$acc($param);
     }
 
-    $object->meta->error_mode('return');
     my $ok = 1;
     if (keys %pk_changes) {
         # See Tuba::DB::Object.
@@ -355,6 +355,7 @@ Generic delete
 sub remove {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
+    $object->meta->error_mode('return');
     $object->delete or return $c->render_exception($object->error);
     return $c->render(text => 'ok');
 }
