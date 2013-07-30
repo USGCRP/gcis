@@ -1,5 +1,10 @@
 % layout 'default';
 
+%# Optionally pass a hash from column name to template and parameters, e.g.
+%# chapter => { template => 'select', parameters => { values => [1,2,3] }
+%# This template should be in the controls subdirectory.
+% my $controls = stash 'controls';
+
 <div class="row-fluid">
 
 %= form_for 'create_'.$meta->table => class => 'form-horizontal well' => begin
@@ -13,10 +18,12 @@
 % for my $column (sort { $a->name cmp $b->name } $meta->columns) {
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
-    <div class="control-group">
+    <div class="control-group" style='margin-bottom:2px;'>
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            % if ($name && $name eq 'report' && (stash 'report_identifier')) {
+            % if (my $entry = $controls->{$name}) {
+            %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
+            % } elsif ($name && $name eq 'report' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
             % } else {
             <input type="text" class="span4" id="<%= $name %>" name="<%= $name %>" placeholder="<%= $column->type %>">
@@ -25,6 +32,7 @@
             <span class="help-inline">
             %= $column->remarks || ""
             </span>
+        </div>
     </div>
 % }
 <div class='required_note'>required</div>

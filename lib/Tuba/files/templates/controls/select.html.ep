@@ -1,0 +1,2 @@
+
+%= select_field $column->name, $values;
