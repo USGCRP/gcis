@@ -15,7 +15,11 @@
 % if ($active eq 'prov') {
 <li class='active'><a href='#'>provenance</a></li>
 % } else {
+% if (Tuba::DB::Object::PublicationType::Manager->get_objects_count(query => [table => $table])) {
 <li><%= link_to 'update_prov_form_'.$table => begin %>provenance<%= end %></li>
+% } else {
+<li class='disabled'><a class="disabled" disabled>provenance</a></li>
+% }
 % }
 
 % if ($active eq 'rel') {

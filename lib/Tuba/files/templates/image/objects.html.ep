@@ -9,6 +9,9 @@
 
 % my $base = url_for('current')->to_abs;
 % $base =~ s/.html$$//;
+<% if (user_can('update')) { %>
+<span style='float:right;'><%= include 'create_link'%></span>
+<% } %>
 <pre>
 JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
 HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>

@@ -89,14 +89,6 @@ sub startup {
             }
             return $prop;
         });
-    $app->helper(default_report_identifier => sub {
-            state $id;
-            return $id if $id;
-            ($id) = @{ Tuba::DB::Object::Report::Manager->get_objects(limit => 1, sort_by => 'identifier') };
-            return unless $id;
-            $id = $id->identifier;
-            return $id;
-        });
     $app->helper(all_reports => sub {
             return @{ Tuba::DB::Object::Report::Manager->get_objects(all => 1, sort_by => 'identifier') };
         });
@@ -205,7 +197,7 @@ sub startup {
           $authed->delete("*$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post("*$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
-          $authed->post("/rel/*$identifier")      ->to("$name#update_rel")->name("update_rel_$name");
+          $authed->post("/rel/*$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
       } else {
           $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/:$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");

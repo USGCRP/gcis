@@ -14,4 +14,11 @@ sub stringify {
     return $c->name;
 }
 
+sub uri {
+    my $self = shift;
+    my $c = shift;
+
+    return $c->url_for( 'show_person', { person_identifier => $self->id } );
+}
+
 1;

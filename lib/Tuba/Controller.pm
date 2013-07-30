@@ -94,13 +94,8 @@ sub create_form {
 sub _redirect_to_view {
     my $c = shift;
     my $object = shift;
-
-    my $table = $object->meta->table;
-    if ($object->can('identifier')) {
-        return $c->redirect_to("show_$table", $table.'_identifier' => $object->identifier );
-    }
-    $c->app->log->warn("no identifier column cannot find view page for $object");
-    return $c->render(text => "created new ".$object->table);
+    my $url = $object->uri($c);
+    return $c->redirect_to( $url );
 }
 
 =head2 create
@@ -205,7 +200,7 @@ sub update_prov_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
-    my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => 'cannot make publication entry');
+    my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => $object->meta->table.' is not a publication');
     $c->stash(publication => $pub);
     my $parents = [];
     if ($pub) {

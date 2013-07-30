@@ -49,5 +49,12 @@ sub redirect_by_name {
     return $c->render(people => $found);
 }
 
+sub _this_object {
+    my $c = shift;
+    my $obj = Person->new(id => $c->stash('person_identifier'));
+    $obj->load(speculative => 1);
+    return $obj;
+}
+
 1;
 

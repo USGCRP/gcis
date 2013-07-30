@@ -1,0 +1,6 @@
+<div style='float:right;'>
+% my $table = $meta->table;
+%= link_to 'create_form_'.$table => class => 'btn' => begin
+Add <%= $table %>
+%= end
+</div>

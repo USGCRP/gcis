@@ -12,13 +12,15 @@ sub list {
     my $c = shift;
     my $objects;
     my $meta = Finding->meta;
+    my $report = $c->stash('report_identifier');
 
     if (my $ch = $c->stash('chapter_identifier')) {
-        $objects = Findings->get_objects(query => [chapter => $ch], with_objects => ['chapter_obj'],
+        $objects = Findings->get_objects(query => [chapter => $ch, report => $report], with_objects => ['chapter_obj'],
             sort_by => "ordinal, t1.identifier");
-        $c->title('Findings in chapter : '.$ch);
+        $c->title("Findings in chapter $ch of $report");
     } else {
-        $objects = Findings->get_objects(with_objects => ['chapter_obj'], sort_by => "ordinal, t1.identifier" );
+        $objects = Findings->get_objects(query => [ report => $report ], with_objects => ['chapter_obj'], sort_by => "ordinal, t1.identifier" );
+        $c->title("Findings in report $report");
     }
 
     $c->respond_to(
