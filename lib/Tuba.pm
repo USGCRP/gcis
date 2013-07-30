@@ -206,7 +206,7 @@ sub startup {
           $authed->delete(":$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/:$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
-          $authed->post("/rel/:$identifier")      ->to("$name#update_rel")->name("update_rel_$name");
+          $authed->post("/rel/:$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
       }
 
       return $select;
