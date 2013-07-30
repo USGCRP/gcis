@@ -47,6 +47,7 @@
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="reset" class="btn">Reset</button>
+    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
 </div>
 
 %= end

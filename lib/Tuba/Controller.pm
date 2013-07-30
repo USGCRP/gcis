@@ -288,6 +288,16 @@ sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
     my %pk_changes;
+    my $table = $object->meta->table;
+
+    if ($c->param('delete')) {
+        if ($object->delete) {
+            $c->flash(message => "Deleted $table");
+            return $c->redirect_to('list_'.$table);
+        }
+        $c->flash(error => $object->error);
+        $c->redirect_to("update_form_".$object->meta->table);
+    }
 
     for my $col ($object->meta->columns) {
         my $param = $c->param($col->name);
@@ -316,7 +326,7 @@ sub update {
     $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
     $ok and return $c->_redirect_to_view($object);
     $c->flash(error => $object->error);
-    $c->redirect_to("update_form_".$object->meta->table);
+    $c->redirect_to("update_form_".$table);
 }
 
 =head2 remove
