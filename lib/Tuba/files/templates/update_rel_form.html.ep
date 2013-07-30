@@ -1,0 +1,37 @@
+% layout 'default';
+<center>
+<h2><%= $object->stringify %></h2>
+</center>
+
+<div class='row-fluid'>
+
+%= include 'update_tabs', active => 'rel';
+
+<div class='tab-content'>
+
+%= form_for 'update_rel_'.$meta->table => class => 'form-horizontal well' => begin
+% if (my $error = (stash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+% if (my $info = (stash 'info')) {
+    <div class='alert alert-success'><b><%= $info %></b></div>
+% }
+
+<pre>
+% for my $rel ($meta->relationships) {
+<%= $rel->name; %> : <%= $rel->type; %>
+% }
+</pre>
+
+TODO
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn">Reset</button>
+</div>
+
+%= end
+
+</div>
+</div>
+

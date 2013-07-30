@@ -97,6 +97,16 @@ sub startup {
             $id = $id->identifier;
             return $id;
         });
+    $app->helper(all_reports => sub {
+            return @{ Tuba::DB::Object::Report::Manager->get_objects(all => 1, sort_by => 'identifier') };
+        });
+    $app->helper(current_report => sub {
+            my $c = shift;
+            my $identifier = shift || $c->stash('report_identifier');
+            my $obj = Tuba::DB::Object::Report->new(identifier => $identifier);
+            $obj->load(speculative => 1) or return;
+            return $obj;
+        });
     $app->helper(elide => sub {
             my $c = shift;
             my $str = shift;
@@ -171,12 +181,13 @@ sub startup {
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
+        my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|history/)];
           for my $format (qw/json nt html/) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
-                         ->over(not_match => { $identifier => q[^(?:form/update/|form/update_prov|history/)]})
+                         ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
           }
-        $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => q[^(?:form/update/|history/)]})->to('#show')->name("show_$name");
+        $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier" => \@restrict )->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
@@ -189,17 +200,21 @@ sub startup {
       if ($opts->{wildcard}) {
           $authed->get("/form/update/*$identifier")->to("$name#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/*$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
+          $authed->get("/form/update_rel/*$identifier")->to("$name#update_rel_form")->name("update_rel_form_$name");
           $authed->get("/history/*$identifier")    ->to("$name#history")    ->name("history_$name");
           $authed->delete("*$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post("*$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
+          $authed->post("/rel/*$identifier")      ->to("$name#update_rel")->name("update_rel_$name");
       } else {
           $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/:$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
+          $authed->get("/form/update_rel/:$identifier")->to("$name#update_rel_form")->name("update_rel_form_$name");
           $authed->get("/history/:$identifier")    ->to("$name#history")    ->name("history_$name");
           $authed->delete(":$identifier")          ->to("$name#remove")     ->name("remove_$name");
           $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/:$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
+          $authed->post("/rel/:$identifier")      ->to("$name#update_rel")->name("update_rel_$name");
       }
 
       return $select;

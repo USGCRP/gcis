@@ -11,11 +11,17 @@
 % }
 
 % for my $column (sort { $a->name cmp $b->name } $meta->columns) {
+% my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
     <div class="control-group">
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            <input type="text" class="span4" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>">
+            % if ($name && $name eq 'report' && (stash 'report_identifier')) {
+                %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
+            % } else {
+            <input type="text" class="span4" id="<%= $name %>" name="<%= $name %>" placeholder="<%= $column->type %>">
+            % }
+
             <span class="help-inline">
             %= $column->remarks || ""
             </span>

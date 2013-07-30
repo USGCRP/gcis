@@ -1,0 +1,28 @@
+%# send active as a stash parameter : 'fields', 'prov', or 'rel'
+
+% my $table = $meta->table;
+
+<ul class='nav nav-tabs'>
+
+<li><%= link_to $object->uri($self) => begin %> &larr; View<%= end %></li>
+
+% if ($active eq 'fields') {
+<li class='active'><a href='#'><%= $table %></a></li>
+% } else {
+<li><%= link_to 'update_form_'.$meta->table => begin %><%= $meta->table %><%= end %></li>
+% }
+
+% if ($active eq 'prov') {
+<li class='active'><a href='#'>provenance</a></li>
+% } else {
+<li><%= link_to 'update_prov_form_'.$table => begin %>provenance<%= end %></li>
+% }
+
+% if ($active eq 'rel') {
+<li class='active'><a href='#'>relationships</a></li>
+% } else {
+<li><%= link_to 'update_rel_form_'.$table => begin %>relationships<%= end %></li>
+% }
+
+</ul>
+

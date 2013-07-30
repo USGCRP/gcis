@@ -4,11 +4,9 @@
 </center>
 
 <div class='row-fluid'>
-<ul class='nav nav-tabs'>
-<li><%= link_to $object->uri($self) => begin %> &larr; View<%= end %></li>
-<li><%= link_to 'update_form_'.$meta->table => begin %>Update <%= $meta->table %><%= end %></li>
-<li class='active'><a href='#'>Update provenance</a></li>
-</ul>
+
+%= include 'update_tabs', active => 'prov';
+
 <div class='tab-content'>
 
 %= form_for 'update_prov_'.$meta->table => class => 'form-horizontal well' => begin

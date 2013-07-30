@@ -121,6 +121,9 @@ sub create {
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
     }
+    if (exists($obj{report}) && $c->stash('report_identifier')) {
+        $obj{report} = $c->stash('report_identifier');
+    }
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
     my $table = $object_class->meta->table;
@@ -200,6 +203,7 @@ sub _text_to_object {
     my $str = shift or return;
     return $c->Tuba::Search::autocomplete_str_to_object($str);
 }
+
 =head2 update_prov
 
 Update the provenance for this object.
@@ -244,6 +248,35 @@ sub update_prov {
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
     return $c->render;
 }
+
+=head2 update_rel_form
+
+Form for updating the relationships.
+
+=cut
+
+sub update_rel_form {
+    my $c = shift;
+    # TODO
+    my $object = $c->_this_object;
+    my $meta = $object->meta;
+    $c->stash(object => $object);
+    $c->stash(meta => $meta);
+    $c->render(template => "update_rel_form");
+}
+
+=head2 update_rel
+
+Update the relationships.
+
+=cut
+
+sub update_rel {
+    my $c = shift;
+    # TODO
+
+}
+
 
 =head2 update
 
