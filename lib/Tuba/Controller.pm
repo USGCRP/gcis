@@ -85,6 +85,8 @@ instead of the default create_form.html.ep.
 
 sub create_form {
     my $c = shift;
+    my $controls = $c->stash('controls') || {};
+    $c->stash(controls => { $c->_default_controls, %$controls } );
     $c->stash(meta => $c->_guess_object_class->meta);
     $c->render(template => "create_form");
 }
@@ -163,6 +165,19 @@ sub _this_object {
     return $object;
 }
 
+sub _chaplist {
+    my $rpt = shift;
+    my @chapters = @{ Chapters->get_objects(query => [ report => $rpt ], sort_by => 'number') };
+    return [ '', map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters ];
+}
+sub _default_controls {
+    my $c = shift; # TODO coderef for lazy evaluation
+    return (
+        chapter => sub { +{ template => 'select',
+                             params => { values => _chaplist(shift->stash('report_identifier')) } } },
+    );
+}
+
 =head2 update_form
 
 Generic update_form.
@@ -171,6 +186,8 @@ Generic update_form.
 
 sub update_form {
     my $c = shift;
+    my $controls = $c->stash('controls') || {};
+    $c->stash(controls => { $c->_default_controls, %$controls } );
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);

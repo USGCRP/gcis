@@ -22,7 +22,8 @@
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
             % if (my $entry = $controls->{$name}) {
-            %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
+                % $entry = $self->$entry if ref($entry) eq 'CODE';
+                %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } elsif ($name && $name eq 'report' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
             % } else {

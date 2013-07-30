@@ -44,21 +44,7 @@ sub show {
 
 sub create_form {
     my $c = shift;
-    my @chapters = @{ Chapters->get_objects(query => [ report => $c->stash('report_identifier') ], sort_by => 'number') };
-    $c->stash(
-        controls => {
-            chapter => {
-                template => 'select',
-                params   => {
-                    values => [ '',
-                        map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters
-                    ]
-                }
-            }
-        },
-    );
-
-    $c->SUPER::create_form;
+    $c->SUPER::create_form(@_);
 }
 
 1;

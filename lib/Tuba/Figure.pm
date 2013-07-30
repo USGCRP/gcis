@@ -56,5 +56,10 @@ sub redirect_to_identifier {
     return $c->redirect_to( 'show_figure' => { figure_identifier => $found->[0]->identifier } );
 }
 
+sub update_form {
+    my $c = shift;
+    $c->SUPER::update_form(@_);
+}
+
 1;
 

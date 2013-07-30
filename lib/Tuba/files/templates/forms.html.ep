@@ -24,7 +24,7 @@ Import spreadsheet
 
 <ul>
 <li>
-% my @reports = map [ $_->title, $_->identifier ], all_reports();
+% my @reports = map [ $_->identifier.': '.$_->title, $_->identifier ], all_reports();
 % my $report = (param 'report') || $reports[0]->[1];
 
 Report : <%= select_field(report => \@reports, class => 'span10', onchange => '{this.form.submit();}' ); %>
