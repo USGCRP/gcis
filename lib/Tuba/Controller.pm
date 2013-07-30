@@ -171,7 +171,7 @@ sub _chaplist {
     return [ '', map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters ];
 }
 sub _default_controls {
-    my $c = shift; # TODO coderef for lazy evaluation
+    my $c = shift;
     return (
         chapter => sub { +{ template => 'select',
                              params => { values => _chaplist(shift->stash('report_identifier')) } } },
