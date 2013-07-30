@@ -11,12 +11,16 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     my $figures;
+    my $report_identifier = $c->stash('report_identifier');
     if (my $ch = $c->stash('chapter_identifier')) {
-        $figures = Figures->get_objects(query => [chapter => $ch], with_objects => ['chapter_obj'],
-            sort_by => "number, ordinal, t1.identifier");
+        $figures = Figures->get_objects(
+            query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
+            sort_by => "number, ordinal, t1.identifier",
+            );
         $c->title('figures in chapter');
     } else {
-        $figures = Figures->get_objects(with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier" );
+        $figures = Figures->get_objects(with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier",
+       query => [ report => $report_identifier ] );
     }
 
     $c->respond_to(
