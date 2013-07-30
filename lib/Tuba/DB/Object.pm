@@ -28,8 +28,15 @@ sub plural {
 # Override these in mixin classes, e.g. Tuba::DB::Mixin::Object::Chapter
 sub stringify {
     my $s = shift;
+    return scalar $s->pk_values;
+}
+
+sub pk_values {
+    my $s = shift;
+    my $delim = shift || '/';
     my @pk = map $_->accessor_method_name, $s->meta->primary_key->columns;
-    return join '/', map $s->$_, @pk;
+    return map $s->$_, @pk if wantarray;
+    return join $delim, 
 }
 
 sub uri {

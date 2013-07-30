@@ -2,6 +2,7 @@ package Tuba::Search;
 
 use Tuba::DB::Objects qw/-nicknames/;
 use Mojo::Base qw/Tuba::Controller/;
+use List::MoreUtils qw/mesh/;
 
 sub keyword {
     my $c = shift;
@@ -31,7 +32,9 @@ sub autocomplete {
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max);
         for (@got) {
-            push @results, sprintf('[%s] {%s} %s',$table, $_->identifier, $c->elide($_->stringify,80));
+            push @results, join ' ', "[".$table."]",
+                                      ( map "{".$_."}", $_->pk_values ),
+                                      $c->elide($_->stringify(80));
         }
     }
 
@@ -42,20 +45,34 @@ sub autocomplete_str_to_object {
     # Reverse the above.
     my $c = shift;
     my $str = shift;
-    my ($type,$identifier) =
-    $str =~ /^
-               \[
-                   ( [^]]+ )
-               \]
-               \ 
-               \{
-                   ( [^}]+ )
-               \}
-              /x;
-    return unless $type && $identifier;
+    my @match =
+        $str =~ /^
+                   \[
+                       ( [^]]+ )
+                   \]
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )?
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )?
+                   (?: [^}]* )$
+                  /x;
+    my $type = shift @match;
+    my @keys = @match;
+    return unless $type && @keys;
     my $table = PublicationType->new(identifier => $type)->load->table or die "no table for $type";
     my $class = $c->orm->{$table}->{obj} or die "no class for $table";
-    my $obj = $class->new(identifier => $identifier);
+    my @pks = $class->meta->primary_key_column_names;
+    my %new;
+    @new{@pks} = @keys;
+    my $obj = $class->new( %new );
     $obj->load(speculative => 1);
     return $obj;
 }
