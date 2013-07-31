@@ -179,24 +179,31 @@ sub _rptlist {
 sub _default_controls {
     my $c = shift;
     return (
-        chapter     => sub { my $c = shift;
+        chapter  => sub { my $c = shift;
                             +{ template => 'select',
                                params => { values => $c->_chaplist($c->stash('report_identifier')) } } },
-        chapter_obj => sub { my ($c,$obj) = @_;
-                             +{ template => 'select',
-                                params => { values => $c->_chaplist($c->stash('report_identifier')),
-                                            column => $obj->meta->column('chapter'),
-                                            value => $obj->chapter }
-                            } },
         report  => sub { +{ template => 'select',
                              params => { values => shift->_rptlist() } } },
-        report_obj  => sub { my ($c,$obj) = @_;
-                          +{ template => 'select',
-                             params => { values => $c->_rptlist(),
-                                         column => $obj->meta->column('report'),
-                                         value => $obj->report } } },
     );
 }
+
+sub _default_rel_controls {
+    my $c = shift;
+    return (
+    chapter_obj => sub { my ($c,$obj) = @_;
+                         +{ template => 'select',
+                            params => { values => $c->_chaplist($c->stash('report_identifier')),
+                                        column => $obj->meta->column('chapter'),
+                                        value => $obj->chapter }
+                        } },
+    report_obj  => sub { my ($c,$obj) = @_;
+                      +{ template => 'select',
+                         params => { values => $c->_rptlist(),
+                                     column => $obj->meta->column('report'),
+                                     value => $obj->report } } },
+    );
+}
+
 
 =head2 update_form
 
@@ -296,7 +303,7 @@ sub update_rel_form {
     my $c = shift;
     my $object = $c->_this_object;
     my $controls = $c->stash('controls') || {};
-    $c->stash(controls => { $c->_default_controls, %$controls } );
+    $c->stash(controls => { $c->_default_rel_controls, %$controls } );
     my $meta = $object->meta;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
