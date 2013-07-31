@@ -63,7 +63,7 @@ sub update_form {
 
 sub update_rel_form {
     my $c = shift;
-    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/report_obj chapter_obj image_objs/ ]);
+    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/image_objs/ ]);
     $c->stash(controls => {
             image_objs => sub {
                 my ($c,$obj) = @_;
