@@ -7,7 +7,9 @@
     <tr>
         <td><%= $k %></td>
         <td>
-            % if ($k eq 'doi') {
+            % if (!$val) {
+
+            % } elsif ($k eq 'doi') {
                 %= link_to "http://dx.doi.org/$val" => begin
                 <%= $val %>
                 %= end
