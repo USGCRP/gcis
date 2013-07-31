@@ -36,6 +36,8 @@ finding
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report::text <> old.report::text) EXECUTE PROCEDURE update_publication()
  Has OIDs: no
  
 

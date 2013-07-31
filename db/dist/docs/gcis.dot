@@ -62,7 +62,7 @@ edge [
 
 "ref_type" [shape = plaintext, label = < <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0"> <TR ><TD PORT="ltcol0"> </TD> <TD bgcolor="grey90" border="1" COLSPAN="4"> \N </TD> <TD PORT="rtcol0"></TD></TR>  <TR><TD PORT="ltcol1" ></TD><TD align="left" > identifier </TD><TD align="left" > character varying </TD><TD align="left" > PK </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol1"> </TD></TR> <TR><TD PORT="ltcol2" ></TD><TD align="left" > table </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol2"> </TD></TR> </TABLE>> ];
 
-"report" [shape = plaintext, label = < <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0"> <TR ><TD PORT="ltcol0"> </TD> <TD bgcolor="grey90" border="1" COLSPAN="4"> \N </TD> <TD PORT="rtcol0"></TD></TR>  <TR><TD PORT="ltcol1" ></TD><TD align="left" > identifier </TD><TD align="left" > character varying </TD><TD align="left" > PK </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol1"> </TD></TR> <TR><TD PORT="ltcol2" ></TD><TD align="left" > title </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol2"> </TD></TR> </TABLE>> ];
+"report" [shape = plaintext, label = < <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0"> <TR ><TD PORT="ltcol0"> </TD> <TD bgcolor="grey90" border="1" COLSPAN="4"> \N </TD> <TD PORT="rtcol0"></TD></TR>  <TR><TD PORT="ltcol1" ></TD><TD align="left" > identifier </TD><TD align="left" > character varying </TD><TD align="left" > PK </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol1"> </TD></TR> <TR><TD PORT="ltcol2" ></TD><TD align="left" > title </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol2"> </TD></TR> <TR><TD PORT="ltcol3" ></TD><TD align="left" > url </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol3"> </TD></TR> <TR><TD PORT="ltcol4" ></TD><TD align="left" > organization </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" > FK </TD><TD align="left" PORT="rtcol4"> </TD></TR> <TR><TD PORT="ltcol5" ></TD><TD align="left" > doi </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol5"> </TD></TR> </TABLE>> ];
 
 "submitter" [shape = plaintext, label = < <TABLE BORDER="1" CELLBORDER="0" CELLSPACING="0"> <TR ><TD PORT="ltcol0"> </TD> <TD bgcolor="grey90" border="1" COLSPAN="4"> \N </TD> <TD PORT="rtcol0"></TD></TR>  <TR><TD PORT="ltcol1" ></TD><TD align="left" > id </TD><TD align="left" > serial </TD><TD align="left" > PK </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol1"> </TD></TR> <TR><TD PORT="ltcol2" ></TD><TD align="left" > person_id </TD><TD align="left" > integer </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol2"> </TD></TR> <TR><TD PORT="ltcol3" ></TD><TD align="left" > table </TD><TD align="left" > character varying </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol3"> </TD></TR> <TR><TD PORT="ltcol4" ></TD><TD align="left" > fk </TD><TD align="left" > integer </TD><TD align="left" >  </TD><TD align="left" >  </TD><TD align="left" PORT="rtcol4"> </TD></TR> <TR><TD PORT="ltcol5" ></TD><TD align="left" > contributor_id </TD><TD align="left" > integer </TD><TD align="left" >  </TD><TD align="left" > FK </TD><TD align="left" PORT="rtcol5"> </TD></TR> </TABLE>> ];
 
@@ -77,7 +77,7 @@ edge [
 "dataset_organization_map":rtcol2 -> "organization":ltcol1 [label="dataset_organization_organization_fkey"];
 "figure":rtcol0 -> "chapter":ltcol0 [label="figure_chapter_report"];
 "figure":rtcol19 -> "report":ltcol1 [label="figure_report_fkey"];
-"file":rtcol2 -> "image":ltcol1 [label="file_ibfk_1"];
+"file":rtcol2 -> "image":ltcol1 [label="file_image"];
 "finding":rtcol0 -> "chapter":ltcol0 [label="finding_chapter_report"];
 "finding":rtcol5 -> "report":ltcol1 [label="finding_report_fkey"];
 "finding_keyword_map":rtcol0 -> "finding":ltcol0 [label="finding_keyword_map_finding_fkey"];
@@ -92,6 +92,7 @@ edge [
 "publication_map":rtcol1 -> "publication":ltcol1 [label="publication_map_child_fkey"];
 "publication_map":rtcol3 -> "publication":ltcol1 [label="publication_map_parent_fkey"];
 "publication_ref":rtcol3 -> "ref_type":ltcol1 [label="publication_ref_ibfk_1"];
+"report":rtcol4 -> "organization":ltcol1 [label="report_organization_fkey"];
 "submitter":rtcol5 -> "contributor":ltcol1 [label="submitter_contributor_id_fkey"];
 }
 

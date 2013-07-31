@@ -60,10 +60,12 @@ figure
      "figure_chapter_report" FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report)
      "figure_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
  Referenced by:
-     TABLE "image_figure_map" CONSTRAINT "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON DELETE CASCADE
+     TABLE "image_figure_map" CONSTRAINT "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON figure FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON figure FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON figure FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report::text <> old.report::text) EXECUTE PROCEDURE update_publication()
  Has OIDs: no
  
 

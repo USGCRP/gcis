@@ -30,6 +30,7 @@ organization
      TABLE "contributor" CONSTRAINT "contributor_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
      TABLE "dataset_organization_map" CONSTRAINT "dataset_organization_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE
      TABLE "organization_type_map" CONSTRAINT "organization_type_map_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE
+     TABLE "report" CONSTRAINT "report_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

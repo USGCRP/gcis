@@ -11,17 +11,25 @@ report
 
  identifier (character varying) - A unique identifier for the report.
  title (character varying) - 
+ url (character varying) - 
+ organization (character varying) - 
+ doi (character varying) - 
 
 
 =head1 SCHEMA
 
-                                 Table "gcis_metadata.report"
-    Column   |       Type        | Modifiers | Storage  |             Description             
- ------------+-------------------+-----------+----------+-------------------------------------
-  identifier | character varying | not null  | extended | A unique identifier for the report.
-  title      | character varying |           | extended | 
+                                  Table "gcis_metadata.report"
+     Column    |       Type        | Modifiers | Storage  |             Description             
+ --------------+-------------------+-----------+----------+-------------------------------------
+  identifier   | character varying | not null  | extended | A unique identifier for the report.
+  title        | character varying |           | extended | 
+  url          | character varying |           | extended | 
+  organization | character varying |           | extended | 
+  doi          | character varying |           | extended | 
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "report_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
  Referenced by:
      TABLE "chapter" CONSTRAINT "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
      TABLE "figure" CONSTRAINT "figure_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
@@ -29,6 +37,8 @@ report
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON report FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON report FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON report FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON report FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
  Has OIDs: no
  
 
