@@ -2,4 +2,4 @@
 % if (my $val = stash 'value') {
 % param $column->name => $val;
 % }
-%= select_field $column->name, $values;
+%= select_field $column->name, $values, class => 'span8';

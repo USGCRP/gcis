@@ -40,6 +40,7 @@ sub pk_values {
 }
 
 sub uri {
+    logger->warn('getting uri');
     my $s = shift;
     my $c = shift;
     my %pk = map {( $_ => $s->$_ )} $s->meta->primary_key_columns;
@@ -65,8 +66,7 @@ sub update_primary_key {
     };
     my $audit_note = delete $changes{audit_note}; # Optional
 
-    # Save current pk values in case there is a composite primary key and
-    # we are only changing one piece.
+    # Current pk values.
     my %pk;
     for my $pk_col ($object->meta->primary_key_columns) {
         # use ->name, rather than accessor_method_name to be consistent with %changes.
@@ -76,16 +76,14 @@ sub update_primary_key {
 
     # %changes should just be source_column -> new_value.
     my $table = $object->meta->table;
-    my %where;
-    for my $col (keys %changes) {
-        $where{$col} = $object->$col;
-    }
     my $db = $object->db;
     $db->do_transaction( sub {
         $db->dbh->do("set local audit.username = ?",{},$audit_user);
         $db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
         my $dbis = DBIx::Simple->new($db->dbh);
-        $dbis->update($table, \%changes, \%where) or die $dbis->error;
+        logger->debug("doing update, changes : ".dumpit(\%changes));
+        logger->debug("doing update, where : ".dumpit(\%pk));
+        $dbis->update($table, \%changes, \%pk) or die $dbis->error;
     } ) or do {
         $object->error($db->error);
         return;

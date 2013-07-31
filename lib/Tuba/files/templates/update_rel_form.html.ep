@@ -9,6 +9,8 @@
 
 <div class='tab-content'>
 
+%= include 'relationships', object => $object, meta => $meta;
+
 %= form_for 'update_rel_'.$meta->table => class => 'form-horizontal well' => begin
 % if (my $error = (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>

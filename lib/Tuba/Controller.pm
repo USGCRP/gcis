@@ -11,6 +11,7 @@ use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
 use Tuba::Search;
 use Pg::hstore qw/hstore_encode/;
+use Tuba::Log;
 
 =head2 check, list
 
@@ -165,11 +166,17 @@ sub _chaplist {
     my @chapters = @{ Chapters->get_objects(query => [ report => $rpt ], sort_by => 'number') };
     return [ '', map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters ];
 }
+sub _rptlist {
+    my @reports = @{ Reports->get_objects(sort_by => 'identifier') };
+    return [ '', map [ sprintf( '%s : %.80s', ( $_->identifier || '' ), $_->title ), $_->identifier ], @reports ];
+}
 sub _default_controls {
     my $c = shift;
     return (
         chapter => sub { +{ template => 'select',
                              params => { values => _chaplist(shift->stash('report_identifier')) } } },
+        report  => sub { +{ template => 'select',
+                             params => { values => _rptlist() } } },
     );
 }
 
@@ -296,10 +303,20 @@ Generic update for an object.
 
 =cut
 
+sub _differ {
+    my ($x,$y) = @_;
+    return 1 if !defined($x) && defined($y);
+    return 1 if defined($y) && !defined($x);
+    return 0 if !defined($x) && !defined($y);
+    return 1 if $x ne $y;
+    return 0;
+}
+
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
     my %pk_changes;
+    my %new_attrs;
     my $table = $object->meta->table;
     $object->meta->error_mode('return');
 
@@ -316,17 +333,22 @@ sub update {
         my $param = $c->param($col->name);
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
+        $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
+        $new_attrs{$col->name} = $param if _differ($param,$new_attrs{$col->name});
         if ($col->is_primary_key_member && $param ne $object->$acc) {
             $pk_changes{$col->name} = $param;
+            # $c->app->log->debug("Setting primary key member ".$col->name." to $param");
             next;
         }
+        # $c->app->log->debug("Setting $acc to ".($param // 'undef'));
         $object->$acc($param);
     }
 
     my $ok = 1;
     if (keys %pk_changes) {
+        $c->app->log->debug("Updating primary key");
         # See Tuba::DB::Object.
-        if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes)) {
+        if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes, %new_attrs)) {
             $new->$_($object->$_) for map { $_->is_primary_key_member ? () : $_->name } $object->meta->columns;
             $object = $new;
         } else {
@@ -336,7 +358,7 @@ sub update {
 
 
     $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
-    $ok and return $c->_redirect_to_view($object);
+    $ok and do { $c->flash(message => "Saved changes"); return $c->_redirect_to_view($object); };
     $c->flash(error => $object->error);
     $c->redirect_to("update_form_".$table);
 }
