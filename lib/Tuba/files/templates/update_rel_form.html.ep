@@ -3,6 +3,8 @@
 <h2><%= $object->stringify %></h2>
 </center>
 
+% my $controls = stash 'controls' || {};
+
 <div class='row-fluid'>
 
 %= include 'update_tabs', active => 'rel';
@@ -19,13 +21,22 @@
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 
-<pre>
-% for my $rel ($meta->relationships) {
-<%= $rel->name; %> : <%= $rel->type; %>
-% }
-</pre>
+% for my $rel (@{ (stash 'relationships') || $meta->relationships }) {
+<div class='control-group' style='margin:10px;'>
+<label class='control-label'>
+%= $rel->name
+</label>
 
-TODO
+<div class="controls">
+    % if (my $entry = $controls->{$rel->name}) {
+        % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
+        %= include 'controls/'.$entry->{template}, object => $object, %{ $entry->{params} || {} };
+    % } else {
+    <span class='alert alert-danger'>not implemented</span>
+    % }
+</div>
+</div>
+% }
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>

@@ -61,5 +61,41 @@ sub update_form {
     $c->SUPER::update_form(@_);
 }
 
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/report_obj chapter_obj image_objs/ ]);
+    $c->stash(controls => {
+            image_objs => sub {
+                my ($c,$obj) = @_;
+                +{
+                template => 'image',
+                params => {
+                }
+            } }
+        });
+    $c->SUPER::update_rel_form(@_);
+}
+
+sub update_rel {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $object->meta->error_mode('return');
+    if (my $new = $c->param('new_image')) {
+        my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
+        $object->add_image_objs($img);
+        $object->save(audit_user => $c->user) or do {
+            $c->flash(error => $object->error);
+            return $c->render(template => 'update_rel_form');
+        };
+    }
+
+    for my $id ($c->param('delete_image')) {
+        ImageFigureMaps->delete_objects({ image => $id, figure => $object->identifier });
+        $c->flash(message => 'Saved changes');
+    }
+
+    $c->_redirect_to_view($object);
+}
+
 1;
 

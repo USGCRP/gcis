@@ -162,21 +162,35 @@ sub _this_object {
 }
 
 sub _chaplist {
+    my $c = shift;
     my $rpt = shift;
     my @chapters = @{ Chapters->get_objects(query => [ report => $rpt ], sort_by => 'number') };
     return [ '', map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters ];
 }
 sub _rptlist {
+    my $c = shift;
     my @reports = @{ Reports->get_objects(sort_by => 'identifier') };
     return [ '', map [ sprintf( '%s : %.80s', ( $_->identifier || '' ), $_->title ), $_->identifier ], @reports ];
 }
 sub _default_controls {
     my $c = shift;
     return (
-        chapter => sub { +{ template => 'select',
-                             params => { values => _chaplist(shift->stash('report_identifier')) } } },
+        chapter     => sub { my $c = shift;
+                            +{ template => 'select',
+                               params => { values => $c->_chaplist($c->stash('report_identifier')) } } },
+        chapter_obj => sub { my ($c,$obj) = @_;
+                             +{ template => 'select',
+                                params => { values => $c->_chaplist($c->stash('report_identifier')),
+                                            column => $obj->meta->column('chapter'),
+                                            value => $obj->chapter }
+                            } },
         report  => sub { +{ template => 'select',
-                             params => { values => _rptlist() } } },
+                             params => { values => shift->_rptlist() } } },
+        report_obj  => sub { my ($c,$obj) = @_;
+                          +{ template => 'select',
+                             params => { values => $c->_rptlist(),
+                                         column => $obj->meta->column('report'),
+                                         value => $obj->report } } },
     );
 }
 
@@ -276,8 +290,9 @@ Form for updating the relationships.
 
 sub update_rel_form {
     my $c = shift;
-    # TODO
     my $object = $c->_this_object;
+    my $controls = $c->stash('controls') || {};
+    $c->stash(controls => { $c->_default_controls, %$controls } );
     my $meta = $object->meta;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
@@ -293,7 +308,7 @@ Update the relationships.
 sub update_rel {
     my $c = shift;
     # TODO
-
+    $c->render(text => 'saving not implemented');
 }
 
 

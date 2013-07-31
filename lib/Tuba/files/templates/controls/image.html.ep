@@ -1,0 +1,28 @@
+
+%= hidden_field 'delete_image';
+
+<table class='table table-condensed table-bordered'>
+% for my $image ($object->image_objs) {
+<tr>
+<td>
+    <span class='btn squeezevert'><%= obj_link($image); %></span>
+</td>
+<td><%== $image->thumbnail($self) %></td>
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_image"].value = '].$image->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+%= text_field 'new_image', placeholder => "new image", id => "newimage", class => 'span12';
+
+%= javascript begin
+$('#newimage').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'image' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

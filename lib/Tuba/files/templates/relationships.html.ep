@@ -2,7 +2,8 @@
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
-% for my $rel ($meta->relationships) {
+% my $rels = ( (stash 'relationships') || $meta->relationships );
+% for my $rel (@$rels) {
 % my $method = $rel->name;
 <tr>
 <td><%= $method %></td>

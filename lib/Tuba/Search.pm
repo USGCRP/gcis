@@ -3,6 +3,8 @@ package Tuba::Search;
 use Tuba::DB::Objects qw/-nicknames/;
 use Mojo::Base qw/Tuba::Controller/;
 use List::MoreUtils qw/mesh/;
+use Tuba::Log;
+use strict;
 
 sub keyword {
     my $c = shift;
@@ -23,12 +25,17 @@ sub keyword {
 sub autocomplete {
     my $c = shift;
     my $q = $c->param('q') || $c->json->{q};
-    return $c->render(json => []) unless $q && length($q) >= 2;
+    return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
+    my $want = $c->param('type');
+    logger->info("we want $want");
 
     my @results;
     for my $type (@{ PublicationTypes->get_objects(all => 1) }) {
         my $table = $type->table;
+        logger->info('looking in '.$table);
+        next if $want && $table ne $want;
+        logger->info('still looking in '.$table);
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max);
         for (@got) {

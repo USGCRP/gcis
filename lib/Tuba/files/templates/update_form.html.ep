@@ -34,8 +34,8 @@
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % if (my $entry = $controls->{$column->name}) {
-                % $entry = $self->$entry if ref($entry) eq 'CODE';
-                %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} }, value => $val;
+                % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
+                %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
             % } else {
                 % if ($val && length($val) > 50) {
                 %= $textarea->($column,$object);
