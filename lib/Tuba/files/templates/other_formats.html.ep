@@ -3,3 +3,5 @@ URI  : <%= $self->req->url %>
 JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
 HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
 N-Triples : <%= link_to "$base.nt" => begin %><%= "$base.nt" %><%= end %>
+Turtle : <%= link_to "$base.ttl" => begin %><%= "$base.ttl" %><%= end %>
+

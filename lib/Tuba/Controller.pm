@@ -33,7 +33,8 @@ sub show {
     my $c = shift;
 
     my $object = $c->stash('object') or die "no object";
-    my $meta  = $c->stash('meta') or die "no meta";
+    my $meta  = $c->stash('meta') || $object->meta;
+    $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
 
     $c->respond_to(
@@ -41,6 +42,9 @@ sub show {
                        $c->render_maybe(template => "$table/object")
                     or $c->render(json => $object->as_tree ); },
         nt    => sub { my $c = shift;
+                      $c->render_maybe(template => "$table/object")
+                   or $c->render(template => "object") },
+        ttl   => sub { my $c = shift;
                       $c->render_maybe(template => "$table/object")
                    or $c->render(template => "object") },
         html  => sub { my $c = shift;
@@ -462,5 +466,15 @@ sub history {
     $c->render(template => 'history', change_log => $change_log, object => $object, pk => $pk)
 }
 
+sub render {
+    my $c = shift;
+    my %args = @_;
+    my $obj = $c->stash('object') || $args{object} or return $c->SUPER::render(@_);
+    my $moniker = $obj->moniker;
+    if (!defined($c->stash($moniker))) {
+        $c->stash($moniker => $obj);
+    }
+    return $c->SUPER::render(@_);
+}
 
 1;

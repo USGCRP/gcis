@@ -41,7 +41,7 @@ sub autocomplete {
         for (@got) {
             push @results, join ' ', "[".$table."]",
                                       ( map "{".$_."}", $_->pk_values ),
-                                      $c->elide($_->stringify(80));
+                                      $c->elide($_->stringify,80);
         }
     }
 

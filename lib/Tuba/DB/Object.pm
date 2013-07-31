@@ -15,14 +15,19 @@ use base 'Rose::DB::Object';
 use strict;
 use warnings;
 
-=head2 plural
+=head2 moniker, plural
     
-    The plural form of the moniker for this object type.
+    Singuler and plural monikers for this object type.
 
 =cut
 
+sub moniker {
+    my $c = shift;
+    return $c->meta->table;
+}
+
 sub plural {
-    shift->meta->table.'s';
+    shift->moniker.'s';
 }
 
 # Override these in mixin classes, e.g. Tuba::DB::Mixin::Object::Chapter

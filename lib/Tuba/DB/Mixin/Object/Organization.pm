@@ -30,5 +30,10 @@ sub find_or_make {
     return $org;
 }
 
+sub stringify {
+    my $s = shift;
+    return $s->name || $s->identifier;
+}
+
 1;
 

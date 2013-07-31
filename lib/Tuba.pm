@@ -51,7 +51,7 @@ sub startup {
             my $c = shift;
             my $obj = shift;
             return "" unless defined($obj);
-            my $val = $obj->stringify;
+            my $val = $obj->stringify || '[missing]';
             my $uri = $obj->uri($c);
             return $val unless $uri;
             return $c->link_to($val, $uri );
@@ -102,7 +102,7 @@ sub startup {
     $app->helper(elide => sub {
             my $c = shift;
             my $str = shift;
-            my $len = shift;
+            my $len = shift or die "missing length";
             return $str if !$str || length($str) < $len;
             return substr($str,0,$len-3).'...';
         });

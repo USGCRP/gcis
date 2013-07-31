@@ -1,0 +1,24 @@
+%#
+%# Sample :
+%#
+%# <http://data.globalchange.gov/organization/Cornell_University> a gcis:Agent,
+%#         gcis:Organization,
+%#         org:Organization,
+%#         prov:Agent,
+%#         prov:Organization,
+%#         foaf:Agent,
+%#         foaf:Organization ;
+%#     prov:label "Cornell University" ;
+%#     foaf:name "Cornell University" .
+
+% layout 'default';
+<<%= current_resource %>> a gcis:Agent,
+        gcis:Organization,
+        org:Organization,
+        prov:Agent,
+        prov:Organization,
+        foaf:Agent,
+        foaf:Organization ;
+    prov:label "<%= $organization->name %>" ;
+    foaf:name "<%= $organization->name %>" .
+
