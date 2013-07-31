@@ -40,8 +40,9 @@ sub pk_values {
     my $s = shift;
     my $delim = shift || '/';
     my @pk = map $_->accessor_method_name, $s->meta->primary_key->columns;
-    return map $s->$_, @pk if wantarray;
-    return join $delim, 
+    my @vals = map $s->$_, @pk;
+    return @vals if wantarray;
+    return join $delim, @vals;
 }
 
 sub uri {
