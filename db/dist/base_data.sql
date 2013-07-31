@@ -26,10 +26,18 @@ COPY article (identifier, title, doi, year, journal, journal_vol, journal_pages,
 
 
 --
+-- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization (identifier, name, url, country) FROM stdin;
+\.
+
+
+--
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title) FROM stdin;
+COPY report (identifier, title, url, organization, doi) FROM stdin;
 \.
 
 
@@ -46,14 +54,6 @@ COPY chapter (identifier, title, report, number) FROM stdin;
 --
 
 COPY contributor_role_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization (identifier, name, url, country) FROM stdin;
 \.
 
 

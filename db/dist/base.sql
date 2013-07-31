@@ -9,6 +9,30 @@ SET client_min_messages = warning;
 
 
 
+
+CREATE FUNCTION delete_publication() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    delete from publication
+         where publication_type = TG_TABLE_NAME::text and
+            fk = slice(hstore(OLD.*),akeys(fk));
+    RETURN OLD;
+END; $$;
+
+
+
+CREATE FUNCTION update_publication() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    update publication set fk = slice(hstore(NEW.*),akeys(fk))
+         where publication_type = TG_TABLE_NAME::text and
+            fk = slice(hstore(OLD.*),akeys(fk));
+     RETURN NEW;
+END; $$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -383,7 +407,10 @@ CREATE TABLE ref_type (
 
 CREATE TABLE report (
     identifier character varying NOT NULL,
-    title character varying
+    title character varying,
+    url character varying,
+    organization character varying,
+    doi character varying
 );
 
 
@@ -818,6 +845,70 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_map FOR EACH STAT
 
 
 
+CREATE TRIGGER delpub BEFORE DELETE ON journal FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON article FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON report FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON chapter FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON figure FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON dataset FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON image FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON article FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON report FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON chapter FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON dataset FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
 ALTER TABLE ONLY article
     ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL;
 
@@ -864,7 +955,7 @@ ALTER TABLE ONLY figure
 
 
 ALTER TABLE ONLY file
-    ADD CONSTRAINT file_ibfk_1 FOREIGN KEY (image) REFERENCES image(identifier) MATCH FULL;
+    ADD CONSTRAINT file_image FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE;
 
 
 
@@ -889,7 +980,7 @@ ALTER TABLE ONLY finding
 
 
 ALTER TABLE ONLY image_figure_map
-    ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON DELETE CASCADE;
+    ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -935,6 +1026,11 @@ ALTER TABLE ONLY publication_map
 
 ALTER TABLE ONLY publication_ref
     ADD CONSTRAINT publication_ref_ibfk_1 FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY report
+    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
 
 
 
