@@ -212,7 +212,7 @@ sub make_identifier {
     my @words = split /\s+/, $str;
     my $id = '';
     my $next;
-    while (length($id) < $max_length && ($next = shift @words)) {
+    while (length($id) < $max_length && defined($next = shift @words)) {
         my $stop;
         $next = lc $next;
         $stop = 1 if $next eq ':';
