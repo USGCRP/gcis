@@ -13,6 +13,7 @@ db/dist/docs/html/func_gcis_metadata.avals(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, gcis_metadata.hstore).html'
 'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, text).html'
 'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, text[]).html'
+db/dist/docs/html/func_gcis_metadata.delete_publication().html
 'db/dist/docs/html/func_gcis_metadata.each(hs gcis_metadata.hstore).html'
 'db/dist/docs/html/func_gcis_metadata.exist(gcis_metadata.hstore, text).html'
 'db/dist/docs/html/func_gcis_metadata.exists_all(gcis_metadata.hstore, text[]).html'
@@ -60,6 +61,7 @@ db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.slice_array(gcis_metadata.hstore, text[]).html'
 db/dist/docs/html/func_gcis_metadata.svals(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.tconvert(text, text).html'
+db/dist/docs/html/func_gcis_metadata.update_publication().html
 db/dist/docs/html/index.html
 db/dist/docs/html/table_gcis_metadata.article.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
@@ -149,6 +151,12 @@ db/patches/0160_image_figure.sql
 db/patches/0170_multi_reports.sql
 db/patches/0180_multi_pub.sql
 db/patches/0190_finding_pub.sql
+db/patches/0200_more_audit.sql
+db/patches/0210_pubnote.sql
+db/patches/0220_report.sql
+db/patches/0230_publication_triggers.sql
+db/patches/0240_file_fk.sql
+db/patches/0250_on_update_cascade.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article.pm
@@ -159,6 +167,7 @@ lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
+lib/Tuba/DB/Mixin/Object/Contributor.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
 lib/Tuba/DB/Mixin/Object/File.pm
 lib/Tuba/DB/Mixin/Object/Finding.pm
@@ -186,12 +195,17 @@ lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/chapter/object.nt.ep
+lib/Tuba/files/templates/controls/image.html.ep
+lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/create_form.html.ep
+lib/Tuba/files/templates/create_link.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/examples.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/exception.production.html.ep
+lib/Tuba/files/templates/fields.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
+lib/Tuba/files/templates/figure/object.ttl.ep
 lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/forms.html.ep
@@ -205,12 +219,15 @@ lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
+lib/Tuba/files/templates/layouts/default.ttl.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.nt.ep
+lib/Tuba/files/templates/object.ttl.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/opensearch.xml.ep
 lib/Tuba/files/templates/organization/object.html.ep
+lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/person/object.html.ep
@@ -225,6 +242,8 @@ lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep
+lib/Tuba/files/templates/update_rel_form.html.ep
+lib/Tuba/files/templates/update_tabs.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
 lib/Tuba/Importer.pm

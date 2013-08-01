@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.120630",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560",
    "license" : [
       "perl_5"
    ],
@@ -49,167 +49,130 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.44"
+         "version" : "0.45"
       },
       "Tuba::Article" : {
-         "file" : "lib/Tuba/Article.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Article.pm"
       },
       "Tuba::Auth" : {
-         "file" : "lib/Tuba/Auth.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Auth.pm"
       },
       "Tuba::Chapter" : {
-         "file" : "lib/Tuba/Chapter.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Chapter.pm"
       },
       "Tuba::Controller" : {
-         "file" : "lib/Tuba/Controller.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Controller.pm"
       },
       "Tuba::DB" : {
-         "file" : "lib/Tuba/DB.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB.pm"
       },
       "Tuba::DB::Object" : {
-         "file" : "lib/Tuba/DB/Object.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Object.pm"
       },
       "Tuba::DB::Object::Article" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Article.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Article.pm"
       },
       "Tuba::DB::Object::Chapter" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Chapter.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Chapter.pm"
+      },
+      "Tuba::DB::Object::Contributor" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Contributor.pm"
       },
       "Tuba::DB::Object::Figure" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Figure.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Figure.pm"
       },
       "Tuba::DB::Object::File" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/File.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/File.pm"
       },
       "Tuba::DB::Object::Finding" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Finding.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Finding.pm"
       },
       "Tuba::DB::Object::Finding::Manager" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Finding/Manager.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Finding/Manager.pm"
       },
       "Tuba::DB::Object::Image" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Image.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Image.pm"
       },
       "Tuba::DB::Object::Journal" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Journal.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Journal.pm"
       },
       "Tuba::DB::Object::Keyword" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Keyword.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Keyword.pm"
       },
       "Tuba::DB::Object::Manager" : {
-         "file" : "lib/Tuba/DB/Object/Manager.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Object/Manager.pm"
       },
       "Tuba::DB::Object::Organization" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm"
       },
       "Tuba::DB::Object::Person" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Person.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Person.pm"
       },
       "Tuba::DB::Object::Publication" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Publication.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Mixin/Object/Publication.pm"
       },
       "Tuba::DB::Objects" : {
-         "file" : "lib/Tuba/DB/Objects.pm",
-         "version" : 0
+         "file" : "lib/Tuba/DB/Objects.pm"
       },
       "Tuba::Dataset" : {
-         "file" : "lib/Tuba/Dataset.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Dataset.pm"
       },
       "Tuba::Figure" : {
-         "file" : "lib/Tuba/Figure.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Figure.pm"
       },
       "Tuba::File" : {
-         "file" : "lib/Tuba/File.pm",
-         "version" : 0
+         "file" : "lib/Tuba/File.pm"
       },
       "Tuba::Finding" : {
-         "file" : "lib/Tuba/Finding.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Finding.pm"
       },
       "Tuba::Image" : {
-         "file" : "lib/Tuba/Image.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Image.pm"
       },
       "Tuba::Importer" : {
-         "file" : "lib/Tuba/Importer.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer.pm"
       },
       "Tuba::Importer::Processor" : {
-         "file" : "lib/Tuba/Importer/Processor.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer/Processor.pm"
       },
       "Tuba::Importer::Processor::Ant" : {
-         "file" : "lib/Tuba/Importer/Processor/Ant.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer/Processor/Ant.pm"
       },
       "Tuba::Importer::Processor::Datasets" : {
-         "file" : "lib/Tuba/Importer/Processor/Datasets.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer/Processor/Datasets.pm"
       },
       "Tuba::Importer::Processor::Findings" : {
-         "file" : "lib/Tuba/Importer/Processor/Findings.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer/Processor/Findings.pm"
       },
       "Tuba::Importer::Processor::Journals" : {
-         "file" : "lib/Tuba/Importer/Processor/Journals.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Importer/Processor/Journals.pm"
       },
       "Tuba::Journal" : {
-         "file" : "lib/Tuba/Journal.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Journal.pm"
       },
       "Tuba::Log" : {
-         "file" : "lib/Tuba/Log.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Log.pm"
       },
       "Tuba::Organization" : {
-         "file" : "lib/Tuba/Organization.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Organization.pm"
       },
       "Tuba::Person" : {
-         "file" : "lib/Tuba/Person.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Person.pm"
       },
       "Tuba::Plugin::Auth" : {
-         "file" : "lib/Tuba/Plugin/Auth.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Plugin/Auth.pm"
       },
       "Tuba::Plugin::Db" : {
-         "file" : "lib/Tuba/Plugin/Db.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Plugin/Db.pm"
       },
       "Tuba::Publication" : {
-         "file" : "lib/Tuba/Publication.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Publication.pm"
       },
       "Tuba::Report" : {
-         "file" : "lib/Tuba/Report.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Report.pm"
       },
       "Tuba::Search" : {
-         "file" : "lib/Tuba/Search.pm",
-         "version" : 0
+         "file" : "lib/Tuba/Search.pm"
       }
    },
    "release_status" : "stable",
@@ -218,5 +181,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.44"
+   "version" : "0.45"
 }
