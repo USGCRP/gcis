@@ -26,11 +26,7 @@ sub show {
       Article->new( identifier => $identifier )->load( speculative => 1)
       or return $c->render_not_found;
     $c->stash(object => $object);
-    $c->respond_to(
-        json => sub { shift->render(json => $object->as_tree) },
-        nt   => sub { shift->render(template => 'object') },
-        html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }
-    );
+    $c->SUPER::show(@_);
 }
 
 sub doi {

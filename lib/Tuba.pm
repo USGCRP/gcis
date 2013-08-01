@@ -174,7 +174,7 @@ sub startup {
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
         my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|history/)];
-          for my $format (qw/json nt html/) {
+          for my $format (qw/json ttl nt html/) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
