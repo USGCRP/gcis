@@ -3,5 +3,6 @@
 <<%= current_resource %>> <http://www.w3.org/ns/prov#label> "<%= $object->prov_label %>" .
 <<%= current_resource %>> <http://xmlns.com/foaf/0.1/name> "<%= $object->foaf_name %>" .
 % for my $contributor ($object->contributor) {
-<<%= current_resource %>> <http://data.globalchange.gov/gcis.owl#affiliation> <<%= $contributor->organization_obj->uri($self)->to_abs %>> .
+% my $org = $contributor->organization_obj or next;
+<<%= current_resource %>> <http://data.globalchange.gov/gcis.owl#affiliation> <<%= $org->uri($self)->to_abs %>> .
 % }
