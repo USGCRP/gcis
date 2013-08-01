@@ -38,5 +38,27 @@ sub doi {
     $c->redirect_to('show_article' => { article_identifier => $object->identifier } );
 }
 
+sub _journal_list {
+    my @journals = @{ Journals->get_objects(sort_by => 'identifier') };
+    return [ '', map [ sprintf( '%s : %.80s', ( $_->identifier || '' ), $_->title ), $_->identifier ], @journals ];
+}
+
+sub update_form {
+    my $c = shift;
+    $c->stash(
+        controls => {
+            journal => sub {
+                my $c   = shift;
+                my $obj = shift;
+                +{
+                    template => 'select',
+                    params   => { values => $c->_journal_list }
+                };
+              }
+        }
+    );
+    $c->SUPER::update_form(@_);
+}
+
 1;
 
