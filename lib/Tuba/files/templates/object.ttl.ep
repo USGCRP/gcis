@@ -1,7 +1,7 @@
-<<%= current_resource %>> <<%= rdf_resource('type') %>> <<%= $object->prov_type %>> .
-% if ($object->foaf_type) {
-<<%= current_resource %>> <<%= rdf_resource('type') %>> <<%= $object->foaf_type %>> .
-% }
-<<%= current_resource %>> <http://www.w3.org/ns/prov#label> "<%= $object->prov_label %>" .
-<<%= current_resource %>> <http://xmlns.com/foaf/0.1/name> "<%= $object->foaf_name %>" .
+% layout 'default';
+
+<<%= current_resource %>>
+    a <<%= $object->prov_type %>> ;
+    prov:label "<%= $object->prov_label %>" ;
+    foaf:name "<%= $object->foaf_name %>" .
 %= include 'prov';

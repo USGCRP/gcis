@@ -1,9 +1,0 @@
-% my $pub = $object->get_publication;
-% my @parents = ();
-% @parents = $pub->get_parents if $pub;
-
-% for my $p (@parents) {
-<<%= current_resource %>> <<%= property_to_iri($p->{relationship}) %>> <<%= $p->{publication}->to_object->uri($self)->to_abs %>> .
-% }
-
-

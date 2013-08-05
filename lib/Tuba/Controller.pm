@@ -12,6 +12,7 @@ use List::Util qw/shuffle/;
 use Tuba::Search;
 use Pg::hstore qw/hstore_encode/;
 use Tuba::Log;
+use File::Temp;
 
 =head2 check, list
 
@@ -21,6 +22,20 @@ These virtual methods should be implemented by subclasses.
 
 sub check { die "not implemented" };
 sub list { die "not implemented" };
+
+sub ttl2nt {
+    my $c = shift;
+    my $ttl = shift;
+    my $base = $c->req->url->base->to_abs;
+    # TODO use rdflib in memory.
+    my $fp = File::Temp->new;
+    print $fp $ttl;
+    $fp->close;
+    my $cmd = "rapper -i turtle -o ntriples $fp $base 2>/dev/null";
+    $c->app->log->info("running $cmd");
+    my $got = `$cmd`;
+    return $got;
+}
 
 =head2 show
 
@@ -42,8 +57,10 @@ sub show {
                        $c->render_maybe(template => "$table/object")
                     or $c->render(json => $object->as_tree ); },
         nt    => sub { my $c = shift;
-                      $c->render_maybe(template => "$table/object")
-                   or $c->render(template => "object") },
+                       my $ttl = $c->render_maybe(partial => 1, format => 'ttl', template => "$table/object")
+                              || $c->render(partial => 1, format => 'ttl', template => "object");
+                       $c->render(data => $c->ttl2nt($ttl));
+                   },
         ttl   => sub { my $c = shift;
                       $c->render_maybe(template => "$table/object")
                    or $c->render(template => "object") },

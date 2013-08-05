@@ -1,0 +1,13 @@
+% my $pub = $object->get_publication;
+% my @parents = ();
+% @parents = $pub->get_parents if $pub;
+
+% if (@parents) {
+<<%= current_resource %>> 
+% }
+% for (0..$#parents) {
+%   my $p = $parents[$_];
+    <%= $p->{relationship} %> <<%= $p->{publication}->to_object->uri($self)->to_abs %>> <%= $_ == $#parents ? '.' : ';' %>
+% }
+
+
