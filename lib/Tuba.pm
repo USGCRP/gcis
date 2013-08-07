@@ -15,6 +15,7 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
+use Tuba::Converter;
 use Tuba::Log;
 
 our $VERSION = '0.45';
@@ -106,7 +107,29 @@ sub startup {
             return $str if !$str || length($str) < $len;
             return substr($str,0,$len-3).'...';
         });
-
+    $app->helper(render_partial_ttl => sub {
+            my $c = shift;
+            my $table = shift || die "need table";
+            return $c->render_maybe(partial => 1, format => 'ttl', template => "$table/object")
+                || $c->render(partial => 1, format => 'ttl', template => "object");
+        });
+    $app->helper(render_ttl_as => sub {
+            my $c = shift;
+            my $ttl = shift;
+            my $format = shift;
+            my $conv = Tuba::Converter->new(
+                    ttl  => $ttl,
+                    base => $c->req->url->base->to_abs
+                );
+            $c->render( data => $conv->output( format => $format ));
+        });
+    $app->helper(render_partial_ttl_as => sub {
+            my $c = shift;
+            my $table = shift;
+            my $format = shift;
+            my $ttl = $c->render_partial_ttl($table);
+            $c->render_ttl_as($ttl,$format);
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -174,11 +197,12 @@ sub startup {
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
         my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|history/)];
-          for my $format (qw/json ttl nt html/) {
+        my @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
+        for my $format (@supported_formats) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
-          }
+        }
         $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier" => \@restrict )->to('#show')->name("show_$name");

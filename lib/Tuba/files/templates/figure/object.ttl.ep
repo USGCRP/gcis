@@ -30,3 +30,5 @@
     dct:isPartOf <<%= $figure->report_obj->uri($self)->to_abs %>> ;
     dct:title "<%= $figure->title %>" ;
     prov:label "<%= $figure->title %>" .
+
+%= include 'prov';
