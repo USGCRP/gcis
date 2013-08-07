@@ -1,7 +1,0 @@
-<<%= current_resource %>> <<%= rdf_resource('type') %>> <<%= $object->prov_type %>> .
-<<%= current_resource %>> <http://www.w3.org/ns/prov#label> "<%= $object->prov_label %>" .
-<<%= current_resource %>> <http://xmlns.com/foaf/0.1/name> "<%= $object->foaf_name %>" .
-% for my $figure ($object->figure_objs) {
-<<%= current_resource %>> <http://purl.org/dc/terms/isPartOf> <<%= $figure->uri($self)->to_abs %>> .
-% }
-%= include 'prov'

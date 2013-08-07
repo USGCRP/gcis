@@ -1,8 +1,0 @@
-<<%= current_resource %>> <http://data.globalchange.gov/person/Nancy_Grimm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/prov#Person> .
-<<%= current_resource %>> <http://data.globalchange.gov/person/Nancy_Grimm> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
-<<%= current_resource %>> <http://www.w3.org/ns/prov#label> "<%= $object->prov_label %>" .
-<<%= current_resource %>> <http://xmlns.com/foaf/0.1/name> "<%= $object->foaf_name %>" .
-% for my $contributor ($object->contributor) {
-% my $org = $contributor->organization_obj or next;
-<<%= current_resource %>> <http://data.globalchange.gov/gcis.owl#affiliation> <<%= $org->uri($self)->to_abs %>> .
-% }

@@ -194,7 +194,6 @@ lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
-lib/Tuba/files/templates/chapter/object.nt.ep
 lib/Tuba/files/templates/controls/image.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/create_form.html.ep
@@ -212,7 +211,6 @@ lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
-lib/Tuba/files/templates/image/object.nt.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
 lib/Tuba/files/templates/importer/form.html.ep
@@ -222,7 +220,6 @@ lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
-lib/Tuba/files/templates/object.nt.ep
 lib/Tuba/files/templates/object.ttl.ep
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/opensearch.xml.ep
@@ -231,11 +228,9 @@ lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/person/object.html.ep
-lib/Tuba/files/templates/person/object.nt.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/prov.html.ep
-lib/Tuba/files/templates/prov.nt.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/resources.html.ep
