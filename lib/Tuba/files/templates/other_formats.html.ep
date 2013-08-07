@@ -1,7 +1,11 @@
 % my $base = current_resource;
-URI  : <%= $self->req->url %>
-JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
-HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
-N-Triples : <%= link_to "$base.nt" => begin %><%= "$base.nt" %><%= end %>
-Turtle : <%= link_to "$base.ttl" => begin %><%= "$base.ttl" %><%= end %>
-
+        URI  : <%= $self->req->url %>
+        JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
+        HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+      Turtle : <%= link_to "$base.ttl" => begin %><%= "$base.ttl" %><%= end %>
+   N-Triples : <%= link_to "$base.nt" => begin %><%= "$base.nt" %><%= end %>
+JSON Triples : <%= link_to "$base.jsontriples" => begin %><%= "$base.jsontriples" %><%= end %>
+     RDF+XML : <%= link_to "$base.rdfxml" => begin %><%= "$base.rdfxml" %><%= end %>
+    RDF+JSON : <%= link_to "$base.rdfjson" => begin %><%= "$base.rdfjson" %><%= end %>
+    Graphviz : <%= link_to "$base.dot" => begin %><%= "$base.dot" %><%= end %>
+         SVG : <%= link_to "$base.svg" => begin %><%= "$base.svg" %><%= end %>
