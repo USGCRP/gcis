@@ -23,10 +23,8 @@ sub list {
        query => [ report => $report_identifier ] );
     }
 
-    $c->respond_to(
-        json => sub { $c->render(json => [ map $_->as_tree, @$figures ]) },
-        html => sub { $c->render(template => 'figure/objects', meta => Figure->meta, objects => $figures ) }
-    );
+    $c->stash(objects => $figures);
+    $c->SUPER::list(@_);
 }
 
 sub show {

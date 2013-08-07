@@ -82,21 +82,6 @@ sub checkmet {
     $c->render(uploads => \@got);
 }
 
-=head1 list
-
-List images
-
-=cut
-
-sub list {
-    my $c = shift;
-    my $images = Images->get_objects(with_objects => ['figure_objs']);
-    $c->respond_to(
-        json => sub { $c->render(json => [ map $_->as_tree, @$images ]) },
-        html => sub { $c->render(template => 'image/objects', meta => Image->meta, objects => $images ) }
-    );
-}
-
 =head1 show
 
 Show metadata about an image.

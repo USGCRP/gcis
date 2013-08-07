@@ -14,14 +14,34 @@ use Pg::hstore qw/hstore_encode/;
 use Tuba::Log;
 use File::Temp;
 
-=head2 check, list
+=head2 list
 
-These virtual methods should be implemented by subclasses.
+Generic list.
 
 =cut
 
-sub check { die "not implemented" };
-sub list { die "not implemented" };
+sub list {
+    my $c = shift;
+    my $objects = $c->stash('objects');
+    unless ($objects) {
+        my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
+        $objects = $manager_class->get_objects(sort_by => "identifier");
+    }
+    my $object_class = $c->stash('object_class') || $c->_guess_object_class;
+    my $meta = $object_class->meta;
+    my $table = $meta->table;
+    $c->respond_to(
+        json => sub {
+            my $c = shift;
+            $c->render(json => [ map $_->as_tree, @$objects ]) },
+        html => sub {
+             my $c = shift;
+             $c->render_maybe(template => "$table/objects", meta => $meta, objects => $objects )
+                 or
+             $c->render(template => 'objects', meta => $meta, objects => $objects )
+         }
+    );
+};
 
 =head2 show
 
@@ -40,7 +60,7 @@ sub show {
     my $cnv = Tuba::Converter->new();
 
     $c->respond_to(
-        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree ); },
+        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c) ); },
         ttl   => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         html  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         nt    => sub { shift->render_partial_ttl_as($table,'ntriples'); },
@@ -81,6 +101,16 @@ sub _guess_object_class {
     $object_class->can('meta') or die "can't figure out object class for $class (not $object_class)";
     return $object_class;
 }
+
+sub _guess_manager_class {
+    my $c = shift;
+    my $class = ref $c;
+    my ($object_class) = $class =~ /::(.*)$/;
+    $object_class = 'Tuba::DB::Object::'.$object_class;
+    $object_class->can('meta') or die "can't figure out object class for $class (not $object_class)";
+    return $object_class.'::Manager';
+}
+
 
 =head2 create_form
 

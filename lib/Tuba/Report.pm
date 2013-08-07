@@ -8,16 +8,6 @@ package Tuba::Report;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
-sub list {
-    my $c = shift;
-    my $objects = Reports->get_objects;
-    my $meta = Report->meta;
-    $c->respond_to(
-        json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
-        html => sub { shift->render(template => 'objects', meta => $meta, objects => $objects ) }
-    );
-}
-
 sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');

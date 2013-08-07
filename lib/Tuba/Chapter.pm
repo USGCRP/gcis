@@ -13,10 +13,7 @@ sub list {
     my $report = $c->stash('report_identifier');
     my $objects = Chapters->get_objects(query => [ report => $report ] );
     $c->title('Chapters in report '.$report);
-    $c->respond_to(
-        json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
-        html => sub { shift->render(template => 'objects', meta => Chapter->meta, objects => $objects ) }
-    );
+    $c->SUPER::list(@_);
 }
 
 sub show {

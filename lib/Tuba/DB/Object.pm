@@ -237,5 +237,34 @@ sub make_identifier {
     return $id;
 }
 
+=head2 as_tree
+
+In addition to the helper object, pass c => current controller
+in order to also get an array of parent publications.  (The controller
+is used to find the url for parenst).
+
+=cut
+
+sub as_tree {
+    my $s = shift;
+    my %a = @_;
+    my $tree = $s->Rose::DB::Object::Helpers::as_tree(@_);
+    if (my $c = $a{c}) {
+        $tree->{parents} = [];
+        if (my $pub = $s->get_publication) {
+            for my $parent ($pub->get_parents) {
+                my $pub = $parent->{publication};
+                push @{ $tree->{parents} }, {
+                    relationship => $parent->{relationship},
+                    publication_type => $pub->{publication_type},
+                    label => $pub->stringify,
+                    url => $pub->to_object->uri($c),
+                };
+            }
+        }
+    }
+    return $tree;
+}
+
 1;
 

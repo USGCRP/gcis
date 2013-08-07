@@ -10,11 +10,8 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    my $files = Files->get_objects(require_objects => 'image_obj');
-    $c->respond_to(
-        json => sub { $c->render(json => [ map $_->as_tree, @$files ]) },
-        html => sub { $c->render(template => 'objects', meta => File->meta, objects => $files ) }
-    );
+    $c->stash(objects => Files->get_objects(require_objects => 'image_obj'));
+    $c->SUPER::list(@_);
 }
 
 sub show {

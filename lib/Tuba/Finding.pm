@@ -23,10 +23,8 @@ sub list {
         $c->title("Findings in report $report");
     }
 
-    $c->respond_to(
-        json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
-        html => sub { shift->render(template => 'objects', meta => $meta, objects => $objects ) }
-    );
+    $c->stash(objects => $objects);
+    $c->SUPER::list(@_);
 }
 
 sub show {

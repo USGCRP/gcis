@@ -8,16 +8,6 @@ package Tuba::Article;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
-sub list {
-    my $c = shift;
-    my $objects = Articles->get_objects(sort_by => "identifier");
-    my $meta = Article->meta;
-    $c->respond_to(
-        json => sub { shift->render(json => [ map $_->as_tree, @$objects ]) },
-        html => sub { shift->render(template => 'article/objects', meta => $meta, objects => $objects ) }
-    );
-}
-
 sub show {
     my $c = shift;
     my $meta = Article->meta;
