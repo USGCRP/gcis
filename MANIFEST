@@ -163,6 +163,7 @@ lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
 lib/Tuba/Controller.pm
+lib/Tuba/Converter.pm
 lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
@@ -231,6 +232,7 @@ lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/prov.html.ep
+lib/Tuba/files/templates/prov.ttl.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/resources.html.ep
