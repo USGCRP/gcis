@@ -11,7 +11,10 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     my $report = $c->stash('report_identifier');
-    $c->stash(objects => Chapters->get_objects(query => [ report => $report ], sort_by => 'number' ));
+    $c->stash(objects => Chapters->get_objects(query => [ report => $report ],
+             with_objects => ['figure' ],
+             sort_by => 'chapter.number') 
+    );
     $c->title('Chapters in report '.$report);
     $c->SUPER::list(@_);
 }

@@ -3,6 +3,9 @@ package Tuba::DB::Object::Figure;
 
 sub stringify {
     my $c = shift;
+    if (my $num = $c->numeric) {
+        return join ' ', $num, ($c->title || $c->identifier);
+    }
     return $c->title || $c->identifier;
 }
 

@@ -1,6 +1,8 @@
 package Tuba::DB::Object::Chapter;
 # Tuba::DB::Mixin::Object::Chapter;
 
+__PACKAGE__->meta->relationship('figure')->manager_args({ sort_by => "figure.ordinal" });
+
 sub uri {
     my $s = shift;
     my $c = shift;
