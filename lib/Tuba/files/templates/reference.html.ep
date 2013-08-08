@@ -4,7 +4,7 @@
 
 % layout 'default';
 <h2>API Reference</h2>
-<p>Below is a comprehensive list of methods and URLs supported by the GCIS.
+<p>Below is a list of methods and URLs supported by the GCIS.
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
 
 % my $show_method = ( (param 'show_method') || 'GET');
@@ -14,6 +14,7 @@
 GET
 %= end
 </li>
+% if (user_can('update')) {
 <li <%== $show_method eq 'POST' ? q[class="active"] : "" %>>
 %= link_to url_for('current')->query(show_method => 'POST') => begin
 POST
@@ -24,6 +25,7 @@ POST
 DELETE
 %= end
 </li>
+% }
 
 </ul>
 
@@ -48,7 +50,8 @@ DELETE
   % return if $node->name =~ /^_/;
   % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|reference|resources|import_form)$/;
   % unless (user_can('update')) {
-  %     return if $node->name =~ m[^((create|update)_form)];
+  %     return if $node->name =~ m[^((create|update)_(prov_|rel_)?form)];
+  %     return if $node->name =~ m[^autocomplete$];
   %     return if $node->name =~ m[^history_];
   % }
   % my $pattern = $node->pattern->pattern || '/';
