@@ -19,6 +19,7 @@ use Tuba::Converter;
 use Tuba::Log;
 
 our $VERSION = '0.46';
+our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
 
 sub startup {
     my $app = shift;
@@ -68,8 +69,8 @@ sub startup {
                 return $cached;
             }
             my $str = $c->req->url->clone->to_abs;
-            if (my $format = $c->stash('format')) {
-                $str =~ s/\.$format$//;
+            for my $format (@supported_formats) {
+                $str =~ s/\.$format$// and last;
             }
             $c->stash('_current_resource' => $str);
             $str;
@@ -197,7 +198,6 @@ sub startup {
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
         my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|history/)];
-        my @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
         for my $format (@supported_formats) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
