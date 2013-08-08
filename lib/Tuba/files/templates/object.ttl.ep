@@ -1,5 +1,4 @@
 % layout 'default';
-
 <<%= current_resource %>>
     a <<%= $object->prov_type %>> ;
     prov:label "<%= $object->prov_label %>" ;
