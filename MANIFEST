@@ -157,6 +157,7 @@ db/patches/0220_report.sql
 db/patches/0230_publication_triggers.sql
 db/patches/0240_file_fk.sql
 db/patches/0250_on_update_cascade.sql
+db/patches/0260_chapter_url.sql
 eg/atrac_upload.html
 lib/Tuba.pm
 lib/Tuba/Article.pm
