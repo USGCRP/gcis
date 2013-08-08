@@ -56,7 +56,8 @@ CREATE TABLE chapter (
     identifier character varying NOT NULL,
     title character varying,
     report character varying NOT NULL,
-    number integer
+    number integer,
+    url character varying
 );
 
 

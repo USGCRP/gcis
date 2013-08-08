@@ -22,3 +22,4 @@
 0230_publication_triggers.sql	7b0cf7b0ebf6c175b1bf608f1127578b
 0240_file_fk.sql	5f26154f2e3341238d0adc4ba3482b71
 0250_on_update_cascade.sql	1fc2c4abfd1756fe289fa759a9ef7b6d
+0260_chapter_url.sql	8e808b097ebbeab82226863474985f4d

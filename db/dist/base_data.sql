@@ -45,7 +45,7 @@ COPY report (identifier, title, url, organization, doi) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report, number) FROM stdin;
+COPY chapter (identifier, title, report, number, url) FROM stdin;
 \.
 
 

@@ -13,6 +13,7 @@ chapter
  title (character varying) - 
  report (character varying) - 
  number (integer) - 
+ url (character varying) - 
 
 
 =head1 SCHEMA
@@ -24,6 +25,7 @@ chapter
   title      | character varying |           | extended | 
   report     | character varying | not null  | extended | 
   number     | integer           |           | plain    | 
+  url        | character varying |           | extended | 
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (identifier, report)
      "uk_number" UNIQUE CONSTRAINT, btree (number)
