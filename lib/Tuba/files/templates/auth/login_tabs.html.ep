@@ -1,0 +1,24 @@
+<ul class="nav nav-tabs">
+
+% my $destination = param 'destination';
+% my @q = ($destination ? ( destination => $destination) : () );
+
+<li <%== current_route eq 'login' ? q[ class='active'] : ''  %>>
+    <%= link_to 'login' => begin %>google<%= end %></li>
+
+<li <%== current_route eq '_login_key' ? q[ class='active'] : ''  %>>
+    % my $link = url_for('login_key');
+    % $link->query(@q) if @q;
+    <%= link_to $link => begin %>api key<%= end %>
+</li>
+
+% if ($self->app->mode eq 'development') {
+<li <%== current_route eq '_login_pw' ? q[ class='active'] : ''  %>>
+    % my $pwlink = url_for('login_pw');
+    % $pwlink->query(@q) if @q;
+    <%= link_to $pwlink => begin %>password<%= end %></li>
+% }
+
+</ul>
+
+

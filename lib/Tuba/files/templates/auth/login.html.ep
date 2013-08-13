@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head><%= title =%>
-%= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
-%= javascript '/mojo/jquery/jquery.js';
-</head>
+% layout 'default';
 
-<body>
-<div class='container-fluid'>
-<br>
-<br>
-<br>
 % my $destination = ( (param 'destination') || (flash 'destination') || '');
-% if ($self->app->mode eq 'development') {
-<ul class="nav nav-tabs">
-<li class='active'><%= link_to 'login' => begin %>google<%= end %></li>
-<li><%= link_to url_for('login_pw')->query(destination => (param 'destination')) => begin %>password<%= end %></li>
-</ul>
-% }
+
+%= include 'auth/login_tabs';
 
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
@@ -42,10 +28,4 @@
     <button type="submit" class="btn btn-primary">Sign in with your Google account</button>
 </div>
 %= end
-
-</div>
-
-</body>
-</html>
-
 

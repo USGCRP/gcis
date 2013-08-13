@@ -1,0 +1,38 @@
+% layout 'default';
+% my $destination = ( (param 'destination') || (flash 'destination') || '');
+
+%= include 'auth/login_tabs'
+
+% if (user_can('update')) {
+<p>
+Below is a key which may be used to connect to the GCIS API from the command line.
+</p>
+%= text_field 'key' => $api_key, readonly => 'readonly', class => 'span10';
+<p>
+To verify that this works, try the following :
+</p>
+<textarea class='span10' readonly rows=4>
+curl -L \\
+-H 'Accept: application/json' \\
+<%= url_for('login')->clone->query(api_key=>$api_key)->to_abs %>
+</textarea>
+<br>
+or
+<br>
+<textarea class='span10' readonly rows=5>
+curl -L \\
+-H 'Accept: application/json' \\
+-H 'X-GCIS-API-Key: <%= $api_key %>' \\
+<%= url_for('login')->clone->to_abs %>
+</textarea>
+<p>
+Refresh this page to generate a new API key for <b><%= user %></b>.<br>
+API keys expire after 1 month.
+</p>
+% } else {
+<div class='alert'>
+    Please <%= link_to 'login' => begin %>log in<%= end %> to obtain an API key.
+</div>
+% }
+
+

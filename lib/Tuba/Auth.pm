@@ -24,9 +24,52 @@ use Mojo::ByteStream qw/b/;
 use Path::Class qw/file/;
 use JSON::WebToken qw/decode_jwt/;
 use JSON::XS;
+use Tuba::Log;
+
+my $key_expiration = 60 * 60 * 24 * 30;
+
+sub _validate_api_key {
+    my $c = shift;
+    my $key = shift or return 0;
+    my $secret = $c->config('auth')->{secret};
+    my ($hash,$user,$create_time) = split q[:], b($key)->b64_decode;
+    unless ($create_time =~ /^[0-9]+$/) {
+        logger->warn("Invalid time in api key : ".($create_time // 'none'));
+        return 0;
+    }
+    if (time - $create_time> $key_expiration) {
+        logger->warn("Key for $user has expired.");
+        return 0;
+    }
+    my $j = Mojo::JSON->new();
+    my $verify = b($j->encode([$user,$secret,$create_time]))->hmac_sha1_sum;
+    if ($verify eq $hash) {
+        logger->debug("Valid api key for $user");
+        return 1;
+    } else {
+        logger->warn("Invalid key for $user");
+    }
+    return 0;
+}
 
 sub login {
     my $c = shift;
+    $c->respond_to(
+        json => sub { shift->stash->{format} = 'json' },
+        html => sub { shift->stash->{format} = 'html' }
+    );
+    my $api_key = $c->param('api_key');
+    if (my $auth = $c->req->headers->header('X-GCIS-API-Key')) {
+        $api_key = $auth;
+    }
+    if ($api_key) {
+        if ($c->_validate_api_key($api_key)) {
+            return $c->respond_to(
+                json => sub { shift->render( json => { login => "ok" } ) },
+                html => sub { shift->render( text => "login ok\n" ) } 
+            );
+        }
+    }
     return $c->render if $ENV{HARNESS_ACTIVE};
     return $c->render if $c->req->is_secure;
     return $c->render if ($c->app->mode eq 'development' && $c->tx->remote_address eq '127.0.0.1');
@@ -72,6 +115,9 @@ sub _redirect_uri {
 sub check_login {
     my $c = shift;
     my $user = $c->param('user');
+    if (!$user && (my $json = $c->req->json)) {
+        $user = $json->{user};
+    }
     my $password = $c->param('password');
     return $c->_login_ok($user) if $ENV{HARNESS_ACTIVE};
     return $c->redirect_to('login') unless $user;
@@ -155,8 +201,22 @@ sub oauth2callback {
     return $c->render(code => 401, text => "email address has not been verified") unless $info->{email_verified} eq 'true';
     # See https://developers.google.com/accounts/docs/OAuth2Login#authenticationuriparameters
     my $user = $info->{email};
-    $c->session(google_access_token => b($info->{access_token})->xor_encode($c->app->secret));
+    $c->session(google_access_token => b($info->{access_token}));
     return $c->_login_ok($user);
+}
+
+sub login_key {
+    my $c = shift;
+    my $time = time;
+    my $secret = $c->config('auth')->{secret};
+    my $user = $c->user;
+    my $j = Mojo::JSON->new;
+    my $hash = b($j->encode([$user,$secret,$time]))->hmac_sha1_sum;
+    my $api_key = b( "$hash:$user:$time" )->b64_encode->to_string;
+    chomp $api_key;
+    $c->stash(api_key => $api_key);
+    logger->debug("api key for ".$c->user." at $time is '$api_key'");
+    $c->render;
 }
 
 1;

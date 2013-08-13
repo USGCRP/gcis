@@ -1,30 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head><%= title =%>
-%= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
-%= javascript '/mojo/jquery/jquery.js';
-</head>
+% layout 'default';
+%= include 'auth/login_tabs';
 
-<body>
-<div class='container-fluid'>
-<br>
-<br>
-<br>
 % if ($self->app->mode eq 'development') {
-<ul class="nav nav-tabs">
-<li><%= link_to 'login' => begin %>google<%= end %></li>
-<li class='active'><%= link_to 'login_pw'=> begin %>password<%= end %></li>
-</ul>
-% }
 
-% my $destination = ( (param 'destination') || (flash 'destination') || '');
+% if (user()) {
+<p>
+Welcome, <%= user %>.<br>
+Please choose from the menu above to explore the GCIS API,</p>
+%= link_to 'logout', class => 'btn' => begin
+logout
+%= end
+% } else {
+% my $destination = ( (param 'destination') || (flash 'destination') );
+% $destination = current_route() unless $destination && $destination ne '/';
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
-            % if ($destination) {
-            Please log in to continue.
-            % } else {
-            Log in to the GCIS.
-            % }
+        Log in to the GCIS.
         </legend>
         % if (my $error = (flash 'error')) {
             <div class='alert alert-error'><%= $error %></div>
@@ -47,10 +38,11 @@
     <button type="submit" class="btn btn-primary">Sign in</button>
 </div>
 %= end
+% }
+
+% } else {
+Sorry, password logins are only available in dev mode.
+% }
 
 </div>
-
-</body>
-</html>
-
 
