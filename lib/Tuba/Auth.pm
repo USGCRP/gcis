@@ -131,20 +131,19 @@ sub check_login {
                 && ($password eq $valid_users->{$user});
     }
 
+    my $destination = $c->param('destination') || 'login';
     # google oath2
     if (my $w = $c->_google_secrets) {
         my $redirect_uri = $c->_redirect_uri;
-        my $auth_state = b(rand())->md5_sum;
         my $redirect_url = Mojo::URL->new($w->{auth_uri})
              ->query(
                 client_id       => $w->{client_id},
                 response_type => 'code',
                 redirect_uri  => $redirect_uri,
                 scope         => "openid profile email https://www.googleapis.com/auth/drive.file",
-                auth_state    => $auth_state,
+                state         => $destination,
                 login_hint    => $user,
              );
-        $c->flash(auth_state => $auth_state);
         return $c->redirect_to($redirect_url);
     }
     $c->flash(error => "Sorry, bad username or password.");
@@ -167,11 +166,10 @@ sub oauth2callback {
         $c->flash(error => "Error : $error (".($c->param('error_description') || 'no description for this error').')');
         return $c->redirect_to('login');
     }
-    #my $state = $c->param('state') or return $c->render(code => 401, text => 'invalid auth state');
-    #unless ($state eq $c->flash('state')) {
-    #    # no server side storage of user data yet, but sessions are signed with HMAC-SHA1
-    #    return $c->render(code => 401, text => "invalid auth state");
-    #}
+    if (my $state = $c->param('state')) {
+        $c->param(destination => $state);
+    }
+
     my $code = $c->param('code') or return $c->render(code => 401, text => "missing auth code");
 
     my $s = $c->_google_secrets;

@@ -4,6 +4,17 @@
 
 %= include 'auth/login_tabs';
 
+% if (user()) {
+<p>
+Welcome, <%= user %>.<br>
+Please choose from the menu above to explore the GCIS API,</p>
+%= link_to 'logout', class => 'btn' => begin
+logout
+%= end
+% } else {
+% my $destination = ( (param 'destination') || (flash 'destination') );
+% $destination = current_route() unless $destination && $destination ne '/';
+
 %= form_for 'check_login', method => 'POST', class => "form-horizontal well" => begin
         <legend>
             % if ($destination) {
@@ -28,4 +39,5 @@
     <button type="submit" class="btn btn-primary">Sign in with your Google account</button>
 </div>
 %= end
+% }
 
