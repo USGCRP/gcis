@@ -213,7 +213,7 @@ sub login_key {
     my $j = Mojo::JSON->new;
     my $hash = b($j->encode([$user,$secret,$time]))->hmac_sha1_sum;
     my $api_key = b( "$hash:$user:$time" )->b64_encode->to_string;
-    chomp $api_key;
+    $api_key =~ s/\n//g;
     $c->stash(api_key => $api_key);
     logger->debug("api key for ".$c->user." at $time is '$api_key'");
     $c->render;
