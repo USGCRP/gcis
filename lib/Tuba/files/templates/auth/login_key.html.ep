@@ -17,7 +17,7 @@ curl -L -u <%= $api_user %>:<%= $api_pw %> <%= url_for('login')->clone->to_abs %
 <br>
 or
 <br>
-<textarea class='span10' readonly rows=5>
+<textarea class='span10' readonly rows=6>
 curl -L \\
 -H 'Accept: application/json' \\
 -H 'Authorization : Basic <%= $api_key %>' \\
