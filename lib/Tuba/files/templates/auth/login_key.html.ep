@@ -5,16 +5,14 @@
 
 % if (user_can('update')) {
 <p>
-Below is a key which may be used to connect to the GCIS API from the command line.
+Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
 </p>
-%= text_field 'key' => $api_key, readonly => 'readonly', class => 'span10';
+%= text_field 'key' => $api_pw, readonly => 'readonly', class => 'span10';
 <p>
 To verify that this works, try the following :
 </p>
-<textarea class='span10' readonly rows=4>
-curl -L \\
--H 'Accept: application/json' \\
-<%= url_for('login')->clone->query(api_key=>$api_key)->to_abs %>
+<textarea class='span10' readonly rows=2>
+curl -L -u <%= $api_user %>:<%= $api_pw %> <%= url_for('login')->clone->to_abs %>.json
 </textarea>
 <br>
 or
@@ -22,12 +20,12 @@ or
 <textarea class='span10' readonly rows=5>
 curl -L \\
 -H 'Accept: application/json' \\
--H 'X-GCIS-API-Key: <%= $api_key %>' \\
+-H 'Authorization : Basic <%= $api_key %>' \\
 <%= url_for('login')->clone->to_abs %>
 </textarea>
 <p>
-Refresh this page to generate a new API key for <b><%= user %></b>.<br>
-API keys expire after 1 month.
+API keys expire after 1 month.<br>
+Refresh this page to generate a new API key for <b><%= user %></b>.
 </p>
 % } else {
 <div class='alert'>

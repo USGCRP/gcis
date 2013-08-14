@@ -32,13 +32,19 @@ sub _validate_api_key {
     my $c = shift;
     my $key = shift or return 0;
     my $secret = $c->config('auth')->{secret};
-    my ($hash,$user,$create_time) = split q[:], b($key)->b64_decode;
+    my ($user,$hashtime) = split q[:], b($key)->b64_decode;
+    unless ($user) {
+        logger->warn("missing user in key $key");
+        return 0;
+    }
+    my ($hash,$create_time) = (substr($hashtime,0,40),substr($hashtime,40));
+    $create_time = hex $create_time;
     unless ($create_time =~ /^[0-9]+$/) {
         logger->warn("Invalid time in api key : ".($create_time // 'none'));
         return 0;
     }
     if (time - $create_time> $key_expiration) {
-        logger->warn("Key for $user has expired.");
+        logger->warn("Key for $user expired ".(time - $create_time)." seconds ago");
         return 0;
     }
     my $j = Mojo::JSON->new();
@@ -59,8 +65,8 @@ sub login {
         html => sub { shift->stash->{format} = 'html' }
     );
     my $api_key = $c->param('api_key');
-    if (my $auth = $c->req->headers->header('X-GCIS-API-Key')) {
-        $api_key = $auth;
+    if (my $auth = $c->req->headers->authorization) {
+        ($api_key) = $auth =~ /^Basic (.*)$/;
     }
     if ($api_key) {
         if ($c->_validate_api_key($api_key)) {
@@ -210,8 +216,11 @@ sub login_key {
     my $user = $c->user;
     my $j = Mojo::JSON->new;
     my $hash = b($j->encode([$user,$secret,$time]))->hmac_sha1_sum;
-    my $api_key = b( "$hash:$user:$time" )->b64_encode->to_string;
+    my $api_pw = sprintf('%s%x',$hash,$time);
+    my $api_key = b(sprintf('%s:%s',$user,$api_pw))->b64_encode->to_string;
     $api_key =~ s/\n//g;
+    $c->stash(api_user => $user);
+    $c->stash(api_pw => $api_pw);
     $c->stash(api_key => $api_key);
     logger->debug("api key for ".$c->user." at $time is '$api_key'");
     $c->render;
