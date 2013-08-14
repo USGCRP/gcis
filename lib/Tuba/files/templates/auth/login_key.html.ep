@@ -20,7 +20,7 @@ or
 <textarea class='span10' readonly rows=6>
 curl -L \\
 -H 'Accept: application/json' \\
--H 'Authorization : Basic <%= $api_key %>' \\
+-H 'Authorization: Basic <%= $api_key %>' \\
 <%= url_for('login')->clone->to_abs %>
 </textarea>
 <p>
