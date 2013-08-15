@@ -20,6 +20,21 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    my $user = $c->user;
+    my $objects = Reports->get_objects(
+        query => [
+            or => [ and => [public => 't'],
+                    and => [username => $user]
+                  ]
+        ],
+        with_objects => [qw/_report_viewer organization_obj/],
+        limit => 20,
+    );
+    $c->stash(objects => $objects);
+    $c->SUPER::list(@_);
+};
 
 1;
 
