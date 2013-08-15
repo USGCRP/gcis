@@ -1,5 +1,6 @@
 #!/usr/bin/env perl
 use Mojo::UserAgent;
+use Path::Class qw/file/;
 use feature qw/:all/;
 use strict;
 use warnings;
@@ -7,13 +8,13 @@ use warnings;
 my $base = 'http://localhost:3000';
 my $keyfile = "$ENV{HOME}/.gcis_api_key";
 
-my $key = Mojo::Asset::File->new( path => $keyfile )->slurp;
+my $key = file($keyfile)->slurp;
 
 my $ua = Mojo::UserAgent->new();
 
 my %h = (
     'Accept' => 'application/json',
-    'X-GCIS-API-Key' => $key
+    'Authorization' => "Basic $key",
 );
 
 my $res = $ua->get("$base/login" => \%h )->res;
