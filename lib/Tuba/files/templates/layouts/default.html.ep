@@ -61,15 +61,16 @@ String.prototype.htmlEscape = function() {
                     </li>
                 </ul>
                 <ul class="nav">
-                    % my $report_identifier = ( stash 'report_identifier' ) || 'nca3draft';
+                    % my $report_identifier = current_report->identifier;
 
-                    <li><%= link_to 'list_report' => begin %>report<%= end %></li>
                     <li class='dropdown'>
                             <a href='#' data-toggle='dropdown'><%= $report_identifier %> <span class='caret'></span></a>
                      <ul class='dropdown-menu'>
+                        <li><%= link_to 'show_report'  => { report_identifier => $report_identifier } => begin %>report : <%= current_report->title %><%= end %></li>
                         <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapters<%= end %></li>
                         <li><%= link_to 'list_figure'  => { report_identifier => $report_identifier } => begin %>figures<%= end %></li>
                         <li><%= link_to 'list_finding' => { report_identifier => $report_identifier } => begin %>findings<%= end %></li>
+                        <li><%= link_to 'list_report' => begin %>other reports<%= end %></li>
                      </ul>
                     </li>
                     <li><%= link_to 'list_image'   => begin %>images<%= end %></li>

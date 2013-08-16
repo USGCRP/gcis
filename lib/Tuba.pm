@@ -96,7 +96,8 @@ sub startup {
         });
     $app->helper(current_report => sub {
             my $c = shift;
-            my $identifier = shift || $c->stash('report_identifier');
+            my $identifier = shift || $c->stash('report_identifier') || $c->session('report_identifier') || 'nca3draft';
+            $c->session(report_identifier => $identifier);
             my $obj = Tuba::DB::Object::Report->new(identifier => $identifier);
             $obj->load(speculative => 1) or return;
             return $obj;

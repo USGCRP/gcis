@@ -100,5 +100,33 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+=head1 list
+
+Show images for selected report.
+
+=cut
+
+sub list {
+    my $c = shift;
+    my $identifier = $c->current_report->identifier;
+    my $page = $c->param('page') || 1;
+    my $limit = 20;
+    my $offset = ( $page - 1 ) * 20;
+    my $objects = Images->get_objects_from_sql(
+        args => [ $identifier, $identifier ],
+        sql => qq[select i.*
+        from image i
+            inner join image_figure_map m on m.image = i.identifier
+            inner join figure f on f.identifier = m.figure
+            inner join chapter c on f.chapter = c.identifier
+        where c.report = ? or f.report = ?
+        order by c.number,f.ordinal
+        limit $limit offset $offset ]
+    );
+    $c->stash(page => $page);
+    $c->stash(objects => $objects);
+    $c->SUPER::list(@_);
+}
+
 1;
 

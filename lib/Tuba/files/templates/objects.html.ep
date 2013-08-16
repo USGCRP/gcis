@@ -18,7 +18,12 @@
   );
 %>
 % push @cols, @{ stash 'extra_cols' } if stash 'extra_cols';
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
 <table class='table table-condensed table-bordered table-striped'>
+<caption>
+</caption>
 <tr>
 % for my $c (@cols) {
     <th><%= $c %></th>
@@ -50,3 +55,7 @@
     </tr>
 % }
 </table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
