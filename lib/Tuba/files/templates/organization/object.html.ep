@@ -15,8 +15,7 @@
 
 <pre>
 <%= include 'other_formats'; =%>
-Primary key : <%= $meta->primary_key %>
-Relationships : <%= join ',', map $_->name, @{ $meta->relationships } %>
+<%= include 'db_meta'; =%>
 </pre>
 
 %= include 'prov';
