@@ -1,6 +1,6 @@
 %#
 %# Sample :
-%#
+%# this is a comment.
 %# <http://data.globalchange.gov/report/nca2013/chapter/10/figure/7> a gcis:Figure,
 %#         prov:Entity ;
 %#     rdfs:label "The Columbia River Basin Land Use and Land Cover" ;
@@ -17,7 +17,9 @@
 %# To validate the output :
 %#   rapper -i turtle <url>
 %#
+
 % layout 'default';
+
 <<%= current_resource %>> a gcis:Figure,
         prov:Entity ;
     rdfs:label "<%= $figure->title %>" ;

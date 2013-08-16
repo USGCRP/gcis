@@ -11,6 +11,12 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
+@prefix doco: <http://purl.org/spar/doco>.
+@prefix cito: <http://purl.org/spar/cito/>.
+@prefix datacite: <http://purl.org/spar/datacite/>.
+
+
 % }
 
 %= content

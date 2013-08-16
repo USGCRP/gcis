@@ -1,0 +1,111 @@
+# First, we use Brian's initial code
+
+# \% layout 'default';
+
+# <<%= current_resource %>>
+#    a <<%= $image->prov_type %>> ;
+#    prov:label "<%= $image->title %>" ;
+#    foaf:name "<%= $object->title %>" .
+#    gcis: 
+#BLAH BLAH
+
+#%= include 'prov';
+# Test
+
+# Now, we expand, using JG code
+\% layout 'default';
+
+%# General info about image per data.globalchange.gov, incl. authors
+<<%= current_resource %>>
+    a <<%= $image->prov_type %>> ;
+
+% for my $title ($image->titles) {
+    dcterms:title "<%= $title->title %>"                                        %# Title
+% }
+    
+% for my $identifier ($image->identifiers) {
+    dcterms:identifier "<%= $identifier->identifier %>"                                        %# identifier
+% }
+
+% for my $nblat ($image->nblats) {
+    gcis:northBoundLatitude "<%= $nblat->lat_max %>"                 %# Max. Latitude
+% }
+
+ % for my $sblat ($image->sblats) {
+    gcis:southBoundLatitude "<%= $sblat->lat_max %>"                 %# Min. Latitude
+% }
+
+% for my $wblong ($image->wblongs) {
+    gcis:westBoundLongitude "<%= $wblong->lon_max %>"              %# Max. Longitude (Western-most pt)
+% }
+% for my $eblong ($image->eblongs) {
+    gcis:eastBoundLongitude "<%= $eblong->lon_min %>"              %# Max. Longitude (Eastern-most pt)
+
+% for my $Datum ($image->Datums) {
+    dwc:geodeticDatum "<%= $Datum->image_datum>>"                             %# Datum
+% }
+
+% for my $time ($image->times) {
+    gcis:startedAt "<%= $time->time_start %>"                            %# Temporal extent - beg. (date time)
+% }
+
+% for my $endtime ($image->endtimes) {
+    gcis:endedAt "<%= $endtime->time_end %>"                              %# Temporal extent - end.(date time)
+% }
+
+% for my $attime ($image->attimes) {
+    prov:generatedAtTime "<%= $attime->create_dt->iso_8601 %>"  %# Date/time of image creation 
+% }
+
+%# % for my $spatialscale ($image->spatialscales) {
+%#   gcis:spatial_scale .<%= $spatialscale->scale %>.                            %# Spatial scale of image
+%# % }
+
+%# %# % for my $projection ($image->projections)
+%#   gcis:spatial_ref_sys "<%= $projection->projection %>"                  %# Projection of image
+%# % }
+    
+% for my $description ($image->description) {
+    gcis:description "<%= $description->description %>"                         %# Description of image.
+% }
+                
+ % for my $keyword ($image->keywords)      {                                %# GCMD keyword pertaining to image
+       gcis:attributes "<%= $keyword->attributes %>"                      %# Image attributes
+  % }
+ 
+%# % for my $org ($image->orgs) {
+%#   gcis:ishostedby "<%= $org->hosting_agency %>"                    %# hosting agency
+%# % }
+
+%# % for my $available ($image->availables)
+%#    dcterms:available "<%= $available->release_date %> "                 %# Release date of image
+%# % } 
+
+% for my $rights ($image->rightss) {
+    dcterms:rights "<%= $rights->usage_limits %>"                      %# Rights held vis-a-vis the image
+% }
+
+%# % for my $license ($image->licenses) {
+ %#   dcterms:license "<%= $license->license %>"                           %# License type
+%# % }
+
+%# % for my $format ($image->formats) {
+%#   dcterms:format "<%= $format->format %>"                             %# Image format
+%# % }
+
+% for my $datesubmitted ($image->datesubmitteds) {
+    dcterms:dateSubmitted "<%= $datesubmitteds->submission_dt %>"       %# Submission date
+% }
+
+%# % for my $url ($image->urls) {
+%#   gcis:url "<%= $url->URL %>"                                                                  %# URL
+%# % } 
+
+%# % for my $person ($image->persons) {                    
+%#    gcis:PointOfContact "<%= $person->point_of_contact %>"     %# POC for image
+%# % }           
+    
+%# % for my $person ($image->persons) {
+%#    gcis:wasCreatedBy "<%= $person->author %>"                        %# Image Creator(s)
+%# % }
+
