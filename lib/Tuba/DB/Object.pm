@@ -46,7 +46,6 @@ sub pk_values {
 }
 
 sub uri {
-    logger->warn('getting uri');
     my $s = shift;
     my $c = shift;
     my %pk = map {( $_ => $s->$_ )} $s->meta->primary_key_columns;
