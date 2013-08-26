@@ -218,7 +218,10 @@ sub startup {
         $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
       }
 
-      my $authed = $r->bridge("/$name")->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update') });
+      my $authed = $r->bridge("/$name")->to(cb => sub {
+              my $c = shift;
+              $c->auth && $c->authz(role => 'update') }
+      );
       $authed->post->to("$name#create")->name("create_$name");
       $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
 

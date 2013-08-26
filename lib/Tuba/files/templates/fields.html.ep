@@ -2,6 +2,7 @@
 <caption>Fields</caption>
 
 % for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% next if $col->name =~ /^_/;
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
     <tr>

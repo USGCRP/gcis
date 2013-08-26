@@ -165,7 +165,6 @@ sub create {
     $c->respond_to(
         json => sub {
                 my $c = shift;
-                $c->app->log->warn("# rendering");
                 $c->res->code(409);
                 $c->render(json => { error => $new->error } );
             },
@@ -394,6 +393,7 @@ sub update {
 
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->param($col->name);
+        $param = $c->stash('report_identifier') if $col->name eq 'report' && $c->stash('report_identifier');
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.

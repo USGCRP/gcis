@@ -21,9 +21,9 @@
 <<%= current_resource %>> a gcis:Figure,
         prov:Entity ;
     rdfs:label "<%= $figure->title %>" ;
-    gcis:figureNumber "<%= $object->chapter_obj->number %>.<%= $object->ordinal %>" ;
     gcis:hasCaption "<%= $figure->caption %>" ;
 % if (my $chapter = $figure->chapter_obj) {
+    gcis:figureNumber "<%= $chapter->number %>.<%= $object->ordinal %>" ;
     gcis:inPublication <<%= $chapter->uri($self)->to_abs %>> ;
 % }
     dct:identifier "<%= $figure->identifier %>" ;

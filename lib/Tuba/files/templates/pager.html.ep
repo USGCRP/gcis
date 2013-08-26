@@ -1,5 +1,5 @@
 <ul class='pager' style='margin:5pt;'>
-<li><%= link_to url_for->query(page => ( $page - 1)) => begin %><i class='icon-backward icon-small'></i><%= end %></li>
+<li><%= link_to url_for->query(page => ( $page - 1)) => begin %><i class='icon-backward'></i><%= end %></li>
 % if (stash 'favorite_ok') {
 <li><%= link_to url_for->query(page => '♥') => begin %><i class='icon-heart'></i><%= end %></li>
 % }

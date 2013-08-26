@@ -47,9 +47,10 @@ sub register {
             my $user = $c->user() or return 0;
             my $authz = $c->config->{authz};
             return 1 if $ENV{HARNESS_ACTIVE};
-            return 1 if $authz->{$role}{$user}; # Just use the config file.
-            $c->app->log->debug("denied role $role to $user");
-            return 0;
+            return 0 unless $authz->{$role}{$user}; # from the config file.
+            my $report = $c->stash('report') or return 1;
+            return 0 unless $c->Tuba::Report::_user_can_edit($report);
+            return 1;
         });
     $app->helper(user_can => sub {
             my $c = shift;

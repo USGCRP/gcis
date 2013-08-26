@@ -33,6 +33,10 @@ String.prototype.htmlEscape = function() {
         padding-top:0px;
         padding-bottom:0px;
     }
+    ul.pager li a {
+        padding-top:0px;
+        padding-bottom:0px;
+    }
 </style>
 </head>
     <body>

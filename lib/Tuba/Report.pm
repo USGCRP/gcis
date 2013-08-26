@@ -7,15 +7,32 @@ Tuba::Report : Controller class for reports.
 package Tuba::Report;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Tuba::Log;
+
+sub _user_can_view {
+    my $c = shift;
+    my $report = shift or return;
+    return 1 if $report->_public;
+    my $user = $c->user or return 0;
+    return 1 if ReportViewer->new(username => $user, report => $report->identifier)->load(speculative => 1);
+    return 0;
+}
+
+sub _user_can_edit {
+    my $c = shift;
+    my $report = shift or return;
+    my $user = $c->user or return;
+    return 1 if ReportEditor->new(username => $user, report => $report->identifier)->load(speculative => 1);
+    return 0;
+}
 
 sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
-    my $meta = Report->meta;
-    my $object =
-      Report->new( identifier => $identifier )
+    my $object = Report->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/chapter/] )
       or return $c->render_not_found;
+    return $c->render(status => 403, text => '403 Forbidden') unless $c->_user_can_view($object);
     $c->stash(object => $object);
     $c->stash(sorters => {
             figure => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify }
@@ -33,7 +50,7 @@ sub _favorite_page {
             with_objects => [qw/_report_viewer/],
             query => [
                  and => [
-                     or => [ and => [public => 't'], and => [username => $user] ],
+                     or => [ and => [_public => 't'], and => [username => $user] ],
                      or => [ 'identifier' => { 'le' => 'nca3' } ],
                 ]
             ]
@@ -50,7 +67,7 @@ sub list {
     $c->stash(page => $page);
     my $objects = Reports->get_objects(
         query => [
-            or => [ and => [public => 't'],
+            or => [ and => [_public => 't'],
                     and => [username => $user]
                   ]
         ],
@@ -62,6 +79,15 @@ sub list {
     $c->stash(favorite_ok => 1 );
     $c->SUPER::list(@_);
 };
+
+sub select {
+    my $c = shift;
+    my $identifier = $c->stash('report_identifier');
+    my $report = $c->_this_object or do { $c->render_not_found; return 0; };
+    $c->_user_can_view($report) or do { $c->render(status => 403, text => "Forbidden"); return 0; };
+    $c->stash(report => $report);
+    return 1;
+}
 
 1;
 

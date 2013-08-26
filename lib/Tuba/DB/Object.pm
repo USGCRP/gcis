@@ -247,7 +247,7 @@ is used to find the url for parenst).
 sub as_tree {
     my $s = shift;
     my %a = @_;
-    my $tree = $s->Rose::DB::Object::Helpers::as_tree(@_);
+    my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
     if (my $c = $a{c}) {
         $tree->{parents} = [];
         if (my $pub = $s->get_publication) {
@@ -261,6 +261,9 @@ sub as_tree {
                 };
             }
         }
+    }
+    for my $k (keys %$tree) {
+        delete $tree->{$k} if $k =~ /^_/;
     }
     return $tree;
 }
