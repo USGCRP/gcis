@@ -12,14 +12,12 @@ my $keyfile = "$ENV{HOME}/.gcis_api_key";
 my $key     = file($keyfile)->slurp;
 chomp $key;
 my $ua      = Mojo::UserAgent->new();
-#$ua->max_redirects(3);
+my %hdrs = ('Accept' => 'application/json',
+            'Authorization' => "Basic $key");
 
 sub get {
     my $path = shift;
-    my $tx = $ua->get("$base$path"
-        => {'Accept' => 'application/json',
-            'Authorization' => "Basic $key"}
-    );
+    my $tx = $ua->get("$base$path" => \%hdrs);
     my $res = $tx->success or die $tx->error;
     my $json = $res->json or die "no json : ".$res->body;
     return $res->json;
@@ -28,10 +26,7 @@ sub get {
 sub post {
     my $path = shift;
     my $data = shift;
-    my $tx = $ua->post("$base$path"
-        => {'Accept' => 'application/json',
-            'Authorization' => "Basic $key"}
-        => json => $data );
+    my $tx = $ua->post("$base$path" => \%hdrs => json => $data );
     my $res = $tx->success or die $tx->error.$tx->req->to_string;
     my $json = $res->json or die "no json : ";
     return $res->json;
