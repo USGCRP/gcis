@@ -132,6 +132,14 @@ sub startup {
             my $ttl = $c->render_partial_ttl($table);
             $c->render_ttl_as($ttl,$format);
         });
+    $app->helper(detect_format => sub {
+            # Taken from Mojolicious::Controller::respond_to
+            my $c = shift;
+            my @formats = @{$c->app->types->detect($c->req->headers->accept, $c->req->is_xhr)};
+            push @formats, $c->app->renderer->default_format;
+            push @formats, $c->stash('format') if $c->stash('format');
+            return $formats[0];
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {

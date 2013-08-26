@@ -28,7 +28,18 @@ use Tuba::Log;
 
 my $key_expiration = 60 * 60 * 24 * 30;
 
+sub check_api_key {
+    my $c = shift;
+    my $auth = $c->req->headers->authorization or return 0;
+    my ($api_key) = $auth =~ /^Basic (.*)$/;
+    if($c->Tuba::Auth::_validate_api_key($api_key)) {
+        return 1;
+    }
+    return 0;
+}
+
 sub _validate_api_key {
+    # Also sets session->{user} on success.
     my $c = shift;
     my $key = shift or return 0;
     my $secret = $c->config('auth')->{secret};
@@ -51,6 +62,7 @@ sub _validate_api_key {
     my $verify = b($j->encode([$user,$secret,$create_time]))->hmac_sha1_sum;
     if ($verify eq $hash) {
         logger->debug("Valid api key for $user");
+        $c->session(user => $user);
         return 1;
     } else {
         logger->warn("Invalid key for $user");

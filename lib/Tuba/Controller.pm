@@ -250,6 +250,10 @@ sub update_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
+    my $format = $c->detect_format;
+    if ($format eq 'json') {
+        return $c->render(json => $object->as_tree(max_depth => 0));
+    }
     $c->render(template => "update_form");
 }
 
@@ -364,7 +368,7 @@ Generic update for an object.
 sub _differ {
     my ($x,$y) = @_;
     return 1 if !defined($x) && defined($y);
-    return 1 if defined($y) && !defined($x);
+    return 1 if defined($x) && !defined($y);
     return 0 if !defined($x) && !defined($y);
     return 1 if $x ne $y;
     return 0;
@@ -377,6 +381,7 @@ sub update {
     my %new_attrs;
     my $table = $object->meta->table;
     $object->meta->error_mode('return');
+    my $json = $c->req->json;
 
     if ($c->param('delete')) {
         if ($object->delete) {
@@ -388,7 +393,7 @@ sub update {
     }
 
     for my $col ($object->meta->columns) {
-        my $param = $c->param($col->name);
+        my $param = $json ? $json->{$col->name} : $c->param($col->name);
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
@@ -398,7 +403,7 @@ sub update {
             # $c->app->log->debug("Setting primary key member ".$col->name." to $param");
             next;
         }
-        # $c->app->log->debug("Setting $acc to ".($param // 'undef'));
+        $c->app->log->debug("Setting $acc to ".($param // 'undef'));
         $object->$acc($param);
     }
 
@@ -416,6 +421,10 @@ sub update {
 
 
     $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
+    if ($c->detect_format eq 'json') {
+        return $c->update_form if $ok;
+        return $c->render(json => { error => $object->error });
+    }
     $ok and do { $c->flash(message => "Saved changes"); return $c->_redirect_to_view($object); };
     $c->flash(error => $object->error);
     $c->redirect_to("update_form_".$table);

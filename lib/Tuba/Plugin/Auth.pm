@@ -13,6 +13,7 @@ Set up helpers for authentication and authorization, and set $app->secret using 
 =cut
 
 package Tuba::Plugin::Auth;
+use Tuba::Auth;
 use Mojo::Base qw/Mojolicious::Plugin/;
 
 sub register {
@@ -32,6 +33,9 @@ sub register {
     $app->helper(auth => sub {
             my $c = shift;
             return 1 if $c->session('user');
+            if ($c->Tuba::Auth::check_api_key) {
+                return 1;
+            }
             $c->flash(destination => $c->req->url);
             $c->redirect_to('login');
             return 0;
@@ -44,6 +48,7 @@ sub register {
             my $authz = $c->config->{authz};
             return 1 if $ENV{HARNESS_ACTIVE};
             return 1 if $authz->{$role}{$user}; # Just use the config file.
+            $c->app->log->debug("denied role $role to $user");
             return 0;
         });
     $app->helper(user_can => sub {
