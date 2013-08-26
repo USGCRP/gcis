@@ -13,7 +13,8 @@ use warnings;
 sub has_urls {
     my $s = shift;
     my $c = shift;
-    my $route_name = 'show_'.$s->object_class->meta->table;
+    my $table = $s->object_class->meta->table;
+    my $route_name = 'show_'.$table;
     return unless $c->app->routes->find($route_name);
 
 }
@@ -34,6 +35,7 @@ sub dbgrep {
         next if $col->type =~ /numeric/;
         next if $col->type =~ /int/;
         next if $col->type =~ /serial/;
+        next if $col->type =~ /boolean/;
         push @query, $col->accessor_method_name => { ilike => '%'.$query_string.'%' };
     }
     return unless @query;
