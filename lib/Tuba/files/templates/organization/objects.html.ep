@@ -9,6 +9,7 @@
 
 %= include 'list_formats';
 
+%= include 'pager';
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
     <th>identitier</th>
@@ -43,3 +44,4 @@
     </tr>
 % }
 </table>
+%= include 'pager';

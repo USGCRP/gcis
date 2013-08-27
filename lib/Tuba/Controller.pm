@@ -25,7 +25,8 @@ sub list {
     my $objects = $c->stash('objects');
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier");
+        $objects = $manager_class->get_objects(sort_by => "identifier", page => $c->page);
+        $c->set_pages($manager_class->get_objects_count);
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
@@ -523,6 +524,27 @@ sub render {
         $c->stash($moniker => $obj);
     }
     return $c->SUPER::render(@_);
+}
+
+sub page {
+    my $c = shift;
+    my $page = $c->param('page') || 1;
+    if ($page eq '♥') {
+        $page = $c->_favorite_page;
+    };
+    $page = 1 unless $page && $page =~ /^\d+$/;
+    $c->stash(page => $page);
+    return $page;
+}
+
+sub per_page {
+    return 20;
+}
+
+sub set_pages {
+    my $c = shift;
+    my $count = shift || 1;
+    $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
 }
 
 1;

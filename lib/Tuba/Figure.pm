@@ -15,14 +15,24 @@ sub list {
     if (my $ch = $c->stash('chapter_identifier')) {
         $figures = Figures->get_objects(
             query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
+            page => $c->page,
             sort_by => "number, ordinal, t1.identifier",
             );
+        $c->set_pages(Figures->get_objects_count(
+            query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
+            ));
         $c->title('figures in chapter');
     } else {
-        $figures = Figures->get_objects(with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier",
-       query => [ report => $report_identifier ] );
+        $figures = Figures->get_objects(
+           with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier",
+           query => [ report => $report_identifier ],
+           page => $c->page
+       );
+       $c->set_pages(Figures->get_objects_count(
+           query => [ report => $report_identifier ])
+       );
     }
-
+    
     $c->stash(objects => $figures);
     $c->SUPER::list(@_);
 }

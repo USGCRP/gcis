@@ -13,8 +13,11 @@ sub list {
     my $report = $c->stash('report_identifier');
     $c->stash(objects => Chapters->get_objects(query => [ report => $report ],
              with_objects => ['figure' ],
-             sort_by => 'chapter.number') 
+             sort_by => 'chapter.number',
+             page => $c->page,
+         )
     );
+    $c->set_pages( Chapters->get_objects_count( query => [ report => $report ] ));
     $c->title('Chapters in report '.$report);
     $c->SUPER::list(@_);
 }

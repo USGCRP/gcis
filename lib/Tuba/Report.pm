@@ -60,11 +60,6 @@ sub _favorite_page {
 sub list {
     my $c = shift;
     my $user = $c->user;
-    my $page = $c->param('page') || 1;
-    if ($page eq '♥') {
-        $page = $c->_favorite_page;
-    };
-    $c->stash(page => $page);
     my $objects = Reports->get_objects(
         query => [
             or => [ and => [_public => 't'],
@@ -72,9 +67,18 @@ sub list {
                   ]
         ],
         with_objects => [qw/_report_viewer organization_obj/],
-        page => $page,
+        page => $c->page,
         sort_by => 'identifier',
     );
+    my $count = Reports->get_objects_count(
+        query => [
+            or => [ and => [_public => 't'],
+                    and => [username => $user]
+                  ]
+        ],
+        with_objects => [qw/_report_viewer/],
+    );
+    $c->set_pages($count);
     $c->stash(objects => $objects);
     $c->stash(favorite_ok => 1 );
     $c->SUPER::list(@_);

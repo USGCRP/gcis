@@ -8,16 +8,6 @@ package Tuba::Organization;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
-sub list {
-    my $c = shift;
-    my $objects = Organizations->get_objects(sort_by => 'identifier');
-    my $meta = Organization->meta;
-    $c->respond_to(
-        json => sub { shift->render(json => [ map $_->{org}->as_tree, @$objects ]) }, # TODO
-        html => sub { shift->render(template => 'organization/objects', meta => $meta, objects => $objects ) }
-    );
-}
-
 sub show {
     my $c = shift;
     my $meta = Organization->meta;

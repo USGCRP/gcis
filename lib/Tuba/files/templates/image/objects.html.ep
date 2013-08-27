@@ -8,10 +8,7 @@
 </center>
 
 %= include 'list_formats';
-% if (my $page = stash 'page') {
-%= include 'pager', page => $page;
-% }
-
+%= include 'pager';
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
     <th><%= $meta->primary_key %></th>
@@ -50,6 +47,4 @@
     </tr>
 % }
 </table>
-% if (my $page = stash 'page') {
-%= include 'pager', page => $page;
-% }
+%= include 'pager';
