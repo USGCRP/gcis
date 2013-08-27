@@ -1,6 +1,10 @@
 
 %= hidden_field 'delete_image';
 
+%= link_to 'create_form_image' => begin
+create new image
+%= end
+
 <table class='table table-condensed table-bordered'>
 % for my $image ($object->image_objs) {
 <tr>

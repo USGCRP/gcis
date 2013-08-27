@@ -10,7 +10,7 @@ use File::Temp;
 use YAML::XS qw/DumpFile LoadFile/;
 use Path::Class qw/file dir/;
 use File::Basename qw/basename/;
-
+use Tuba::Log;
 use Tuba::DB::Objects qw/-nicknames/;
 
 =head1 ROUTES
