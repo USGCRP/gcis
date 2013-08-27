@@ -27,3 +27,4 @@
 0280_report_public.sql	e9b865b8688977994dd2bd81a1839aa1
 0290_chapter_number.sql	757d2032c1e31835b1bff74de9086e1f
 0300_file_identifier.sql	d2b6cc134e0c2d6959aac51ead5c89de
+0310_report_editors.sql	08738175ae402194812724814e06e6e2
