@@ -38,6 +38,20 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 
+CREATE TABLE _report_editor (
+    report character varying NOT NULL,
+    username character varying NOT NULL
+);
+
+
+
+CREATE TABLE _report_viewer (
+    report character varying NOT NULL,
+    username character varying NOT NULL
+);
+
+
+
 CREATE TABLE article (
     identifier character varying NOT NULL,
     title character varying,
@@ -176,12 +190,25 @@ COMMENT ON COLUMN figure.identifier IS 'A unique identifier for the figure.';
 
 
 CREATE TABLE file (
-    identifier character varying NOT NULL,
     image character varying NOT NULL,
     file_type character varying,
     dir character varying,
-    file character varying
+    file character varying,
+    identifier integer NOT NULL
 );
+
+
+
+CREATE SEQUENCE file_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+ALTER SEQUENCE file_id_seq OWNED BY file.identifier;
 
 
 
@@ -411,7 +438,8 @@ CREATE TABLE report (
     title character varying,
     url character varying,
     organization character varying,
-    doi character varying
+    doi character varying,
+    _public boolean DEFAULT true
 );
 
 
@@ -451,6 +479,10 @@ ALTER TABLE ONLY dataset_lineage ALTER COLUMN id SET DEFAULT nextval('dataset_li
 
 
 
+ALTER TABLE ONLY file ALTER COLUMN identifier SET DEFAULT nextval('file_id_seq'::regclass);
+
+
+
 ALTER TABLE ONLY keyword ALTER COLUMN id SET DEFAULT nextval('keyword_id_seq'::regclass);
 
 
@@ -472,6 +504,16 @@ ALTER TABLE ONLY publication_ref ALTER COLUMN id SET DEFAULT nextval('publicatio
 
 
 ALTER TABLE ONLY submitter ALTER COLUMN id SET DEFAULT nextval('submitter_id_seq'::regclass);
+
+
+
+ALTER TABLE ONLY _report_editor
+    ADD CONSTRAINT _report_editor_pkey PRIMARY KEY (report, username);
+
+
+
+ALTER TABLE ONLY _report_viewer
+    ADD CONSTRAINT _report_viewer_pkey PRIMARY KEY (report, username);
 
 
 
@@ -626,7 +668,7 @@ ALTER TABLE ONLY keyword
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT uk_number UNIQUE (number);
+    ADD CONSTRAINT uk_number_report UNIQUE (number, report);
 
 
 
@@ -907,6 +949,16 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (((new.identif
 
 
 CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
+ALTER TABLE ONLY _report_editor
+    ADD CONSTRAINT _report_editor_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
+
+
+
+ALTER TABLE ONLY _report_viewer
+    ADD CONSTRAINT _report_viewer_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
 
 
 

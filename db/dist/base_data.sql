@@ -10,6 +10,38 @@ SET client_min_messages = warning;
 
 
 --
+-- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization (identifier, name, url, country) FROM stdin;
+\.
+
+
+--
+-- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY report (identifier, title, url, organization, doi, _public) FROM stdin;
+\.
+
+
+--
+-- Data for Name: _report_editor; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY _report_editor (report, username) FROM stdin;
+\.
+
+
+--
+-- Data for Name: _report_viewer; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY _report_viewer (report, username) FROM stdin;
+\.
+
+
+--
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -22,22 +54,6 @@ COPY journal (identifier, title, print_issn, online_issn, publisher, country, ur
 --
 
 COPY article (identifier, title, doi, year, journal, journal_vol, journal_pages, url, notes) FROM stdin;
-\.
-
-
---
--- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization (identifier, name, url, country) FROM stdin;
-\.
-
-
---
--- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY report (identifier, title, url, organization, doi) FROM stdin;
 \.
 
 
@@ -131,8 +147,15 @@ COPY image (identifier, "position", title, description, attributes, time_start, 
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (identifier, image, file_type, dir, file) FROM stdin;
+COPY file (image, file_type, dir, file, identifier) FROM stdin;
 \.
+
+
+--
+-- Name: file_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
+--
+
+SELECT pg_catalog.setval('file_id_seq', 1, false);
 
 
 --
