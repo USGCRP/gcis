@@ -7,13 +7,13 @@ use feature qw/:all/;
 use strict;
 use warnings;
 
-my $base    = 'http://localhost:3000';
+my $base    = "http://localhost:3000";
 my $keyfile = "$ENV{HOME}/.gcis_api_key";
 my $key     = file($keyfile)->slurp;
 chomp $key;
 my $ua      = Mojo::UserAgent->new();
-my %hdrs = ('Accept' => 'application/json',
-            'Authorization' => "Basic $key");
+my %hdrs = ("Accept" => "application/json",
+            "Authorization" => "Basic $key");
 
 sub get {
     my $path = shift;
@@ -36,7 +36,17 @@ my ($obj,$new);
 
 # Set lat_min for global-slr to -90.
 $obj = get("/report/nca3draft/figure/form/update/global-slr");
-$obj->{lat_min} = '-90';
-$new = post("/report/nca3draft/figure/global-slr" => $obj);
-say "set lat_min to $new->{lat_min}";
+$obj->{lat_min} = "-90";
+post("/report/nca3draft/figure/global-slr" => $obj);
 
+# Set bounding box and url for coastal-flooding-new-jersey
+$obj = get("/report/nca3draft/figure/form/update/coastal-flooding-new-jersey");
+%$obj = (
+    %$obj,
+    lat_min => "40.20",
+    lat_max => "38.87",
+    long_min => "-74.00",
+    long_max => "-74.98",
+    source_citation => "http://coastal.er.usgs.gov/hurricanes/sandy/coastal-change/"
+);
+post("/report/nca3draft/figure/coastal-flooding-new-jersey" => $obj);

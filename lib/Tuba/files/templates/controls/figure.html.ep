@@ -1,0 +1,34 @@
+
+%= hidden_field 'delete_figure';
+
+<table class='table table-condensed table-bordered' style='width:auto;'>
+% for my $figure ($object->figure_objs) {
+<tr>
+<td style='text-align:right;'>
+    <span class='btn squeezevert'><%= obj_link($figure); %></span>
+</td>
+% unless (stash 'no_thumbnails') {
+<td><%== $figure->thumbnail($self) %></td>
+% }
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_figure"].value = '].$figure->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+<tr>
+<td>
+%= text_field 'new_figure', placeholder => "new figure", id => "newfigure", style => "width:100%;";
+</td>
+</tr>
+</table>
+
+%= javascript begin
+$('#newfigure').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'figure' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

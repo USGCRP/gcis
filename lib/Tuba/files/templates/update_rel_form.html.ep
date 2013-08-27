@@ -11,9 +11,7 @@
 
 <div class='tab-content'>
 
-%= include 'relationships', object => $object, meta => $meta;
-
-%= form_for 'update_rel_'.$meta->table => class => 'form-horizontal well' => begin
+%= form_for 'update_rel_'.$meta->table => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
 % if (my $error = (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
@@ -27,7 +25,7 @@
 %= $rel->name
 </label>
 
-<div class="controls">
+<div class="controls" style='border:1px solid #ddd;'>
     % if (my $entry = $controls->{$rel->name}) {
         % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
         %= include 'controls/'.$entry->{template}, object => $object, %{ $entry->{params} || {} };

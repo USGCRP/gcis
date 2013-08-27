@@ -66,10 +66,10 @@ sub update_rel_form {
             image_objs => sub {
                 my ($c,$obj) = @_;
                 +{
-                template => 'image',
-                params => {
-                }
-            } }
+                    template => 'image',
+                    params => { }
+                  }
+              }
         });
     $c->SUPER::update_rel_form(@_);
 }

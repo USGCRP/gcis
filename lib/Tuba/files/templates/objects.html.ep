@@ -51,6 +51,11 @@
                 %= $got
             % }
         </td>
+% if (stash 'show_thumbnails') {
+    <td>
+        %= $o->thumbnail($self);
+    </td>
+% }
 % }
     </tr>
 % }

@@ -128,5 +128,99 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+sub update_rel_form {
+    my $c = shift;
+    my $files = Files->get_objects(query => [ image => undef ]);
+    $c->stash(relationships => [ map Image->meta->relationship($_), qw/figure_objs file/ ]);
+    $c->stash(controls => {
+            figure_objs => sub {
+                my ($c,$obj) = @_;
+                +{ template => 'figure', params => { no_thumbnails => 1 } }
+              },
+            file => sub {
+                my ($c,$obj) = @_;
+                +{ template => 'file', params => { name => 'file', values => $files } }
+              },
+
+        });
+    $c->SUPER::update_rel_form(@_);
+}
+
+sub update_rel {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $object->meta->error_mode('return');
+    $c->stash(object => $object);
+    $c->stash(meta => $object->meta);
+
+    if (my $new = $c->param('new_figure')) {
+        my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
+        $object->add_figure_objs($img);
+        $object->save(audit_user => $c->user) or do {
+            $c->flash(error => $object->error);
+            return $c->update_rel_form(@_);
+        };
+    }
+
+    for my $id ($c->param('delete_figure')) {
+        ImageFigureMaps->delete_objects({ figure => $id, image => $object->identifier });
+        $c->flash(message => 'Saved changes');
+    }
+
+    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
+    -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
+    my $file = $c->req->upload('file_upload');
+    if ($file && $file->size) {
+        my $filename = $file->filename;
+        $filename =~ s/ /_/g;
+        $filename =~ tr[a-zA-Z0-9_.-][]dc;
+        my $suffix;
+        $filename =~ s/(\.[^.]+)$// and $suffix = $1;
+        my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
+        $file->move_to($name) or die $!;
+        my $obj = File->new(file => file($name)->basename, image => $object->identifier);
+        $obj->meta->error_mode('return');
+        $obj->save(audit_user => $c->user) or do {
+            $c->flash(error => $obj->error);
+            return $c->update_rel_form(@_);
+        };
+    }
+
+    if (my $id = $c->param('delete_file')) {
+        my $file = File->new(identifier => $id)->load(speculative => 1) or do {
+            $c->flash(error => "could not delete file $id");
+            return $c->SUPER::update_rel_form(@_);
+        };
+        $file->image eq $object->identifier or do {
+            $c->flash(error => "File $id does not belong to this image.");
+            return $c->update_rel_form(@_);
+        };
+        $file->meta->error_mode('return');
+        my $filename = "$image_dir".'/'.$file->file;
+        -e $filename or die "missing file";
+        $file->delete or do {
+            $c->flash(error => $file->error);
+            return $c->update_rel_form(@_);
+        };
+        unlink $filename or die $!;
+        $c->flash(message => 'Saved changes');
+        return $c->update_rel_form(@_);
+    }
+    #if (my $new = $c->param('new_file')) {
+    #    $object->add_file($file);
+    #    $object->save(audit_user => $c->user) or do {
+    #        $c->flash(error => $object->error);
+    #        return $c->render(template => 'update_rel_form');
+    #    };
+    #}
+
+    #for my $id ($c->param('delete_image')) {
+    #    ImageFigureMaps->delete_objects({ image => $id, figure => $object->identifier });
+    #    $c->flash(message => 'Saved changes');
+    #}
+
+    $c->_redirect_to_view($object);
+}
+
 1;
 
