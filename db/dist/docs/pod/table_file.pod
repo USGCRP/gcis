@@ -9,23 +9,23 @@ file
 
 =head1 FIELDS
 
- identifier (character varying) - 
  image (character varying) - 
  file_type (character varying) - 
  dir (character varying) - 
  file (character varying) - 
+ identifier (serial) - 
 
 
 =head1 SCHEMA
 
-                      Table "gcis_metadata.file"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
-  image      | character varying | not null  | extended | 
-  file_type  | character varying |           | extended | 
-  dir        | character varying |           | extended | 
-  file       | character varying |           | extended | 
+                                          Table "gcis_metadata.file"
+    Column   |       Type        |                     Modifiers                     | Storage  | Description 
+ ------------+-------------------+---------------------------------------------------+----------+-------------
+  image      | character varying | not null                                          | extended | 
+  file_type  | character varying |                                                   | extended | 
+  dir        | character varying |                                                   | extended | 
+  file       | character varying |                                                   | extended | 
+  identifier | integer           | not null default nextval('file_id_seq'::regclass) | plain    | 
  Indexes:
      "file_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:

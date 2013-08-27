@@ -14,23 +14,27 @@ report
  url (character varying) - 
  organization (character varying) - 
  doi (character varying) - 
+ _public (boolean) - 
 
 
 =head1 SCHEMA
 
-                                  Table "gcis_metadata.report"
-     Column    |       Type        | Modifiers | Storage  |             Description             
- --------------+-------------------+-----------+----------+-------------------------------------
-  identifier   | character varying | not null  | extended | A unique identifier for the report.
-  title        | character varying |           | extended | 
-  url          | character varying |           | extended | 
-  organization | character varying |           | extended | 
-  doi          | character varying |           | extended | 
+                                    Table "gcis_metadata.report"
+     Column    |       Type        |  Modifiers   | Storage  |             Description             
+ --------------+-------------------+--------------+----------+-------------------------------------
+  identifier   | character varying | not null     | extended | A unique identifier for the report.
+  title        | character varying |              | extended | 
+  url          | character varying |              | extended | 
+  organization | character varying |              | extended | 
+  doi          | character varying |              | extended | 
+  _public      | boolean           | default true | plain    | 
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
      "report_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
  Referenced by:
+     TABLE "_report_editor" CONSTRAINT "_report_editor_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
+     TABLE "_report_viewer" CONSTRAINT "_report_viewer_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
      TABLE "chapter" CONSTRAINT "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
      TABLE "figure" CONSTRAINT "figure_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
      TABLE "finding" CONSTRAINT "finding_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)

@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.chapter">chapter</a>
+            <a name="gcis-metadata.table.-report-viewer">_report_viewer</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>chapter Structure</caption>
+                <caption>_report_viewer Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -134,49 +134,8 @@
                 
                   
                 
-                </td>
-                <td>identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    PRIMARY KEY
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                <br><br>A unique identifier for the chapter.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>title</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
                   
                   <a href="table_gcis_metadata.report.html#gcis-metadata.table.report">report.identifier</a>
-                  
-                
-                  
-                
                   
                 
                 </td>
@@ -184,10 +143,6 @@
                 <td>character varying</td>
                 <td><i>
                 
-                    
-
-                    
-                
                     PRIMARY KEY
                     
 
@@ -195,8 +150,6 @@
                 
                     
 
-                    
-                       UNIQUE#1
                     
                 
 
@@ -213,31 +166,14 @@
                   
                 
                 </td>
-                <td>number</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE#1
-                    
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>url</td>
+                <td>username</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
                 
 
                 
@@ -256,13 +192,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.figure.html">figure</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
         
 
     <!-- Indexes -->

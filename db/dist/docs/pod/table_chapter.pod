@@ -28,7 +28,7 @@ chapter
   url        | character varying |           | extended | 
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (identifier, report)
-     "uk_number" UNIQUE CONSTRAINT, btree (number)
+     "uk_number_report" UNIQUE CONSTRAINT, btree (number, report)
  Foreign-key constraints:
      "chapter_ibfk_1" FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL
  Referenced by:
