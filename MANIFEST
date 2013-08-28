@@ -63,6 +63,8 @@ db/dist/docs/html/func_gcis_metadata.svals(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.tconvert(text, text).html'
 db/dist/docs/html/func_gcis_metadata.update_publication().html
 db/dist/docs/html/index.html
+db/dist/docs/html/table_gcis_metadata._report_editor.html
+db/dist/docs/html/table_gcis_metadata._report_viewer.html
 db/dist/docs/html/table_gcis_metadata.article.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
 db/dist/docs/html/table_gcis_metadata.contributor.html
@@ -97,6 +99,8 @@ db/dist/docs/html/table_gcis_metadata.publication_type.html
 db/dist/docs/html/table_gcis_metadata.ref_type.html
 db/dist/docs/html/table_gcis_metadata.report.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
+db/dist/docs/pod/table__report_editor.pod
+db/dist/docs/pod/table__report_viewer.pod
 db/dist/docs/pod/table_article.pod
 db/dist/docs/pod/table_chapter.pod
 db/dist/docs/pod/table_contributor.pod
@@ -158,7 +162,16 @@ db/patches/0230_publication_triggers.sql
 db/patches/0240_file_fk.sql
 db/patches/0250_on_update_cascade.sql
 db/patches/0260_chapter_url.sql
+db/patches/0270_report_access.sql
+db/patches/0280_report_public.sql
+db/patches/0290_chapter_number.sql
+db/patches/0300_file_identifier.sql
+db/patches/0310_report_editors.sql
+db/patches/0320_report_viewers.sql
 eg/atrac_upload.html
+eg/compare.pl
+eg/image-meta.pl
+eg/login.pl
 lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -169,8 +182,10 @@ lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
+lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
 lib/Tuba/DB/Mixin/Object/Contributor.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
+lib/Tuba/DB/Mixin/Object/Figure/Manager.pm
 lib/Tuba/DB/Mixin/Object/File.pm
 lib/Tuba/DB/Mixin/Object/Finding.pm
 lib/Tuba/DB/Mixin/Object/Finding/Manager.pm
@@ -180,6 +195,7 @@ lib/Tuba/DB/Mixin/Object/Keyword.pm
 lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
 lib/Tuba/DB/Mixin/Object/Publication.pm
+lib/Tuba/DB/Mixin/Object/Report/Manager.pm
 lib/Tuba/DB/Object.pm
 lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
@@ -195,11 +211,16 @@ lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
+lib/Tuba/files/templates/auth/login_key.html.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
+lib/Tuba/files/templates/auth/login_tabs.html.ep
+lib/Tuba/files/templates/controls/figure.html.ep
+lib/Tuba/files/templates/controls/file.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/create_link.html.ep
+lib/Tuba/files/templates/db_meta.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/examples.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
@@ -220,6 +241,7 @@ lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
+lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.ttl.ep
@@ -229,6 +251,7 @@ lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
+lib/Tuba/files/templates/pager.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
