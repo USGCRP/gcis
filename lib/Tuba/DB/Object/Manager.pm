@@ -19,18 +19,12 @@ sub has_urls {
 
 }
 
-sub dbgrep {
-    my $self = shift;
-    my %a = @_;
-
-    my $query_string = $a{query_string} or return;
-    my $limit = $a{limit} || 10;
-
-    chomp $query_string;
-    $query_string =~ s/^\s+//;
-    $query_string =~ s/\s+$//;
+sub _make_query {
+    my $s = shift;
+    my $query_string = shift;
     my @query;
-    for my $col ($self->object_class->meta->columns) {
+
+    for my $col ($s->object_class->meta->columns) {
         next if $col->type =~ /time/;
         next if $col->type =~ /numeric/;
         next if $col->type =~ /int/;
@@ -38,7 +32,21 @@ sub dbgrep {
         next if $col->type =~ /boolean/;
         push @query, $col->accessor_method_name => { ilike => '%'.$query_string.'%' };
     }
-    return unless @query;
+
+    return @query;
+}
+
+sub dbgrep {
+    my $self = shift;
+    my %a = @_;
+
+    my $limit = $a{limit} || 10;
+    my $query_string = $a{query_string} or return;
+    chomp $query_string;
+    $query_string =~ s/^\s+//;
+    $query_string =~ s/\s+$//;
+
+    my @query = $self->_make_query($query_string) or return;
     my $found = $self->get_objects( query => [ or => \@query ], limit => $limit, );
     return @$found;
 }
