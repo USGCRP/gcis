@@ -16,7 +16,7 @@ sub keyword {
         next if $table eq 'publication';
         my $manager = $all->{$table}->{mng};
         next unless $manager->has_urls($c);
-        push @results, $manager->dbgrep(query_string => $q, limit => 10);
+        push @results, $manager->dbgrep(query_string => $q, user => $c->user, limit => 10);
     }
 
     $c->render(results => \@results);
@@ -37,7 +37,7 @@ sub autocomplete {
         next if $want && $table ne $want;
         logger->info('still looking in '.$table);
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
-        my @got = $manager->dbgrep(query_string => $q, limit => $max);
+        my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
         for (@got) {
             push @results, join ' ', "[".$table."]",
                                       ( map "{".$_."}", $_->pk_values ),
