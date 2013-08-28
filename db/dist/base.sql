@@ -349,7 +349,7 @@ ALTER SEQUENCE person_id_seq OWNED BY person.id;
 CREATE TABLE publication (
     id integer NOT NULL,
     publication_type character varying NOT NULL,
-    fk hstore
+    fk hstore NOT NULL
 );
 
 
