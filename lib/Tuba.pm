@@ -18,7 +18,7 @@ use Date::Parse qw/str2time/;
 use Tuba::Converter;
 use Tuba::Log;
 
-our $VERSION = '0.47';
+our $VERSION = '0.48';
 our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
 
 sub startup {
