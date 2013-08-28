@@ -12,8 +12,7 @@ sub dbgrep {
     my $limit = $a{limit} || 10;
     my $user = $a{user};
 
-    my @query;
-    push @query, ( $_ => { ilike => '%'.$query_string.'%' } ) for qw/identifier title url/;
+    my @query = $self->_make_query($query_string);
 
     my @viewable;
     my @with = ( 'report_obj' );
