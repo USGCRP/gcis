@@ -174,6 +174,7 @@ sub update_rel {
         $c->flash(message => 'Saved changes');
     }
 
+    # TODO remove this, just use files tab.
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
     -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
     my $file = $c->req->upload('file_upload');

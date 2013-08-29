@@ -11,6 +11,7 @@ use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
 use Tuba::Search;
 use Pg::hstore qw/hstore_encode/;
+use Path::Class qw/file/;
 use Tuba::Log;
 use File::Temp;
 
@@ -348,6 +349,84 @@ sub update_rel_form {
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->render(template => "update_rel_form");
+}
+
+=head2 update_files_form
+
+Form for updating files.
+
+=cut
+
+sub update_files_form {
+    my $c = shift;
+    my $object = $c->_this_object;
+    $c->stash(object => $object);
+    $c->stash(meta => $object->meta);
+    $c->render(template => "update_files_form");
+}
+
+=head2 update_files
+
+Update the files.
+
+=cut
+
+sub update_files {
+    my $c = shift;
+    my $object = $c->_this_object;
+    my $pub = $object->get_publication(autocreate => 1);
+
+    my $next = 'update_files_form_'.$object->meta->table;
+
+    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
+    -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
+
+    my $file = $c->req->upload('file_upload');
+    if ($file && $file->size) {
+        my $filename = $file->filename;
+        $filename =~ s/ /_/g;
+        $filename =~ tr[a-zA-Z0-9_.-][]dc;
+        my $suffix;
+        $filename =~ s/(\.[^.]+)$// and $suffix = $1;
+        my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
+        $file->move_to($name) or die $!;
+        my $obj = File->new(file => file($name)->basename);
+        $pub->add_file_objs($obj);
+        $pub->save(audit_user => $c->user);
+        $obj->meta->error_mode('return');
+        $obj->save(audit_user => $c->user) or do {
+            $c->flash(error => $obj->error);
+            return $c->redirect_to($next);
+        };
+    }
+
+    if (my $id = $c->param('delete_file')) {
+        my $obj = File->new(identifier => $id)->load(speculative => 1) or do {
+            $c->flash(error => "could not find file $id");
+            return $c->redirect_to($next);
+        };
+        $obj->meta->error_mode('return');
+        my $filename = "$image_dir".'/'.$obj->file;
+        -e $filename or die "missing file";
+        my $entry = PublicationFileMap->new(
+            publication => $pub->id,
+            file => $obj->identifier
+        );
+        $entry->delete or do {
+            $c->flash(error => $obj->error);
+            return $c->redirect_to($next);
+        };
+        $obj->delete or do {
+            $c->flash(error => $obj->error);
+            return $c->redirect_to($next);
+        };
+        unlink $filename or die $!;
+        $c->flash(message => 'Saved changes');
+        return $c->redirect_to($next);
+    }
+
+
+    return $c->redirect_to('update_files_form_'.$object->meta->table);
 }
 
 =head2 update_rel

@@ -170,8 +170,9 @@ sub foaf_name {
 sub thumbnail {
     my $self = shift;
     my $c = shift;
-    # overload if you can generate a thumbnail image
-    return "";
+    my $pub = $self->get_publication or return "";
+    my $files = $pub->file_objs;
+    return join '', map $_->thumbnail($c, @_), @$files;
 }
 
 sub get_publication {

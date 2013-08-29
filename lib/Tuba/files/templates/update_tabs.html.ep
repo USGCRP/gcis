@@ -28,5 +28,12 @@
 <li><%= link_to 'update_rel_form_'.$table => begin %>relationships<%= end %></li>
 % }
 
+% if ($active eq 'files') {
+<li class='active'><a href='#'>files</a></li>
+% } else {
+<li><%= link_to 'update_files_form_'.$table => begin %>files<%= end %></li>
+% }
+
+
 </ul>
 

@@ -51,11 +51,13 @@
                 %= $got
             % }
         </td>
-% if (stash 'show_thumbnails') {
-    <td>
-        %= $o->thumbnail($self);
-    </td>
 % }
+% if (my $thumb = $o->thumbnail($self)) {
+    <td>
+       %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $o->identifier } => begin
+        <%== $o->thumbnail($self); %>
+       %= end
+    </td>
 % }
     </tr>
 % }
