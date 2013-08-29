@@ -95,5 +95,10 @@ sub upload_file {
     return 1;
 }
 
+sub uri {
+    my $s = shift;
+    my $c = shift;
+    return $c->url_for('show_publication', { publication_identifier => $s->id } );
+}
 1;
 
