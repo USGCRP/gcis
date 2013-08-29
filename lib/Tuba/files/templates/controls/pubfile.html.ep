@@ -1,9 +1,13 @@
 %= hidden_field 'delete_file';
 
-<p>To upload files from the command line, use the following command :</p>
-<pre>
-TODO
-</pre>
+% my ($api_pw,$api_key) = $self->Tuba::Auth::make_api_key;
+
+<p>To upload files from the command line (using an HTTP PUT request):</p>
+<textarea class='span12' readonly rows=1>
+curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$meta->table)->to_abs %>
+</textarea>
+<br>
+<br>
 
 % my $pub = $object->get_publication(autocreate => 1);
 

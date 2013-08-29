@@ -378,28 +378,15 @@ sub update_files {
 
     my $next = 'update_files_form_'.$object->meta->table;
 
-    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
-    -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
-
     my $file = $c->req->upload('file_upload');
     if ($file && $file->size) {
-        my $filename = $file->filename;
-        $filename =~ s/ /_/g;
-        $filename =~ tr[a-zA-Z0-9_.-][]dc;
-        my $suffix;
-        $filename =~ s/(\.[^.]+)$// and $suffix = $1;
-        my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
-        $file->move_to($name) or die $!;
-        my $obj = File->new(file => file($name)->basename);
-        $pub->add_file_objs($obj);
-        $pub->save(audit_user => $c->user);
-        $obj->meta->error_mode('return');
-        $obj->save(audit_user => $c->user) or do {
-            $c->flash(error => $obj->error);
+        $pub->upload_file(c => $c, upload => $file) or do {
+            $c->flash(error => $pub->error);
             return $c->redirect_to($next);
-        };
+        }
     }
 
+    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
     if (my $id = $c->param('delete_file')) {
         my $obj = File->new(identifier => $id)->load(speculative => 1) or do {
             $c->flash(error => "could not find file $id");
@@ -427,6 +414,24 @@ sub update_files {
 
 
     return $c->redirect_to('update_files_form_'.$object->meta->table);
+}
+
+=head2 put_files
+
+PUT files.
+
+=cut
+
+sub put_files {
+    my $c = shift;
+    my $file = Mojo::Upload->new(asset => Mojo::Asset::File->new->add_chunk($c->req->body));
+    $file->filename(time);
+    my $obj = $c->_this_object;
+    my $pub = $obj->get_publication(autocreate => 1);
+    $pub->upload_file(c => $c, upload => $file) or do {
+        return $c->render(status => 500, text => $pub->error);
+    };
+    $c->render(text => "ok");
 }
 
 =head2 update_rel

@@ -206,7 +206,7 @@ sub startup {
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       if ($opts->{wildcard}) {
-        my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|update_files|history/)];
+        my $reserved = q[^(?:form/update/|form/update_prov|form/create|update_rel|update_files|put_files|history/)];
         for my $format (@supported_formats) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
@@ -235,7 +235,8 @@ sub startup {
           $authed->post("*$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
           $authed->post("/rel/*$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
-          $authed->post("/files/*$identifier")       ->to("$name#update_files")->name("update_files_$name");
+          $authed->post("/files/*$identifier")     ->to("$name#update_files")->name("update_files_$name");
+          $authed->put("/files/*$identifier")      ->to("$name#put_files")->name("put_files_$name");
       } else {
           $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/:$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
@@ -246,7 +247,8 @@ sub startup {
           $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
           $authed->post("/prov/:$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
           $authed->post("/rel/:$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
-          $authed->post("/files/:$identifier")       ->to("$name#update_files")->name("update_files_$name");
+          $authed->post("/files/:$identifier")     ->to("$name#update_files")->name("update_files_$name");
+          $authed->put("/files/:$identifier")      ->to("$name#put_files")->name("put_files_$name");
       }
 
       return $select;

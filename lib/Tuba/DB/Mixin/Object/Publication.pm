@@ -2,8 +2,11 @@ package Tuba::DB::Object::Publication;
 # Tuba::DB::Mixin::Object::Publication;
 
 use Pg::hstore qw/hstore_decode/;
+use Tuba::Log;
 
 use strict;
+use File::Temp;
+use Path::Class qw/file/;
 
 sub stringify {
     my $self = shift;
@@ -58,6 +61,38 @@ SQL
         push @parents, { relationship => $row->{relationship}, note => $row->{note}, publication => $class->new(%pub) };
     };
     return @parents;
+}
+
+sub upload_file {
+    my $pub = shift;
+    my %args = @_;
+    my ($c,$upload) = @args{qw/c upload/};
+    my $file = $upload;
+    unless ($file && $file->size) {
+        $pub->error("Missing or empty file.");
+        return;
+    }
+
+    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
+    -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
+
+    my $filename = $file->filename;
+    $filename =~ s/ /_/g;
+    $filename =~ tr[a-zA-Z0-9_.-][]dc;
+    my $suffix;
+    $filename =~ s/(\.[^.]+)$// and $suffix = $1;
+    my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
+    $file->move_to($name) or die $!;
+    my $obj = Tuba::DB::Object::File->new(file => file($name)->basename);
+    $pub->add_file_objs($obj);
+    $pub->save(audit_user => $c->user);
+    $obj->meta->error_mode('return');
+    $obj->save(audit_user => $c->user) or do {
+        $pub->error($obj->error);
+        return 0;
+    };
+
+    return 1;
 }
 
 1;

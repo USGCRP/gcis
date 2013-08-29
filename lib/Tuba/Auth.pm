@@ -221,7 +221,7 @@ sub oauth2callback {
     return $c->_login_ok($user);
 }
 
-sub login_key {
+sub make_api_key {
     my $c = shift;
     my $time = time;
     my $secret = $c->config('auth')->{secret};
@@ -231,10 +231,16 @@ sub login_key {
     my $api_pw = sprintf('%s%x',$hash,$time);
     my $api_key = b(sprintf('%s:%s',$user,$api_pw))->b64_encode->to_string;
     $api_key =~ s/\n//g;
-    $c->stash(api_user => $user);
+    return ($api_pw,$api_key);
+}
+
+sub login_key {
+    my $c = shift;
+    my ($api_pw,$api_key) = $c->make_api_key;
+    $c->stash(api_user => $c->user);
     $c->stash(api_pw => $api_pw);
     $c->stash(api_key => $api_key);
-    logger->debug("api key for ".$c->user." at $time is '$api_key'");
+    logger->debug("api key for ".$c->user." : $api_key");
     $c->render;
 }
 
