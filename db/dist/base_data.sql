@@ -252,6 +252,14 @@ SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 
 
 --
+-- Data for Name: publication_file_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_file_map (publication, file) FROM stdin;
+\.
+
+
+--
 -- Name: publication_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
 --
 

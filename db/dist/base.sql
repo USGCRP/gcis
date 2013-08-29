@@ -190,7 +190,7 @@ COMMENT ON COLUMN figure.identifier IS 'A unique identifier for the figure.';
 
 
 CREATE TABLE file (
-    image character varying NOT NULL,
+    image character varying,
     file_type character varying,
     dir character varying,
     file character varying,
@@ -372,6 +372,13 @@ CREATE SEQUENCE publication_contributor_id_seq
 
 
 ALTER SEQUENCE publication_contributor_id_seq OWNED BY publication_contributor.id;
+
+
+
+CREATE TABLE publication_file_map (
+    publication integer NOT NULL,
+    file integer NOT NULL
+);
 
 
 
@@ -619,6 +626,11 @@ ALTER TABLE ONLY person
 
 ALTER TABLE ONLY publication_contributor
     ADD CONSTRAINT publication_contributor_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY publication_file_map
+    ADD CONSTRAINT publication_file_map_pkey PRIMARY KEY (publication, file);
 
 
 
@@ -1059,6 +1071,16 @@ ALTER TABLE ONLY publication_contributor
 
 ALTER TABLE ONLY publication_contributor
     ADD CONSTRAINT publication_contributor_ibfk_3 FOREIGN KEY (publication_id) REFERENCES publication(id) MATCH FULL;
+
+
+
+ALTER TABLE ONLY publication_file_map
+    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file) REFERENCES file(identifier);
+
+
+
+ALTER TABLE ONLY publication_file_map
+    ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication) REFERENCES publication(id);
 
 
 
