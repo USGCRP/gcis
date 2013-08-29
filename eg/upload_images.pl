@@ -7,11 +7,14 @@ use feature qw/:all/;
 use strict;
 
 my $base = $ARGV[0] || 'http://localhost:3000';
+my $credsfile = '~/.gcis_creds.'.($ARGV[1] || 'local');
+my $page = $ARGV[2] || '1';
+
 my $ua = Mojo::UserAgent->new;
 
-my $json = $ua->get("$base/report.json?page=3")->res->json;
+my $json = $ua->get("$base/report.json?page=$page")->res->json;
 
-my $creds = `cat ~/.gcis_creds`;
+my $creds = `cat $credsfile`;
 chomp $creds;
 
 my $dir;
