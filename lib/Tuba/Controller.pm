@@ -34,6 +34,10 @@ sub list {
     $c->respond_to(
         json => sub {
             my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
             $c->render(json => [ map $_->as_tree, @$objects ]) },
         html => sub {
              my $c = shift;
@@ -529,9 +533,12 @@ sub render {
 sub page {
     my $c = shift;
     my $page = $c->param('page') || 1;
-    if ($page eq '♥') {
-        $page = $c->_favorite_page;
-    };
+    $page = $c->_favorite_page if $page eq '♥';
+    if (my $accept = $c->req->headers->content_range) {
+        if ($accept =~ /^page=(\d+)$/i) {
+            $page = $1;
+        }
+    }
     $page = 1 unless $page && $page =~ /^\d+$/;
     $c->stash(page => $page);
     return $page;
