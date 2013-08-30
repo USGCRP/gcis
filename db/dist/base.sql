@@ -965,12 +965,12 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.iden
 
 
 ALTER TABLE ONLY _report_editor
-    ADD CONSTRAINT _report_editor_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
+    ADD CONSTRAINT _report_editor_report_fkey FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY _report_viewer
-    ADD CONSTRAINT _report_viewer_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
+    ADD CONSTRAINT _report_viewer_report_fkey FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -980,7 +980,7 @@ ALTER TABLE ONLY article
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_ibfk_1 FOREIGN KEY (report) REFERENCES report(identifier) MATCH FULL;
+    ADD CONSTRAINT chapter_ibfk_1 FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1105,7 +1105,7 @@ ALTER TABLE ONLY publication_ref
 
 
 ALTER TABLE ONLY report
-    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
+    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON UPDATE CASCADE;
 
 
 
