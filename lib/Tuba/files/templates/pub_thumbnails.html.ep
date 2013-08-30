@@ -1,0 +1,41 @@
+
+
+
+% if (stash 'simple') {
+    % for my $file ($pub->file_objs) {
+        %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "thumbnail" => begin
+            %= image '/img/'.$file->file, class => 'img-polaroid', style => 'padding:0px;'
+        %= end
+    % }
+% } elsif (stash 'files') {
+<ul class='thumbnails'>
+%   for my $file ($pub->file_objs) {
+    <li class='span3 thumbnail'>
+    %= link_to 'show_file', { file_identifier =>$ file->identifier } => begin
+    %= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;';
+    %= end
+    % my $obj = $pub->to_object($self);
+    <div class='caption centered'>
+    %= obj_link($file)
+    </div>
+    </li>
+% }
+</ul>
+
+% } else {
+<ul class='thumbnails'>
+%   for my $file ($pub->file_objs) {
+    <li class='span3 thumbnail'>
+    %= link_to 'show_file', { file_identifier =>$ file->identifier } => begin
+    %= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;';
+    %= end
+    % my $obj = $pub->to_object($self);
+    <div class='caption centered'>
+    %= link_to  $obj->uri($self) => class => 'btn squeezevert' => begin
+    %= $obj->stringify;
+    %= end
+    </div>
+    </li>
+% }
+</ul>
+% }

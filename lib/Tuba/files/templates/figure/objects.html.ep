@@ -13,7 +13,7 @@ Figures in report <%= stash 'report_identifier' %>
 
 %= include 'list_formats';
 
-% my @cols = qw/identifier numeric chapter_obj image_objs/;
+% my @cols = qw/identifier numeric chapter_obj/;
 
 %= include 'pager';
 
@@ -22,6 +22,7 @@ Figures in report <%= stash 'report_identifier' %>
 % for my $c (@cols) {
     <th><%= $c %></th>
 % }
+    <th>image_objs</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -46,7 +47,10 @@ Figures in report <%= stash 'report_identifier' %>
             % }
         </td>
 % }
-    </tr>
+<td class='row-fluid'>
+%= include 'obj_thumbnails', small => 1, objs => $o->image_objs || [];
+</td>
+</tr>
 % }
 </table>
 

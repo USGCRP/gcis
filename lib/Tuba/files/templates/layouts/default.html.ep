@@ -37,6 +37,17 @@ String.prototype.htmlEscape = function() {
         padding-top:0px;
         padding-bottom:0px;
     }
+    .centered {
+        text-align: center;
+    }
+    .little {
+        font-size:75%;
+        font-stretch: ultracondensed;
+        font-family:monospace;
+    }
+    a.btn {
+        color: #0088cc;
+    }
 </style>
 </head>
     <body>

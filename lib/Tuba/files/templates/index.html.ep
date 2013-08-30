@@ -77,13 +77,17 @@ mailing list<%= end %>.
 % my $first;
 % my $last = $demo_files->[-1];
 % for my $f (@$demo_files) {
-% my $figure = $f->image_obj->figure_objs->[0];
         <div class="item<%= !$first++ ? ' active' : '' %>">
-<a href="<%= url_for('show_figure', { figure_identifier => $figure->identifier, report_identifier => $figure->chapter_obj->report }) %>">
-          <img src='<%= url_for('/img/'.$f->file) %>' alt=""/>
+% my $pub = $f->publication_objs->[0] or next;
+% my $obj = $pub->to_object or next;
+% if ($obj->isa('Tuba::DB::Object::Image')) {
+% $obj = $obj->figure_objs->[0] or next;
+% }
+%= link_to $pub->uri($self) => begin
+          <img src='<%= url_for('/img/'.$f->file) %>' alt="" height="400px" />
+%= end
             <div class="carousel-caption">
-              <h4><%= $figure->identifier %></h4>
-              <p><%= $figure->title %></p>
+              <h4><%= $obj->stringify %></h4>
             </div>
 </a>
         </div>

@@ -4,23 +4,24 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 % my $rels = ( (stash 'relationships') || $meta->relationships );
+
 % for my $rel (@$rels) {
 % my $method = $rel->name;
 % next if $method =~ /^_/;
 <tr>
 <td><%= $method %></td>
-<td>
+<td class='row-fluid'>
 % my $got = $object->$method;
 % if (ref($got) eq 'ARRAY') {
 %    if (my $sorter = $sorters->{$method}) {
 %       @$got = sort $sorter @$got;
 %    }
-%    for (@$got) {
-    <span class='btn squeezevert'><%= obj_link($_); %></span>
-%    }
+% } elsif ($got) {
+%   $got = [ $got ];
 % } else {
-%= obj_link($got);
+%   $got = [];
 % }
+%= include 'obj_thumbnails', objs => $got;
 </td>
 </tr>
 % }

@@ -93,7 +93,7 @@ sub show {
     my $identifier = $c->stash('image_identifier');
     my $meta = Image->meta;
     my $object = Image->new( identifier => $identifier )
-      ->load( speculative => 1, with => [qw/figure_objs file/] )
+      ->load( speculative => 1, with => [qw/figure_objs/] )
       or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);

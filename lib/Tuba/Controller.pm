@@ -385,6 +385,23 @@ sub update_files {
             return $c->redirect_to($next);
         }
     }
+    if (my $file_url = $c->param('file_url')) {
+        my $tx = $c->app->ua->get($file_url);
+        my $res = $tx->success or do {
+            $c->flash(error => "Error getting $file_url : ".$tx->error);
+            return $c->redirect_to($next);
+        };
+        my $content = $res->body;
+
+        my $filename = Mojo::URL->new($file_url)->path->parts->[-1];
+        my $up = Mojo::Upload->new;
+        $up->filename($filename);
+        $up->asset(Mojo::Asset::File->new->add_chunk($content));
+        $pub->upload_file(c => $c, upload => $up) or do {
+            $c->flash(error => $pub->error);
+            return $c->redirect_to($next);
+        }
+    }
 
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
     if (my $id = $c->param('delete_file')) {
@@ -549,7 +566,6 @@ sub index {
     $offset = 0 if $offset < 0;
 
     my $demo_files = Files->get_objects(
-            require_objects => [qw/image_obj.figure_objs.chapter_obj/],
             offset => $offset,
             limit => 50,
         );

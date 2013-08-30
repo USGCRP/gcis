@@ -1,0 +1,29 @@
+% my $i = 0;
+<ul class='thumbnails'>
+%    for my $obj (@$objs) {
+        % my $pub = $obj->get_publication;
+        <li class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
+            <div class='thumbnail centered'>
+                % my $files = $pub ? $pub->file_objs : undef;
+                % if ($files && @$files) {
+                    % for my $file (@$files) {
+                        <%= link_to $obj->uri($self) => begin =%>
+                            <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                        <%= end =%>
+                    % }
+                % }
+                <div class="caption">
+                % my $val = $obj->stringify;
+                % my $short = $obj->stringify(short => 1);
+                %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin
+                <%= $short %>
+                %= end
+                </div>
+            </div>
+        </li>
+% if ( (++$i % 6 == 0) && $i) {
+</ul><ul class='thumbnails'>
+% }
+        % }
+</ul>
+

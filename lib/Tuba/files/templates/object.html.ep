@@ -2,7 +2,7 @@
 % layout 'default';
 
 <center>
-<h2><%= $object->stringify %></h2>
+<h2><%= $object->meta->table %> <%= $object->stringify %></h2>
 </center>
 
 %= include 'history_modal';
@@ -19,9 +19,14 @@
 <%= include 'db_meta'; =%>
 </pre>
 
-<div class='row-fluid' style='text-align:center;'>
-%== $object->thumbnail($self, width => "400", height => "400", style => 'border:1px solid #aaa;');
+% if (my $pub = $object->get_publication) {
+<center>Files</center>
+<div class='row-fluid well'>
+<div class='span12'>
+%= include 'pub_thumbnails', pub => $pub, files => 1;
 </div>
+</div>
+% }
 
 %= include 'prov';
 

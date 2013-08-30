@@ -19,10 +19,6 @@
 <%= include 'db_meta'; =%>
 </pre>
 
-<div class='row-fluid' style='text-align:center;'>
-%== $object->thumbnail($self, width => "600", height => "600", style => 'border:1px solid #aaa;');
-</div>
-
 %= include 'prov';
 
 %= include 'relationships', object => $object, meta => $meta;

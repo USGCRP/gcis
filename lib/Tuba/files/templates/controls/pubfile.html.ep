@@ -24,11 +24,19 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     % }
 % }
 
-<tr>
-<td>
-Upload a file :
-%= file_field 'file_upload';
-</td>
-<td colspan=2></td>
 </table>
+
+<label class="control-label">
+Upload a file
+</label>
+<div class="controls">
+%= file_field 'file_upload';
+</div>
+
+<label class="control-label">
+Retrieve a file from a url
+</label>
+<div class="controls">
+%= text_field 'file_url', class => 'span10', placeholder => 'http://example.com/image.jpg'
+</div>
 

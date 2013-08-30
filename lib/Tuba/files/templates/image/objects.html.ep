@@ -37,13 +37,13 @@
             % }
             </td>
         % }
-        <td>
-        <% for my $f ($o->file) { %>
-        %= link_to 'show_file', { file_identifier => $f->identifier } => begin
-<%= $f->thumbnail($self) %>
-        %= end
-        <% } %>
-        </td>
+    <td class='thumbnails'>
+    <div class='span2'>
+       % if (my $pub = $o->get_publication) {
+       %= include 'pub_thumbnails', pub => $pub, simple => 1;
+       % }
+    </div>
+    </td>
     </tr>
 % }
 </table>
