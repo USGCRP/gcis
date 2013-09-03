@@ -1,6 +1,6 @@
 % layout 'default';
 <center>
-<h2><%= $object->stringify %></h2>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
 </center>
 
 <div class='row-fluid'>
