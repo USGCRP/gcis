@@ -1,7 +1,8 @@
 /* first put into publication */
 
 insert into publication (publication_type, fk)
-select 'image',('identifier'=>f.image)::hstore from file f
+
+select 'image',('identifier=>'||f.image)::hstore from file f
 left join publication p on p.publication_type='image' and (p.fk->'identifier') = f.image
 where f.image is not null
 and p.id is null
