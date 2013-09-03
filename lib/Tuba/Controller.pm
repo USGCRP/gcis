@@ -374,9 +374,13 @@ Update the files.
 sub update_files {
     my $c = shift;
     my $object = $c->_this_object;
-    my $pub = $object->get_publication(autocreate => 1);
-
     my $next = 'update_files_form_'.$object->meta->table;
+
+    my $pub = $object->get_publication(autocreate => 1) or do {
+        $c->flash(error => "Sorry, files uploads have only been implemented for publications.");
+        # TODO
+        return $c->redirect_to($next);
+    };
 
     my $file = $c->req->upload('file_upload');
     if ($file && $file->size) {
@@ -442,7 +446,7 @@ PUT files.
 sub put_files {
     my $c = shift;
     my $file = Mojo::Upload->new(asset => Mojo::Asset::File->new->add_chunk($c->req->body));
-    $file->filename(time);
+    $file->filename($c->stash("filename") ||  'asset');
     my $obj = $c->_this_object;
     my $pub = $obj->get_publication(autocreate => 1);
     $pub->upload_file(c => $c, upload => $file) or do {

@@ -7,6 +7,7 @@ use Tuba::Log;
 use strict;
 use File::Temp;
 use Path::Class qw/file/;
+use Mojo::ByteStream qw/b/;
 
 sub stringify {
     my $self = shift;
@@ -76,14 +77,17 @@ sub upload_file {
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
     -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
 
+    my $md5 = b($file->slurp)->md5_sum;
+    my $md5_dir = join '/', substr($md5,0,2), substr($md5,2,2), substr($md5,4);
+
     my $filename = $file->filename;
     $filename =~ s/ /_/g;
     $filename =~ tr[a-zA-Z0-9_.-][]dc;
-    my $suffix;
-    $filename =~ s/(\.[^.]+)$// and $suffix = $1;
-    my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
-    $file->move_to($name) or die $!;
-    my $obj = Tuba::DB::Object::File->new(file => file($name)->basename);
+    my $name = join '/', $md5_dir, $filename;
+    my $f = file("$image_dir/$name");
+    $f->dir->mkpath;
+    $file->move_to("$f") or die $!;
+    my $obj = Tuba::DB::Object::File->new(file => $name);
     $pub->add_file_objs($obj);
     $pub->save(audit_user => $c->user);
     $obj->meta->error_mode('return');

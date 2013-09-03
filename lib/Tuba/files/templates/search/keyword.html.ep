@@ -7,23 +7,14 @@ Searched for <b><%= param 'q' %></b>.
 % if (@$results==0) {
 No search results.
 % } else  {
-<table class='table table-condensed table-bordered'>
-% for my $obj (@$results) {
-<tr>
-<td><%= $obj->meta->table %></td>
-<td>
-    % if (my $uri = $obj->uri($self)) {
-        <%= link_to $uri => begin %>
-            <%= $obj->stringify(long => 1) %>
-            <span style='float:right;'><%== $obj->thumbnail($self) %></span>
-        <%= end %>
-    % } else {
-        <%= $obj->stringify %>
-        <span style='float:right;'><%== $obj->thumbnail($self) %></span>
+    <table class='table table-condensed table-bordered'>
+    % for my $obj (@$results) {
+    <tr>
+            <td class='span1'><%= $obj->meta->table %></td>
+            <td class='row-fluid span11'>
+            %= include 'obj_thumbnails', objs => [ $obj ];
+            </td>
+    </td>
     % }
-</td>
-</tr>
-% }
-</table>
-
+    </table>
 % }
