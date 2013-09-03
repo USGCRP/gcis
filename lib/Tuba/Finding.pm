@@ -13,12 +13,14 @@ sub list {
     my $objects;
     my $meta = Finding->meta;
     my $report = $c->stash('report_identifier');
+    my $all = $c->param('all');
+    my @page = $all ? () : (page => $c->page);
 
     if (my $ch = $c->stash('chapter_identifier')) {
         $objects = Findings->get_objects(
             query => [chapter => $ch, report => $report],
             with_objects => ['chapter_obj'],
-            page => $c->page,
+            @page,
             sort_by => "ordinal, t1.identifier");
         $c->title("Findings in chapter $ch of $report");
         $c->set_pages(
@@ -26,17 +28,17 @@ sub list {
                 query => [chapter => $ch, report => $report],
                 with_objects => ['chapter_obj'],
             )
-        );
+        ) unless $all;
     } else {
         $objects = Findings->get_objects(
             query => [ report => $report ],
             with_objects => ['chapter_obj'],
             sort_by => "ordinal, t1.identifier",
-            page => $c->page
+            @page,
         );
         $c->set_pages(
             Findings->get_objects_count( query => [ report => $report ] )
-        );
+        ) unless $all;
         $c->title("Findings in report $report");
     }
 

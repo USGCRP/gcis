@@ -11,13 +11,15 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     my $report = $c->stash('report_identifier');
+    my $all = $c->param('all');
+    my @page = $all ? () : (page => $c->page);
     $c->stash(objects => Chapters->get_objects(query => [ report => $report ],
              with_objects => ['figure' ],
              sort_by => 'chapter.number',
-             page => $c->page,
+             @page,
          )
     );
-    $c->set_pages( Chapters->get_objects_count( query => [ report => $report ] ));
+    $c->set_pages( Chapters->get_objects_count( query => [ report => $report ] )) unless $all;
     $c->title('Chapters in report '.$report);
     $c->SUPER::list(@_);
 }

@@ -1,5 +1,7 @@
 
-% unless ($pages==1) {
+% my $page = stash 'page';
+% my $pages = stash 'pages';
+% if ($page && $pages > 1) {
 <center>
 <div class='btn-group' style='margin-bottom:4px;'>
 

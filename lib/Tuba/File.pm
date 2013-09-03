@@ -10,10 +10,9 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    my $page = $c->param('page') || 1;
-    $c->stash(page => $page);
-    $c->stash(objects => Files->get_objects(require_objects => 'image_obj', page => $page));
-    $c->stash(show_thumbnails => 1);
+    $c->stash(objects => Files->get_objects(with_objects => 'publication_objs', page => $c->page));
+    my $count = Files->get_objects_count;
+    $c->set_pages($count);
     $c->SUPER::list(@_);
 }
 
