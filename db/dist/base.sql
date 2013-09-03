@@ -190,10 +190,9 @@ COMMENT ON COLUMN figure.identifier IS 'A unique identifier for the figure.';
 
 
 CREATE TABLE file (
-    image character varying,
     file_type character varying,
     dir character varying,
-    file character varying,
+    file character varying NOT NULL,
     identifier integer NOT NULL
 );
 
@@ -566,6 +565,11 @@ ALTER TABLE ONLY dataset
 
 ALTER TABLE ONLY figure
     ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier, report);
+
+
+
+ALTER TABLE ONLY file
+    ADD CONSTRAINT file_file_key UNIQUE (file);
 
 
 
@@ -975,7 +979,7 @@ ALTER TABLE ONLY _report_viewer
 
 
 ALTER TABLE ONLY article
-    ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL;
+    ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1016,11 +1020,6 @@ ALTER TABLE ONLY figure
 
 ALTER TABLE ONLY figure
     ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
-
-
-
-ALTER TABLE ONLY file
-    ADD CONSTRAINT file_image FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE;
 
 
 
@@ -1075,12 +1074,12 @@ ALTER TABLE ONLY publication_contributor
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file) REFERENCES file(identifier);
+    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication) REFERENCES publication(id);
+    ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

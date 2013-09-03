@@ -136,18 +136,10 @@ COPY figure (identifier, uuid, chapter, title, caption, attributes, time_start, 
 
 
 --
--- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
-\.
-
-
---
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (image, file_type, dir, file, identifier) FROM stdin;
+COPY file (file_type, dir, file, identifier) FROM stdin;
 \.
 
 
@@ -179,6 +171,14 @@ COPY keyword (id, category, topic, term, level1, level2, level3) FROM stdin;
 --
 
 COPY finding_keyword_map (finding, keyword, report) FROM stdin;
+\.
+
+
+--
+-- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
 \.
 
 
