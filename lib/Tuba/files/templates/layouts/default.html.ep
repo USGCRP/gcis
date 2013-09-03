@@ -48,6 +48,10 @@ String.prototype.htmlEscape = function() {
     a.btn {
         color: #0088cc;
     }
+    tr.ctr td {
+        vertical-align:middle;
+        text-align:center;
+    }
 </style>
 </head>
     <body>

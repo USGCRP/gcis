@@ -342,7 +342,7 @@ Form for updating the relationships.
 
 sub update_rel_form {
     my $c = shift;
-    my $object = $c->_this_object;
+    my $object = $c->_this_object or return $c->render_not_found;
     my $controls = $c->stash('controls') || {};
     $c->stash(controls => { $c->_default_rel_controls, %$controls } );
     my $meta = $object->meta;
@@ -359,7 +359,7 @@ Form for updating files.
 
 sub update_files_form {
     my $c = shift;
-    my $object = $c->_this_object;
+    my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     $c->render(template => "update_files_form");
@@ -373,7 +373,7 @@ Update the files.
 
 sub update_files {
     my $c = shift;
-    my $object = $c->_this_object;
+    my $object = $c->_this_object or return $c->render_not_found;
     my $next = 'update_files_form_'.$object->meta->table;
 
     my $pub = $object->get_publication(autocreate => 1) or do {
@@ -390,6 +390,7 @@ sub update_files {
         }
     }
     if (my $file_url = $c->param('file_url')) {
+        $c->app->log->info("Getting $file_url for ".$object->meta->table."  ".(join '/',$object->pk_values));
         my $tx = $c->app->ua->get($file_url);
         my $res = $tx->success or do {
             $c->flash(error => "Error getting $file_url : ".$tx->error);
@@ -424,11 +425,15 @@ sub update_files {
             $c->flash(error => $obj->error);
             return $c->redirect_to($next);
         };
-        $obj->delete or do {
-            $c->flash(error => $obj->error);
-            return $c->redirect_to($next);
-        };
-        unlink $filename or die $!;
+        $obj = File->new(identifier => $obj->identifier)->load;
+        my @others = $obj->publication_objs;
+        unless (@others) {
+            $obj->delete or do {
+                $c->flash(error => $obj->error);
+                return $c->redirect_to($next);
+            };
+            unlink $filename or die $!;
+        }
         $c->flash(message => 'Saved changes');
         return $c->redirect_to($next);
     }

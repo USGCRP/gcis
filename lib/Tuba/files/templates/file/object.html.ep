@@ -2,7 +2,7 @@
 % layout 'default';
 
 <center>
-<h2><%= $object->stringify %></h2>
+<h2>file : <%= $object->stringify %></h2>
 </center>
 
 %= include 'history_modal';

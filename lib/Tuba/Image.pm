@@ -137,18 +137,12 @@ sub list {
 
 sub update_rel_form {
     my $c = shift;
-    my $files = Files->get_objects(query => [ image => undef ]);
-    $c->stash(relationships => [ map Image->meta->relationship($_), qw/figure_objs file/ ]);
+    $c->stash(relationships => [ map Image->meta->relationship($_), qw/figure_objs/ ]);
     $c->stash(controls => {
             figure_objs => sub {
                 my ($c,$obj) = @_;
                 +{ template => 'figure', params => { no_thumbnails => 1 } }
               },
-            file => sub {
-                my ($c,$obj) = @_;
-                +{ template => 'file', params => { name => 'file', values => $files } }
-              },
-
         });
     $c->SUPER::update_rel_form(@_);
 }

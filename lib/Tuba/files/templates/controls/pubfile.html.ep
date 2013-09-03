@@ -9,12 +9,12 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
 <br>
 <br>
 
-<table class='table table-condensed table-bordered' style='width:auto;'>
+<table class='table table-condensed table-bordered'>
 
 % my $pub = $object->get_publication;
 % if ($pub) {
     % for my $file ($pub->file_objs) {
-    <tr class='row-fluid'>
+    <tr class='row-fluid ctr'>
     <td>
         <span class='btn squeezevert'><%= obj_link($file); %></span>
     </td>
@@ -23,7 +23,9 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     <%= image '/img/'.$file->file, class => 'img-polaroid span3' => style => 'padding:0px;' =%>
     %= end
     </td>
-    <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+    <td>
+    <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+    </td>
     </tr>
     % }
 % }
