@@ -227,13 +227,13 @@ sub _default_controls {
 sub _default_rel_controls {
     my $c = shift;
     return (
-    chapter_obj => sub { my ($c,$obj) = @_;
+    chapter => sub { my ($c,$obj) = @_;
                          +{ template => 'select',
                             params => { values => $c->_chaplist($c->stash('report_identifier')),
                                         column => $obj->meta->column('chapter'),
                                         value => $obj->chapter }
                         } },
-    report_obj  => sub { my ($c,$obj) = @_;
+    report  => sub { my ($c,$obj) = @_;
                       +{ template => 'select',
                          params => { values => $c->_rptlist(),
                                      column => $obj->meta->column('report'),

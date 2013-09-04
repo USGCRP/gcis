@@ -27,7 +27,7 @@
 <caption>Fields</caption>
 <tr>
 <td>chapter.ordinal</td>
-<td><%= $object->chapter ? $object->chapter_obj->number : "[no chapter]" %>.<%= $object->ordinal %>
+<td><%= $object->chapter ? $object->chapter->number : "[no chapter]" %>.<%= $object->ordinal %>
 </td>
 </tr>
 

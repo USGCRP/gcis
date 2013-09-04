@@ -19,11 +19,11 @@ function() {
     var res = UrlFetchApp.fetch(url + '.json');
     var txt = res.getContentText();
     var json = JSON.parse(txt);
-    if (!json || !json.image_objs) {
+    if (!json || !json.images) {
         Browser.msgBox('Cannot find any images for figure ' + val);
         return;
     }
-    var first_image = json.image_objs[0].identifier;
+    var first_image = json.images[0].identifier;
     var img_txt = UrlFetchApp.fetch(api_base + '/image/' + first_image + '.json');
     var img_json = JSON.parse(img_txt);
     var file = img_json.file[0].file;
@@ -31,7 +31,7 @@ function() {
      
     var htmlApp = HtmlService
         .createHtmlOutput('<a href="' + url + '">' + json.identifier + '</a>' + img_url + '<hr><p>' + json.caption + '</p>')
-        .setTitle('Figure ' + json.chapter_obj.number + '.' + json.ordinal + ' : ' + json.title)
+        .setTitle('Figure ' + json.chapter.number + '.' + json.ordinal + ' : ' + json.title)
         .setWidth(500)
         .setHeight(500);
     ss.show(htmlApp);

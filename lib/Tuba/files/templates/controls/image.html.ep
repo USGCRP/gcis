@@ -6,7 +6,7 @@ create new image
 %= end
 
 <table class='table table-condensed table-bordered'>
-% for my $image ($object->image_objs) {
+% for my $image ($object->images) {
 <tr>
 <td>
     <span class='btn squeezevert'><%= obj_link($image); %></span>

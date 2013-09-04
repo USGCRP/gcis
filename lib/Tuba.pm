@@ -266,6 +266,7 @@ sub startup {
     $report->resource('finding');
 
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
+    $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
 
     $r->resource(article => { wildcard => 1} );
     $r->resource($_) for qw/journal paper/;

@@ -29,7 +29,7 @@
             <%= $o->name %>
         </td>
         <td>
-            %= join ',', map $_->identifier, $o->organization_type_objs
+            %= join ',', map $_->identifier, $o->organization_types
         </td>
         <td>
             % for my $c (@{ $o->contributor }) {
@@ -37,7 +37,7 @@
             % }
         </td>
         <td>
-            % for my $d (@{ $o->dataset_objs }) {
+            % for my $d (@{ $o->datasets }) {
     <span class='btn squeezevert'><%= obj_link($d) %></span>
             % }
         </td>

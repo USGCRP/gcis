@@ -66,7 +66,7 @@ sub list {
                     and => [username => $user]
                   ]
         ],
-        with_objects => [qw/_report_viewer organization_obj/],
+        with_objects => [qw/_report_viewer organization/],
         page => $c->page,
         sort_by => 'identifier',
     );

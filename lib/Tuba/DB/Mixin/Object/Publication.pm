@@ -104,5 +104,6 @@ sub uri {
     my $c = shift;
     return $c->url_for('show_publication', { publication_identifier => $s->id } );
 }
+
 1;
 

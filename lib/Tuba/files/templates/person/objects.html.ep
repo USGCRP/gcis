@@ -20,7 +20,7 @@
         </td>
         <td>
             % for my $contributor (@{ $o->contributor }) {
-                % if (my $org = $contributor->organization_obj) {
+                % if (my $org = $contributor->organization) {
                 %= obj_link($org);
                 % }
             % }

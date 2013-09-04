@@ -15,10 +15,10 @@ sub dbgrep {
     my @query = $self->_make_query($query_string);
 
     my @viewable;
-    my @with = ( 'report_obj' );
+    my @with = ( 'report' );
     if ($user) {
         @viewable = ( or => [ _public => 't', username => $user ] );
-        push @with, 'report_obj._report_viewer';
+        push @with, 'report._report_viewer';
     } else {
         @viewable = ( _public => 't' );
     }

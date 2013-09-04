@@ -93,7 +93,7 @@ sub show {
     my $identifier = $c->stash('image_identifier');
     my $meta = Image->meta;
     my $object = Image->new( identifier => $identifier )
-      ->load( speculative => 1, with => [qw/figure_objs/] )
+      ->load( speculative => 1, with => [qw/figures/] )
       or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
@@ -116,19 +116,19 @@ sub list {
         args => [ $identifier, $identifier ],
         sql => qq[select i.*
         from image i
-            inner join image_figure_map m on m.image = i.identifier
-            inner join figure f on f.identifier = m.figure
-            inner join chapter c on f.chapter = c.identifier
-        where c.report = ? or f.report = ?
+            inner join image_figure_map m on m.image_identifier = i.identifier
+            inner join figure f on f.identifier = m.figure_identifier
+            inner join chapter c on f.chapter_identifier = c.identifier
+        where c.report_identifier = ? or f.report_identifier = ?
         order by c.number,f.ordinal
         limit $limit offset $offset ]
     );
     $c->dbs->query('select count(1) from
         image i
-            inner join image_figure_map m on m.image = i.identifier
-            inner join figure f on f.identifier = m.figure
-            inner join chapter c on f.chapter = c.identifier
-        where c.report = ? or f.report = ?
+            inner join image_figure_map m on m.image_identifier = i.identifier
+            inner join figure f on f.identifier = m.figure_identifier
+            inner join chapter c on f.chapter_identifier = c.identifier
+        where c.report_identifier = ? or f.report_identifier = ?
         ',$identifier,$identifier)->into(my $count);
     $c->set_pages($count);
     $c->stash(objects => $objects);
@@ -137,9 +137,9 @@ sub list {
 
 sub update_rel_form {
     my $c = shift;
-    $c->stash(relationships => [ map Image->meta->relationship($_), qw/figure_objs/ ]);
+    $c->stash(relationships => [ map Image->meta->relationship($_), qw/figures/ ]);
     $c->stash(controls => {
-            figure_objs => sub {
+            figures => sub {
                 my ($c,$obj) = @_;
                 +{ template => 'figure', params => { no_thumbnails => 1 } }
               },
@@ -156,7 +156,7 @@ sub update_rel {
 
     if (my $new = $c->param('new_figure')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
-        $object->add_figure_objs($img);
+        $object->add_figures($img);
         $object->save(audit_user => $c->user) or do {
             $c->flash(error => $object->error);
             return $c->update_rel_form(@_);

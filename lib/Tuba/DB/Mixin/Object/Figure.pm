@@ -16,14 +16,14 @@ sub uri {
         'show_figure',
         {
             figure_identifier => $s->identifier,
-            report_identifier  => $s->report
+            report_identifier  => $s->report_identifier,
         }
     );
 }
 
 sub numeric {
     my $c = shift;
-    my $chapter = $c->chapter_obj or return "";
+    my $chapter = $c->chapter or return "";
     return join '.', $chapter->number, $c->ordinal;
 }
 
@@ -32,7 +32,7 @@ sub thumbnail {
     my $c = shift;
     #die join '', map $_->name, $s->meta->relationships;
     my %seen;
-    my @files = grep { !$seen{$_->file}++ } map $_->file, $s->image_objs;
+    my @files = grep { !$seen{$_->file}++ } map $_->file, $s->images;
 
     return join '', map $_->thumbnail($c, @_), @files;
 }

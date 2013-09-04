@@ -11,7 +11,7 @@ sub stringify {
 sub uri {
     my $s = shift;
     my $c = shift;
-    return $c->url_for( 'show_finding', { 'finding_identifier' => $s->identifier, report_identifier => $s->report } );
+    return $c->url_for( 'show_finding', { 'finding_identifier' => $s->identifier, report_identifier => $s->report_identifier } );
 }
 
 1;

@@ -10,7 +10,7 @@ sub uri {
         'show_chapter',
         {
             chapter_identifier => $s->identifier,
-            report_identifier  => $s->report_obj->identifier
+            report_identifier  => $s->report->identifier
         }
     );
 }

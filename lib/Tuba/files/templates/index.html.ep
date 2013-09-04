@@ -81,7 +81,7 @@ mailing list<%= end %>.
 % my $pub = $f->publication_objs->[0] or next;
 % my $obj = $pub->to_object or next;
 % if ($obj->isa('Tuba::DB::Object::Image')) {
-% $obj = $obj->figure_objs->[0] or next;
+% $obj = $obj->figures->[0] or next;
 % }
 %= link_to $pub->uri($self) => begin
           <img src='<%= url_for('/img/'.$f->file) %>' alt="" height="400px" />

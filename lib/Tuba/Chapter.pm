@@ -13,13 +13,13 @@ sub list {
     my $report = $c->stash('report_identifier');
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page);
-    $c->stash(objects => Chapters->get_objects(query => [ report => $report ],
+    $c->stash(objects => Chapters->get_objects(query => [ report_identifier => $report ],
              with_objects => ['figure' ],
              sort_by => 'chapter.number',
              @page,
          )
     );
-    $c->set_pages( Chapters->get_objects_count( query => [ report => $report ] )) unless $all;
+    $c->set_pages( Chapters->get_objects_count( query => [ report_identifier => $report ] )) unless $all;
     $c->title('Chapters in report '.$report);
     $c->SUPER::list(@_);
 }
@@ -29,8 +29,8 @@ sub show {
     my $identifier = $c->stash('chapter_identifier');
     my $report = $c->stash('report_identifier');
     my $chapter =
-      Chapter->new( identifier => $identifier, report => $report )
-      ->load( speculative => 1, with => [qw/figure finding report_obj/] )
+      Chapter->new( identifier => $identifier, report_identifier => $report )
+      ->load( speculative => 1, with => [qw/figure finding report/] )
       or return $c->render_not_found;
 
     $c->stash(object => $chapter);

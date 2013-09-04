@@ -19,7 +19,7 @@ function identify_figure() {
   
  var htmlApp = HtmlService
      .createHtmlOutput('<a href="' + url + '">' + json.identifier + '</a>' + img_url + '<hr><p>' + json.caption + '</p>')
-     .setTitle('Figure ' + json.chapter_obj.number + '.' + json.ordinal + ' : ' + json.title)
+     .setTitle('Figure ' + json.chapter.number + '.' + json.ordinal + ' : ' + json.title)
      .setWidth(500)
      .setHeight(500);
  ss.show(htmlApp);

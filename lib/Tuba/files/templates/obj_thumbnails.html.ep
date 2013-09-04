@@ -2,22 +2,32 @@
 <div class='thumbnails' style='margin-left:0px;'>
 %    for my $obj (@$objs) {
         % my $pub = $obj->get_publication;
+        % my $uri = $obj->uri($self);
         <div class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
             <div class='thumbnail centered'>
                 % my $files = $pub ? $pub->file_objs : undef;
                 % if ($files && @$files) {
                     % for my $file (@$files) {
+                        % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
                             <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
                         <%= end =%>
+                        % } else {
+                            <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                        % }
                     % }
                 % }
                 <div class="caption">
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify(short => 1);
-                %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin
-                <%= $short %>
-                %= end
+
+                % if ($uri) {
+                    %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin
+                    <%= $short %>
+                    %= end
+                % } else {
+                    <%= $short %>
+                % }
                 </div>
             </div>
         </div>

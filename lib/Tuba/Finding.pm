@@ -19,20 +19,20 @@ sub list {
     if (my $ch = $c->stash('chapter_identifier')) {
         $objects = Findings->get_objects(
             query => [chapter => $ch, report => $report],
-            with_objects => ['chapter_obj'],
+            with_objects => ['chapter'],
             @page,
             sort_by => "ordinal, t1.identifier");
         $c->title("Findings in report : $report, chapter $ch");
         $c->set_pages(
             Findings->get_objects_count(
                 query => [chapter => $ch, report => $report],
-                with_objects => ['chapter_obj'],
+                with_objects => ['chapter'],
             )
         ) unless $all;
     } else {
         $objects = Findings->get_objects(
             query => [ report => $report ],
-            with_objects => ['chapter_obj'],
+            with_objects => ['chapter'],
             sort_by => "ordinal, t1.identifier",
             @page,
         );

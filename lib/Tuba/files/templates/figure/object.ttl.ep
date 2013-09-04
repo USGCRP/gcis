@@ -22,12 +22,12 @@
         prov:Entity ;
     rdfs:label "<%= $figure->title %>" ;
     gcis:hasCaption "<%= $figure->caption %>" ;
-% if (my $chapter = $figure->chapter_obj) {
+% if (my $chapter = $figure->chapter) {
     gcis:figureNumber "<%= $chapter->number %>.<%= $object->ordinal %>" ;
     gcis:inPublication <<%= $chapter->uri($self)->to_abs %>> ;
 % }
     dct:identifier "<%= $figure->identifier %>" ;
-    dct:isPartOf <<%= $figure->report_obj->uri($self)->to_abs %>> ;
+    dct:isPartOf <<%= $figure->report->uri($self)->to_abs %>> ;
     dct:title "<%= $figure->title %>" ;
     prov:label "<%= $figure->title %>" .
 

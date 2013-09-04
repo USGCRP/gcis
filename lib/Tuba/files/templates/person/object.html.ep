@@ -32,7 +32,7 @@
 <tr> <td>org</td><td>
 <% for my $o ($object->contributor) { %>
 <span class='btn squeezevert'>
-<%= obj_link($o->organization_obj) %>
+<%= obj_link($o->organization) %>
 </span>
 <% } %>
 </td></tr>

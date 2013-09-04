@@ -16,21 +16,21 @@ sub list {
     my @page = $all ? () : (page => $c->page);
     if (my $ch = $c->stash('chapter_identifier')) {
         $figures = Figures->get_objects(
-            query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
+            query => [chapter => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier",
             );
         $c->set_pages(Figures->get_objects_count(
-            query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
+            query => [chapter => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
     } else {
         $figures = Figures->get_objects(
-           with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier",
-           query => [ report => $report_identifier ],
+           with_objects => ['chapter'], sort_by => "number, ordinal, t1.identifier",
+           query => [ report_identifier => $report_identifier ],
            @page,
        );
        $c->set_pages(Figures->get_objects_count(
-           query => [ report => $report_identifier ])
+           query => [ report_identifier => $report_identifier ])
        ) unless $all;
     }
     
@@ -40,11 +40,11 @@ sub list {
 
 sub show {
     my $c = shift;
-    my $report = $c->stash('report_identifier');
+    my $report_identifier = $c->stash('report_identifier');
     my $identifier = $c->stash('figure_identifier');
     my $meta = Figure->meta;
-    my $object = Figure->new(identifier => $identifier, report => $report)
-        ->load(speculative => 1, with => [qw/chapter_obj image_objs/]) or return $c->render_not_found;
+    my $object = Figure->new(identifier => $identifier, report_identifier => $report_identifier)
+        ->load(speculative => 1, with => [qw/chapter images/]) or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->SUPER::show(@_);
@@ -55,7 +55,7 @@ sub redirect_to_identifier {
     my $chapter_number = $c->stash('chapter_number');
     my $figure_number = $c->stash('figure_number');
     my $found = Figures->get_objects(
-            with_objects => ['chapter_obj'],
+            with_objects => ['chapter'],
             query => [
                 'chapter.number' => $chapter_number,
                 'ordinal' => $figure_number,
@@ -72,9 +72,9 @@ sub update_form {
 
 sub update_rel_form {
     my $c = shift;
-    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/image_objs/ ]);
+    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/images/ ]);
     $c->stash(controls => {
-            image_objs => sub {
+            images => sub {
                 my ($c,$obj) = @_;
                 +{
                     template => 'image',
@@ -91,7 +91,7 @@ sub update_rel {
     $object->meta->error_mode('return');
     if (my $new = $c->param('new_image')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
-        $object->add_image_objs($img);
+        $object->add_images($img);
         $object->save(audit_user => $c->user) or do {
             $c->flash(error => $object->error);
             return $c->render(template => 'update_rel_form');
