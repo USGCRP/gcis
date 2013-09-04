@@ -4,7 +4,7 @@
 <center>
 <h2>
     % if (stash('chapter_identifier')) { 
-Figures in chapter : <%= stash 'chapter_identifier' %> in report <%= 'report_identifier' %>
+Figures in report : <%= stash 'report_identifier' %>, chapter : <%= stash 'chapter_identifier' %>
     % } else {
 Figures in report <%= stash 'report_identifier' %>
     % }

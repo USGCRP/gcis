@@ -23,7 +23,6 @@ sub list {
         $c->set_pages(Figures->get_objects_count(
             query => [chapter => $ch, report => $report_identifier], with_objects => ['chapter_obj'],
             )) unless $all;
-        $c->title('figures in chapter');
     } else {
         $figures = Figures->get_objects(
            with_objects => ['chapter_obj'], sort_by => "number, ordinal, t1.identifier",
