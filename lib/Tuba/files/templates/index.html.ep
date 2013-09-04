@@ -78,7 +78,7 @@ mailing list<%= end %>.
 % my $last = $demo_files->[-1];
 % for my $f (@$demo_files) {
         <div class="item<%= !$first++ ? ' active' : '' %>">
-% my $pub = $f->publication_objs->[0] or next;
+% my $pub = $f->publications->[0] or next;
 % my $obj = $pub->to_object or next;
 % if ($obj->isa('Tuba::DB::Object::Image')) {
 % $obj = $obj->figures->[0] or next;

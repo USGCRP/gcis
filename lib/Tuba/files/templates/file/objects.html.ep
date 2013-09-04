@@ -23,7 +23,7 @@
         </td>
         <td class='thumbnails'>
             <div class='span2'>
-               % for my $pub ($o->publication_objs) {
+               % for my $pub ($o->publications) {
                %= include 'pub_thumbnails', pub => $pub;
                % }
             </div>

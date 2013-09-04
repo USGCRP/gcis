@@ -16,4 +16,6 @@ alter table organization_type_map rename column organization to organization_ide
 alter table organization_type_map rename column organization_type to organization_type_identifier;
 alter table contributor rename column organization to organization_identifier;
 alter table report rename column organization to organization_identifier;
+alter table publication_file_map rename column file to file_identifier;
+alter table publication_file_map rename column publication to publication_id;
 

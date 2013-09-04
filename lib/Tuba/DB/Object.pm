@@ -171,7 +171,7 @@ sub thumbnail {
     my $self = shift;
     my $c = shift;
     my $pub = $self->get_publication or return "";
-    my $files = $pub->file_objs;
+    my $files = $pub->files;
     return join '', map $_->thumbnail($c, @_), @$files;
 }
 

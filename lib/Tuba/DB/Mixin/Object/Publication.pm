@@ -88,7 +88,7 @@ sub upload_file {
     $f->dir->mkpath;
     $file->move_to("$f") or die $!;
     my $obj = Tuba::DB::Object::File->new(file => $name);
-    $pub->add_file_objs($obj);
+    $pub->add_files($obj);
     $pub->save(audit_user => $c->user);
     $obj->meta->error_mode('return');
     $obj->save(audit_user => $c->user) or do {

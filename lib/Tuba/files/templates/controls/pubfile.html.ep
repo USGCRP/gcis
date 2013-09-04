@@ -13,7 +13,7 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
 
 % my $pub = $object->get_publication;
 % if ($pub) {
-    % for my $file ($pub->file_objs) {
+    % for my $file ($pub->files) {
     <tr class='row-fluid ctr'>
     <td>
         <span class='btn squeezevert'><%= obj_link($file); %></span>

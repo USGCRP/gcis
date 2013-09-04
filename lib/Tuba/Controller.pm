@@ -426,7 +426,7 @@ sub update_files {
             return $c->redirect_to($next);
         };
         $obj = File->new(identifier => $obj->identifier)->load;
-        my @others = $obj->publication_objs;
+        my @others = $obj->publications;
         unless (@others) {
             $obj->delete or do {
                 $c->flash(error => $obj->error);
