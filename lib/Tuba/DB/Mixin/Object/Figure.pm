@@ -27,14 +27,5 @@ sub numeric {
     return join '.', $chapter->number, $c->ordinal;
 }
 
-sub thumbnail {
-    my $s = shift;
-    my $c = shift;
-    #die join '', map $_->name, $s->meta->relationships;
-    my %seen;
-    my @files = grep { !$seen{$_->file}++ } map $_->file, $s->images;
-
-    return join '', map $_->thumbnail($c, @_), @files;
-}
 1;
 

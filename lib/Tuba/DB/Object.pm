@@ -167,14 +167,6 @@ sub foaf_name {
     return $self->identifier;
 }
 
-sub thumbnail {
-    my $self = shift;
-    my $c = shift;
-    my $pub = $self->get_publication or return "";
-    my $files = $pub->files;
-    return join '', map $_->thumbnail($c, @_), @$files;
-}
-
 sub get_publication {
     my $self = shift;
     my %args = @_;
