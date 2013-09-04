@@ -88,22 +88,23 @@ sub update_rel_form {
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
+    my $next = 'update_rel_form_'.$object->meta->table;
     $object->meta->error_mode('return');
     if (my $new = $c->param('new_image')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_images($img);
         $object->save(audit_user => $c->user) or do {
             $c->flash(error => $object->error);
-            return $c->render(template => 'update_rel_form');
+            return $c->redirect_to($next);
         };
     }
 
     for my $id ($c->param('delete_image')) {
-        ImageFigureMaps->delete_objects({ image => $id, figure => $object->identifier });
+        ImageFigureMaps->delete_objects({ image_identifier => $id, figure_identifier => $object->identifier });
         $c->flash(message => 'Saved changes');
     }
 
-    $c->_redirect_to_view($object);
+    return $c->redirect_to($next);
 }
 
 1;

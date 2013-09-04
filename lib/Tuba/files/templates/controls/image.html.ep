@@ -1,18 +1,14 @@
 
 %= hidden_field 'delete_image';
 
-%= link_to 'create_form_image' => begin
+%= link_to 'create_form_image' => class => 'btn' => begin
 create new image
 %= end
 
 <table class='table table-condensed table-bordered'>
 % for my $image ($object->images) {
 <tr>
-<td>
-    <span class='btn squeezevert'><%= obj_link($image); %></span>
-</td>
-
-<td>
+<td class='row'>
 %= include 'obj_thumbnails', objs => [ $image ];
 </td>
 
@@ -20,7 +16,7 @@ create new image
 </tr>
 % }
 </table>
-%= text_field 'new_image', placeholder => "new image", id => "newimage", class => 'span12';
+%= text_field 'new_image', placeholder => "new image", id => "newimage", class => 'span10';
 
 %= javascript begin
 $('#newimage').typeahead({
