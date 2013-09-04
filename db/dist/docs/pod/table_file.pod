@@ -9,7 +9,6 @@ file
 
 =head1 FIELDS
 
- image (character varying) - 
  file_type (character varying) - 
  dir (character varying) - 
  file (character varying) - 
@@ -21,15 +20,15 @@ file
                                           Table "gcis_metadata.file"
     Column   |       Type        |                     Modifiers                     | Storage  | Description 
  ------------+-------------------+---------------------------------------------------+----------+-------------
-  image      | character varying | not null                                          | extended | 
   file_type  | character varying |                                                   | extended | 
   dir        | character varying |                                                   | extended | 
-  file       | character varying |                                                   | extended | 
+  file       | character varying | not null                                          | extended | 
   identifier | integer           | not null default nextval('file_id_seq'::regclass) | plain    | 
  Indexes:
      "file_pkey" PRIMARY KEY, btree (identifier)
- Foreign-key constraints:
-     "file_image" FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE
+     "file_file_key" UNIQUE CONSTRAINT, btree (file)
+ Referenced by:
+     TABLE "publication_file_map" CONSTRAINT "publication_file_map_file_fkey" FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON file FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON file FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

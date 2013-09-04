@@ -57,7 +57,7 @@ CREATE TABLE article (
     title character varying,
     doi character varying,
     year integer,
-    journal character varying,
+    journal_identifier character varying,
     journal_vol character varying,
     journal_pages character varying,
     url character varying,
@@ -69,7 +69,7 @@ CREATE TABLE article (
 CREATE TABLE chapter (
     identifier character varying NOT NULL,
     title character varying,
-    report character varying NOT NULL,
+    report_identifier character varying NOT NULL,
     number integer,
     url character varying
 );
@@ -84,7 +84,7 @@ CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
     role_type character varying NOT NULL,
-    organization character varying
+    organization_identifier character varying
 );
 
 
@@ -155,8 +155,8 @@ ALTER SEQUENCE dataset_lineage_id_seq OWNED BY dataset_lineage.id;
 
 
 CREATE TABLE dataset_organization_map (
-    dataset character varying NOT NULL,
-    organization character varying NOT NULL
+    dataset_identifier character varying NOT NULL,
+    organization_identifier character varying NOT NULL
 );
 
 
@@ -164,7 +164,7 @@ CREATE TABLE dataset_organization_map (
 CREATE TABLE figure (
     identifier character varying NOT NULL,
     uuid character varying,
-    chapter character varying,
+    chapter_identifier character varying,
     title character varying,
     caption character varying,
     attributes character varying,
@@ -180,7 +180,7 @@ CREATE TABLE figure (
     create_dt timestamp(3) without time zone,
     source_citation character varying,
     ordinal integer,
-    report character varying NOT NULL
+    report_identifier character varying NOT NULL
 );
 
 
@@ -213,18 +213,18 @@ ALTER SEQUENCE file_id_seq OWNED BY file.identifier;
 
 CREATE TABLE finding (
     identifier character varying NOT NULL,
-    chapter character varying,
+    chapter_identifier character varying,
     statement character varying,
     ordinal integer,
-    report character varying NOT NULL
+    report_identifier character varying NOT NULL
 );
 
 
 
 CREATE TABLE finding_keyword_map (
-    finding character varying NOT NULL,
-    keyword integer NOT NULL,
-    report character varying NOT NULL
+    finding_identifier character varying NOT NULL,
+    keyword_id integer NOT NULL,
+    report_identifier character varying NOT NULL
 );
 
 
@@ -254,9 +254,9 @@ COMMENT ON COLUMN image.identifier IS 'A unique identifier for the image.';
 
 
 CREATE TABLE image_figure_map (
-    image character varying NOT NULL,
-    figure character varying NOT NULL,
-    report character varying NOT NULL
+    image_identifier character varying NOT NULL,
+    figure_identifier character varying NOT NULL,
+    report_identifier character varying NOT NULL
 );
 
 
@@ -315,8 +315,8 @@ CREATE TABLE organization_type (
 
 
 CREATE TABLE organization_type_map (
-    organization character varying NOT NULL,
-    organization_type character varying NOT NULL
+    organization_identifier character varying NOT NULL,
+    organization_type_identifier character varying NOT NULL
 );
 
 
@@ -375,8 +375,8 @@ ALTER SEQUENCE publication_contributor_id_seq OWNED BY publication_contributor.i
 
 
 CREATE TABLE publication_file_map (
-    publication integer NOT NULL,
-    file integer NOT NULL
+    publication_id integer NOT NULL,
+    file_identifier integer NOT NULL
 );
 
 
@@ -443,7 +443,7 @@ CREATE TABLE report (
     identifier character varying NOT NULL,
     title character varying,
     url character varying,
-    organization character varying,
+    organization_identifier character varying,
     doi character varying,
     _public boolean DEFAULT true
 );
@@ -534,7 +534,7 @@ ALTER TABLE ONLY article
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier, report);
+    ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier, report_identifier);
 
 
 
@@ -554,7 +554,7 @@ ALTER TABLE ONLY dataset_lineage
 
 
 ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_pkey PRIMARY KEY (dataset, organization);
+    ADD CONSTRAINT dataset_organization_pkey PRIMARY KEY (dataset_identifier, organization_identifier);
 
 
 
@@ -564,7 +564,7 @@ ALTER TABLE ONLY dataset
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier, report);
+    ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier, report_identifier);
 
 
 
@@ -579,17 +579,17 @@ ALTER TABLE ONLY file
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding, keyword, report);
+    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding_identifier, keyword_id, report_identifier);
 
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier, report);
+    ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier, report_identifier);
 
 
 
 ALTER TABLE ONLY image_figure_map
-    ADD CONSTRAINT image_figure_map_pkey PRIMARY KEY (image, figure, report);
+    ADD CONSTRAINT image_figure_map_pkey PRIMARY KEY (image_identifier, figure_identifier, report_identifier);
 
 
 
@@ -614,7 +614,7 @@ ALTER TABLE ONLY organization
 
 
 ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_pkey PRIMARY KEY (organization, organization_type);
+    ADD CONSTRAINT organization_type_map_pkey PRIMARY KEY (organization_identifier, organization_type_identifier);
 
 
 
@@ -634,7 +634,7 @@ ALTER TABLE ONLY publication_contributor
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_pkey PRIMARY KEY (publication, file);
+    ADD CONSTRAINT publication_file_map_pkey PRIMARY KEY (publication_id, file_identifier);
 
 
 
@@ -684,7 +684,7 @@ ALTER TABLE ONLY keyword
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT uk_number_report UNIQUE (number, report);
+    ADD CONSTRAINT uk_number_report UNIQUE (number, report_identifier);
 
 
 
@@ -948,11 +948,11 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON report FOR EACH ROW WHEN (((new.identi
 
 
 
-CREATE TRIGGER updatepub BEFORE UPDATE ON chapter FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+CREATE TRIGGER updatepub BEFORE UPDATE ON chapter FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
 
 
 
-CREATE TRIGGER updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+CREATE TRIGGER updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
 
 
 
@@ -964,7 +964,7 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (((new.identif
 
 
 
-CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report)::text <> (old.report)::text))) EXECUTE PROCEDURE update_publication();
+CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
 
 
 
@@ -979,12 +979,12 @@ ALTER TABLE ONLY _report_viewer
 
 
 ALTER TABLE ONLY article
-    ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT article_ibfk_1 FOREIGN KEY (journal_identifier) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY chapter
-    ADD CONSTRAINT chapter_ibfk_1 FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT chapter_ibfk_1 FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -999,67 +999,67 @@ ALTER TABLE ONLY contributor
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier);
+    ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier);
 
 
 
 ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset) REFERENCES dataset(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report);
+    ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
 
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
+    ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
 
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_chapter_report FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report);
+    ADD CONSTRAINT finding_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
 
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE;
+    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE;
+    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword_id) REFERENCES keyword(id) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_report_fkey FOREIGN KEY (report) REFERENCES report(identifier);
+    ADD CONSTRAINT finding_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
 
 
 
 ALTER TABLE ONLY image_figure_map
-    ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure_identifier, report_identifier) REFERENCES figure(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY image_figure_map
-    ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image_identifier) REFERENCES image(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT organization_type_map_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_organization_type_fkey FOREIGN KEY (organization_type) REFERENCES organization_type(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT organization_type_map_organization_type_fkey FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier) ON DELETE CASCADE;
 
 
 
@@ -1074,12 +1074,12 @@ ALTER TABLE ONLY publication_contributor
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1104,7 +1104,7 @@ ALTER TABLE ONLY publication_ref
 
 
 ALTER TABLE ONLY report
-    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization) REFERENCES organization(identifier) ON UPDATE CASCADE;
+    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE;
 
 
 

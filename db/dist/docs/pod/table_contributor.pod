@@ -12,24 +12,24 @@ contributor
  id (serial) - 
  person_id (integer) - 
  role_type (character varying) - 
- organization (character varying) - 
+ organization_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-                                           Table "gcis_metadata.contributor"
-     Column    |       Type        |                        Modifiers                         | Storage  | Description 
- --------------+-------------------+----------------------------------------------------------+----------+-------------
-  id           | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    | 
-  person_id    | integer           |                                                          | plain    | 
-  role_type    | character varying | not null                                                 | extended | 
-  organization | character varying |                                                          | extended | 
+                                                 Table "gcis_metadata.contributor"
+          Column          |       Type        |                        Modifiers                         | Storage  | Description 
+ -------------------------+-------------------+----------------------------------------------------------+----------+-------------
+  id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    | 
+  person_id               | integer           |                                                          | plain    | 
+  role_type               | character varying | not null                                                 | extended | 
+  organization_identifier | character varying |                                                          | extended | 
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:
      "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL
      "contributor_ibfk_3" FOREIGN KEY (role_type) REFERENCES contributor_role_type(identifier) MATCH FULL
-     "contributor_organization_fkey" FOREIGN KEY (organization) REFERENCES organization(identifier)
+     "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier)
  Referenced by:
      TABLE "publication_contributor" CONSTRAINT "publication_contributor_ibfk_2" FOREIGN KEY (contributor_id) REFERENCES contributor(id) MATCH FULL
      TABLE "submitter" CONSTRAINT "submitter_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id)

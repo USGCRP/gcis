@@ -9,24 +9,24 @@ finding_keyword_map
 
 =head1 FIELDS
 
- finding (character varying) - 
- keyword (integer) - 
- report (character varying) - 
+ finding_identifier (character varying) - 
+ keyword_id (integer) - 
+ report_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-             Table "gcis_metadata.finding_keyword_map"
-  Column  |       Type        | Modifiers | Storage  | Description 
- ---------+-------------------+-----------+----------+-------------
-  finding | character varying | not null  | extended | 
-  keyword | integer           | not null  | plain    | 
-  report  | character varying | not null  | extended | 
+                   Table "gcis_metadata.finding_keyword_map"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  finding_identifier | character varying | not null  | extended | 
+  keyword_id         | integer           | not null  | plain    | 
+  report_identifier  | character varying | not null  | extended | 
  Indexes:
-     "finding_keyword_map_pkey" PRIMARY KEY, btree (finding, keyword, report)
+     "finding_keyword_map_pkey" PRIMARY KEY, btree (finding_identifier, keyword_id, report_identifier)
  Foreign-key constraints:
-     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE
-     "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword) REFERENCES keyword(id) ON DELETE CASCADE
+     "finding_keyword_map_finding_fkey" FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE
+     "finding_keyword_map_keyword_fkey" FOREIGN KEY (keyword_id) REFERENCES keyword(id) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding_keyword_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON finding_keyword_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

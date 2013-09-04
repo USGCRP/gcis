@@ -10,34 +10,34 @@ finding
 =head1 FIELDS
 
  identifier (character varying) - 
- chapter (character varying) - 
+ chapter_identifier (character varying) - 
  statement (character varying) - 
  ordinal (integer) - 
- report (character varying) - 
+ report_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-                     Table "gcis_metadata.finding"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
-  chapter    | character varying |           | extended | 
-  statement  | character varying |           | extended | 
-  ordinal    | integer           |           | plain    | 
-  report     | character varying | not null  | extended | 
+                         Table "gcis_metadata.finding"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  identifier         | character varying | not null  | extended | 
+  chapter_identifier | character varying |           | extended | 
+  statement          | character varying |           | extended | 
+  ordinal            | integer           |           | plain    | 
+  report_identifier  | character varying | not null  | extended | 
  Indexes:
-     "finding_pkey" PRIMARY KEY, btree (identifier, report)
+     "finding_pkey" PRIMARY KEY, btree (identifier, report_identifier)
  Foreign-key constraints:
-     "finding_chapter_report" FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report)
-     "finding_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
+     "finding_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
+     "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier)
  Referenced by:
-     TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_finding_fkey" FOREIGN KEY (finding, report) REFERENCES finding(identifier, report) ON DELETE CASCADE
+     TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_finding_fkey" FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE delete_publication()
-     updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report::text <> old.report::text) EXECUTE PROCEDURE update_publication()
+     updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
  Has OIDs: no
  
 

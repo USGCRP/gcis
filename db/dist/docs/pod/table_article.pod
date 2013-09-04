@@ -13,7 +13,7 @@ article
  title (character varying) - 
  doi (character varying) - 
  year (integer) - 
- journal (character varying) - 
+ journal_identifier (character varying) - 
  journal_vol (character varying) - 
  journal_pages (character varying) - 
  url (character varying) - 
@@ -22,23 +22,23 @@ article
 
 =head1 SCHEMA
 
-                      Table "gcis_metadata.article"
-     Column     |       Type        | Modifiers | Storage  | Description 
- ---------------+-------------------+-----------+----------+-------------
-  identifier    | character varying | not null  | extended | 
-  title         | character varying |           | extended | 
-  doi           | character varying |           | extended | 
-  year          | integer           |           | plain    | 
-  journal       | character varying |           | extended | 
-  journal_vol   | character varying |           | extended | 
-  journal_pages | character varying |           | extended | 
-  url           | character varying |           | extended | 
-  notes         | character varying |           | extended | 
+                         Table "gcis_metadata.article"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  identifier         | character varying | not null  | extended | 
+  title              | character varying |           | extended | 
+  doi                | character varying |           | extended | 
+  year               | integer           |           | plain    | 
+  journal_identifier | character varying |           | extended | 
+  journal_vol        | character varying |           | extended | 
+  journal_pages      | character varying |           | extended | 
+  url                | character varying |           | extended | 
+  notes              | character varying |           | extended | 
  Indexes:
      "article_pkey" PRIMARY KEY, btree (identifier)
      "article_doi_key" UNIQUE CONSTRAINT, btree (doi)
  Foreign-key constraints:
-     "article_ibfk_1" FOREIGN KEY (journal) REFERENCES journal(identifier) MATCH FULL
+     "article_ibfk_1" FOREIGN KEY (journal_identifier) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON article FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

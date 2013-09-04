@@ -23,7 +23,7 @@ _report_editor
  Indexes:
      "_report_editor_pkey" PRIMARY KEY, btree (report, username)
  Foreign-key constraints:
-     "_report_editor_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
+     "_report_editor_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Has OIDs: no
  
 

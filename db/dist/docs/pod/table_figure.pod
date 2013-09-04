@@ -11,7 +11,7 @@ figure
 
  identifier (character varying) - A unique identifier for the figure.
  uuid (character varying) - 
- chapter (character varying) - 
+ chapter_identifier (character varying) - 
  title (character varying) - 
  caption (character varying) - 
  attributes (character varying) - 
@@ -27,45 +27,45 @@ figure
  create_dt (timestamp(3) without time zone) - 
  source_citation (character varying) - 
  ordinal (integer) - 
- report (character varying) - 
+ report_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-                                          Table "gcis_metadata.figure"
-      Column      |              Type              | Modifiers | Storage  |             Description             
- -----------------+--------------------------------+-----------+----------+-------------------------------------
-  identifier      | character varying              | not null  | extended | A unique identifier for the figure.
-  uuid            | character varying              |           | extended | 
-  chapter         | character varying              |           | extended | 
-  title           | character varying              |           | extended | 
-  caption         | character varying              |           | extended | 
-  attributes      | character varying              |           | extended | 
-  time_start      | timestamp(3) without time zone |           | plain    | 
-  time_end        | timestamp(3) without time zone |           | plain    | 
-  lat_max         | character varying              |           | extended | 
-  lat_min         | character varying              |           | extended | 
-  lon_max         | character varying              |           | extended | 
-  lon_min         | character varying              |           | extended | 
-  keywords        | character varying              |           | extended | 
-  usage_limits    | character varying              |           | extended | 
-  submission_dt   | timestamp(3) without time zone |           | plain    | 
-  create_dt       | timestamp(3) without time zone |           | plain    | 
-  source_citation | character varying              |           | extended | 
-  ordinal         | integer                        |           | plain    | 
-  report          | character varying              | not null  | extended | 
+                                            Table "gcis_metadata.figure"
+        Column       |              Type              | Modifiers | Storage  |             Description             
+ --------------------+--------------------------------+-----------+----------+-------------------------------------
+  identifier         | character varying              | not null  | extended | A unique identifier for the figure.
+  uuid               | character varying              |           | extended | 
+  chapter_identifier | character varying              |           | extended | 
+  title              | character varying              |           | extended | 
+  caption            | character varying              |           | extended | 
+  attributes         | character varying              |           | extended | 
+  time_start         | timestamp(3) without time zone |           | plain    | 
+  time_end           | timestamp(3) without time zone |           | plain    | 
+  lat_max            | character varying              |           | extended | 
+  lat_min            | character varying              |           | extended | 
+  lon_max            | character varying              |           | extended | 
+  lon_min            | character varying              |           | extended | 
+  keywords           | character varying              |           | extended | 
+  usage_limits       | character varying              |           | extended | 
+  submission_dt      | timestamp(3) without time zone |           | plain    | 
+  create_dt          | timestamp(3) without time zone |           | plain    | 
+  source_citation    | character varying              |           | extended | 
+  ordinal            | integer                        |           | plain    | 
+  report_identifier  | character varying              | not null  | extended | 
  Indexes:
-     "figure_pkey" PRIMARY KEY, btree (identifier, report)
+     "figure_pkey" PRIMARY KEY, btree (identifier, report_identifier)
  Foreign-key constraints:
-     "figure_chapter_report" FOREIGN KEY (chapter, report) REFERENCES chapter(identifier, report)
-     "figure_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier)
+     "figure_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
+     "figure_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier)
  Referenced by:
-     TABLE "image_figure_map" CONSTRAINT "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "image_figure_map" CONSTRAINT "image_figure_map_figure_fkey" FOREIGN KEY (figure_identifier, report_identifier) REFERENCES figure(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON figure FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON figure FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON figure FOR EACH ROW EXECUTE PROCEDURE delete_publication()
-     updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report::text <> old.report::text) EXECUTE PROCEDURE update_publication()
+     updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
  Has OIDs: no
  
 

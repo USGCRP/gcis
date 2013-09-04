@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.file">file</a>
+            <a name="gcis-metadata.table.publication-file-map">publication_file_map</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>file Structure</caption>
+                <caption>publication_file_map Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -132,10 +132,25 @@
             <tr class="tr0">
                 <td>
                 
+                  
+                
+                  
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
+                  
+                
                 </td>
-                <td>file_type</td>
-                <td>character varying</td>
+                <td>publication_id</td>
+                <td>integer</td>
                 <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+                    
+
+                    
                 
 
                 
@@ -148,52 +163,20 @@
             <tr class="tr1">
                 <td>
                 
-                </td>
-                <td>dir</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
+                  
+                  <a href="table_gcis_metadata.file.html#gcis-metadata.table.file">file.identifier</a>
+                  
                 
                   
                 
                 </td>
-                <td>file</td>
-                <td>character varying</td>
+                <td>file_identifier</td>
+                <td>integer</td>
                 <td><i>
                 
                     
 
                     
-                       UNIQUE
-                    
-                
-
-                NOT NULL
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                
-                </td>
-                <td>identifier</td>
-                <td>serial</td>
-                <td><i>
                 
                     PRIMARY KEY
                     
@@ -217,11 +200,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
-        
         
 
     <!-- Indexes -->

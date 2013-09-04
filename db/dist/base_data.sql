@@ -21,7 +21,7 @@ COPY organization (identifier, name, url, country) FROM stdin;
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, organization, doi, _public) FROM stdin;
+COPY report (identifier, title, url, organization_identifier, doi, _public) FROM stdin;
 \.
 
 
@@ -53,7 +53,7 @@ COPY journal (identifier, title, print_issn, online_issn, publisher, country, ur
 -- Data for Name: article; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY article (identifier, title, doi, year, journal, journal_vol, journal_pages, url, notes) FROM stdin;
+COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes) FROM stdin;
 \.
 
 
@@ -61,7 +61,7 @@ COPY article (identifier, title, doi, year, journal, journal_vol, journal_pages,
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report, number, url) FROM stdin;
+COPY chapter (identifier, title, report_identifier, number, url) FROM stdin;
 \.
 
 
@@ -85,7 +85,7 @@ COPY person (id, name, address, phone, email, url) FROM stdin;
 -- Data for Name: contributor; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY contributor (id, person_id, role_type, organization) FROM stdin;
+COPY contributor (id, person_id, role_type, organization_identifier) FROM stdin;
 \.
 
 
@@ -123,7 +123,7 @@ SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
 -- Data for Name: dataset_organization_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset_organization_map (dataset, organization) FROM stdin;
+COPY dataset_organization_map (dataset_identifier, organization_identifier) FROM stdin;
 \.
 
 
@@ -131,7 +131,7 @@ COPY dataset_organization_map (dataset, organization) FROM stdin;
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, uuid, chapter, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal, report) FROM stdin;
+COPY figure (identifier, uuid, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
 \.
 
 
@@ -154,7 +154,7 @@ SELECT pg_catalog.setval('file_id_seq', 1, false);
 -- Data for Name: finding; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding (identifier, chapter, statement, ordinal, report) FROM stdin;
+COPY finding (identifier, chapter_identifier, statement, ordinal, report_identifier) FROM stdin;
 \.
 
 
@@ -170,7 +170,7 @@ COPY keyword (id, category, topic, term, level1, level2, level3) FROM stdin;
 -- Data for Name: finding_keyword_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding_keyword_map (finding, keyword, report) FROM stdin;
+COPY finding_keyword_map (finding_identifier, keyword_id, report_identifier) FROM stdin;
 \.
 
 
@@ -186,7 +186,7 @@ COPY image (identifier, "position", title, description, attributes, time_start, 
 -- Data for Name: image_figure_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image_figure_map (image, figure, report) FROM stdin;
+COPY image_figure_map (image_identifier, figure_identifier, report_identifier) FROM stdin;
 \.
 
 
@@ -209,7 +209,7 @@ COPY organization_type (identifier) FROM stdin;
 -- Data for Name: organization_type_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY organization_type_map (organization, organization_type) FROM stdin;
+COPY organization_type_map (organization_identifier, organization_type_identifier) FROM stdin;
 \.
 
 
@@ -255,7 +255,7 @@ SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 -- Data for Name: publication_file_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_file_map (publication, file) FROM stdin;
+COPY publication_file_map (publication_id, file_identifier) FROM stdin;
 \.
 
 

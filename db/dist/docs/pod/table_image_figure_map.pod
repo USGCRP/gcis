@@ -9,24 +9,24 @@ image_figure_map
 
 =head1 FIELDS
 
- image (character varying) - 
- figure (character varying) - 
- report (character varying) - 
+ image_identifier (character varying) - 
+ figure_identifier (character varying) - 
+ report_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-              Table "gcis_metadata.image_figure_map"
-  Column |       Type        | Modifiers | Storage  | Description 
- --------+-------------------+-----------+----------+-------------
-  image  | character varying | not null  | extended | 
-  figure | character varying | not null  | extended | 
-  report | character varying | not null  | extended | 
+                    Table "gcis_metadata.image_figure_map"
+       Column       |       Type        | Modifiers | Storage  | Description 
+ -------------------+-------------------+-----------+----------+-------------
+  image_identifier  | character varying | not null  | extended | 
+  figure_identifier | character varying | not null  | extended | 
+  report_identifier | character varying | not null  | extended | 
  Indexes:
-     "image_figure_map_pkey" PRIMARY KEY, btree (image, figure, report)
+     "image_figure_map_pkey" PRIMARY KEY, btree (image_identifier, figure_identifier, report_identifier)
  Foreign-key constraints:
-     "image_figure_map_figure_fkey" FOREIGN KEY (figure, report) REFERENCES figure(identifier, report) ON UPDATE CASCADE ON DELETE CASCADE
-     "image_figure_map_image_fkey" FOREIGN KEY (image) REFERENCES image(identifier) ON DELETE CASCADE
+     "image_figure_map_figure_fkey" FOREIGN KEY (figure_identifier, report_identifier) REFERENCES figure(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "image_figure_map_image_fkey" FOREIGN KEY (image_identifier) REFERENCES image(identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image_figure_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON image_figure_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

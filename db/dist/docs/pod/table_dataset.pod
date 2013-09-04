@@ -57,7 +57,7 @@ dataset
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
-     TABLE "dataset_organization_map" CONSTRAINT "dataset_organization_ibfk_1" FOREIGN KEY (dataset) REFERENCES dataset(identifier) ON DELETE CASCADE
+     TABLE "dataset_organization_map" CONSTRAINT "dataset_organization_ibfk_1" FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON dataset FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

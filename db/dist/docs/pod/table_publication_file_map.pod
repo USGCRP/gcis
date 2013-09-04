@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+publication_file_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ publication_id (integer) - 
+ file_identifier (integer) - 
+
+
+=head1 SCHEMA
+
+           Table "gcis_metadata.publication_file_map"
+      Column      |  Type   | Modifiers | Storage | Description 
+ -----------------+---------+-----------+---------+-------------
+  publication_id  | integer | not null  | plain   | 
+  file_identifier | integer | not null  | plain   | 
+ Indexes:
+     "publication_file_map_pkey" PRIMARY KEY, btree (publication_id, file_identifier)
+ Foreign-key constraints:
+     "publication_file_map_file_fkey" FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "publication_file_map_publication_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

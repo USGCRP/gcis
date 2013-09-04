@@ -21,7 +21,7 @@ publication
  ------------------+-------------------+----------------------------------------------------------+----------+-------------
   id               | integer           | not null default nextval('publication_id_seq'::regclass) | plain    | 
   publication_type | character varying | not null                                                 | extended | 
-  fk               | hstore            |                                                          | extended | 
+  fk               | hstore            | not null                                                 | extended | 
  Indexes:
      "publication_pkey" PRIMARY KEY, btree (id)
      "publication_type_fk" UNIQUE CONSTRAINT, btree (publication_type, fk)
@@ -29,6 +29,7 @@ publication
      "publication_ibfk_2" FOREIGN KEY (publication_type) REFERENCES publication_type(identifier) MATCH FULL
  Referenced by:
      TABLE "publication_contributor" CONSTRAINT "publication_contributor_ibfk_3" FOREIGN KEY (publication_id) REFERENCES publication(id) MATCH FULL
+     TABLE "publication_file_map" CONSTRAINT "publication_file_map_publication_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "publication_map" CONSTRAINT "publication_map_child_fkey" FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE
      TABLE "publication_map" CONSTRAINT "publication_map_parent_fkey" FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE
  Triggers:
