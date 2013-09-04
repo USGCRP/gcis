@@ -1,4 +1,3 @@
-
 alter table chapter rename column report to report_identifier;
 alter table figure rename column chapter to chapter_identifier;
 alter table figure rename column report to report_identifier;
@@ -16,4 +15,5 @@ alter table dataset_organization_map rename column organization to organization_
 alter table organization_type_map rename column organization to organization_identifier;
 alter table organization_type_map rename column organization_type to organization_type_identifier;
 alter table contributor rename column organization to organization_identifier;
+alter table report rename column organization to organization_identifier;
 
