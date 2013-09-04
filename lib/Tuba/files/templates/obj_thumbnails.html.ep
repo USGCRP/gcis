@@ -1,8 +1,8 @@
 % my $i = 0;
-<ul class='thumbnails'>
+<div class='thumbnails' style='margin-left:0px;'>
 %    for my $obj (@$objs) {
         % my $pub = $obj->get_publication;
-        <li class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
+        <div class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
             <div class='thumbnail centered'>
                 % my $files = $pub ? $pub->file_objs : undef;
                 % if ($files && @$files) {
@@ -20,10 +20,7 @@
                 %= end
                 </div>
             </div>
-        </li>
-% if ( (++$i % 6 == 0) && $i) {
-</ul><ul class='thumbnails'>
-% }
+        </div>
         % }
-</ul>
+</div>
 

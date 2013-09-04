@@ -10,7 +10,7 @@
 % next if $method =~ /^_/;
 <tr>
 <td><%= $method %></td>
-<td class='row-fluid'>
+<td class='row'>
 % my $got = $object->$method;
 % if (ref($got) eq 'ARRAY') {
 %    if (my $sorter = $sorters->{$method}) {
