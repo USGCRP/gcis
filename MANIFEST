@@ -168,10 +168,18 @@ db/patches/0290_chapter_number.sql
 db/patches/0300_file_identifier.sql
 db/patches/0310_report_editors.sql
 db/patches/0320_report_viewers.sql
+db/patches/0330_publication_fk.sql
+db/patches/0340_publication_file.sql
+db/patches/0350_cascade_updates.sql
+db/patches/0360_publication_file_again.sql
+db/patches/0370_remove_file_from_image.sql
+db/patches/0380_fix_file_table.sql
+db/patches/0390_article_fk.sql
 eg/atrac_upload.html
 eg/compare.pl
 eg/image-meta.pl
 eg/login.pl
+eg/upload_images.pl
 lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -217,6 +225,7 @@ lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
+lib/Tuba/files/templates/controls/pubfile.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/create_link.html.ep
@@ -230,6 +239,7 @@ lib/Tuba/files/templates/figure/object.html.ep
 lib/Tuba/files/templates/figure/object.ttl.ep
 lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
+lib/Tuba/files/templates/file/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
@@ -243,6 +253,7 @@ lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
 lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/not_found.html.ep
+lib/Tuba/files/templates/obj_thumbnails.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.ttl.ep
 lib/Tuba/files/templates/objects.html.ep
@@ -257,10 +268,12 @@ lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.ep
+lib/Tuba/files/templates/pub_thumbnails.html.ep
 lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
+lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep
 lib/Tuba/files/templates/update_rel_form.html.ep
