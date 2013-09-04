@@ -22,7 +22,7 @@ sub list {
             with_objects => ['chapter_obj'],
             @page,
             sort_by => "ordinal, t1.identifier");
-        $c->title("Findings in chapter $ch of $report");
+        $c->title("Findings in report : $report, chapter $ch");
         $c->set_pages(
             Findings->get_objects_count(
                 query => [chapter => $ch, report => $report],
