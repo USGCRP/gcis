@@ -28,7 +28,6 @@ sub autocomplete {
     return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
     my $want = $c->param('type');
-    logger->info("we want $want");
 
     my @results;
     for my $type (@{ PublicationTypes->get_objects(all => 1) }) {
