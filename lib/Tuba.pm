@@ -58,6 +58,20 @@ sub startup {
             return $val unless $uri;
             return $c->link_to($val, $uri );
         } );
+    $app->helper(obj_link_to => sub {
+            my $c = shift;
+            my $obj = shift;
+            my $tab = shift;
+            my $uri = $obj->uri($c,{ tab => $tab });
+            return $c->link_to($uri, @_ );
+        });
+    $app->helper(obj_uri_for => sub {
+            my $c = shift;
+            my $obj = shift;
+            my $tab = shift;
+            return $obj->uri($c,{ tab => $tab });
+        });
+
     $app->helper(format_ago => sub {
             my $c = shift;
             my $date = shift;
@@ -184,11 +198,19 @@ sub startup {
     );
     $app->routes->add_shortcut(resource => sub {
       my ($r, $name, $opts) = @_;
-      my $identifier = join '_', $name, 'identifier';
-      $identifier =~ s/-/_/g;
+      #
+      # $opts is a hash which can have :
+      #    restrict_identifier -- a regex for the identifier pattern
+      #    wildcard -- means the identifier could have a /
+      #    defaults -- default values for routes for this resource.
+      #    controller -- controller class
+      #    identifier -- name of the stash key for the identifier (tablename + '_identifier')
+      #    path_base -- initial path for urls (/tablename)
+      #
+      my $identifier = $opts->{identifier} || join '_', $name, 'identifier';
+      my $controller = $opts->{controller} || 'Tuba::'.b($name)->camelize;
+      my $path_base = $opts->{path_base} || $name;
 
-      # Keep stubs out of @forms.
-      my $controller = 'Tuba::'.b($name)->camelize;
       eval " use $controller ";
       if (!$@) {
          push @forms, "create_form_$name";
@@ -199,12 +221,16 @@ sub startup {
           }
           # $app->log->debug("did not load $controller");
       }
+      my $cname = $controller;
+      $cname =~ s/Tuba:://;
+      $cname = lc $cname;
 
       # Build bridges and routes.
-      my $resource = $r->route("/$name")->to("$name#");
+      my $resource = $r->route("$path_base")->to("$cname#");
       $resource->get->to('#list')->name("list_$name");
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
+      my %defaults = $opts->{defaults} ? %{ $opts->{defaults} } : ();
       if ($opts->{wildcard}) {
         my $reserved = q[^(?:form/update(?:_prov|_rel|_files)?|form/create|update(?:_rel|files|prov)?|put_files|history/)];
         for my $format (@supported_formats) {
@@ -212,46 +238,46 @@ sub startup {
                          ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
         }
-        $resource->get("*$identifier" => \@restrict )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
+        $resource->get("*$identifier" => \@restrict => \%defaults )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
       } else {
-        $resource->get(":$identifier" => \@restrict )->to('#show')->name("show_$name");
+        $resource->get(":$identifier" => \@restrict => \%defaults )->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
       }
 
-      my $authed = $r->bridge("/$name")->to(cb => sub {
+      my $authed = $r->bridge("/$path_base")->to(cb => sub {
               my $c = shift;
               $c->auth && $c->authz(role => 'update') }
       );
-      $authed->post->to("$name#create")->name("create_$name");
-      $authed->get('/form/create')->to("$name#create_form")->name("create_form_$name");
+      $authed->post->to("$cname#create")->name("create_$name");
+      $authed->get('/form/create')->to("$cname#create_form")->name("create_form_$name");
 
       if ($opts->{wildcard}) {
-          $authed->get("/form/update/*$identifier")->to("$name#update_form")->name("update_form_$name");
-          $authed->get("/form/update_prov/*$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
-          $authed->get("/form/update_rel/*$identifier")->to("$name#update_rel_form")->name("update_rel_form_$name");
-          $authed->get("/form/update_files/*$identifier")->to("$name#update_files_form")->name("update_files_form_$name");
-          $authed->get("/history/*$identifier")    ->to("$name#history")    ->name("history_$name");
-          $authed->delete("*$identifier")          ->to("$name#remove")     ->name("remove_$name");
-          $authed->post("*$identifier")->over(not_match => { $identifier => qr[^(?:prov|rel|files)/] })
-                                                    ->to("$name#update")     ->name("update_$name");
-          $authed->post("/prov/*$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
-          $authed->post("/rel/*$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
-          $authed->post("/files/*$identifier")     ->to("$name#update_files")->name("update_files_$name");
+          $authed->get("/form/update/*$identifier" => \%defaults)      ->to("$cname#update_form")->name("update_form_$name");
+          $authed->get("/form/update_prov/*$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
+          $authed->get("/form/update_rel/*$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
+          $authed->get("/form/update_files/*$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
+          $authed->get("/history/*$identifier" => \%defaults)          ->to("$cname#history")    ->name("history_$name");
+          $authed->delete("*$identifier" => \%defaults)                ->to("$cname#remove")     ->name("remove_$name");
+          $authed->post("*$identifier" => \%defaults)->over(not_match => { $identifier => qr[^(?:prov|rel|files)/] })
+                                                   ->to("$cname#update")     ->name("update_$name");
+          $authed->post("/prov/*$identifier")      ->to("$cname#update_prov")->name("update_prov_$name");
+          $authed->post("/rel/*$identifier")       ->to("$cname#update_rel")->name("update_rel_$name");
+          $authed->post("/files/*$identifier")     ->to("$cname#update_files")->name("update_files_$name");
           $authed->put("/files/*$identifier/#filename") # a default filename for PUTs would be ambiguous.
-                                                   ->to("$name#put_files")->name("put_files_$name");
+                                                   ->to("$cname#put_files")->name("put_files_$name");
       } else {
-          $authed->get("/form/update/:$identifier")->to("$name#update_form")->name("update_form_$name");
-          $authed->get("/form/update_prov/:$identifier")->to("$name#update_prov_form")->name("update_prov_form_$name");
-          $authed->get("/form/update_rel/:$identifier")->to("$name#update_rel_form")->name("update_rel_form_$name");
-          $authed->get("/form/update_files/:$identifier")->to("$name#update_files_form")->name("update_files_form_$name");
-          $authed->get("/history/:$identifier")    ->to("$name#history")    ->name("history_$name");
-          $authed->delete(":$identifier")          ->to("$name#remove")     ->name("remove_$name");
-          $authed->post(":$identifier")            ->to("$name#update")     ->name("update_$name");
-          $authed->post("/prov/:$identifier")      ->to("$name#update_prov")->name("update_prov_$name");
-          $authed->post("/rel/:$identifier")       ->to("$name#update_rel")->name("update_rel_$name");
-          $authed->post("/files/:$identifier")     ->to("$name#update_files")->name("update_files_$name");
-          $authed->put("/files/:$identifier/#filename" => {filename => 'unnamed'})
-                                                   ->to("$name#put_files")->name("put_files_$name");
+          $authed->get("/form/update/:$identifier")                    ->to("$cname#update_form")->name("update_form_$name");
+          $authed->get("/form/update_prov/:$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
+          $authed->get("/form/update_rel/:$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
+          $authed->get("/form/update_files/:$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
+          $authed->get("/history/:$identifier" => \%defaults)    ->to("$cname#history")    ->name("history_$name");
+          $authed->delete(":$identifier" => \%defaults)          ->to("$cname#remove")     ->name("remove_$name");
+          $authed->post(":$identifier" => \%defaults)            ->to("$cname#update")     ->name("update_$name");
+          $authed->post("/prov/:$identifier" => \%defaults)      ->to("$cname#update_prov")->name("update_prov_$name");
+          $authed->post("/rel/:$identifier" => \%defaults)       ->to("$cname#update_rel")->name("update_rel_$name");
+          $authed->post("/files/:$identifier" => \%defaults)     ->to("$cname#update_files")->name("update_files_$name");
+          $authed->put("/files/:$identifier/#filename" => {filename => 'unnamed', %defaults })
+                                                   ->to("$cname#put_files")->name("put_files_$name");
       }
 
       return $select;
@@ -263,7 +289,13 @@ sub startup {
     my $report = $r->resource('report');
     my $chapter = $report->resource('chapter');
     $report->resource('figure');
-    $report->resource('finding');
+    #$r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
+    #$r->lookup('select_chapter')->get('/finding')->to('Finding#list')->name('list_findings_in_chapter');
+    $r->lookup('select_chapter')->resource('finding');
+
+    # Report findings have no chapter.
+    $report->get('/finding')->to('Finding#list')->name('list_all_findings');
+    $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding' });
 
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
     $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
@@ -275,8 +307,7 @@ sub startup {
 
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
-    $r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
-    $r->lookup('select_chapter')->get('/finding')->to('Finding#list')->name('list_findings_in_chapter');
+
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:name')->to('person#redirect_by_name');
     $r->resource($_) for qw/dataset model software algorithm activity

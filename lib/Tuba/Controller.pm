@@ -187,7 +187,7 @@ sub _this_object {
     my $object_class = $c->_guess_object_class;
     my $meta = $object_class->meta;
     my %pk;
-    for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report
+    for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
         my $stash_name = $name;
         $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
         $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
@@ -204,8 +204,8 @@ sub _this_object {
 
 sub _chaplist {
     my $c = shift;
-    my $rpt = shift;
-    my @chapters = @{ Chapters->get_objects(query => [ report => $rpt ], sort_by => 'number') };
+    my $report_identifier = shift;
+    my @chapters = @{ Chapters->get_objects(query => [ report_identifier => $report_identifier ], sort_by => 'number') };
     return [ '', map [ sprintf( '%s %s', ( $_->number || '' ), $_->title ), $_->identifier ], @chapters ];
 }
 sub _rptlist {
@@ -216,11 +216,11 @@ sub _rptlist {
 sub _default_controls {
     my $c = shift;
     return (
-        chapter  => sub { my $c = shift;
+        chapter_identifier => sub { my $c = shift;
                             +{ template => 'select',
                                params => { values => $c->_chaplist($c->stash('report_identifier')) } } },
-        report  => sub { +{ template => 'select',
-                             params => { values => shift->_rptlist() } } },
+        report_identifier  => sub { +{ template => 'select',
+                                params => { values => shift->_rptlist() } } },
     );
 }
 
@@ -230,14 +230,14 @@ sub _default_rel_controls {
     chapter => sub { my ($c,$obj) = @_;
                          +{ template => 'select',
                             params => { values => $c->_chaplist($c->stash('report_identifier')),
-                                        column => $obj->meta->column('chapter'),
-                                        value => $obj->chapter }
+                                        column => $obj->meta->column('chapter_identifier'),
+                                        value => $obj->chapter_identifier }
                         } },
-    report  => sub { my ($c,$obj) = @_;
+    report => sub { my ($c,$obj) = @_;
                       +{ template => 'select',
                          params => { values => $c->_rptlist(),
-                                     column => $obj->meta->column('report'),
-                                     value => $obj->report } } },
+                                     column => $obj->meta->column('report_identifier'),
+                                     value => $obj->report_identifier } } },
     );
 }
 
@@ -337,6 +337,11 @@ sub update_prov {
 =head2 update_rel_form
 
 Form for updating the relationships.
+
+Override this and set 'relationships' to relationships that should
+be on this page, e.g.
+
+    $c->stash(relationships => [ map Figure->meta->relationship($_), qw/images/ ]);
 
 =cut
 
@@ -507,8 +512,9 @@ sub update {
     }
 
     for my $col ($object->meta->columns) {
-        my $param = $json ? $json->{$col->name} : $c->param($col->name);
-        $param = $c->stash('report_identifier') if $col->name eq 'report' && $c->stash('report_identifier');
+        my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
+        warn "$col is $param";
+        $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
@@ -540,7 +546,7 @@ sub update {
         return $c->update_form if $ok;
         return $c->render(json => { error => $object->error });
     }
-    $ok and do { $c->flash(message => "Saved changes"); return $c->_redirect_to_view($object); };
+    $ok and do { $c->flash(message => "Saved changes"); return $c->redirect_to("update_form_".$table); };
     $c->flash(error => $object->error);
     $c->redirect_to("update_form_".$table);
 }

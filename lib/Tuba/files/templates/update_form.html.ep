@@ -22,7 +22,7 @@
 <div class='row-fluid'>
 %= include 'update_tabs', active => 'fields';
 <div class='tab-content'>
-%= form_for 'update_'.$meta->table => class => 'form-horizontal well' => begin
+%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well' => begin
 % if (my $error = (flash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
@@ -34,7 +34,7 @@
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
-            % if ($name && $name eq 'report' && (stash 'report_identifier')) {
+            % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
             % } elsif (my $entry = $controls->{$column->name}) {
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';

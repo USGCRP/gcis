@@ -34,7 +34,7 @@
     % my $first = $cols[0];
     % my $val = $o->can($first) ? $o->$first : "error, cannot call $first";
         <td>
-            %= link_to "show_".$meta->table, { $meta->table.'_'.$first => $val } => begin
+            %= link_to $o->uri($self) => begin
             <%= $val %>
             %= end
         </td>

@@ -4,19 +4,19 @@
 
 <ul class='nav nav-tabs'>
 
-<li><%= link_to $object->uri($self) => begin %> &larr; View<%= end %></li>
+<li><%= obj_link_to $object, show => begin %> &larr; View<%= end %></li>
 
 % if ($active eq 'fields') {
 <li class='active'><a href='#'><%= $table %></a></li>
 % } else {
-<li><%= link_to 'update_form_'.$meta->table => begin %><%= $meta->table %><%= end %></li>
+<li><%= obj_link_to $object, update_form => begin %><%= $meta->table %><%= end %></li>
 % }
 
 % if ($active eq 'prov') {
 <li class='active'><a href='#'>provenance</a></li>
 % } else {
 % if (Tuba::DB::Object::PublicationType::Manager->get_objects_count(query => [table => $table])) {
-<li><%= link_to 'update_prov_form_'.$table => begin %>provenance<%= end %></li>
+<li><%= obj_link_to $object, update_prov_form => begin %>provenance<%= end %></li>
 % } else {
 <li class='disabled'><a class="disabled" disabled>provenance</a></li>
 % }
@@ -25,13 +25,13 @@
 % if ($active eq 'rel') {
 <li class='active'><a href='#'>relationships</a></li>
 % } else {
-<li><%= link_to 'update_rel_form_'.$table => begin %>relationships<%= end %></li>
+<li><%= obj_link_to $object, update_rel_form => begin %>relationships<%= end %></li>
 % }
 
 % if ($active eq 'files') {
 <li class='active'><a href='#'>files</a></li>
 % } else {
-<li><%= link_to 'update_files_form_'.$table => begin %>files<%= end %></li>
+<li><%= obj_link_to $object, update_files_form => begin %>files<%= end %></li>
 % }
 
 

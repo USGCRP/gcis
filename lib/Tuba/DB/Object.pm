@@ -48,9 +48,13 @@ sub pk_values {
 sub uri {
     my $s = shift;
     my $c = shift;
-    my %pk = map {( $_ => $s->$_ )} $s->meta->primary_key_columns;
+    my $opts = shift || {};
+    my $route_name = $opts->{tab} || 'show';
+    $route_name .= '_'.$s->meta->table;
+
     my $table = $s->meta->table;
-    my $route_name = 'show_'.$table;
+
+    my %pk = map {( $_ => $s->$_ )} $s->meta->primary_key_columns;
     return unless $c->app->routes->find($route_name);
     my %url_params;
     for my $column_name (keys %pk) {

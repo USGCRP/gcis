@@ -54,16 +54,14 @@ sub show {
     my $object = Finding->new( identifier => $identifier, report_identifier => $report_identifier )->load( speculative => 1)
       or return $c->render_not_found;
     $c->stash(object => $object);
-    $c->respond_to(
-        json => sub { shift->render(json => $object->as_tree) },
-        nt   => sub { shift->render(template => 'object', meta => $meta, objects => $object ) },
-        html => sub { shift->render(template => 'object', meta => $meta, objects => $object ) }
-    );
+    $c->SUPER::show(@_);
 }
 
-sub create_form {
+sub update_rel_form {
     my $c = shift;
-    $c->SUPER::create_form(@_);
+    $c->stash(relationships => [ map Finding->meta->relationship($_), qw/keywords/ ]); # TODO
+    $c->SUPER::update_rel_form(@_);
+
 }
 
 1;

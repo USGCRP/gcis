@@ -9,7 +9,7 @@
 
 <div class='tab-content'>
 
-%= form_for 'update_prov_'.$meta->table => class => 'form-horizontal well' => begin
+%= form_for obj_uri_for($object, 'update_prov') => method => 'POST', class => 'form-horizontal well' => begin
 % if (my $error = (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }

@@ -1,5 +1,6 @@
 package Tuba::DB::Object::Finding;
 # Tuba::DB::Mixin::Object::Finding;
+use strict;
 
 sub stringify {
     my $c = shift;
@@ -11,7 +12,22 @@ sub stringify {
 sub uri {
     my $s = shift;
     my $c = shift;
-    return $c->url_for( 'show_finding', { 'finding_identifier' => $s->identifier, report_identifier => $s->report_identifier } );
+    my $opts = shift;
+    my $route_name = $opts->{tab} || 'show';
+
+    $route_name .= '_report' unless $s->chapter_identifier;
+    $route_name .= '_finding';
+
+    my $got = $c->url_for(
+      $route_name,
+      {
+        finding_identifier => $s->identifier,
+        report_identifier  => $s->report_identifier,
+        chapter_identifier => $s->chapter_identifier,
+      }
+    );
+    return $got;
+
 }
 
 1;
