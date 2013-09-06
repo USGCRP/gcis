@@ -179,8 +179,8 @@ sub get_publication {
     my $type = $types->[0];
     my %pk = map {( $_ => $self->$_ )} $self->meta->primary_key_columns;
     my $pub = Tuba::DB::Object::Publication->new(
-        publication_type => $type->identifier,
-        fk               => hstore_encode( \%pk )
+        publication_type_identifier => $type->identifier,
+        fk                          => hstore_encode( \%pk )
     );
     if ($pub->load(speculative => 1)) {
         return $pub;
@@ -252,7 +252,7 @@ sub as_tree {
                 my $pub = $parent->{publication};
                 push @{ $tree->{parents} }, {
                     relationship => $parent->{relationship},
-                    publication_type => $pub->{publication_type},
+                    publication_type_identifier => $pub->{publication_type_identifier},
                     label => $pub->stringify,
                     url => $pub->to_object->uri($c),
                 };

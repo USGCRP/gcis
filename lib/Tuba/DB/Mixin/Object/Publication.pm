@@ -17,13 +17,13 @@ sub stringify {
     } else {
         $label = join '/', map $self->$_, $self->meta->primary_key_column_names;
     }
-    return $self->publication_type.' : '.$label;
+    return $self->publication_type_identifier.' : '.$label;
 }
 
 sub to_object {
     my $self = shift;
     my $orm = Tuba::DB::Objects->table2class;
-    my $type = $self->publication_type_obj or die "no type for ".$self->id;
+    my $type = $self->publication_type or die "no type for ".$self->id;
     my $obj_class = $orm->{$type->table}->{obj}
         or die "no object class for ".$type->table;
     my @pkcols = $obj_class->meta->primary_key_columns;
@@ -58,7 +58,7 @@ SQL
     my @parents;
     for my $row (@$rows) {
         my %pub;
-        @pub{qw/id publication_type fk/} = @$row{qw/id publication_type fk/};
+        @pub{qw/id publication_type_identifier fk/} = @$row{qw/id publication_type_identifier fk/};
         push @parents, { relationship => $row->{relationship}, note => $row->{note}, publication => $class->new(%pub) };
     };
     return @parents;
