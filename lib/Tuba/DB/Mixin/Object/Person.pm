@@ -15,10 +15,13 @@ sub stringify {
 }
 
 sub uri {
-    my $self = shift;
-    my $c = shift;
+    my $self       = shift;
+    my $c          = shift;
+    my $opts       = shift;
+    my $route_name = $opts->{tab} || 'show';
+    $route_name .= '_person';
 
-    return $c->url_for( 'show_person', { person_identifier => $self->id } );
+    return $c->url_for( $route_name, { person_identifier => $self->id } );
 }
 
 1;

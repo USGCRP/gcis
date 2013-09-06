@@ -21,7 +21,10 @@ sub stringify {
 sub uri {
     my $s = shift;
     my $c = shift;
-    return $c->url_for('show_contributor', { contributor_identifier => $s->id } );
+    my $opts = shift;
+    my $route_name = $opts->{tab} || 'show';
+    $route_name .= '_contributor';
+    return $c->url_for($route_name, { contributor_identifier => $s->id } );
 }
 
 1;

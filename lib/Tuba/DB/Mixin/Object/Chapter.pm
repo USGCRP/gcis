@@ -6,8 +6,12 @@ __PACKAGE__->meta->relationship('figure')->manager_args({ sort_by => "figure.ord
 sub uri {
     my $s = shift;
     my $c = shift;
+    my $opts = shift;
+    my $route_name = $opts->{tab} || 'show';
+    $route_name .= '_chapter';
+
     return $c->url_for(
-        'show_chapter',
+        $route_name,
         {
             chapter_identifier => $s->identifier,
             report_identifier  => $s->report->identifier
