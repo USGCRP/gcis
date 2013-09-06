@@ -130,7 +130,9 @@ sub create_form {
     my $c = shift;
     my $controls = $c->stash('controls') || {};
     $c->stash(controls => { $c->_default_controls, %$controls } );
-    $c->stash(meta => $c->_guess_object_class->meta);
+    my $object_class = $c->_guess_object_class;
+    $c->stash(object_class => $object_class);
+    $c->stash(meta =>$object_class->meta);
     $c->render(template => "create_form");
 }
 
@@ -161,8 +163,8 @@ sub create {
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
     }
-    if (exists($obj{report}) && $c->stash('report_identifier')) {
-        $obj{report} = $c->stash('report_identifier');
+    if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
+        $obj{report_identifier} = $c->stash('report_identifier');
     }
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
@@ -513,7 +515,6 @@ sub update {
 
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
-        warn "$col is $param";
         $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;

@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
 
-%= form_for 'create_'.$meta->table => class => 'form-horizontal well' => begin
+%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well' => begin
 
 <legend>New <%= $meta->table %></legend>
 
@@ -21,7 +21,7 @@
     <div class="control-group" style='margin-bottom:2px;'>
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            % if ($name && $name eq 'report' && (stash 'report_identifier')) {
+            % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
             % } elsif (my $entry = $controls->{$name}) {
                 % $entry = $self->$entry if ref($entry) eq 'CODE';

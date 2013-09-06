@@ -1,6 +1,5 @@
 <div style='float:right;'>
-% my $table = $meta->table;
-%= link_to 'create_form_'.$table => class => 'btn' => begin
-Add <%= $table %>
+%= obj_link_to $meta->class, 'create_form' => class => 'btn' => begin
+Add <%= $meta->table %>
 %= end
 </div>

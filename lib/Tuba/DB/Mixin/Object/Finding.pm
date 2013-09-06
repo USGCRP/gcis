@@ -21,8 +21,11 @@ sub uri {
     my $s = shift;
     my $c = shift;
     my $opts = shift;
-    my $route_name = $opts->{tab} || 'show';
+    my $tab = $opts->{tab} || 'show';
 
+    return $c->url_for($tab.'_report_finding') if $tab =~ /create/; # create/create_form
+
+    my $route_name = $tab;
     $route_name .= '_report' unless $s->chapter_identifier;
     $route_name .= '_finding';
 
