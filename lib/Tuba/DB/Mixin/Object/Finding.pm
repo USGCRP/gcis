@@ -5,7 +5,7 @@ use strict;
 sub numeric {
     my $s = shift;
     if (my $chapter = $s->chapter) {
-        return sprintf('%d.%d',$chapter->number,$s->ordinal // '');
+        return sprintf('%s.%s',$chapter->number // '',$s->ordinal // '');
     }
     return $s->ordinal // '';
 }
@@ -29,10 +29,12 @@ sub uri {
     return $c->url_for($tab.'_report_finding') if $tab =~ /create/; # create/create_form
 
     my $route_name = $tab;
-    $route_name .= '_report' unless $s->chapter_identifier;
+    $route_name .= '_report' unless ref $s && $s->chapter_identifier;
     $route_name .= '_finding';
 
-    my $got = $c->url_for(
+    return $c->url_for($route_name) unless ref $s;
+
+    return $c->url_for(
       $route_name,
       {
         finding_identifier => $s->identifier,
@@ -40,8 +42,6 @@ sub uri {
         chapter_identifier => $s->chapter_identifier,
       }
     );
-    return $got;
-
 }
 
 1;

@@ -179,7 +179,7 @@ sub create {
         html => sub {
                 my $c = shift;
                 $c->flash(error => $new->error);
-                $c->redirect_to("create_form_$table");
+                $c->redirect_to($object_class->uri($c,{tab => "create_form"}));
             }
         );
 }

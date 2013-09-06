@@ -51,6 +51,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
+    return $c->url_for($route_name) unless ref $s;
 
     my $table = $s->meta->table;
 
