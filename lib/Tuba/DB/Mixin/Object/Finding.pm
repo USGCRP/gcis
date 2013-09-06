@@ -13,8 +13,11 @@ sub numeric {
 sub stringify {
     my $c = shift;
     my %args = @_;
-    return $c->statement if $args{long};
-    return $c->identifier;
+    my $val = $args{long} ? $c->statement : $c->identifier;
+    if (my $num = $c->numeric) {
+        return "$num $val";
+    }
+    return $val;
 }
 
 sub uri {

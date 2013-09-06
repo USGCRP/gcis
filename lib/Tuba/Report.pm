@@ -35,7 +35,8 @@ sub show {
     return $c->render(status => 403, text => '403 Forbidden') unless $c->_user_can_view($object);
     $c->stash(object => $object);
     $c->stash(sorters => {
-            figure => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify }
+            figure => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
+            finding => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
         }
     );
     $c->SUPER::show(@_);
