@@ -75,7 +75,7 @@ sub startup {
     $app->helper(format_ago => sub {
             my $c = shift;
             my $date = shift;
-            return ago(time - str2time($date));
+            return ago(time - str2time($date), 1);
         });
     $app->helper(current_resource => sub {
             my $c = shift;
@@ -288,14 +288,14 @@ sub startup {
     # API
     my $report = $r->resource('report');
     my $chapter = $report->resource('chapter');
-    $report->resource('figure');
-    #$r->lookup('select_chapter')->get('/figure')->to('Figure#list')->name('list_figures_in_chapter');
-    #$r->lookup('select_chapter')->get('/finding')->to('Finding#list')->name('list_findings_in_chapter');
     $r->lookup('select_chapter')->resource('finding');
+    $r->lookup('select_chapter')->resource('figure');
 
-    # Report findings have no chapter.
+    # Report (finding|figure)s have no chapter.
     $report->get('/finding')->to('Finding#list')->name('list_all_findings');
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding' });
+    $report->get('/figure')->to('figure#list')->name('list_all_figures');
+    $report->resource('report_figure', { controller => 'Tuba::figure', identifier => 'figure_identifier', path_base => 'figure' });
 
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
     $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
@@ -345,8 +345,9 @@ sub startup {
     $r->get('/examples' => 'examples');
     $r->get('/autocomplete')->to('search#autocomplete');
 
-    my $authed = $r->bridge->to(cb => sub { shift->auth });
+    my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
     $authed->get('/forms')->to(cb => sub { shift->render(forms => \@forms) })->name('forms');
+    $authed->get('/watch')->to('report#watch')->name('_watch_report');
     $r->get('/login')->to('auth#login')->name('login');
     $r->get('/login_pw')->to('auth#login_pw')->name('_login_pw');
     $r->get('/login_key')->to('auth#login_key')->name('_login_key');

@@ -24,8 +24,7 @@ sub to_object {
     my $self = shift;
     my $orm = Tuba::DB::Objects->table2class;
     my $type = $self->publication_type or die "no type for ".$self->id;
-    my $obj_class = $orm->{$type->table}->{obj}
-        or die "no object class for ".$type->table;
+    my $obj_class = $orm->{$type->table}->{obj} or return;
     my @pkcols = $obj_class->meta->primary_key_columns;
     my $pkvals = hstore_decode($self->fk);
     my $obj = $obj_class->new(%$pkvals);

@@ -1,0 +1,18 @@
+% layout 'default';
+
+%= form_for current_route() => begin
+limit : <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit();}', class => 'span1'; %>
+%= end
+
+<pre>
+% for my $row (@$change_log) {
+<%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b> <%=
+   $row->{action} eq 'I' ? 'inserted'
+ : $row->{action} eq 'D' ? 'deleted'
+ : "set ".$row->{changed_fields}
+ %> <%= $row->{table_name}
+ %> <%= $row->{obj} ? $row->{action} eq 'D' ? $row->{obj}->stringify : obj_link($row->{obj}) : ""
+ %> <%= $row->{audit_note} %>
+% }
+</pre>
+

@@ -7,6 +7,7 @@ Tuba::Report : Controller class for reports.
 package Tuba::Report;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Pg::hstore qw/hstore_decode/;
 use Tuba::Log;
 
 sub _user_can_view {
@@ -92,6 +93,32 @@ sub select {
     $c->_user_can_view($report) or do { $c->render(status => 403, text => "Forbidden"); return 0; };
     $c->stash(report => $report);
     return 1;
+}
+
+sub watch {
+    my $c = shift;
+    my $limit = $c->param('limit') || 20;
+    $limit = 50 unless $limit =~ /^\d+$/;
+    my $result = $c->dbc->select(
+        [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
+        table => "audit.logged_actions",
+        append => "order by action_tstamp_tx desc limit $limit",
+    );
+    my $change_log = $result->all;
+    for my $row (@$change_log) {
+        my $table = $row->{table_name};
+        warn $table;
+        my $class = $c->orm->{$table}{obj} or next;
+        my $vals = hstore_decode($row->{row_data});
+        if (my $other = $row->{changed_fields}) {
+            $other = hstore_decode($other);
+            %$vals = ( %$vals, %$other);
+        }
+        $row->{obj} = $class->new(%$vals);
+        #$row->{obj}->load(speculative => 1);
+    }
+
+    $c->render(template => 'watch', change_log => $change_log);
 }
 
 1;

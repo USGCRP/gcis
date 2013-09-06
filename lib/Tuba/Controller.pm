@@ -423,7 +423,6 @@ sub update_files {
         };
         $obj->meta->error_mode('return');
         my $filename = "$image_dir".'/'.$obj->file;
-        -e $filename or die "missing file";
         my $entry = PublicationFileMap->new(
             publication => $pub->id,
             file => $obj->identifier
@@ -439,7 +438,7 @@ sub update_files {
                 $c->flash(error => $obj->error);
                 return $c->redirect_to($next);
             };
-            unlink $filename or die $!;
+            -e $filename and do { unlink $filename or die $!; };
         }
         $c->flash(message => 'Saved changes');
         return $c->redirect_to($next);

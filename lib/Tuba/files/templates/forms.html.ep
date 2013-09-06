@@ -2,8 +2,6 @@
 
 <h3>Forms</h3>
 
-%= form_for current_route() => begin
-
 <ul>
 
 <li>
@@ -12,30 +10,3 @@ Import spreadsheet
 %= end
 </li>
 
-% for (qw/article dataset journal organization person image/) {
-<li>
-    %= link_to "create_form_$_" => begin
-        New <%= $_ %>
-    %= end
-</li>
-% }
-
-</ul>
-
-<ul>
-<li>
-% my @reports = map [ $_->identifier.': '.$_->title, $_->identifier ], all_reports();
-% my $report = (param 'report') || $reports[0]->[1];
-
-Report : <%= select_field(report => \@reports, class => 'span10', onchange => '{this.form.submit();}' ); %>
-</li>
-
-% for (qw/finding chapter figure/) {
-<li>
-    %= link_to "create_form_$_" => { report_identifier => $report } => begin
-        New <%= $_ %> in <%= $report %>
-    %= end
-</li>
-% }
-</ul>
-%= end
