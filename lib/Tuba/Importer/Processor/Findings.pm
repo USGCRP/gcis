@@ -32,9 +32,7 @@ sub process {
         $finding->statement($record{finding});
         my $pub = $record{chapter};
         if ($pub =~ m[chapter/(.*)$]) {
-            $finding->chapter($1);
-        } else {
-            $finding->chapter(undef);
+            $finding->chapter_identifier($1);
         }
         $finding->report($report);
         $finding->save(changes_only => 1, $self->_audit_info($index)) or do {
@@ -47,7 +45,7 @@ sub process {
                  my ($category, $topic, $term, $one, $two, $three) = split /\s*>\s*/, $kw;
                  my $k = Keyword->new(category => $category, topic => $topic, term => $term, level1 => $one, level2 => $two, level3 => $three);
                  $k->load(speculative => 1) or $k->save($self->_audit_info) or do { $self->_note_error($k->error, $index); next };
-                 $finding->add_keyword_objs($k);
+                 $finding->add_keywords($k);
                  $finding->save($self->_audit_info) or do {
                      $self->_note_error($finding->error, $index);
                  };
