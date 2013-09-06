@@ -15,7 +15,7 @@ CREATE FUNCTION delete_publication() RETURNS trigger
     AS $$
 BEGIN
     delete from publication
-         where publication_type = TG_TABLE_NAME::text and
+         where publication_type_identifier = TG_TABLE_NAME::text and
             fk = slice(hstore(OLD.*),akeys(fk));
     RETURN OLD;
 END; $$;
@@ -1039,7 +1039,7 @@ ALTER TABLE ONLY finding_keyword_map
 
 
 ALTER TABLE ONLY finding
-    ADD CONSTRAINT finding_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
+    ADD CONSTRAINT finding_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

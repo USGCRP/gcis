@@ -123,7 +123,7 @@
         <pre>
 BEGIN
     delete from publication
-         where publication_type = TG_TABLE_NAME::text and
+         where publication_type_identifier = TG_TABLE_NAME::text and
             fk = slice(hstore(OLD.*),akeys(fk));
     RETURN OLD;
 END; </pre>

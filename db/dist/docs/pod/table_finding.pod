@@ -30,7 +30,7 @@ finding
      "finding_pkey" PRIMARY KEY, btree (identifier, report_identifier)
  Foreign-key constraints:
      "finding_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
-     "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier)
+     "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Referenced by:
      TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_finding_fkey" FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE
  Triggers:
