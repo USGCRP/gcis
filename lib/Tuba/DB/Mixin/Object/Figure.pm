@@ -16,6 +16,8 @@ sub uri {
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_figure';
 
+    return $c->url_for( $route_name ) unless ref $s;
+
     return $c->url_for(
         $route_name,
         {
