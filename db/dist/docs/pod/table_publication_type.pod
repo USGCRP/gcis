@@ -23,7 +23,7 @@ publication_type
  Indexes:
      "publication_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
-     TABLE "publication" CONSTRAINT "publication_ibfk_2" FOREIGN KEY (publication_type) REFERENCES publication_type(identifier) MATCH FULL
+     TABLE "publication" CONSTRAINT "publication_ibfk_2" FOREIGN KEY (publication_type_identifier) REFERENCES publication_type(identifier) MATCH FULL
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

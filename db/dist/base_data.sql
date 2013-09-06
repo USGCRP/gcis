@@ -232,7 +232,7 @@ COPY publication_type (identifier, "table") FROM stdin;
 -- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication (id, publication_type, fk) FROM stdin;
+COPY publication (id, publication_type_identifier, fk) FROM stdin;
 \.
 
 

@@ -37,3 +37,4 @@
 0380_fix_file_table.sql	383ed72303146a3b76b395fadcc6f1e5
 0390_article_fk.sql	b098714cb4151e8ccfcb691bce672a8e
 0400_rename_fks.sql	d24185c0d49761fb618ea74ef138108e
+0410_pubtype_identifier.sql	3939675398702c821c67785eca2fdf9a

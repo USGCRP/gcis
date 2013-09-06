@@ -347,7 +347,7 @@ ALTER SEQUENCE person_id_seq OWNED BY person.id;
 
 CREATE TABLE publication (
     id integer NOT NULL,
-    publication_type character varying NOT NULL,
+    publication_type_identifier character varying NOT NULL,
     fk hstore NOT NULL
 );
 
@@ -654,7 +654,7 @@ ALTER TABLE ONLY publication_ref
 
 
 ALTER TABLE ONLY publication
-    ADD CONSTRAINT publication_type_fk UNIQUE (publication_type, fk);
+    ADD CONSTRAINT publication_type_fk UNIQUE (publication_type_identifier, fk);
 
 
 
@@ -1084,7 +1084,7 @@ ALTER TABLE ONLY publication_file_map
 
 
 ALTER TABLE ONLY publication
-    ADD CONSTRAINT publication_ibfk_2 FOREIGN KEY (publication_type) REFERENCES publication_type(identifier) MATCH FULL;
+    ADD CONSTRAINT publication_ibfk_2 FOREIGN KEY (publication_type_identifier) REFERENCES publication_type(identifier) MATCH FULL;
 
 
 
