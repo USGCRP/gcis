@@ -11,7 +11,7 @@
 
 <div class='tab-content'>
 
-%= form_for 'update_files_'.$meta->table => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
+%= form_for obj_uri_for($object,'update_files') => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
 % if (my $error = (flash 'error') || (stash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }

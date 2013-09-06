@@ -88,7 +88,7 @@ sub update_rel_form {
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
-    my $next = 'update_rel_form_'.$object->meta->table;
+    my $next = $object->uri($c,{tab => 'update_rel_form'});
     $object->meta->error_mode('return');
     if (my $new = $c->param('new_image')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);

@@ -381,7 +381,7 @@ Update the files.
 sub update_files {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
-    my $next = 'update_files_form_'.$object->meta->table;
+    my $next = $object->uri($c,{tab => 'update_files_form'});
 
     my $pub = $object->get_publication(autocreate => 1) or do {
         $c->flash(error => "Sorry, files uploads have only been implemented for publications.");
@@ -445,7 +445,7 @@ sub update_files {
     }
 
 
-    return $c->redirect_to('update_files_form_'.$object->meta->table);
+    return $c->redirect_to($next);
 }
 
 =head2 put_files
@@ -497,6 +497,7 @@ sub _differ {
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
+    my $next = $object->uri($c,{tab => 'update_form'});
     my %pk_changes;
     my %new_attrs;
     my $table = $object->meta->table;
@@ -509,7 +510,7 @@ sub update {
             return $c->redirect_to('list_'.$table);
         }
         $c->flash(error => $object->error);
-        return $c->redirect_to("update_form_".$object->meta->table);
+        return $c->redirect_to($next);
     }
 
     for my $col ($object->meta->columns) {
@@ -546,9 +547,11 @@ sub update {
         return $c->update_form if $ok;
         return $c->render(json => { error => $object->error });
     }
-    $ok and do { $c->flash(message => "Saved changes"); return $c->redirect_to("update_form_".$table); };
+    $ok and do {
+        $next = $object->uri($c,{tab => 'update_form'});
+        $c->flash(message => "Saved changes"); return $c->redirect_to($next); };
     $c->flash(error => $object->error);
-    $c->redirect_to("update_form_".$table);
+    $c->redirect_to($next);
 }
 
 =head2 remove

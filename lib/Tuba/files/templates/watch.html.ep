@@ -11,8 +11,9 @@ limit : <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.sub
  : $row->{action} eq 'D' ? 'deleted'
  : "set ".$row->{changed_fields}
  %> <%= $row->{table_name}
- %> <%= $row->{obj} ? $row->{action} eq 'D' ? $row->{obj}->stringify : obj_link($row->{obj}) : ""
- %> <%= $row->{audit_note} %>
+ %> <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show')))
+ { %><%= link_to $uri => class => 'btn squeezevert' => begin %><%= $row->{obj}->stringify %><%= end %><% } else { %><b><%=
+ $row->{obj} ? $row->{obj}->stringify : "" %></b> <% } %> <%= $row->{audit_note} %>
 % }
 </pre>
 
