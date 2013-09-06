@@ -2,6 +2,14 @@ package Tuba::DB::Object::Finding;
 # Tuba::DB::Mixin::Object::Finding;
 use strict;
 
+sub numeric {
+    my $s = shift;
+    if (my $chapter = $s->chapter) {
+        return sprintf('%d.%d',$chapter->number,$s->ordinal // '');
+    }
+    return $s->ordinal // '';
+}
+
 sub stringify {
     my $c = shift;
     my %args = @_;

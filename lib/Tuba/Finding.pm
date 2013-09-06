@@ -21,7 +21,7 @@ sub list {
             query => [chapter_identifier => $chapter_identifier, report_identifier => $report_identifier],
             with_objects => ['chapter'],
             @page,
-            sort_by => "ordinal, t1.identifier");
+            sort_by => "number, ordinal, t1.identifier");
         $c->title("Findings in report : $report_identifier, chapter $chapter_identifier");
         $c->set_pages(
             Findings->get_objects_count(
@@ -33,7 +33,7 @@ sub list {
         $objects = Findings->get_objects(
             query => [ report_identifier => $report_identifier ],
             with_objects => ['chapter'],
-            sort_by => "ordinal, t1.identifier",
+            sort_by => "number, ordinal, t1.identifier",
             @page,
         );
         $c->set_pages(
@@ -43,6 +43,7 @@ sub list {
     }
 
     $c->stash(objects => $objects);
+    $c->stash(extra_cols => [ 'numeric' ]);
     $c->SUPER::list(@_);
 }
 
