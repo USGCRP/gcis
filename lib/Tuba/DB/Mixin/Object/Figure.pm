@@ -10,10 +10,14 @@ sub stringify {
 }
 
 sub uri {
-    my $s = shift;
-    my $c = shift;
+    my $s          = shift;
+    my $c          = shift;
+    my $opts       = shift;
+    my $route_name = $opts->{tab} || 'show';
+    $route_name .= '_figure';
+
     return $c->url_for(
-        'show_figure',
+        $route_name,
         {
             figure_identifier => $s->identifier,
             report_identifier  => $s->report_identifier,
