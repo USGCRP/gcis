@@ -7,10 +7,10 @@ limit : <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.sub
 <pre>
 % for my $row (@$change_log) {
 <%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b> <%=
-   $row->{action} eq 'I' ? 'inserted'
+   $row->{action} eq 'I' ? 'inserted new'
  : $row->{action} eq 'D' ? 'deleted'
  : "set ".$row->{changed_fields}
- %> <%= $row->{table_name}
+ %><%= $row->{action} eq 'U' ? " for" : "" %> <%= $row->{table_name}
  %> <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show')))
  { %><%= link_to $uri => class => 'btn squeezevert' => begin %><%= $row->{obj}->stringify %><%= end %><% } else { %><b><%=
  $row->{obj} ? $row->{obj}->stringify : "" %></b> <% } %> <%= $row->{audit_note} %>
