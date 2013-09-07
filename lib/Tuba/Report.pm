@@ -107,7 +107,6 @@ sub watch {
     my $change_log = $result->all;
     for my $row (@$change_log) {
         my $table = $row->{table_name};
-        warn $table;
         my $class = $c->orm->{$table}{obj} or next;
         my $vals = hstore_decode($row->{row_data});
         if (my $other = $row->{changed_fields}) {
