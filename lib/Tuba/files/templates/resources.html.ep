@@ -1,12 +1,7 @@
 % layout 'default';
 
-<h2>Resources</h2>
-
-<dl>
- <dt>Report</dt>
- <dd>A report, such as the NCA3 has an identifier and a title.</dd>
-
- <dt>Figure</dt>
- <dd>A figure has a unique identifier, and is associated with a chapter in a report.</dd>
-
-</dl>
+<h2><center>Resources</center></h2>
+<p>The URLs within the GCIS API are representations of resources which are formally
+described by the
+<a href="http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCIS%20Ontology.htm">GCIS ontology</a>.
+</p>
