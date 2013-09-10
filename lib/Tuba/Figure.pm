@@ -99,8 +99,9 @@ sub update_rel {
         };
     }
 
+    my $report_identifier = $c->stash('report_identifier');
     for my $id ($c->param('delete_image')) {
-        ImageFigureMaps->delete_objects({ image_identifier => $id, figure_identifier => $object->identifier });
+        ImageFigureMaps->delete_objects({ image_identifier => $id, figure_identifier => $object->identifier, report_identifier => $report_identifier });
         $c->flash(message => 'Saved changes');
     }
 

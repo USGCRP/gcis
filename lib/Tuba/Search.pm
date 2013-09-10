@@ -29,12 +29,16 @@ sub autocomplete {
     my $max = $c->param('items') || 20;
     my $want = $c->param('type');
 
+    my @tables;
+    if ($want && $want=~/^(keyword)$/) { # TODO person, organization
+       @tables = ( $want );
+    } else {
+       @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+    }
     my @results;
-    for my $type (@{ PublicationTypes->get_objects(all => 1) }) {
-        my $table = $type->table;
-        logger->info('looking in '.$table);
+    for my $table (@tables) {
         next if $want && $table ne $want;
-        logger->info('still looking in '.$table);
+        logger->info('looking in '.$table);
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
         for (@got) {
@@ -51,36 +55,15 @@ sub autocomplete_str_to_object {
     # Reverse the above.
     my $c = shift;
     my $str = shift;
-    my @match =
-        $str =~ /^
-                   \[
+    my ($type) =
+        $str =~ /^ \[
                        ( [^]]+ )
                    \]
-                   (?:\ \{
-                       ( [^}]+ )
-                      \}
-                   )
-                   (?:\ \{
-                       ( [^}]+ )
-                      \}
-                   )?
-                   (?:\ \{
-                       ( [^}]+ )
-                      \}
-                   )?
-                   (?: [^}]* )$
                   /x;
-    my $type = shift @match;
-    my @keys = @match;
-    return unless $type && @keys;
+    return unless $type;
     my $table = PublicationType->new(identifier => $type)->load->table or die "no table for $type";
     my $class = $c->orm->{$table}->{obj} or die "no class for $table";
-    my @pks = $class->meta->primary_key_column_names;
-    my %new;
-    @new{@pks} = @keys;
-    my $obj = $class->new( %new );
-    $obj->load(speculative => 1);
-    return $obj;
+    return $class->new_from_autocomplete($str);
 }
 
 1;

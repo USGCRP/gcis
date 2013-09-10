@@ -1,0 +1,32 @@
+
+%= hidden_field 'delete_keyword';
+
+%= link_to 'create_form_keyword' => class => 'btn' => begin
+create new keyword
+%= end
+
+<table class='table table-condensed table-bordered'>
+% for my $keyword ($object->keywords) {
+<tr>
+<td class='row'>
+%= include 'obj_thumbnails', objs => [ $keyword ];
+</td>
+
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_keyword"].value = '].$keyword->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+%= text_field 'new_keyword', placeholder => "new keyword", id => "newkeyword", class => 'span9';
+
+%= javascript begin
+$('#newkeyword').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'keyword' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

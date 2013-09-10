@@ -60,9 +60,43 @@ sub show {
 
 sub update_rel_form {
     my $c = shift;
-    $c->stash(relationships => [ map Finding->meta->relationship($_), qw/keywords/ ]); # TODO
-    $c->SUPER::update_rel_form(@_);
+    $c->stash(relationships => [ map Finding->meta->relationship($_), qw/keywords/ ]);
+    $c->stash(controls => {
+            keywords => sub {
+                my ($c,$obj) = @_;
+                +{
+                    template => 'keywords',
+                    params => { }
+                  }
+              }
+        });
 
+    $c->SUPER::update_rel_form(@_);
+}
+
+sub update_rel {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    my $next = $object->uri($c,{tab => 'update_rel_form'});
+    $object->meta->error_mode('return');
+    if (my $new = $c->param('new_keyword')) {
+        my $kwd = Keyword->new_from_autocomplete($new);
+        #$c->Tuba::Search::autocomplete_str_to_object($new);
+        $object->add_keywords($kwd);
+        $object->save(audit_user => $c->user) or do {
+            $c->flash(error => $object->error);
+            return $c->redirect_to($next);
+        };
+    }
+
+    my $report_identifier = $c->stash('report_identifier');
+    for my $id ($c->param('delete_keyword')) {
+        next unless $id;
+        FindingKeywordMaps->delete_objects({ keyword_id => $id, finding_identifier => $object->identifier, report_identifier => $report_identifier });
+        $c->flash(message => 'Saved changes');
+    }
+
+    return $c->redirect_to($next);
 }
 
 1;

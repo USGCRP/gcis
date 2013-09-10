@@ -1,10 +1,17 @@
 % layout 'default';
 
 %= form_for current_route() => begin
-limit : <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit();}', class => 'span1'; %>
+last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit();}', class => 'span1'; %> changes
 %= end
 
-<pre>
+<style>
+    div.log {
+        font-family:monospace;
+        white-space:pre-wrap;
+        font-size:80%;
+    }
+</style>
+<div class='log well'>
 % for my $row (@$change_log) {
 <%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b> <%=
    $row->{action} eq 'I' ? 'inserted new'
@@ -15,5 +22,5 @@ limit : <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.sub
  { %><%= link_to $uri => class => 'btn squeezevert' => begin %><%= $row->{obj}->stringify %><%= end %><% } else { %><b><%=
  $row->{obj} ? $row->{obj}->stringify : "" %></b> <% } %> <i><%= $row->{audit_note} ? "($row->{audit_note})" : "" %></i>
 % }
-</pre>
+</div>
 

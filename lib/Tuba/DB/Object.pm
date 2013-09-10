@@ -266,5 +266,39 @@ sub as_tree {
     return $tree;
 }
 
+sub new_from_autocomplete {
+    # See Tuba::Search.
+    my $class = shift;
+    my $str = shift;
+    my @match =
+        $str =~ /^
+                   \[
+                       ( [^]]+ )
+                   \]
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )?
+                   (?:\ \{
+                       ( [^}]+ )
+                      \}
+                   )?
+                   (?: [^}]* )$
+                  /x;
+    my $table = shift @match;
+    die "wrong table : $table" unless $table eq $class->meta->table;
+    my @keys = @match;
+    my @pks = $class->meta->primary_key_column_names;
+    my %new;
+    @new{@pks} = @keys;
+    my $obj = $class->new( %new );
+    $obj->load(speculative => 1);
+    return $obj;
+}
+
 1;
 
