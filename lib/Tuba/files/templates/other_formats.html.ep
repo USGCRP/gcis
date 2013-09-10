@@ -1,11 +1,11 @@
 % my $base = current_resource;
-        URI  : <%= $self->req->url %>
-        JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
-        HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
-      Turtle : <%= link_to "$base.ttl" => begin %><%= "$base.ttl" %><%= end %>
-   N-Triples : <%= link_to "$base.nt" => begin %><%= "$base.nt" %><%= end %>
-JSON Triples : <%= link_to "$base.jsontriples" => begin %><%= "$base.jsontriples" %><%= end %>
-     RDF+XML : <%= link_to "$base.rdfxml" => begin %><%= "$base.rdfxml" %><%= end %>
-    RDF+JSON : <%= link_to "$base.rdfjson" => begin %><%= "$base.rdfjson" %><%= end %>
-    Graphviz : <%= link_to "$base.dot" => begin %><%= "$base.dot" %><%= end %>
-         SVG : <%= link_to "$base.svg" => begin %><%= "$base.svg" %><%= end %>
+<%= $self->req->url %>
+<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %> \
+<%= link_to "$base.ttl" => class => 'label label-info' => begin %>Turtle<%= end %> \
+<%= link_to "$base.nt" => class => 'label label-info' => begin %>N-Triples<%= end %> \
+<%= link_to "$base.jsontriples" => class => 'label label-info' => begin %>JSON Triples<%= end %> \
+<%= link_to "$base.rdfxml" => class => 'label label-info' => begin %>RDF+XML<%= end %> \
+<%= link_to "$base.rdfjson" => class => 'label label-info' => begin %>RDF+JSON<%= end %> \
+<%= link_to "$base.dot" => class => 'label label-info' => begin %>Graphviz<%= end %> \
+<%= link_to "$base.svg" => class => 'label label-info' => begin %>SVG<%= end %>
