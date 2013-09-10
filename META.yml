@@ -17,13 +17,15 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.49
+    version: 0.50
   Tuba::Article:
     file: lib/Tuba/Article.pm
   Tuba::Auth:
     file: lib/Tuba/Auth.pm
   Tuba::Chapter:
     file: lib/Tuba/Chapter.pm
+  Tuba::Contributor:
+    file: lib/Tuba/Contributor.pm
   Tuba::Controller:
     file: lib/Tuba/Controller.pm
   Tuba::Converter:
@@ -127,4 +129,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.49
+version: 0.50

@@ -93,6 +93,7 @@ db/dist/docs/html/table_gcis_metadata.organization_type_map.html
 db/dist/docs/html/table_gcis_metadata.person.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
+db/dist/docs/html/table_gcis_metadata.publication_file_map.html
 db/dist/docs/html/table_gcis_metadata.publication_map.html
 db/dist/docs/html/table_gcis_metadata.publication_ref.html
 db/dist/docs/html/table_gcis_metadata.publication_type.html
@@ -129,6 +130,7 @@ db/dist/docs/pod/table_organization_type_map.pod
 db/dist/docs/pod/table_person.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
+db/dist/docs/pod/table_publication_file_map.pod
 db/dist/docs/pod/table_publication_map.pod
 db/dist/docs/pod/table_publication_ref.pod
 db/dist/docs/pod/table_publication_type.pod
@@ -175,6 +177,11 @@ db/patches/0360_publication_file_again.sql
 db/patches/0370_remove_file_from_image.sql
 db/patches/0380_fix_file_table.sql
 db/patches/0390_article_fk.sql
+db/patches/0400_rename_fks.sql
+db/patches/0410_pubtype_identifier.sql
+db/patches/0420_fix_pub_triggers.sql
+db/patches/0430_cascade_findings.sql
+db/patches/0440_fix_audit_log.sql
 eg/atrac_upload.html
 eg/compare.pl
 eg/image-meta.pl
@@ -184,6 +191,7 @@ lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
+lib/Tuba/Contributor.pm
 lib/Tuba/Controller.pm
 lib/Tuba/Converter.pm
 lib/Tuba/Dataset.pm
@@ -225,6 +233,7 @@ lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
+lib/Tuba/files/templates/controls/keywords.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/create_form.html.ep
@@ -246,6 +255,7 @@ lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
+lib/Tuba/files/templates/import.html.ep
 lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
@@ -278,6 +288,7 @@ lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep
 lib/Tuba/files/templates/update_rel_form.html.ep
 lib/Tuba/files/templates/update_tabs.html.ep
+lib/Tuba/files/templates/watch.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Image.pm
 lib/Tuba/Importer.pm
