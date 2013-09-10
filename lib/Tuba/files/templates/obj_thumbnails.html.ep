@@ -1,4 +1,3 @@
-% my $i = 0;
 <div class='thumbnails' style='margin-left:0px;'>
 %    for my $obj (@$objs) {
         % my $pub = $obj->get_publication;
@@ -17,9 +16,9 @@
                         % }
                     % }
                 % }
-                <div class="caption">
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify(short => 1);
+                <div class="caption" style='overflow:hidden;' title='<%= $val %>'>
 
                 % if ($uri) {
                     %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin

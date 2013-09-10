@@ -99,7 +99,7 @@ String.prototype.htmlEscape = function() {
                     <li><%= link_to 'list_person' => begin %>people<%= end %></li>
                     <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                     % if (user_can('update')) {
-                    <li><%= link_to 'admin' => begin %>admin<%= end %></li>
+                    <li><%= link_to 'import' => begin %>import<%= end %></li>
                     % }
                 </ul>
             </div>

@@ -346,7 +346,7 @@ sub startup {
     $r->get('/autocomplete')->to('search#autocomplete');
 
     my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
-    $authed->get('/admin')->to(cb => sub { shift->render })->name('admin');
+    $authed->get('/import')->to(cb => sub { shift->render })->name('import');
     $authed->get('/watch')->to('report#watch')->name('_watch');
     $r->get('/login')->to('auth#login')->name('login');
     $r->get('/login_pw')->to('auth#login_pw')->name('_login_pw');
