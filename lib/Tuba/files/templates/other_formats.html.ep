@@ -1,5 +1,4 @@
 % my $base = current_resource;
-<%= $self->req->url %>
 <%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
 <%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %> \
 <%= link_to "$base.ttl" => class => 'label label-info' => begin %>Turtle<%= end %> \
@@ -9,3 +8,4 @@
 <%= link_to "$base.rdfjson" => class => 'label label-info' => begin %>RDF+JSON<%= end %> \
 <%= link_to "$base.dot" => class => 'label label-info' => begin %>Graphviz<%= end %> \
 <%= link_to "$base.svg" => class => 'label label-info' => begin %>SVG<%= end %>
+<%= $self->req->url %>

@@ -4,8 +4,8 @@
 % my $base = url_for('current')->to_abs;
 % $base =~ s/.html$$//;
 <pre>
-JSON : <%= link_to "$base.json" => begin %><%= "$base.json" %><%= end %>
-HTML : <%= link_to "$base.html" => begin %><%= "$base.html" %><%= end %>
+<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %>
 Primary key : <%= $meta->primary_key %>
 Unique keys : <%= join ',', $meta->unique_keys %>
 Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relationships } %>
