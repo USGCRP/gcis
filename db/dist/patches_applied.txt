@@ -41,3 +41,4 @@
 0420_fix_pub_triggers.sql	e4d46c3c454ba94e677d6e39580f0caf
 0430_cascade_findings.sql	1fce94eda3dfdfa94b0f0d6e10e682dc
 0440_fix_audit_log.sql	2ab39bca4b344e7fed1e4208863967ea
+0450_fix_pub_update.sql	413189063a258d613c87431a473ae539
