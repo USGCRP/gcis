@@ -84,7 +84,6 @@ sub update_rel {
     $object->meta->error_mode('return');
     if (my $new = $c->param('new_keyword')) {
         my $kwd = Keyword->new_from_autocomplete($new);
-        #$c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_keywords($kwd);
         $object->save(audit_user => $c->user) or do {
             $c->flash(error => $object->error);

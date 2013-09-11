@@ -13,7 +13,7 @@
 % }
 </table>
 <div style='font-size:75%;'>
-%= text_field class => 'little', 'new_keyword', placeholder => "new keyword", id => "newkeyword", class => 'span9';
+%= text_field 'new_keyword', placeholder => "new keyword", id => "newkeyword", class => 'span9';
 </div>
 
 %= javascript begin
