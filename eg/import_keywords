@@ -1,0 +1,34 @@
+#!/usr/bin/env perl
+
+use File::Temp;
+use strict;
+use Text::CSV_XS;
+use Mojo::UserAgent;
+use Smart::Comments;
+
+use Tuba::DB::Objects qw/-nicknames -autoconnect/;
+
+my $me = $ENV{USER} || 'unknown';
+my $ua = Mojo::UserAgent->new();
+my $content = $ua->get(q[http://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.csv])->res->body;
+my $csv = Text::CSV_XS->new();
+my @rows = split /\n/, $content;
+while ($csv->parse(shift @rows)) {  ###  Importing --->[%]             done
+    my @have = map { $_ || undef } $csv->fields;
+    my ($category, $topic, $term, $one, $two, $three) = @have;
+    next if $category eq 'Category';
+    next if $category =~ /^Keyword/;
+    my $kw = Keyword->new(
+      category => $category,
+      topic    => $topic,
+      term     => $term,
+      level1   => $one,
+      level2   => $two,
+      level3   => $three
+    );
+    $kw->load(speculative => 1);
+    $kw->save(audit_user => $me) or die $kw->error;
+}
+
+
+

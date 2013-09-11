@@ -2,6 +2,7 @@ package Tuba::Importer::Processor::Findings;
 use Mojo::Base qw/Tuba::Importer::Processor/;
 use Tuba::DB::Objects qw/-nicknames/;
 use List::MoreUtils qw/mesh/;
+use Text::CSV_XS;
 use Data::Dumper;
 
 sub process {
@@ -15,6 +16,7 @@ sub process {
 
     my $index = 0;
     my @labels;
+    my $csv = Text::CSV_XS->new({allow_whitespace => 1});
     for my $row (@$data) {
         next unless $row;
         unless (@labels) {
@@ -40,16 +42,36 @@ sub process {
             next;
         };
         if (my $kws = $record{'gcmd science keywords'} ) {
-            #$self->_note_info("found keywords for $record{identifier} : $kws\n");
-            for my $kw (split /\s*,\s*/, $kws) {
+            $csv->parse($kws) or do {
+                $self->_note_error("Error parsing keywords '$kws' :" .$csv->error_diag);
+                next;
+            };
+            for my $kw ($csv->fields) {
                  next unless $kw;
-                 my ($category, $topic, $term, $one, $two, $three) = split /\s*>\s*/, $kw;
-                 my $k = Keyword->new(category => $category, topic => $topic, term => $term, level1 => $one, level2 => $two, level3 => $three);
-                 eval { $k->load(speculative => 1); };
+                 $kw =~ s/^\s+//;
+                 $kw =~ s/\s+$//;
+                 next unless $kw;
+                 $kw =~ s/\s+/ /g;
+                 my @fields = $kw =~ /(?:\s*)([^>]+)\s*(?: >|$)/g;
+                 unless (@fields) {
+                    $self->_note_error("Cannot parse $kw", $index); next;
+                 }
+                 my ($category, $topic, $term, $one, $two, $three) = @fields;
+                my %want = (
+                  category => $category,
+                  topic    => $topic,
+                  term     => $term,
+                  level1   => $one,
+                  level2   => $two,
+                  level3   => $three
+                );
+                 my $k = Keyword->new(%want);
+                 unless (eval { $k->load(speculative => 1); }) {
+                    $self->_note_error("Failed to find keyword '$kw'", $index); next;
+                 }
                  if ($@) {
                     $self->_note_error("Error loading '$kw' : $@", $index); next;
                  }
-                 $k->save($self->_audit_info) or do { $self->_note_error($k->error, $index); next };
                  $finding->add_keywords($k);
                  $finding->save($self->_audit_info) or do {
                      $self->_note_error($finding->error, $index);
