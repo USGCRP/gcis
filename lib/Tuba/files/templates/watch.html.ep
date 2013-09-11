@@ -7,20 +7,38 @@ last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit
 <style>
     div.log {
         font-family:monospace;
-        white-space:pre-wrap;
         font-size:80%;
+    }
+    div.log .logrow {
+        white-space:nowrap;
     }
 </style>
 <div class='log well'>
 % for my $row (@$change_log) {
-<%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b> <%=
-   $row->{action} eq 'I' ? 'inserted new'
- : $row->{action} eq 'D' ? 'deleted'
- : "set ".$row->{changed_fields}
- %><%= $row->{action} eq 'U' ? " for" : "" %> <%= $row->{table_name}
- %> <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show')))
- { %><%= link_to $uri => class => 'btn squeezevert' => begin %><%= $row->{obj}->stringify %><%= end %><% } else { %><b><%=
- $row->{obj} ? $row->{obj}->stringify : "" %></b> <% } %> <i><%= $row->{audit_note} ? "($row->{audit_note})" : "" %></i>
+    <div class='logrow'>
+        <%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b>
+
+        <%= $row->{action} eq 'I' ? 'inserted new'
+         : $row->{action} eq 'D' ? 'deleted'
+         : "set ".$row->{changed_fields} =%>
+
+         <%= $row->{action} eq 'U' ? " for" : "" =%>
+
+         <%= $row->{table_name} %> 
+
+         <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show'))) { %>
+             <%= link_to $uri => class => 'btn squeezevert' => begin =%>
+                 <%= $row->{obj}->stringify =%>
+             <%= end %>
+         <% } else { %>
+         <b><%= $row->{obj} ? $row->{obj}->stringify
+             : $row->{yaml} ? $row->{yaml}
+             : "" %></b>
+         <% } %>
+
+         <i><%= $row->{audit_note} ? "($row->{audit_note})" : "" %></i>
+
+    </div>
 % }
 </div>
 

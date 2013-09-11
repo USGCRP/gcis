@@ -107,13 +107,15 @@ sub watch {
     my $change_log = $result->all;
     for my $row (@$change_log) {
         my $table = $row->{table_name};
+        next if $table =~ /^_/;
         my $class = $c->orm->{$table}{obj} or next;
         my $vals = hstore_decode($row->{row_data});
         if (my $other = $row->{changed_fields}) {
             $other = hstore_decode($other);
             %$vals = ( %$vals, %$other);
         }
-        $row->{obj} = $class->new(%$vals);
+        $row->{obj} = eval { $class->new(%$vals); };
+
         #$row->{obj}->load(speculative => 1);
     }
 
