@@ -52,19 +52,21 @@ sub process {
                  $kw =~ s/\s+$//;
                  next unless $kw;
                  $kw =~ s/\s+/ /g;
-                 my @fields = $kw =~ /(?:\s*)([^>]+)\s*(?: >|$)/g;
+                 my @fields = $kw =~ /(?:\s*)([^>]+)\s*(?: ?>|$)/g;
                  unless (@fields) {
                     $self->_note_error("Cannot parse $kw", $index); next;
                  }
+                 s/^\s+// for @fields;
+                 s/\s+$// for @fields;
                  my ($category, $topic, $term, $one, $two, $three) = @fields;
-                my %want = (
+                 my %want = (
                   category => $category,
                   topic    => $topic,
                   term     => $term,
                   level1   => $one,
                   level2   => $two,
                   level3   => $three
-                );
+                 );
                  my $k = Keyword->new(%want);
                  unless (eval { $k->load(speculative => 1); }) {
                     $self->_note_error("Failed to find keyword '$kw'", $index); next;
