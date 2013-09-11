@@ -1,10 +1,6 @@
 
 %= hidden_field 'delete_keyword';
 
-%= link_to 'create_form_keyword' => class => 'btn' => begin
-create new keyword
-%= end
-
 <table class='table table-condensed table-bordered'>
 % for my $keyword ($object->keywords) {
 <tr>
