@@ -16,14 +16,16 @@ create new keyword
 </tr>
 % }
 </table>
-%= text_field 'new_keyword', placeholder => "new keyword", id => "newkeyword", class => 'span9';
+<div style='font-size:75%;'>
+%= text_field class => 'little', 'new_keyword', placeholder => "new keyword", id => "newkeyword", class => 'span9';
+</div>
 
 %= javascript begin
 $('#newkeyword').typeahead({
     minLength : 1,
     items : 15,
     source : function(query,process) {
-            return $.get('/autocomplete', { q : query, items : 15, type : 'keyword' }, function(data) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'keyword', elide : 120 }, function(data) {
                  return process(data);
             });
         }

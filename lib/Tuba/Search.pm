@@ -28,9 +28,10 @@ sub autocomplete {
     return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
     my $want = $c->param('type');
+    my $elide = $c->param('elide') || 80;
 
     my @tables;
-    if ($want && $want=~/^(keyword)$/) { # TODO person, organization
+    if ($want && $want=~/^(keyword|person|organization)$/) {
        @tables = ( $want );
     } else {
        @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
@@ -44,7 +45,7 @@ sub autocomplete {
         for (@got) {
             push @results, join ' ', "[".$table."]",
                                       ( map "{".$_."}", $_->pk_values ),
-                                      $c->elide($_->stringify,80);
+                                      $c->elide($_->stringify,$elide);
         }
     }
 

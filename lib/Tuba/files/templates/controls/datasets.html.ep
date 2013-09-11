@@ -1,0 +1,32 @@
+
+%= hidden_field 'delete_dataset';
+
+%= link_to 'create_form_dataset' => class => 'btn' => begin
+create new dataset
+%= end
+
+<table class='table table-condensed table-bordered'>
+% for my $dataset ($object->datasets) {
+<tr>
+<td class='row'>
+%= include 'obj_thumbnails', objs => [ $dataset ];
+</td>
+
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_dataset"].value = '].$dataset->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+%= text_field 'new_dataset', placeholder => "new dataset", id => "newdataset", class => 'span9';
+
+%= javascript begin
+$('#newdataset').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'dataset' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end
