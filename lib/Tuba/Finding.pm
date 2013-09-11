@@ -52,7 +52,10 @@ sub show {
     my $meta = Finding->meta;
     my $identifier = $c->stash('finding_identifier');
     my $report_identifier = $c->stash('report_identifier');
-    my $object = Finding->new( identifier => $identifier, report_identifier => $report_identifier )->load( speculative => 1)
+    my $object = Finding->new(
+      identifier        => $identifier,
+      report_identifier => $report_identifier
+      )->load(speculative => 1, with => [ 'keywords' ])
       or return $c->render_not_found;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
