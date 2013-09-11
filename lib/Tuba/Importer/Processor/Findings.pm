@@ -40,11 +40,16 @@ sub process {
             next;
         };
         if (my $kws = $record{'gcmd science keywords'} ) {
-            $self->_note_info("found keywords for $record{identifier} : $kws\n");
-             for my $kw (split /\s*,\s*/, $kws) {
+            #$self->_note_info("found keywords for $record{identifier} : $kws\n");
+            for my $kw (split /\s*,\s*/, $kws) {
+                 next unless $kw;
                  my ($category, $topic, $term, $one, $two, $three) = split /\s*>\s*/, $kw;
                  my $k = Keyword->new(category => $category, topic => $topic, term => $term, level1 => $one, level2 => $two, level3 => $three);
-                 $k->load(speculative => 1) or $k->save($self->_audit_info) or do { $self->_note_error($k->error, $index); next };
+                 eval { $k->load(speculative => 1); };
+                 if ($@) {
+                    $self->_note_error("Error loading '$kw' : $@", $index); next;
+                 }
+                 $k->save($self->_audit_info) or do { $self->_note_error($k->error, $index); next };
                  $finding->add_keywords($k);
                  $finding->save($self->_audit_info) or do {
                      $self->_note_error($finding->error, $index);
