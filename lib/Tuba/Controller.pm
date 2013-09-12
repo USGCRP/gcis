@@ -214,7 +214,7 @@ sub _chaplist {
 sub _rptlist {
     my $c = shift;
     my @reports = @{ Reports->get_objects(sort_by => 'identifier') };
-    return [ '', map [ sprintf( '%s : %.80s', ( $_->identifier || '' ), $_->title ), $_->identifier ], @reports ];
+    return [ '', map [ sprintf( '%s : %.80s', ( $_->identifier || '' ), ($_->title || '') ), $_->identifier ], @reports ];
 }
 sub _default_controls {
     my $c = shift;
