@@ -10,13 +10,6 @@ sub numeric {
 
 sub stringify {
     my $c = shift;
-    #my %args = @_;
-    #if ($args{short}) {
-    #    if (my $num = $c->numeric) {
-    #        return $num.' '.$c->identifier;
-    #    }
-    #    return $c->identifier;
-    #}
     if (my $num = $c->numeric) {
         return join ' ', $num, ($c->title || $c->identifier);
     }
