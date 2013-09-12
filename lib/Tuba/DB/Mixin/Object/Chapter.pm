@@ -28,5 +28,12 @@ sub stringify {
     return "Chapter ".$s->number." : ".$s->title;
 }
 
+sub sortkey {
+    my $s = shift;
+    return $s->{_sortkey} if defined($s->{_sortkey});
+    my $num = $s->number || 0;
+    $s->{_sortkey} = sprintf('%10d%s',$num,$s->title || '');
+}
+
 1;
 

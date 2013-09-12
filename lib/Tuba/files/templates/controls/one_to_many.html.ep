@@ -1,0 +1,30 @@
+
+% my $name = $rel->name;
+<div class='row-fluid'>
+    <div class='span10'>
+        <center>
+    <h4>
+        %= obj_link_to $rel->class, 'create_form' => class => 'btn btn-info' => style => 'color:black;' => begin
+        create a new <%= $name %>
+        %= end
+        <br>
+        To delete a <%= $name %>, follow the link below, and click 'delete'.
+    </h4>
+    </center>
+    </div>
+</div>
+<div class='row-fluid'>
+
+% my $i = 0;
+% for my $obj (sort { $a->sortkey cmp $b->sortkey } $object->$name) {
+    <div class='span2'>
+        %= obj_link_to $obj => 'update_form' => class => 'btn' => begin
+        %= $obj->stringify(short => 1);
+        %= end
+    </div>
+    % if (++$i % 6 == 0) {
+    </div>
+    <div class='row-fluid'>
+    % }
+% }
+</div>

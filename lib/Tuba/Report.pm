@@ -122,5 +122,16 @@ sub watch {
     $c->render(template => 'watch', change_log => $change_log);
 }
 
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Report->meta->relationship($_), qw/chapter figure finding/ ]);
+    $c->stash(controls => {
+            chapter => { template => 'one_to_many' },
+            figure  => { template => 'one_to_many' },
+            finding => { template => 'one_to_many' }
+        });
+    $c->SUPER::update_rel_form(@_);
+}
+
 1;
 

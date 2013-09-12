@@ -26,7 +26,7 @@
 <div class="controls" style='border:1px solid #ddd;'>
     % if (my $entry = $controls->{$rel->name}) {
         % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
-        %= include 'controls/'.$entry->{template}, object => $object, %{ $entry->{params} || {} };
+        %= include 'controls/'.$entry->{template}, object => $object, rel => $rel, %{ $entry->{params} || {} };
     % } else {
     <span class='alert alert-danger'>not implemented</span>
     % }

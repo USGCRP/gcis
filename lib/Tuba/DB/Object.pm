@@ -36,6 +36,13 @@ sub stringify {
     return scalar $s->pk_values;
 }
 
+sub sortkey {
+    my $s = shift;
+    return $s->{_sortkey} if defined($s->{_sortkey});
+    $s->{_sortkey} = $s->stringify;
+    return $s->{_sortkey};
+}
+
 sub pk_values {
     my $s = shift;
     my $delim = shift || '/';
@@ -288,9 +295,10 @@ sub new_from_autocomplete {
                       \}
                    )?
                    (?: [^}]* )$
-                  /x;
+                  /x or return;
     my $table = shift @match;
-    die "wrong table : $table" unless $table eq $class->meta->table;
+    return unless $table;
+    return unless $table eq $class->meta->table;
     my @keys = @match;
     my @pks = $class->meta->primary_key_column_names;
     my %new;

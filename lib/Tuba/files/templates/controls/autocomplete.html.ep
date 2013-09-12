@@ -1,0 +1,23 @@
+%# parameters :
+%# column (rose-db column), object_type (e.g. 'organization')
+
+% if (my $col = stash 'column') {
+    % if (my $val = stash 'value') {
+    % param $column->name => $val;
+    % }
+    %= text_field $column->name, id => $column->name, class => 'span8', placeholder => 'type to search';
+% } else {
+    missing $column for autocomplete
+% }
+
+%= javascript begin
+$('#<%= $column->name %>').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : '<%= $object_type %>' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+%= end

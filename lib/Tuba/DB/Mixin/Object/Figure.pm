@@ -1,5 +1,6 @@
 package Tuba::DB::Object::Figure;
 # Tuba::DB::Mixin::Object::Figure;
+use strict;
 
 sub numeric {
     my $c = shift;
@@ -9,10 +10,29 @@ sub numeric {
 
 sub stringify {
     my $c = shift;
+    #my %args = @_;
+    #if ($args{short}) {
+    #    if (my $num = $c->numeric) {
+    #        return $num.' '.$c->identifier;
+    #    }
+    #    return $c->identifier;
+    #}
     if (my $num = $c->numeric) {
         return join ' ', $num, ($c->title || $c->identifier);
     }
     return $c->title || $c->identifier;
+}
+
+sub sortkey {
+    my $s = shift;
+    return $s->{_sortkey} if defined($s->{_sortkey});
+    my $chapter_number = 0;
+    if (my $chapter = $s->chapter) {
+        $chapter_number = $chapter->number || 0;
+    }
+    my $ordinal = $s->ordinal || 0;
+    $s->{_sortkey} = sprintf('%10d%10d',$chapter_number,$ordinal);
+    return $s->{_sortkey};
 }
 
 sub uri {

@@ -160,6 +160,7 @@ sub create {
     } else {
         for my $col ($object_class->meta->columns) {
             my $got = $c->param($col->name);
+            $got = $c->normalize_form_parameter(column => $col->name, value => $got);
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
     }
@@ -218,6 +219,10 @@ sub _rptlist {
 sub _default_controls {
     my $c = shift;
     return (
+        organization_identifier => sub {
+            my $c = shift;
+            { template => 'autocomplete', params => { object_type => 'organization' } }
+        },
         chapter_identifier => sub { my $c = shift;
                             +{ template => 'select',
                                params => { values => $c->_chaplist($c->stash('report_identifier')) } } },
@@ -494,6 +499,17 @@ sub _differ {
     return 0;
 }
 
+sub normalize_form_parameter {
+    my $c = shift;
+    my %args = @_;
+    my ($column, $value) = @args{qw/column value/};
+    if ($column eq 'organization_identifier') {
+        my $org = Organization->new_from_autocomplete($value);
+        return $org->identifier if $org;
+    }
+    return $value;
+}
+
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
@@ -516,6 +532,7 @@ sub update {
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
+        $param = $c->normalize_form_parameter(column => $col->name, value => $param);
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
