@@ -38,5 +38,15 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Chapter->meta->relationship($_), qw/report figure finding/ ]);
+    $c->stash(controls => {
+            figure  => { template => 'one_to_many' },
+            finding => { template => 'one_to_many' }
+        });
+    $c->SUPER::update_rel_form(@_);
+}
+
 1;
 

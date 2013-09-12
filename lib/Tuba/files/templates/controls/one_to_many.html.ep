@@ -3,13 +3,13 @@
 <div class='row-fluid'>
     <div class='span10'>
         <center>
-    <h4>
-        %= obj_link_to $rel->class, 'create_form' => class => 'btn btn-info' => style => 'color:black;' => begin
+    <b>
+        %= obj_link_to $rel->class, 'create_form' => class => 'btn' => begin
         create a new <%= $name %>
         %= end
         <br>
         To delete a <%= $name %>, follow the link below, and click 'delete'.
-    </h4>
+    </b>
     </center>
     </div>
 </div>
