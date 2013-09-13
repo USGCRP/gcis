@@ -30,8 +30,16 @@ sub show {
     my $report = $c->stash('report_identifier');
     my $chapter =
       Chapter->new( identifier => $identifier, report_identifier => $report )
-      ->load( speculative => 1, with => [qw/figure finding report/] )
-      or return $c->render_not_found;
+          ->load( speculative => 1, with => [qw/figure finding report/] );
+    if (!$chapter && $identifier =~ /^\d+$/) {
+      $chapter = Chapter->new( number => $identifier, report_identifier => $report )
+        ->load( speculative => 1, with => [qw/figure finding report/] );
+      if ($chapter) {
+        $c->stash(chapter_identifier => $chapter->identifier);
+        return $c->redirect_to( $c->current_route, { chapter_identifier => $chapter->identifier } );
+      }
+    }
+    return $c->render_not_found unless $chapter;
 
     $c->stash(object => $chapter);
     $c->stash(meta => Chapter->meta);
