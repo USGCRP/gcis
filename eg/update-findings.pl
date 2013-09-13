@@ -7,7 +7,8 @@ use feature qw/:all/;
 use strict;
 use warnings;
 
-my $base    = "http://localhost:3000";
+#my $base    = "http://localhost:3000";
+my $base    = "https://data.gcis-dev-front.joss.ucar.edu";
 my $keyfile = "$ENV{HOME}/.gcis_api_key";
 my $key     = file($keyfile)->slurp;
 chomp $key;
