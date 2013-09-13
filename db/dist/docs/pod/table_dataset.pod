@@ -28,6 +28,7 @@ dataset
  vertical_extent (character varying) - 
  processing_level (character varying) - 
  spatial_res (character varying) - 
+ doi (character varying) - 
 
 
 =head1 SCHEMA
@@ -54,6 +55,7 @@ dataset
   vertical_extent  | character varying              |           | extended | 
   processing_level | character varying              |           | extended | 
   spatial_res      | character varying              |           | extended | 
+  doi              | character varying              |           | extended | 
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:

@@ -128,7 +128,8 @@ CREATE TABLE dataset (
     temporal_extent character varying,
     vertical_extent character varying,
     processing_level character varying,
-    spatial_res character varying
+    spatial_res character varying,
+    doi character varying
 );
 
 
