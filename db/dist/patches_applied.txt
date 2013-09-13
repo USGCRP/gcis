@@ -42,3 +42,4 @@
 0430_cascade_findings.sql	1fce94eda3dfdfa94b0f0d6e10e682dc
 0440_fix_audit_log.sql	2ab39bca4b344e7fed1e4208863967ea
 0450_fix_pub_update.sql	413189063a258d613c87431a473ae539
+0460_finding_attributes.sql	411822796a934ce61308539e06ccd971

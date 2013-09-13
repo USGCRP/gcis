@@ -216,8 +216,24 @@ CREATE TABLE finding (
     chapter_identifier character varying,
     statement character varying,
     ordinal integer,
-    report_identifier character varying NOT NULL
+    report_identifier character varying NOT NULL,
+    process character varying,
+    evidence character varying,
+    uncertainties character varying,
+    confidence character varying
 );
+
+
+
+COMMENT ON COLUMN finding.evidence IS 'Description of evidence base';
+
+
+
+COMMENT ON COLUMN finding.uncertainties IS 'New information and remaining uncertainties';
+
+
+
+COMMENT ON COLUMN finding.confidence IS 'Assessment of confidence based on evidence';
 
 
 

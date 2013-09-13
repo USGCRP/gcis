@@ -154,7 +154,7 @@ SELECT pg_catalog.setval('file_id_seq', 1, false);
 -- Data for Name: finding; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding (identifier, chapter_identifier, statement, ordinal, report_identifier) FROM stdin;
+COPY finding (identifier, chapter_identifier, statement, ordinal, report_identifier, process, evidence, uncertainties, confidence) FROM stdin;
 \.
 
 
