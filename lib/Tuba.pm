@@ -17,6 +17,7 @@ use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
 use Tuba::Converter;
 use Tuba::Log;
+use Data::UUID::LibUUID;
 
 our $VERSION = '0.50';
 our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
@@ -286,6 +287,7 @@ sub startup {
     my $r = $app->routes;
 
     # API
+    $r->get('/uuid' => sub { shift->render(text => new_uuid_string(4) ) } => 'uuid');
     my $report = $r->resource('report');
     my $chapter = $report->resource('chapter');
     $r->lookup('select_chapter')->resource('finding');
