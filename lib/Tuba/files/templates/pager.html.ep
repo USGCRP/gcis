@@ -11,9 +11,9 @@
 <%= link_to url_for->query(page => ( $page - 1)) => class => 'btn btn-small' => begin %><i class='icon-backward'></i><%= end %><
 % }
 
-<a class='dropdown btn btn-small' data-toggle='dropdown' href='#'>
-    <%= $page %> <b class='caret'></b>
-</a>
+<button class='btn btn-small dropdown-toggle' data-toggle='dropdown'>
+    <%= $page %> <span class='caret'></span>
+</button>
 <ul class='dropdown-menu' role='menu' area-labelledby='dLabel'>
     % if (stash 'favorite_ok') {
     <li><%= link_to url_for->query(page => '♥') => begin %><i class='icon-heart'></i><%= end %></li>
