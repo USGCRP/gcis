@@ -32,6 +32,6 @@
 % }
 </table>
 % if (my $page = stash 'page') {
-%= include 'pager', page => $page;
+%= include 'pager', page => $page, bottom => 1;
 % }
 

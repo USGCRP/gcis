@@ -3,7 +3,7 @@
 % my $pages = stash 'pages';
 % if ($page && $pages > 1) {
 <center>
-<div class='btn-group' style='margin-bottom:4px;'>
+    <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
 % if ($page==1) {
 <span class='btn btn-small disabled'><i class='icon-backward'></i></span>

@@ -47,4 +47,4 @@
     </tr>
 % }
 </table>
-%= include 'pager';
+%= include 'pager', bottom => 1;
