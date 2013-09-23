@@ -243,9 +243,14 @@ sub make_identifier {
 
 =head2 as_tree
 
-In addition to the helper object, pass c => current controller
-in order to also get an array of parent publications.  (The controller
-is used to find the url for parenst).
+Override Rose::DB::Object::Helpers::as_tree, and provide more
+information :
+
+    - a list of parent publications
+    - a list of files
+
+The parameter 'c' should have a controller object
+(so that we can look up a URL for an object).
 
 =cut
 
@@ -262,9 +267,10 @@ sub as_tree {
                     relationship => $parent->{relationship},
                     publication_type_identifier => $pub->{publication_type_identifier},
                     label => $pub->stringify,
-                    url => $pub->to_object->uri($c),
+                    url   => $pub->to_object->uri($c),
                 };
             }
+            $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
         }
     }
     for my $k (keys %$tree) {
