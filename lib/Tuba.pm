@@ -155,6 +155,31 @@ sub startup {
             push @formats, $c->stash('format') if $c->stash('format');
             return $formats[0];
         });
+    $app->helper(ontology_url => sub {
+            my $c = shift;
+            my $str = shift or return;
+            my ($namespace,$frag) = split /:/, $str;
+            return unless $namespace;
+            my %map = (
+              prov   => q<http://www.w3.org/ns/prov#>,
+              bibo   => q<http://purl.org/ontology/bibo/>,
+              dc     => q<http://purl.org/dc/elements/1.1/>,
+              dct    => q<http://purl.org/dc/terms/>,
+              dctype => q<http://purl.org/dc/dcmitype/>,
+              foaf   => q<http://xmlns.com/foaf/0.1/>,
+              gcis   => q<http://data.globalchange.gov/gcis.owl#>,
+              org    => q<http://www.w3.org/ns/org#>,
+              prov   => q<http://www.w3.org/ns/prov#>,
+              rdf    => q<http://www.w3.org/1999/02/22-rdf-syntax-ns#>,
+              rdfs   => q<http://www.w3.org/2000/01/rdf-schema#>,
+              xml    => q<http://www.w3.org/XML/1998/namespace>,
+              xsd    => q<http://www.w3.org/2001/XMLSchema#>,
+              cito   => #q<http://purl.org/spar/cito/>, # redirect ignores trailing part of url
+                        q<http://www.essepuntato.it/lode/http://purl.org/spar/cito/>
+            );
+            my $base = $map{$namespace} or return;
+            return $base.$frag;
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {

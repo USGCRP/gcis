@@ -13,7 +13,7 @@
 % for my $parent (@parents) {
     % my $parent_pub = $parent->{publication};
     <tr>
-    <td><%= $parent->{relationship} %></td>
+        <td><%= link_to ontology_url($parent->{relationship}) => begin %><%= $parent->{relationship} %><%= end %></td>
     <td><%= $parent->{note} || "" %></td>
     <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
     % if (stash 'add_delete_buttons') {
