@@ -30,6 +30,7 @@ Also from 'dot', we go through graphviz to get to svg.
 
 package Tuba::Converter;
 use Mojo::Base qw/-base/;
+use Text::Format;
 use Tuba::Log;
 
 has 'ttl';  # Turtle
@@ -49,9 +50,27 @@ sub output {
     my $fmt = $a{format} or die 'no format given';
     if ($fmt eq 'svg') {
         my $dot = $s->output(format => 'dot');
-        my $in = _tmp($dot);
+        my $width = 40;
+        my $truncate = 350;
+        my $fmt = Text::Format->new({columns => $width});
+        my $filtered = '';
+        for my $line (split /\n/, $dot) {
+          if ($line =~ m/label="(.*?)"/ && $line !~ /Model:/) {
+            my $labeltext = $1;
+            $labeltext =~ s[/][/ ]g;
+            my $newlabel = $fmt->format($labeltext);
+            $newlabel =~ s/\n/\\n/g;
+            $labeltext =~ s[/ ][/]g;
+            if (length($newlabel) > $truncate) {
+                $newlabel = substr($newlabel,0,$truncate - 2).'...';
+            }
+            $line =~ s/label=".*?"/label="$newlabel"/;
+          }
+          $filtered .= $line."\n";
+        }
+        my $in = _tmp($filtered);
         my $errs = File::Temp->new;
-        my $cmd = "dot -Tsvg $in 2>$errs";
+        my $cmd = "iconv -f iso-8859-1 -t utf8 $in > $in.conv && dot -Nwidth=3 -Nheight=1.5 -Nfontsize=8 -Nfixedsize=true -Tsvg $in.conv 2>$errs";
         my $got = `$cmd` or do {
             logger->error("Error converting to svg ".join '',<$errs>);
             return "error converting to svg";
