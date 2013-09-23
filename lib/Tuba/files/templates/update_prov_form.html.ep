@@ -32,7 +32,7 @@ This resource
 Relationship
 </label>
 <div class='controls'>
-%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom' ], class => 'input span10',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom', 'gcis:cites' ], class => 'input span10',
 </div>
 
 <label class="control-label" for="parent">

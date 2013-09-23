@@ -160,6 +160,7 @@ sub startup {
             my $str = shift or return;
             my ($namespace,$frag) = split /:/, $str;
             return unless $namespace;
+            my $gcis = $c->req->url->base->to_abs;
             my %map = (
               prov   => q<http://www.w3.org/ns/prov#>,
               bibo   => q<http://purl.org/ontology/bibo/>,
@@ -167,7 +168,7 @@ sub startup {
               dct    => q<http://purl.org/dc/terms/>,
               dctype => q<http://purl.org/dc/dcmitype/>,
               foaf   => q<http://xmlns.com/foaf/0.1/>,
-              gcis   => q<http://data.globalchange.gov/gcis.owl#>,
+              gcis   => qq<$gcis/gcis.owl#>,
               org    => q<http://www.w3.org/ns/org#>,
               prov   => q<http://www.w3.org/ns/prov#>,
               rdf    => q<http://www.w3.org/1999/02/22-rdf-syntax-ns#>,
@@ -347,6 +348,12 @@ sub startup {
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
         => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]
       )->to('figure#redirect_to_identifier')->name('figure_redirect');
+
+    # To regenerate the owl file, get this URL :
+    # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl
+    # Then prefix href's for the css at the top with
+    #   http://ontorule-project.eu/parrot
+    $app->types->type(owl => 'text/html');
 
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');
