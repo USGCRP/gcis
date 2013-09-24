@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.50
+    version: 0.51
   Tuba::Article:
     file: lib/Tuba/Article.pm
   Tuba::Auth:
@@ -115,6 +115,7 @@ requires:
   Crypt::OpenSSL::RSA: 0
   DBIx::Custom: 0
   DBIx::Simple: 0
+  Data::UUID::LibUUID: 0
   Date::Parse: 0
   File::ShareDir: 1.00
   JSON::WebToken: 0
@@ -125,8 +126,10 @@ requires:
   Rose::DB::Object: 0
   SQL::Abstract: 0
   SQL::Interp: 0
+  Text::CSV_XS: 0
+  Text::Format: 0
   YAML::Syck: 0
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.50
+version: 0.51

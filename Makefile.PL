@@ -12,6 +12,7 @@ WriteMakefile
                  ],
   'VERSION_FROM' => 'lib/Tuba.pm',
   'PREREQ_PM' => {
+                   'Data::UUID::LibUUID' => 0,
                    'Pg::hstore' => 0,
                    'JSON::XS' => 0,
                    'DBIx::Simple' => 0,
@@ -19,7 +20,9 @@ WriteMakefile
                    'DBIx::Custom' => 0,
                    'Rose::DB::Object' => 0,
                    'Algorithm::Permute' => 0,
+                   'Text::Format' => 0,
                    'File::ShareDir' => '1.00',
+                   'Text::CSV_XS' => 0,
                    'SQL::Abstract' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
                    'JSON::WebToken' => 0,
