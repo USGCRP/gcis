@@ -24,8 +24,9 @@ sub uri {
 
 sub stringify {
     my $s = shift;
+    return $s->identifier unless $s->title || $s->number;
     return $s->title unless $s->number;
-    return "Chapter ".$s->number." : ".$s->title;
+    return "Chapter ".$s->number." : ".($s->title || '');
 }
 
 sub sortkey {
