@@ -161,7 +161,7 @@ sub startup {
             my ($namespace,$frag) = split /:/, $str;
             return unless $namespace;
             my $gcis = $c->req->url->base->to_abs;
-            $gcis =~ s/https:/http/;
+            $gcis =~ s/^https:/http:/;
             my %map = (
               prov   => q<http://www.w3.org/ns/prov#>,
               bibo   => q<http://purl.org/ontology/bibo/>,
