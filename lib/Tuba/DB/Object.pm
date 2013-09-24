@@ -282,7 +282,7 @@ sub as_tree {
 sub new_from_autocomplete {
     # See Tuba::Search.
     my $class = shift;
-    my $str = shift;
+    my $str = shift or return;
     my @match =
         $str =~ /^
                    \[
