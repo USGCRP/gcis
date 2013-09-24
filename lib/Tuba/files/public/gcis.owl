@@ -1872,7 +1872,7 @@ a RIF and OWL documentation service</h2>
 	<div class="term" id="md5-e43df6da58045cbf2fb229faf6a9d35a" about="http://data.globalchange.gov/gcis.owl#Report">
 
 
-  <h3 id="anchor-940471984"> <a id="Report"></a><span class="parrot-element-title parrot-class-title">Report</span>
+  <h3 id="anchor-940471984"> <a id="http://ontorule-project.eu/parrot/report"></a><span class="parrot-element-title parrot-class-title">Report</span>
 
 			<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#Class">(OWL Class)</span> 
 	
@@ -1939,7 +1939,7 @@ a RIF and OWL documentation service</h2>
 	<div class="term" id="md5-a89d3c8bab55e326316b1ee81642b6ed" about="http://data.globalchange.gov/gcis.owl#ReportGeneration">
 
 
-  <h3 id="anchor-1154808504"> <a id="ReportGeneration"></a><span class="parrot-element-title parrot-class-title">Report Generation</span>
+  <h3 id="anchor-1154808504"> <a id="http://ontorule-project.eu/parrot/reportGeneration"></a><span class="parrot-element-title parrot-class-title">Report Generation</span>
 
 			<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#Class">(OWL Class)</span> 
 	
@@ -2599,7 +2599,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-422472328"> <a id="aboutFinding"></a><span class="parrot-element-title parrot-property-title">About Finding</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -2659,7 +2659,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor807479272"> <a id="assessmentOfConfidenceBasedOnEvidence"></a><span class="parrot-element-title parrot-property-title">Assessment of Confidence Based on Evidence</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -2719,7 +2719,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1055866500"> <a id="atLocation"></a><span class="parrot-element-title parrot-property-title">At Location</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -2774,7 +2774,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1330817944"> <a id="chapterNumber"></a><span class="parrot-element-title parrot-property-title">Chapter Number</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -2834,7 +2834,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1786600094"> <a id="cites"></a><span class="parrot-element-title parrot-property-title">Cites</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -2876,7 +2876,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1012690950"> <a id="confidence"></a><span class="parrot-element-title parrot-property-title">Confidence</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -2936,7 +2936,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1359246868"> <a id="contributedTo"></a><span class="parrot-element-title parrot-property-title">Contributed To</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -2996,7 +2996,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor988402203"> <a id="dataCenter"></a><span class="parrot-element-title parrot-property-title">Data Center</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3051,7 +3051,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor15367549"> <a id="descriptionOfEvidenceBase"></a><span class="parrot-element-title parrot-property-title">Description of Evidence Base</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3111,7 +3111,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-407779959"> <a id="figureNumber"></a><span class="parrot-element-title parrot-property-title">Figure Number</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3171,7 +3171,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1886231988"> <a id="FindingNumber"></a><span class="parrot-element-title parrot-property-title">Finding Number</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3231,7 +3231,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1036638626"> <a id="findingProcess"></a><span class="parrot-element-title parrot-property-title">Finding Process</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3291,7 +3291,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor327717863"> <a id="hasAuthor"></a><span class="parrot-element-title parrot-property-title">Has Author</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3346,7 +3346,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1526567064"> <a id="hasCaption"></a><span class="parrot-element-title parrot-property-title">Has Caption</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3406,7 +3406,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1340124721"> <a id="hasChapter"></a><span class="parrot-element-title parrot-property-title">Has Chapter</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3466,7 +3466,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1909588031"> <a id="hasCommittee"></a><span class="parrot-element-title parrot-property-title">Has Committee</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3526,7 +3526,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor459406656"> <a id="hasFigure"></a><span class="parrot-element-title parrot-property-title">Has Figure</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3586,7 +3586,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1362653451"> <a id="hasFinding"></a><span class="parrot-element-title parrot-property-title">Has Finding</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3646,7 +3646,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-696461148"> <a id="hasFundingAgency"></a><span class="parrot-element-title parrot-property-title">Has Funding Agency</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3701,7 +3701,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor772240388"> <a id="hasGoverningOrganization"></a><span class="parrot-element-title parrot-property-title">Has Governing Organization</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3761,7 +3761,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1367770211"> <a id="hasImage"></a><span class="parrot-element-title parrot-property-title">Has Image</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3821,7 +3821,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-383087126"> <a id="hasInputDataset"></a><span class="parrot-element-title parrot-property-title">Has Input Dataset</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3876,7 +3876,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor656276726"> <a id="hasMember"></a><span class="parrot-element-title parrot-property-title">Has Member</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -3936,7 +3936,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1152362457"> <a id="hasName"></a><span class="parrot-element-title parrot-property-title">Has Name</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -3996,7 +3996,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1845837711"> <a id="hasPlatform"></a><span class="parrot-element-title parrot-property-title">Has Platform</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4056,7 +4056,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor553167550"> <a id="hasPublisher"></a><span class="parrot-element-title parrot-property-title">Has Publisher</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4116,7 +4116,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor828098070"> <a id="hasSensor"></a><span class="parrot-element-title parrot-property-title">Has Sensor</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4176,7 +4176,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor611260993"> <a id="hasSpatialExtents"></a><span class="parrot-element-title parrot-property-title">Has Spatial Extents</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4236,7 +4236,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-377736558"> <a id="hasSpatialResolution"></a><span class="parrot-element-title parrot-property-title">Has Spatial Resolution</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4296,7 +4296,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1357967856"> <a id="hasTable"></a><span class="parrot-element-title parrot-property-title">Has Table</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4356,7 +4356,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-964415607"> <a id="hasTemporalExtents"></a><span class="parrot-element-title parrot-property-title">Has Temporal Extents</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4416,7 +4416,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1661749174"> <a id="hasTemporalResolution"></a><span class="parrot-element-title parrot-property-title">Has Temporal Resolution</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4476,7 +4476,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor752041770"> <a id="hasTraceableAccount"></a><span class="parrot-element-title parrot-property-title">Has Traceable Account</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4536,7 +4536,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1651005105"> <a id="URL"></a><span class="parrot-element-title parrot-property-title">Has URL</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -4591,7 +4591,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1727532454"> <a id="hasVersion"></a><span class="parrot-element-title parrot-property-title">Has Version</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -4651,7 +4651,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor184353641"> <a id="implementedIn"></a><span class="parrot-element-title parrot-property-title">Implemented In</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4711,7 +4711,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1479698071"> <a id="inPublication"></a><span class="parrot-element-title parrot-property-title">In Publication</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4766,7 +4766,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor201905034"> <a id="isBasedOn"></a><span class="parrot-element-title parrot-property-title">Is Based On</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4826,7 +4826,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1308674947"> <a id="newInformationAndRemainingUncertainties"></a><span class="parrot-element-title parrot-property-title">New Information and Remaining Uncertainties</span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -4886,7 +4886,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1248001738"> <a id="producedDataset"></a><span class="parrot-element-title parrot-property-title">Produced Dataset</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -4941,7 +4941,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1874340192"> <a id="publicationStatus"></a><span class="parrot-element-title parrot-property-title">Publication Status </span> (Property)
   	  	
-	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="report/images/datatype-property-24.png" alt="datatype property"/>		
+	<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#DatatypeProperty"></span><img class="datatype-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/datatype-property-24.png" alt="datatype property"/>		
 			
 		   	
    	        
@@ -5001,7 +5001,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1563519850"> <a id="relatedProject"></a><span class="parrot-element-title parrot-property-title">Related Project</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5061,7 +5061,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1233951606"> <a id="sourceAlgorithm"></a><span class="parrot-element-title parrot-property-title">Source Algorithm</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5121,7 +5121,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1103219329"> <a id="sourceDataset"></a><span class="parrot-element-title parrot-property-title">Source Dataset</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5176,7 +5176,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1701946850"> <a id="sourceInstrument"></a><span class="parrot-element-title parrot-property-title">Source Instrument</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5236,7 +5236,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1290245680"> <a id="sourceModel"></a><span class="parrot-element-title parrot-property-title">Source Model</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5291,7 +5291,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-1846137620"> <a id="subOrganizationOf"></a><span class="parrot-element-title parrot-property-title">Sub Organization Of</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5351,7 +5351,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor577964302"> <a id="subject"></a><span class="parrot-element-title parrot-property-title">Subject</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5406,7 +5406,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-362631449"> <a id="targetSensor"></a><span class="parrot-element-title parrot-property-title">Target Sensor</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5466,7 +5466,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-357464327"> <a id="used"></a><span class="parrot-element-title parrot-property-title">Used</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5508,7 +5508,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1688442944"> <a id="wasCapturedBy"></a><span class="parrot-element-title parrot-property-title">Was Captured By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5568,7 +5568,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1616282163"> <a id="wasCompiledBy"></a><span class="parrot-element-title parrot-property-title">Was Compiled By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5610,7 +5610,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor1640375986"> <a id="wasCreatedBy"></a><span class="parrot-element-title parrot-property-title">Was Created By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5670,7 +5670,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor948104927"> <a id="wasPreparedBy"></a><span class="parrot-element-title parrot-property-title">Was Prepared By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5730,7 +5730,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-305040282"> <a id="wasProducedBy"></a><span class="parrot-element-title parrot-property-title">Was Produced By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5790,7 +5790,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-349963999"> <a id="wasWrittenBy"></a><span class="parrot-element-title parrot-property-title">Was Written By</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5850,7 +5850,7 @@ a RIF and OWL documentation service</h2>
 
   <h3 id="anchor-323944649"> <a id="worksAt"></a><span class="parrot-element-title parrot-property-title">Works At</span> (Property)
   	  	
-		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="report/images/object-property-24.png" alt="object property"/>	
+		<span rel="rdf:type" href="http://www.w3.org/2002/07/owl#ObjectProperty"></span><img class="object-property-icon icon" src="http://ontorule-project.eu/parrot/report/images/object-property-24.png" alt="object property"/>	
 			
 		   	
    	        
@@ -5927,7 +5927,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ActingFederalExOfficioMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ActingFederalExOfficioMember"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ActingFederalExOfficioMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ActingFederalExOfficioMember"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -5970,7 +5970,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Author</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Author"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Author</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Author"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6003,7 +6003,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CoAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CoAuthor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CoAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CoAuthor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6036,7 +6036,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Collaborator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Collaborator"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Collaborator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Collaborator"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6069,7 +6069,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeChair</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeChair"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeChair</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeChair"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6102,7 +6102,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeMember"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeMember"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6135,7 +6135,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeViceChair</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeViceChair"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#CommitteeViceChair</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#CommitteeViceChair"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6168,7 +6168,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ContributingAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ContributingAuthor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ContributingAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ContributingAuthor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6211,7 +6211,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Contributor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Contributor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Contributor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Contributor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6244,7 +6244,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ConveningLeadAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ConveningLeadAuthor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ConveningLeadAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ConveningLeadAuthor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6287,7 +6287,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Custodian</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Custodian"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Custodian</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Custodian"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6320,7 +6320,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Distributor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Distributor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Distributor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Distributor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6353,7 +6353,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Editor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Editor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Editor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Editor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6386,7 +6386,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ExecutiveSecretariatMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ExecutiveSecretariatMember"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ExecutiveSecretariatMember</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ExecutiveSecretariatMember"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6419,7 +6419,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Funder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Funder"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Funder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Funder"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6452,7 +6452,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#High</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#High"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#High</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#High"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6495,7 +6495,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#LeadAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#LeadAuthor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#LeadAuthor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#LeadAuthor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6538,7 +6538,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Low</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Low"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Low</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Low"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6581,7 +6581,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Mediator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Mediator"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Mediator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Mediator"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6614,7 +6614,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Medium</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Medium"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Medium</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Medium"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6657,7 +6657,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Originator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Originator"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Originator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Originator"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6690,7 +6690,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Owner</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Owner"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Owner</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Owner"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6723,7 +6723,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#PointOfContact</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#PointOfContact"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#PointOfContact</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#PointOfContact"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6756,7 +6756,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#PrincipalInvestigator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#PrincipalInvestigator"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#PrincipalInvestigator</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#PrincipalInvestigator"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6789,7 +6789,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Processor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Processor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Processor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Processor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6822,7 +6822,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Publisher</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Publisher"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Publisher</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Publisher"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6855,7 +6855,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ResourceProvider</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ResourceProvider"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ResourceProvider</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ResourceProvider"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6888,7 +6888,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ReviewEditor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ReviewEditor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#ReviewEditor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#ReviewEditor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6931,7 +6931,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Reviewer</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Reviewer"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Reviewer</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Reviewer"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6964,7 +6964,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#RightsHolder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#RightsHolder"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#RightsHolder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#RightsHolder"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -6997,7 +6997,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Sponsor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Sponsor"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Sponsor</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Sponsor"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -7030,7 +7030,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Stakeholder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Stakeholder"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#Stakeholder</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#Stakeholder"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -7063,7 +7063,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#User</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#User"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#User</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#User"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -7096,7 +7096,7 @@ a RIF and OWL documentation service</h2>
   	<div class="ti"> 
 	<h4>Definition</h4> 
 	
-			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#VeryHigh</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#VeryHigh"><img src="report/images/parrot.png" alt="Parrot" /></a>
+			<p>The <strong>URI</strong> of this individual is <span><code>http://data.globalchange.gov/gcis.owl#VeryHigh</code></span>       <a href="?documentUri=http://data.globalchange.gov/gcis.owl#VeryHigh"><img src="http://ontorule-project.eu/parrot/report/images/parrot.png" alt="Parrot" /></a>
 </p> 
 		
 		
@@ -7134,35 +7134,35 @@ a RIF and OWL documentation service</h2>
 </div>   </div>
   <div id="bottom-bar"> 
         <ul> 
-            <li title="Go to top"><a href="#"><img src="report/images/top.png" alt="Go to top" /></a></li> 
+            <li title="Go to top"><a href="#"><img src="http://ontorule-project.eu/parrot/report/images/top.png" alt="Go to top" /></a></li> 
         </ul> 
         <span class="jx-separator-left"></span> 
         <ul> 
-		            <li title="Ontologies"><a href="#ontologies"><img src="report/images/icon-ontology-16.png" alt="Ontologies" /></a></li> 
+		            <li title="Ontologies"><a href="#ontologies"><img src="http://ontorule-project.eu/parrot/report/images/icon-ontology-16.png" alt="Ontologies" /></a></li> 
 				
-		            <li title="Classes"><a href="#classes"><img src="report/images/icon-class-16.png" alt="Classes" /></a></li> 
+		            <li title="Classes"><a href="#classes"><img src="http://ontorule-project.eu/parrot/report/images/icon-class-16.png" alt="Classes" /></a></li> 
 				
-		            <li title="Properties"><a href="#properties"><img src="report/images/icon-property-16.png" alt="Properties" /></a></li> 
+		            <li title="Properties"><a href="#properties"><img src="http://ontorule-project.eu/parrot/report/images/icon-property-16.png" alt="Properties" /></a></li> 
 				
-					<li title="Individuals"><a href="#individuals"><img src="report/images/icon-individual-16.png" alt="Individuals" /></a></li> 
+					<li title="Individuals"><a href="#individuals"><img src="http://ontorule-project.eu/parrot/report/images/icon-individual-16.png" alt="Individuals" /></a></li> 
 				
 				
 		        </ul> 
         <span class="jx-separator-left"></span>        
         <ul> 
-			<li title="Expand/Collapse all" ><a href="#" id="openCloseAll"><img src="report/images/block.png" alt="Expand/Collapse all"/></a></li> 
+			<li title="Expand/Collapse all" ><a href="#" id="openCloseAll"><img src="http://ontorule-project.eu/parrot/report/images/block.png" alt="Expand/Collapse all"/></a></li> 
         </ul> 
   		<span class="jx-separator-left"></span>
 
 				        <ul class="jx-bar-button-right">
-		    		    				      <li title="Back to form"><a href="http://ontorule-project.eu/parrot/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl&amp;showform=true"><img src="report/images/back.png" alt="Back to form" /></a></li>
+		    		    				      <li title="Back to form"><a href="http://ontorule-project.eu/parrot/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl&amp;showform=true"><img src="http://ontorule-project.eu/parrot/report/images/back.png" alt="Back to form" /></a></li>
    		</ul>
    		
   		<span class="jx-separator-right"></span>
 
 
    		<ul class="jx-bar-button-right">
-		  <li title="Help"><a href="help"><img src="report/images/help.png" alt="Help" /></a></li>
+		  <li title="Help"><a href="help"><img src="http://ontorule-project.eu/parrot/report/images/help.png" alt="Help" /></a></li>
         </ul>
         
    		<span class="jx-separator-right"></span>
@@ -7184,12 +7184,12 @@ a RIF and OWL documentation service</h2>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script> 
   <script type="text/javascript" src="javascript/feedback.jQuery.js"></script>
   
-  <script type="text/javascript" src="report/js/jquery.corner.js"></script> 
-  <script type="text/javascript" src="report/jixedbar/jquery.jixedbar.min.js"></script> 
-  <script type="text/javascript" src="report/js/jquery.qtip-1.0.js"></script> 
-  <script type="text/javascript" src="report/js/javascript.js"></script> 
+  <script type="text/javascript" src="http://ontorule-project.eu/parrot/report/js/jquery.corner.js"></script> 
+  <script type="text/javascript" src="http://ontorule-project.eu/parrot/report/jixedbar/jquery.jixedbar.min.js"></script> 
+  <script type="text/javascript" src="http://ontorule-project.eu/parrot/report/js/jquery.qtip-1.0.js"></script> 
+  <script type="text/javascript" src="http://ontorule-project.eu/parrot/report/js/javascript.js"></script> 
 
-  	<script type="text/javascript" src="report/js/technical.js"></script> 
+  	<script type="text/javascript" src="http://ontorule-project.eu/parrot/report/js/technical.js"></script> 
   
   <script type="text/javascript">
 	/* <![CDATA[ */
