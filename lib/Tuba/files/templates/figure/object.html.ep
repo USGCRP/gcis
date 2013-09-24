@@ -30,6 +30,13 @@
 <td><%= $object->chapter ? $object->chapter->number : "[no chapter]" %>.<%= $object->ordinal %>
 </td>
 </tr>
+<tr>
+    <td>kindred figures</td>
+    <td><% for my $f ($object->kindred_figures) { %>
+        <%= obj_link($f) %>
+        <% } %>
+    </td>
+</tr>
 
 % for my $col (sort {$a->name cmp $b->name} $meta->columns) {
 % my $k = $col->accessor_method_name;

@@ -52,5 +52,34 @@ sub uri {
     );
 }
 
+sub kindred_figures {
+    my $s = shift;
+    my $results = $s->db->dbh->selectrow_arrayref(<<CUT, {}, $s->identifier);
+select distinct(y.figure_identifier,y.report_identifier)
+from image_figure_map x
+inner join image_figure_map y
+on x.image_identifier = y.image_identifier and (x.figure_identifier != y.figure_identifier or x.report_identifier != y.report_identifier)
+where x.figure_identifier=?
+CUT
+    my @objs;
+    for my $row (@$results) {
+        $row =~ s/^\(//;
+        $row =~ s/\)$//;
+        my ($figure,$report) = split /,/, $row;
+        my $obj = Tuba::DB::Object::Figure->new(identifier => $figure, report_identifier => $report);
+        push @objs, $obj;
+    }
+    return @objs;
+}
+
+sub as_tree {
+    my $s = shift;
+    my %a = @_;
+    my $c = $a{c};
+    my $tree = $s->SUPER::as_tree(@_);
+    $tree->{kindred_figures} = [ map $_->uri($c), $s->kindred_figures ];
+    return $tree;
+}
+
 1;
 
