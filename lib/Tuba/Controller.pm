@@ -63,7 +63,6 @@ sub show {
     my $meta  = $c->stash('meta') || $object->meta;
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
-    my $cnv = Tuba::Converter->new();
 
     $c->respond_to(
         json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c) ); },

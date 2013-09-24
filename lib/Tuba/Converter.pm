@@ -32,14 +32,15 @@ package Tuba::Converter;
 use Mojo::Base qw/-base/;
 use Text::Format;
 use Tuba::Log;
+use Encode qw/encode decode/;
 
 has 'ttl';  # Turtle
 has 'base'; # uri_base
 
 sub _tmp {
     my $content = shift;
-    my $tmp = File::Temp->new();
-    print $tmp $content;
+    my $tmp = File::Temp->new;
+    print $tmp encode('UTF-8',$content);
     $tmp->close;
     return $tmp;
 }
@@ -70,11 +71,12 @@ sub output {
         }
         my $in = _tmp($filtered);
         my $errs = File::Temp->new;
-        my $cmd = "iconv -f iso-8859-1 -t utf8 $in > $in.conv && dot -Nwidth=3 -Nheight=1.5 -Nfontsize=8 -Nfixedsize=true -Tsvg $in.conv 2>$errs";
+        my $cmd = "dot -Nwidth=3 -Nheight=1.5 -Nfontsize=8 -Nfixedsize=true -Tsvg $in 2>$errs";
         my $got = `$cmd` or do {
             logger->error("Error converting to svg ".join '',<$errs>);
             return "error converting to svg";
         };
+        $got = decode('UTF-8',$got);
         return $got;
     }
     my $base = $s->base or die "no base";
@@ -84,11 +86,14 @@ sub output {
     my $cmd = "rapper -i turtle -o $fmt $fp $base 2>$errs";
     logger->info("running $cmd");
     my $got = `$cmd`;
+    # rapper uses escape sequences, cannot output unicode.
+    $got =~ s/\\u([[:xdigit:]]{1,4})/chr(eval("0x$1"))/egis;
+    $got = encode('UTF-8',$got) unless $fmt =~ /^(dot|rdfxml)/; # some are already encoded
     if (!$got || $@) {
         logger->error("Errors running $cmd :\n ".join '',<$errs>);
+        logger->info("errors $@") if $@;
         return "error converting to $fmt";
     }
-    logger->info("got $@");
     return $got;
 }
 
