@@ -1,7 +1,7 @@
 <% if (user_can('update')) { %>
 <span style='float:right;'><%= include 'create_link'%></span>
 <% } %>
-% my $base = url_for('current')->to_abs;
+% my $base = $self->req->url;
 % $base =~ s/.html$$//;
 <pre>
 <%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
