@@ -314,7 +314,18 @@ sub startup {
     my $r = $app->routes;
 
     # API
-    $r->get('/uuid' => sub { shift->render(text => new_uuid_string(4) ) } => 'uuid');
+    $r->get(
+      '/uuid' => sub {
+        my $c = shift;
+        my $count = $c->param('count') || 1;
+        $count = 1 unless $count =~ /^[0-9]+$/;
+        return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
+        $c->res->headers->content_type('text/plain');
+        $c->render(
+          text => join "\n", (map new_uuid_string(4), 1..$count)
+        );
+      } => 'uuid'
+    );
     my $report = $r->resource('report');
     my $chapter = $report->resource('chapter');
     $r->lookup('select_chapter')->resource('finding');

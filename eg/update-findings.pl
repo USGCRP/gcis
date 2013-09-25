@@ -23,7 +23,7 @@ say "connecting to $dest";
 
 my $which_key = $dest =~ /gcis-dev/                ? '.gcis_api_key.dev'
               : $dest =~ /gcis-test/               ? '.gcis_api_key.test'
-              : $dest =~ /^data.globalchange.gov$/ ? '.gcis_api_key.prod'
+              : $dest =~ /data.globalchange.gov$/ ? '.gcis_api_key.prod'
               :   die "don't know which key to use for $dest";
 my $keyfile = "$ENV{HOME}/".$which_key;
 my $key     = file($keyfile)->slurp;
