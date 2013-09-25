@@ -32,5 +32,34 @@
     dct:isPartOf <<%= $figure->report->uri($self)->to_abs %>> ;
     dct:title "<%= $figure->title %>" ;
     prov:label "<%= $figure->title %>" .
-
 %= include 'prov';
+<<%= current_resource %>>
+    a <<%= $figure->prov_type %>> ;
+
+%# % for my $figureNumber ($figure->figureNumbers) {      
+%#     gcis:figureNumber .<%= $figure->Figure_Number %>.;                             %# Figure Number
+%# % }
+
+% for my $keyword ($figure->keywords) {                                         %# GCMD keyword pertaining to figure
+    gcis:attributes .<%= $keyword->attributes %>.                           %# Figure attributes
+ % }
+              
+% for my $caption ($figure->captions) {
+    gcis:hasCaption .<%= $caption->caption %>.                              %# Figure caption
+% }
+
+% for my $chapter ($figure->chapters)
+    dcterms:isPartOf .<%= $chapter->chapter_identifier %>.              %# Chapter
+% }
+
+% for my $time ($figure->times) {
+    prov:generatedAtTime "<%= $time->create_dt->iso_8601 %>"        %# Date/time of figure creation
+% }
+
+% for my $identifier ($figure->identifiers) {
+    dcterms:identifier "<%= $identifier->identifier %>"                           %# Figure identifier
+% }
+
+% for my $title ($figure->titles) {
+    dcterms:title "<%= $title->title %>"                                       %# Figure Title 
+% }

@@ -11,14 +11,45 @@
 %#     prov:label "Cornell University" ;
 %#     foaf:name "Cornell University" .
 
+
+%# Brian's code in this paragraph-JG commented out
 % layout 'default';
 <<%= current_resource %>> a gcis:Agent,
-        gcis:Organization,
-        org:Organization,
-        prov:Agent,
-        prov:Organization,
-        foaf:Agent,
-        foaf:Organization ;
-    prov:label "<%= $organization->name %>" ;
-    foaf:name "<%= $organization->name %>" .
+%#        gcis:Organization,
+ %#       org:Organization,
+ %#       prov:Agent,
+  %#      prov:Organization,
+%#        foaf:Agent,
+%#        foaf:Organization ;
+%#    prov:label "<%= $organization->name %>" ;
+%#    foaf:name "<%= $organization->name %>" .
+
+<<%= current_resource %>>
+    a <<%= $org->prov_type %>> ;     
+                                                             
+% for my $org ($org->orgs) {
+           org:purpose "<$org->organization_types>"                %#  Organization type (e.g. academic).
+                                                                                                       %#  Might be multiple 
+% }
+
+% for my $country ($org->countrys) {                                                    %# Org.country (might be multiple)
+           dwc:countryCode "<%= $country->country)>"    
+% }
+
+% for my $identifier ($org->identifiers) { 
+           dcterms:identifier "<%= $identifier->identifier %>"                      %#  Identifier for organization 
+% }
+       
+% for my $name ($org->names) {                  
+           foaf:name "<%= $name->name %>"                                    %#  name of organization
+% }
+
+% for my $url ($org->urls) { 
+           gcis:url "<%= $url->url %>"                                             %#  Official URL of org
+% }                 
+
+%# % for my $suborg ($org->suborgs) {
+ %#     org:subOrganizationof "<%= $suborg>parent_org %>"                   #Parent org(s)
+%# % }
+
 
