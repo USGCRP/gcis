@@ -8,7 +8,7 @@
 % if ($page==1) {
 <span class='btn btn-small disabled'><i class='icon-backward'></i></span>
 % } else {
-<%= link_to url_for->query(page => ( $page - 1)) => class => 'btn btn-small' => begin %><i class='icon-backward'></i><%= end %><
+<%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-small' => begin %><i class='icon-backward'></i><%= end %><
 % }
 
 <button class='btn btn-small dropdown-toggle' data-toggle='dropdown'>
@@ -16,14 +16,14 @@
 </button>
 <ul class='dropdown-menu' role='menu' area-labelledby='dLabel'>
     % if (stash 'favorite_ok') {
-    <li><%= link_to url_for->query(page => '♥') => begin %><i class='icon-heart'></i><%= end %></li>
+    <li><%= link_to url_with->query([page => '♥']) => begin %><i class='icon-heart'></i><%= end %></li>
     % }
 % my $i = 1;
 % while ($i <= $pages) {
-    <li><%= link_to url_for->query(page => $i) => begin %><%= $i %><%= end %></li>
+    <li><%= link_to url_with->query([page => $i]) => begin %><%= $i %><%= end %></li>
 % $i++;
 % if ($i > 10 && $i < $pages - 10 && $pages > 20) {
-    <li><%= link_to url_for->query(page => int($pages/2)) => begin %>...<%= end %></li>
+    <li><%= link_to url_with->query([page => int($pages/2)]) => begin %>...<%= end %></li>
 % $i = $pages - 10;
 % }
 % }
@@ -31,7 +31,7 @@
 % if ($page==$pages) {
 <span class='btn btn-small disabled'><i class='icon-forward'></i></span>
 % } else {
-<%= link_to url_for->query(page => ( $page + 1)) => class => 'btn btn-small' => begin %><i class='icon-forward'></i><%= end %>
+<%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-small' => begin %><i class='icon-forward'></i><%= end %>
 % }
 </div>
 </center>
