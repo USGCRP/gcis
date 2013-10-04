@@ -594,20 +594,14 @@ sub index {
     my $c = shift;
     state $count;
     unless ($count) {
-        $count = Files->get_objects_count;
+        $count = Publications->get_objects_count;
     }
-    my $offset = int rand ($count - 50);
-    $offset = 0 if $offset < 0;
-
-    my $demo_files = Files->get_objects(
-            offset => $offset,
-            limit => 50,
-        );
-    my %uniq;
-    for (@$demo_files) {
-        $uniq{$_->file} //= $_;
-    }
-    $c->stash(demo_files => [ shuffle values %uniq ]);
+    my $demo_pubs;
+    push @$demo_pubs, @{ Publications->get_objects(
+            offset => ( int rand $count ),
+            limit => 1,
+        ) } for (1..6);
+    $c->stash(demo_pubs => [ shuffle @$demo_pubs ]);
     $c->render(template => 'index');
 }
 
