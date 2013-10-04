@@ -7,15 +7,6 @@
         padding-bottom: 60px;
       }
 
-      /* Custom container */
-      .container {
-        margin: 0 auto;
-        max-width: 1000px;
-      }
-      .container > hr {
-        margin: 60px 0;
-      }
-
       /* Main marketing message and sign up button */
       .jumbotron {
         margin: 80px 0;
@@ -34,32 +25,7 @@
         padding: 14px 24px;
       }
 
-      /* Supporting marketing content */
-      .marketing {
-        margin: 60px 0;
-      }
-      .marketing p + h4 {
-        margin-top: 28px;
-      }
-
-
-
-
-/* CUSTOMIZE THE CAROUSEL
-    -------------------------------------------------- */
-
-    /* Carousel base class */
-
-    .jumbotron {
-        margin-bottom:10px;
-        margin-top:10px;
-    }
-    .carousel .item {
-      height: 500px;
-    }
-
 </style>
-
 
 <div class="jumbotron">
 <h1>GCIS API</h1>
@@ -72,34 +38,14 @@ mailing list<%= end %>.
 </p>
 </div>
 
-    <div id="myCarousel" class="carousel slide" style='border:1px solid #999;'>
-      <div class="carousel-inner">
-% my $first;
-% my $last = $demo_files->[-1];
-% for my $f (@$demo_files) {
-        <div class="item<%= !$first++ ? ' active' : '' %>">
-% my $pub = $f->publications->[0] or next;
-% my $obj = $pub->to_object or next;
-% if ($obj->isa('Tuba::DB::Object::Image')) {
-% $obj = $obj->figures->[0] or next;
-% }
-%= link_to $pub->uri($self) => begin
-          <img src='<%= url_for('/img/'.$f->file) %>' alt="" height="400px" />
-%= end
-            <div class="carousel-caption">
-              <h4><%= $obj->stringify %></h4>
-            </div>
-</a>
-        </div>
-% }
-    <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-    <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-    </div>
-</div><!-- /.carousel -->
-
-%= javascript begin
-$('.carousel').carousel({interval : 20000 })
-%= end
+<div class="row well" style='margin-left:0px;position:relative;'>
+%= include 'obj_thumbnails', objs => [ map $_->to_object, @$demo_pubs ];
+<div style='position:absolute;top:2px;right:2px;'>
+    <%= link_to current_route(), class => 'btn btn-mini' => begin %>
+    <i class='icon-refresh'></i>
+    <%= end %>
+</div>
+</div>
 
 <div class="row-fluid">
 
@@ -121,4 +67,3 @@ are represented, including how we represent their current state and provenance.
 </div>
 
 </div>
-
