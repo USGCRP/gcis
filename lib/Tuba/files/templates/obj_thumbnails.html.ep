@@ -4,6 +4,7 @@
         % my $uri = $obj->uri($self);
         <div class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
             <div class='thumbnail centered'>
+                <small><%= $obj->meta->table %></small>
                 % my $files = $pub ? $pub->files : undef;
                 % if ($files && @$files) {
                     % for my $file (@$files) {
