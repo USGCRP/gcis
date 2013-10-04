@@ -48,7 +48,7 @@ sub get_parents {
     my $class = ref($self) || $self;
     my $dbh = $self->db->dbh;
     my $sth = $dbh->prepare(<<'SQL');
-select p.*, m.relationship, m.note from publication p
+select p.*, m.relationship, m.note, m.reference_identifier from publication p
     inner join publication_map m on m.parent=p.id
     where m.child = ?
 SQL
@@ -57,8 +57,19 @@ SQL
     my @parents;
     for my $row (@$rows) {
         my %pub;
-        @pub{qw/id publication_type_identifier fk/} = @$row{qw/id publication_type_identifier fk/};
-        push @parents, { relationship => $row->{relationship}, note => $row->{note}, publication => $class->new(%pub) };
+        @pub{qw/id publication_type_identifier fk/}
+          = @$row{qw/id publication_type_identifier fk/};
+        my $reference;
+        $reference = Tuba::DB::Object::Reference->new(
+            identifier => $row->{reference_identifier})->load
+          if $row->{reference_identifier};
+        push @parents,
+          {
+              relationship => $row->{relationship},
+              note         => $row->{note},
+              publication  => $class->new(%pub),
+              reference    => $reference,
+          };
     };
     return @parents;
 }

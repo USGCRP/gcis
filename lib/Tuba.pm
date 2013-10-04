@@ -177,7 +177,9 @@ sub startup {
               xml    => q<http://www.w3.org/XML/1998/namespace>,
               xsd    => q<http://www.w3.org/2001/XMLSchema#>,
               cito   => #q<http://purl.org/spar/cito/>, # redirect ignores trailing part of url
-                        q<http://www.essepuntato.it/lode/http://purl.org/spar/cito/>
+                        q<http://www.essepuntato.it/lode/http://purl.org/spar/cito/>,
+              biro   => #q<http://purl.org/spar/biro/>,
+                        q<http://www.essepuntato.it/lode/http://purl.org/spar/biro/>,
             );
             my $base = $map{$namespace} or return;
             return $base.$frag;
@@ -356,6 +358,7 @@ sub startup {
     $r->resource("file");
     $r->get('/search')->to('search#keyword')->name('search');
 
+    $r->resource('reference');
     # Redirects
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
         => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]

@@ -1,0 +1,49 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption> </caption>
+<tr>
+    <th>identifier</th>
+    <th>type</th>
+    <th>publication</th>
+</tr>
+% for my $o (@$objects) {
+    <tr>
+    <td>
+        <%= link_to 'show_reference', { reference_identifier => $o->identifier } => begin %>
+        <%= $o->identifier %>
+        <%= end %>
+    </td>
+    <td>
+        <%= $o->get_attr->{'reftype'} %>
+    </td>
+    <td class='thumbnails'>
+        % my $map = $o->publication_map;
+        % if ($map) {
+            % my $obj = $map->child_publication->to_object;
+            <div class='span2'>
+                %= include 'obj_thumbnails', objs => [ $obj ];
+            </div>
+        % } else {
+            no publication
+        % }
+    </td>
+    </tr>
+% }
+</table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

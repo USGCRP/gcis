@@ -38,7 +38,7 @@ mailing list<%= end %>.
 </p>
 </div>
 
-<div class="row well" style='margin-left:0px;position:relative;'>
+<div class="row well" style='position:relative;'>
 %= include 'obj_thumbnails', objs => [ map $_->to_object, @$demo_pubs ];
 <div style='position:absolute;top:2px;right:2px;'>
     <%= link_to current_route(), class => 'btn btn-mini' => begin %>
