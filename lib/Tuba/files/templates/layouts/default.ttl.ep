@@ -1,7 +1,7 @@
 % unless (param 'no_header') {
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dctype: <http://purl.org/dc/dcmitype/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix gcis: <http://data.globalchange.gov/gcis.owl#> .
@@ -12,9 +12,9 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
-@prefix doco: <http://purl.org/spar/doco>.
-@prefix cito: <http://purl.org/spar/cito/>.
-@prefix datacite: <http://purl.org/spar/datacite/>.
+@prefix doco: <http://purl.org/spar/doco> .
+@prefix cito: <http://purl.org/spar/cito/> .
+@prefix datacite: <http://purl.org/spar/datacite/> .
 
 
 % }

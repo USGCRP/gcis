@@ -1,55 +1,28 @@
-%#
-%# Sample :
-%#
-%# <http://data.globalchange.gov/organization/Cornell_University> a gcis:Agent,
-%#         gcis:Organization,
-%#         org:Organization,
-%#         prov:Agent,
-%#         prov:Organization,
-%#         foaf:Agent,
-%#         foaf:Organization ;
-%#     prov:label "Cornell University" ;
-%#     foaf:name "Cornell University" .
-
-
-%# Brian's code in this paragraph-JG commented out
-% layout 'default';
-<<%= current_resource %>> a gcis:Agent,
-%#        gcis:Organization,
- %#       org:Organization,
- %#       prov:Agent,
-  %#      prov:Organization,
-%#        foaf:Agent,
-%#        foaf:Organization ;
-%#    prov:label "<%= $organization->name %>" ;
-%#    foaf:name "<%= $organization->name %>" .
+% layout "default";
 
 <<%= current_resource %>>
-    a <<%= $org->prov_type %>> ;     
-                                                             
-% for my $org ($org->orgs) {
-           org:purpose "<$org->organization_types>"                %#  Organization type (e.g. academic).
-                                                                                                       %#  Might be multiple 
-% }
-
-% for my $country ($org->countrys) {                                                    %# Org.country (might be multiple)
-           dwc:countryCode "<%= $country->country)>"    
-% }
-
-% for my $identifier ($org->identifiers) { 
-           dcterms:identifier "<%= $identifier->identifier %>"                      %#  Identifier for organization 
-% }
-       
-% for my $name ($org->names) {                  
-           foaf:name "<%= $name->name %>"                                    %#  name of organization
-% }
-
-% for my $url ($org->urls) { 
-           gcis:url "<%= $url->url %>"                                             %#  Official URL of org
-% }                 
-
-%# % for my $suborg ($org->suborgs) {
- %#     org:subOrganizationof "<%= $suborg>parent_org %>"                   #Parent org(s)
+   a prov:Entity;          
+%# % for my $contributor ($organization->contributor) {
+%# gcis:contributor "<%= $contributor->identifier %>";
 %# % }
+% for my $dataset ($organization->datasets) {
+   gcis:dataset "<%= $dataset->identifier %>";
+% }
+% for my $type ($organization->organization_types) {
+   org:purpose "<%= $type->identifier %>";
+% }
+% for my $report ($organization->report) {
+   prov:wasAssociatedWith "<%= $report->identifier %>";
+% }
+   dwc:countryCode "<%= $organization->country %>";
+   dcterms:identifier "<%= $organization->identifier %>";
+   foaf:name "<%= $organization->name %>";
+   gcis:url "<%= $organization->url %>".
+
+%# parent organization(s) - to be added later               
+%# % for my $suborg ($organization->suborgs) {
+ %#     org:subOrganizationof "<%= $suborg>parent_org %>"           
+%# % }
+
 
 

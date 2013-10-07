@@ -1,0 +1,14 @@
+% layout "default";
+
+<<%= current_resource %>>
+   a prov:Entity;
+% for my $article ($journal->article) {
+   dcterms:hasPart "<%= $article->identifier %>";
+% }
+   dwc:Countrycode "<%= $journal->country %>";
+   dcterms:identifier "<%= $journal->identifier %>";
+   bibo:eissn "<%= $journal->online_issn %>";
+   bibo:issn "<%= $journal->print_issn %>";
+   gcis:hasPublisher "<%= $journal->publisher %>";
+   dcterms:title "<%= $journal->title %>";
+   gcis:URL "<%= $journal->url %>".

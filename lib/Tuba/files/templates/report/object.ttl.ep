@@ -1,0 +1,24 @@
+% layout 'default';
+<<%= current_resource %>>
+   a prov:Entity;
+
+% for my $chapter ($report->chapter) {
+   gcis:hasChapter "<%= $chapter->identifier %>";	
+% }
+
+% for my $finding ($report->finding) {
+   gcis:hasFinding "<%= $finding->identifier %>";
+% }
+
+   %for my $figure ($report->figure) {
+   gcis:hasFigure "<%= $figure->identifier %>";
+% }
+
+
+   gcis:Organization "<%= $report->organization %>";
+   bibo:doi "<%= $report->doi %>";
+   dcterms:identifier "<%= $report->identifier %>";
+   gcis:Organization "<%= $report->organization_identifier %>";
+   dcterms:title "<%= $report->title %>";
+   gcis:url "<%= $report->url %>". 
+ 

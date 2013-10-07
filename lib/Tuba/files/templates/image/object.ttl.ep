@@ -1,111 +1,53 @@
-# First, we use Brian's initial code
+% layout 'default';
 
-# \% layout 'default';
+<<%= current_resource %>>  
+   a prov:Entity;
+%# The following only returns figure title without "2.1", so holding off and commented out
 
-# <<%= current_resource %>>
-#    a <<%= $image->prov_type %>> ;
-#    prov:label "<%= $image->title %>" ;
-#    foaf:name "<%= $object->title %>" .
-#    gcis: 
-#BLAH BLAH
+  % for my $figure ($image->figures) {
+   doco:FigureLabel "<%= $figure->title %>";
+ % }
 
-#%= include 'prov';
-# Test
+   prov:generatedAtTime "<%= $image->create_dt %>";
+   gcis:description "<%= $image->description %>";
+   dcterms:identifier "<%= $image->identifier %>";
+   gcis:northBoundLatitude "<%= $image->lat_max %>";
+   gcis:southBoundLatitude "<%= $image->lat_min %>";
+   gcis:westBoundLongitude "<%= $image->lon_max %>";
+   gcis:eastBoundLongitude "<%= $image->lon_min %>";
+   dcterms:dateSubmitted "<%= $image->submission_dt %>";
+   gcis:endedAt "<%= $image->time_end %>";
+   gcis:startedAt "<%= $image->time_start %>";
+   dcterms:title "<%= $image->title %>".      
+%#   gcis:spatial_scale "<%= $image->scale %>";
+%#  gcis:spatial_ref_sys "<%= $image->projection %>";
 
-# Now, we expand, using JG code
-\% layout 'default';
-
-%# General info about image per data.globalchange.gov, incl. authors
-<<%= current_resource %>>
-    a <<%= $image->prov_type %>> ;
-
-% for my $title ($image->titles) {
-    dcterms:title "<%= $title->title %>"                                        %# Title
-% }
-    
-% for my $identifier ($image->identifiers) {
-    dcterms:identifier "<%= $identifier->identifier %>"                                        %# identifier
-% }
-
-% for my $nblat ($image->nblats) {
-    gcis:northBoundLatitude "<%= $nblat->lat_max %>"                 %# Max. Latitude
-% }
-
- % for my $sblat ($image->sblats) {
-    gcis:southBoundLatitude "<%= $sblat->lat_max %>"                 %# Min. Latitude
-% }
-
-% for my $wblong ($image->wblongs) {
-    gcis:westBoundLongitude "<%= $wblong->lon_max %>"              %# Max. Longitude (Western-most pt)
-% }
-% for my $eblong ($image->eblongs) {
-    gcis:eastBoundLongitude "<%= $eblong->lon_min %>"              %# Max. Longitude (Eastern-most pt)
-
-% for my $Datum ($image->Datums) {
-    dwc:geodeticDatum "<%= $Datum->image_datum>>"                             %# Datum
-% }
-
-% for my $time ($image->times) {
-    gcis:startedAt "<%= $time->time_start %>"                            %# Temporal extent - beg. (date time)
-% }
-
-% for my $endtime ($image->endtimes) {
-    gcis:endedAt "<%= $endtime->time_end %>"                              %# Temporal extent - end.(date time)
-% }
-
-% for my $attime ($image->attimes) {
-    prov:generatedAtTime "<%= $attime->create_dt->iso_8601 %>"  %# Date/time of image creation 
-% }
-
-%# % for my $spatialscale ($image->spatialscales) {
-%#   gcis:spatial_scale .<%= $spatialscale->scale %>.                            %# Spatial scale of image
+%# for my $kwd ($image->keywords) {                              
+%#       gcis:attributes "<%= $kwd->keywords %>";                      
 %# % }
-
-%# %# % for my $projection ($image->projections)
-%#   gcis:spatial_ref_sys "<%= $projection->projection %>"                  %# Projection of image
-%# % }
-    
-% for my $description ($image->description) {
-    gcis:description "<%= $description->description %>"                         %# Description of image.
-% }
-                
- % for my $keyword ($image->keywords)      {                                %# GCMD keyword pertaining to image
-       gcis:attributes "<%= $keyword->attributes %>"                      %# Image attributes
-  % }
  
-%# % for my $org ($image->orgs) {
-%#   gcis:ishostedby "<%= $org->hosting_agency %>"                    %# hosting agency
-%# % }
+%# gcis:ishostedby "<%= $image->hosting_agency %>";                    
 
-%# % for my $available ($image->availables)
-%#    dcterms:available "<%= $available->release_date %> "                 %# Release date of image
-%# % } 
+%# dcterms:available "<%= $image->release_date %>";                 
 
-% for my $rights ($image->rightss) {
-    dcterms:rights "<%= $rights->usage_limits %>"                      %# Rights held vis-a-vis the image
-% }
 
-%# % for my $license ($image->licenses) {
- %#   dcterms:license "<%= $license->license %>"                           %# License type
-%# % }
+%# % for my $right ($image->rights) {
+ %#   dcterms:rights "<%= $right->usage_limits %>";                      
+ %# }
 
-%# % for my $format ($image->formats) {
-%#   dcterms:format "<%= $format->format %>"                             %# Image format
-%# % }
+%# dcterms:license "<%= $image->license %>";                           
 
-% for my $datesubmitted ($image->datesubmitteds) {
-    dcterms:dateSubmitted "<%= $datesubmitteds->submission_dt %>"       %# Submission date
-% }
-
-%# % for my $url ($image->urls) {
-%#   gcis:url "<%= $url->URL %>"                                                                  %# URL
-%# % } 
-
-%# % for my $person ($image->persons) {                    
-%#    gcis:PointOfContact "<%= $person->point_of_contact %>"     %# POC for image
-%# % }           
+%# dcterms:format "<%= $image->format %>";                            
+%# gcis:url "<%= $image->URL %>";                    
+ 
+ %# % for my $person ($image->persons) {                    
+ %#   gcis:PointOfContact "<%= $person->point_of_contact %>";  
+%# % }   
     
 %# % for my $person ($image->persons) {
-%#    gcis:wasCreatedBy "<%= $person->author %>"                        %# Image Creator(s)
-%# % }
+%#    gcis:wasCreatedBy "<%= $person->author %>"; 
+%# }
+
+
+%# dwc:geodeticDatum "<%= $image->image_datum %>";
 
