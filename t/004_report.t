@@ -41,7 +41,6 @@ $t->get_ok("/report/test-report/figure/test-figure" => { Accept => "application/
 $t->get_ok("/report/test-report/figure/" => { Accept => "application/json" } )->status_is(200);
 $t->get_ok("/report/test-report/finding/" => { Accept => "application/json" } )->status_is(200);
 $t->get_ok("/report/test-report/chapter/" => { Accept => "application/json" } )->status_is(200);
-$t->get_ok("/file" => { Accept => "application/json" } )->status_is(200);
 $t->get_ok("/image" => { Accept => "application/json" } )->status_is(200);
 
 $t->delete_ok("/report/test-report" => { Accept => "application/json" })->status_is(200);

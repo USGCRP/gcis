@@ -1,4 +1,9 @@
 
+create table reference (
+    identifier varchar primary key not null, /* uuid */
+    attrs hstore
+);
+
 alter table publication_map
     add column reference_identifier varchar
     references reference(identifier)
@@ -11,7 +16,10 @@ insert into publication_type (identifier, "table") values ('generic', 'generic')
 
 create trigger delpub before delete on generic for each row execute procedure delete_publication();
 
-create trigger updatepub before update on generic for each row when ( NEW.identifier != OLD.identifier ) execute procedure update_publication();
+create trigger updatepub before update
+    on generic for each row
+    when ( NEW.identifier != OLD.identifier )
+        execute procedure update_publication();
 
 alter table publication_map add unique(reference_identifier);
 
