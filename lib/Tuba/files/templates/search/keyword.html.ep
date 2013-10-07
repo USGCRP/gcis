@@ -1,20 +1,12 @@
 % layout 'default';
 
+% my @clone = @$results;
 <center>
-Searched for <b><%= param 'q' %></b>.
+    Searched for <b><%= param 'q' %></b>.<br>
+    <%= @clone %> result<%= @clone==1 ? '' : 's' %>
 </center>
-<br>
-% if (@$results==0) {
-No search results.
-% } else  {
-    <table class='table table-condensed table-bordered'>
-    % for my $obj (@$results) {
-    <tr>
-            <td class='span1'><%= $obj->meta->table %></td>
-            <td class='row-fluid span11'>
-            %= include 'obj_thumbnails', objs => [ $obj ];
-            </td>
-    </td>
-    % }
-    </table>
+% while (my @next = splice(@clone, 0, 6)) {
+    <div class='row'>
+        %= include 'obj_thumbnails', objs => \@next;
+    </div>
 % }
