@@ -19,5 +19,13 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    if ($c->param('all')) {
+        $c->stash(objects => Journals->get_objects);
+    }
+    $c->SUPER::list(@_);
+}
+
 1;
 
