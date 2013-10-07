@@ -1,5 +1,5 @@
-package Tuba::DB::Object::Reference;
-# Tuba::DB::Mixin::Object::Reference;
+package Tuba::DB::Object::Generic;
+# Tuba::DB::Mixin::Object::Generic;
 use strict;
 use Pg::hstore;
 use Encode;
@@ -23,7 +23,6 @@ sub as_tree {
     my $s = shift;
     return $s->SUPER::as_tree(@_, deflate => 0);
 }
-
 
 1;
 

@@ -27,26 +27,14 @@
 </div>
 % }
 
-<style>
-    table.centered tr th { text-align:center; }
-</style>
-<table class='table table-condensed table-bordered table-striped centered'>
-    <caption>Publications</caption>
-    <tr>
-        <th>publication</th><th>relationship</th><th>publication</th><th>note</th>
-    </tr>
-    % for my $map ($object->publication_map) {
-    <tr>
-        <td><%= include obj_thumbnails => objs => [ $map->child_publication->to_object] %></td>
-        <td><%= $map->relationship %></td>
-        <td><%= include obj_thumbnails => objs => [ $map->parent_publication->to_object] %></td>
-        <td><%= $map->note || "" %></td>
-    </tr>
-    % }
-</table>
+%= include 'prov';
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
+<tr>
+    <td>identifier</td>
+    <td><%= $object->identifier %></td>
+</tr>
 
 % my $attrs = $object->attrs;
 % my @ordered = sort keys %$attrs;

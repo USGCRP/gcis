@@ -27,7 +27,7 @@
         <%= end %>
     </td>
     <td>
-        <%= $o->get_attr->{'reftype'} %>
+        <%= $o->attrs->{'reftype'} %>
     </td>
     <td class='thumbnails'>
         % my $map = $o->publication_map;

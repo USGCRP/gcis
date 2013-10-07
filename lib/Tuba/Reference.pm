@@ -13,14 +13,15 @@ sub list {
     my $pub = $c->current_report->get_publication or return $c->render_not_found;
     my $refs = References->get_objects(
       require_objects => 'publication_map',
-      query           => [child => $pub->id],
+      query           => [parent => $pub->id],
       page            => $c->page,
     );
     my $count = References->get_objects_count(
       require_objects => 'publication_map',
-      query           => [child => $pub->id],
+      query           => [parent => $pub->id],
       page            => $c->page,
     );
+    $c->stash(objects => $refs);
     $c->set_pages($count);
     $c->stash(title => "References for ".$c->current_report->identifier." report");
     $c->SUPER::list(@_);
