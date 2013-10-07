@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+generic
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ attrs (hstore) - 
+
+
+=head1 SCHEMA
+
+                     Table "gcis_metadata.generic"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  attrs      | hstore            |           | extended | 
+ Indexes:
+     "generic_pkey" PRIMARY KEY, btree (identifier)
+ Triggers:
+     delpub BEFORE DELETE ON generic FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON generic FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+=cut
+
+

@@ -1,0 +1,32 @@
+
+=head1 NAME
+
+reference
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ attrs (hstore) - 
+
+
+=head1 SCHEMA
+
+                    Table "gcis_metadata.reference"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  attrs      | hstore            |           | extended | 
+ Indexes:
+     "reference_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "publication_map" CONSTRAINT "publication_map_reference_identifier_fkey" FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

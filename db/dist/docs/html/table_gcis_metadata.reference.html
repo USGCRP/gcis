@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.publication-map">publication_map</a>
+            <a name="gcis-metadata.table.reference">reference</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>publication_map Structure</caption>
+                <caption>reference Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -133,73 +133,11 @@
                 <td>
                 
                   
-                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
-                  
-                
-                  
                 
                 </td>
-                <td>child</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
-                
-                    PRIMARY KEY
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                
-                </td>
-                <td>relationship</td>
+                <td>identifier</td>
                 <td>character varying</td>
                 <td><i>
-                
-                    PRIMARY KEY
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
-                  
-                
-                  
-                
-                </td>
-                <td>parent</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
                 
                     PRIMARY KEY
                     
@@ -218,41 +156,9 @@
                 <td>
                 
                 </td>
-                <td>note</td>
-                <td>character varying</td>
+                <td>attrs</td>
+                <td>hstore</td>
                 <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.reference.html#gcis-metadata.table.reference">reference.identifier</a>
-                  
-                
-                  
-                
-                </td>
-                <td>reference_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-                    
-
-                    
-                       UNIQUE
-                    
                 
 
                 
@@ -271,6 +177,11 @@
         
 
         <!-- Foreign Key Discovery -->
+        
+            <p>Tables referencing this one via Foreign Key Constraints:</p>
+        
+                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
+        
         
 
     <!-- Indexes -->

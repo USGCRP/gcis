@@ -44,3 +44,4 @@
 0450_fix_pub_update.sql	413189063a258d613c87431a473ae539
 0460_finding_attributes.sql	411822796a934ce61308539e06ccd971
 0470_dataset_doi.sql	8688bfaf476275f8a6426e7e12c8c04a
+0480_references.sql	e5a60f7c5f3484ed8c8ff2abc441ce10

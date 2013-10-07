@@ -246,6 +246,13 @@ CREATE TABLE finding_keyword_map (
 
 
 
+CREATE TABLE generic (
+    identifier character varying NOT NULL,
+    attrs hstore
+);
+
+
+
 CREATE TABLE image (
     identifier character varying NOT NULL,
     "position" character varying,
@@ -415,7 +422,8 @@ CREATE TABLE publication_map (
     child integer NOT NULL,
     relationship character varying NOT NULL,
     parent integer NOT NULL,
-    note character varying
+    note character varying,
+    reference_identifier character varying
 );
 
 
@@ -452,6 +460,13 @@ CREATE TABLE publication_type (
 CREATE TABLE ref_type (
     identifier character varying NOT NULL,
     "table" character varying
+);
+
+
+
+CREATE TABLE reference (
+    identifier character varying NOT NULL,
+    attrs hstore
 );
 
 
@@ -605,6 +620,11 @@ ALTER TABLE ONLY finding
 
 
 
+ALTER TABLE ONLY generic
+    ADD CONSTRAINT generic_pkey PRIMARY KEY (identifier);
+
+
+
 ALTER TABLE ONLY image_figure_map
     ADD CONSTRAINT image_figure_map_pkey PRIMARY KEY (image_identifier, figure_identifier, report_identifier);
 
@@ -660,6 +680,11 @@ ALTER TABLE ONLY publication_map
 
 
 
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_reference_identifier_key UNIQUE (reference_identifier);
+
+
+
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_pkey PRIMARY KEY (id);
 
@@ -682,6 +707,11 @@ ALTER TABLE ONLY publication_type
 
 ALTER TABLE ONLY ref_type
     ADD CONSTRAINT ref_type_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY reference
+    ADD CONSTRAINT reference_pkey PRIMARY KEY (identifier);
 
 
 
@@ -953,6 +983,10 @@ CREATE TRIGGER delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE de
 
 
 
+CREATE TRIGGER delpub BEFORE DELETE ON generic FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
 CREATE TRIGGER updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
@@ -982,6 +1016,10 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (((new.identif
 
 
 CREATE TRIGGER updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON generic FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
 
@@ -1112,6 +1150,11 @@ ALTER TABLE ONLY publication_map
 
 ALTER TABLE ONLY publication_map
     ADD CONSTRAINT publication_map_parent_fkey FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_reference_identifier_fkey FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

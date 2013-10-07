@@ -175,6 +175,14 @@ COPY finding_keyword_map (finding_identifier, keyword_id, report_identifier) FRO
 
 
 --
+-- Data for Name: generic; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY generic (identifier, attrs) FROM stdin;
+\.
+
+
+--
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -225,6 +233,7 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+generic	generic
 \.
 
 
@@ -267,10 +276,18 @@ SELECT pg_catalog.setval('publication_id_seq', 1, false);
 
 
 --
+-- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY reference (identifier, attrs) FROM stdin;
+\.
+
+
+--
 -- Data for Name: publication_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_map (child, relationship, parent, note) FROM stdin;
+COPY publication_map (child, relationship, parent, note, reference_identifier) FROM stdin;
 \.
 
 
