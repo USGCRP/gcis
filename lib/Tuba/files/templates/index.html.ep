@@ -51,7 +51,7 @@ mailing list<%= end %>.
 
 <div class="span4">
     <h2>API Reference</h2>
-    <p>The current complete <%= link_to 'reference' => begin %>API Reference<%= end %>.</p>
+    <p>The current complete <%= link_to 'api_reference' => begin %>API Reference<%= end %>.</p>
 </div>
 
 <div class="span4">

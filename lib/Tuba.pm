@@ -328,7 +328,16 @@ sub startup {
         );
       } => 'uuid'
     );
+
+    #
+    # Various resources, each one gets GET, POST, forms, and other routes.
+    # (see the resource helper for more details).
+    #
+
+    # Reports.
     my $report = $r->resource('report');
+
+    # Chapters.
     my $chapter = $report->resource('chapter');
     $r->lookup('select_chapter')->resource('finding');
     $r->lookup('select_chapter')->resource('figure');
@@ -339,30 +348,48 @@ sub startup {
     $report->get('/figure')->to('figure#list')->name('list_all_figures');
     $report->resource('report_figure', { controller => 'Tuba::figure', identifier => 'figure_identifier', path_base => 'figure' });
 
-    $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
-    $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
-
-    $r->resource(article => { wildcard => 1} );
-    $r->resource($_) for qw/journal paper/;
-
-    $r->resource('image');
-
-    $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
-    $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
-
-    $r->resource(person => { restrict_identifier => qr/\d+/ } );
-    $r->get('/person/:name')->to('person#redirect_by_name');
-    $r->resource($_) for qw/dataset model software algorithm activity
-                            instrument platform
-                            role organization country/;
-    $r->resource("file");
-    $r->get('/search')->to('search#keyword')->name('search');
-
-    $r->resource('reference');
-    # Redirects
+    # Redirect from chapter numbers to names.
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
         => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]
       )->to('figure#redirect_to_identifier')->name('figure_redirect');
+
+    # Redirect from generics to specifics.
+    $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
+    $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
+
+    # Article (which have DOIs so slashes are allowed in the URL)
+    $r->resource(article => { wildcard => 1} );
+
+    # Journals, papers.
+    $r->resource($_) for qw/journal paper/;
+
+    # Images (globally unique)
+    $r->resource('image');
+
+    # Metadata processing routes.
+    $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
+    $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+
+    # Person.
+    $r->resource(person => { restrict_identifier => qr/\d+/ } );
+    $r->get('/person/:name')->to('person#redirect_by_name');
+
+    # Others, some of which aren't yet implemented.
+    $r->resource($_) for qw/dataset model software algorithm activity
+                            instrument platform
+                            role organization country/;
+
+    # Files.
+    $r->resource("file");
+
+    # Bibliographic entry.
+    $r->resource('reference');
+
+    # Generic publication.
+    $r->resource('generic');
+
+    # Search route.
+    $r->get('/search')->to('search#keyword')->name('search');
 
     # To regenerate the owl file, get this URL :
     # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl
@@ -372,7 +399,7 @@ sub startup {
 
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');
-    $r->get('/reference' => sub {
+    $r->get('/api_reference' => sub {
       my $c = shift;
       my $trying; if (my $try = $c->param('try')) {
           $trying = $c->app->routes->lookup($try);
@@ -389,7 +416,8 @@ sub startup {
           $trying = $trying->parent;
       }
       $c->stash(placeholders => \@placeholders);
-    } => 'reference');
+    } => 'api_reference');
+
     $r->get('/resources' => 'resources');
     $r->get('/examples' => 'examples');
     $r->get('/autocomplete')->to('search#autocomplete');
