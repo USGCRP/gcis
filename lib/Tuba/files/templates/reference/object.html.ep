@@ -27,8 +27,6 @@
 </div>
 % }
 
-%= include 'prov';
-
 <style>
     table.centered tr th { text-align:center; }
 </style>
@@ -50,8 +48,11 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
 
-% for my $k (sort keys %{$object->get_attr}) {
-% my $val = $object->get_attr->{$k};
+% my $attrs = $object->get_attr;
+% my @ordered = sort keys %$attrs;
+% @ordered = ( 'reftype', 'reftype_id', grep { $_ !~ /reftype/ } @ordered );
+% for my $k (@ordered) {
+% my $val = $attrs->{$k};
     <tr>
         <td><%= $k %></td>
         <td>
