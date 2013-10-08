@@ -1,7 +1,8 @@
 package Tuba::DB::Object::File;
-use Mojo::ByteStream qw/b/;
-use strict;
 # Tuba::DB::Mixin::Object::File;
+use Mojo::ByteStream qw/b/;
+use Data::UUID::LibUUID;
+use strict;
 
 sub as_tree {
     my $s = shift;
@@ -11,6 +12,10 @@ sub as_tree {
     $tree->{url} = '/img/'.$s->file;
     return $tree;
 }
+
+__PACKAGE__->meta->primary_key_generator(sub {
+    return new_uuid_string(4);
+});
 
 
 1;
