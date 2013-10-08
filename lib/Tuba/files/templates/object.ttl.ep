@@ -1,8 +1,5 @@
-<<%= current_resource %>>
-a prov:Entity;
+% layout 'default';
 
-dcterms:identifier "<%= $chapter->identifier %>";
-doco:ChapterLabel "<%= $chapter->number %>";
-dcterms:identifier "<%= $chapter->report_identifier %>";
-dcterms:title "<%= $chapter->title %>";
-gcis:url "<%=$chapter->url %>".
+<<%= current_resource %>>
+    a prov:Entity ;
+    dcterms:identifier "<%= $object->identifier %>".
