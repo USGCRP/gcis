@@ -1,6 +1,8 @@
-% layout 'default';
 <<%= current_resource %>>
-    a <<%= $object->prov_type %>> ;
-    prov:label "<%= $object->prov_label %>" ;
-    foaf:name "<%= $object->foaf_name %>" .
-%= include 'prov';
+a prov:Entity;
+
+dcterms:identifier "<%= $chapter->identifier %>";
+doco:ChapterLabel "<%= $chapter->number %>";
+dcterms:identifier "<%= $chapter->report_identifier %>";
+dcterms:title "<%= $chapter->title %>";
+gcis:url "<%=$chapter->url %>".

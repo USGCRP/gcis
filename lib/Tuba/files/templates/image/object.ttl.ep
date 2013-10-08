@@ -1,0 +1,53 @@
+% layout 'default';
+
+<<%= current_resource %>>  
+   a prov:Entity;
+%# The following only returns figure title without "2.1", so holding off and commented out
+
+  % for my $figure ($image->figures) {
+   doco:FigureLabel "<%= $figure->title %>";
+ % }
+
+   prov:generatedAtTime "<%= $image->create_dt %>";
+   gcis:description "<%= $image->description %>";
+   dcterms:identifier "<%= $image->identifier %>";
+   gcis:northBoundLatitude "<%= $image->lat_max %>";
+   gcis:southBoundLatitude "<%= $image->lat_min %>";
+   gcis:westBoundLongitude "<%= $image->lon_max %>";
+   gcis:eastBoundLongitude "<%= $image->lon_min %>";
+   dcterms:dateSubmitted "<%= $image->submission_dt %>";
+   gcis:endedAt "<%= $image->time_end %>";
+   gcis:startedAt "<%= $image->time_start %>";
+   dcterms:title "<%= $image->title %>".      
+%#   gcis:spatial_scale "<%= $image->scale %>";
+%#  gcis:spatial_ref_sys "<%= $image->projection %>";
+
+%# for my $kwd ($image->keywords) {                              
+%#       gcis:attributes "<%= $kwd->keywords %>";                      
+%# % }
+ 
+%# gcis:ishostedby "<%= $image->hosting_agency %>";                    
+
+%# dcterms:available "<%= $image->release_date %>";                 
+
+
+%# % for my $right ($image->rights) {
+ %#   dcterms:rights "<%= $right->usage_limits %>";                      
+ %# }
+
+%# dcterms:license "<%= $image->license %>";                           
+
+%# dcterms:format "<%= $image->format %>";                            
+%# gcis:url "<%= $image->URL %>";                    
+ 
+ %# % for my $person ($image->persons) {                    
+ %#   gcis:PointOfContact "<%= $person->point_of_contact %>";  
+%# % }   
+    
+%# % for my $person ($image->persons) {
+%#    gcis:wasCreatedBy "<%= $person->author %>"; 
+%# }
+
+
+%# dwc:geodeticDatum "<%= $image->image_datum %>";
+

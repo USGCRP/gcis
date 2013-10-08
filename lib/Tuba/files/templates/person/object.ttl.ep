@@ -1,0 +1,9 @@
+% layout "default";
+
+<<%= current_resource %>>
+   a prov: agent
+   dcterms:identifier "<%= $person->id %>";
+   foaf:name "<%= $person->name %>";
+   gcis:url "<%= $person->url %>";
+   gcis:Organization "<%= $person->org %>".
+

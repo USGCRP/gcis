@@ -1,0 +1,17 @@
+% layout 'default';
+
+<<%= current_resource %>>
+   a prov:Entity;
+
+   gcis:inPublication "<%= $article->journal->identifier %>";
+   bibo:doi "<%= $article->doi %>";
+   dcterms:identifier "<%= $article->identifier %>";
+   gcis:inPublication "<%= $article->journal_identifier %>";
+   bibo:pages "<%= $article->journal_pages %>";
+   bibo:Volume "<%= $article->journal_vol %>";
+   dcterms:title "<%= $article->title %>";
+   gcis:url "<%= $article->url %>";
+   dwc:year "<%= $article->year %>".
+
+%= include "prov";
+
