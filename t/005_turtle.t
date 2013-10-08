@@ -67,6 +67,8 @@ $t->get_ok("/report/animals/chapter/alligators.nt")
     ->status_is(200)
     ->content_like( qr[report/animals] );
 
+# TODO : figure, image, finding, journal, article, reference
+
 # Clean up
 $t->delete_ok("/report/animals")->status_is(200);
 
