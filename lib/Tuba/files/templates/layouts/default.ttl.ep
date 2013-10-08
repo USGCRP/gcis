@@ -14,6 +14,7 @@
 @prefix dwc: <http://rs.tdwg.org/dwc/terms/> .
 @prefix doco: <http://purl.org/spar/doco> .
 @prefix cito: <http://purl.org/spar/cito/> .
+@prefix biro: <http://purl.org/spar/biro/> .
 @prefix datacite: <http://purl.org/spar/datacite/> .
 
 

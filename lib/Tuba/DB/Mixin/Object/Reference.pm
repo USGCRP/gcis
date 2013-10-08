@@ -24,6 +24,13 @@ sub as_tree {
     return $s->SUPER::as_tree(@_, deflate => 0);
 }
 
+sub parent {
+    return shift->publication_map->parent_publication->to_object;
+}
+
+sub child {
+    return shift->publication_map->child_publication->to_object;
+}
 
 1;
 
