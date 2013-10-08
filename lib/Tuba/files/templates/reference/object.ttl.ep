@@ -1,6 +1,7 @@
 % layout 'default';
 
 <<%= current_resource %>>
+    a biro:BibliographicRecord ;
     dcterms:identifier "<%= $reference->identifier %>" ;
     biro:references <<%= obj_uri_for($reference->child)->to_abs; %>> ;
     biro:references <<%= obj_uri_for($reference->parent)->to_abs; %>> .
