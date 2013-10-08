@@ -1,17 +1,14 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity;
-   
+   a prov:Entity;   
 % for my $figure ($chapter->figure) {
-   gcis:hasFigure "<%= $figure->identifier %>";
- % }
+   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+% }
+% for my $finding ($chapter->finding) {
+   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+% }
 
-%# findings are not yet associated with chapter, hence commented out
-%# % for my $finding ($chapter->findings) {
-%# dcterms:title "<%= $finding->title %>";
-%# % } 
-
-   gcis:inPublication "<%= $chapter->report->identifier %>";
+   gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>";
    gcis:inPublication "<%= $chapter->report_identifier %>";

@@ -2,7 +2,6 @@
 
 <<%= current_resource %>>
    a prov:Entity;
-
    gcis:inPublication "<%= $article->journal->identifier %>";
    bibo:doi "<%= $article->doi %>";
    dcterms:identifier "<%= $article->identifier %>";

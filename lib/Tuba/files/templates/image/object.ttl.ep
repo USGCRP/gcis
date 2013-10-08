@@ -3,11 +3,9 @@
 <<%= current_resource %>>  
    a prov:Entity;
 %# The following only returns figure title without "2.1", so holding off and commented out
-
   % for my $figure ($image->figures) {
-   doco:FigureLabel "<%= $figure->title %>";
+   doco:FigureLabel <<%= obj_uri_for($figure)->to_abs %>>;
  % }
-
    prov:generatedAtTime "<%= $image->create_dt %>";
    gcis:description "<%= $image->description %>";
    dcterms:identifier "<%= $image->identifier %>";
