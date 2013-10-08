@@ -12,7 +12,7 @@ file
  file_type (character varying) - 
  dir (character varying) - 
  file (character varying) - 
- identifier (serial) - 
+ identifier (character varying) - 
 
 
 =head1 SCHEMA
@@ -23,12 +23,12 @@ file
   file_type  | character varying |                                                   | extended | 
   dir        | character varying |                                                   | extended | 
   file       | character varying | not null                                          | extended | 
-  identifier | integer           | not null default nextval('file_id_seq'::regclass) | plain    | 
+  identifier | character varying | not null default nextval('file_id_seq'::regclass) | extended | 
  Indexes:
      "file_pkey" PRIMARY KEY, btree (identifier)
      "file_file_key" UNIQUE CONSTRAINT, btree (file)
  Referenced by:
-     TABLE "publication_file_map" CONSTRAINT "publication_file_map_file_fkey" FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "publication_file_map" CONSTRAINT "publication_file_map_file_identifier_fkey" FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON file FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON file FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

@@ -194,7 +194,7 @@ CREATE TABLE file (
     file_type character varying,
     dir character varying,
     file character varying NOT NULL,
-    identifier integer NOT NULL
+    identifier character varying NOT NULL
 );
 
 
@@ -400,7 +400,7 @@ ALTER SEQUENCE publication_contributor_id_seq OWNED BY publication_contributor.i
 
 CREATE TABLE publication_file_map (
     publication_id integer NOT NULL,
-    file_identifier integer NOT NULL
+    file_identifier character varying NOT NULL
 );
 
 
@@ -1129,7 +1129,7 @@ ALTER TABLE ONLY publication_contributor
 
 
 ALTER TABLE ONLY publication_file_map
-    ADD CONSTRAINT publication_file_map_file_fkey FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT publication_file_map_file_identifier_fkey FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
