@@ -24,5 +24,9 @@ sub as_tree {
     return $s->SUPER::as_tree(@_, deflate => 0);
 }
 
+sub type {
+    return shift->attrs->{reftype};
+}
+
 1;
 

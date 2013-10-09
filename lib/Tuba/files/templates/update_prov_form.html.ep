@@ -22,7 +22,7 @@
 
 <h4>Associate this <%= $meta->table %> with another resource :</h4>
 <label class="control-label" for="_url">
-This resource
+This publication
 </label>
 <div class='controls'>
 %= text_field '_url', class => 'span10', value => $object->uri($self), disabled => 1
@@ -32,7 +32,23 @@ This resource
 Relationship
 </label>
 <div class='controls'>
-%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom', 'gcis:cites', 'cito:hasCitingEntity', 'biro:isReferencedBy', 'biro:references' ], class => 'input span10',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom', 'cito:cites' ], class => 'input span10',
+</div>
+
+<!---
+<label class="control-label" for="parent">
+Bibliographic entry
+</label>
+<div class='controls'>
+%= text_field 'reference', class => 'span10', id => 'reference', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
+</div>
+--->
+
+<label class="control-label" for="parent">
+Other publication
+</label>
+<div class='controls'>
+%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
 </div>
 
 <label class="control-label" for="parent">
@@ -42,13 +58,6 @@ Note
 %= text_field 'note', class => 'span10', id => 'note', placeholder => 'Note about the relationship';
 </div>
 
-
-<label class="control-label" for="parent">
-Other resource
-</label>
-<div class='controls'>
-%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
-</div>
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -69,5 +78,16 @@ $('#parent').typeahead({
             });
         }
 });
+
+$('#reference').typeahead({
+    minLength : 2,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'reference' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
 
 %= end

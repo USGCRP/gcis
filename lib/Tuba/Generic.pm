@@ -22,5 +22,11 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    $c->stash(extra_cols => ['type']);
+    $c->SUPER::list(@_);
+}
+
 1;
 
