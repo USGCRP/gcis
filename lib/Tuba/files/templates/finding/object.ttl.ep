@@ -1,20 +1,17 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity;
-   doco:ChapterTitle "<%= obj_uri_for($chapter)->to_abs %>";
+   gcis:isBasedOn "<%= $finding->chapter->identifier %>";
 % for my $keyword ($finding->keywords) {
    dcterms:subject "<%== $keyword->stringify %>";
 % }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
-   doco:ChapterTitle "<%= $finding->chapter_identifier %>";
+   dcterms:identifier "<%= $chapter->identifier %>";
    gcis:confidence "<%= $finding->confidence %>";
    gcis:descriptionOfEvidenceBase "<%= $finding->evidence %>";
    dcterms:identifier "<%= $finding->identifier %>";
    rdf:rest "<%= $finding->ordinal %>";
    gcis:findingProcess "<%= $finding->process %>";
-   dcterms:identifier "<%= $finding->report_identifier %>";
+   gcis:inPublication "<%= $report->identifier %>";
    gcis:Finding "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".
-
-
-
