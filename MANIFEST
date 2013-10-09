@@ -289,7 +289,6 @@ lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.ep
 lib/Tuba/files/templates/pub_thumbnails.html.ep
-lib/Tuba/files/templates/reference.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
