@@ -52,7 +52,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.51"
+         "version" : "0.52"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm"
@@ -105,6 +105,12 @@
       "Tuba::DB::Object::Finding::Manager" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Finding/Manager.pm"
       },
+      "Tuba::DB::Object::Generic" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Generic.pm"
+      },
+      "Tuba::DB::Object::Generic::Manager" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Generic/Manager.pm"
+      },
       "Tuba::DB::Object::Image" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Image.pm"
       },
@@ -126,6 +132,15 @@
       "Tuba::DB::Object::Publication" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Publication.pm"
       },
+      "Tuba::DB::Object::PublicationMap" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/PublicationMap.pm"
+      },
+      "Tuba::DB::Object::Reference" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Reference.pm"
+      },
+      "Tuba::DB::Object::Reference::Manager" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Reference/Manager.pm"
+      },
       "Tuba::DB::Object::Report::Manager" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Report/Manager.pm"
       },
@@ -143,6 +158,9 @@
       },
       "Tuba::Finding" : {
          "file" : "lib/Tuba/Finding.pm"
+      },
+      "Tuba::Generic" : {
+         "file" : "lib/Tuba/Generic.pm"
       },
       "Tuba::Image" : {
          "file" : "lib/Tuba/Image.pm"
@@ -186,6 +204,9 @@
       "Tuba::Publication" : {
          "file" : "lib/Tuba/Publication.pm"
       },
+      "Tuba::Reference" : {
+         "file" : "lib/Tuba/Reference.pm"
+      },
       "Tuba::Report" : {
          "file" : "lib/Tuba/Report.pm"
       },
@@ -199,5 +220,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.51"
+   "version" : "0.52"
 }
