@@ -185,6 +185,12 @@ sub startup {
             return $base.$frag;
         });
 
+    $app->helper(uri => sub {
+        my $c = shift;
+        my $obj = shift;
+        return $obj->uri($c,{ tab => 'show' })->to_abs;
+    });
+    
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;

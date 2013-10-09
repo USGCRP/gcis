@@ -314,5 +314,13 @@ sub new_from_autocomplete {
     return $obj;
 }
 
+sub get_references {
+    my $s = shift;
+    my $pub = $s->get_publication or return;
+    my $map = $pub->publication_map or return;
+    my @refs = grep defined, map $_->reference, @$map;
+    return @refs;
+}
+
 1;
 
