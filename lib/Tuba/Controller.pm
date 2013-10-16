@@ -26,7 +26,7 @@ sub list {
     my $objects = $c->stash('objects');
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier", page => $c->page);
+        $objects = $manager_class->get_objects(sort_by => "identifier", page => $c->page, per_page => $c->per_page);
         $c->set_pages($manager_class->get_objects_count);
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
@@ -674,6 +674,8 @@ sub page {
 }
 
 sub per_page {
+    my $c = shift;
+    return 21 if $c->param('thumbs');
     return 20;
 }
 
