@@ -37,14 +37,13 @@ for (@$all) {
     $out = `curl -T ./out.jpg -u $creds $base/report/files/$identifier 2> $errs`;
     $ok = 1 unless $?;
 } continue {
+    chdir '/tmp';
     if (!$ok) {
-        #say "\n\n$out\nerrors : ", file("$errs")->slurp;
+        say "\n\n$out\nerrors : ", file("$errs")->slurp;
         say "fail";
-    } else {
-        chdir '/tmp';
-        undef $dir;
-        undef $errs;
     }
+    undef $dir;
+    undef $errs;
 }
 
 
