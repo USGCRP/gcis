@@ -198,7 +198,6 @@ eg/import_keywords
 eg/journal_images.pl
 eg/login.pl
 eg/update-findings.pl
-eg/upload_images.pl
 lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
