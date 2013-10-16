@@ -15,6 +15,7 @@ sub _user_can_view {
     my $report = shift or return;
     return 1 if $report->_public;
     my $user = $c->user or return 0;
+    return 1 if $c->config->{authz}{root}{$user};
     return 1 if ReportViewer->new(username => $user, report => $report->identifier)->load(speculative => 1);
     return 0;
 }
@@ -23,6 +24,7 @@ sub _user_can_edit {
     my $c = shift;
     my $report = shift or return;
     my $user = $c->user or return;
+    return 1 if $c->config->{authz}{root}{$user};
     return 1 if ReportEditor->new(username => $user, report => $report->identifier)->load(speculative => 1);
     return 0;
 }
