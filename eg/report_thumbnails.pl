@@ -32,7 +32,7 @@ for (@$all) {
     say "Doing $identifier ($url)";
     $out = `curl -q '$url' > ./out.pdf 2>$errs`;
     -e './out.pdf' or next;
-    $out = `convert -resize 600x400 out.pdf[0] out.jpg 2>$errs`;
+    $out = `gm convert -resize 600x400 out.pdf[0] out.jpg 2>$errs`;
     -e './out.jpg' or next;
     $out = `curl -T ./out.jpg -u $creds $base/report/files/$identifier 2> $errs`;
     $ok = 1 unless $?;
