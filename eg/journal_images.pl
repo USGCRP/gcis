@@ -1,27 +1,51 @@
 #!/usr/bin/env perl
 use Mojo::UserAgent;
+use Path::Class qw/file/;
 use Data::Dumper;
 use feature qw/:all/;
 use strict;
 
-my $ua = Mojo::UserAgent->new();
+my $ua = Mojo::UserAgent->new()->max_redirects(1);
 
-my $base = $ARGV[0] || 'http://localhost:3000';
-my $credsfile = '~/.gcis_creds.'.($ARGV[1] || 'local');
+my $which = $ARGV[0] or die "Usage $0 [local|dev|test|prod]\n";
+my $dest = {
+  local => "http://localhost:3000",
+  dev   => "https://data.gcis-dev-front.joss.ucar.edu",
+  test  => "https://data.gcis-test-front.joss.ucar.edu",
+  prod  => "https://data.globalchange.gov",
+  }->{$which};
+say "connecting to $dest";
+my $which_key = ".gcis_api_key.$which";
+my $keyfile = "$ENV{HOME}/".$which_key;
+my $key     = file($keyfile)->slurp;
+chomp $key;
+my %hdrs = ("Accept" => "application/json",
+            "Authorization" => "Basic $key");
 
-my $all = $ua->get("$base/journal.json?page=1")->success->json;
+my $all = $ua->get("$dest/journal.json?all=1")->success->json;
 
-#http://download.journals.elsevierhealth.com/images/journalimages/1081-1206/S1081120613X00092_cov200h.gif
-
-for my $journal (@$all) {
-    say $journal->{title}; 
-    my $url = Mojo::URL->new('http://www.google.com')->query(q => $journal->{title}, btnG => 'Search by image');
-    #next unless my $url = $journal->{url};
-    my $res = $ua->get($url => { Accept => "application/json" })->success or next;
-    say $res->body;
-    #my ($found) = $res->body =~ /(http.*download.*.gif)/;
-    #say $res->body unless $found;
-    #say "got ".$journal->{url}." $found";
-die;
+sub handle_all_elsevier {
+    my $all = shift;
+    for my $journal (@$all) {
+        next unless my $url = $journal->{url};
+        say $journal->{identifier};
+        next unless $url =~ /elsevier/;
+        my $this = $ua->get("$dest/journal/$journal->{identifier}.json" => \%hdrs)->res->json;
+        if ($this->{files} && @{$this->{files}}) {
+            say "have files for $journal->{identifier} already";
+            next;
+        }
+        my $dom = $ua->get($url)->res->dom;
+        my $img_url = eval { $dom->find('html > body > div.pgContainer > div.mainCol > div.jnlHeader > div.jnlCover > a > img')->attr('src'); };
+        say "skipppng ".$journal->{url} unless $img_url;
+        next unless $img_url;
+        say $img_url;
+        my $tx = $ua->post("$dest/journal/files/$journal->{identifier}" => \%hdrs => form => { file_url => $img_url } );
+        my $res = $tx->success or do { warn $tx->error; next; };
+        warn "error : ".$res->code.$res->body unless $res->code==200;
+        sleep 5;
+    }
 }
+
+handle_all_elsevier($all);
 
