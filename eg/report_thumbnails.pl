@@ -10,13 +10,21 @@ my $base  = $ARGV[0] || 'http://localhost:3000';
 my $which = $ARGV[1] || 'local';
 my $creds = file("$ENV{HOME}/.gcis_creds.$which")->slurp;
 chomp $creds;
-my $page  = $ARGV[2] || '1';
+my $identifier  = $ARGV[2];
 
 my $ua = Mojo::UserAgent->new;
 
-my $tx = $ua->get("$base/report.json?page=$page");
-my $res = $tx->success or die $tx->error;
-my $all = $res->json;
+my $all;
+
+if ($identifier) {
+    my $tx = $ua->get("$base/report/$identifier.json");
+    my $res = $tx->success or die $tx->error;
+    $all = [ $res->json ];
+} else {
+    my $tx = $ua->get("$base/report.json?all=1");
+    my $res = $tx->success or die $tx->error;
+    $all = $res->json;
+}
 
 my $dir;
 my $errs;

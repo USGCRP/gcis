@@ -69,8 +69,9 @@ sub list {
                   ]
         ],
         with_objects => [qw/_report_viewer organization/],
-        page => $c->page,
-        per_page => $c->per_page,
+        ($c->param('all')
+          ? ()
+          : (page => $c->page, per_page => $c->per_page)),
         sort_by => 'identifier',
     );
     my $count = Reports->get_objects_count(
