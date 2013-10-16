@@ -32,6 +32,7 @@ sub list {
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
     my $table = $meta->table;
+    my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
     $c->respond_to(
         json => sub {
             my $c = shift;
@@ -42,9 +43,9 @@ sub list {
             $c->render(json => [ map $_->as_tree, @$objects ]) },
         html => sub {
              my $c = shift;
-             $c->render_maybe(template => "$table/objects", meta => $meta, objects => $objects )
+             $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )
                  or
-             $c->render(template => 'objects', meta => $meta, objects => $objects )
+             $c->render(template => $template, meta => $meta, objects => $objects )
          }
     );
 };

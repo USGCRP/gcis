@@ -16,6 +16,8 @@
                             <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
                         % }
                     % }
+                % } elsif (stash 'blanks') {
+                    <%= image '/blank.png', class => 'img-polaroid' => style => 'padding:0px;' =%>
                 % }
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify(short => 1);
