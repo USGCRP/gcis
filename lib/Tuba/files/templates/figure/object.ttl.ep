@@ -22,7 +22,7 @@
    dcterms:dateSubmitted "<%= $figure->submission_dt %>";     
    gcis:startedAt "<%= $figure->time_start %>";                          
    gcis:endedAt "<%= $figure->time_end %>";                           
-   dcterms:title "<%= $figure->title %>";                                   
+   dcterms:title "<%= $figure->title %>".
 
 %# gcis:description "<%= $figure->description %>";
 
