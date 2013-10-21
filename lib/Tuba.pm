@@ -426,8 +426,8 @@ sub startup {
       $c->stash(placeholders => \@placeholders);
     } => 'api_reference');
 
-    $r->get('/resources' => 'resources');
-    $r->get('/examples' => 'examples');
+    $r->get('/resources')->to('doc#resources')->name('resources');
+    $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/autocomplete')->to('search#autocomplete');
 
     my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});

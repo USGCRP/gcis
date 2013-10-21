@@ -112,6 +112,10 @@ sub list {
     my $page = $c->page;
     my $limit = 20;
     my $offset = ( $page - 1 ) * 20;
+    if ($c->param('all')) {
+        $limit = 10_000;
+        $offset = 0;
+    }
     my $objects = Images->get_objects_from_sql(
         args => [ $identifier, $identifier ],
         sql => qq[select i.*
@@ -123,14 +127,16 @@ sub list {
         order by c.number,f.ordinal
         limit $limit offset $offset ]
     );
-    $c->dbs->query('select count(1) from
-        image i
-            inner join image_figure_map m on m.image_identifier = i.identifier
-            inner join figure f on f.identifier = m.figure_identifier
-            inner join chapter c on f.chapter_identifier = c.identifier
-        where c.report_identifier = ? or f.report_identifier = ?
-        ',$identifier,$identifier)->into(my $count);
-    $c->set_pages($count);
+    unless ($c->param('all')) {
+        $c->dbs->query('select count(1) from
+            image i
+                inner join image_figure_map m on m.image_identifier = i.identifier
+                inner join figure f on f.identifier = m.figure_identifier
+                inner join chapter c on f.chapter_identifier = c.identifier
+            where c.report_identifier = ? or f.report_identifier = ?
+            ',$identifier,$identifier)->into(my $count);
+        $c->set_pages($count);
+    }
     $c->stash(objects => $objects);
     $c->SUPER::list(@_);
 }
