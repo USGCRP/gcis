@@ -371,6 +371,7 @@ sub startup {
 
     # Images (globally unique)
     $r->resource('image');
+    $report->get('/image')->to('image#list');
 
     # Metadata processing routes.
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
@@ -390,6 +391,7 @@ sub startup {
 
     # Bibliographic entry.
     $r->resource('reference');
+    $report->get('/reference')->to('reference#list');
 
     # Generic publication.
     $r->resource('generic');
