@@ -2,17 +2,9 @@
 
 <h2>Examples</h2>
 
-<h3>1. Download all of the chapters from the draft Third National Climate Assesement.</h3>
+<h4>1. Get a URL to download a chapter of the <a href="/report/nca3draft">draft NCA3 report</a>. </h4>
 <pre>
-$ seq 30 | xargs --replace <a href="http://mojolicio.us">mojo</a> get http://data.globalchange.gov/report/nca3draft/chapter.json /{}/url | xargs -n 1 wget
+$ <a href="http://mojolicio.us">mojo</a> get http://data.globalchange.gov/report/nca3draft.json /chapter/2/url
 </pre>
-</h3>
 
-<h3>2. Retrieve the data used to produce a figure.</h3>
-<p>Retrieve the actual data used to produce
-<%= link_to 'show_figure', { figure_identifier => 'temperature-increase-projected', report_identifier => 'nca3draft' } => begin %>
-Figure 20.1: Projected Temperature Increases.
-%= end
-.
-</p>
 
