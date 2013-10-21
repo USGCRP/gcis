@@ -1,6 +1,7 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity;
+   a gcis:Finding;
    gcis:isBasedOn "<%= $finding->chapter->identifier %>";
 % for my $keyword ($finding->keywords) {
    dcterms:subject "<%== $keyword->stringify %>";
@@ -13,5 +14,5 @@
    rdf:rest "<%= $finding->ordinal %>";
    gcis:findingProcess "<%= $finding->process %>";
    gcis:inPublication "<%= $report->identifier %>";
-   gcis:Finding "<%= $finding->statement %>";
+   dcterms:description "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".

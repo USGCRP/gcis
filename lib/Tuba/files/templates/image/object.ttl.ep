@@ -2,6 +2,7 @@
 
 <<%= current_resource %>>  
    a prov:Entity;
+   a gcis:Image;
 %# The following only returns figure title without "2.1", so holding off and commented out
   % for my $figure ($image->figures) {
    doco:FigureLabel <<%= obj_uri_for($figure)->to_abs %>>;

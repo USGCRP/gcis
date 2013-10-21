@@ -1,6 +1,7 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity;   
+   a gcis:Chapter;
 % for my $figure ($chapter->figure) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
