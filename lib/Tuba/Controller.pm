@@ -40,7 +40,7 @@ sub list {
                 $c->res->headers->accept_ranges('page');
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
-            $c->render(json => [ map $_->as_tree, @$objects ]) },
+            $c->render(json => [ map $_->as_tree(c => $c), @$objects ]) },
         html => sub {
              my $c = shift;
              $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )

@@ -153,32 +153,6 @@ sub save {
     return $status;
 }
 
-sub prov_type {
-    my $self = shift;
-    return q[http://www.w3.org/ns/prov#Entity];
-}
-
-sub foaf_type {
-    my $self = shift;
-    return;
-}
-
-sub prov_label {
-    my $self = shift;
-    return $self->name if $self->can('name');
-    return $self->title if $self->can('title');
-    return $self->statement if $self->can('statement');
-    return $self->identifier;
-}
-
-sub foaf_name {
-    my $self = shift;
-    return $self->name if $self->can('name');
-    return $self->title if $self->can('title');
-    return $self->statement if $self->can('statement');
-    return $self->identifier;
-}
-
 sub get_publication {
     my $self = shift;
     my %args = @_;
@@ -272,6 +246,7 @@ sub as_tree {
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
         }
+        $tree->{uri} //= $s->uri($c)->to_abs;
     }
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
