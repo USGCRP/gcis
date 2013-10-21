@@ -15,3 +15,6 @@
    gcis:inPublication "<%= $chapter->report_identifier %>";
    dcterms:title "<%= $chapter->title %>";
    gcis:url "<%= $chapter->url %>".
+
+%= include 'prov';
+

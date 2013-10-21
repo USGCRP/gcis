@@ -50,3 +50,5 @@
 
 %# dwc:geodeticDatum "<%= $image->image_datum %>";
 
+%= include 'prov';
+

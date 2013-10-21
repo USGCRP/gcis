@@ -2,12 +2,13 @@
 <<%= current_resource %>>
    a prov:Entity;
    a gcis:Finding;
-   gcis:isBasedOn "<%= $finding->chapter->identifier %>";
+% if (my $chapter = $finding->chapter) {
+   gcis:isBasedOn "<%= $chapter->identifier %>";
+% }
 % for my $keyword ($finding->keywords) {
    dcterms:subject "<%== $keyword->stringify %>";
 % }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
-   dcterms:identifier "<%= $chapter->identifier %>";
    gcis:confidence "<%= $finding->confidence %>";
    gcis:descriptionOfEvidenceBase "<%= $finding->evidence %>";
    dcterms:identifier "<%= $finding->identifier %>";
@@ -16,3 +17,6 @@
    gcis:inPublication "<%= $report->identifier %>";
    dcterms:description "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".
+
+%= include 'prov';
+

@@ -12,3 +12,6 @@
    gcis:hasPublisher "<%= $journal->publisher %>";
    dcterms:title "<%= $journal->title %>";
    gcis:URL "<%= $journal->url %>".
+
+%= include 'prov';
+
