@@ -246,7 +246,7 @@ sub as_tree {
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
         }
-        $tree->{uri} //= $s->uri($c)->to_abs;
+        $tree->{uri} //= $s->uri($c);
     }
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
