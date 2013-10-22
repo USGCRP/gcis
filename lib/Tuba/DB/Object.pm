@@ -231,8 +231,11 @@ The parameter 'c' should have a controller object
 sub as_tree {
     my $s = shift;
     my %a = @_;
+    my $c = $a{c}; # controller object
+    my $bonsai = $a{bonsai}; # a small tree
+
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
-    if (my $c = $a{c}) {
+    if ($c && !$bonsai) {
         $tree->{parents} = [];
         if (my $pub = $s->get_publication) {
             for my $parent ($pub->get_parents) {
@@ -248,6 +251,7 @@ sub as_tree {
         }
         $tree->{uri} //= $s->uri($c);
     }
+    $tree->{uri} //= $s->uri($c);
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }

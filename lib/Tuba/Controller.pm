@@ -33,6 +33,7 @@ sub list {
     my $meta = $object_class->meta;
     my $table = $meta->table;
     my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
+    my $all = $c->param('all') ? 1 : 0;
     $c->respond_to(
         json => sub {
             my $c = shift;
@@ -40,7 +41,8 @@ sub list {
                 $c->res->headers->accept_ranges('page');
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
-            $c->render(json => [ map $_->as_tree(c => $c), @$objects ]) },
+            # Trees are smaller when getting all objects.
+            $c->render(json => [ map $_->as_tree(c => $c, bonsai => $all), @$objects ]) },
         html => sub {
              my $c = shift;
              $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )
