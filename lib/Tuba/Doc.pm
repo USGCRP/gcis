@@ -14,25 +14,28 @@ sub examples {
     my $base = "http://data.gcis-dev-front.joss.ucar.edu";
 
     my $sparql = [
-        { desc => "Get a list of figures in the GCIS triplestore.",
+        { desc => "List URLs for 10 figures.",
           code => 
 "select * FROM <http://data.globalchange.gov>
 where { ?s a gcis:Figure }
 limit 10",
         },
-        { desc => "Get a list of findings in the GCIS triplestore.",
+        { desc => "List all of the findings from the NCA3 draft report.",
           code => 
 "select * FROM <http://data.globalchange.gov>
-where { ?s a gcis:Finding }
-limit 10",
+where {
+ ?s a gcis:Finding .
+ ?s <http://purl.org/dc/terms/description> ?d
+ }
+",
         },
         {
-          desc => "Find all publications that informed figure 2.26 : global-slr",
+          desc => "Find publications from which figure 2.26 (global-slr) in the draft nca3 was derived.",
 code =>
 "select ?y FROM <http://data.globalchange.gov>
 where {
  <$base/report/nca3draft/chapter/our-changing-climate/figure/global-slr> gcis:hasImage ?img .
- ?img prov:wasInformedBy ?y
+ ?img prov:wasDerivedFrom ?y
 }
 limit 10"
 }
