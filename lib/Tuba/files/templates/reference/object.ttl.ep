@@ -1,25 +1,13 @@
 % layout 'default';
 
 <<%= current_resource %>>
-   a biro:BibliographicRecord;
-   biro:references <<%= obj_uri_for($reference->child)->to_abs %>>; 
-   biro:references <<%= obj_uri_for($reference->parent)->to_abs %>>; 
-%#   dcterms:type "<%= $reference->attrs->{reftype} %>";
- %#  dcterms:identifier "<%= $reference->attrs->{identifier} %>";
-%# % for my $author ($reference->attrs->{author}) {
-%#   gcis:wasWrittenBy "<%= $author->author %>";
-%# % }
-%# We also have "secondary_author" above, sometimes (e.g. http://data.globalchange.gov/reference/01a15925-f969-4751-b586-ee69abf16bf3) 
-%#   gcis:Location "<%= $reference->attrs->{location} %>";
-%#   gcis:hasPublisher "<%= $reference->attrs->{publisher} %>";
-  %# Need something for record number
-%#   gcis:inPublication "<%= $reference->attrs->{secondary_title} %>";
-%#   dcterms:title "<%= $reference->attrs->{title} %>";   
-%#   gcis:URL "<%= $reference->attrs->{urls} %>";
-%#   dwc:year "<%= $reference->attrs->{year} %>"; 
-%#   bibo:isbn "<%= $reference->attrs->{isbn} %>";
-%#   bibo:issue "<%= $reference->attrs->{issue} %>";
-%#   bibo:pages "<%= $reference->attrs->{pages} %>";
-  %# Note-depending on the resource, this becomes bibo:numPages (e.g. book, see https://raw.github.com/structureddynamics/Bibliographic-Ontology-BIBO/master/bibo.xml.owl)	
-%#   bibo:volume "<%= $reference->attrs->{volume} %>";
- %# <%= link_to 'show_reference', { reference_identifier => $o->identifier } => begin %>
+    a gcis:Reference ;
+    a biro:BibliographicRecord ;
+    dcterms:identifier "<%= $reference->identifier %>" .
+% if (my $child = $reference->child) {
+    <<%= current_resource %>> biro:references <<%= uri($child) %>> .
+% }
+% if (my $parent = $reference->parent) {
+    <<%= current_resource %>> biro:references <<%= uri($parent) %>> .
+% }
+

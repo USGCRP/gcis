@@ -1,7 +1,9 @@
 % layout 'default';
 
 <<%= current_resource %>>  
-   a prov:Entity; a bibo:Image;
+   a prov:Entity;
+   a gcis:Image;
+   a bibo:Image;
 %# The following only returns figure title without "2.1", so holding off and commented out
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
@@ -52,4 +54,6 @@
 
 
 %# dwc:geodeticDatum "<%= $image->image_datum %>";
+
+%= include 'prov';
 

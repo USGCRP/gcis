@@ -1,10 +1,17 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a prov:Person; a 0-1:Person;
+   a prov:Person;
    dcterms:identifier "<%= $person->id %>";
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
    gcis:url "<%= $person->url %>";
    gcis:Organization "<%= $person->org %>".
+   a prov:agent ;
+   gcis:url "<%= $person->url %>" .
+% for my $c ($person->contributor) {
+% my $org = $c->organization or next;
+<<%= current_resource =%>> gcis:hasOrganization "<%= $org->identifier %>".
+% }
+
 

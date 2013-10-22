@@ -153,32 +153,6 @@ sub save {
     return $status;
 }
 
-sub prov_type {
-    my $self = shift;
-    return q[http://www.w3.org/ns/prov#Entity];
-}
-
-sub foaf_type {
-    my $self = shift;
-    return;
-}
-
-sub prov_label {
-    my $self = shift;
-    return $self->name if $self->can('name');
-    return $self->title if $self->can('title');
-    return $self->statement if $self->can('statement');
-    return $self->identifier;
-}
-
-sub foaf_name {
-    my $self = shift;
-    return $self->name if $self->can('name');
-    return $self->title if $self->can('title');
-    return $self->statement if $self->can('statement');
-    return $self->identifier;
-}
-
 sub get_publication {
     my $self = shift;
     my %args = @_;
@@ -257,8 +231,11 @@ The parameter 'c' should have a controller object
 sub as_tree {
     my $s = shift;
     my %a = @_;
+    my $c = $a{c}; # controller object
+    my $bonsai = $a{bonsai}; # a small tree
+
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
-    if (my $c = $a{c}) {
+    if ($c && !$bonsai) {
         $tree->{parents} = [];
         if (my $pub = $s->get_publication) {
             for my $parent ($pub->get_parents) {
@@ -272,7 +249,9 @@ sub as_tree {
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
         }
+        $tree->{uri} //= $s->uri($c);
     }
+    $tree->{uri} //= $s->uri($c);
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }

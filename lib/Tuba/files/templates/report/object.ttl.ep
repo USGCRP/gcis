@@ -1,6 +1,7 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity;
+   a gcis:Report;
 % for my $chapter ($report->chapter) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
@@ -12,7 +13,7 @@
 % for my $finding ($report->finding) {
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-   gcis:Organization "<%= $report->organization %>";
+   gcis:Organization "<%= $report->organization_identifier %>";
    bibo:doi "<%= $report->doi %>";
    dcterms:identifier "<%= $report->identifier %>";
    gcis:Organization "<%= $report->organization_identifier %>";

@@ -4,7 +4,7 @@
         % my $uri = $obj->uri($self);
         <div class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
             <div class='thumbnail centered'>
-                <small><%= $obj->meta->table %></small>
+                <div><small><%= $obj->meta->table %></small></div>
                 % my $files = $pub ? $pub->files : undef;
                 % if ($files && @$files) {
                     % for my $file (@$files) {
@@ -16,6 +16,8 @@
                             <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
                         % }
                     % }
+                % } elsif (stash 'blanks') {
+                    <%= image '/blank.png', class => 'img-polaroid' => style => 'padding:0px;' =%>
                 % }
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify(short => 1);

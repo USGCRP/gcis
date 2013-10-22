@@ -1,8 +1,9 @@
 
 % my $page = stash 'page';
 % my $pages = stash 'pages';
+<div class='row-fluid'>
 % if ($page && $pages > 1) {
-<center>
+<div class='span2 offset5 text-center'>
     <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
 % if ($page==1) {
@@ -34,5 +35,17 @@
 <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-small' => begin %><i class='icon-forward'></i><%= end %>
 % }
 </div>
-</center>
+</div>
+<div class='span1 pull-right'>
+    <div class='btn-group'>
+        % if (param 'thumbs') {
+        <%= link_to url_with->query([thumbs => 0]) => class => 'btn btn-small' => begin %><i class='icon-th-list'></i><%= end %>
+            <div class='btn btn-small active'><i class='icon-th'></i></div>
+        % } else {
+            <div class='btn btn-small active'><i class='icon-th-list'></i></div>
+        <%= link_to url_with->query([thumbs => 1]) => class => 'btn btn-small' => begin %><i class='icon-th'></i><%= end %>
+        % }
+    </div>
+</div>
+</div>
 % }

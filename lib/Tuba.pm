@@ -19,7 +19,7 @@ use Tuba::Converter;
 use Tuba::Log;
 use Data::UUID::LibUUID;
 
-our $VERSION = '0.52';
+our $VERSION = '0.53';
 our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
 
 sub startup {
@@ -371,6 +371,7 @@ sub startup {
 
     # Images (globally unique)
     $r->resource('image');
+    $report->get('/image')->to('image#list');
 
     # Metadata processing routes.
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
@@ -390,6 +391,7 @@ sub startup {
 
     # Bibliographic entry.
     $r->resource('reference');
+    $report->get('/reference')->to('reference#list');
 
     # Generic publication.
     $r->resource('generic');
@@ -424,8 +426,8 @@ sub startup {
       $c->stash(placeholders => \@placeholders);
     } => 'api_reference');
 
-    $r->get('/resources' => 'resources');
-    $r->get('/examples' => 'examples');
+    $r->get('/resources')->to('doc#resources')->name('resources');
+    $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/autocomplete')->to('search#autocomplete');
 
     my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});

@@ -198,7 +198,6 @@ eg/import_keywords
 eg/journal_images.pl
 eg/login.pl
 eg/update-findings.pl
-eg/upload_images.pl
 lib/Tuba.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -234,6 +233,7 @@ lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
+lib/Tuba/files/public/blank.png
 lib/Tuba/files/public/client/js/google/Code.gs
 lib/Tuba/files/public/client/js/google/Demo.gs
 lib/Tuba/files/public/client/js/google/menu_item_1.gs
@@ -318,6 +318,7 @@ lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
 lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
+lib/Tuba/files/templates/thumbs.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep

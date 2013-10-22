@@ -1,6 +1,8 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a bibo:Chapter;   
+   a prov:Entity;
+   a gcis:Chapter;
+   a bibo:Chapter;
 % for my $figure ($chapter->figure) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
@@ -14,3 +16,6 @@
    dcterms:title "<%= $chapter->title %>";
    rdfs:label "<%= $chapter->title %>";
    gcis:url "<%= $chapter->url %>".
+
+%= include 'prov';
+

@@ -10,8 +10,7 @@ use warnings;
 #my $dest    = "http://localhost:3000";
 my $src     = "http://gcis-dev-front.joss.ucar.edu/raw";
 
-my $which = $ARGV[0] or die "Usage $0 [dev|test|prod]\n";
-
+my $which = $ARGV[0] or die "Usage $0 [local|dev|test|prod]\n";
 my $dest = {
   local => "http://localhost:3000",
   dev   => "https://data.gcis-dev-front.joss.ucar.edu",

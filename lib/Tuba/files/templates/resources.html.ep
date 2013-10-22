@@ -3,5 +3,5 @@
 <h2><center>Resources</center></h2>
 <p>The URLs within the GCIS API are representations of resources which are formally
 described by the
-<a href="http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCIS%20Ontology.htm">GCIS ontology</a>.
+<a href="<%= url_for('gcis.owl') %>">GCIS ontology</a>.
 </p>

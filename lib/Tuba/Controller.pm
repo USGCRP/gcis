@@ -24,14 +24,16 @@ Generic list.
 sub list {
     my $c = shift;
     my $objects = $c->stash('objects');
+    my $all = $c->param('all') ? 1 : 0;
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier", page => $c->page);
-        $c->set_pages($manager_class->get_objects_count);
+        $objects = $manager_class->get_objects(sort_by => "identifier", $all ? () : (page => $c->page, per_page => $c->per_page));
+        $c->set_pages($manager_class->get_objects_count) unless $all;
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
     my $table = $meta->table;
+    my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
     $c->respond_to(
         json => sub {
             my $c = shift;
@@ -39,12 +41,13 @@ sub list {
                 $c->res->headers->accept_ranges('page');
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
-            $c->render(json => [ map $_->as_tree, @$objects ]) },
+            # Trees are smaller when getting all objects.
+            $c->render(json => [ map $_->as_tree(c => $c, bonsai => $all), @$objects ]) },
         html => sub {
              my $c = shift;
-             $c->render_maybe(template => "$table/objects", meta => $meta, objects => $objects )
+             $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )
                  or
-             $c->render(template => 'objects', meta => $meta, objects => $objects )
+             $c->render(template => $template, meta => $meta, objects => $objects )
          }
     );
 };
@@ -673,6 +676,8 @@ sub page {
 }
 
 sub per_page {
+    my $c = shift;
+    return 21 if $c->param('thumbs');
     return 20;
 }
 

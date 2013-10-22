@@ -13,3 +13,6 @@
    dcterms:title "<%= $journal->title %>";
    rdfs:label ",%= $journal->title %>";
    gcis:URL "<%= $journal->url %>".
+
+%= include 'prov';
+
