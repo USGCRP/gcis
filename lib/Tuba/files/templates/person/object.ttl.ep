@@ -1,9 +1,10 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a prov: agent
+   a prov:Person; a 0-1:Person;
    dcterms:identifier "<%= $person->id %>";
    foaf:name "<%= $person->name %>";
+   rdfs:label "<%= $person->name %>";
    gcis:url "<%= $person->url %>";
    gcis:Organization "<%= $person->org %>".
 

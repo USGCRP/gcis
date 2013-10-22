@@ -2,7 +2,7 @@
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix dctype: <http://purl.org/dc/dcmitype/> .
+@prefix dcmitype: <http://purl.org/dc/dcmitype/> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix gcis: <http://data.globalchange.gov/gcis.owl#> .
 @prefix org: <http://www.w3.org/ns/org#> .
@@ -16,7 +16,6 @@
 @prefix cito: <http://purl.org/spar/cito/> .
 @prefix biro: <http://purl.org/spar/biro/> .
 @prefix datacite: <http://purl.org/spar/datacite/> .
-
 
 % }
 

@@ -1,16 +1,16 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity;   
+   a prov:Entity; a bibo:Chapter;   
 % for my $figure ($chapter->figure) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 % for my $finding ($chapter->finding) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-
-   gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>";
    gcis:inPublication "<%= $chapter->report_identifier %>";
    dcterms:title "<%= $chapter->title %>";
+   rdfs:label "<%= $chapter->title %>";
    gcis:url "<%= $chapter->url %>".

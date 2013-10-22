@@ -1,7 +1,8 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a prov:Entity;          
+   a org:Organization; a prov:Organization; a foaf:Organization;
+        
 %# % for my $contributor ($organization->contributor) {
 %# gcis:contributor "<%= $contributor->identifier %>";
 %# % }
@@ -12,11 +13,12 @@
    org:purpose "<%= $type->identifier %>";
 % }
 % for my $report ($organization->report) {
-   prov:wasAssociatedWith "<%= $report->identifier %>";
+   prov:wasAssociatedWith "<%= $organization->report->identifier %>";
 % }
    dwc:countryCode "<%= $organization->country %>";
    dcterms:identifier "<%= $organization->identifier %>";
    foaf:name "<%= $organization->name %>";
+   rdfs:label "<%= $organization->name %>";
    gcis:url "<%= $organization->url %>".
 
 %# parent organization(s) - to be added later               

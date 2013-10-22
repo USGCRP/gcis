@@ -1,12 +1,25 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity;
-   gcis:isBasedOn "<%= $finding->chapter->identifier %>";
+% if (my $chapter = stash 'chapter') {
+   gcis:inPublication <<%= obj_uri_for($chapter)->to_abs %>>;
+% }
+
+
+% if (my $chapter = stash 'chapter') {
+   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
+% }
+
+
 % for my $keyword ($finding->keywords) {
    dcterms:subject "<%== $keyword->stringify %>";
 % }
-   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
+   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
+
+% if (my $chapter = stash 'chapter') { 
    dcterms:identifier "<%= $chapter->identifier %>";
+% }
    gcis:confidence "<%= $finding->confidence %>";
    gcis:descriptionOfEvidenceBase "<%= $finding->evidence %>";
    dcterms:identifier "<%= $finding->identifier %>";
@@ -14,4 +27,5 @@
    gcis:findingProcess "<%= $finding->process %>";
    gcis:inPublication "<%= $report->identifier %>";
    gcis:Finding "<%= $finding->statement %>";
+   rdfs:label "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".

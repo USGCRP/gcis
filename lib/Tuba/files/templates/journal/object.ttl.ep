@@ -1,7 +1,7 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a prov:Entity;
+   a prov:Entity; a bibo:Journal;
 % for my $article ($journal->article) {
    dcterms:hasPart "<%= $article->identifier %>";
 % }
@@ -11,4 +11,5 @@
    bibo:issn "<%= $journal->print_issn %>";
    gcis:hasPublisher "<%= $journal->publisher %>";
    dcterms:title "<%= $journal->title %>";
+   rdfs:label ",%= $journal->title %>";
    gcis:URL "<%= $journal->url %>".

@@ -12,11 +12,12 @@
 % for my $finding ($report->finding) {
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-
    gcis:Organization "<%= $report->organization %>";
    bibo:doi "<%= $report->doi %>";
    dcterms:identifier "<%= $report->identifier %>";
    gcis:Organization "<%= $report->organization_identifier %>";
    dcterms:title "<%= $report->title %>";
+   rdfs:label "<%= $report->title %>";
    gcis:url "<%= $report->url %>". 
  
+%# add gcis:hasCommittee somewhere?

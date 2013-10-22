@@ -1,16 +1,19 @@
 % layout 'default';
 
 <<%= current_resource %>>
-   a prov:Entity;
-   gcis:inPublication "<%= $article->journal->identifier %>";
+   a prov:Entity; a bibo:Article;
+% for my $ref ($article->get_references) {
+   biro:isReferencedBy <<%= uri($ref); %>>;
+ % }  
+   gcis:inPublication <<%= obj_uri_for($article->journal)->to_abs %>>;
    bibo:doi "<%= $article->doi %>";
    dcterms:identifier "<%= $article->identifier %>";
-   gcis:inPublication "<%= $article->journal_identifier %>";
+   gcis:inPublication <<%= obj_uri_for($article->journal)->to_abs %>>;
    bibo:pages "<%= $article->journal_pages %>";
    bibo:Volume "<%= $article->journal_vol %>";
    dcterms:title "<%= $article->title %>";
+   rdfs:label "<%= $article->title %>";
    gcis:url "<%= $article->url %>";
    dwc:year "<%= $article->year %>".
-
 %= include "prov";
 

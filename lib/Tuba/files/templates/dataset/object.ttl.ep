@@ -1,16 +1,17 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a prov:Entity;
+   a prov:Entity; a dcmitype:Dataset;
 % for my $organization ($dataset->organizations) {
-    gcis:Organization "<%= $organization->identifier %>";    
+   gcis:Organization "<%= $organization->identifier %>";    
 % }
    dcterms:date "<%= $dataset->access_dt %>";
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";      
    dcterms:description "<%= $dataset->description %>";
    datacite:doi "<%= $dataset->doi %>";                       
    dcterms:identifier "<%= $dataset->identifier %>";           
-    dcterms:title "<%= $dataset->name %>";                                     
+   dcterms:title "<%= $dataset->name %>";                                     
+   rdfs:label "<%= $dataset->name %>";
    dcterms:nativeid "<%= $dataset->native_id %>";                       
    gcis:processing-level "<%= $dataset->processing_level %>";                
    dcterms:date "<%= $dataset->publication_dt %>";                

@@ -2,10 +2,17 @@
 
 <<%= current_resource %>>
    a prov:Entity;
-   gcis:inPublication <<%= obj_uri_for($chapter)->to_abs %>>;
+% if (my $chapter = stash 'chapter') {
+   gcis:isFigureOf <<%= obj_uri_for($chapter)->to_abs %>>;
+% }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
 % }
+
+%# % for my $ref ($article->get_references) {
+%#   biro:isReferencedBy <<%= uri($ref); %>>
+%# % }
+
    gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    gcis:figureNumber "<%= $figure->numeric %>";
    gcis:hasCaption "<%= $figure->caption %>";                              
@@ -23,7 +30,7 @@
    gcis:startedAt "<%= $figure->time_start %>";                          
    gcis:endedAt "<%= $figure->time_end %>";                           
    dcterms:title "<%= $figure->title %>";                                   
-
+   rdfs:label "<%= $figure->title %>".
 %# gcis:description "<%= $figure->description %>";
 
 %# for my $keyword ($figure->keywords) {
