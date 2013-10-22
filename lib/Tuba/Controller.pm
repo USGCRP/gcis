@@ -24,16 +24,16 @@ Generic list.
 sub list {
     my $c = shift;
     my $objects = $c->stash('objects');
+    my $all = $c->param('all') ? 1 : 0;
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier", page => $c->page, per_page => $c->per_page);
-        $c->set_pages($manager_class->get_objects_count);
+        $objects = $manager_class->get_objects(sort_by => "identifier", $all ? () : (page => $c->page, per_page => $c->per_page));
+        $c->set_pages($manager_class->get_objects_count) unless $all;
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
     my $table = $meta->table;
     my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
-    my $all = $c->param('all') ? 1 : 0;
     $c->respond_to(
         json => sub {
             my $c = shift;

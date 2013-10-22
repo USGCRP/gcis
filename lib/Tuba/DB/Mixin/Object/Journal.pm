@@ -12,7 +12,11 @@ sub uri {
     my $c = shift;
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
-    return Mojo::URL->new->path("/journal/".$s->identifier) if $route_name eq 'show';
+    if ($route_name eq 'show') {
+        my $uri = Mojo::URL->new->path("/journal/".$s->identifier);
+        $uri->base($c->req->url->base) if $c;
+        return $uri;
+    }
     return $s->SUPER::uri($c,$opts);
 }
 
