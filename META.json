@@ -52,7 +52,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.53"
+         "version" : "0.54"
       },
       "Tuba::Article" : {
          "file" : "lib/Tuba/Article.pm"
@@ -150,6 +150,9 @@
       "Tuba::Dataset" : {
          "file" : "lib/Tuba/Dataset.pm"
       },
+      "Tuba::Doc" : {
+         "file" : "lib/Tuba/Doc.pm"
+      },
       "Tuba::Figure" : {
          "file" : "lib/Tuba/Figure.pm"
       },
@@ -220,5 +223,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.53"
+   "version" : "0.54"
 }
