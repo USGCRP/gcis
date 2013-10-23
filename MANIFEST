@@ -266,7 +266,6 @@ lib/Tuba/files/templates/create_link.html.ep
 lib/Tuba/files/templates/dataset/object.ttl.ep
 lib/Tuba/files/templates/db_meta.html.ep
 lib/Tuba/files/templates/debug.html.ep
-lib/Tuba/files/templates/examples.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/exception.production.html.ep
 lib/Tuba/files/templates/fields.html.ep
