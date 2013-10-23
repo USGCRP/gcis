@@ -456,6 +456,14 @@ sub startup {
 
     $app->routes->get('/debug') if $ENV{TUBA_DEBUG};
     $app->routes->get('/open-search')->name('opensearch');
+    unless ($app->mode eq 'production') {
+        $app->routes->get('/sparql' => sub {
+                my $c = shift;
+                my $url = $c->req->url->clone;
+                $url->host('gcis-dev-front.joss.ucar.edu');
+                $c->redirect_to($url);
+            });
+    }
 }
 
 1;

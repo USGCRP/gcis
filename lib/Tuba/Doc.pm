@@ -10,8 +10,11 @@ use Mojo::Base qw/Tuba::Controller/;
 
 sub examples {
     my $c = shift;
-    my $sparql_url = Mojo::URL->new(q[http://data.gcis-dev-front.joss.ucar.edu/sparql]);
-    my $base = "http://data.gcis-dev-front.joss.ucar.edu";
+    my $sparql_url = $c->req->url->clone->to_abs;
+    $sparql_url->path->parts(['sparql']);
+
+    my $global_slr = $sparql_url->clone;
+    $global_slr->path(q[/report/nca3draft/chapter/our-changing-climate/figure/global-slr]);
 
     my $sparql = [
         { desc => "List URLs for 10 figures.",
@@ -34,7 +37,7 @@ where {
 code =>
 "select ?y FROM <http://data.globalchange.gov>
 where {
- <$base/report/nca3draft/chapter/our-changing-climate/figure/global-slr> gcis:hasImage ?img .
+ <$global_slr> gcis:hasImage ?img .
  ?img prov:wasDerivedFrom ?y
 }
 limit 10"
