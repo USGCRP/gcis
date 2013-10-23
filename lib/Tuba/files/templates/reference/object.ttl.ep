@@ -4,7 +4,7 @@
    a gcis:Reference;
    a biro:BibliographicRecord;
    a co:Set;
-   a core:Work;
+   a frbr:Work;
    dcterms:identifier "<%= $reference->identifier %>" ;
 % if (my $child = $reference->child) {
     <<%= current_resource %>> biro:references <<%= uri($child) %>> ;
