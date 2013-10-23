@@ -251,7 +251,7 @@ sub as_tree {
         }
         $tree->{uri} //= $s->uri($c);
     }
-    $tree->{uri} //= $s->uri($c);
+    $tree->{uri} //= $s->uri($c) if $c;
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }
