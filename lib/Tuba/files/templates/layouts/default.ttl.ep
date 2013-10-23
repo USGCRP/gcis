@@ -16,7 +16,8 @@
 @prefix cito: <http://purl.org/spar/cito/> .
 @prefix biro: <http://purl.org/spar/biro/> .
 @prefix datacite: <http://purl.org/spar/datacite/> .
-
+@prefix co: <http://purl.org/co/> .
+@prefix frbr: <http://purl.org/vocab/frbr/core#> .
 % }
 
 %= content
