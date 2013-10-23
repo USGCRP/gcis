@@ -6,7 +6,6 @@
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
    gcis:url "<%= $person->url %>";
-   gcis:Organization "<%= $person->org %>".
    a prov:agent ;
    gcis:url "<%= $person->url %>" .
 % for my $c ($person->contributor) {
