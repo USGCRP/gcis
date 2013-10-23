@@ -13,7 +13,7 @@
    org:purpose "<%= $type->identifier %>";
 % }
 % for my $report ($organization->report) {
-   prov:wasAssociatedWith "<%= $organization->report->identifier %>";
+   prov:wasAssociatedWith "<%= $report->identifier %>";
 % }
    dwc:countryCode "<%= $organization->country %>";
    dcterms:identifier "<%= $organization->identifier %>";
