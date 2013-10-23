@@ -10,7 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    my $pub = $c->current_report->get_publication or return $c->render_not_found;
+    my $pub = $c->current_report->get_publication(autocreate => 1);
     my $all = $c->param('all');
     my $refs = References->get_objects(
       require_objects => 'publication_map',
