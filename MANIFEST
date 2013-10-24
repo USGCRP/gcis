@@ -318,7 +318,6 @@ lib/Tuba/files/templates/reference/object.ttl.ep
 lib/Tuba/files/templates/reference/objects.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
-lib/Tuba/files/templates/resources.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
