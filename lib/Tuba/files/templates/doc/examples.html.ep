@@ -18,7 +18,9 @@ $ wget `cat url`
 <h3>SPARQL</h3>
 <p>The GCIS API exposes a SPARQL endpoint at <%= link_to '/sparql' => begin %><%= $sparql_url %><%= end %>.
 Try your own queries in the <%= link_to '/sparql' => begin %>SPARQL Query Editor<%= end %> or run
-some of the ones below.
+some of the ones below.</p>
+<p>The <a href="/gcis.owl">GCIS ontology</a> is still under development, but will eventually
+describe the contents of the triple store which supports the SPARQL endpoint.
 </p>
 % for my $eg (@$sparql) {
 <h4><%= $eg->{desc} %></h4>
