@@ -9,7 +9,7 @@
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <input type="text" class="span4" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+    <input type="text" class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
 % end
 
 % my $textarea = begin
@@ -22,7 +22,7 @@
 <div class='row-fluid'>
 %= include 'update_tabs', active => 'fields';
 <div class='tab-content'>
-%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well' => begin
+%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 % if (my $error = (flash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }

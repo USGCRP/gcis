@@ -48,6 +48,7 @@ my $builder = Module::Build::Database->new(
         'YAML::Syck'  => 0,
         'YAML::XS'    => 0,
         'Data::UUID::LibUUID'  => 0,
+        'Rose::DB' => '0.772',
         'Rose::DB::Object' => 0,
         'DBIx::Simple' => 0,
         'DBIx::Custom' => 0,

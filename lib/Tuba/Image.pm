@@ -12,14 +12,9 @@ use Path::Class qw/file dir/;
 use File::Basename qw/basename/;
 use Tuba::Log;
 use Tuba::DB::Objects qw/-nicknames/;
+use Data::UUID::LibUUID;
 
 =head1 ROUTES
-
-=head2 list
-
-Get a list of images.
-
-=cut
 
 =head2 setmet
 
@@ -174,60 +169,13 @@ sub update_rel {
         $c->flash(message => 'Saved changes');
     }
 
-    # TODO remove this, just use files tab.
-    my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
-    -d $image_dir or do { logger->error("no such dir : $image_dir"); die "configuration error"; };
-    my $file = $c->req->upload('file_upload');
-    if ($file && $file->size) {
-        my $filename = $file->filename;
-        $filename =~ s/ /_/g;
-        $filename =~ tr[a-zA-Z0-9_.-][]dc;
-        my $suffix;
-        $filename =~ s/(\.[^.]+)$// and $suffix = $1;
-        my $name = File::Temp->new(UNLINK => 0, DIR => $image_dir, TEMPLATE => $filename.'-XXXXXX', $suffix ? ( SUFFIX => $suffix ) : () );
-        $file->move_to($name) or die $!;
-        my $obj = File->new(file => file($name)->basename, image => $object->identifier);
-        $obj->meta->error_mode('return');
-        $obj->save(audit_user => $c->user) or do {
-            $c->flash(error => $obj->error);
-            return $c->update_rel_form(@_);
-        };
-    }
-
-    if (my $id = $c->param('delete_file')) {
-        my $file = File->new(identifier => $id)->load(speculative => 1) or do {
-            $c->flash(error => "could not delete file $id");
-            return $c->SUPER::update_rel_form(@_);
-        };
-        $file->image eq $object->identifier or do {
-            $c->flash(error => "File $id does not belong to this image.");
-            return $c->update_rel_form(@_);
-        };
-        $file->meta->error_mode('return');
-        my $filename = "$image_dir".'/'.$file->file;
-        -e $filename or die "missing file";
-        $file->delete or do {
-            $c->flash(error => $file->error);
-            return $c->update_rel_form(@_);
-        };
-        unlink $filename or die $!;
-        $c->flash(message => 'Saved changes');
-        return $c->update_rel_form(@_);
-    }
-    #if (my $new = $c->param('new_file')) {
-    #    $object->add_file($file);
-    #    $object->save(audit_user => $c->user) or do {
-    #        $c->flash(error => $object->error);
-    #        return $c->render(template => 'update_rel_form');
-    #    };
-    #}
-
-    #for my $id ($c->param('delete_image')) {
-    #    ImageFigureMaps->delete_objects({ image => $id, figure => $object->identifier });
-    #    $c->flash(message => 'Saved changes');
-    #}
-
     $c->_redirect_to_view($object);
+}
+
+sub create_form {
+    my $c = shift;
+    $c->param(identifier => new_uuid_string(4));
+    return $c->SUPER::create_form(@_);
 }
 
 1;

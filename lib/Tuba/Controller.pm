@@ -133,9 +133,10 @@ sub create_form {
     my $controls = $c->stash('controls') || {};
     $c->stash(controls => { $c->_default_controls, %$controls } );
     my $object_class = $c->_guess_object_class;
+    my $table = $object_class->meta->table;
     $c->stash(object_class => $object_class);
     $c->stash(meta =>$object_class->meta);
-    $c->render(template => "create_form");
+    $c->render_maybe(template => "$table/create_form") or $c->render(template => "create_form");
 }
 
 sub _redirect_to_view {
@@ -156,12 +157,13 @@ sub create {
     my $class = ref $c;
     my ($object_class) = $class =~ /::(.*)$/;
     $object_class = 'Tuba::DB::Object::'.$object_class;
+    my $computed = $c->stash('computed_params') || {}; # to override incoming params in a subclass.
     my %obj;
     if (my $json = $c->req->json) {
         %obj = %$json;
     } else {
         for my $col ($object_class->meta->columns) {
-            my $got = $c->param($col->name);
+            my $got = $computed->{$col->name} // $c->param($col->name);
             $got = $c->normalize_form_parameter(column => $col->name, value => $got);
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
@@ -519,6 +521,7 @@ sub update {
     my %pk_changes;
     my %new_attrs;
     my $table = $object->meta->table;
+    my $computed = $c->stash('computed_params') || {}; # to override incoming params in a subclass.
     $object->meta->error_mode('return');
     my $json = $c->req->json;
 
@@ -533,6 +536,7 @@ sub update {
 
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
+        $param = $computed->{$col->name} if exists($computed->{$col->name});
         $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
         $param = $c->normalize_form_parameter(column => $col->name, value => $param);
         $param = undef unless defined($param) && length($param);

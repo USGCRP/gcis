@@ -22,6 +22,20 @@
                 %= link_to $val => target => "_blank" => begin
                 <%= $val %>
                 %= end
+            % } elsif (ref($val) eq 'ARRAY') {
+                <table class='table table-condensed table-striped table-bordered'>
+                    % for my $row (@$val) {
+                    <tr>
+                        % if (ref($row) eq 'ARRAY') {
+                            % for my $cell (@$row) {
+                                <td><%= $cell  %></td>
+                            % }
+                        % } else {
+                            <td><%= $row %></td>
+                        % }
+                    </tr>
+                    % }
+                </table>
             % } else {
             <%= $val %>
             % }

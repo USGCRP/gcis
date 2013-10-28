@@ -1,0 +1,34 @@
+
+%= hidden_field 'delete_table';
+
+<table class='table table-condensed table-bordered' style='width:auto;'>
+% for my $table ($object->tables) {
+<tr>
+<td style='text-align:right;'>
+    <span class='btn squeezevert'><%= obj_link($table); %></span>
+</td>
+% unless (stash 'no_thumbnails') {
+<td><%== $table->thumbnail($self) %></td>
+% }
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_table"].value = '].$table->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+<tr>
+<td>
+%= text_field 'new_table', placeholder => "new table", id => "newtable", style => "width:100%;";
+</td>
+</tr>
+</table>
+
+%= javascript begin
+$('#newtable').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'table' }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

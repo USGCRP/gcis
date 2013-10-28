@@ -206,7 +206,6 @@ sub startup {
     }) if $app->mode eq 'production';
 
     # Shortcuts (see Mojolicious::Guides::Routing)
-    my @forms;
     # For a given resource we create several routes.  As an
     # example, for the resource 'report' we create :
     #    name           method, path, controller
@@ -248,9 +247,7 @@ sub startup {
       my $path_base = $opts->{path_base} || $name;
 
       eval " use $controller ";
-      if (!$@) {
-         push @forms, "create_form_$name";
-      } else {
+      if ($@) {
           unless ($@ =~ /^Can't locate/) {
               warn "loading $controller failed ---------- $@\n";
               die $@;
@@ -347,17 +344,23 @@ sub startup {
     my $chapter = $report->resource('chapter');
     $r->lookup('select_chapter')->resource('finding');
     $r->lookup('select_chapter')->resource('figure');
+    $r->lookup('select_chapter')->resource('table');
 
-    # Report (finding|figure)s have no chapter.
-    $report->get('/finding')->to('Finding#list')->name('list_all_findings');
+    # Report (finding|figure|table)s have no chapter.
+    $report->get('/finding')->to('finding#list')->name('list_all_findings');
+    $report->get('/figure') ->to('figure#list') ->name('list_all_figures');
+    $report->get('/table')  ->to('table#list')  ->name('list_all_tables');
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding' });
-    $report->get('/figure')->to('figure#list')->name('list_all_figures');
-    $report->resource('report_figure', { controller => 'Tuba::figure', identifier => 'figure_identifier', path_base => 'figure' });
+    $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure' });
+    $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table' });
 
     # Redirect from chapter numbers to names.
     $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
         => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]
       )->to('figure#redirect_to_identifier')->name('figure_redirect');
+    $r->get('/report/:report_identifier/chapter/:chapter_number/table/:table_number'
+        => [ chapter_number => qr/\d+/, table_number => qr/\d+/ ]
+      )->to('table#redirect_to_identifier')->name('table_redirect');
 
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
@@ -372,6 +375,10 @@ sub startup {
     # Images (globally unique)
     $r->resource('image');
     $report->get('/image')->to('image#list');
+
+    # array (globally unique)
+    $r->resource('array');
+    $report->get('/array')->to('array#list');
 
     # Metadata processing routes.
     $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');

@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
 
-%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well' => begin
+%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well' => enctype => 'multipart/form-data' => begin
 
 <legend>New <%= $meta->table %></legend>
 
@@ -27,7 +27,7 @@
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } else {
-            <input type="text" class="span4" id="<%= $name %>" name="<%= $name %>" placeholder="<%= $column->type %>">
+                %= text_field $name, placeholder => $column->type, id => $name, class => 'span5';
             % }
 
             <span class="help-inline">

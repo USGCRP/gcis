@@ -33,6 +33,7 @@ use Rose::DB::Object::Loader;
 use Tuba;
 use Tuba::DB;
 use Tuba::DB::Object::Manager;
+use Tuba::DB::Object::ConventionManager;
 use YAML::Syck;
 
 use strict;
@@ -77,11 +78,13 @@ sub init {
 
     my $db_schema = Tuba::Plugin::Db->schema;
 
+    my $cm = Tuba::DB::Object::ConventionManager->new();
     my $loader = Rose::DB::Object::Loader->new(
         class_prefix => 'Tuba::DB::Object',
         db_schema => $db_schema,
         base_classes => [qw/Tuba::DB::Object Rose::DB::Object::Helpers/ ],
         manager_base_classes => [qw/Tuba::DB::Object::Manager/],
+        convention_manager => $cm,
     );
 
     my @made = $loader->make_classes(db_class => 'Tuba::DB' );

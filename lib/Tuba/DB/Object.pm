@@ -233,6 +233,7 @@ sub as_tree {
     my %a = @_;
     my $c = $a{c}; # controller object
     my $bonsai = $a{bonsai}; # a small tree
+    $a{deflate} = 0 unless exists($a{deflate});
 
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
     if ($c && !$bonsai) {

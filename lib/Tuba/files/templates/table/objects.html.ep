@@ -1,0 +1,57 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    % if (stash('chapter_identifier')) { 
+Tables in report : <%= stash 'report_identifier' %>, chapter : <%= stash 'chapter_identifier' %>
+    % } else {
+Tables in report <%= stash 'report_identifier' %>
+    % }
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% my @cols = qw/identifier numeric chapter/;
+
+%= include 'pager';
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+% for my $c (@cols) {
+    <th><%= $c %></th>
+% }
+    <th>arrays</th>
+</tr>
+% for my $o (@$objects) {
+    <tr>
+    % my $first = $cols[0];
+    % my $val = $o->can($first) ? $o->$first : "error, cannot call $first";
+        <td>
+            %= obj_link_to $o, show => begin
+            <%= $val %>
+            %= end
+        </td>
+% for my $c (@cols[1..$#cols]) {
+        % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
+        <td>
+            % if (ref($got) eq 'ARRAY') {
+            %   for (@$got) {
+                    <span class='btn squeezevert'><%= obj_link($_); %></span>
+            %   }
+            % } elsif (ref($got)) {
+                %= obj_link($got);
+            % } else {
+                %= $got
+            % }
+        </td>
+% }
+<td class='row'>
+%= include 'obj_thumbnails', objs => $o->arrays || [];
+</td>
+</tr>
+% }
+</table>
+
+%= include 'pager', bottom => 1;
