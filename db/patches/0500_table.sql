@@ -41,4 +41,5 @@ select audit.audit_table('array');
 select audit.audit_table('array_table_map');
 
 insert into publication_type (identifier,"table") values ('array','array');
+insert into publication_type (identifier,"table") values ('table','table');
 

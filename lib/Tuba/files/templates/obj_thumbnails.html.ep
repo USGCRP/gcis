@@ -2,7 +2,7 @@
 %    for my $obj (@$objs) {
         % my $pub = $obj->get_publication;
         % my $uri = $obj->uri($self);
-        <div class='<%= (stash 'small') ? "span1" : "span2" %>' style='margin:2px;'>
+        <div class='<%= (stash 'small') ? "span1" : (stash 'large') ? "span5" : "span2" %>' style='margin:2px;'>
             <div class='thumbnail centered'>
                 <div><small><%= $obj->meta->table %></small></div>
                 % my $files = $pub ? $pub->files : undef;
