@@ -36,10 +36,13 @@ sub uri {
     my $opts = shift;
     my $tab = $opts->{tab} || 'show';
 
-    return $c->url_for($tab.'_report_table') if $tab =~ /create/; # create/create_form
+    my $chapter_identifier;
+    $chapter_identifier = $s->chapter_identifier if ref $s;
+    $chapter_identifier ||= $opts->{chapter_identifier};
+    $chapter_identifier ||= $c->stash('chapter_identifier');
 
     my $route_name = $tab;
-    $route_name .= '_report' unless ref $s && $s->chapter_identifier;
+    $route_name .= '_report' unless $chapter_identifier;
     $route_name .= '_table';
 
     return $c->url_for($route_name) unless ref $s;
@@ -49,7 +52,7 @@ sub uri {
       {
         table_identifier => $s->identifier,
         report_identifier  => $s->report_identifier,
-        chapter_identifier => $s->chapter_identifier,
+        chapter_identifier => $chapter_identifier,
       }
     );
 }

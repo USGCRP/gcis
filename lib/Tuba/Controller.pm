@@ -129,14 +129,30 @@ instead of the default create_form.html.ep.
 =cut
 
 sub create_form {
+  my $c = shift;
+  my $controls = $c->stash('controls') || {};
+  $c->stash(controls => {$c->_default_controls, %$controls});
+  my $object_class = $c->_guess_object_class;
+  my $table        = $object_class->meta->table;
+  $c->stash(object_class => $object_class);
+  $c->stash(meta         => $object_class->meta);
+  $c->stash(cols => $c->_order_columns(meta => $object_class->meta));
+  $c->render_maybe(template => "$table/create_form")
+    or $c->render(template => "create_form");
+}
+
+sub _order_columns {
     my $c = shift;
-    my $controls = $c->stash('controls') || {};
-    $c->stash(controls => { $c->_default_controls, %$controls } );
-    my $object_class = $c->_guess_object_class;
-    my $table = $object_class->meta->table;
-    $c->stash(object_class => $object_class);
-    $c->stash(meta =>$object_class->meta);
-    $c->render_maybe(template => "$table/create_form") or $c->render(template => "create_form");
+    my %a = @_;
+    my $meta = $a{meta};
+    my @first = qw/report_identifier chapter_identifier identifier number ordinal title caption statement/;
+    my @ordered;
+    my %col_names = map { $_->name => $_ } $meta->columns;
+    for my $name (@first, keys %col_names) {
+        my $this = delete $col_names{$name} or next;
+        push @ordered, $this;
+    }
+    return \@ordered;
 }
 
 sub _redirect_to_view {
@@ -266,6 +282,7 @@ sub update_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
+    $c->stash(cols => $c->_order_columns(meta => $object->meta));
     my $format = $c->detect_format;
     if ($format eq 'json') {
         return $c->render(json => $object->as_tree(max_depth => 0));

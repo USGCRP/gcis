@@ -2,21 +2,6 @@
 % my $name = $rel->name;
 % my @existing = $object->$name;
 <div class='row-fluid'>
-    <div class='span10'>
-        <center>
-    <b>
-        %= obj_link_to $rel->class, 'create_form' => class => 'btn' => begin
-        create a new <%= $name %>
-        %= end
-        % if (@existing) {
-        <br>
-        To delete an existing <%= $name %>, follow the link below, and click 'delete'.
-        % }
-    </b>
-    </center>
-    </div>
-</div>
-<div class='row-fluid'>
 
 % my $i = 0;
 % for my $obj (sort { $a->sortkey cmp $b->sortkey } @existing) {
@@ -31,3 +16,15 @@
     % }
 % }
 </div>
+<div class='row-fluid'>
+    <div class='span10'>
+        <center>
+    <b>
+        %= obj_link_to $rel->class, 'create_form' => class => 'btn' => begin
+        create a new <%= $name %>
+        %= end
+    </b>
+    </center>
+    </div>
+</div>
+

@@ -27,13 +27,11 @@
     <div class='alert alert-error'><%= $error %></div>
 % }
 
-% for my $column (sort { $a->name cmp $b->name } $meta->columns) {
+% my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
+% for my $column (@$cols) {
 % my $required = $column->not_null ? ' required' : "";
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
         <div class="controls">
-            <p class="help-block">
-            %= $column->remarks || ""
-            </p>
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
@@ -49,6 +47,9 @@
                 %= $textfield->($column,$object);
                 % }
             % }
+            <span class="help-inline">
+            %= $column->remarks || ""
+            </span>
         </div>
 % }
 <div class='required_note'>required</div>
