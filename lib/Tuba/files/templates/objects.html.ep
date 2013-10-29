@@ -17,6 +17,7 @@
     ( map $_->name, map $_->columns, $meta->unique_keys ),
   );
 %>
+% @cols = @{ stash 'cols' } if stash 'cols';
 % push @cols, @{ stash 'extra_cols' } if stash 'extra_cols';
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;

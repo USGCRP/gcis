@@ -11,7 +11,7 @@
 
 <td>
     <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
-    <%= obj_link_to $array, update_form => class => 'btn btn-info squeezevert' => begin %>update<%= end %>
+    <%= obj_link_to $array, update_form => class => 'btn btn-info squeezevert' => begin %>edit<%= end %>
 </td>
 </tr>
 % }

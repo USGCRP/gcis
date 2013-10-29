@@ -21,6 +21,9 @@ sub list {
     );
     $c->set_pages( Chapters->get_objects_count( query => [ report_identifier => $report ] )) unless $all;
     $c->title('Chapters in report '.$report);
+    $c->stash(cols => [
+        qw/number identifier report figure finding table/
+        ]);
     $c->SUPER::list(@_);
 }
 
