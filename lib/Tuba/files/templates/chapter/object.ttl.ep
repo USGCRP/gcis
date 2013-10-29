@@ -3,10 +3,10 @@
    a prov:Entity;
    a gcis:Chapter;
    a bibo:Chapter;
-% for my $figure ($chapter->figure) {
+% for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
-% for my $finding ($chapter->finding) {
+% for my $finding ($chapter->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
 % }
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;

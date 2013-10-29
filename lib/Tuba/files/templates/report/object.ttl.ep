@@ -2,15 +2,15 @@
 <<%= current_resource %>>
    a prov:Entity;
    a gcis:Report;
-% for my $chapter ($report->chapter) {
+% for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
 
-% for my $figure ($report->figure) {
+% for my $figure ($report->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 
-% for my $finding ($report->finding) {
+% for my $finding ($report->findings) {
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
 % }
    gcis:Organization "<%= $report->organization_identifier %>";

@@ -12,7 +12,7 @@
 % for my $type ($organization->organization_types) {
    org:purpose "<%= $type->identifier %>";
 % }
-% for my $report ($organization->report) {
+% for my $report ($organization->reports) {
    prov:wasAssociatedWith "<%= $report->identifier %>";
 % }
    dwc:countryCode "<%= $organization->country %>";

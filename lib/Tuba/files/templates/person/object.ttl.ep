@@ -8,7 +8,7 @@
    gcis:url "<%= $person->url %>";
    a prov:agent ;
    gcis:url "<%= $person->url %>" .
-% for my $c ($person->contributor) {
+% for my $c ($person->contributors) {
 % my $org = $c->organization or next;
 <<%= current_resource =%>> gcis:hasOrganization "<%= $org->identifier %>".
 % }

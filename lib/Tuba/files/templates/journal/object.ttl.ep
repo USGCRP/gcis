@@ -2,7 +2,7 @@
 
 <<%= current_resource %>>
    a prov:Entity; a bibo:Journal;
-% for my $article ($journal->article) {
+% for my $article ($journal->articles) {
    dcterms:hasPart "<%= $article->identifier %>";
 % }
    dwc:Countrycode "<%= $journal->country %>";
