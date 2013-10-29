@@ -21,7 +21,7 @@ sub show {
     my $identifier = $c->stash('person_identifier');
     my $person =
       Person->new( id => $identifier )
-      ->load( speculative => 1, with => [qw/contributor/] )
+      ->load( speculative => 1, with => [qw/contributors/] )
       or return $c->render_not_found;
 
     $c->stash(object => $person);

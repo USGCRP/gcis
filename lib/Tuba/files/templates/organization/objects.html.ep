@@ -32,7 +32,7 @@
             %= join ',', map $_->identifier, $o->organization_types
         </td>
         <td>
-            % for my $c (@{ $o->contributor }) {
+            % for my $c (@{ $o->contributors }) {
     <span class='btn squeezevert'><%= obj_link($c->person) %></span>
             % }
         </td>

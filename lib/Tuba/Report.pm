@@ -33,13 +33,13 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
     my $object = Report->new( identifier => $identifier )
-      ->load( speculative => 1, with => [qw/chapter/] )
+      ->load( speculative => 1, with => [qw/chapters/] )
       or return $c->render_not_found;
     return $c->render(status => 403, text => '403 Forbidden') unless $c->_user_can_view($object);
     $c->stash(object => $object);
     $c->stash(sorters => {
-            figure => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
-            finding => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
+            figures => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
+            findings => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
         }
     );
     $c->SUPER::show(@_);
@@ -51,7 +51,7 @@ sub _favorite_page {
     return
         int(
             Reports->get_objects_count(
-            with_objects => [qw/_report_viewer/],
+            with_objects => [qw/_report_viewers/],
             query => [
                  and => [
                      or => [ and => [_public => 't'], and => [username => $user] ],
@@ -70,7 +70,7 @@ sub list {
                     and => [username => $user]
                   ]
         ],
-        with_objects => [qw/_report_viewer organization/],
+        with_objects => [qw/_report_viewers organization/],
         ($c->param('all')
           ? ()
           : (page => $c->page, per_page => $c->per_page)),
@@ -82,7 +82,7 @@ sub list {
                     and => [username => $user]
                   ]
         ],
-        with_objects => [qw/_report_viewer/],
+        with_objects => [qw/_report_viewers/],
     );
     $c->set_pages($count);
     $c->stash(objects => $objects);
@@ -128,11 +128,12 @@ sub watch {
 
 sub update_rel_form {
     my $c = shift;
-    $c->stash(relationships => [ map Report->meta->relationship($_), qw/chapter figure finding/ ]);
+    $c->stash(relationships => [ map Report->meta->relationship($_), qw/chapters figures findings tables/ ]);
     $c->stash(controls => {
-            chapter => { template => 'one_to_many' },
-            figure  => { template => 'one_to_many' },
-            finding => { template => 'one_to_many' }
+            chapters  => { template => 'one_to_many' },
+            figures   => { template => 'one_to_many' },
+            findings  => { template => 'one_to_many' },
+            tables    => { template => 'one_to_many' }
         });
     $c->SUPER::update_rel_form(@_);
 }

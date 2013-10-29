@@ -1,8 +1,8 @@
 package Tuba::DB::Object::Chapter;
 # Tuba::DB::Mixin::Object::Chapter;
 
-__PACKAGE__->meta->relationship('figure')->manager_args({ sort_by => "figure.ordinal" });
-__PACKAGE__->meta->relationship('finding')->manager_args({ sort_by => "finding.ordinal" });
+__PACKAGE__->meta->relationship('figures')->manager_args({ sort_by => "figure.ordinal" });
+__PACKAGE__->meta->relationship('findings')->manager_args({ sort_by => "finding.ordinal" });
 
 sub uri {
     my $s = shift;

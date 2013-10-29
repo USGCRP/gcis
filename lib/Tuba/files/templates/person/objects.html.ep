@@ -19,7 +19,7 @@
             <%= link_to "show_person", { person_identifier => $o->id } => begin %><%= $o->name %><%= end %>
         </td>
         <td>
-            % for my $contributor (@{ $o->contributor }) {
+            % for my $contributor (@{ $o->contributors }) {
                 % if (my $org = $contributor->organization) {
                 %= obj_link($org);
                 % }
