@@ -13,7 +13,7 @@ Tables in report <%= stash 'report_identifier' %>
 
 %= include 'list_formats';
 
-% my @cols = qw/identifier numeric chapter/;
+% my @cols = qw/identifier numeric report chapter arrays/;
 
 %= include 'pager';
 
@@ -22,7 +22,9 @@ Tables in report <%= stash 'report_identifier' %>
 % for my $c (@cols) {
     <th><%= $c %></th>
 % }
-    <th>arrays</th>
+<th>
+    files
+</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -38,7 +40,7 @@ Tables in report <%= stash 'report_identifier' %>
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {
-                    <span class='btn squeezevert'><%= obj_link($_); %></span>
+            <span class='btn squeezevert'><%= obj_link($_, short => 1); %></span>
             %   }
             % } elsif (ref($got)) {
                 %= obj_link($got);
@@ -47,8 +49,10 @@ Tables in report <%= stash 'report_identifier' %>
             % }
         </td>
 % }
-<td class='row'>
-    %= include 'obj_thumbnails', large => 1, objs => $o->arrays || [];
+<td>
+    % if (my $pub = $o->get_publication) {
+    %= include 'pub_thumbnails', pub => $pub;
+    % }
 </td>
 </tr>
 % }

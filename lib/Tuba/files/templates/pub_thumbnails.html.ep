@@ -1,6 +1,5 @@
 
 
-
 % if (stash 'simple') {
     % for my $file ($pub->files) {
         %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "thumbnail" => begin
