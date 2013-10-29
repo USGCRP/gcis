@@ -9,4 +9,7 @@ sub singular_to_plural {
     return $s->SUPER::singular_to_plural($word);
 }
 
+# TODO
+# table_are_singular
+
 1;
