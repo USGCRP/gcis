@@ -1,0 +1,38 @@
+
+=head1 NAME
+
+array_table_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ array_identifier (character varying) - 
+ table_identifier (character varying) - 
+ report_identifier (character varying) - 
+
+
+=head1 SCHEMA
+
+                    Table "gcis_metadata.array_table_map"
+       Column       |       Type        | Modifiers | Storage  | Description 
+ -------------------+-------------------+-----------+----------+-------------
+  array_identifier  | character varying | not null  | extended | 
+  table_identifier  | character varying | not null  | extended | 
+  report_identifier | character varying | not null  | extended | 
+ Indexes:
+     "array_table_map_pkey" PRIMARY KEY, btree (array_identifier, table_identifier, report_identifier)
+ Foreign-key constraints:
+     "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier)
+     "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

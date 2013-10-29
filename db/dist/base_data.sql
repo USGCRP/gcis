@@ -42,6 +42,38 @@ COPY _report_viewer (report, username) FROM stdin;
 
 
 --
+-- Data for Name: array; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY "array" (identifier, rows_in_header, rows) FROM stdin;
+\.
+
+
+--
+-- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY chapter (identifier, title, report_identifier, number, url) FROM stdin;
+\.
+
+
+--
+-- Data for Name: table; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY "table" (identifier, report_identifier, chapter_identifier, ordinal, title, caption) FROM stdin;
+\.
+
+
+--
+-- Data for Name: array_table_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY array_table_map (array_identifier, table_identifier, report_identifier) FROM stdin;
+\.
+
+
+--
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -54,14 +86,6 @@ COPY journal (identifier, title, print_issn, online_issn, publisher, country, ur
 --
 
 COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes) FROM stdin;
-\.
-
-
---
--- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY chapter (identifier, title, report_identifier, number, url) FROM stdin;
 \.
 
 
@@ -233,6 +257,8 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+array	array
+table	table
 \.
 
 

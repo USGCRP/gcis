@@ -1,0 +1,51 @@
+
+=head1 NAME
+
+table
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ report_identifier (character varying) - 
+ chapter_identifier (character varying) - 
+ ordinal (integer) - 
+ title (character varying) - 
+ caption (character varying) - 
+
+
+=head1 SCHEMA
+
+                          Table "gcis_metadata.table"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  identifier         | character varying | not null  | extended | 
+  report_identifier  | character varying | not null  | extended | 
+  chapter_identifier | character varying |           | extended | 
+  ordinal            | integer           |           | plain    | 
+  title              | character varying |           | extended | 
+  caption            | character varying |           | extended | 
+ Indexes:
+     "table_pkey" PRIMARY KEY, btree (identifier, report_identifier)
+ Foreign-key constraints:
+     "table_chapter_identifier_fkey" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
+     "table_report_identifier_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier)
+ Referenced by:
+     TABLE "array_table_map" CONSTRAINT "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "table" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON "table" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON "table" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+=cut
+
+
+
+
+

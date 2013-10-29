@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.submitter">submitter</a>
+            <a name="gcis-metadata.table.array">array</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>submitter Structure</caption>
+                <caption>array Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,8 +135,8 @@
                   
                 
                 </td>
-                <td>id</td>
-                <td>serial</td>
+                <td>identifier</td>
+                <td>character varying</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -156,7 +156,7 @@
                 <td>
                 
                 </td>
-                <td>person_id</td>
+                <td>rows_in_header</td>
                 <td>integer</td>
                 <td><i>
                 
@@ -172,49 +172,9 @@
                 <td>
                 
                 </td>
-                <td>table</td>
-                <td>character varying</td>
+                <td>rows</td>
+                <td>character varying[]</td>
                 <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>fk</td>
-                <td>integer</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.contributor.html#gcis-metadata.table.contributor">contributor.id</a>
-                  
-                
-                </td>
-                <td>contributor_id</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
                 
 
                 
@@ -233,6 +193,11 @@
         
 
         <!-- Foreign Key Discovery -->
+        
+            <p>Tables referencing this one via Foreign Key Constraints:</p>
+        
+                <a href="table_gcis_metadata.array_table_map.html">array_table_map</a><br>
+        
         
 
     <!-- Indexes -->

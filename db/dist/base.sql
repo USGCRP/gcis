@@ -52,6 +52,22 @@ CREATE TABLE _report_viewer (
 
 
 
+CREATE TABLE "array" (
+    identifier character varying NOT NULL,
+    rows_in_header integer DEFAULT 0,
+    rows character varying[]
+);
+
+
+
+CREATE TABLE array_table_map (
+    array_identifier character varying NOT NULL,
+    table_identifier character varying NOT NULL,
+    report_identifier character varying NOT NULL
+);
+
+
+
 CREATE TABLE article (
     identifier character varying NOT NULL,
     title character varying,
@@ -509,6 +525,17 @@ ALTER SEQUENCE submitter_id_seq OWNED BY submitter.id;
 
 
 
+CREATE TABLE "table" (
+    identifier character varying NOT NULL,
+    report_identifier character varying NOT NULL,
+    chapter_identifier character varying,
+    ordinal integer,
+    title character varying,
+    caption character varying
+);
+
+
+
 ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id_seq'::regclass);
 
 
@@ -552,6 +579,16 @@ ALTER TABLE ONLY _report_editor
 
 ALTER TABLE ONLY _report_viewer
     ADD CONSTRAINT _report_viewer_pkey PRIMARY KEY (report, username);
+
+
+
+ALTER TABLE ONLY "array"
+    ADD CONSTRAINT array_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY array_table_map
+    ADD CONSTRAINT array_table_map_pkey PRIMARY KEY (array_identifier, table_identifier, report_identifier);
 
 
 
@@ -725,6 +762,11 @@ ALTER TABLE ONLY submitter
 
 
 
+ALTER TABLE ONLY "table"
+    ADD CONSTRAINT table_pkey PRIMARY KEY (identifier, report_identifier);
+
+
+
 ALTER TABLE ONLY keyword
     ADD CONSTRAINT uk_gcmd UNIQUE (category, topic, term, level1, level2, level3);
 
@@ -843,6 +885,18 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "table" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "array" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -951,6 +1005,18 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_map FOR EACH STAT
 
 
 
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON "table" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON "array" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER delpub BEFORE DELETE ON journal FOR EACH ROW EXECUTE PROCEDURE delete_publication();
 
 
@@ -984,6 +1050,14 @@ CREATE TRIGGER delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE de
 
 
 CREATE TRIGGER delpub BEFORE DELETE ON generic FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON "table" FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON "array" FOR EACH ROW EXECUTE PROCEDURE delete_publication();
 
 
 
@@ -1023,6 +1097,14 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON generic FOR EACH ROW WHEN (((new.ident
 
 
 
+CREATE TRIGGER updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
 ALTER TABLE ONLY _report_editor
     ADD CONSTRAINT _report_editor_report_fkey FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1030,6 +1112,16 @@ ALTER TABLE ONLY _report_editor
 
 ALTER TABLE ONLY _report_viewer
     ADD CONSTRAINT _report_viewer_report_fkey FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY array_table_map
+    ADD CONSTRAINT array_table_map_array_identifier_fkey FOREIGN KEY (array_identifier) REFERENCES "array"(identifier);
+
+
+
+ALTER TABLE ONLY array_table_map
+    ADD CONSTRAINT array_table_map_table_identifier_fkey FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier);
 
 
 
@@ -1170,6 +1262,16 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY submitter
     ADD CONSTRAINT submitter_contributor_id_fkey FOREIGN KEY (contributor_id) REFERENCES contributor(id);
+
+
+
+ALTER TABLE ONLY "table"
+    ADD CONSTRAINT table_chapter_identifier_fkey FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
+
+
+
+ALTER TABLE ONLY "table"
+    ADD CONSTRAINT table_report_identifier_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
 
 
 

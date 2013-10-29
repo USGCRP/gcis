@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.submitter">submitter</a>
+            <a name="gcis-metadata.table.table">table</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>submitter Structure</caption>
+                <caption>table Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,8 +135,8 @@
                   
                 
                 </td>
-                <td>id</td>
-                <td>serial</td>
+                <td>identifier</td>
+                <td>character varying</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -155,8 +155,71 @@
             <tr class="tr1">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.chapter.html#gcis-metadata.table.chapter">chapter.report_identifier#1</a>
+                  
+                
+                  
+                
+                  
+                  <a href="table_gcis_metadata.report.html#gcis-metadata.table.report">report.identifier</a>
+                  
+                
                 </td>
-                <td>person_id</td>
+                <td>report_identifier</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                  <a href="table_gcis_metadata.chapter.html#gcis-metadata.table.chapter">chapter.identifier#1</a>
+                  
+                
+                </td>
+                <td>chapter_identifier</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>ordinal</td>
                 <td>integer</td>
                 <td><i>
                 
@@ -172,7 +235,7 @@
                 <td>
                 
                 </td>
-                <td>table</td>
+                <td>title</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -188,33 +251,9 @@
                 <td>
                 
                 </td>
-                <td>fk</td>
-                <td>integer</td>
+                <td>caption</td>
+                <td>character varying</td>
                 <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.contributor.html#gcis-metadata.table.contributor">contributor.id</a>
-                  
-                
-                </td>
-                <td>contributor_id</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
                 
 
                 
@@ -234,6 +273,11 @@
 
         <!-- Foreign Key Discovery -->
         
+            <p>Tables referencing this one via Foreign Key Constraints:</p>
+        
+                <a href="table_gcis_metadata.array_table_map.html">array_table_map</a><br>
+        
+        
 
     <!-- Indexes -->
     
@@ -247,4 +291,7 @@
 
 </body></html>
 
+    
+
+<!-- ------------------------------------------------------------------------- -->
     

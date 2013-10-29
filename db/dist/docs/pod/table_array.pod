@@ -1,0 +1,39 @@
+
+=head1 NAME
+
+array
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ rows_in_header (integer) - 
+ rows (character varying[]) - 
+
+
+=head1 SCHEMA
+
+                         Table "gcis_metadata.array"
+      Column     |        Type         | Modifiers | Storage  | Description 
+ ----------------+---------------------+-----------+----------+-------------
+  identifier     | character varying   | not null  | extended | 
+  rows_in_header | integer             | default 0 | plain    | 
+  rows           | character varying[] |           | extended | 
+ Indexes:
+     "array_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "array_table_map" CONSTRAINT "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "array" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON "array" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON "array" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+=cut
+
+
