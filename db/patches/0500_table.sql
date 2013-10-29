@@ -27,7 +27,7 @@ create table array_table_map (
     primary key (array_identifier, table_identifier, report_identifier),
     foreign key (table_identifier,report_identifier) references
         "table" (identifier, report_identifier )
-)
+);
 
 
 create trigger delpub before delete on "table" for each row execute procedure delete_publication();
@@ -36,9 +36,9 @@ create trigger updatepub before update on "table" for each row when ( NEW.identi
 create trigger delpub before delete on "array" for each row execute procedure delete_publication();
 create trigger updatepub before update on "array" for each row when ( NEW.identifier != OLD.identifier ) execute procedure update_publication();
 
-select audit.audit_table('table');
-select audit.audit_table('array');
 select audit.audit_table('array_table_map');
+select audit.audit_table('array');
+select audit.audit_table('table');
 
 insert into publication_type (identifier,"table") values ('array','array');
 insert into publication_type (identifier,"table") values ('table','table');
