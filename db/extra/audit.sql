@@ -30,7 +30,7 @@ SET search_path = audit, pg_catalog;
 -- Name: audit_table(regclass); Type: FUNCTION; Schema: audit; Owner: -
 --
 
-CREATE FUNCTION audit_table(target_table regclass) RETURNS void
+CREATE OR REPLACE FUNCTION audit_table(target_table regclass) RETURNS void
     LANGUAGE sql
     AS $_$
 SELECT audit.audit_table($1, BOOLEAN 't', BOOLEAN 't');
@@ -50,7 +50,7 @@ Add auditing support to the given table. Row-level changes will be logged with f
 -- Name: audit_table(regclass, boolean, boolean); Type: FUNCTION; Schema: audit; Owner: -
 --
 
-CREATE FUNCTION audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean) RETURNS void
+CREATE OR REPLACE FUNCTION audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean) RETURNS void
     LANGUAGE sql
     AS $_$
 SELECT audit.audit_table($1, $2, $3, ARRAY[]::text[]);
@@ -61,7 +61,7 @@ $_$;
 -- Name: audit_table(regclass, boolean, boolean, text[]); Type: FUNCTION; Schema: audit; Owner: -
 --
 
-CREATE FUNCTION audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean, ignored_cols text[]) RETURNS void
+CREATE OR REPLACE FUNCTION audit_table(target_table regclass, audit_rows boolean, audit_query_text boolean, ignored_cols text[]) RETURNS void
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -114,7 +114,7 @@ Arguments:
 -- Name: if_modified_func(); Type: FUNCTION; Schema: audit; Owner: -
 --
 
-CREATE FUNCTION if_modified_func() RETURNS trigger
+CREATE OR REPLACE FUNCTION if_modified_func() RETURNS trigger
     LANGUAGE plpgsql SECURITY DEFINER
     SET search_path TO pg_catalog, gcis_metadata, audit, public
     AS $$
