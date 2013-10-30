@@ -65,6 +65,8 @@ db/dist/docs/html/func_gcis_metadata.update_publication().html
 db/dist/docs/html/index.html
 db/dist/docs/html/table_gcis_metadata._report_editor.html
 db/dist/docs/html/table_gcis_metadata._report_viewer.html
+db/dist/docs/html/table_gcis_metadata.array.html
+db/dist/docs/html/table_gcis_metadata.array_table_map.html
 db/dist/docs/html/table_gcis_metadata.article.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
 db/dist/docs/html/table_gcis_metadata.contributor.html
@@ -102,8 +104,11 @@ db/dist/docs/html/table_gcis_metadata.ref_type.html
 db/dist/docs/html/table_gcis_metadata.reference.html
 db/dist/docs/html/table_gcis_metadata.report.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
+db/dist/docs/html/table_gcis_metadata.table.html
 db/dist/docs/pod/table__report_editor.pod
 db/dist/docs/pod/table__report_viewer.pod
+db/dist/docs/pod/table_array.pod
+db/dist/docs/pod/table_array_table_map.pod
 db/dist/docs/pod/table_article.pod
 db/dist/docs/pod/table_chapter.pod
 db/dist/docs/pod/table_contributor.pod
@@ -141,6 +146,7 @@ db/dist/docs/pod/table_ref_type.pod
 db/dist/docs/pod/table_reference.pod
 db/dist/docs/pod/table_report.pod
 db/dist/docs/pod/table_submitter.pod
+db/dist/docs/pod/table_table.pod
 db/dist/patches_applied.txt
 db/extra/audit.sql
 db/patches/0010_start.sql
@@ -191,6 +197,7 @@ db/patches/0460_finding_attributes.sql
 db/patches/0470_dataset_doi.sql
 db/patches/0480_references.sql
 db/patches/0490_file_uuids.sql
+db/patches/0500_table.sql
 eg/atrac_upload.html
 eg/compare.pl
 eg/image-meta.pl
@@ -198,8 +205,10 @@ eg/import_keywords
 eg/journal_images.pl
 eg/login.pl
 eg/report_thumbnails.pl
+eg/update-array.pl
 eg/update-findings.pl
 lib/Tuba.pm
+lib/Tuba/Array.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
 lib/Tuba/Chapter.pm
@@ -208,6 +217,7 @@ lib/Tuba/Controller.pm
 lib/Tuba/Converter.pm
 lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
+lib/Tuba/DB/Mixin/Object/Array.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
@@ -229,7 +239,10 @@ lib/Tuba/DB/Mixin/Object/PublicationMap.pm
 lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
+lib/Tuba/DB/Mixin/Object/Table.pm
+lib/Tuba/DB/Mixin/Object/Table/Manager.pm
 lib/Tuba/DB/Object.pm
+lib/Tuba/DB/Object/ConventionManager.pm
 lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
@@ -253,22 +266,27 @@ lib/Tuba/files/templates/auth/login_key.html.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
+lib/Tuba/files/templates/collapsible.html.ep
+lib/Tuba/files/templates/controls/arrays.html.ep
 lib/Tuba/files/templates/controls/autocomplete.html.ep
 lib/Tuba/files/templates/controls/datasets.html.ep
 lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
+lib/Tuba/files/templates/controls/grid.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
 lib/Tuba/files/templates/controls/keywords.html.ep
 lib/Tuba/files/templates/controls/one_to_many.html.ep
 lib/Tuba/files/templates/controls/organizations.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
+lib/Tuba/files/templates/controls/table.html.ep
 lib/Tuba/files/templates/create_form.html.ep
 lib/Tuba/files/templates/create_link.html.ep
 lib/Tuba/files/templates/dataset/object.ttl.ep
 lib/Tuba/files/templates/db_meta.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/doc/examples.html.ep
+lib/Tuba/files/templates/doc/resources.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/exception.production.html.ep
 lib/Tuba/files/templates/fields.html.ep
@@ -319,12 +337,14 @@ lib/Tuba/files/templates/reference/objects.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
 lib/Tuba/files/templates/search/keyword.html.ep
+lib/Tuba/files/templates/table/objects.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep
 lib/Tuba/files/templates/update_rel_form.html.ep
 lib/Tuba/files/templates/update_tabs.html.ep
+lib/Tuba/files/templates/view_array.html.ep
 lib/Tuba/files/templates/watch.html.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Generic.pm
@@ -345,6 +365,7 @@ lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
 lib/Tuba/Report.pm
 lib/Tuba/Search.pm
+lib/Tuba/Table.pm
 Makefile.PL
 MANIFEST			This list of files
 META.json

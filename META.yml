@@ -17,7 +17,9 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.54
+    version: 0.55
+  Tuba::Array:
+    file: lib/Tuba/Array.pm
   Tuba::Article:
     file: lib/Tuba/Article.pm
   Tuba::Auth:
@@ -34,6 +36,8 @@ provides:
     file: lib/Tuba/DB.pm
   Tuba::DB::Object:
     file: lib/Tuba/DB/Object.pm
+  Tuba::DB::Object::Array:
+    file: lib/Tuba/DB/Mixin/Object/Array.pm
   Tuba::DB::Object::Article:
     file: lib/Tuba/DB/Mixin/Object/Article.pm
   Tuba::DB::Object::Chapter:
@@ -42,6 +46,8 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
   Tuba::DB::Object::Contributor:
     file: lib/Tuba/DB/Mixin/Object/Contributor.pm
+  Tuba::DB::Object::ConventionManager:
+    file: lib/Tuba/DB/Object/ConventionManager.pm
   Tuba::DB::Object::Figure:
     file: lib/Tuba/DB/Mixin/Object/Figure.pm
   Tuba::DB::Object::Figure::Manager:
@@ -78,6 +84,10 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
   Tuba::DB::Object::Report::Manager:
     file: lib/Tuba/DB/Mixin/Object/Report/Manager.pm
+  Tuba::DB::Object::Table:
+    file: lib/Tuba/DB/Mixin/Object/Table.pm
+  Tuba::DB::Object::Table::Manager:
+    file: lib/Tuba/DB/Mixin/Object/Table/Manager.pm
   Tuba::DB::Objects:
     file: lib/Tuba/DB/Objects.pm
   Tuba::Dataset:
@@ -126,6 +136,8 @@ provides:
     file: lib/Tuba/Report.pm
   Tuba::Search:
     file: lib/Tuba/Search.pm
+  Tuba::Table:
+    file: lib/Tuba/Table.pm
 requires:
   Algorithm::Permute: 0
   Crypt::OpenSSL::RSA: 0
@@ -139,6 +151,7 @@ requires:
   Mojolicious: 4.14
   Mojolicious::Plugin::YamlConfig: 0
   Pg::hstore: 0
+  Rose::DB: 0.772
   Rose::DB::Object: 0
   SQL::Abstract: 0
   SQL::Interp: 0
@@ -148,4 +161,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.54
+version: 0.55

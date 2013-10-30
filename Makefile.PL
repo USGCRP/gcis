@@ -23,6 +23,7 @@ WriteMakefile
                    'Text::Format' => 0,
                    'File::ShareDir' => '1.00',
                    'Text::CSV_XS' => 0,
+                   'Rose::DB' => '0.772',
                    'SQL::Abstract' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
                    'JSON::WebToken' => 0,
