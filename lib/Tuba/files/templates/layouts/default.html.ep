@@ -71,10 +71,9 @@ String.prototype.htmlEscape = function() {
         margin-left:0px;
     }
     .openrow {
-        min-height:120px;
     }
     .closedrow {
-        height:120px;
+        max-height:120px;
         overflow:auto;
     }
 </style>
