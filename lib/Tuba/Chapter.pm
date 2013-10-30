@@ -15,6 +15,7 @@ sub list {
     my @page = $all ? () : (page => $c->page);
     $c->stash(objects => Chapters->get_objects(query => [ report_identifier => $report ],
              with_objects => [qw/figures findings tables/],
+             multi_many_ok => 1,
              sort_by => 'chapter.number',
              @page,
          )
