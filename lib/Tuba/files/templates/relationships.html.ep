@@ -11,45 +11,23 @@
 <tr>
 <td><%= $method %></td>
 <td class='row'>
-% my $got = $object->$method;
-% if (ref($got) eq 'ARRAY') {
-%    if (my $sorter = $sorters->{$method}) {
-%       @$got = sort $sorter @$got;
-%    } else {
-%       @$got = sort { $a->sortkey cmp $b->sortkey } @$got;
-%    }
-% } elsif ($got) {
-%   $got = [ $got ];
-% } else {
-%   $got = [];
-% }
-% my $id = new_id();
-<div class='row' style='position:relative;'>
-    <span class='btn btn-mini' style='position:absolute;top:2px;right:16px;visibility:hidden;' id='i<%= $id %>'>
-        <i class='icon-resize-full' id='icon_<%= $id %>'></i>
-</span>
-<div class='closedrow' id='j<%= $id %>'>
-    %= include 'obj_thumbnails', objs => $got;
-    %= javascript begin
-    $(document).ready(function(){
-        if (($('#j<%= $id %>')).hasScrollBar()) {
-            $('#i<%= $id %>').attr('style','position:absolute;top:2px;right:16px;visibility:visible;');
-        }
-    })
-    $('#i<%= $id %>').click(function() {
-        var current = $("#j<%= $id %>").attr("class");
-        if (current == 'closedrow') {
-            $("#j<%= $id %>").attr("class","openrow");
-            $("#icon_<%= $id %>").attr("class","icon-resize-small");
-        } else {
-            $("#j<%= $id %>").attr("class","closedrow");
-            $("#icon_<%= $id %>").attr("class","icon-resize-full");
-        }
-    } );
-    %= end
-</div>
-</div>
-</div>
+    % my $got = $object->$method;
+    % if (ref($got) eq 'ARRAY') {
+    %    if (my $sorter = $sorters->{$method}) {
+    %       @$got = sort $sorter @$got;
+    %    } else {
+    %       @$got = sort { $a->sortkey cmp $b->sortkey } @$got;
+    %    }
+    % } elsif ($got) {
+    %   $got = [ $got ];
+    % } else {
+    %   $got = [];
+    % }
+    <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => $got;
+            %= end
+    </div>
 </td>
 </tr>
 % }

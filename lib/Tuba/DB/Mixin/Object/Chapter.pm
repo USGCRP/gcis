@@ -3,6 +3,7 @@ package Tuba::DB::Object::Chapter;
 
 __PACKAGE__->meta->relationship('figures')->manager_args({ sort_by => "figure.ordinal" });
 __PACKAGE__->meta->relationship('findings')->manager_args({ sort_by => "finding.ordinal" });
+__PACKAGE__->meta->relationship('tables')->manager_args({ sort_by => "table.ordinal" });
 
 sub uri {
     my $s = shift;

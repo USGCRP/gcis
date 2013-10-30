@@ -42,15 +42,21 @@
 % for my $c (@cols[1..$#cols]) {
         % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
         <td>
-            % if (ref($got) eq 'ARRAY') {
-            %   for (@$got) {
-                    <span class='btn squeezevert'><%= obj_link($_); %></span>
-            %   }
-            % } elsif (ref($got)) {
-                %= obj_link($got);
-            % } else {
-                %= $got
-            % }
+                % if (!defined($got) || (ref($got) eq 'ARRAY' && @$got==0) ) {
+                &nbsp;
+                % } elsif (ref($got) eq 'ARRAY') {
+                    <div style='position:relative;'>
+                        %= include 'collapsible', row_content => begin
+                        %   for (@$got) {
+                                <span class='btn squeezevert'><%= obj_link($_); %></span>
+                        %   }
+                        %= end
+                    </div>
+                % } elsif (ref($got)) {
+                    %= obj_link($got);
+                % } else {
+                    %= $got
+                % }
         </td>
 % }
 

@@ -75,6 +75,7 @@ String.prototype.htmlEscape = function() {
     .closedrow {
         max-height:120px;
         overflow:auto;
+        border-bottom:1px dotted #aaa;
     }
 </style>
 </head>

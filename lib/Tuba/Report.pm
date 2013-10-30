@@ -40,6 +40,7 @@ sub show {
     $c->stash(sorters => {
             figures => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
             findings => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
+            tables => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
         }
     );
     $c->SUPER::show(@_);

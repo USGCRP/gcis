@@ -1,0 +1,26 @@
+
+% my $id = new_id();
+<span class='btn btn-mini' style='position:absolute;top:2px;right:16px;visibility:hidden;' id='i<%= $id %>'>
+    <i class='icon-resize-full' id='icon_<%= $id %>'></i>
+</span>
+<div class='closedrow' id='j<%= $id %>'>
+    %= $row_content->()
+</div>
+%= javascript begin
+    $(document).ready(function(){
+        if (($('#j<%= $id %>')).hasScrollBar()) {
+            $('#i<%= $id %>').attr('style','position:absolute;top:2px;right:16px;visibility:visible;');
+        }
+    })
+    $('#i<%= $id %>').click(function() {
+        var current = $("#j<%= $id %>").attr("class");
+        if (current == 'closedrow') {
+            $("#j<%= $id %>").attr("class","openrow");
+            $("#icon_<%= $id %>").attr("class","icon-resize-small");
+       } else {
+            $("#j<%= $id %>").attr("class","closedrow");
+            $("#icon_<%= $id %>").attr("class","icon-resize-full");
+        }
+    } );
+%= end
+
