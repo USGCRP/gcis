@@ -597,7 +597,6 @@ sub update {
         }
     }
 
-
     $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
     if ($c->detect_format eq 'json') {
         return $c->update_form if $ok;
@@ -606,7 +605,7 @@ sub update {
     $ok and do {
         $next = $object->uri($c,{tab => 'update_form'});
         $c->flash(message => "Saved changes"); return $c->redirect_to($next); };
-    $c->flash(error => $object->error);
+    $c->flash(error => substr($object->error,0,1000));
     $c->redirect_to($next);
 }
 

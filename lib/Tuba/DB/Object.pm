@@ -97,12 +97,20 @@ sub update_primary_key {
     $db->do_transaction( sub {
         $db->dbh->do("set local audit.username = ?",{},$audit_user);
         $db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+        my %non_pk_changes = %changes;
+        my %pk_changes;
+        for (keys %pk) {
+            $pk_changes{$_} = delete $non_pk_changes{$_};
+        }
+        for (keys %non_pk_changes) {
+            $object->$_($non_pk_changes{$_});
+        }
+        $object->save(audit_user => $audit_user, audit_note => $audit_note);
+        
         my $dbis = DBIx::Simple->new($db->dbh);
-        logger->debug("doing update, changes : ".dumpit(\%changes));
-        logger->debug("doing update, where : ".dumpit(\%pk));
-        $dbis->update($table, \%changes, \%pk) or die $dbis->error;
+        $dbis->update(qq["$table"], \%pk_changes, \%pk) or die $dbis->error;
     } ) or do {
-        $object->error($db->error);
+        $object->error($db->error) unless $object->error;
         return;
     };
     my $class = ref $object;

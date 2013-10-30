@@ -28,9 +28,13 @@ my @rows = map $_->content, $wk->rows;
 # };
 
 #my $client = Tuba::Client->new;
+#my $client = Tuba::Client->new(
+#    url => 'http://data.gcis-test-front.joss.ucar.edu',
+#    keyfile => $ENV{HOME}.'/.gcis_api_key.test',
+#);
 my $client = Tuba::Client->new(
-    url => 'http://data.gcis-test-front.joss.ucar.edu',
-    keyfile => $ENV{HOME}.'/.gcis_api_key.test',
+    url => 'http://data.globalchange.gov',
+    keyfile => $ENV{HOME}.'/.gcis_api_key.prod',
 );
 
 
