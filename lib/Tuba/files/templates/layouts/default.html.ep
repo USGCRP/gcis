@@ -70,10 +70,10 @@ String.prototype.htmlEscape = function() {
     .row {
         margin-left:0px;
     }
-    .open {
+    .openrow {
         min-height:120px;
     }
-    .closed {
+    .closedrow {
         height:120px;
         overflow:auto;
     }
