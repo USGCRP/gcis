@@ -1116,12 +1116,12 @@ ALTER TABLE ONLY _report_viewer
 
 
 ALTER TABLE ONLY array_table_map
-    ADD CONSTRAINT array_table_map_array_identifier_fkey FOREIGN KEY (array_identifier) REFERENCES "array"(identifier);
+    ADD CONSTRAINT array_table_map_array_identifier_fkey FOREIGN KEY (array_identifier) REFERENCES "array"(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY array_table_map
-    ADD CONSTRAINT array_table_map_table_identifier_fkey FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier);
+    ADD CONSTRAINT array_table_map_table_identifier_fkey FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

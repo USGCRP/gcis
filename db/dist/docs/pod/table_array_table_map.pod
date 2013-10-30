@@ -25,8 +25,8 @@ array_table_map
  Indexes:
      "array_table_map_pkey" PRIMARY KEY, btree (array_identifier, table_identifier, report_identifier)
  Foreign-key constraints:
-     "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier)
-     "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier)
+     "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

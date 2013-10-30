@@ -25,7 +25,7 @@ array
  Indexes:
      "array_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
-     TABLE "array_table_map" CONSTRAINT "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier)
+     TABLE "array_table_map" CONSTRAINT "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "array" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON "array" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

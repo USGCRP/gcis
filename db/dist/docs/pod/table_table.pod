@@ -34,7 +34,7 @@ table
      "table_chapter_identifier_fkey" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
      "table_report_identifier_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier)
  Referenced by:
-     TABLE "array_table_map" CONSTRAINT "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier)
+     TABLE "array_table_map" CONSTRAINT "array_table_map_table_identifier_fkey" FOREIGN KEY (table_identifier, report_identifier) REFERENCES "table"(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON "table" FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON "table" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
