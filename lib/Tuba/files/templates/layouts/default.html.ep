@@ -13,6 +13,11 @@
 String.prototype.htmlEscape = function() {
      return $('<div/>').text(this.toString()).html();
 };
+(function($) {
+    $.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+})(jQuery);
 %= end
 <title>GCIS <%= $Tuba::VERSION %></title>
 <style>
@@ -64,6 +69,13 @@ String.prototype.htmlEscape = function() {
  
     .row {
         margin-left:0px;
+    }
+    .open {
+        min-height:120px;
+    }
+    .closed {
+        height:120px;
+        overflow:auto;
     }
 </style>
 </head>

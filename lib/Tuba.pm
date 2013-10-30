@@ -190,6 +190,11 @@ sub startup {
         my $obj = shift;
         return $obj->uri($c,{ tab => 'show' })->to_abs;
     });
+    $app->helper(new_id => sub {
+            state $id = 1;
+            $id++; $id = 1 if $id > 1_000;
+            $id;
+        });
     
     # Hooks
     $app->hook(after_dispatch => sub {
