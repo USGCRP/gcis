@@ -25,9 +25,15 @@ my @rows = map $_->content, $wk->rows;
 #  'imageid' => '/image/8e638a2a-1161-4641-b6e8-0ad2471d9aa7',
 #  'note' => '',
 ##  'uri' => '/figure/local-level-adaptation-activities'
-};
+# };
 
-my $client = Tuba::Client->new;
+#my $client = Tuba::Client->new;
+my $client = Tuba::Client->new(
+    url => 'http://data.gcis-test-front.joss.ucar.edu',
+    keyfile => $ENV{HOME}.'/.gcis_api_key.test',
+);
+
+
 my $got = $client->get('/login');
 my $chapters = $client->get('/report/nca3draft/chapter?all=1');
 my %num2id = map { ( $_->{number} || '' ) => $_->{identifier} } @$chapters;
