@@ -169,7 +169,7 @@ sub update {
         } else {
             return $c->redirect_to(Array->uri($c,{tab => 'update_form'}));
         }
-    } else {
+    } elsif ($c->detect_format eq 'html') {
         $c->stash(computed_params => { rows => scalar $obj->rows });
     }
 
