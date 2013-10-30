@@ -66,6 +66,7 @@ sub show {
     my $meta  = $c->stash('meta') || $object->meta;
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
+    $c->stash(relationships => $c->_order_relationships(meta => $meta));
 
     $c->respond_to(
         json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c) ); },
@@ -154,6 +155,21 @@ sub _order_columns {
     }
     return \@ordered;
 }
+
+sub _order_relationships {
+    my $c = shift;
+    my %a = @_;
+    my $meta = $a{meta};
+    my @first = qw/report reports chapter chapters/;
+    my @ordered;
+    my %rel_names = map { $_->name => $_ } $meta->relationships;
+    for my $name (@first, keys %rel_names) {
+        my $this = delete $rel_names{$name} or next;
+        push @ordered, $this;
+    }
+    return \@ordered;
+}
+
 
 sub _redirect_to_view {
     my $c = shift;
