@@ -4,33 +4,42 @@
 %= include 'auth/login_tabs'
 
 % if (user_can('update')) {
-<p>
-Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
-</p>
-%= text_field 'key' => $api_pw, readonly => 'readonly', class => 'span10';
-<p>
-To verify that this works, try the following :
-</p>
-<textarea class='span10' readonly rows=2>
-curl -L -u <%= $api_user %>:<%= $api_pw %> <%= url_for('login')->clone->to_abs %>.json
-</textarea>
-<br>
-or
-<br>
-<textarea class='span10' readonly rows=6>
-curl -L \\
--H 'Accept: application/json' \\
--H 'Authorization: Basic <%= $api_key %>' \\
-<%= url_for('login')->clone->to_abs %>
-</textarea>
-<p>
-API keys expire after 1 month.<br>
-Refresh this page to generate a new API key for <b><%= user %></b>.
-</p>
+    <p>
+    Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
+    </p>
+    %= text_field 'key' => $api_pw, readonly => 'readonly', class => 'span10';
+    <p>
+    To verify that this works, try the following :
+    </p>
+    <textarea class='span10' readonly rows=2>
+    curl -L -u <%= $api_user %>:<%= $api_pw %> <%= url_for('login')->clone->to_abs %>.json
+    </textarea>
+    <br>
+    or
+    <br>
+    <textarea class='span10' readonly rows=6>
+    curl -L \\
+    -H 'Accept: application/json' \\
+    -H 'Authorization: Basic <%= $api_key %>' \\
+    <%= url_for('login')->clone->to_abs %>
+    </textarea>
+    <p>
+    API keys expire after 1 month.<br>
+    Refresh this page to generate a new API key for <b><%= user %></b>.
+    </p>
+    <p>
+    % my $base = $self->req->url;
+    % $base =~ s/.html$//;
+    Save a
+    %= link_to "$base.json", class => 'label label-info' => begin
+    JSON version
+    %= end
+    of your credentials to use them outside of the web browser.
+    </p>
 % } else {
-<div class='alert'>
-    Please <%= link_to 'login' => begin %>log in<%= end %> to obtain an API key.
-</div>
+    <div class='alert'>
+        Please <%= link_to 'login' => begin %>log in<%= end %> to obtain an API key.
+    </div>
 % }
 
 

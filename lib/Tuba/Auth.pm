@@ -236,12 +236,21 @@ sub make_api_key {
 
 sub login_key {
     my $c = shift;
+    unless ($c->user) {
+        return $c->respond_to(
+            json => sub { shift->render( json => { error => 'not logged in' } ) },
+            any  => sub { shift->render(api_user => "", api_pw => "", api_key => ""); },
+        );
+    }
     my ($api_pw,$api_key) = $c->make_api_key;
     $c->stash(api_user => $c->user);
     $c->stash(api_pw => $api_pw);
     $c->stash(api_key => $api_key);
     logger->debug("api key for ".$c->user." : $api_key");
-    $c->render;
+    return $c->respond_to(
+        json => sub { shift->render(json => { userinfo => (join ':',$c->user,$api_pw), key => $api_key } ) },
+        any => sub { shift->render; }
+    );
 }
 
 1;
