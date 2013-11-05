@@ -48,7 +48,7 @@ DELETE
 % my $walk = begin
   % my ($walk, $node, $depth, $parent_pattern) = @_;
   % return if $node->name =~ /^_/;
-  % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|reference|resources|import_form)$/;
+  % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|api_reference|resources|import_form)$/;
   % unless (user_can('update')) {
   %     return if $node->name =~ m[^((create|update)_(prov_|rel_)?form)];
   %     return if $node->name =~ m[^autocomplete$];

@@ -210,7 +210,7 @@ sub create {
     $c->respond_to(
         json => sub {
                 my $c = shift;
-                $c->res->code(409);
+                $c->res->code(500);
                 $c->render(json => { error => $new->error } );
             },
         html => sub {

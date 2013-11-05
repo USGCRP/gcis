@@ -35,7 +35,7 @@
     <tr>
         <th>publication</th><th>relationship</th><th>publication</th><th>note</th>
     </tr>
-    % for my $map ($object->publication_map) {
+    % for my $map (grep defined, $object->publication_map) {
     <tr>
         <td><%= include obj_thumbnails => objs => [ $map->child_publication->to_object] %></td>
         <td><%= $map->relationship %></td>
