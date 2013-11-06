@@ -191,7 +191,7 @@ sub create {
     $object_class = 'Tuba::DB::Object::'.$object_class;
     my $computed = $c->stash('computed_params') || {}; # to override incoming params in a subclass.
     my %obj;
-    if (my $json = $c->req->json) {
+    if (my $json = ($c->stash('object_json') || $c->req->json)) {
         %obj = %$json;
     } else {
         for my $col ($object_class->meta->columns) {
@@ -232,7 +232,7 @@ sub _this_object {
         $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
         my $val = $c->stash($stash_name) or do {
             $c->app->log->warn("No values for $name when loading $object_class");
-            return;
+            next;
         };
         $pk{$name} = $val;
     }
@@ -556,7 +556,7 @@ sub update {
     my $table = $object->meta->table;
     my $computed = $c->stash('computed_params') || {}; # to override incoming params in a subclass.
     $object->meta->error_mode('return');
-    my $json = $c->req->json;
+    my $json = ($c->stash('object_json') || $c->req->json);
 
     if ($c->param('delete')) {
         if ($object->delete) {
@@ -721,6 +721,8 @@ sub set_pages {
     my $c = shift;
     my $count = shift || 1;
     $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
+    $c->stash(per_page => $c->per_page);
+    $c->stash(count => $count);
 }
 
 1;

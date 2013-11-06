@@ -1,9 +1,14 @@
 
 % my $page = stash 'page';
 % my $pages = stash 'pages';
+% my $count = stash 'count';
+% my $per_page = stash 'per_page';
 <div class='row-fluid'>
+    <div class='span5 pull-left'>
+        <span class='btn btn-small'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
+    </div>
     % if ($page && $pages > 1) {
-        <div class='span2 offset5 text-center'>
+        <div class='span2 text-center'>
             <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
                 % if ($page==1) {

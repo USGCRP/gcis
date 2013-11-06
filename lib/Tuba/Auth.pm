@@ -249,6 +249,7 @@ sub login_key {
     logger->debug("api key for ".$c->user." : $api_key");
     return $c->respond_to(
         json => sub { shift->render(json => { userinfo => (join ':',$c->user,$api_pw), key => $api_key } ) },
+        yaml => sub { shift->render; },
         any => sub { shift->render; }
     );
 }

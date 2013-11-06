@@ -17,6 +17,7 @@ use Time::Duration qw/ago/;
 use Date::Parse qw/str2time/;
 use Tuba::Converter;
 use Tuba::Log;
+use List::Util qw/min/;
 use Data::UUID::LibUUID;
 
 our $VERSION = '0.55';
@@ -195,11 +196,16 @@ sub startup {
             $id++; $id = 1 if $id > 1_000;
             $id;
         });
+    $app->helper(min => sub {
+            my $c = shift;
+            return min(@_);
+        });
     
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
+        $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
     } );
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).

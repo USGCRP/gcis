@@ -34,6 +34,10 @@
     %= link_to "$base.json", class => 'label label-info' => begin
     JSON version
     %= end
+    or a
+    %= link_to "$base.yaml", class => 'label label-info' => begin
+    YAML version
+    %= end
     of your credentials to use them outside of the web browser.
     </p>
 % } else {

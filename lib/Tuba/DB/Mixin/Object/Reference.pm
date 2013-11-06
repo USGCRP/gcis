@@ -15,7 +15,7 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
 __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
-        # do { utf8::downgrade($_) if defined($_) } for values %$v;
+        do { $_ = encode('UTF8',$_) } for values %$v;
         return Pg::hstore::encode($v);
     });
 
@@ -32,5 +32,16 @@ sub child {
     return shift->publication_map->child_publication->to_object;
 }
 
+sub stringify {
+    my $s = shift;
+    my %args = @_;
+    my $uuid = $s->identifier;
+    if ($args{short}) {
+        if ($uuid =~ /^(\w+)-(\w+)-(\w+)-(\w+)-(\w+)$/) {
+            return $1;
+        }
+    }
+    return $uuid;
+}
 1;
 

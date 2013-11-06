@@ -1,0 +1,3 @@
+---
+userinfo : <%= $api_user%>:<%= $api_pw %>
+key      : <%= $api_key %>
