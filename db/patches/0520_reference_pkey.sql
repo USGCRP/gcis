@@ -12,3 +12,9 @@ alter table reference
 alter table publication_map add unique (reference_identifier, parent);
 
 alter table publication_map drop constraint publication_map_reference_identifier_key
+
+comment on column reference.publication_id is 'Primary publication whose bibliography contains this entry';
+
+comment on column reference.identifier is 'A globally unique identifier for this bibliographic record';
+
+comment on column reference.attrs is 'Attributes of this bibliographic record';
