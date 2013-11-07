@@ -27,7 +27,6 @@ sub _make_query {
     for my $col ($s->object_class->meta->columns) {
         next if $col->type =~ /time/;
         next if $col->type =~ /numeric/;
-        next if $col->type =~ /int/;
         next if $col->type =~ /serial/;
         next if $col->type =~ /boolean/;
         next if $col->type =~ /hstore/;
@@ -35,6 +34,10 @@ sub _make_query {
         if ($col->type =~ /array/) {
             my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');
             push @query, \(qq[array_to_string($name,',') ilike $q]);
+            next;
+        } elsif ($col->type =~ /int/) {
+            my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');
+            push @query, \(qq[$name\::text like $q]);
             next;
         };
         push @query, $name => { ilike => '%'.$query_string.'%' };

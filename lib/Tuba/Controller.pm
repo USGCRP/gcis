@@ -223,6 +223,7 @@ sub create {
 
 sub _this_object {
     my $c = shift;
+    return $c->stash('_this_object') if $c->stash('_this_object');
     my $object_class = $c->_guess_object_class;
     my $meta = $object_class->meta;
     my %pk;
@@ -238,6 +239,7 @@ sub _this_object {
     }
 
     my $object = $object_class->new(%pk)->load(speculative => 1);
+    $c->stash(_this_object => $object);
     return $object;
 }
 
@@ -402,7 +404,9 @@ sub update_rel_form {
     my $meta = $object->meta;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
-    $c->render(template => "update_rel_form");
+    my $table = $meta->table;
+    $c->render_maybe(template => "$table/update_rel_form")
+        or $c->render(template => "update_rel_form");
 }
 
 =head2 update_files_form
@@ -728,6 +732,22 @@ sub set_pages {
     $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
     $c->stash(per_page => $c->per_page);
     $c->stash(count => $count);
+}
+
+sub redirect_with_error {
+    my $c     = shift;
+    my $tab   = shift;
+    my $error = shift;
+    my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    $c->flash(error => $error);
+    return $c->redirect_to($uri);
+}
+
+sub redirect_without_error {
+    my $c     = shift;
+    my $tab   = shift;
+    my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    return $c->redirect_to($uri);
 }
 
 1;

@@ -20,64 +20,6 @@ String.prototype.htmlEscape = function() {
 })(jQuery);
 %= end
 <title>GCIS <%= $Tuba::VERSION %></title>
-<style>
-    form label.required:after {
-        color: #e32;
-        content: '*';
-        display:inline;
-    }
-    .required_note {
-        float:right;
-    }
-    div.required_note:before {
-        color: #e32;
-        content: '*';
-        display:inline;
-    }
-    .squeezevert {
-        padding-top:0px;
-        padding-bottom:0px;
-    }
-    ul.pager li a {
-        padding-top:0px;
-        padding-bottom:0px;
-    }
-    .centered {
-        text-align: center;
-    }
-    .little {
-        font-size:75%;
-        font-stretch: ultracondensed;
-        font-family:monospace;
-    }
-    a.btn {
-        color: #0088cc;
-    }
-    a.btn-info {
-        color: white;
-    }
-    tr.ctr td {
-        vertical-align:middle;
-        text-align:center;
-    }
-    a[href^="http"]:after {
-         content: " " url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=);    
-    }
-    a[target="_blank"]:after {
-         content: " " url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVklEQVR4Xn3PgQkAMQhDUXfqTu7kTtkpd5RA8AInfArtQ2iRXFWT2QedAfttj2FsPIOE1eCOlEuoWWjgzYaB/IkeGOrxXhqB+uA9Bfcm0lAZuh+YIeAD+cAqSz4kCMUAAAAASUVORK5CYII=);    
-    }
- 
-    .row {
-        margin-left:0px;
-    }
-    .openrow {
-    }
-    .closedrow {
-        max-height:120px;
-        overflow:auto;
-        border-bottom:1px dotted #aaa;
-    }
-</style>
 </head>
     <body>
         <div class="navbar">

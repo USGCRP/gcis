@@ -200,7 +200,13 @@ sub startup {
             my $c = shift;
             return min(@_);
         });
-    
+    $app->helper(str_to_obj => sub {
+         my $c = shift;
+         my $str = shift;
+         return $c->Tuba::Search::autocomplete_str_to_object($str);
+     });
+
+ 
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;
@@ -291,7 +297,7 @@ sub startup {
       my $authed = $r->bridge("/$path_base")->to(cb => sub {
               my $c = shift;
               $c->auth && $c->authz(role => 'update') }
-      );
+      )->name("authed_select_$name");
       $authed->post->to("$cname#create")->name("create_$name");
       $authed->get('/form/create')->to("$cname#create_form")->name("create_form_$name");
 
@@ -408,8 +414,9 @@ sub startup {
     $r->resource("file");
 
     # Bibliographic entry.
-    $r->resource('reference');
+    my $reference = $r->resource('reference');
     $report->get('/reference')->to('reference#list');
+    $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch');
 
     # Generic publication.
     $r->resource('generic');

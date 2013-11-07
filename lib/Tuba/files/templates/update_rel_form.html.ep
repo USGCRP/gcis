@@ -10,10 +10,10 @@
 <div class='tab-content'>
 
 %= form_for obj_uri_for($object,'update_rel') => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
-% if (my $error = (stash 'error')) {
+% if (my $error = ( (stash 'error') || flash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }
-% if (my $info = (stash 'info')) {
+% if (my $info = ( (stash 'info') || flash 'info')) {
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 

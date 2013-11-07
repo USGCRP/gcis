@@ -38,7 +38,7 @@ sub autocomplete {
     }
     my @results;
     for my $table (@tables) {
-        next if $want && $table ne $want;
+        next if $want && $want ne 'all' && $table ne $want;
         logger->info('looking in '.$table);
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);

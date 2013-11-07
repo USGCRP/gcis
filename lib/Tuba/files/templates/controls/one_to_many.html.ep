@@ -21,7 +21,7 @@
         <center>
     <b>
         %= obj_link_to $rel->class, 'create_form' => class => 'btn' => begin
-        create a new <%= $name %>
+        create <%= $name %>
         %= end
     </b>
     </center>

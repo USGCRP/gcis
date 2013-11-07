@@ -13,8 +13,21 @@ alter table publication_map add unique (reference_identifier, parent);
 
 alter table publication_map drop constraint publication_map_reference_identifier_key
 
+alter table reference add column child_publication_id integer references publication(id) on delete cascade;
+
+alter table reference add unique (identifier,child_publication_id);
+
+update reference r set child_publication_id = (select child from publication_map p
+    where p.reference_identifier=r.identifier);
+
+alter table publication_map add constraint refchild
+    foreign key (reference_identifier,child) references
+    reference(identifier,child_publication_id);
+
 comment on column reference.publication_id is 'Primary publication whose bibliography contains this entry';
 
 comment on column reference.identifier is 'A globally unique identifier for this bibliographic record';
 
 comment on column reference.attrs is 'Attributes of this bibliographic record';
+
+

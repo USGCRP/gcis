@@ -2,7 +2,7 @@ package Tuba::DB::Object::Reference;
 # Tuba::DB::Mixin::Object::Reference;
 use strict;
 use Pg::hstore;
-use Encode;
+use Encode qw/encode decode is_utf8/;
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     inflate => sub {
@@ -15,8 +15,10 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
 __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
-        do { $_ = encode('UTF8',$_) } for values %$v;
-        return Pg::hstore::encode($v);
+        return $v unless ref($v);
+        do { $_ = encode('UTF8',$_) unless is_utf8($_) } for values %$v;
+        my $deflated = Pg::hstore::encode($v);
+        return $deflated;
     });
 
 sub as_tree {

@@ -68,5 +68,66 @@ sub update {
     $c->SUPER::update(@_);
 }
 
+sub smartmatch {
+    # Match this reference to a child publication.
+    my $c = shift;
+    my $reference = $c->_this_object;
+    my @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+    my $match;
+    for my $table (@tables) {
+        my $obj_class = $c->orm->{$table}{obj} or die "no manager for $table";
+        $match = $obj_class->new_from_reference($reference) and last;
+    }
+    die "not implemented" if $match;
+    $c->respond_to(
+      json => sub {
+        shift->render(
+          json => {publication_uri => ($match ? $match->uri($c) : undef),});
+      },
+      html => sub {
+        shift->redirect_to('update_rel_form');
+      }
+    );
+}
+
+sub update_rel_form {
+    my $c = shift;
+    my $reference = $c->_this_object;
+    my $report = $reference->publication->to_object;
+    undef $report unless $report->meta->table eq 'report';
+    my @chapters;
+    if ($report) { 
+        @chapters = ( [ 'add a chapter', ''], map [ $_->stringify, $_->identifier ], sort { $a->sortkey cmp $b->sortkey } $report->chapters );
+    }
+    $c->stash(chapters => \@chapters);
+    $c->SUPER::update_rel_form(@_);
+}
+
+sub update_rel {
+    my $c = shift;
+    my $reference = $c->_this_object;
+    my $report = $reference->publication->to_object;
+    undef $report unless $report->meta->table eq 'report';
+    if (my $child = $c->param('child_publication_id')) {
+        my $obj = $c->str_to_obj($child);
+        my $child_publication = $obj->get_publication(autocreate => 1);
+        $child_publication->save(audit_user => $c->user) unless $child_publication->id;
+        $reference->child_publication_id($child_publication->id);
+        $reference->save(audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
+    }
+    if ( $report && (my $chapter_identifier = $c->param('chapter'))) {
+        my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
+        my $chapter_pub = $chapter->get_publication(autocreate => 1);
+        $chapter_pub->save(audit_user => $c->user) unless $chapter_pub->id;
+        $reference->add_subpubrefs({ publication_id => $chapter_pub->id });
+        $reference->save(audit_user => $c->user) or
+            return $c->redirect_with_error(update_rel_form => $reference->error);
+    }
+    if (my $other_pub = $c->param('other_pub')) {
+        # TODO
+    }
+    $c->redirect_without_error('update_rel_form');
+}
+
 1;
 

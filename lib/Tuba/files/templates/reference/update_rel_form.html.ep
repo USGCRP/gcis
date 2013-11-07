@@ -1,0 +1,78 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+% my $controls = stash 'controls' || {};
+
+%= include 'update_tabs', active => 'rel';
+
+<div class='tab-content'>
+
+%= form_for obj_uri_for($object,'update_rel') => class => 'form-horizontal well' => method => 'POST' => begin
+% if (my $error = ( (stash 'error') || flash 'error')) {
+    <div class='alert alert-error'><%= $error %></div>
+% }
+% if (my $info = ( (stash 'info') || flash 'info')) {
+    <div class='alert alert-success'><b><%= $info %></b></div>
+% }
+
+<div class='control-group' style='margin:10px;'>
+    <label class='control-label'>
+        Primary publication whose bibliography contains this reference (e.g. a report).
+    </label>
+
+    <div class="controls" style='border:1px solid #ddd;'>
+        %= include 'obj_thumbnails', objs => [ $object->publication->to_object ];
+    </div>
+</div>
+
+<div class='control-group' style='margin:10px;'>
+    <label class='control-label'>
+        Other publications containing this reference (e.g. chapters).
+    </label>
+
+    <div class="controls" style='border:1px solid #ddd;'>
+    % my @other = @{ $object->subpubrefs };
+    %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, @other ];
+        % if (@$chapters) {
+        %= include 'controls/select', input_name => 'chapter', values => $chapters;
+        % }
+        %= include 'controls/autocomplete', input_name => 'other_pub', object_type => 'all';
+    </div>
+</div>
+
+
+% my $child = $object->child_publication;
+<div class='control-group' style='margin:10px;'>
+    <label class='control-label'>
+        Child publication
+    </label>
+    <div class="controls" style='border:1px solid #ddd;'>
+        % if ($child) {
+        %= include 'obj_thumbnails', objs => [ $child->to_object ];
+        % }
+        %= include 'controls/autocomplete', column => $meta->column('child_publication_id'), object_type => 'all';
+    </div>
+</div>
+
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn">Reset</button>
+</div>
+
+%= end
+
+</div>
+
+<table class='table table-striped table-bordered squeeze'>
+    <caption>Attributes</caption>
+    % for my $k (sort keys $reference->attrs) {
+    <tr>
+        <td><%= $k %></td><td><%= $reference->attrs->{$k} %></td>
+    </tr>
+    % }
+</table>
+
+
