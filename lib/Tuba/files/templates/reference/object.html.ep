@@ -19,25 +19,25 @@
 </pre>
 
 <div class='row-fluid'>
-    % my $maps = $reference->publication_maps;
-    <div class='span6'>
+    % my $others= $reference->subpubrefs;
+    <div class='span6 well'>
         This bibliographic record appears in :
-        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->child_publication->to_object, @$maps ], size => 'span3'
+        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->publication->to_object, @$others ], size => 'span3'
     </div>
-    % if ($maps && @$maps) {
-    <div class='span6'>
-        Publications referenced by this bibliographic entry :
-        %= include 'obj_thumbnails', objs => [ map $_->parent_publication->to_object, @$maps ], size => 'span3'
+    % if (my $child = $reference->child_publication) {
+        <div class='span6 well'>
+            Publications referenced by this bibliographic entry :
+            %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span3'
     % } else {
-    <div class='span6 alert alert-error'>
-    <p style='text-align:center;'>This reference is not associated with a publication.
-    % if (user_can('update')) {
-    <br>
-    %= link_to 'update_rel_form_reference', class => 'btn' => begin
-    Assign a publication
-    %= end
-    % }
-    </p>
+        <div class='span6 alert alert-error'>
+        <p style='text-align:center;'>This reference is not associated with a publication.
+        % if (user_can('update')) {
+        <br>
+        %= link_to 'update_rel_form_reference', class => 'btn' => begin
+        Assign a publication
+        %= end
+        % }
+        </p>
     % }
     </div>
 </div>

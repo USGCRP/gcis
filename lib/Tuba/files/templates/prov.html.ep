@@ -1,40 +1,46 @@
 % my $pub = $object->get_publication;
 % my @parents;
+% my @parents_with_references;
 % @parents = $pub->get_parents if $pub;
-% if (@parents) {
+% @parents_with_references = $pub->get_parents_with_references if $pub;
+% if (@parents || @parents_with_references) {
 
-% if (stash 'add_delete_buttons') {
-%= hidden_field 'delete_publication';
-%= hidden_field 'delete_relationship';
-% }
-
-<table class='table table-condensed table-bordered table-striped'>
-<caption>Provenance</caption>
-<tr>
-    <th>relationship</th>
-    <th>publication</th>
-    <th>reference</th>
-    <th>note</th>
     % if (stash 'add_delete_buttons') {
-    <th>delete?</th>
+    %= hidden_field 'delete_publication';
+    %= hidden_field 'delete_relationship';
     % }
-</tr>
-% for my $parent (@parents) {
-    % my $parent_pub = $parent->{publication};
+
+    <table class='table table-condensed table-bordered table-striped'>
+    <caption>Provenance</caption>
     <tr>
-        <td><%= link_to ontology_url($parent->{relationship}) => target => "_blank" => begin %><%= $parent->{relationship} %><%= end %></td>
-    <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
-    <td><% if ($parent->{reference}) { %>
-        <%= obj_link($parent->{reference}) %>
-        <% } %>
-    </td>
-    <td><%= $parent->{note} || "" %></td>
-    % if (stash 'add_delete_buttons') {
-        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        <th>relationship</th>
+        <th>publication</th>
+        <th>note</th>
+        % if (stash 'add_delete_buttons') {
+        <th>delete?</th>
+        % }
+    </tr>
+    % for my $parent (@parents) {
+        % my $parent_pub = $parent->{publication};
+        <tr>
+            <td><%= link_to ontology_url($parent->{relationship}) => target => "_blank" => begin %><%= $parent->{relationship} %><%= end %></td>
+        <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
+        <td><%= $parent->{note} || "" %></td>
+        % if (stash 'add_delete_buttons') {
+            <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        % }
+    </tr>
     % }
-</tr>
+
+    % for my $parent (@parents_with_references) {
+        <tr>
+            % my $parent_pub = $parent->{parent};
+            <td>cito:isCitedBy (ref: <%= obj_link($parent->{reference}, short => 1) %>)
+            </td>
+            <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
+            <td></td>
+        </tr>
+    % }
 % }
+
 </table>
-
-% }
-

@@ -20,9 +20,13 @@ alter table reference add unique (identifier,child_publication_id);
 update reference r set child_publication_id = (select child from publication_map p
     where p.reference_identifier=r.identifier);
 
-alter table publication_map add constraint refchild
-    foreign key (reference_identifier,child) references
-    reference(identifier,child_publication_id);
+alter table publication_map drop column reference_identifier;
+
+create table subpubref (
+    publication_id integer references publication(id) not null,
+    reference_identifier varchar references reference(identifier) not null,
+    primary key (publication_id, reference_identifier)
+)
 
 comment on column reference.publication_id is 'Primary publication whose bibliography contains this entry';
 
