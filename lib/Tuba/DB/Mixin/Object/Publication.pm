@@ -35,10 +35,11 @@ sub to_object {
 sub children {
     my $self = shift;
 
-    return Tuba::DB::Object::Publication::Manager->get_objects(
-        query => [ parent_id => $self->id ],
+    my $got = Tuba::DB::Object::PublicationMap::Manager->get_objects(
+        query => [ parent => $self->id ],
         limit => 100,
     );
+    return wantarray ? @$got : $got;
 }
 
 sub get_parents {

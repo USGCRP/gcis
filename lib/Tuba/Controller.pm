@@ -364,12 +364,17 @@ sub update_prov {
     my $parent = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
     my $parent_pub = $parent->get_publication(autocreate => 1);
     $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
+    my $reference;
+    if (my $ref = $c->param('reference')) {
+        $reference = Reference->new_from_autocomplete($ref);
+    }
 
     my $map = PublicationMap->new(
         child        => $pub->id,
         parent       => $parent_pub->id,
         relationship => $rel,
-        note         => ( ($c->param('note') || undef) ),
+        note         => ($c->param('note') || undef),
+        reference_identifier => $reference->identifier,
     );
 
     $map->save(audit_user => $c->user) or return $c->render(error => $map->error);

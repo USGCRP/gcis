@@ -18,7 +18,7 @@ sub dbgrep {
     my @with = ( 'report' );
     if ($user) {
         @viewable = ( or => [ _public => 't', username => $user ] );
-        push @with, 'report._report_viewer';
+        push @with, 'report._report_viewers';
     } else {
         @viewable = ( _public => 't' );
     }

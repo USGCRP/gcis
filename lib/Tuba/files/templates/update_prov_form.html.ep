@@ -58,6 +58,12 @@ Note
 %= text_field 'note', class => 'span10', id => 'note', placeholder => 'Note about the relationship';
 </div>
 
+<label class="control-label" for="parent">
+Reference
+</label>
+<div class='controls'>
+%= text_field 'reference', class => 'span10', id => 'reference', placeholder => 'Bibliographic entry establishing the relationship';
+</div>
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>

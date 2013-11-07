@@ -30,6 +30,7 @@ sub _make_query {
         next if $col->type =~ /int/;
         next if $col->type =~ /serial/;
         next if $col->type =~ /boolean/;
+        next if $col->type =~ /hstore/;
         my $name = $col->accessor_method_name;
         if ($col->type =~ /array/) {
             my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');

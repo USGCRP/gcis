@@ -18,55 +18,57 @@
 <%= include 'db_meta'; =%>
 </pre>
 
-% if (my $pub = $object->get_publication) {
-<center>Files</center>
-<div class='row well'>
-<div class='span12'>
-%= include 'pub_thumbnails', pub => $pub, files => 1;
-</div>
-</div>
-% }
-
-<style>
-    table.centered tr th { text-align:center; }
-</style>
-<table class='table table-condensed table-bordered table-striped centered'>
-    <caption>Publications</caption>
-    <tr>
-        <th>publication</th><th>relationship</th><th>publication</th><th>note</th>
-    </tr>
-    % for my $map (grep defined, $object->publication_map) {
-    <tr>
-        <td><%= include obj_thumbnails => objs => [ $map->child_publication->to_object] %></td>
-        <td><%= $map->relationship %></td>
-        <td><%= include obj_thumbnails => objs => [ $map->parent_publication->to_object] %></td>
-        <td><%= $map->note || "" %></td>
-    </tr>
+<div class='row-fluid'>
+    % my $maps = $reference->publication_maps;
+    <div class='span6'>
+        This bibliographic record appears in :
+        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->child_publication->to_object, @$maps ], size => 'span3'
+    </div>
+    % if ($maps && @$maps) {
+    <div class='span6'>
+        Publications referenced by this bibliographic entry :
+        %= include 'obj_thumbnails', objs => [ map $_->parent_publication->to_object, @$maps ], size => 'span3'
+    % } else {
+    <div class='span6 alert alert-error'>
+    <p style='text-align:center;'>This reference is not associated with a publication.
+    % if (user_can('update')) {
+    <br>
+    %= link_to 'update_rel_form_reference', class => 'btn' => begin
+    Assign a publication
+    %= end
     % }
-</table>
+    </p>
+    % }
+    </div>
+</div>
 
-<table class='table table-condensed table-bordered table-striped'>
-<caption>Fields</caption>
-
+% my @internal;
 % my $attrs = $object->attrs;
 % my @ordered = sort keys %$attrs;
 % @ordered = ( 'reftype', 'reftype_id', grep { $_ !~ /reftype/ } @ordered );
+% for my $dot (grep /^[._]/, @ordered) {
+%   @ordered = grep { $_ ne $dot } @ordered;
+%   push @internal, $dot;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Bibliographic fields</caption>
 % for my $k (@ordered) {
-% my $val = $attrs->{$k};
+    % my $val = $attrs->{$k};
     <tr>
         <td><%= $k %></td>
         <td>
-            % if (!$val) {
+            % if (!defined($val)) {
 
-            % } elsif ($k eq 'doi') {
+            % } elsif ($k =~ /^doi$/i) {
                 %= link_to "http://dx.doi.org/$val" => target => "_blank" => begin
                 <%= $val %>
                 %= end
-            % } elsif ($k =~ /issn/ && $val) {
+            % } elsif ($k =~ /issn/i && $val) {
                 %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
                 <%= $val %>
                 %= end
-            % } elsif ($k =~ /urls?/) {
+            % } elsif ($k =~ /urls?/i) {
                 %= link_to $val => target => "_blank" => begin
                 <%= $val %>
                 %= end
@@ -76,7 +78,17 @@
          </td>
     </tr>
 % }
+</table>
 
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Bibliographic identifiers</caption>
+% for my $k (@internal) {
+    % my $val = $attrs->{$k};
+    <tr>
+        <td><%= $k %></td>
+        <td><%= $attrs->{$k} // '' %></td>
+    </tr>
+% }
 </table>
 
 
