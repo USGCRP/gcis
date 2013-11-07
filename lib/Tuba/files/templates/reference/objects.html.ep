@@ -30,11 +30,10 @@
         <%= $o->attrs->{'reftype'} %>
     </td>
     <td class='thumbnails'>
-        % my $map = $o->publication_map;
-        % if ($map) {
-            % my $obj = $map->child_publication->to_object;
+        % my $maps = $o->publication_maps;
+        % if (@$maps) {
             <div class='span2'>
-                %= include 'obj_thumbnails', objs => [ $obj ];
+                %= include 'obj_thumbnails', objs => [ map $_->child_publication->to_object, @$maps ];
             </div>
         % } else {
             no publication

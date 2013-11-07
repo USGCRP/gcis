@@ -14,7 +14,7 @@ sub list {
     my $all = $c->param('all');
     my $refs = References->get_objects(
        query => [publication_id => $pub->id],
-       with_objects => 'publication_map',
+       with_objects => 'publication_maps',
        ( $all ? () : (page => $c->page, per_page => $c->per_page) )
     );
     unless ($all) {
