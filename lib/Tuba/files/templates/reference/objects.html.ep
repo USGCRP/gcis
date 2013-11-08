@@ -29,7 +29,7 @@
         <%= end %>
     </td>
     <td> <%= $o->attrs->{reftype} %> </td>
-    <td> <%= elide($o->attrs->{Title} // '',50) %> </td>
+    <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
     <td class='thumbnails'>
         <div class='span2'>
             %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, $o->subpubrefs ];
