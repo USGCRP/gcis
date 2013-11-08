@@ -17,23 +17,28 @@
 <tr>
     <th>identifier</th>
     <th>type</th>
+    <th>title</th>
+    <th>chapters</th>
     <th>publication</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
     <td>
         <%= link_to 'show_reference', { reference_identifier => $o->identifier } => begin %>
-        <%= $o->identifier %>
+        <%= $o->stringify(short => 1) %>
         <%= end %>
     </td>
-    <td>
-        <%= $o->attrs->{'reftype'} %>
+    <td> <%= $o->attrs->{reftype} %> </td>
+    <td> <%= elide($o->attrs->{Title} // '',50) %> </td>
+    <td class='thumbnails'>
+        <div class='span2'>
+            %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, $o->subpubrefs ];
+        </div>
     </td>
     <td class='thumbnails'>
-        % my $maps = $o->publication_maps;
-        % if (@$maps) {
+        % if (my $pub = $o->child_publication) {
             <div class='span2'>
-                %= include 'obj_thumbnails', objs => [ map $_->child_publication->to_object, @$maps ];
+                %= include 'obj_thumbnails', objs => [ $pub->to_object ];
             </div>
         % } else {
             no publication
