@@ -11,7 +11,7 @@ alter table reference
 
 alter table publication_map add unique (reference_identifier, parent);
 
-alter table publication_map drop constraint publication_map_reference_identifier_key
+alter table publication_map drop constraint publication_map_reference_identifier_key;
 
 alter table reference add column child_publication_id integer references publication(id) on delete cascade;
 
@@ -26,7 +26,7 @@ create table subpubref (
     publication_id integer references publication(id) on delete cascade not null,
     reference_identifier varchar references reference(identifier) on delete cascade not null,
     primary key (publication_id, reference_identifier)
-)
+);
 
 comment on column reference.publication_id is 'Primary publication whose bibliography contains this entry';
 
