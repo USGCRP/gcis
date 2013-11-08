@@ -438,8 +438,7 @@ CREATE TABLE publication_map (
     child integer NOT NULL,
     relationship character varying NOT NULL,
     parent integer NOT NULL,
-    note character varying,
-    reference_identifier character varying
+    note character varying
 );
 
 
@@ -482,8 +481,22 @@ CREATE TABLE ref_type (
 
 CREATE TABLE reference (
     identifier character varying NOT NULL,
-    attrs hstore
+    attrs hstore,
+    publication_id integer NOT NULL,
+    child_publication_id integer
 );
+
+
+
+COMMENT ON COLUMN reference.identifier IS 'A globally unique identifier for this bibliographic record';
+
+
+
+COMMENT ON COLUMN reference.attrs IS 'Attributes of this bibliographic record';
+
+
+
+COMMENT ON COLUMN reference.publication_id IS 'Primary publication whose bibliography contains this entry';
 
 
 
@@ -522,6 +535,13 @@ CREATE SEQUENCE submitter_id_seq
 
 
 ALTER SEQUENCE submitter_id_seq OWNED BY submitter.id;
+
+
+
+CREATE TABLE subpubref (
+    publication_id integer NOT NULL,
+    reference_identifier character varying NOT NULL
+);
 
 
 
@@ -717,11 +737,6 @@ ALTER TABLE ONLY publication_map
 
 
 
-ALTER TABLE ONLY publication_map
-    ADD CONSTRAINT publication_map_reference_identifier_key UNIQUE (reference_identifier);
-
-
-
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_pkey PRIMARY KEY (id);
 
@@ -748,6 +763,16 @@ ALTER TABLE ONLY ref_type
 
 
 ALTER TABLE ONLY reference
+    ADD CONSTRAINT reference_identifier_child_publication_id_key UNIQUE (identifier, child_publication_id);
+
+
+
+ALTER TABLE ONLY reference
+    ADD CONSTRAINT reference_identifier_publication_id_key UNIQUE (identifier, publication_id);
+
+
+
+ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_pkey PRIMARY KEY (identifier);
 
 
@@ -759,6 +784,11 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY submitter
     ADD CONSTRAINT submitter_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY subpubref
+    ADD CONSTRAINT subpubref_pkey PRIMARY KEY (publication_id, reference_identifier);
 
 
 
@@ -1245,13 +1275,18 @@ ALTER TABLE ONLY publication_map
 
 
 
-ALTER TABLE ONLY publication_map
-    ADD CONSTRAINT publication_map_reference_identifier_fkey FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-
 ALTER TABLE ONLY publication_ref
     ADD CONSTRAINT publication_ref_ibfk_1 FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY reference
+    ADD CONSTRAINT reference_child_publication_id_fkey FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY reference
+    ADD CONSTRAINT reference_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
 
 
 
@@ -1262,6 +1297,16 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY submitter
     ADD CONSTRAINT submitter_contributor_id_fkey FOREIGN KEY (contributor_id) REFERENCES contributor(id);
+
+
+
+ALTER TABLE ONLY subpubref
+    ADD CONSTRAINT subpubref_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY subpubref
+    ADD CONSTRAINT subpubref_reference_identifier_fkey FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE;
 
 
 

@@ -299,18 +299,10 @@ SELECT pg_catalog.setval('publication_id_seq', 1, false);
 
 
 --
--- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY reference (identifier, attrs) FROM stdin;
-\.
-
-
---
 -- Data for Name: publication_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_map (child, relationship, parent, note, reference_identifier) FROM stdin;
+COPY publication_map (child, relationship, parent, note) FROM stdin;
 \.
 
 
@@ -338,6 +330,14 @@ SELECT pg_catalog.setval('publication_ref_id_seq', 1, false);
 
 
 --
+-- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY reference (identifier, attrs, publication_id, child_publication_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: submitter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -350,6 +350,14 @@ COPY submitter (id, person_id, "table", fk, contributor_id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('submitter_id_seq', 1, false);
+
+
+--
+-- Data for Name: subpubref; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY subpubref (publication_id, reference_identifier) FROM stdin;
+\.
 
 
 --

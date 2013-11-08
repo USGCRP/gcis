@@ -134,10 +134,26 @@
                 
                   
                 
+                  
+                
+                  
+                
                 </td>
                 <td>identifier</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
+                
+                    
+
+                    
+                       UNIQUE#2
+                    
                 
                     PRIMARY KEY
                     
@@ -148,7 +164,7 @@
                 
                 
                 </i>
-                
+                <br><br>A globally unique identifier for this bibliographic record
                 </td>
              </tr>
             
@@ -159,6 +175,70 @@
                 <td>attrs</td>
                 <td>hstore</td>
                 <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>Attributes of this bibliographic record
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                  
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
+                  
+                
+                </td>
+                <td>publication_id</td>
+                <td>integer</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE#2
+                    
+                
+                    
+
+                    
+                
+
+                NOT NULL
+                
+                </i>
+                <br><br>Primary publication whose bibliography contains this entry
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
+                  
+                
+                  
+                
+                </td>
+                <td>child_publication_id</td>
+                <td>integer</td>
+                <td><i>
+                
+                    
+
+                    
+                
+                    
+
+                    
+                       UNIQUE#1
+                    
                 
 
                 
@@ -180,7 +260,7 @@
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
+                <a href="table_gcis_metadata.subpubref.html">subpubref</a><br>
         
         
 
