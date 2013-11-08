@@ -30,6 +30,8 @@ sub startup {
 
     Tuba::Log->set_logger($app->log);
 
+    $ENV{MOJO_MAX_MESSAGE_SIZE} = 52428800;
+
     # Plugins, configuration
     my $conf =
         $ENV{TUBA_CONFIG}             ? $ENV{TUBA_CONFIG}
