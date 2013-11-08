@@ -40,48 +40,69 @@ sub create {
     my $c = shift;
     if (my $json = $c->req->json) {
         if (my $uri = delete $json->{publication_uri}) {
-            my ($type,$identifier) = $uri =~ m[/([^/]+)/([^/]+)$];
-            die "unsupported type ($uri) : $type" unless $type eq 'report';
-            my $pub = Report->new(identifier => $identifier)->get_publication(autocreate => 1);
+            my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => 'uri not found' } );
+            $report->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
+            my $pub = $report->get_publication(autocreate => 1);
             $pub->save(audit_user => $c->user) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         }
+        $c->stash(sub_publication_uris => delete $json->{sub_publication_uris});
     }
-    # $c->stash(computed_params => { publication_id => $pub->id } );
     $c->SUPER::create(@_);
+}
+sub post_create {
+  my $c         = shift;
+  my $reference = shift;
+  my $uris      = $c->stash('sub_publication_uris') or return 1;
+  for my $uri (@$uris) {
+    my $pub = $c->uri_to_pub($uri)
+      or do { $reference->error("$uri not found"); return 0; };
+    $reference->add_subpubrefs({publication_id => $pub->id});
+  }
+  $reference->save(audit_user => $c->user);
+  return 1;
 }
 
 sub update {
     my $c = shift;
     if (my $json = $c->req->json) {
         if (my $uri = delete $json->{publication_uri}) {
-            my ($type,$identifier) = split '/', $uri;
-            die "unsupported type ($uri) : $type" unless $type eq 'report';
-            my $pub = Report->new(identifier => $identifier)->get_publication(autocreate => 1);
+            my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => 'uri not found' } );
+            $report->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
+            my $pub = $report->get_publication(autocreate => 1);
+            $pub->save(audit_user => $c->user) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         }
     }
-    # $c->stash(computed_params => { publication_id => $pub->id } );
     $c->SUPER::update(@_);
 }
 
 sub smartmatch {
     # Match this reference to a child publication.
-    my $c = shift;
+    my $c         = shift;
     my $reference = $c->_this_object;
-    my @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+    my @tables    = map $_->table, @{PublicationTypes->get_objects(all => 1)};
     my $match;
     for my $table (@tables) {
         my $obj_class = $c->orm->{$table}{obj} or die "no manager for $table";
         $match = $obj_class->new_from_reference($reference) and last;
     }
-    die "not implemented" if $match;
+    if ($match) {
+        my $pub = $match->get_publication(autocreate => 1);
+        $pub->save(audit_user => $c->user) unless $pub->id;
+        $reference->child_publication_id($pub->id);
+        $reference->save(audit_user => $c->user)
+            or $c->redirect_with_error(update_rel_form => $reference->error);
+    }
     $c->respond_to(
       json => sub {
         shift->render(
-          json => {publication_uri => ($match ? $match->uri($c) : undef),});
+          json => {
+              publication_uri => ( $match ? $match->uri($c) : undef),
+              status          => ( $match ? 'match' : "no match" ),
+          });
       },
       html => sub {
         shift->redirect_to('update_rel_form');

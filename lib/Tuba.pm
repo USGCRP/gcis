@@ -205,7 +205,30 @@ sub startup {
          my $str = shift;
          return $c->Tuba::Search::autocomplete_str_to_object($str);
      });
+    $app->helper(uri_to_obj => sub {
+         my $c = shift;
+         my $uri = shift;
 
+         # TODO clever generic way of doing this.
+         my $obj;
+         given ($uri) {
+             m[^/report/([^/]+)$]                 and $obj = Tuba::DB::Object::Report->new(identifier => $1);
+             m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
+         }
+         if ($obj && $obj->load(speculative => 1)) {
+             return $obj;
+         }
+         $c->app->logger->warn("Could not identify $uri");
+         return;
+    });
+    $app->helper(uri_to_pub => sub {
+            my $c = shift;
+            my $uri = shift;
+            my $obj = $c->uri_to_obj($uri) or return;
+            my $pub = $obj->get_publication(autocreate => 1);
+            $pub->save(audit_user => $c->user) unless $pub->id;
+            return $pub;
+        });
  
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -398,8 +421,8 @@ sub startup {
     $report->get('/array')->to('array#list');
 
     # Metadata processing routes.
-    $r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
-    $r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+    #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
+    #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
 
     # Person.
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
@@ -417,6 +440,13 @@ sub startup {
     my $reference = $r->resource('reference');
     $report->get('/reference')->to('reference#list');
     $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch');
+    $r->bridge('/reference/match')
+      ->to(cb => sub {
+              my $c = shift;
+              $c->auth && $c->authz(role => 'update')
+        })
+      ->post('/:reference_identifier')
+      ->to('reference#smartmatch');
 
     # Generic publication.
     $r->resource('generic');

@@ -58,7 +58,7 @@ a[target="_blank"]:after {
 .openrow {
 }
 .closedrow {
-    max-height:120px;
+    max-height:250px;
     overflow:auto;
     border-bottom:1px dotted #aaa;
 }

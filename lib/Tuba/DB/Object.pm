@@ -302,5 +302,12 @@ sub new_from_autocomplete {
     return $obj;
 }
 
+sub new_from_reference {
+    my $class = shift;
+    my $ref = shift;
+    # Override to try to make a new object from the attrs in a Tuba::DB::Object::Reference.
+    return;
+}
+
 1;
 

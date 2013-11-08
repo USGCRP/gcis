@@ -206,7 +206,9 @@ sub create {
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
     my $table = $object_class->meta->table;
-    $new->save(audit_user => $c->user) and return $c->_redirect_to_view($new);
+    $new->save(audit_user => $c->user)
+          and $c->post_create($new)
+          and return $c->_redirect_to_view($new);
     $c->respond_to(
         json => sub {
                 my $c = shift;
@@ -221,6 +223,13 @@ sub create {
         );
 }
 
+sub post_create {
+    my $c = shift;
+    my $obj = shift;
+    # override to do something after saving succesfully
+}
+
+
 sub _this_object {
     my $c = shift;
     return $c->stash('_this_object') if $c->stash('_this_object');
@@ -232,7 +241,6 @@ sub _this_object {
         $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
         $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
         my $val = $c->stash($stash_name) or do {
-            $c->app->log->warn("No values for $name when loading $object_class");
             next;
         };
         $pk{$name} = $val;
@@ -585,7 +593,8 @@ sub update {
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
         $new_attrs{$col->name} = $param if _differ($param,$new_attrs{$col->name});
-        if ($col->is_primary_key_member && $param ne $object->$acc) {
+        if ($col->is_primary_key_member && ($param ne $object->$acc)) {
+            die "$acc is not defined" unless defined($param);
             $pk_changes{$col->name} = $param;
             # $c->app->log->debug("Setting primary key member ".$col->name." to $param");
             next;

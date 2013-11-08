@@ -16,7 +16,7 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
         return $v unless ref($v);
-        do { $_ = encode('UTF8',$_) unless is_utf8($_) } for values %$v;
+        do { $_ = encode('UTF8',$_) } for values %$v;
         my $deflated = Pg::hstore::encode($v);
         return $deflated;
     });
@@ -37,5 +37,18 @@ sub stringify {
     }
     return $uuid;
 }
+
+sub attr {
+    my $c = shift;
+    my $k = shift;
+    my $attr = $c->attrs;
+    my $norm = $c->{__norm} || {};
+    my %norm = %$norm;
+    @norm{@{[ map lc, keys %$attr ]}} = values %$attr;
+    $c->{__norm} //= \%norm;
+    return $norm{$k} if $k;
+    return \%norm;
+}
+
 1;
 

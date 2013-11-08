@@ -23,8 +23,8 @@ update reference r set child_publication_id = (select child from publication_map
 alter table publication_map drop column reference_identifier;
 
 create table subpubref (
-    publication_id integer references publication(id) not null,
-    reference_identifier varchar references reference(identifier) not null,
+    publication_id integer references publication(id) on delete cascade not null,
+    reference_identifier varchar references reference(identifier) on delete cascade not null,
     primary key (publication_id, reference_identifier)
 )
 

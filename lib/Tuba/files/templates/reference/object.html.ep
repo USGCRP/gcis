@@ -20,16 +20,16 @@
 
 <div class='row-fluid'>
     % my $others= $reference->subpubrefs;
-    <div class='span6 well'>
+    <div class='span8 well'>
         This bibliographic record appears in :
         %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->publication->to_object, @$others ], size => 'span3'
     </div>
     % if (my $child = $reference->child_publication) {
-        <div class='span6 well'>
-            Publications referenced by this bibliographic entry :
-            %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span3'
+        <div class='span4 well'>
+            Publication referenced by this bibliographic entry :
+            %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span12'
     % } else {
-        <div class='span6 alert alert-error'>
+        <div class='span4 alert alert-error'>
         <p style='text-align:center;'>This reference is not associated with a publication.
         % if (user_can('update')) {
         <br>

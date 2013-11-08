@@ -20,5 +20,15 @@ sub uri {
     return $s->SUPER::uri($c,$opts);
 }
 
+sub new_from_reference {
+    my $class = shift;
+    my $ref = shift;
+    if (my $doi = $ref->attr('doi')) {
+        my $obj = $class->new(doi => $doi);
+        $obj->load(speculative => 1) and return $obj;
+    }
+    return;
+}
+
 1;
 

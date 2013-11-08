@@ -36,7 +36,7 @@
     % my $val = $o->can($first) ? $o->$first : "error, cannot call $first";
         <td>
             %= link_to $o->uri($self) => begin
-            <%= $val %>
+            <%= $val || '[none]' %>
             %= end
         </td>
 % for my $c (@cols[1..$#cols]) {
