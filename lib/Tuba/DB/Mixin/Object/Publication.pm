@@ -104,8 +104,50 @@ SQL
         $_->{reference} = Tuba::DB::Object::Reference->new(identifier => $_->{reference_identifier});
     }
     return @results;
+}
 
+sub get_children_with_references {
+    my $s = shift;
+    my %a = @_;
+    my $limit = $a{limit} || 5000;
+    $limit = 1 unless $limit =~ /^[0-9]+$/;
+    $limit = 5000 if $limit > 5000;
 
+    my $first = <<SQL;
+    select
+        subp.publication_type_identifier,
+        s.publication_id                    as parent_publication_id,
+        r.child_publication_id              as child_publication_id,
+        r.identifier                        as reference_identifier
+      from reference r
+        inner join publication p    on r.publication_id = p.id
+        inner join subpubref s      on s.reference_identifier = r.identifier
+        inner join publication subp on s.publication_id = subp.id
+      where s.publication_id  = ? and r.child_publication_id is not null
+      limit $limit
+SQL
+    my $dbs = DBIx::Simple->new($s->db->dbh);
+    my $second = <<SQL;
+    select 
+        p.publication_type_identifier,
+        p.id                            as parent_publication_id,
+        r.child_publication_id          as child_publication_id,
+        r.identifier                    as reference_identifier
+    from reference r
+        inner join publication p    on r.publication_id = p.id
+    where p.id = ? and r.child_publication_id is not null
+    limit $limit
+SQL
+
+    my @results = $dbs->query($first, $s->id)->hashes;
+    push @results, $dbs->query($second, $s->id)->hashes;
+    @results = @results[0..$limit-1] if @results > $limit;
+    for (@results) {
+        $_->{parent} = $s;
+        $_->{child} = (ref $s)->new(id => $_->{child_publication_id})->load;
+        $_->{reference} = Tuba::DB::Object::Reference->new(identifier => $_->{reference_identifier});
+    }
+    return @results;
 }
 
 sub upload_file {

@@ -1,8 +1,13 @@
+% my $max_children = 10;
 % my $pub = $object->get_publication;
 % my @parents;
 % my @parents_with_references;
-% @parents = $pub->get_parents if $pub;
-% @parents_with_references = $pub->get_parents_with_references if $pub;
+% my @children_with_references;
+% if ($pub) {
+    % @parents = $pub->get_parents;
+    % @parents_with_references = $pub->get_parents_with_references;
+    % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
+% }
 % if (@parents || @parents_with_references) {
 
     % if (stash 'add_delete_buttons') {
@@ -36,12 +41,34 @@
         <tr>
             % my $parent_pub = $parent->{parent};
             <td><%= link_to ontology_url('cito:isCitedBy') => target => "_blank" => begin %>cito:isCitedBy<%= end %>
-                (ref: <%= obj_link($parent->{reference}, short => 1) %>)
+                (ref:<%= obj_link($parent->{reference}, short => 1) %>)
             </td>
             <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
             <td></td>
         </tr>
-    % }
+        % }
 % }
 
+% if (@children_with_references) {
+   <table class='table table-condensed table-bordered table-striped'>
+    <caption>References</caption>
+    % for my $child (@children_with_references) {
+    <tr>
+        % my $child_pub = $child->{child};
+        <td><%= link_to ontology_url('cito:cites') => target => "_blank" => begin %>cito:cites<%= end %>
+            (ref:<%= obj_link($child->{reference}, short => 1) %>)
+        </td>
+        <td><%= link_to 'show_publication' => { publication_identifier => $child_pub->id } => begin %><%= $child_pub->stringify %><%= end %></td>
+    </tr>
+   % }
+   % if (@children_with_references == $max_children && !param('show_all')) {
+   <tr>
+       <td colspan=2>
+           <center>
+               <%= link_to url_with->query([show_all => 1]) => class => 'btn' => begin %>show all<%= end %>
+           </center>
+       </td>
+   </tr>
+   % }
 </table>
+% }
