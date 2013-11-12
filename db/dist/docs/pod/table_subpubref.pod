@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+subpubref
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ publication_id (integer) - 
+ reference_identifier (character varying) - 
+
+
+=head1 SCHEMA
+
+                         Table "gcis_metadata.subpubref"
+         Column        |       Type        | Modifiers | Storage  | Description 
+ ----------------------+-------------------+-----------+----------+-------------
+  publication_id       | integer           | not null  | plain    | 
+  reference_identifier | character varying | not null  | extended | 
+ Indexes:
+     "subpubref_pkey" PRIMARY KEY, btree (publication_id, reference_identifier)
+ Foreign-key constraints:
+     "subpubref_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
+     "subpubref_reference_identifier_fkey" FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+
