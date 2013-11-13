@@ -190,7 +190,7 @@ sub startup {
 
     $app->helper(uri => sub {
         my $c = shift;
-        my $obj = shift;
+        my $obj = shift or return "";
         return $obj->uri($c,{ tab => 'show' })->to_abs;
     });
     $app->helper(new_id => sub {

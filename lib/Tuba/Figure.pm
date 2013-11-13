@@ -16,12 +16,12 @@ sub list {
     my @page = $all ? () : (page => $c->page);
     if (my $ch = $c->stash('chapter_identifier')) {
         $figures = Figures->get_objects(
-            query => [chapter => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier",
             );
         $c->set_pages(Figures->get_objects_count(
-            query => [chapter => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
     } else {
         $figures = Figures->get_objects(

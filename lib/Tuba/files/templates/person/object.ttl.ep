@@ -7,11 +7,11 @@
    dcterms:identifier "<%= $person->id %>";
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
-   gcis:isMemberOf "<%= $person->org %>";
    a prov:agent;
    gcis:hasURL "<%= $person->url %>" .
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
+   gcis:isMemberOf "<%= $org->identifier %>";
 <<%= current_resource =%>> gcis:hasOrganization "<%= $org->identifier %>".
 % }
 

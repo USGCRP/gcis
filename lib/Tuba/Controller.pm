@@ -232,8 +232,10 @@ sub post_create {
 
 sub _this_object {
     my $c = shift;
-    return $c->stash('_this_object') if $c->stash('_this_object');
     my $object_class = $c->_guess_object_class;
+    if (my $cached = $c->stash('_this_object')) {
+        return $cached if ref($cached) eq $object_class;
+    }
     my $meta = $object_class->meta;
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier

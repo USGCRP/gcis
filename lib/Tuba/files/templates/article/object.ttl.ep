@@ -3,8 +3,8 @@
 <<%= current_resource %>>
    a prov:Entity; a bibo:Article;
    
-   gcis:inPublication <<%= obj_uri_for($article->journal)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($article->journal)->to_abs %>>;
+   gcis:inPublication <<%= uri($article->journal) %>>;
+   dcterms:isPartOf <<%= uri($article->journal) %>>;
 
 %# % for my $parent (@parents_with_references) {
 %# % my $parent_pub = $parent->{parent};
@@ -29,16 +29,16 @@
 %# % for my $ref ($article->get_references) {
 %# biro:isReferencedBy <<%= uri($ref); %>>;
 %#  % }  
-   gcis:inPublication <<%= obj_uri_for($article->journal)->to_abs %>>;
+   gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:doi "<%= $article->doi %>";
-   gcis:inPublication <<%= obj_uri_for($article->journal)->to_abs %>>;
+   gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:pages "<%= $article->journal_pages %>";
    bibo:Volume "<%= $article->journal_vol %>";
    dcterms:title "<%= $article->title %>";
    rdfs:label "<%= $article->title %>";
    prov:label "<%= $article->title %>";
    gcis:hasURL "<%= $article->url %>";
-   bibo:uri "<%= $article->uri %>";
+   bibo:uri "<%= $article->uri($self) %>";
    dwc:year "<%= $article->year %>";
    xsd:gYear "<%= $article->year %>".
 %= include "prov";

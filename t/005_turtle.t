@@ -7,10 +7,17 @@
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use FindBin;
+use lib $FindBin::Bin;
+use tlib;
 
 use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
+
+my %h = (Accept => 'application/json');
+
+$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report')]);
 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
@@ -67,9 +74,100 @@ $t->get_ok("/report/animals/chapter/alligators.nt")
     ->status_is(200)
     ->content_like( qr[report/animals] );
 
-# TODO : figure, image, finding, journal, article, reference
+# Figure
+$t->post_ok("/report/animals/chapter/alligators/figure" => \%h
+     => json => { report => "animals", chapter_identifier => "alligators", identifier => "caimans", title => "Little alligators" } )->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/figure.json")
+    ->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/figure/caimans.nt")
+    ->status_is(200)
+    ->content_like( qr[Little] );
+
+# Image
+$t->post_ok("/image" => \%h
+     => json => { identifier => "XXX-XXX-XXX", title => "fakeimage" } )->status_is(200);
+
+$t->get_ok("/image/XXX-XXX-XXX")->status_is(200);
+
+$t->get_ok("/image/XXX-XXX-XXX.nt")
+    ->status_is(200)
+    ->content_like( qr[fakeimage] );
+
+# Finding
+$t->post_ok("/report/animals/chapter/alligators/finding" => \%h
+     => json => { report => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/finding.json")
+    ->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/finding/amphibians.nt")
+    ->status_is(200)
+    ->content_like( qr[amphibians] );
+
+# Journal
+$t->post_ok("/journal" => \%h
+     => json => { identifier => "gators", title => "fakejournal" } )->status_is(200);
+
+$t->get_ok("/journal/gators")->status_is(200);
+
+$t->get_ok("/journal/gators.nt")
+    ->status_is(200)
+    ->content_like( qr[fakejournal] );
+
+# Article
+$t->post_ok("/article" => \%h
+     => json => { identifier => "gatorade", title => "fakearticle" } )->status_is(200);
+
+$t->get_ok("/article/gatorade")->status_is(200);
+
+$t->get_ok("/article/gatorade.nt")
+    ->status_is(200)
+    ->content_like( qr[fakearticle] );
+
+# Person
+$t->post_ok("/person" => \%h
+     => json => { name => "Allie" } )->status_is(200);
+
+my $person = $t->tx->res->json;
+
+ok $person->{id}, "Got an id for a person";
+
+$t->get_ok("/person/$person->{id}")->status_is(200);
+
+$t->get_ok("/person/$person->{id}.nt")
+    ->status_is(200)
+    ->content_like( qr[Allie] );
+
+# Organization
+$t->post_ok("/organization" => \%h
+     => json => { identifier => "aa", name => "alligators anonymous" } )->status_is(200);
+
+$t->get_ok("/organization/aa")->status_is(200);
+
+$t->get_ok("/organization/aa.nt")
+    ->status_is(200)
+    ->content_like( qr[anonymous] );
+
+# Reference
+$t->post_ok("/reference" => \%h
+     => json => { identifier => "ref-ref-ref",
+        publication_uri => '/report/animals',
+        attrs => { end => 'note' } } )->status_is(200);
+
+$t->get_ok("/reference/ref-ref-ref")->status_is(200);
+
+$t->get_ok("/reference/ref-ref-ref.nt")
+    ->status_is(200)
+    ->content_like( qr[ref-ref-ref] );
 
 # Clean up
+$t->delete_ok("/reference/ref-ref-ref")->status_is(200);
+$t->delete_ok("/organization/aa")->status_is(200);
+$t->delete_ok("/person/$person->{id}")->status_is(200);
+$t->delete_ok("/image/XXX-XXX-XXX")->status_is(200);
+$t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
 
 done_testing();
