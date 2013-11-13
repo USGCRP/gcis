@@ -14,11 +14,15 @@
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
 % }
    gcis:Organization "<%= $report->organization_identifier %>";
+   gcis:hasCommittee "<%= $report->organization_identifier %>";
    bibo:doi "<%= $report->doi %>";
    dcterms:identifier "<%= $report->identifier %>";
    gcis:Organization "<%= $report->organization_identifier %>";
    dcterms:title "<%= $report->title %>";
    rdfs:label "<%= $report->title %>";
+   prov:label "<%= $report->title %>";
    gcis:url "<%= $report->url %>". 
+%# dwc:year "<%= $report->year %>";
+%# xsd:gyear "<%= $report->year %>".
  
 %# add gcis:hasCommittee somewhere?

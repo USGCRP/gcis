@@ -38,5 +38,6 @@
    dcterms:description "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".
 
+%# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
 %= include 'prov';
 

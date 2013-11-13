@@ -4,6 +4,7 @@
    a prov:Entity;
    a gcis:Image;
    a bibo:Image;
+   a gcis:Publication;	
 %# The following only returns figure title without "2.1", so holding off and commented out
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
@@ -22,8 +23,10 @@
    gcis:endedAt "<%= $image->time_end %>";
    gcis:startedAt "<%= $image->time_start %>";
    dcterms:title "<%= $image->title %>";      
-   rdf:label "<%= $image->title %>".
-%#   gcis:spatial_scale "<%= $image->scale %>";
+   rdf:label "<%= $image->title %>";
+   prov:label "<%= $image->title %>".
+
+%#  gcis:spatial_scale "<%= $image->scale %>";
 %#  gcis:spatial_ref_sys "<%= $image->projection %>";
 
 %# for my $kwd ($image->keywords) {                              
@@ -42,7 +45,7 @@
 %# dcterms:license "<%= $image->license %>";                           
 
 %# dcterms:format "<%= $image->format %>";                            
-%# gcis:url "<%= $image->URL %>";                    
+%# gcis:hasURL "<%= $image->URL %>";                    
  
  %# % for my $person ($image->persons) {                    
  %#   gcis:PointOfContact "<%= $person->point_of_contact %>";  
@@ -55,5 +58,7 @@
 
 %# dwc:geodeticDatum "<%= $image->image_datum %>";
 
+%# dwc:year "<%= $image->year %>";
+%# xsd:gYear "<%= $image->year %>"; 
 %= include 'prov';
 

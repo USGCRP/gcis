@@ -11,8 +11,9 @@
    bibo:issn "<%= $journal->print_issn %>";
    gcis:hasPublisher "<%= $journal->publisher %>";
    dcterms:title "<%= $journal->title %>";
-   rdfs:label ",%= $journal->title %>";
-   gcis:URL "<%= $journal->url %>".
+   rdfs:label "<%= $journal->title %>";
+   prov:label "<%= $journal->title %>";
+   gcis:hasURL "<%= $journal->url %>".
 
 %= include 'prov';
 

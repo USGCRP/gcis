@@ -1,5 +1,30 @@
 % layout 'default';
-
 <<%= current_resource %>>
-    a prov:Entity ;
-    dcterms:identifier "<%= $object->identifier %>".
+    a <<%= $editedBook->prov_type %>> ;
+
+   dcterms:type "<%= $pub->reftype>
+
+ % for my $person ($editedBook->persons) {
+  gcis:hasAuthor  "<%= $person->author %>";
+ % }
+
+   bibo:uri "<%= $editedBook->urls %>";
+   gcis:ul "<%= $editedBook->urls %>";
+   bibo:isbn "<%= $editedBook->print_isbn %>"; 
+   gcis:Location "<%= $editedBook->pub_location>
+   gcis:hasPublisher "<%= $editedBook->hasPublisher %>"; 
+   bibo:volume "<%= $editedBook->volume %>";                  
+   bibo:doi "<%= $editedBook->doi %>";
+   dcterms:title "<%= $editedBook->title %>"; 
+   dcterms:SizeOrDuration "<%= $editedBook->pages %>";
+   dwc:year "<%= $editedBook->year %>". 
+
+
+%# Loop for editors
+%#  for my $person ($editedBook->persons) {% }       
+ %#            gcis:Editor  "<%= $person->editor(s) %>";    %# Need something like this in the ontology
+%# % }
+
+%# % for my $eisbn ($editedBook->eisbns) {
+  %#       bibo:eisbn "<%= $eisbn->online_isbn %>";                              %#  online issn
+% }

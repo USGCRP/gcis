@@ -14,9 +14,11 @@
 %#   biro:isReferencedBy <<%= uri($ref); %>>
 %# % }
 
-   gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
+%# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:figureNumber "<%= $figure->numeric %>";
    gcis:hasCaption "<%= $figure->caption %>";                              
+   dcterms:description "<%= $figure->caption %>";
    dcterms:identifier "<%= $figure->chapter_identifier %>";      
    prov:generatedAtTime "<%= $figure->create_dt %>";      
    dcterms:identifier "<%= $figure->identifier %>";                           
@@ -31,15 +33,16 @@
    gcis:startedAt "<%= $figure->time_start %>";                          
    gcis:endedAt "<%= $figure->time_end %>";                           
    dcterms:title "<%= $figure->title %>";                                   
-   rdfs:label "<%= $figure->title %>".
+   rdfs:label "<%= $figure->title %>";
+   prov:label "<%= $figure->title %>".
 %# gcis:description "<%= $figure->description %>";
 
 %# for my $keyword ($figure->keywords) {
-%#    gcis:attributes "<%= $keyword->attributes %>"
+%#    gcis:attributes "<%= $keyword->attributes %>";
 %# % }
 
    %# for my $keyword ($figure->keywords) {
-%#    skos:concept "<%= $keyword->attributes %>"
+%#    skos:concept "<%= $keyword->attributes %>";
 %# % }
 
 %# % for my $right ($figure->rights) {

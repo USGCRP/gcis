@@ -19,7 +19,8 @@
    dcterms:identifier "<%= $organization->identifier %>";
    foaf:name "<%= $organization->name %>";
    rdfs:label "<%= $organization->name %>";
-   gcis:url "<%= $organization->url %>".
+   prov:label "<%= $organization->name %>";
+   gcis:hasURL "<%= $organization->url %>".
 
 %# parent organization(s) - to be added later               
 %# % for my $suborg ($organization->suborgs) {

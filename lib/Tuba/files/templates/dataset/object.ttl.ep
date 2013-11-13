@@ -11,6 +11,7 @@
    datacite:doi "<%= $dataset->doi %>";                       
    dcterms:identifier "<%= $dataset->identifier %>";           
    dcterms:title "<%= $dataset->name %>";                                     
+   prov:label "<%= $dataset->name %>";
    rdfs:label "<%= $dataset->name %>";
    dcterms:nativeid "<%= $dataset->native_id %>";                       
    gcis:processing-level "<%= $dataset->processing_level %>";                
@@ -19,10 +20,16 @@
    gcis:projection "<%= $dataset->spatial_ref_sys %>";            
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
    gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;         
-   gcis:url "<%= $dataset->url %>";                   
+   gcis:hasURL "<%= $dataset->url %>";                   
    dcterms:isVersionOf "<%= $dataset->version %>";                    
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>".                           
-    
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>".   
+
+%# for my sourceAlgorithm ($dataset->sourceAlgorithms) {   
+%#   gcis:sourceAlgorithm  "<%= $sourceAlgorithm->algorithm %>";
+%# % }
+
+gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
+
 %# data_qualifier - not sure what this means
 
 %# scale - prob not nec
