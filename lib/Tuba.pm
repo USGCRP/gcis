@@ -71,7 +71,7 @@ sub startup {
         });
     $app->helper(obj_uri_for => sub {
             my $c = shift;
-            my $obj = shift;
+            my $obj = shift or return "";
             my $tab = shift;
             return $obj->uri($c,{ tab => $tab });
         });
