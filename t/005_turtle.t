@@ -17,6 +17,7 @@ my $t = Test::Mojo->new("Tuba");
 
 my %h = (Accept => 'application/json');
 
+$t->app->db->dbh->do(q[delete from publication_type where identifier='report']);
 $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report')]);
 
 $t->ua->max_redirects(1);

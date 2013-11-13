@@ -212,7 +212,7 @@ sub create {
     $c->respond_to(
         json => sub {
                 my $c = shift;
-                $c->res->code(500);
+                $c->res->code($new->error =~ /already exists/ ? 409 : 500);
                 $c->render(json => { error => $new->error } );
             },
         html => sub {
