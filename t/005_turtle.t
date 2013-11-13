@@ -95,6 +95,25 @@ $t->get_ok("/image/XXX-XXX-XXX.nt")
     ->status_is(200)
     ->content_like( qr[fakeimage] );
 
+# Table
+$t->post_ok("/report/animals/chapter/alligators/table" => \%h
+     => json => { report => "animals", chapter_identifier => "alligators", identifier => "population", title => "Some numbers" } )->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/table.json")
+    ->status_is(200);
+
+$t->get_ok("/report/animals/chapter/alligators/table/population.nt")
+    ->status_is(200)
+    ->content_like( qr[numbers] );
+
+# Array
+$t->post_ok("/array" => \%h
+     => json => { identifier => "XXX-XXX-XXXX" } )->status_is(200);
+
+$t->get_ok("/array/XXX-XXX-XXXX")->status_is(200);
+
+$t->get_ok("/array/XXX-XXX-XXXX.nt")->status_is(200);
+
 # Finding
 $t->post_ok("/report/animals/chapter/alligators/finding" => \%h
      => json => { report => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
@@ -167,7 +186,9 @@ $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
 $t->delete_ok("/person/$person->{id}")->status_is(200);
 $t->delete_ok("/image/XXX-XXX-XXX")->status_is(200);
+$t->delete_ok("/array/XXX-XXX-XXXX")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
+$t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
 
 done_testing();
