@@ -1,0 +1,53 @@
+% layout 'default';
+
+<<%= current_resource %>>
+   a prov:Entity;
+   a gcis:Table;
+
+   gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
+
+% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
+   gcis:inPublication <<%= uri($chapter) %>>;
+% }
+
+%# % for my $ref ($article->get_references) {
+%# biro:isReferencedBy <<%= uri($ref); %>>;
+%# % }
+
+% for my $array ($table->arrays) {
+   gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
+% }
+
+%# gcis:tableNumber "<%= $table->numeric %>"; 
+   gcis:hasCaption "<%= $table->caption %>";
+   dcterms:description "<%= $table->caption %>";
+   dcterms:identifier "<%= $table->chapter_identifier %>";
+   dcterms:identifier "<%= $table->identifier %>";
+   rdf:rest "<%= $table->ordinal %>";
+   dcterms:identifier "<%= $table->report_identifier %>";
+   dcterms:title "<%= $table->title %>";
+   rdfs:label "<%= $table->title %>";
+   prov:label "<%= $table->title %>";
+   
+%#   cito:cites "<%= $table->source_citation %>";
+%#   dcterms:dateSubmitted "<%= $table->submission_dt %>";
+%#   gcis:startedAt "<%= $table->time_start %>";
+%#   gcis:endedAt "<%= $table->time_end %>";
+%# gcis:description "<%= $table->description %>";
+
+%# for my $keyword ($table->keywords) {
+%#    gcis:attributes "<%= $keyword->attributes %>"
+%# % }
+
+   %# for my $keyword ($table->keywords) {
+%#    skos:concept "<%= $keyword->attributes %>"
+%# % }
+
+%# % for my $right ($table->rights) {
+ %#   dcterms:rights "<%= $right->usage_limits %>".
+%# % }
+
+%# uuid
+
+%= include 'prov';
+
