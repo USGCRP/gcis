@@ -2,37 +2,37 @@
 use ExtUtils::MakeMaker;
 WriteMakefile
 (
-  'PL_FILES' => {},
-  'INSTALLDIRS' => 'site',
   'NAME' => 'Tuba',
+  'VERSION_FROM' => 'lib/Tuba.pm',
+  'PREREQ_PM' => {
+                   'Algorithm::Permute' => 0,
+                   'Crypt::OpenSSL::RSA' => 0,
+                   'DBIx::Custom' => 0,
+                   'DBIx::Simple' => 0,
+                   'Data::UUID::LibUUID' => 0,
+                   'Date::Parse' => 0,
+                   'File::ShareDir' => '1.00',
+                   'JSON::WebToken' => 0,
+                   'JSON::XS' => 0,
+                   'Mojolicious' => '4.14',
+                   'Mojolicious::Plugin::YamlConfig' => 0,
+                   'Pg::hstore' => 0,
+                   'Rose::DB' => '0.772',
+                   'Rose::DB::Object' => 0,
+                   'SQL::Abstract' => 0,
+                   'SQL::Interp' => 0,
+                   'Test::More' => 0,
+                   'Text::CSV_XS' => 0,
+                   'Text::Format' => 0,
+                   'YAML::Syck' => 0,
+                   'YAML::XS' => 0
+                 },
+  'INSTALLDIRS' => 'site',
   'EXE_FILES' => [
                    'bin/tuba',
                    'bin/tuba_start_httpd',
                    'bin/tuba_stop_httpd'
                  ],
-  'VERSION_FROM' => 'lib/Tuba.pm',
-  'PREREQ_PM' => {
-                   'Data::UUID::LibUUID' => 0,
-                   'Pg::hstore' => 0,
-                   'JSON::XS' => 0,
-                   'DBIx::Simple' => 0,
-                   'YAML::XS' => 0,
-                   'DBIx::Custom' => 0,
-                   'Rose::DB::Object' => 0,
-                   'Algorithm::Permute' => 0,
-                   'Text::Format' => 0,
-                   'File::ShareDir' => '1.00',
-                   'Text::CSV_XS' => 0,
-                   'Rose::DB' => '0.772',
-                   'SQL::Abstract' => 0,
-                   'Mojolicious::Plugin::YamlConfig' => 0,
-                   'JSON::WebToken' => 0,
-                   'YAML::Syck' => 0,
-                   'Crypt::OpenSSL::RSA' => 0,
-                   'Mojolicious' => '4.14',
-                   'Date::Parse' => 0,
-                   'Test::More' => 0,
-                   'SQL::Interp' => 0
-                 }
+  'PL_FILES' => {}
 )
 ;

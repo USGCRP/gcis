@@ -53,7 +53,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.55"
+         "version" : "0.56"
       },
       "Tuba::Array" : {
          "file" : "lib/Tuba/Array.pm"
@@ -242,5 +242,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.55"
+   "version" : "0.56"
 }

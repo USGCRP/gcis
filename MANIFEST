@@ -104,6 +104,7 @@ db/dist/docs/html/table_gcis_metadata.ref_type.html
 db/dist/docs/html/table_gcis_metadata.reference.html
 db/dist/docs/html/table_gcis_metadata.report.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
+db/dist/docs/html/table_gcis_metadata.subpubref.html
 db/dist/docs/html/table_gcis_metadata.table.html
 db/dist/docs/pod/table__report_editor.pod
 db/dist/docs/pod/table__report_viewer.pod
@@ -146,6 +147,7 @@ db/dist/docs/pod/table_ref_type.pod
 db/dist/docs/pod/table_reference.pod
 db/dist/docs/pod/table_report.pod
 db/dist/docs/pod/table_submitter.pod
+db/dist/docs/pod/table_subpubref.pod
 db/dist/docs/pod/table_table.pod
 db/dist/patches_applied.txt
 db/extra/audit.sql
@@ -198,7 +200,10 @@ db/patches/0470_dataset_doi.sql
 db/patches/0480_references.sql
 db/patches/0490_file_uuids.sql
 db/patches/0500_table.sql
+db/patches/0510_table_cascade.sql
+db/patches/0520_reference_pkey.sql
 eg/atrac_upload.html
+eg/client.pl
 eg/compare.pl
 eg/image-meta.pl
 eg/import_keywords
@@ -258,11 +263,13 @@ lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/api_reference.html.ep
+lib/Tuba/files/templates/array/object.ttl.ep
 lib/Tuba/files/templates/article/object.ttl.ep
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
 lib/Tuba/files/templates/auth/login_key.html.ep
+lib/Tuba/files/templates/auth/login_key.yaml.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
@@ -334,9 +341,11 @@ lib/Tuba/files/templates/pub_thumbnails.html.ep
 lib/Tuba/files/templates/reference/object.html.ep
 lib/Tuba/files/templates/reference/object.ttl.ep
 lib/Tuba/files/templates/reference/objects.html.ep
+lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
 lib/Tuba/files/templates/search/keyword.html.ep
+lib/Tuba/files/templates/table/object.ttl.ep
 lib/Tuba/files/templates/table/objects.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
@@ -375,5 +384,7 @@ t/001_start_db.t
 t/002_basic.t
 t/003_lists.t
 t/004_report.t
+t/005_reference.t
 t/005_turtle.t
 t/999_stop_db.t
+t/tlib.pm
