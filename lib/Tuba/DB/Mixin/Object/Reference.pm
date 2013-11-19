@@ -23,7 +23,26 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
 
 sub as_tree {
     my $s = shift;
-    return $s->SUPER::as_tree(@_, deflate => 0);
+    my %a = @_;
+    my $c = $a{c}; # controller
+    my $t = $s->SUPER::as_tree(@_, deflate => 0);
+    if (my $id = $t->{publication_id}) {
+      $t->{publication_uri}
+        = $c ? $s->publication->to_object->uri($c) : "/publication/$id";
+    }
+    if (my $id = $t->{child_publication_id}) {
+      $t->{child_publication_uri}
+        = $c ? $s->child_publication->to_object->uri($c) : "/publication/$id";
+    }
+    if (my $sub = $s->subpubrefs) { # chapters
+        $t->{sub_publication_uris} = [
+            map {
+              my $pub = $_->publication;
+              $c ? $pub->to_object->uri($c) : "/publication/".$pub->id
+            } @$sub
+        ];
+    }
+    return $t;
 }
 
 sub stringify {
