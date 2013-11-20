@@ -146,6 +146,7 @@ sub update_rel {
     if (my $other_pub = $c->param('other_pub')) {
         # TODO
     }
+    # TODO allow deletion
     $c->redirect_without_error('update_rel_form');
 }
 
