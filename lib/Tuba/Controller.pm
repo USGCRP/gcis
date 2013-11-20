@@ -527,6 +527,43 @@ sub put_files {
     $c->render(text => "ok");
 }
 
+=head2 update_keywords
+
+Assign GCMD keywords to a resource.
+
+=cut
+
+sub update_keywords {
+    my $c = shift;
+    my $obj = $c->_this_object or return $c->render_not_found;
+    my $pub = $obj->get_publication(autocreate => 1);
+    $pub->save(audit => $c->user) unless $pub->id;
+    if (my $json = $c->req->json) {
+        my $delete_extra = delete $json->{_delete_extra};
+        $json = [ $json ] if ref($json) eq 'HASH';
+        my %to_delete = map { ($_->identifier => 1) } @{ $pub->gcmd_keywords };
+
+        for my $k (@$json) {
+            ref $k eq 'HASH' or return $c->render(json => { error => { data => $k, msg => "not a hash" }} );
+            my $kw = exists $k->{identifier} ? GcmdKeyword->new(%$k) : GcmdKeyword->new_from_flat(%$k);
+            $kw->load(speculative => 1) or return $c->render(json => { error => { data => $k, msg => 'not found' }} );
+            $pub->add_gcmd_keywords($kw);
+            delete $to_delete{$kw->identifier};
+        }
+        $pub->save(audit_user => $c->user);
+        if ($delete_extra) {
+            for my $extra (keys %to_delete) {
+                PublicationGcmdKeywordMap->new(
+                  publication        => $pub->id,
+                  gcmd_keyword_identifier => $extra
+                )->delete;
+            }
+        }
+        return $c->render(json => 'ok');
+    }
+    return $c->render(text => "html not implemented"); # TODO
+}
+
 =head2 update_rel
 
 Update the relationships.

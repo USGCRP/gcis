@@ -31,5 +31,19 @@
 </td>
 </tr>
 % }
+
+% if (my $pub = $object->get_publication) {
+<tr>
+    <td>GCMD Keywords</td>
+    <td>
+    <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => scalar $pub->gcmd_keywords
+            %= end
+    </div>
+    </td>
+</tr>
+% }
+
 </table>
 

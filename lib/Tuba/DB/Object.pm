@@ -230,6 +230,7 @@ information :
 
     - a list of parent publications
     - a list of files
+    - a list of gcmd keywords
 
 The parameter 'c' should have a controller object
 (so that we can look up a URL for an object).
@@ -257,6 +258,7 @@ sub as_tree {
                 };
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
+            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ];
         }
         $tree->{uri} //= $s->uri($c);
     }

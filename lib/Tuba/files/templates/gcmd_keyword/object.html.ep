@@ -1,0 +1,36 @@
+
+% layout 'default';
+
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+%= include 'history_modal';
+
+% if ($object->can('identifier') && user_can('update')) {
+    <span style='float:right;'>
+    <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+    </span>
+% }
+
+<pre>
+<%= include 'other_formats'; =%>
+<%= include 'db_meta'; =%>
+</pre>
+
+% if (my $pub = $object->get_publication) {
+<center>Files</center>
+<div class='row well'>
+<div class='span12'>
+%= include 'pub_thumbnails', pub => $pub, files => 1;
+</div>
+</div>
+% }
+
+%= include 'prov';
+
+%= include 'relationships', object => $object, meta => $meta;
+
+%= include 'gcmd_keyword/fields';
+

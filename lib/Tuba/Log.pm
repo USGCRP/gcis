@@ -12,8 +12,8 @@ In the main app :
 Someplace else
 
     use Tuba::Log;
-    loggger->info("hi!");
-    loggger->info("hi!",dumpit($var));
+    logger->info("hi!");
+    logger->info("hi!",dumpit($var));
 
 =head1 DESCRIPTION
 

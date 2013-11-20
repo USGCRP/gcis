@@ -1,0 +1,46 @@
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Fields</caption>
+
+% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% next if $col->name =~ /^_/;
+% my $k = $col->accessor_method_name;
+% my $val = $object->$k;
+    <tr>
+        <td><%= $k %></td>
+        <td>
+            % if (!$val) {
+
+            % } elsif ($k eq 'doi') {
+                %= link_to "http://dx.doi.org/$val" => target => "_blank" => begin
+                <%= $val %>
+                %= end
+            % } elsif ($k =~ /issn/ && $val) {
+                %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
+                <%= $val %>
+                %= end
+            % } elsif ($k eq 'url') {
+                %= link_to $val => target => "_blank" => begin
+                <%= $val %>
+                %= end
+            % } elsif (ref($val) eq 'ARRAY') {
+                %= include 'view_array', val => $val, header_rows => ($object->can('rows_in_header') ? $object->rows_in_header : 0)
+            % } else {
+            <%= $val %>
+            % }
+         </td>
+    </tr>
+% }
+<tr>
+    <td>
+        GCMD Metadata
+    </td>
+    <td>
+        %= link_to q[http://gcmdservices.gsfc.nasa.gov/static/kms/concept/].$object->identifier => target => "_blank" => begin
+        <%= $object->identifier %>
+        %= end
+    </td>
+</tr>
+
+</table>
+
+

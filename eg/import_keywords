@@ -8,6 +8,8 @@ use Smart::Comments;
 
 use Tuba::DB::Objects qw/-nicknames -autoconnect/;
 
+# TODO use http://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.rdf
+
 my $me = $ENV{USER} || 'unknown';
 my $ua = Mojo::UserAgent->new();
 my $content = $ua->get(q[http://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.csv])->res->body;

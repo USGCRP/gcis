@@ -1,0 +1,47 @@
+#!/usr/bin/env perl
+
+use Mojo::UserAgent;
+use Tuba::DB::Objects qw/-nicknames -autoconnect/;
+use HTML::Entities qw/decode_entities/;
+use v5.14;
+
+my $me = $ENV{USER} || 'unknown';
+my $ua = Mojo::UserAgent->new();
+my $tx = $ua->get(q[http://gcmdservices.gsfc.nasa.gov/static/kms/sciencekeywords/sciencekeywords.rdf]);
+
+# http://gcmdservices.gsfc.nasa.gov/static/kms/concept/536a86bd-3dd1-4f4a-9b4a-222a12746db5
+my $changes = 0;
+
+my $db = GcmdKeyword->meta->db;
+
+$db->do_transaction(sub {
+    $db->dbh->do('set constraints all deferred;');
+    $tx->res->dom->find('rdf\:RDF > skos\:Concept')->each(sub {
+            my $dom = shift;
+            my $identifier = $dom->attr('rdf:about');
+            my $label = [ $dom->find('skos\:prefLabel')->each ]->[0]->text;
+            my @broader = $dom->find('skos\:broader')->each;
+            die "not a tree" if @broader > 1;
+            my $parent;
+            if ($parent = $broader[0]) {
+                $parent = $parent->attr('rdf:resource');
+                my $gk = GcmdKeyword->new(identifier => $parent);
+                unless ($gk->load(speculative => 1)) {
+                    $gk->save(audit_user => $me) or die $gk->error;
+                }
+            }
+            my @definition = $dom->find('skos\:definition')->each;
+            my $definition = $definition[0]->text if @definition;
+
+            my $kw = GcmdKeyword->new( identifier => $identifier );
+            $kw->load(speculative => 1);
+            $kw->parent($parent);
+            $kw->label($label || undef);
+            $definition =~ s/&nbsp;/ /g;
+            $kw->definition($definition);
+            $kw->save(audit_user => $me) or die $definition;
+        });
+});
+
+
+

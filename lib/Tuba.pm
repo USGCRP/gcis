@@ -307,7 +307,15 @@ sub startup {
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       my %defaults = $opts->{defaults} ? %{ $opts->{defaults} } : ();
       if ($opts->{wildcard}) {
-        my $reserved = q[^(?:form/update(?:_prov|_rel|_files)?|form/create|update(?:_rel|files|prov)?|put_files|history/)];
+        my $reserved = qr[^(?:form/update
+                                (?:_prov|_rel|_files)?
+                             |form/create
+                             |update
+                                (?:_prov|_rel|_files)?
+                             |put_files
+                             |history
+                           )
+                         ]x;
         for my $format (@supported_formats) {
                 $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
@@ -330,6 +338,7 @@ sub startup {
           $authed->get("/form/update/*$identifier" => \%defaults)      ->to("$cname#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/*$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/form/update_rel/*$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
+          $authed->get("/form/update_keywords/*$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/*$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
           $authed->get("/history/*$identifier" => \%defaults)          ->to("$cname#history")    ->name("history_$name");
           $authed->delete("*$identifier" => \%defaults)                ->to("$cname#remove")     ->name("remove_$name");
@@ -337,6 +346,7 @@ sub startup {
                                                    ->to("$cname#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$cname#update_prov")->name("update_prov_$name");
           $authed->post("/rel/*$identifier")       ->to("$cname#update_rel")->name("update_rel_$name");
+          $authed->post("/keywords/*$identifier")       ->to("$cname#update_keywords")->name("update_keywords_$name");
           $authed->post("/files/*$identifier")     ->to("$cname#update_files")->name("update_files_$name");
           $authed->put("/files/*$identifier/#filename") # a default filename for PUTs would be ambiguous.
                                                    ->to("$cname#put_files")->name("put_files_$name");
@@ -344,12 +354,14 @@ sub startup {
           $authed->get("/form/update/:$identifier")                    ->to("$cname#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/:$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/form/update_rel/:$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
+          $authed->get("/form/update_keywords/:$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/:$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
           $authed->get("/history/:$identifier" => \%defaults)    ->to("$cname#history")    ->name("history_$name");
           $authed->delete(":$identifier" => \%defaults)          ->to("$cname#remove")     ->name("remove_$name");
           $authed->post(":$identifier" => \%defaults)            ->to("$cname#update")     ->name("update_$name");
           $authed->post("/prov/:$identifier" => \%defaults)      ->to("$cname#update_prov")->name("update_prov_$name");
           $authed->post("/rel/:$identifier" => \%defaults)       ->to("$cname#update_rel")->name("update_rel_$name");
+          $authed->post("/keywords/:$identifier" => \%defaults)       ->to("$cname#update_keywords")->name("update_keywords_$name");
           $authed->post("/files/:$identifier" => \%defaults)     ->to("$cname#update_files")->name("update_files_$name");
           $authed->put("/files/:$identifier/#filename" => {filename => 'unnamed', %defaults })
                                                    ->to("$cname#put_files")->name("put_files_$name");
@@ -429,6 +441,9 @@ sub startup {
     # Person.
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:name')->to('person#redirect_by_name');
+
+    # GcmdKeyword
+    $r->resource('gcmd_keyword');
 
     # Others, some of which aren't yet implemented.
     $r->resource($_) for qw/dataset model software algorithm activity
