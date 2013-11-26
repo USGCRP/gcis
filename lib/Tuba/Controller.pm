@@ -537,7 +537,7 @@ sub update_keywords {
     my $c = shift;
     my $obj = $c->_this_object or return $c->render_not_found;
     my $pub = $obj->get_publication(autocreate => 1);
-    $pub->save(audit => $c->user) unless $pub->id;
+    $pub->save(audit_user => $c->user) unless $pub->id;
     if (my $json = $c->req->json) {
         my $delete_extra = delete $json->{_delete_extra};
         $json = [ $json ] if ref($json) eq 'HASH';
