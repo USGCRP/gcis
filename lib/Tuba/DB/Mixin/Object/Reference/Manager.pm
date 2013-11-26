@@ -4,21 +4,22 @@ package Tuba::DB::Object::Reference::Manager;
 use strict;
 use warnings;
 
-#sub dbgrep {
-#    my $self = shift;
-
-    # Just search using year and author.
-
-    #my @query = # TODO
-    #my $found = $self->get_objects( query => [ or => \@query ], limit => $limit, );
-    #return @$found;
-#    return ();
-#}
-
 sub _make_query {
     my $s = shift;
     my $str = shift;
-    return ( identifier => { ilike => '%'.$str.'%' } )
+    my $dbh = $s->object_class->meta->db->dbh;
+
+    # Search using year and author.
+    if ($str =~ s/(\d{4})//) {
+        my $year = $1;
+        $str =~ s/^\s+//g;
+        $str =~ s/\s+$//g;
+        my $q = $dbh->quote('%'.$str.'%');
+        return \(qq[attrs->'Author' ilike '%$str%' and attrs->'Year' = '$year']);
+    }
+
+    my $q = $dbh->quote('%'.$str.'%');
+    return \(qq[attrs->'Author' ilike '%$str%']);
 }
 
 1;

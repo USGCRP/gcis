@@ -49,8 +49,18 @@ sub stringify {
     my $s = shift;
     my %args = @_;
     my $uuid = $s->identifier;
+    my $year = $s->attrs->{Year};
+    my $author = $s->attrs->{Author};
+    if ($author) {
+        my @list = split /\x{d}/, $author;
+        $author = $list[0];
+        $author =~ s/,.*$//;
+        $author .= ' et al.' if @list > 1;
+    }
     if ($args{short}) {
         if ($uuid =~ /^(\w+)-(\w+)-(\w+)-(\w+)-(\w+)$/) {
+            return "$1 $author $year" if $year && $author;
+            return "$1 $year" if $year;
             return $1;
         }
     }

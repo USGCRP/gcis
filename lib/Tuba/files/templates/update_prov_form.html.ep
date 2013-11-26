@@ -35,15 +35,6 @@ Relationship
 %= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom', 'cito:cites' ], class => 'input span10',
 </div>
 
-<!---
-<label class="control-label" for="parent">
-Bibliographic entry
-</label>
-<div class='controls'>
-%= text_field 'reference', class => 'span10', id => 'reference', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
-</div>
---->
-
 <label class="control-label" for="parent">
 Other publication
 </label>
@@ -56,13 +47,6 @@ Note
 </label>
 <div class='controls'>
 %= text_field 'note', class => 'span10', id => 'note', placeholder => 'Note about the relationship';
-</div>
-
-<label class="control-label" for="parent">
-Reference
-</label>
-<div class='controls'>
-%= text_field 'reference', class => 'span10', id => 'reference', placeholder => 'Bibliographic entry establishing the relationship';
 </div>
 
 <div class="form-actions">

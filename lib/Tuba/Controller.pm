@@ -386,7 +386,6 @@ sub update_prov {
         parent       => $parent_pub->id,
         relationship => $rel,
         note         => ($c->param('note') || undef),
-        reference_identifier => $reference->identifier,
     );
 
     $map->save(audit_user => $c->user) or return $c->render(error => $map->error);
