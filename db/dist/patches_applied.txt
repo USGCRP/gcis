@@ -49,3 +49,5 @@
 0500_table.sql	2431511528a255733ecc74f00983b544
 0510_table_cascade.sql	fc076cc1096aa083c8f09082eaa00ff8
 0520_reference_pkey.sql	b93cb3355499c6ba73a7c36276a3ff49
+0530_gcmd.sql	199d8842ccac4cbcbe98e05bbcefcdfa
+0540_gcmd_view.sql	623d8d55dbf92fc65d8407f0e06af5f4

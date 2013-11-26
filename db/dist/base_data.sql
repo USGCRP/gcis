@@ -199,6 +199,14 @@ COPY finding_keyword_map (finding_identifier, keyword_id, report_identifier) FRO
 
 
 --
+-- Data for Name: gcmd_keyword; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY gcmd_keyword (identifier, parent_identifier, label, definition) FROM stdin;
+\.
+
+
+--
 -- Data for Name: generic; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -288,6 +296,14 @@ SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 --
 
 COPY publication_file_map (publication_id, file_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: publication_gcmd_keyword_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_gcmd_keyword_map (publication_id, gcmd_keyword_identifier) FROM stdin;
 \.
 
 

@@ -262,6 +262,15 @@ CREATE TABLE finding_keyword_map (
 
 
 
+CREATE TABLE gcmd_keyword (
+    identifier character varying NOT NULL,
+    parent_identifier character varying,
+    label character varying,
+    definition character varying
+);
+
+
+
 CREATE TABLE generic (
     identifier character varying NOT NULL,
     attrs hstore
@@ -421,6 +430,13 @@ CREATE TABLE publication_file_map (
 
 
 
+CREATE TABLE publication_gcmd_keyword_map (
+    publication_id integer NOT NULL,
+    gcmd_keyword_identifier character varying NOT NULL
+);
+
+
+
 CREATE SEQUENCE publication_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -556,6 +572,11 @@ CREATE TABLE "table" (
 
 
 
+CREATE VIEW vw_gcmd_keyword AS
+    (((((SELECT COALESCE(level4.identifier, level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, level3.label AS level3, level4.label AS level4 FROM (((((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text))) JOIN gcmd_keyword level4 ON (((level4.parent_identifier)::text = (level3.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text)) UNION SELECT COALESCE(level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, level3.label AS level3, NULL::character varying AS level4 FROM ((((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM ((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, NULL::character varying AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM ((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(category.identifier) AS identifier, category.label AS category, NULL::character varying AS topic, NULL::character varying AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text));
+
+
+
 ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id_seq'::regclass);
 
 
@@ -677,6 +698,11 @@ ALTER TABLE ONLY finding
 
 
 
+ALTER TABLE ONLY gcmd_keyword
+    ADD CONSTRAINT gcmd_keyword_pkey PRIMARY KEY (identifier);
+
+
+
 ALTER TABLE ONLY generic
     ADD CONSTRAINT generic_pkey PRIMARY KEY (identifier);
 
@@ -729,6 +755,11 @@ ALTER TABLE ONLY publication_contributor
 
 ALTER TABLE ONLY publication_file_map
     ADD CONSTRAINT publication_file_map_pkey PRIMARY KEY (publication_id, file_identifier);
+
+
+
+ALTER TABLE ONLY publication_gcmd_keyword_map
+    ADD CONSTRAINT publication_gcmd_keyword_map_pkey PRIMARY KEY (publication_id, gcmd_keyword_identifier);
 
 
 
@@ -1220,6 +1251,11 @@ ALTER TABLE ONLY finding
 
 
 
+ALTER TABLE ONLY gcmd_keyword
+    ADD CONSTRAINT fk_parent FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED;
+
+
+
 ALTER TABLE ONLY image_figure_map
     ADD CONSTRAINT image_figure_map_figure_fkey FOREIGN KEY (figure_identifier, report_identifier) REFERENCES figure(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1257,6 +1293,16 @@ ALTER TABLE ONLY publication_file_map
 
 ALTER TABLE ONLY publication_file_map
     ADD CONSTRAINT publication_file_map_publication_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_gcmd_keyword_map
+    ADD CONSTRAINT publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_gcmd_keyword_map
+    ADD CONSTRAINT publication_gcmd_keyword_map_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
