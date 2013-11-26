@@ -572,8 +572,30 @@ Update the relationships.
 
 sub update_rel {
     my $c = shift;
-    # TODO
-    $c->render(text => 'saving not implemented');
+    my $object = $c->_this_object;
+    my $next = $object->uri($c,{tab => 'update_rel_form'});
+
+    my $pub = $object->get_publication(autocreate => 1);
+    $pub->save(audit_user => $c->user) unless $pub->id;
+
+    # Update generic relationships for all publication types.
+    if (my $new = $c->param('new_gcmd_keyword')) {
+        my $kwd = GcmdKeyword->new_from_autocomplete($new);
+        $pub->add_gcmd_keywords($kwd);
+        $pub->save(audit_user => $c->user) or do {
+            $c->flash(error => $object->error);
+            return $c->redirect_to($next);
+        };
+    }
+    for my $id ($c->param('delete_gcmd_keyword')) {
+        next unless $id;
+        PublicationGcmdKeywordMaps->delete_objects(
+            { gcmd_keyword_identifier => $id,
+              publication_id => $pub->id });
+        $c->flash(message => 'Saved changes');
+    }
+
+    return $c->redirect_to($next);
 }
 
 

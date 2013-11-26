@@ -34,6 +34,18 @@
 </div>
 % }
 
+% if (my $pub = $object->get_publication(autocreate => 1)) {
+<div class='control-group' style='margin:10px;'>
+<label class='control-label'>
+    GCMD Keywords
+</label>
+
+<div class="controls" style='border:1px solid #ddd;'>
+%= include 'controls/gcmd_keywords'
+</div>
+</div>
+% }
+
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="reset" class="btn">Reset</button>

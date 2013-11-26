@@ -105,7 +105,7 @@ sub update_rel {
         $c->flash(message => 'Saved changes');
     }
 
-    return $c->redirect_to($next);
+    return $c->SUPER::update_rel(@_);
 }
 
 1;

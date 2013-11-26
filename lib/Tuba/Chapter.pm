@@ -55,9 +55,9 @@ sub update_rel_form {
     my $c = shift;
     $c->stash(relationships => [ map Chapter->meta->relationship($_), qw/report figures findings tables/ ]);
     $c->stash(controls => {
-            figure  => { template => 'one_to_many', },
-            finding => { template => 'one_to_many' },
-            table   => { template => 'one_to_many' },
+            figures  => { template => 'one_to_many', },
+            findings => { template => 'one_to_many' },
+            tables   => { template => 'one_to_many' },
         });
     $c->SUPER::update_rel_form(@_);
 }

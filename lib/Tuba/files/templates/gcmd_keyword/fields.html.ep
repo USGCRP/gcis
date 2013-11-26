@@ -40,6 +40,21 @@
         %= end
     </td>
 </tr>
+<tr>
+    <td>
+        Ancestors
+    </td>
+    <td>
+        % my $this = $object;
+        % while ($this) {
+            %= obj_link($this, short =>1 )
+            % if ($this = $this->parent) {
+            &lt;
+            % }
+        % }
+    </td>
+</tr>
+
 
 </table>
 

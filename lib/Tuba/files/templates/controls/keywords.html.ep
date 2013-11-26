@@ -2,7 +2,8 @@
 %= hidden_field 'delete_keyword';
 
 <table class='table table-condensed table-bordered'>
-% for my $keyword ($object->keywords) {
+% my @keywords = $object->get_publication(autocreate => 1)->gcmd_keywords;
+% for my $keyword (@keywords) {
 <tr>
 <td class='row'>
 %= include 'obj_thumbnails', objs => [ $keyword ];

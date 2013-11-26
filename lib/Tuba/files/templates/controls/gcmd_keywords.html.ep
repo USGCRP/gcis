@@ -1,0 +1,31 @@
+
+%= hidden_field 'delete_gcmd_keyword';
+
+<table class='table table-condensed table-bordered'>
+% my @keywords = $object->get_publication(autocreate => 1)->gcmd_keywords;
+% for my $keyword (@keywords) {
+<tr>
+<td class='row'>
+%= include 'obj_thumbnails', objs => [ $keyword ];
+</td>
+
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_gcmd_keyword"].value = '].$keyword->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+<div style='font-size:75%;'>
+%= text_field 'new_gcmd_keyword', placeholder => "new GCMD keyword", id => "new_gcmd_keyword", class => 'span9', autocomplete => 'off';
+</div>
+
+%= javascript begin
+$('#new_gcmd_keyword').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'gcmd_keyword', elide : 120 }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

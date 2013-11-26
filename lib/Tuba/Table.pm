@@ -107,7 +107,7 @@ sub update_rel {
         }
     }
 
-    return $c->redirect_to($next);
+    return $c->SUPER::update_rel(@_);
 }
 
 1;
