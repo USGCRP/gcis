@@ -79,6 +79,7 @@ db/dist/docs/html/table_gcis_metadata.figure.html
 db/dist/docs/html/table_gcis_metadata.file.html
 db/dist/docs/html/table_gcis_metadata.finding.html
 db/dist/docs/html/table_gcis_metadata.finding_keyword_map.html
+db/dist/docs/html/table_gcis_metadata.gcmd_keyword.html
 db/dist/docs/html/table_gcis_metadata.generic.html
 db/dist/docs/html/table_gcis_metadata.image.html
 db/dist/docs/html/table_gcis_metadata.image_figure_map.html
@@ -97,6 +98,7 @@ db/dist/docs/html/table_gcis_metadata.person.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
 db/dist/docs/html/table_gcis_metadata.publication_file_map.html
+db/dist/docs/html/table_gcis_metadata.publication_gcmd_keyword_map.html
 db/dist/docs/html/table_gcis_metadata.publication_map.html
 db/dist/docs/html/table_gcis_metadata.publication_ref.html
 db/dist/docs/html/table_gcis_metadata.publication_type.html
@@ -106,6 +108,7 @@ db/dist/docs/html/table_gcis_metadata.report.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
 db/dist/docs/html/table_gcis_metadata.subpubref.html
 db/dist/docs/html/table_gcis_metadata.table.html
+db/dist/docs/html/view_gcis_metadata.vw_gcmd_keyword.html
 db/dist/docs/pod/table__report_editor.pod
 db/dist/docs/pod/table__report_viewer.pod
 db/dist/docs/pod/table_array.pod
@@ -122,6 +125,7 @@ db/dist/docs/pod/table_figure.pod
 db/dist/docs/pod/table_file.pod
 db/dist/docs/pod/table_finding.pod
 db/dist/docs/pod/table_finding_keyword_map.pod
+db/dist/docs/pod/table_gcmd_keyword.pod
 db/dist/docs/pod/table_generic.pod
 db/dist/docs/pod/table_image.pod
 db/dist/docs/pod/table_image_figure_map.pod
@@ -140,6 +144,7 @@ db/dist/docs/pod/table_person.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
 db/dist/docs/pod/table_publication_file_map.pod
+db/dist/docs/pod/table_publication_gcmd_keyword_map.pod
 db/dist/docs/pod/table_publication_map.pod
 db/dist/docs/pod/table_publication_ref.pod
 db/dist/docs/pod/table_publication_type.pod
@@ -149,6 +154,7 @@ db/dist/docs/pod/table_report.pod
 db/dist/docs/pod/table_submitter.pod
 db/dist/docs/pod/table_subpubref.pod
 db/dist/docs/pod/table_table.pod
+db/dist/docs/pod/view_vw_gcmd_keyword.pod
 db/dist/patches_applied.txt
 db/extra/audit.sql
 db/patches/0010_start.sql
@@ -202,10 +208,14 @@ db/patches/0490_file_uuids.sql
 db/patches/0500_table.sql
 db/patches/0510_table_cascade.sql
 db/patches/0520_reference_pkey.sql
+db/patches/0530_gcmd.sql
+db/patches/0540_gcmd_view.sql
+db/patches/0550_replace_keywords.sql
 eg/atrac_upload.html
 eg/client.pl
 eg/compare.pl
 eg/image-meta.pl
+eg/import_gcmd_keywords
 eg/import_keywords
 eg/journal_images.pl
 eg/login.pl
@@ -232,6 +242,7 @@ lib/Tuba/DB/Mixin/Object/Figure/Manager.pm
 lib/Tuba/DB/Mixin/Object/File.pm
 lib/Tuba/DB/Mixin/Object/Finding.pm
 lib/Tuba/DB/Mixin/Object/Finding/Manager.pm
+lib/Tuba/DB/Mixin/Object/GcmdKeyword.pm
 lib/Tuba/DB/Mixin/Object/Generic.pm
 lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
@@ -260,6 +271,7 @@ lib/Tuba/files/public/client/js/google/menu_item_2.gs
 lib/Tuba/files/public/client/js/google/menuitems.json
 lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/gcis.owl
+lib/Tuba/files/public/js/sparql.js
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.ttl.ep
@@ -278,6 +290,7 @@ lib/Tuba/files/templates/controls/autocomplete.html.ep
 lib/Tuba/files/templates/controls/datasets.html.ep
 lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
+lib/Tuba/files/templates/controls/gcmd_keywords.html.ep
 lib/Tuba/files/templates/controls/grid.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
 lib/Tuba/files/templates/controls/one_to_many.html.ep
@@ -302,6 +315,8 @@ lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/file/objects.html.ep
 lib/Tuba/files/templates/finding/object.ttl.ep
 lib/Tuba/files/templates/forms.html.ep
+lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
+lib/Tuba/files/templates/gcmd_keyword/object.html.ep
 lib/Tuba/files/templates/generic/object.html.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
@@ -354,6 +369,7 @@ lib/Tuba/files/templates/update_tabs.html.ep
 lib/Tuba/files/templates/view_array.html.ep
 lib/Tuba/files/templates/watch.html.ep
 lib/Tuba/Finding.pm
+lib/Tuba/Gcmdkeyword.pm
 lib/Tuba/Generic.pm
 lib/Tuba/Image.pm
 lib/Tuba/Importer.pm

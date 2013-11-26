@@ -53,7 +53,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.56"
+         "version" : "0.57"
       },
       "Tuba::Array" : {
          "file" : "lib/Tuba/Array.pm"
@@ -115,6 +115,9 @@
       "Tuba::DB::Object::Finding::Manager" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Finding/Manager.pm"
       },
+      "Tuba::DB::Object::GcmdKeyword" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/GcmdKeyword.pm"
+      },
       "Tuba::DB::Object::Generic" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Generic.pm"
       },
@@ -126,9 +129,6 @@
       },
       "Tuba::DB::Object::Journal" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Journal.pm"
-      },
-      "Tuba::DB::Object::Keyword" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Keyword.pm"
       },
       "Tuba::DB::Object::Manager" : {
          "file" : "lib/Tuba/DB/Object/Manager.pm"
@@ -177,6 +177,9 @@
       },
       "Tuba::Finding" : {
          "file" : "lib/Tuba/Finding.pm"
+      },
+      "Tuba::Gcmdkeyword" : {
+         "file" : "lib/Tuba/Gcmdkeyword.pm"
       },
       "Tuba::Generic" : {
          "file" : "lib/Tuba/Generic.pm"
@@ -242,5 +245,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.56"
+   "version" : "0.57"
 }
