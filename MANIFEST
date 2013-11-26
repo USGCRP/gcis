@@ -236,7 +236,6 @@ lib/Tuba/DB/Mixin/Object/Generic.pm
 lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
 lib/Tuba/DB/Mixin/Object/Journal.pm
-lib/Tuba/DB/Mixin/Object/Keyword.pm
 lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
 lib/Tuba/DB/Mixin/Object/Publication.pm
@@ -281,7 +280,6 @@ lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
 lib/Tuba/files/templates/controls/grid.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
-lib/Tuba/files/templates/controls/keywords.html.ep
 lib/Tuba/files/templates/controls/one_to_many.html.ep
 lib/Tuba/files/templates/controls/organizations.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
