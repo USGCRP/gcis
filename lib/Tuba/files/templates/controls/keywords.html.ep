@@ -2,7 +2,7 @@
 %= hidden_field 'delete_keyword';
 
 <table class='table table-condensed table-bordered'>
-% my @keywords = $object->get_publication(autocreate => 1)->gcmd_keywords;
+% my @keywords = $object->keywords;
 % for my $keyword (@keywords) {
 <tr>
 <td class='row'>
