@@ -31,8 +31,10 @@ $t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)
     {
         uri => "/reference/$id",
         publication_id => 1,
+        publication_uri => "/report/test-report",
         child_publication_id => undef,
         parents => [],
+        sub_publication_uris => [],
         identifier => $id,
         attrs => { description => $desc },
     });
