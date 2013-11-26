@@ -144,7 +144,13 @@ sub update_rel {
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if (my $other_pub = $c->param('other_pub')) {
-        # TODO
+        my $obj = $c->str_to_obj($other_pub)
+            or return $c->redirect_without_error(update_rel_form => "not found : $other_pub");
+        my $pub = $obj->get_publication(autocreate => 1);
+        $pub->save(audit_user => $c->user) unless $pub->id;
+        $reference->add_subpubrefs({ publication_id => $pub->id });
+        $reference->save(audit_user => $c->user) or
+            return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     # TODO allow deletion
     $c->redirect_without_error('update_rel_form');
