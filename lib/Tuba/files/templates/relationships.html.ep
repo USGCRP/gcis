@@ -36,11 +36,14 @@
 <tr>
     <td>GCMD Keywords</td>
     <td>
+    % my $objs = $pub->gcmd_keywords;
+    % if ($objs && @$objs) {
     <div class='row' style='position:relative;'>
             %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => scalar $pub->gcmd_keywords
+            %= include 'obj_thumbnails', objs => $objs
             %= end
     </div>
+    % }
     </td>
 </tr>
 % }

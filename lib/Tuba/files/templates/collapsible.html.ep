@@ -10,6 +10,8 @@
     $(document).ready(function(){
         if (($('#j<%= $id %>')).hasScrollBar()) {
             $('#i<%= $id %>').attr('style','position:absolute;top:2px;right:16px;visibility:visible;');
+        } else {
+            $("#j<%= $id %>").attr("class","openrow");
         }
     })
     $('#i<%= $id %>').click(function() {

@@ -42,6 +42,8 @@ sub process {
             next;
         };
         if (my $kws = $record{'gcmd science keywords'} ) {
+            $self->_note_error("keywords not implemented");
+            next;
             $csv->parse($kws) or do {
                 $self->_note_error("Error parsing keywords '$kws' :" .$csv->error_diag);
                 next;

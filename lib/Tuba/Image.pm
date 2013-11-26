@@ -165,11 +165,11 @@ sub update_rel {
     }
 
     for my $id ($c->param('delete_figure')) {
-        ImageFigureMaps->delete_objects({ figure => $id, image => $object->identifier });
+        ImageFigureMaps->delete_objects({ figure_identifier => $id, image_identifier => $object->identifier });
         $c->flash(message => 'Saved changes');
     }
 
-    $c->_redirect_to_view($object);
+    return $c->SUPER::update_rel(@_);
 }
 
 sub create_form {
