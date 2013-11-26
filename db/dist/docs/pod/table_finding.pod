@@ -39,8 +39,6 @@ finding
  Foreign-key constraints:
      "finding_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
      "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
- Referenced by:
-     TABLE "finding_keyword_map" CONSTRAINT "finding_keyword_map_finding_fkey" FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

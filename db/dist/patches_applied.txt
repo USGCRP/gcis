@@ -51,3 +51,4 @@
 0520_reference_pkey.sql	b93cb3355499c6ba73a7c36276a3ff49
 0530_gcmd.sql	199d8842ccac4cbcbe98e05bbcefcdfa
 0540_gcmd_view.sql	623d8d55dbf92fc65d8407f0e06af5f4
+0550_replace_keywords.sql	86cf4e76d996c66cdd3867e9503a9330

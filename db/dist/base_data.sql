@@ -155,7 +155,7 @@ COPY dataset_organization_map (dataset_identifier, organization_identifier) FROM
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, uuid, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
+COPY figure (identifier, uuid, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
 \.
 
 
@@ -183,22 +183,6 @@ COPY finding (identifier, chapter_identifier, statement, ordinal, report_identif
 
 
 --
--- Data for Name: keyword; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY keyword (id, category, topic, term, level1, level2, level3) FROM stdin;
-\.
-
-
---
--- Data for Name: finding_keyword_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY finding_keyword_map (finding_identifier, keyword_id, report_identifier) FROM stdin;
-\.
-
-
---
 -- Data for Name: gcmd_keyword; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -218,7 +202,7 @@ COPY generic (identifier, attrs) FROM stdin;
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, keywords, usage_limits, submission_dt, create_dt) FROM stdin;
+COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt) FROM stdin;
 \.
 
 
@@ -228,13 +212,6 @@ COPY image (identifier, "position", title, description, attributes, time_start, 
 
 COPY image_figure_map (image_identifier, figure_identifier, report_identifier) FROM stdin;
 \.
-
-
---
--- Name: keyword_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('keyword_id_seq', 1, false);
 
 
 --

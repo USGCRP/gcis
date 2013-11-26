@@ -191,7 +191,6 @@ CREATE TABLE figure (
     lat_min character varying,
     lon_max character varying,
     lon_min character varying,
-    keywords character varying,
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
@@ -254,14 +253,6 @@ COMMENT ON COLUMN finding.confidence IS 'Assessment of confidence based on evide
 
 
 
-CREATE TABLE finding_keyword_map (
-    finding_identifier character varying NOT NULL,
-    keyword_id integer NOT NULL,
-    report_identifier character varying NOT NULL
-);
-
-
-
 CREATE TABLE gcmd_keyword (
     identifier character varying NOT NULL,
     parent_identifier character varying,
@@ -290,7 +281,6 @@ CREATE TABLE image (
     lat_min character varying,
     lon_max character varying,
     lon_min character varying,
-    keywords character varying,
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone
@@ -320,31 +310,6 @@ CREATE TABLE journal (
     url character varying,
     notes character varying
 );
-
-
-
-CREATE TABLE keyword (
-    id integer NOT NULL,
-    category character varying NOT NULL,
-    topic character varying,
-    term character varying,
-    level1 character varying,
-    level2 character varying,
-    level3 character varying
-);
-
-
-
-CREATE SEQUENCE keyword_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE keyword_id_seq OWNED BY keyword.id;
 
 
 
@@ -589,10 +554,6 @@ ALTER TABLE ONLY file ALTER COLUMN identifier SET DEFAULT nextval('file_id_seq':
 
 
 
-ALTER TABLE ONLY keyword ALTER COLUMN id SET DEFAULT nextval('keyword_id_seq'::regclass);
-
-
-
 ALTER TABLE ONLY person ALTER COLUMN id SET DEFAULT nextval('person_id_seq'::regclass);
 
 
@@ -688,11 +649,6 @@ ALTER TABLE ONLY file
 
 
 
-ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_pkey PRIMARY KEY (finding_identifier, keyword_id, report_identifier);
-
-
-
 ALTER TABLE ONLY finding
     ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier, report_identifier);
 
@@ -720,11 +676,6 @@ ALTER TABLE ONLY image
 
 ALTER TABLE ONLY journal
     ADD CONSTRAINT journal_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY keyword
-    ADD CONSTRAINT keyword_pkey PRIMARY KEY (id);
 
 
 
@@ -828,11 +779,6 @@ ALTER TABLE ONLY "table"
 
 
 
-ALTER TABLE ONLY keyword
-    ADD CONSTRAINT uk_gcmd UNIQUE (category, topic, term, level1, level2, level3);
-
-
-
 ALTER TABLE ONLY chapter
     ADD CONSTRAINT uk_number_report UNIQUE (number, report_identifier);
 
@@ -927,14 +873,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organizatio
 
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON keyword FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON finding_keyword_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1047,14 +985,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type FOR EACH ST
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON keyword FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON finding_keyword_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1233,16 +1163,6 @@ ALTER TABLE ONLY figure
 
 ALTER TABLE ONLY finding
     ADD CONSTRAINT finding_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
-
-
-
-ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_finding_fkey FOREIGN KEY (finding_identifier, report_identifier) REFERENCES finding(identifier, report_identifier) ON DELETE CASCADE;
-
-
-
-ALTER TABLE ONLY finding_keyword_map
-    ADD CONSTRAINT finding_keyword_map_keyword_fkey FOREIGN KEY (keyword_id) REFERENCES keyword(id) ON DELETE CASCADE;
 
 
 

@@ -1,0 +1,39 @@
+
+=head1 NAME
+
+gcmd_keyword
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ parent_identifier (character varying) - 
+ label (character varying) - 
+ definition (character varying) - 
+
+
+=head1 SCHEMA
+
+                      Table "gcis_metadata.gcmd_keyword"
+       Column       |       Type        | Modifiers | Storage  | Description 
+ -------------------+-------------------+-----------+----------+-------------
+  identifier        | character varying | not null  | extended | 
+  parent_identifier | character varying |           | extended | 
+  label             | character varying |           | extended | 
+  definition        | character varying |           | extended | 
+ Indexes:
+     "gcmd_keyword_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "fk_parent" FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED
+ Referenced by:
+     TABLE "gcmd_keyword" CONSTRAINT "fk_parent" FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED
+     TABLE "publication_gcmd_keyword_map" CONSTRAINT "publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey" FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

@@ -20,7 +20,6 @@ image
  lat_min (character varying) - 
  lon_max (character varying) - 
  lon_min (character varying) - 
- keywords (character varying) - 
  usage_limits (character varying) - 
  submission_dt (timestamp(3) without time zone) - 
  create_dt (timestamp(3) without time zone) - 
@@ -42,7 +41,6 @@ image
   lat_min       | character varying              |           | extended | 
   lon_max       | character varying              |           | extended | 
   lon_min       | character varying              |           | extended | 
-  keywords      | character varying              |           | extended | 
   usage_limits  | character varying              |           | extended | 
   submission_dt | timestamp(3) without time zone |           | plain    | 
   create_dt     | timestamp(3) without time zone |           | plain    | 

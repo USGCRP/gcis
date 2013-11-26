@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.finding">finding</a>
+            <a name="gcis-metadata.table.publication-gcmd-keyword-map">publication_gcmd_keyword_map</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>finding Structure</caption>
+                <caption>publication_gcmd_keyword_map Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -134,102 +134,15 @@
                 
                   
                 
-                </td>
-                <td>identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    PRIMARY KEY
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
                   
-                  <a href="table_gcis_metadata.chapter.html#gcis-metadata.table.chapter">chapter.identifier#1</a>
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
                   
                 
                 </td>
-                <td>chapter_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>statement</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>ordinal</td>
+                <td>publication_id</td>
                 <td>integer</td>
                 <td><i>
                 
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.chapter.html#gcis-metadata.table.chapter">chapter.report_identifier#1</a>
-                  
-                
-                  
-                
-                  
-                  <a href="table_gcis_metadata.report.html#gcis-metadata.table.report">report.identifier</a>
-                  
-                
-                </td>
-                <td>report_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
                     PRIMARY KEY
                     
 
@@ -250,64 +163,31 @@
             <tr class="tr1">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.gcmd_keyword.html#gcis-metadata.table.gcmd-keyword">gcmd_keyword.identifier</a>
+                  
+                
+                  
+                
                 </td>
-                <td>process</td>
+                <td>gcmd_keyword_identifier</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
                 
 
                 
                 
                 </i>
                 
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>evidence</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>Description of evidence base
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>uncertainties</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>New information and remaining uncertainties
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>confidence</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>Assessment of confidence based on evidence
                 </td>
              </tr>
             
