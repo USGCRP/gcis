@@ -444,7 +444,7 @@ sub update_files {
     my $next = $object->uri($c,{tab => 'update_files_form'});
 
     my $pub = $object->get_publication(autocreate => 1) or do {
-        $c->flash(error => "Sorry, files uploads have only been implemented for publications.");
+        $c->flash(error => "Sorry, file uploads have only been implemented for publications.");
         # TODO
         return $c->redirect_to($next);
     };
