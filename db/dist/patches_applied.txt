@@ -52,3 +52,5 @@
 0530_gcmd.sql	199d8842ccac4cbcbe98e05bbcefcdfa
 0540_gcmd_view.sql	623d8d55dbf92fc65d8407f0e06af5f4
 0550_replace_keywords.sql	86cf4e76d996c66cdd3867e9503a9330
+0560_cascades.sql	005d7692055d61155ef6e9229d4a9abb
+0570_audit.sql	cae9f6c7bf822110705fffecd1cc2250

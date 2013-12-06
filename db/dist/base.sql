@@ -896,6 +896,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON reference FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON subpubref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1008,6 +1016,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STAT
 
 
 
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON reference FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON subpubref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER delpub BEFORE DELETE ON journal FOR EACH ROW EXECUTE PROCEDURE delete_publication();
 
 
@@ -1088,11 +1104,11 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON generic FOR EACH ROW WHEN (((new.ident
 
 
 
-CREATE TRIGGER updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
-
-
-
 CREATE TRIGGER updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
 
 
 
@@ -1152,12 +1168,12 @@ ALTER TABLE ONLY dataset_organization_map
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
+    ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY figure
-    ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
+    ADD CONSTRAINT figure_report_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1277,12 +1293,12 @@ ALTER TABLE ONLY subpubref
 
 
 ALTER TABLE ONLY "table"
-    ADD CONSTRAINT table_chapter_identifier_fkey FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier);
+    ADD CONSTRAINT table_chapter_identifier_fkey FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY "table"
-    ADD CONSTRAINT table_report_identifier_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier);
+    ADD CONSTRAINT table_report_identifier_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
