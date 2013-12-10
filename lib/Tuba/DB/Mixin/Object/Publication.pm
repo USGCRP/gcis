@@ -3,11 +3,10 @@ package Tuba::DB::Object::Publication;
 
 use Pg::hstore qw/hstore_decode/;
 use Tuba::Log;
-
-use strict;
 use File::Temp;
 use Path::Class qw/file/;
 use Mojo::ByteStream qw/b/;
+use strict;
 
 sub stringify {
     my $self = shift;
@@ -22,14 +21,19 @@ sub stringify {
 
 sub to_object {
     my $self = shift;
+    my %a = @_;
     my $orm = Tuba::DB::Objects->table2class;
     my $type = $self->publication_type or die "no type for ".$self->id;
     my $obj_class = $orm->{$type->table}->{obj} or return;
     my @pkcols = $obj_class->meta->primary_key_columns;
     my $pkvals = hstore_decode($self->fk);
     my $obj = $obj_class->new(%$pkvals);
-    $obj->load(speculative => 1) or return;
-    return $obj;
+    return $obj if $obj->load(speculative => 1);
+    if ($a{autoclean}) {
+        logger->warn("autoclean : removing orphan publication ".$self->id);
+        $self->delete;
+    }
+    return;
 }
 
 sub children {

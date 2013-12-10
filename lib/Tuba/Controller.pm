@@ -809,6 +809,7 @@ sub redirect_with_error {
     my $error = shift;
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
     $c->flash(error => $error);
+    logger->debug("redirecting with error : $error");
     return $c->redirect_to($uri);
 }
 

@@ -163,6 +163,7 @@ sub save {
 
 sub get_publication {
     my $self = shift;
+    die "not an object" unless ref($self);
     my %args = @_;
     my $types = Tuba::DB::Object::PublicationType::Manager->get_objects({table => $self->meta->table});
     return unless $types && @$types==1;

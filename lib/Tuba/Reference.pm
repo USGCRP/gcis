@@ -7,6 +7,8 @@ Tuba::Reference : Controller class for references.
 package Tuba::Reference;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Rose::DB::Object::Util qw/:all/;
+use Tuba::Log qw/logger/;;
 
 sub list {
     my $c = shift;
@@ -68,12 +70,14 @@ sub update {
     my $c = shift;
     if (my $json = $c->req->json) {
         if (my $uri = delete $json->{publication_uri}) {
-            my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => 'uri not found' } );
-            $report->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
+            my $report = $c->uri_to_obj($uri) or return $c->render(code =>400, json => { error  => 'uri not found' } );
+            $report->meta->table eq 'report' or return $c->render(code =>501, json => { error => 'only reports for now' } );
             my $pub = $report->get_publication(autocreate => 1);
             $pub->save(audit_user => $c->user) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
+        } else {
+            return $c->render(code => 400, json => { error => 'missing publication uri (e.g. /report/nca3)' } );
         }
     }
     $c->SUPER::update(@_);
@@ -83,13 +87,31 @@ sub smartmatch {
     # Match this reference to a child publication.
     my $c         = shift;
     my $reference = $c->_this_object;
+    $c->app->log->debug("matching [".$reference->attr('reftype')."]");
     my @tables    = map $_->table, @{PublicationTypes->get_objects(all => 1)};
-    my $match;
-    for my $table (@tables) {
-        my $obj_class = $c->orm->{$table}{obj} or die "no manager for $table";
-        $match = $obj_class->new_from_reference($reference) and last;
+
+    my @try = map $_->{obj}, values %{ $c->orm };
+    my $existing = $reference->child_publication;
+    if ($existing) {
+        $existing->load;
+        $existing = $existing->to_object(autoclean => 1) or die "orphan : ".$reference->child_publication->as_yaml;
     }
+    unshift @try, $existing if $existing;
+    my $match;
+    for my $class (@try) {
+        logger->debug("trying $class");
+        $match = $class->new_from_reference($reference) and last;
+    }
+    logger->debug("match : ".($match // '<none>'));
+    undef $match if $match && !is_in_db($match) && $c->param('updates_only');
+    my $status = 'no match';
     if ($match) {
+        $match->save(audit_user => $c->user);
+        if (is_in_db($match)) {
+            $status = 'match';
+        } else {
+            $status = 'new';
+        }
         my $pub = $match->get_publication(autocreate => 1);
         $pub->save(audit_user => $c->user) unless $pub->id;
         $reference->child_publication_id($pub->id);
@@ -101,7 +123,7 @@ sub smartmatch {
         shift->render(
           json => {
               publication_uri => ( $match ? $match->uri($c) : undef),
-              status          => ( $match ? 'match' : "no match" ),
+              status          => $status,
           });
       },
       html => sub {

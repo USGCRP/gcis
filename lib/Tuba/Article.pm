@@ -7,13 +7,15 @@ Tuba::Article : Controller class for articles.
 package Tuba::Article;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Tuba::Log;
+use strict;
 
 sub show {
     my $c = shift;
     my $meta = Article->meta;
     my $identifier = $c->stash('article_identifier');
     my $object =
-      Article->new( identifier => $identifier )->load( speculative => 1)
+      Article->new( identifier => $identifier )->load( speculative => 1, with_objects => [qw/journal/])
       or return $c->render_not_found;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
