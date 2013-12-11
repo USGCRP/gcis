@@ -68,6 +68,7 @@ db/dist/docs/html/table_gcis_metadata._report_viewer.html
 db/dist/docs/html/table_gcis_metadata.array.html
 db/dist/docs/html/table_gcis_metadata.array_table_map.html
 db/dist/docs/html/table_gcis_metadata.article.html
+db/dist/docs/html/table_gcis_metadata.book.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
 db/dist/docs/html/table_gcis_metadata.contributor.html
 db/dist/docs/html/table_gcis_metadata.contributor_role_type.html
@@ -108,12 +109,14 @@ db/dist/docs/html/table_gcis_metadata.report.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
 db/dist/docs/html/table_gcis_metadata.subpubref.html
 db/dist/docs/html/table_gcis_metadata.table.html
+db/dist/docs/html/table_gcis_metadata.webpage.html
 db/dist/docs/html/view_gcis_metadata.vw_gcmd_keyword.html
 db/dist/docs/pod/table__report_editor.pod
 db/dist/docs/pod/table__report_viewer.pod
 db/dist/docs/pod/table_array.pod
 db/dist/docs/pod/table_array_table_map.pod
 db/dist/docs/pod/table_article.pod
+db/dist/docs/pod/table_book.pod
 db/dist/docs/pod/table_chapter.pod
 db/dist/docs/pod/table_contributor.pod
 db/dist/docs/pod/table_contributor_role_type.pod
@@ -154,6 +157,7 @@ db/dist/docs/pod/table_report.pod
 db/dist/docs/pod/table_submitter.pod
 db/dist/docs/pod/table_subpubref.pod
 db/dist/docs/pod/table_table.pod
+db/dist/docs/pod/table_webpage.pod
 db/dist/docs/pod/view_vw_gcmd_keyword.pod
 db/dist/patches_applied.txt
 db/extra/audit.sql
@@ -211,6 +215,13 @@ db/patches/0520_reference_pkey.sql
 db/patches/0530_gcmd.sql
 db/patches/0540_gcmd_view.sql
 db/patches/0550_replace_keywords.sql
+db/patches/0560_cascades.sql
+db/patches/0570_audit.sql
+db/patches/0580_webpage.sql
+db/patches/0590_journal.sql
+db/patches/0600_report.sql
+db/patches/0610_book.sql
+db/patches/0620_columns.sql
 eg/atrac_upload.html
 eg/client.pl
 eg/compare.pl
@@ -226,6 +237,7 @@ lib/Tuba.pm
 lib/Tuba/Array.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
+lib/Tuba/Book.pm
 lib/Tuba/Chapter.pm
 lib/Tuba/Contributor.pm
 lib/Tuba/Controller.pm
@@ -234,6 +246,7 @@ lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
 lib/Tuba/DB/Mixin/Object/Array.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
+lib/Tuba/DB/Mixin/Object/Book.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
 lib/Tuba/DB/Mixin/Object/Contributor.pm
@@ -253,9 +266,11 @@ lib/Tuba/DB/Mixin/Object/Publication.pm
 lib/Tuba/DB/Mixin/Object/PublicationMap.pm
 lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
+lib/Tuba/DB/Mixin/Object/Report.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
 lib/Tuba/DB/Mixin/Object/Table.pm
 lib/Tuba/DB/Mixin/Object/Table/Manager.pm
+lib/Tuba/DB/Mixin/Object/Webpage.pm
 lib/Tuba/DB/Object.pm
 lib/Tuba/DB/Object/ConventionManager.pm
 lib/Tuba/DB/Object/Manager.pm
@@ -389,6 +404,7 @@ lib/Tuba/Reference.pm
 lib/Tuba/Report.pm
 lib/Tuba/Search.pm
 lib/Tuba/Table.pm
+lib/Tuba/Webpage.pm
 Makefile.PL
 MANIFEST			This list of files
 META.json

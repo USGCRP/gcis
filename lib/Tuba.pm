@@ -20,7 +20,7 @@ use Tuba::Log;
 use List::Util qw/min/;
 use Data::UUID::LibUUID;
 
-our $VERSION = '0.57';
+our $VERSION = '0.58';
 our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
 
 sub startup {
