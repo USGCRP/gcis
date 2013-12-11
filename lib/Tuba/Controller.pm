@@ -644,6 +644,7 @@ sub update {
         return $c->redirect_to($next);
     }
 
+    my $ok = 1;
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
@@ -660,11 +661,17 @@ sub update {
             next;
         }
         $c->app->log->debug("Setting $acc to ".($param // 'undef'));
-        $object->$acc($param);
+        eval { $object->$acc($param); };
+        if (my $err = $@) {
+            $err =~ s[ at /.+/Controller.pm line \d+][];
+            $err = "$acc : $err";
+            $ok = 0;
+            $object->error($err);
+            last;
+        }
     }
 
-    my $ok = 1;
-    if (keys %pk_changes) {
+    if ($ok && keys %pk_changes) {
         $c->app->log->debug("Updating primary key");
         # See Tuba::DB::Object.
         if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes, %new_attrs)) {
@@ -675,7 +682,7 @@ sub update {
         }
     }
 
-    $ok = $object->save(changes_only => 1, audit_user => $c->user) if $ok;
+    $ok &&= $object->save(changes_only => 1, audit_user => $c->user) if $ok;
     if ($c->detect_format eq 'json') {
         return $c->update_form if $ok;
         return $c->render(json => { error => $object->error });
