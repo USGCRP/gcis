@@ -29,7 +29,7 @@ article
   title              | character varying |           | extended | 
   doi                | character varying |           | extended | 
   year               | integer           |           | plain    | 
-  journal_identifier | character varying |           | extended | 
+  journal_identifier | character varying | not null  | extended | 
   journal_vol        | character varying |           | extended | 
   journal_pages      | character varying |           | extended | 
   url                | character varying |           | extended | 

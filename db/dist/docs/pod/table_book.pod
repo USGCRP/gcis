@@ -1,0 +1,46 @@
+
+=head1 NAME
+
+book
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ title (character varying) - 
+ isbn (character varying) - 
+ year (numeric) - 
+ publisher (character varying) - 
+ number_of_pages (numeric) - 
+ url (character varying) - 
+
+
+=head1 SCHEMA
+
+                         Table "gcis_metadata.book"
+      Column      |       Type        | Modifiers | Storage  | Description 
+ -----------------+-------------------+-----------+----------+-------------
+  identifier      | character varying | not null  | extended | 
+  title           | character varying | not null  | extended | 
+  isbn            | character varying |           | extended | 
+  year            | numeric           |           | main     | 
+  publisher       | character varying |           | extended | 
+  number_of_pages | numeric           |           | main     | 
+  url             | character varying |           | extended | 
+ Indexes:
+     "book_pkey" PRIMARY KEY, btree (identifier)
+     "book_isbn_key" UNIQUE CONSTRAINT, btree (isbn)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON book FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON book FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON book FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     updatepub BEFORE UPDATE ON book FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+=cut
+
+

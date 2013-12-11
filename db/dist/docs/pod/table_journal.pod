@@ -34,6 +34,8 @@ journal
   notes       | character varying |           | extended | 
  Indexes:
      "journal_pkey" PRIMARY KEY, btree (identifier)
+     "uk_journal_online_issn" UNIQUE CONSTRAINT, btree (online_issn)
+     "uk_journal_print_issn" UNIQUE CONSTRAINT, btree (print_issn)
  Referenced by:
      TABLE "article" CONSTRAINT "article_ibfk_1" FOREIGN KEY (journal_identifier) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:

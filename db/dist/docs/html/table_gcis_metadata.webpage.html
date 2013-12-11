@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.report">report</a>
+            <a name="gcis-metadata.table.webpage">webpage</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>report Structure</caption>
+                <caption>webpage Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -148,27 +148,11 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
+                
                 </td>
              </tr>
             
             <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>title</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
                 <td>
                 
                   
@@ -185,31 +169,7 @@
                     
                 
 
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
-                  
-                
-                </td>
-                <td>organization_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-
-                
+                NOT NULL
                 
                 </i>
                 
@@ -220,7 +180,7 @@
                 <td>
                 
                 </td>
-                <td>doi</td>
+                <td>title</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -236,13 +196,13 @@
                 <td>
                 
                 </td>
-                <td>_public</td>
-                <td>boolean</td>
+                <td>access_date</td>
+                <td>timestamp without time zone</td>
                 <td><i>
                 
 
                 
-                DEFAULT true
+                
                 </i>
                 
                 </td>
@@ -258,21 +218,6 @@
 
         <!-- Foreign Key Discovery -->
         
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata._report_editor.html">_report_editor</a><br>
-        
-                <a href="table_gcis_metadata._report_viewer.html">_report_viewer</a><br>
-        
-                <a href="table_gcis_metadata.chapter.html">chapter</a><br>
-        
-                <a href="table_gcis_metadata.figure.html">figure</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
-                <a href="table_gcis_metadata.table.html">table</a><br>
-        
-        
 
     <!-- Indexes -->
     
@@ -286,4 +231,7 @@
 
 </body></html>
 
+    
+
+<!-- ------------------------------------------------------------------------- -->
     

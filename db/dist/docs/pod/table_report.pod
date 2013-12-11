@@ -30,6 +30,7 @@ report
   _public                 | boolean           | default true | plain    | 
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
+     "report_url_key" UNIQUE CONSTRAINT, btree (url)
  Foreign-key constraints:
      "report_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE
  Referenced by:
