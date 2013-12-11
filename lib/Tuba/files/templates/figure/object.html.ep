@@ -51,7 +51,7 @@
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
     <tr>
-        <td><%= $k %></td>
+        <td><nobr><%= label_for($k) %></nobr></td>
         <td><%= $val %></td>
     </tr>
 % }
