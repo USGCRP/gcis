@@ -440,6 +440,10 @@ sub startup {
     $r->resource('webpage');
     $report->get('/webpage')->to('webpage#list');
 
+    # book (globally unique)
+    $r->resource('book');
+    $report->get('/book')->to('book#list');
+
     # Metadata processing routes.
     #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');

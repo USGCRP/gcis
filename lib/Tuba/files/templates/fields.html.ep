@@ -18,6 +18,10 @@
                 %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
                 <%= $val %>
                 %= end
+            % } elsif ($k =~ /isbn/ && $val) {
+                %= link_to "http://www.worldcat.org/isbn/$val" => target => "_blank" => begin
+                <%= $val %>
+                %= end
             % } elsif ($k eq 'url') {
                 %= link_to $val => target => "_blank" => begin
                 <%= $val %>
