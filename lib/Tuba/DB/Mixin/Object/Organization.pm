@@ -1,4 +1,5 @@
 package Tuba::DB::Object::Organization;
+use Tuba::Log;
 use strict;
 
 sub prov_type {
@@ -23,7 +24,9 @@ sub find_or_make {
     } else {
         $org = $class->new(name => $name, identifier => $class->make_identifier(name => $name));
         if ($org->load(speculative => 1) ){
-            warn "Not changing name to $name for ".$org->name unless $name eq $org->name;
+            if ($name ne $org->name) {
+                logger->warn("Matched orgs : $name\n".$org->name);
+            }
         }
         $org->save(%{ $args{audit} || {} }) or do { warn $org->error; return; };
     }
