@@ -143,10 +143,12 @@ sub create_form {
 }
 
 sub _order_columns {
+    # Default ordering; use heuristics to put things first
     my $c = shift;
     my %a = @_;
     my $meta = $a{meta};
-    my @first = qw/report_identifier chapter_identifier identifier number ordinal title caption statement/;
+    my @first = qw/report_identifier chapter_identifier identifier number ordinal
+                   title description caption statement lat_min lat_max lon_min lon_max time_start time_end/;
     my @ordered;
     my %col_names = map { $_->name => $_ } $meta->columns;
     for my $name (@first, keys %col_names) {

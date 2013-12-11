@@ -129,6 +129,15 @@ sub startup {
             return $str if !$str || length($str) < $len;
             return substr($str,0,$len-3).'...';
         });
+    $app->helper(label_for => sub {
+            my $c = shift;
+            my $str = shift;
+            # Return a label for a database column.
+            $str =~ s/_identifier//;
+            $str =~ s/_dt$/_date/;
+            $str =~ s/_/ /g;
+            return $str;
+        });
     $app->helper(render_partial_ttl => sub {
             my $c = shift;
             my $table = shift || die "need table";
