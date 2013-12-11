@@ -1,0 +1,7 @@
+% layout 'default';
+<<%= current_resource %>>
+   a bibo:Webpage;
+   dcterms:type "Webpage";
+   gcis:url "<%= $webpage->url %>";
+   dcterms:title "<%= $webpage->title %>";
+
