@@ -90,6 +90,14 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 
 
 --
+-- Data for Name: book; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY book (identifier, title, isbn, year, publisher, number_of_pages, url) FROM stdin;
+\.
+
+
+--
 -- Data for Name: contributor_role_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -155,7 +163,7 @@ COPY dataset_organization_map (dataset_identifier, organization_identifier) FROM
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, uuid, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
+COPY figure (identifier, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
 \.
 
 
@@ -242,6 +250,8 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+webpage	webpage
+book	book
 \.
 
 
@@ -350,6 +360,14 @@ SELECT pg_catalog.setval('submitter_id_seq', 1, false);
 --
 
 COPY subpubref (publication_id, reference_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: webpage; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY webpage (identifier, url, title, access_date) FROM stdin;
 \.
 
 

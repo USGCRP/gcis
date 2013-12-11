@@ -73,11 +73,23 @@ CREATE TABLE article (
     title character varying,
     doi character varying,
     year integer,
-    journal_identifier character varying,
+    journal_identifier character varying NOT NULL,
     journal_vol character varying,
     journal_pages character varying,
     url character varying,
     notes character varying
+);
+
+
+
+CREATE TABLE book (
+    identifier character varying NOT NULL,
+    title character varying NOT NULL,
+    isbn character varying,
+    year numeric,
+    publisher character varying,
+    number_of_pages numeric,
+    url character varying
 );
 
 
@@ -180,7 +192,6 @@ CREATE TABLE dataset_organization_map (
 
 CREATE TABLE figure (
     identifier character varying NOT NULL,
-    uuid character varying,
     chapter_identifier character varying,
     title character varying,
     caption character varying,
@@ -542,6 +553,15 @@ CREATE VIEW vw_gcmd_keyword AS
 
 
 
+CREATE TABLE webpage (
+    identifier character varying NOT NULL,
+    url character varying NOT NULL,
+    title character varying,
+    access_date timestamp without time zone
+);
+
+
+
 ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id_seq'::regclass);
 
 
@@ -601,6 +621,16 @@ ALTER TABLE ONLY article
 
 ALTER TABLE ONLY article
     ADD CONSTRAINT article_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY book
+    ADD CONSTRAINT book_isbn_key UNIQUE (isbn);
+
+
+
+ALTER TABLE ONLY book
+    ADD CONSTRAINT book_pkey PRIMARY KEY (identifier);
 
 
 
@@ -764,6 +794,11 @@ ALTER TABLE ONLY report
 
 
 
+ALTER TABLE ONLY report
+    ADD CONSTRAINT report_url_key UNIQUE (url);
+
+
+
 ALTER TABLE ONLY submitter
     ADD CONSTRAINT submitter_pkey PRIMARY KEY (id);
 
@@ -779,8 +814,28 @@ ALTER TABLE ONLY "table"
 
 
 
+ALTER TABLE ONLY journal
+    ADD CONSTRAINT uk_journal_online_issn UNIQUE (online_issn);
+
+
+
+ALTER TABLE ONLY journal
+    ADD CONSTRAINT uk_journal_print_issn UNIQUE (print_issn);
+
+
+
 ALTER TABLE ONLY chapter
     ADD CONSTRAINT uk_number_report UNIQUE (number, report_identifier);
+
+
+
+ALTER TABLE ONLY webpage
+    ADD CONSTRAINT webpage_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY webpage
+    ADD CONSTRAINT webpage_url_key UNIQUE (url);
 
 
 
@@ -904,6 +959,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON subpubref F
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON webpage FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON book FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1024,6 +1087,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON subpubref FOR EACH STATEMENT 
 
 
 
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON webpage FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON book FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER delpub BEFORE DELETE ON journal FOR EACH ROW EXECUTE PROCEDURE delete_publication();
 
 
@@ -1068,6 +1139,14 @@ CREATE TRIGGER delpub BEFORE DELETE ON "array" FOR EACH ROW EXECUTE PROCEDURE de
 
 
 
+CREATE TRIGGER delpub BEFORE DELETE ON webpage FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON book FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
 CREATE TRIGGER updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
@@ -1109,6 +1188,14 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (((new.ident
 
 
 CREATE TRIGGER updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN ((((new.identifier)::text <> (old.identifier)::text) OR ((new.report_identifier)::text <> (old.report_identifier)::text))) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON webpage FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON book FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
 
