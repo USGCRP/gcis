@@ -16,12 +16,12 @@ image_figure_map
 
 =head1 SCHEMA
 
-                    Table "gcis_metadata.image_figure_map"
-       Column       |       Type        | Modifiers | Storage  | Description 
- -------------------+-------------------+-----------+----------+-------------
-  image_identifier  | character varying | not null  | extended | 
-  figure_identifier | character varying | not null  | extended | 
-  report_identifier | character varying | not null  | extended | 
+                           Table "gcis_metadata.image_figure_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target | Description 
+ -------------------+-------------------+-----------+----------+--------------+-------------
+  image_identifier  | character varying | not null  | extended |              | 
+  figure_identifier | character varying | not null  | extended |              | 
+  report_identifier | character varying | not null  | extended |              | 
  Indexes:
      "image_figure_map_pkey" PRIMARY KEY, btree (image_identifier, figure_identifier, report_identifier)
  Foreign-key constraints:

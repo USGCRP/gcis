@@ -15,11 +15,11 @@ subpubref
 
 =head1 SCHEMA
 
-                         Table "gcis_metadata.subpubref"
-         Column        |       Type        | Modifiers | Storage  | Description 
- ----------------------+-------------------+-----------+----------+-------------
-  publication_id       | integer           | not null  | plain    | 
-  reference_identifier | character varying | not null  | extended | 
+                                Table "gcis_metadata.subpubref"
+         Column        |       Type        | Modifiers | Storage  | Stats target | Description 
+ ----------------------+-------------------+-----------+----------+--------------+-------------
+  publication_id       | integer           | not null  | plain    |              | 
+  reference_identifier | character varying | not null  | extended |              | 
  Indexes:
      "subpubref_pkey" PRIMARY KEY, btree (publication_id, reference_identifier)
  Foreign-key constraints:

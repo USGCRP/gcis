@@ -16,12 +16,12 @@ array_table_map
 
 =head1 SCHEMA
 
-                    Table "gcis_metadata.array_table_map"
-       Column       |       Type        | Modifiers | Storage  | Description 
- -------------------+-------------------+-----------+----------+-------------
-  array_identifier  | character varying | not null  | extended | 
-  table_identifier  | character varying | not null  | extended | 
-  report_identifier | character varying | not null  | extended | 
+                            Table "gcis_metadata.array_table_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target | Description 
+ -------------------+-------------------+-----------+----------+--------------+-------------
+  array_identifier  | character varying | not null  | extended |              | 
+  table_identifier  | character varying | not null  | extended |              | 
+  report_identifier | character varying | not null  | extended |              | 
  Indexes:
      "array_table_map_pkey" PRIMARY KEY, btree (array_identifier, table_identifier, report_identifier)
  Foreign-key constraints:

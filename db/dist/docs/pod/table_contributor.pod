@@ -17,13 +17,13 @@ contributor
 
 =head1 SCHEMA
 
-                                                 Table "gcis_metadata.contributor"
-          Column          |       Type        |                        Modifiers                         | Storage  | Description 
- -------------------------+-------------------+----------------------------------------------------------+----------+-------------
-  id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    | 
-  person_id               | integer           |                                                          | plain    | 
-  role_type               | character varying | not null                                                 | extended | 
-  organization_identifier | character varying |                                                          | extended | 
+                                                        Table "gcis_metadata.contributor"
+          Column          |       Type        |                        Modifiers                         | Storage  | Stats target | Description 
+ -------------------------+-------------------+----------------------------------------------------------+----------+--------------+-------------
+  id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    |              | 
+  person_id               | integer           |                                                          | plain    |              | 
+  role_type               | character varying | not null                                                 | extended |              | 
+  organization_identifier | character varying |                                                          | extended |              | 
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

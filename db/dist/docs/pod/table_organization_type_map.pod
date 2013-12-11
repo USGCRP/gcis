@@ -15,11 +15,11 @@ organization_type_map
 
 =head1 SCHEMA
 
-                       Table "gcis_metadata.organization_type_map"
-             Column            |       Type        | Modifiers | Storage  | Description 
- ------------------------------+-------------------+-----------+----------+-------------
-  organization_identifier      | character varying | not null  | extended | 
-  organization_type_identifier | character varying | not null  | extended | 
+                              Table "gcis_metadata.organization_type_map"
+             Column            |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------------------------+-------------------+-----------+----------+--------------+-------------
+  organization_identifier      | character varying | not null  | extended |              | 
+  organization_type_identifier | character varying | not null  | extended |              | 
  Indexes:
      "organization_type_map_pkey" PRIMARY KEY, btree (organization_identifier, organization_type_identifier)
  Foreign-key constraints:

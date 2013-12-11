@@ -15,11 +15,11 @@ dataset_organization_map
 
 =head1 SCHEMA
 
-                   Table "gcis_metadata.dataset_organization_map"
-          Column          |       Type        | Modifiers | Storage  | Description 
- -------------------------+-------------------+-----------+----------+-------------
-  dataset_identifier      | character varying | not null  | extended | 
-  organization_identifier | character varying | not null  | extended | 
+                          Table "gcis_metadata.dataset_organization_map"
+          Column          |       Type        | Modifiers | Storage  | Stats target | Description 
+ -------------------------+-------------------+-----------+----------+--------------+-------------
+  dataset_identifier      | character varying | not null  | extended |              | 
+  organization_identifier | character varying | not null  | extended |              | 
  Indexes:
      "dataset_organization_pkey" PRIMARY KEY, btree (dataset_identifier, organization_identifier)
  Foreign-key constraints:

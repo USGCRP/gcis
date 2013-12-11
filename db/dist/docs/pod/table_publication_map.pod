@@ -17,13 +17,13 @@ publication_map
 
 =head1 SCHEMA
 
-                  Table "gcis_metadata.publication_map"
-     Column    |       Type        | Modifiers | Storage  | Description 
- --------------+-------------------+-----------+----------+-------------
-  child        | integer           | not null  | plain    | 
-  relationship | character varying | not null  | extended | 
-  parent       | integer           | not null  | plain    | 
-  note         | character varying |           | extended | 
+                         Table "gcis_metadata.publication_map"
+     Column    |       Type        | Modifiers | Storage  | Stats target | Description 
+ --------------+-------------------+-----------+----------+--------------+-------------
+  child        | integer           | not null  | plain    |              | 
+  relationship | character varying | not null  | extended |              | 
+  parent       | integer           | not null  | plain    |              | 
+  note         | character varying |           | extended |              | 
  Indexes:
      "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
  Foreign-key constraints:

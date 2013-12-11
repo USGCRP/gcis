@@ -19,15 +19,15 @@ table
 
 =head1 SCHEMA
 
-                          Table "gcis_metadata.table"
-        Column       |       Type        | Modifiers | Storage  | Description 
- --------------------+-------------------+-----------+----------+-------------
-  identifier         | character varying | not null  | extended | 
-  report_identifier  | character varying | not null  | extended | 
-  chapter_identifier | character varying |           | extended | 
-  ordinal            | integer           |           | plain    | 
-  title              | character varying |           | extended | 
-  caption            | character varying |           | extended | 
+                                 Table "gcis_metadata.table"
+        Column       |       Type        | Modifiers | Storage  | Stats target | Description 
+ --------------------+-------------------+-----------+----------+--------------+-------------
+  identifier         | character varying | not null  | extended |              | 
+  report_identifier  | character varying | not null  | extended |              | 
+  chapter_identifier | character varying |           | extended |              | 
+  ordinal            | integer           |           | plain    |              | 
+  title              | character varying |           | extended |              | 
+  caption            | character varying |           | extended |              | 
  Indexes:
      "table_pkey" PRIMARY KEY, btree (identifier, report_identifier)
  Foreign-key constraints:

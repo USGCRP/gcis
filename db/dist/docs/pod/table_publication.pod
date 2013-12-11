@@ -16,12 +16,12 @@ publication
 
 =head1 SCHEMA
 
-                                                   Table "gcis_metadata.publication"
-            Column            |       Type        |                        Modifiers                         | Storage  | Description 
- -----------------------------+-------------------+----------------------------------------------------------+----------+-------------
-  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    | 
-  publication_type_identifier | character varying | not null                                                 | extended | 
-  fk                          | hstore            | not null                                                 | extended | 
+                                                          Table "gcis_metadata.publication"
+            Column            |       Type        |                        Modifiers                         | Storage  | Stats target | Description 
+ -----------------------------+-------------------+----------------------------------------------------------+----------+--------------+-------------
+  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    |              | 
+  publication_type_identifier | character varying | not null                                                 | extended |              | 
+  fk                          | hstore            | not null                                                 | extended |              | 
  Indexes:
      "publication_pkey" PRIMARY KEY, btree (id)
      "publication_type_fk" UNIQUE CONSTRAINT, btree (publication_type_identifier, fk)

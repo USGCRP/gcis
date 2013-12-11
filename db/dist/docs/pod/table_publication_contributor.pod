@@ -16,12 +16,12 @@ publication_contributor
 
 =head1 SCHEMA
 
-                                       Table "gcis_metadata.publication_contributor"
-      Column     |  Type   |                              Modifiers                               | Storage | Description 
- ----------------+---------+----------------------------------------------------------------------+---------+-------------
-  id             | integer | not null default nextval('publication_contributor_id_seq'::regclass) | plain   | 
-  publication_id | integer |                                                                      | plain   | 
-  contributor_id | integer |                                                                      | plain   | 
+                                              Table "gcis_metadata.publication_contributor"
+      Column     |  Type   |                              Modifiers                               | Storage | Stats target | Description 
+ ----------------+---------+----------------------------------------------------------------------+---------+--------------+-------------
+  id             | integer | not null default nextval('publication_contributor_id_seq'::regclass) | plain   |              | 
+  publication_id | integer |                                                                      | plain   |              | 
+  contributor_id | integer |                                                                      | plain   |              | 
  Indexes:
      "publication_contributor_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

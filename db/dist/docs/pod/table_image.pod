@@ -27,23 +27,23 @@ image
 
 =head1 SCHEMA
 
-                                         Table "gcis_metadata.image"
-     Column     |              Type              | Modifiers | Storage  |            Description             
- ---------------+--------------------------------+-----------+----------+------------------------------------
-  identifier    | character varying              | not null  | extended | A unique identifier for the image.
-  position      | character varying              |           | extended | 
-  title         | character varying              |           | extended | 
-  description   | character varying              |           | extended | 
-  attributes    | character varying              |           | extended | 
-  time_start    | timestamp(3) without time zone |           | plain    | 
-  time_end      | timestamp(3) without time zone |           | plain    | 
-  lat_max       | character varying              |           | extended | 
-  lat_min       | character varying              |           | extended | 
-  lon_max       | character varying              |           | extended | 
-  lon_min       | character varying              |           | extended | 
-  usage_limits  | character varying              |           | extended | 
-  submission_dt | timestamp(3) without time zone |           | plain    | 
-  create_dt     | timestamp(3) without time zone |           | plain    | 
+                                                 Table "gcis_metadata.image"
+     Column     |              Type              | Modifiers | Storage  | Stats target |            Description             
+ ---------------+--------------------------------+-----------+----------+--------------+------------------------------------
+  identifier    | character varying              | not null  | extended |              | A unique identifier for the image.
+  position      | character varying              |           | extended |              | 
+  title         | character varying              |           | extended |              | 
+  description   | character varying              |           | extended |              | 
+  attributes    | character varying              |           | extended |              | 
+  time_start    | timestamp(3) without time zone |           | plain    |              | 
+  time_end      | timestamp(3) without time zone |           | plain    |              | 
+  lat_max       | character varying              |           | extended |              | 
+  lat_min       | character varying              |           | extended |              | 
+  lon_max       | character varying              |           | extended |              | 
+  lon_min       | character varying              |           | extended |              | 
+  usage_limits  | character varying              |           | extended |              | 
+  submission_dt | timestamp(3) without time zone |           | plain    |              | 
+  create_dt     | timestamp(3) without time zone |           | plain    |              | 
  Indexes:
      "image_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:

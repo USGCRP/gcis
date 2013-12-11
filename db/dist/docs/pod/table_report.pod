@@ -19,15 +19,15 @@ report
 
 =head1 SCHEMA
 
-                                         Table "gcis_metadata.report"
-          Column          |       Type        |  Modifiers   | Storage  |             Description             
- -------------------------+-------------------+--------------+----------+-------------------------------------
-  identifier              | character varying | not null     | extended | A unique identifier for the report.
-  title                   | character varying |              | extended | 
-  url                     | character varying |              | extended | 
-  organization_identifier | character varying |              | extended | 
-  doi                     | character varying |              | extended | 
-  _public                 | boolean           | default true | plain    | 
+                                                 Table "gcis_metadata.report"
+          Column          |       Type        |  Modifiers   | Storage  | Stats target |             Description             
+ -------------------------+-------------------+--------------+----------+--------------+-------------------------------------
+  identifier              | character varying | not null     | extended |              | A unique identifier for the report.
+  title                   | character varying |              | extended |              | 
+  url                     | character varying |              | extended |              | 
+  organization_identifier | character varying |              | extended |              | 
+  doi                     | character varying |              | extended |              | 
+  _public                 | boolean           | default true | plain    |              | 
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
      "report_url_key" UNIQUE CONSTRAINT, btree (url)

@@ -17,13 +17,13 @@ publication_ref
 
 =head1 SCHEMA
 
-                                            Table "gcis_metadata.publication_ref"
-      Column     |       Type        |                          Modifiers                           | Storage  | Description 
- ----------------+-------------------+--------------------------------------------------------------+----------+-------------
-  id             | integer           | not null default nextval('publication_ref_id_seq'::regclass) | plain    | 
-  publication_id | integer           |                                                              | plain    | 
-  type           | character varying | not null                                                     | extended | 
-  fk             | integer           | not null                                                     | plain    | 
+                                                    Table "gcis_metadata.publication_ref"
+      Column     |       Type        |                          Modifiers                           | Storage  | Stats target | Description 
+ ----------------+-------------------+--------------------------------------------------------------+----------+--------------+-------------
+  id             | integer           | not null default nextval('publication_ref_id_seq'::regclass) | plain    |              | 
+  publication_id | integer           |                                                              | plain    |              | 
+  type           | character varying | not null                                                     | extended |              | 
+  fk             | integer           | not null                                                     | plain    |              | 
  Indexes:
      "publication_ref_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:

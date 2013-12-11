@@ -20,16 +20,16 @@ book
 
 =head1 SCHEMA
 
-                         Table "gcis_metadata.book"
-      Column      |       Type        | Modifiers | Storage  | Description 
- -----------------+-------------------+-----------+----------+-------------
-  identifier      | character varying | not null  | extended | 
-  title           | character varying | not null  | extended | 
-  isbn            | character varying |           | extended | 
-  year            | numeric           |           | main     | 
-  publisher       | character varying |           | extended | 
-  number_of_pages | numeric           |           | main     | 
-  url             | character varying |           | extended | 
+                                Table "gcis_metadata.book"
+      Column      |       Type        | Modifiers | Storage  | Stats target | Description 
+ -----------------+-------------------+-----------+----------+--------------+-------------
+  identifier      | character varying | not null  | extended |              | 
+  title           | character varying | not null  | extended |              | 
+  isbn            | character varying |           | extended |              | 
+  year            | numeric           |           | main     |              | 
+  publisher       | character varying |           | extended |              | 
+  number_of_pages | numeric           |           | main     |              | 
+  url             | character varying |           | extended |              | 
  Indexes:
      "book_pkey" PRIMARY KEY, btree (identifier)
      "book_isbn_key" UNIQUE CONSTRAINT, btree (isbn)

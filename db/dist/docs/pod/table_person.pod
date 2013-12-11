@@ -19,15 +19,15 @@ person
 
 =head1 SCHEMA
 
-                                         Table "gcis_metadata.person"
-  Column  |       Type        |                      Modifiers                      | Storage  | Description 
- ---------+-------------------+-----------------------------------------------------+----------+-------------
-  id      | integer           | not null default nextval('person_id_seq'::regclass) | plain    | 
-  name    | character varying |                                                     | extended | 
-  address | character varying |                                                     | extended | 
-  phone   | character varying |                                                     | extended | 
-  email   | character varying |                                                     | extended | 
-  url     | character varying |                                                     | extended | 
+                                                Table "gcis_metadata.person"
+  Column  |       Type        |                      Modifiers                      | Storage  | Stats target | Description 
+ ---------+-------------------+-----------------------------------------------------+----------+--------------+-------------
+  id      | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | 
+  name    | character varying |                                                     | extended |              | 
+  address | character varying |                                                     | extended |              | 
+  phone   | character varying |                                                     | extended |              | 
+  email   | character varying |                                                     | extended |              | 
+  url     | character varying |                                                     | extended |              | 
  Indexes:
      "person_pkey" PRIMARY KEY, btree (id)
  Referenced by:

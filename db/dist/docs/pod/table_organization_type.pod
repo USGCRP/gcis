@@ -14,10 +14,10 @@ organization_type
 
 =head1 SCHEMA
 
-                Table "gcis_metadata.organization_type"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
+                       Table "gcis_metadata.organization_type"
+    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------+-------------------+-----------+----------+--------------+-------------
+  identifier | character varying | not null  | extended |              | 
  Indexes:
      "organization_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
