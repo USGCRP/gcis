@@ -7,7 +7,7 @@ use Tuba::Log;
 sub new_from_reference {
     my $s = shift;
     my $ref = shift;
-    return unless $ref->attr('reftype') eq 'Report';
+    return unless $ref->attr('reftype') =~ /^(Report|Government Document)$/;
     $s = $s->new unless ref $s;
     my $title = $ref->attr("title");
 
@@ -23,7 +23,10 @@ sub new_from_reference {
     }
 
     $s->title($title);
-    my $org = Tuba::DB::Object::Organization->find_or_make(name => $ref->attr('institution'), audit => { audit_user => 'unknown' } );
+    my $org = Tuba::DB::Object::Organization->find_or_make(
+      name  => ( $ref->attr('institution') || $ref->attr('publisher') ),
+      audit => {audit_user => 'unknown'}
+    );
     $s->organization_identifier($org->identifier);
 
     return $s;
