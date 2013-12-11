@@ -6,7 +6,7 @@
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
     <tr>
-        <td><nobr><%= label_for($k) %></nobr></td>
+        <td><nobr><%= labelize($k) %></nobr></td>
         <td>
             % if (!$val) {
 

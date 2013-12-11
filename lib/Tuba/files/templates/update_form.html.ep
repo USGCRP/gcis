@@ -30,7 +30,7 @@
 % my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
 % my $required = $column->not_null ? ' required' : "";
-        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= label_for($column->name) %></label>
+        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
         <div class="controls">
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
