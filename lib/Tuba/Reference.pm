@@ -42,7 +42,7 @@ sub create {
     my $c = shift;
     if (my $json = $c->req->json) {
         if (my $uri = delete $json->{publication_uri}) {
-            my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => 'uri not found' } );
+            my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => "uri $uri not found" } );
             $report->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
             my $pub = $report->get_publication(autocreate => 1);
             $pub->save(audit_user => $c->user) unless $pub->id;
