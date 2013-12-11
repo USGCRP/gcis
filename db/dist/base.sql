@@ -216,6 +216,10 @@ COMMENT ON COLUMN figure.identifier IS 'A unique identifier for the figure.';
 
 
 
+COMMENT ON COLUMN figure.ordinal IS 'The numeric identifier for this figure which is not part of the chapter';
+
+
+
 CREATE TABLE file (
     file_type character varying,
     dir character varying,

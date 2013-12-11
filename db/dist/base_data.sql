@@ -250,8 +250,6 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
-webpage	webpage
-book	book
 \.
 
 
