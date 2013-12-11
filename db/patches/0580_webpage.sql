@@ -4,7 +4,7 @@ create table webpage (
     url varchar not null unique,
     title varchar,
     access_date timestamp
-)
+);
 
 insert into publication_type (identifier,"table")
     values ('webpage','webpage');

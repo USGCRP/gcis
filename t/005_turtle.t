@@ -138,7 +138,7 @@ $t->get_ok("/journal/gators.nt")
 
 # Article
 $t->post_ok("/article" => \%h
-     => json => { identifier => "gatorade", title => "fakearticle" } )->status_is(200);
+     => json => { identifier => "gatorade", title => "fakearticle", journal_identifier => 'gators' } )->status_is(200);
 
 $t->get_ok("/article/gatorade")->status_is(200);
 
