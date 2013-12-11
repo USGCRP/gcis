@@ -49,10 +49,7 @@ sub new_from_reference {
     $s->journal_vol($ref->attr('journal_vol'));
 
     my $journal_identifier;
-    my $issns = $ref->attr('issn') or do {
-        logger->warn("no ISSN");
-        return;
-    };
+    my $issns = $ref->attr('issn') || '';
 
     my $journal;
     while ($issns =~ /(\w{4}-\w{4})/g) {

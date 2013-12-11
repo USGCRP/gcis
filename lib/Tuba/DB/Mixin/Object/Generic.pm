@@ -1,8 +1,9 @@
 package Tuba::DB::Object::Generic;
 # Tuba::DB::Mixin::Object::Generic;
-use strict;
+use Data::UUID::LibUUID;
 use Pg::hstore;
 use Encode;
+use strict;
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     inflate => sub {
@@ -18,6 +19,25 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
         do { utf8::downgrade($_) if defined($_) } for values %$v;
         return Pg::hstore::encode($v);
     });
+
+__PACKAGE__->meta->primary_key_generator(sub {
+    return new_uuid_string(4);
+});
+
+
+sub new_from_reference {
+    my $s = shift;  # class or instance
+    my $ref = shift;
+    return unless $ref->attr('reftype') =~ /^(Personal Communication)$/;
+
+    $s = $s->new unless ref $s;
+    my %new = %{ $ref->attrs };
+    for (grep { /^_/ || /^\./ } keys %new) {
+        delete $new{$_};
+    }
+    $s->attrs(\%new);
+    return $s;
+};
 
 sub as_tree {
     my $s = shift;
