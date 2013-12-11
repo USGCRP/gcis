@@ -1,0 +1,32 @@
+% layout 'default';
+<<%= current_resource %>>
+   a bibo:book;
+   dcterms:type "book";
+
+ %# for my $person ($book->persons) {
+ %#  gcis:hasAuthor  "<%= $person->author %>";
+ %# }
+
+   bibo:uri "<%= $book->url %>";
+   gcis:url "<%= $book->url %>";
+
+% if (0) {
+   bibo:isbn "<%= $book->print_isbn %>";
+   gcis:Location "<%= $book->pub_location %>";
+   gcis:hasPublisher "<%= $book->hasPublisher %>";
+   bibo:doi "<%= $book->doi %>";
+   dcterms:title "<%= $book->title %>";
+   dcterms:SizeOrDuration "<%= $book->pages %>";
+   dwc:year "<%= $book->year %>".
+% }
+
+%# % for my $eisbn ($book->eisbns) {
+  %#       bibo:eisbn "<%= $eisbn->online_isbn %>";
+%# }
+
+
+%# book in Book Series
+%# for my $bookSeries ($book->bookSeries) {
+%#      bibo:volume  "<%= $bookSeries->volume %>". 
+%# % }
+
