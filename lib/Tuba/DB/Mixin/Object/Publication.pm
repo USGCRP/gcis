@@ -28,7 +28,12 @@ sub to_object {
     my @pkcols = $obj_class->meta->primary_key_columns;
     my $pkvals = hstore_decode($self->fk);
     my $obj = $obj_class->new(%$pkvals);
-    return $obj if $obj->load(speculative => 1);
+    if (eval { $obj->load(speculative => 1) }) {
+        return $obj;
+    }
+    logger->warn("Error loading publication ".$self->id." -- ".$self->fk);
+    logger->warn("Error : $@") if $@;
+
     if ($a{autoclean}) {
         logger->warn("autoclean : removing orphan publication ".$self->id);
         $self->delete;

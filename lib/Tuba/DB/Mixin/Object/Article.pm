@@ -34,6 +34,7 @@ sub new_from_reference {
     $s->doi($doi);
     if ($doi) {
         $s->load(speculative => 1);
+        $s->identifier($doi) unless $s->identifier;
     } elsif (!$s->identifier) {
         my $title = $ref->attr('title');
         $title =~ tr/a-zA-Z0-9 //dc;
@@ -41,7 +42,6 @@ sub new_from_reference {
         $title = lc $title;
         $s->identifier('missing_doi_'.$title);
     }
-
     $s->title($ref->attr('title'));
     $s->year($ref->attr('year'));
     $s->url($ref->attr('url'));
@@ -66,7 +66,7 @@ sub new_from_reference {
     unless ($journal) {
         $journal = Tuba::DB::Object::Journal->new;
         my @issns = ( $issns =~ /(\w{4}-\w{4})/ );
-        $journal->issn($issns[0]) if @issns;
+        $journal->print_issn($issns[0]) if @issns;
         $journal->title($ref->attr('journal'));
         my $identifier = $ref->attr('journal');
         $identifier =~ tr/a-zA-Z 0-9-//cd;

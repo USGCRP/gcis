@@ -96,10 +96,10 @@ sub smartmatch {
         $existing->load;
         $existing = $existing->to_object(autoclean => 1) or die "orphan : ".$reference->child_publication->as_yaml;
     }
+    logger->debug("matching : ".$reference->identifier);
     unshift @try, $existing if $existing;
     my $match;
     for my $class (@try) {
-        logger->debug("trying $class");
         $match = $class->new_from_reference($reference) and last;
     }
     logger->debug("match : ".($match // '<none>'));
