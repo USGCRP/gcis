@@ -1289,7 +1289,7 @@ ALTER TABLE ONLY image_figure_map
 
 
 ALTER TABLE ONLY image_figure_map
-    ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image_identifier) REFERENCES image(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image_identifier) REFERENCES image(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
