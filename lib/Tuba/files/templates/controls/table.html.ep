@@ -15,7 +15,7 @@
 % }
 <tr>
 <td>
-%= text_field 'new_table', placeholder => "new table", id => "newtable", style => "width:100%;";
+%= text_field 'new_table', placeholder => "search tables", id => "newtable", style => "width:100%;";
 </td>
 </tr>
 </table>

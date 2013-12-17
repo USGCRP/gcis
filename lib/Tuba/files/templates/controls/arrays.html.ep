@@ -11,15 +11,14 @@
 
 <td>
     <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
-    <%= obj_link_to $array, update_form => class => 'btn btn-info squeezevert' => begin %>edit<%= end %>
 </td>
 </tr>
 % }
 </table>
-<%= tag 'button' => class => 'btn btn-primary squeezevert' => onClick => qq[{this.form.elements["make_array"].value = 1; this.form.submit(); }] => begin %>make new array<%= end %>
-<br>
-<br>
-%= text_field 'new_array', placeholder => "assign existing array", id => "newarray", class => 'span10';
+
+%= text_field 'new_array', placeholder => "search arrays", id => "newarray", class => 'span8';
+<a href="#create_array" role="button" class="btn" data-toggle="modal">Create array</a>
+%= include 'modal', url => url_for('create_form_array'), id => 'create_array'
 
 %= javascript begin
 $('#newarray').typeahead({

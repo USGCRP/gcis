@@ -607,7 +607,6 @@ sub update_contributors {
             logger->debug("Found contributor person ".($person // 'undef').' org '.($organization) // 'undef');
             logger->debug("json : ".Dumper($json));
     } else {
-            logger->debug("New contributor person ".($person->id // 'undef').' org '.($organization->identifier) // 'undef');
             $contributor->save(audit_user => $c->user)
                 or return $c->update_error($contributor->error);
     };

@@ -1,10 +1,6 @@
 
 %= hidden_field 'delete_image';
 
-%= link_to 'create_form_image' => class => 'btn' => begin
-create new image
-%= end
-
 <table class='table table-condensed table-bordered'>
 % for my $image ($object->images) {
 <tr>
@@ -16,7 +12,10 @@ create new image
 </tr>
 % }
 </table>
-%= text_field 'new_image', placeholder => "new image", id => "newimage", class => 'span10';
+%= text_field 'new_image', placeholder => "search images", id => "newimage", class => 'span8';
+
+<a href="#create_image" role="button" class="btn" data-toggle="modal">Create image</a>
+%= include 'modal', url => url_for('create_form_image'), id => 'create_image'
 
 %= javascript begin
 $('#newimage').typeahead({

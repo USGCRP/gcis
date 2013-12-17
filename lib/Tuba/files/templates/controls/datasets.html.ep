@@ -16,7 +16,7 @@ create new dataset
 </tr>
 % }
 </table>
-%= text_field 'new_dataset', placeholder => "new dataset", id => "newdataset", class => 'span9';
+%= text_field 'new_dataset', placeholder => "search datasets", id => "newdataset", class => 'span9';
 
 %= javascript begin
 $('#newdataset').typeahead({

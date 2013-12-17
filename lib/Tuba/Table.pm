@@ -85,14 +85,15 @@ sub update_rel {
     my $object = $c->_this_object or return $c->render_not_found;
     my $next = $object->uri($c,{tab => 'update_rel_form'});
     $object->meta->error_mode('return');
-    if (my $new = $c->param('make_array')) {
-        my $array = Array->new();
+    if (my $new = $c->param('new_array')) {
+        my $array = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_arrays($array);
         $object->save(audit_user => $c->user) or do {
             $c->flash(error => $object->error);
             return $c->redirect_to($next);
         };
     }
+
 
     my $report_identifier = $c->stash('report_identifier');
     for my $id (grep { defined && length } $c->param('delete_array')) {

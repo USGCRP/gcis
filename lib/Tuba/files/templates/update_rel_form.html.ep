@@ -9,7 +9,7 @@
 
 <div class='tab-content'>
 
-%= form_for obj_uri_for($object,'update_rel') => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
+%= form_for obj_uri_for($object,'update_rel') => autocomplete => 'off', class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
 % if (my $error = ( (stash 'error') || flash 'error')) {
     <div class='alert alert-error'><%= $error %></div>
 % }

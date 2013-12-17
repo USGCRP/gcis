@@ -16,7 +16,7 @@ create new organization
 </tr>
 % }
 </table>
-%= text_field 'new_organization', placeholder => "new organization", id => "neworganization", class => 'span9';
+%= text_field 'new_organization', placeholder => "search organization", id => "neworganization", class => 'span9';
 
 %= javascript begin
 $('#neworganization').typeahead({
