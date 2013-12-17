@@ -1,3 +1,4 @@
+
 drop table contributor_role_type cascade;
 
 alter table person add orcid varchar unique;
@@ -63,4 +64,10 @@ alter table contributor
     add constraint contributor_organization_fkey
         foreign key (organization_identifier) references organization(identifier)
             on delete cascade on update cascade;
+
+alter table person add column middle_name varchar;
+
+delete from contributor where organization_identifier is null;
+
+alter table contributor alter column organization_identifier set not null;
 

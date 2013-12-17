@@ -471,13 +471,17 @@ sub startup {
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:name')->to('person#redirect_by_name');
 
+    $r->resource('organization');
+    $r->post('/organization/lookup/name')->to('organization#lookup_name');
+    $r->post('/person/lookup/name')->to('person#lookup_name');
+
     # GcmdKeyword
     $r->resource('gcmd_keyword');
 
     # Others, some of which aren't yet implemented.
     $r->resource($_) for qw/dataset model software algorithm activity
                             instrument platform
-                            role organization country/;
+                            role country/;
 
     # Files.
     $r->resource("file");

@@ -2,15 +2,19 @@ package Tuba::DB::Object::Organization;
 use Tuba::Log;
 use strict;
 
-sub prov_type {
-    my $self = shift;
-    return sprintf(q[http://www.w3.org/ns/prov#%s], ucfirst($self->meta->table) );
-}
-
-sub foaf_type {
-    my $self = shift;
-    return sprintf(q[http://xmlns.com/foaf/0.1/%s], ucfirst($self->meta->table) );
-}
+sub insert {
+    my $s = shift;
+    unless (defined $s->identifier) {
+        my $name = $s->name;
+        my %skip = map { $_ => 1} qw/
+                a an the and or nor for but so yet to of by at for but in with has
+        /;
+        my @words = grep { !$skip{lc $_} } split / /, $name;
+        my $identifier = @words ?  (join '', map lc(substr($_,0,1)), @words) : "unknown-".rand;
+        $s->identifier($identifier);
+    }
+    return $s->SUPER::insert(@_);
+};
 
 sub find_or_make {
     my $class = shift;

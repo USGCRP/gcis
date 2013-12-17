@@ -15,6 +15,7 @@ use Path::Class qw/file/;
 use Tuba::Log;
 use Tuba::Util qw/nice_db_error/;
 use File::Temp;
+use Data::Dumper;
 
 =head2 list
 
@@ -221,7 +222,7 @@ sub create {
     $c->respond_to(
         json => sub {
                 my $c = shift;
-                $c->res->code($new->error =~ /already exists/ ? 409 : 500);
+                $c->res->code($new->error =~ /(already exists|violates unique constraint)/ ? 409 : 500);
                 $c->render(json => { error => $new->error } );
             },
         html => sub {
@@ -565,30 +566,52 @@ sub update_contributors {
     my $pub = $obj->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user) unless $pub->id;
 
-    die "not implemented" if $c->req->json;
+    my $json = $c->req->json || {};
 
-    if (my $id = $c->param('delete_contributor')) {
+    if (my $id = $json->{delete_contributor} || $c->param('delete_contributor')) {
         PublicationContributorMaps->delete_objects({
                 contributor_id => $id,
                 publication_id => $pub->id,
             }) or return $c->update_error("Failed to remove contributor");
         $c->flash(info => "Saved changes.");
     }
-    my $person = $c->param('person');
-    my $organization = $c->param('organization');
+
+    my ($person,$organization);
+
+    if ($c->req->json) {
+        $person = $json->{person_id};
+        $organization = $json->{organization_identifier};
+        if (my $id = $person) {
+            $person = Person->new(id => $id)->load(speculative => 1)
+                or return $c->update_error("invalid person $person");
+        }
+        if (my $id = $organization) {
+            $organization = Organization->new(identifier => $id)->load(speculative => 1)
+                or return $c->update_error("invalid organization $organization");
+        }
+    } else {
+        $person = $c->param('person');
+        $organization = $c->param('organization');
+        $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
+        $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
+    }
+
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
 
-    $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
-    $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
-
-    my $role = $c->param('role') or return $c->update_error("missing role");
+    my $role = $c->param('role') || $json->{role} or return $c->update_error("missing role");
     
     my $contributor = Contributor->new(role_type => $role);
     $contributor->organization_identifier($organization->identifier) if $organization;
     $contributor->person_id($person->id) if $person;
-    $contributor->load(speculative => 1)
-        or $contributor->save(audit_user => $c->user)
-        or return $c->update_error($contributor->error);
+    if ( $contributor->load(speculative => 1)) {
+            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization) // 'undef');
+            logger->debug("json : ".Dumper($json));
+    } else {
+            logger->debug("New contributor person ".($person->id // 'undef').' org '.($organization->identifier) // 'undef');
+            $contributor->save(audit_user => $c->user)
+                or return $c->update_error($contributor->error);
+    };
+
     $pub->add_contributors($contributor);
     $pub->save(audit_user => $c->user) or return $c->update_error($contributor->error);
     $c->flash(info => "Saved changes.");
@@ -890,16 +913,27 @@ sub redirect_with_error {
     my $tab   = shift;
     my $error = nice_db_error(shift);
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
-    $c->flash(error => $error);
     logger->debug("redirecting with error : $error");
-    return $c->redirect_to($uri);
+    $c->respond_to(
+        json => sub {
+            shift->render(json => { error => $error })
+        },
+        html => sub {
+            my $c = shift;
+            $c->flash(error => $error);
+            return $c->redirect_to($uri);
+        },
+    );
 }
 
 sub redirect_without_error {
     my $c     = shift;
     my $tab   = shift;
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
-    return $c->redirect_to($uri);
+    $c->respond_to(
+        html => sub { shift->redirect_to($uri) },
+        json => sub { shift->render(json => { status => 'ok' }) }
+    );
 }
 
 1;

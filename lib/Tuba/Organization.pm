@@ -88,5 +88,16 @@ sub create_form {
     $c->SUPER::create_form(@_);
 }
 
+sub lookup_name {
+    my $c = shift;
+    my $name = $c->req->json->{name} or return $c->render_not_found;
+    my $org = Organization->new(name => $name)->load(speculative => 1);
+    if ($org) {
+        my $uri = $org->uri($c);
+        return $c->redirect_to($uri);
+    }
+    return $c->render_not_found;
+}
+
 1;
 

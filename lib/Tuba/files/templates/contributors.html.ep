@@ -2,18 +2,20 @@
 % my @con = $object->get_publication(autocreate => 1)->contributors;
 
 % if (@con) {
+    % @con = sort { $a->role_type cmp $b->role_type } @con;
 
     <table class='table table-condensed table-bordered'>
     <caption> Contributors</caption>
-
         <tr>
-            <th>Person</th><th>Organization</th><th>Role</th>
+            <th>Role</th>
+            <th>Person</th>
+            <th>Organization</th>
         </tr>
     % for my $ctr (@con) {
     <tr>
+        <td><%= $ctr->role_type %></td>
         <td><%= obj_link($ctr->person, long => 1) %></td>
         <td><%= obj_link($ctr->organization) %></td>
-        <td><%= $ctr->role_type %></td>
     </tr>
     % }
     </table>

@@ -35,13 +35,6 @@
 <tr> <td>first_name</td><td><%= $object->first_name %></td> </tr>
 <tr> <td>last_name</td><td><%= $object->last_name %></td> </tr>
 <tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
-<tr> <td>org</td><td>
-<% for my $o ($object->contributors) { %>
-<span class='btn squeezevert'>
-<%= obj_link($o->organization) %>
-</span>
-<% } %>
-</td></tr>
 
 </table>
 

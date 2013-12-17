@@ -33,18 +33,30 @@ sub redirect_by_name {
     my $c = shift;
     my $name = $c->stash('name');
     my @pieces = split /-/, $name;
-    my $p = Algorithm::Permute->new(\@pieces);
-    my @query;
-    while (my @res = $p->next) {
-        push @query, ( name => { ilike => '%'.(join '%', @res).'%' } );
-    }
-    my $found = Persons->get_objects(query => [ or => \@query ], limit => 10 );
-    return $c->render_not_found unless @$found;
-    if ($found && @$found==1) {
-        return $c->redirect_to('show_person', { person_identifier => $found->[0]->id } );
+    return $c->render_not_found unless @pieces==2;
+    my $front = Persons->get_objects(
+      query => [first_name => $pieces[0], last_name => $pieces[1]],
+      limit => 10
+    );
+    my $back = Persons->get_objects(
+      query => [first_name => $pieces[1], last_name => $pieces[0]],
+      limit => 10
+    );
+    my @found = (@$front, @$back);
+
+    return $c->render_not_found unless @found;
+    if (@found==1) {
+        return $c->redirect_to('show_person', { person_identifier => $found[0]->id } );
     }
 
-    return $c->render(people => $found);
+    $c->respond_to(
+        json => sub {
+            shift->render(json =>{ people =>  [ map $_->as_tree, @found ] }),
+        },
+        html => sub {
+            return $c->render(people => @found);
+        },
+    );
 }
 
 sub _this_object {
@@ -58,6 +70,20 @@ sub _order_columns {
     my $c = shift;
     return [ qw/id first_name last_name orcid url/ ] unless $c->current_route =~ /create/;
     return [ qw/first_name last_name orcid url/ ];
+}
+
+sub lookup_name {
+    my $c = shift;
+    my $first = $c->req->json->{first_name};
+    my $last = $c->req->json->{last_name};
+    my $matches = Persons->get_objects(
+        query => [ first_name => $first, last_name => $last ]
+    );
+    if ($matches && @$matches==1) {
+        return $c->redirect_to($matches->[0]->uri($c));
+    }
+    return $c->render_not_found unless @$matches;
+    return $c->render(json => { matches => [ map $_->as_tree(bonsai => 1), @$matches ] } );
 }
 
 1;
