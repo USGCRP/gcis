@@ -55,7 +55,8 @@ CREATE TABLE _report_viewer (
 CREATE TABLE "array" (
     identifier character varying NOT NULL,
     rows_in_header integer DEFAULT 0,
-    rows character varying[]
+    rows character varying[],
+    CONSTRAINT ck_array_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -89,7 +90,8 @@ CREATE TABLE book (
     year numeric,
     publisher character varying,
     number_of_pages numeric,
-    url character varying
+    url character varying,
+    CONSTRAINT ck_book_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -99,7 +101,8 @@ CREATE TABLE chapter (
     title character varying,
     report_identifier character varying NOT NULL,
     number integer,
-    url character varying
+    url character varying,
+    CONSTRAINT ck_chapter_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -112,7 +115,8 @@ CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
     role_type character varying NOT NULL,
-    organization_identifier character varying
+    organization_identifier character varying NOT NULL,
+    CONSTRAINT ck_person_org CHECK (((person_id IS NOT NULL) OR (organization_identifier IS NOT NULL)))
 );
 
 
@@ -130,9 +134,9 @@ ALTER SEQUENCE contributor_id_seq OWNED BY contributor.id;
 
 
 
-CREATE TABLE contributor_role_type (
-    identifier character varying NOT NULL,
-    "table" character varying
+CREATE TABLE country (
+    code character varying(2) NOT NULL,
+    name character varying
 );
 
 
@@ -207,7 +211,8 @@ CREATE TABLE figure (
     create_dt timestamp(3) without time zone,
     source_citation character varying,
     ordinal integer,
-    report_identifier character varying NOT NULL
+    report_identifier character varying NOT NULL,
+    CONSTRAINT ck_figure_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -224,7 +229,8 @@ CREATE TABLE file (
     file_type character varying,
     dir character varying,
     file character varying NOT NULL,
-    identifier character varying NOT NULL
+    identifier character varying NOT NULL,
+    CONSTRAINT ck_file_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -251,7 +257,8 @@ CREATE TABLE finding (
     process character varying,
     evidence character varying,
     uncertainties character varying,
-    confidence character varying
+    confidence character varying,
+    CONSTRAINT ck_finding_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -279,7 +286,8 @@ CREATE TABLE gcmd_keyword (
 
 CREATE TABLE generic (
     identifier character varying NOT NULL,
-    attrs hstore
+    attrs hstore,
+    CONSTRAINT ck_generic_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -298,7 +306,8 @@ CREATE TABLE image (
     lon_min character varying,
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
-    create_dt timestamp(3) without time zone
+    create_dt timestamp(3) without time zone,
+    CONSTRAINT ck_image_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -332,7 +341,8 @@ CREATE TABLE organization (
     identifier character varying NOT NULL,
     name character varying,
     url character varying,
-    country character varying
+    country_code character varying,
+    organization_type_identifier character varying
 );
 
 
@@ -343,20 +353,14 @@ CREATE TABLE organization_type (
 
 
 
-CREATE TABLE organization_type_map (
-    organization_identifier character varying NOT NULL,
-    organization_type_identifier character varying NOT NULL
-);
-
-
-
 CREATE TABLE person (
     id integer NOT NULL,
-    name character varying,
-    address character varying,
-    phone character varying,
-    email character varying,
-    url character varying
+    url character varying,
+    orcid character varying,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    middle_name character varying,
+    CONSTRAINT ck_orcid CHECK (((orcid)::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{4}\Z'::text, NULL::text)))
 );
 
 
@@ -382,24 +386,10 @@ CREATE TABLE publication (
 
 
 
-CREATE TABLE publication_contributor (
-    id integer NOT NULL,
-    publication_id integer,
-    contributor_id integer
+CREATE TABLE publication_contributor_map (
+    publication_id integer NOT NULL,
+    contributor_id integer NOT NULL
 );
-
-
-
-CREATE SEQUENCE publication_contributor_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE publication_contributor_id_seq OWNED BY publication_contributor.id;
 
 
 
@@ -479,7 +469,8 @@ CREATE TABLE reference (
     identifier character varying NOT NULL,
     attrs hstore,
     publication_id integer NOT NULL,
-    child_publication_id integer
+    child_publication_id integer,
+    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -502,7 +493,8 @@ CREATE TABLE report (
     url character varying,
     organization_identifier character varying,
     doi character varying,
-    _public boolean DEFAULT true
+    _public boolean DEFAULT true,
+    CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -547,7 +539,8 @@ CREATE TABLE "table" (
     chapter_identifier character varying,
     ordinal integer,
     title character varying,
-    caption character varying
+    caption character varying,
+    CONSTRAINT ck_table_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -561,7 +554,8 @@ CREATE TABLE webpage (
     identifier character varying NOT NULL,
     url character varying NOT NULL,
     title character varying,
-    access_date timestamp without time zone
+    access_date timestamp without time zone,
+    CONSTRAINT ck_webpage_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -583,10 +577,6 @@ ALTER TABLE ONLY person ALTER COLUMN id SET DEFAULT nextval('person_id_seq'::reg
 
 
 ALTER TABLE ONLY publication ALTER COLUMN id SET DEFAULT nextval('publication_id_seq'::regclass);
-
-
-
-ALTER TABLE ONLY publication_contributor ALTER COLUMN id SET DEFAULT nextval('publication_contributor_id_seq'::regclass);
 
 
 
@@ -644,12 +634,17 @@ ALTER TABLE ONLY chapter
 
 
 ALTER TABLE ONLY contributor
+    ADD CONSTRAINT contributor_person_id_role_type_organization_identifier_key UNIQUE (person_id, role_type, organization_identifier);
+
+
+
+ALTER TABLE ONLY contributor
     ADD CONSTRAINT contributor_pkey PRIMARY KEY (id);
 
 
 
-ALTER TABLE ONLY contributor_role_type
-    ADD CONSTRAINT contributor_role_type_pkey PRIMARY KEY (identifier);
+ALTER TABLE ONLY country
+    ADD CONSTRAINT country_pkey PRIMARY KEY (code);
 
 
 
@@ -714,12 +709,12 @@ ALTER TABLE ONLY journal
 
 
 ALTER TABLE ONLY organization
+    ADD CONSTRAINT organization_name_key UNIQUE (name);
+
+
+
+ALTER TABLE ONLY organization
     ADD CONSTRAINT organization_pkey PRIMARY KEY (identifier);
-
-
-
-ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_pkey PRIMARY KEY (organization_identifier, organization_type_identifier);
 
 
 
@@ -729,12 +724,17 @@ ALTER TABLE ONLY organization_type
 
 
 ALTER TABLE ONLY person
+    ADD CONSTRAINT person_orcid_key UNIQUE (orcid);
+
+
+
+ALTER TABLE ONLY person
     ADD CONSTRAINT person_pkey PRIMARY KEY (id);
 
 
 
-ALTER TABLE ONLY publication_contributor
-    ADD CONSTRAINT publication_contributor_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY publication_contributor_map
+    ADD CONSTRAINT publication_contributor_map_pkey PRIMARY KEY (publication_id, contributor_id);
 
 
 
@@ -843,6 +843,10 @@ ALTER TABLE ONLY webpage
 
 
 
+CREATE UNIQUE INDEX uk_first_last_orcid ON person USING btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)));
+
+
+
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON article FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -852,10 +856,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON chapter FOR
 
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON contributor FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON contributor_role_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -899,10 +899,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_contributor FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_ref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -928,10 +924,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organizatio
 
 
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_type_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -983,10 +975,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON contributor FOR EACH STATEMEN
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON contributor_role_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1027,10 +1015,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMEN
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_contributor FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_ref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1056,10 +1040,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEME
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_type_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1234,17 +1214,12 @@ ALTER TABLE ONLY chapter
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_ibfk_1 FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL;
+    ADD CONSTRAINT contributor_ibfk_1 FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_ibfk_3 FOREIGN KEY (role_type) REFERENCES contributor_role_type(identifier) MATCH FULL;
-
-
-
-ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier);
+    ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1278,6 +1253,11 @@ ALTER TABLE ONLY finding
 
 
 
+ALTER TABLE ONLY organization
+    ADD CONSTRAINT fk_org_country FOREIGN KEY (country_code) REFERENCES country(code);
+
+
+
 ALTER TABLE ONLY gcmd_keyword
     ADD CONSTRAINT fk_parent FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED;
 
@@ -1293,23 +1273,18 @@ ALTER TABLE ONLY image_figure_map
 
 
 
-ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
+ALTER TABLE ONLY organization
+    ADD CONSTRAINT organization_organization_type_identifier_fkey FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier);
 
 
 
-ALTER TABLE ONLY organization_type_map
-    ADD CONSTRAINT organization_type_map_organization_type_fkey FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier) ON DELETE CASCADE;
+ALTER TABLE ONLY publication_contributor_map
+    ADD CONSTRAINT publication_contributor_map_contributor_id_fkey FOREIGN KEY (contributor_id) REFERENCES contributor(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
-ALTER TABLE ONLY publication_contributor
-    ADD CONSTRAINT publication_contributor_ibfk_2 FOREIGN KEY (contributor_id) REFERENCES contributor(id) MATCH FULL;
-
-
-
-ALTER TABLE ONLY publication_contributor
-    ADD CONSTRAINT publication_contributor_ibfk_3 FOREIGN KEY (publication_id) REFERENCES publication(id) MATCH FULL;
+ALTER TABLE ONLY publication_contributor_map
+    ADD CONSTRAINT publication_contributor_map_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

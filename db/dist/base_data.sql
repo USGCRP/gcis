@@ -10,10 +10,26 @@ SET client_min_messages = warning;
 
 
 --
+-- Data for Name: country; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY country (code, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization_type (identifier) FROM stdin;
+\.
+
+
+--
 -- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY organization (identifier, name, url, country) FROM stdin;
+COPY organization (identifier, name, url, country_code, organization_type_identifier) FROM stdin;
 \.
 
 
@@ -98,18 +114,10 @@ COPY book (identifier, title, isbn, year, publisher, number_of_pages, url) FROM 
 
 
 --
--- Data for Name: contributor_role_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY contributor_role_type (identifier, "table") FROM stdin;
-\.
-
-
---
 -- Data for Name: person; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY person (id, name, address, phone, email, url) FROM stdin;
+COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 \.
 
 
@@ -223,22 +231,6 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 
 
 --
--- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization_type (identifier) FROM stdin;
-\.
-
-
---
--- Data for Name: organization_type_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization_type_map (organization_identifier, organization_type_identifier) FROM stdin;
-\.
-
-
---
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
 --
 
@@ -262,18 +254,11 @@ COPY publication (id, publication_type_identifier, fk) FROM stdin;
 
 
 --
--- Data for Name: publication_contributor; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+-- Data for Name: publication_contributor_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_contributor (id, publication_id, contributor_id) FROM stdin;
+COPY publication_contributor_map (publication_id, contributor_id) FROM stdin;
 \.
-
-
---
--- Name: publication_contributor_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('publication_contributor_id_seq', 1, false);
 
 
 --
