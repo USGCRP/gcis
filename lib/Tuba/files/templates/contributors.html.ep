@@ -1,5 +1,6 @@
 
-% my @con = $object->get_publication(autocreate => 1)->contributors;
+% my $pub = $object->get_publication;
+% my @con = $pub ? $pub->contributors : ();
 
 % if (@con) {
     % @con = sort { $a->role_type cmp $b->role_type } @con;

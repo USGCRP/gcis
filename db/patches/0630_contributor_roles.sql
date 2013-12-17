@@ -34,9 +34,9 @@ create table publication_contributor_map (
     publication_id integer not null references publication(id) on delete cascade on update cascade,
     contributor_id integer not null references contributor(id) on delete cascade on update cascade,
     primary key (publication_id, contributor_id)
-)
+);
 
-alter table person add unique (first_name, last_name, ( coalesce(orcid,1)));
+/* alter table person add unique (first_name, last_name, ( coalesce(orcid,1))); */
 
 create unique index uk_first_last_orcid on person (first_name, last_name, ( coalesce(orcid,'null') ) );
 
@@ -47,15 +47,15 @@ update organization as o
     set organization_type_identifier
     = (select organization_type_identifier from organization_type_map m where m.organization_identifier = o.identifier);
 
-drop table organization_type_map
-
-alter table organization add constraint fk_org_country
-    foreign key(country) references country(code);
+drop table organization_type_map;
 
 create table country (
     code varchar(2) not null primary key,
     name varchar
 );
+
+alter table organization add constraint fk_org_country
+    foreign key(country) references country(code);
 
 alter table organization rename column country to country_code;
 

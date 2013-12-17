@@ -9,7 +9,7 @@
 % for my $dataset ($organization->datasets) {
    gcis:dataset "<%= $dataset->identifier %>";
 % }
-% for my $type ($organization->organization_types) {
+% if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
 % for my $report ($organization->reports) {

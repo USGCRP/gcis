@@ -86,13 +86,13 @@ $t->get_ok("/report/animals/chapter/alligators/figure/caimans.nt")
     ->status_is(200)
     ->content_like( qr[Little] );
 
-# Image
+
 $t->post_ok("/image" => \%h
-     => json => { identifier => "XXX-XXX-XXX", title => "fakeimage" } )->status_is(200);
+     => json => { identifier => "be08d5f5-fac1-44a0-9bd3-a3a891c1494a", title => "fakeimage" } )->status_is(200);
 
-$t->get_ok("/image/XXX-XXX-XXX")->status_is(200);
+$t->get_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a")->status_is(200);
 
-$t->get_ok("/image/XXX-XXX-XXX.nt")
+$t->get_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a.nt")
     ->status_is(200)
     ->content_like( qr[fakeimage] );
 
@@ -109,11 +109,11 @@ $t->get_ok("/report/animals/chapter/alligators/table/population.nt")
 
 # Array
 $t->post_ok("/array" => \%h
-     => json => { identifier => "XXX-XXX-XXXX" } )->status_is(200);
+     => json => { identifier => "33ac71cb-b34c-4290-962b-bee1125adf7e" } )->status_is(200);
 
-$t->get_ok("/array/XXX-XXX-XXXX")->status_is(200);
+$t->get_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 
-$t->get_ok("/array/XXX-XXX-XXXX.nt")->status_is(200);
+$t->get_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e.nt")->status_is(200);
 
 # Finding
 $t->post_ok("/report/animals/chapter/alligators/finding" => \%h
@@ -148,7 +148,7 @@ $t->get_ok("/article/gatorade.nt")
 
 # Person
 $t->post_ok("/person" => \%h
-     => json => { name => "Allie" } )->status_is(200);
+     => json => { first_name => "Allie", last_name => "Gator" } )->status_is(200);
 
 my $person = $t->tx->res->json;
 
@@ -186,8 +186,8 @@ $t->get_ok("/reference/ref-ref-ref.nt")
 $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
 $t->delete_ok("/person/$person->{id}")->status_is(200);
-$t->delete_ok("/image/XXX-XXX-XXX")->status_is(200);
-$t->delete_ok("/array/XXX-XXX-XXXX")->status_is(200);
+$t->delete_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a")->status_is(200);
+$t->delete_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
