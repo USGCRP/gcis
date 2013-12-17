@@ -30,6 +30,8 @@ table
   caption            | character varying |           | extended |              | 
  Indexes:
      "table_pkey" PRIMARY KEY, btree (identifier, report_identifier)
+ Check constraints:
+     "ck_table_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Foreign-key constraints:
      "table_chapter_identifier_fkey" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "table_report_identifier_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE

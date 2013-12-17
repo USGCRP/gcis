@@ -446,6 +446,21 @@
 
         <!-- Constraint List -->
         
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>figure Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>ck_figure_identifier</td>
+                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+        </table>
+        
 
         <!-- Foreign Key Discovery -->
         

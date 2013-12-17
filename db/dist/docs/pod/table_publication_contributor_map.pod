@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+publication_contributor_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ publication_id (integer) - 
+ contributor_id (integer) - 
+
+
+=head1 SCHEMA
+
+               Table "gcis_metadata.publication_contributor_map"
+      Column     |  Type   | Modifiers | Storage | Stats target | Description 
+ ----------------+---------+-----------+---------+--------------+-------------
+  publication_id | integer | not null  | plain   |              | 
+  contributor_id | integer | not null  | plain   |              | 
+ Indexes:
+     "publication_contributor_map_pkey" PRIMARY KEY, btree (publication_id, contributor_id)
+ Foreign-key constraints:
+     "publication_contributor_map_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id) ON UPDATE CASCADE ON DELETE CASCADE
+     "publication_contributor_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

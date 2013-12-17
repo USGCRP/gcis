@@ -12,24 +12,29 @@ organization
  identifier (character varying) - 
  name (character varying) - 
  url (character varying) - 
- country (character varying) - 
+ country_code (character varying) - 
+ organization_type_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-                          Table "gcis_metadata.organization"
-    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
- ------------+-------------------+-----------+----------+--------------+-------------
-  identifier | character varying | not null  | extended |              | 
-  name       | character varying |           | extended |              | 
-  url        | character varying |           | extended |              | 
-  country    | character varying |           | extended |              | 
+                                   Table "gcis_metadata.organization"
+             Column            |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------------------------+-------------------+-----------+----------+--------------+-------------
+  identifier                   | character varying | not null  | extended |              | 
+  name                         | character varying |           | extended |              | 
+  url                          | character varying |           | extended |              | 
+  country_code                 | character varying |           | extended |              | 
+  organization_type_identifier | character varying |           | extended |              | 
  Indexes:
      "organization_pkey" PRIMARY KEY, btree (identifier)
+     "organization_name_key" UNIQUE CONSTRAINT, btree (name)
+ Foreign-key constraints:
+     "fk_org_country" FOREIGN KEY (country_code) REFERENCES country(code)
+     "organization_organization_type_identifier_fkey" FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier)
  Referenced by:
-     TABLE "contributor" CONSTRAINT "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier)
+     TABLE "contributor" CONSTRAINT "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "dataset_organization_map" CONSTRAINT "dataset_organization_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE
-     TABLE "organization_type_map" CONSTRAINT "organization_type_map_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE
      TABLE "report" CONSTRAINT "report_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')

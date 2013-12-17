@@ -28,6 +28,8 @@ reference
      "reference_pkey" PRIMARY KEY, btree (identifier)
      "reference_identifier_child_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, child_publication_id)
      "reference_identifier_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, publication_id)
+ Check constraints:
+     "ck_reference_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Foreign-key constraints:
      "reference_child_publication_id_fkey" FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE CASCADE
      "reference_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE

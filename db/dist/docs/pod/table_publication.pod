@@ -28,7 +28,7 @@ publication
  Foreign-key constraints:
      "publication_ibfk_2" FOREIGN KEY (publication_type_identifier) REFERENCES publication_type(identifier) MATCH FULL
  Referenced by:
-     TABLE "publication_contributor" CONSTRAINT "publication_contributor_ibfk_3" FOREIGN KEY (publication_id) REFERENCES publication(id) MATCH FULL
+     TABLE "publication_contributor_map" CONSTRAINT "publication_contributor_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "publication_file_map" CONSTRAINT "publication_file_map_publication_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "publication_gcmd_keyword_map" CONSTRAINT "publication_gcmd_keyword_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "publication_map" CONSTRAINT "publication_map_child_fkey" FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE

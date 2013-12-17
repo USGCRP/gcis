@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.generic">generic</a>
+            <a name="gcis-metadata.table.country">country</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>generic Structure</caption>
+                <caption>country Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,8 +135,8 @@
                   
                 
                 </td>
-                <td>identifier</td>
-                <td>character varying</td>
+                <td>code</td>
+                <td>character varying(2)</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -156,8 +156,8 @@
                 <td>
                 
                 </td>
-                <td>attrs</td>
-                <td>hstore</td>
+                <td>name</td>
+                <td>character varying</td>
                 <td><i>
                 
 
@@ -175,23 +175,13 @@
 
         <!-- Constraint List -->
         
-        <p>&nbsp;</p>
-        <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>generic Constraints</caption>
-            <tr>
-                <th>Name</th>
-                <th>Constraint</th>
-            </tr>
-            
-            <tr class="tr0">
-                <td>ck_generic_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-        </table>
-        
 
         <!-- Foreign Key Discovery -->
+        
+            <p>Tables referencing this one via Foreign Key Constraints:</p>
+        
+                <a href="table_gcis_metadata.organization.html">organization</a><br>
+        
         
 
     <!-- Indexes -->

@@ -156,71 +156,79 @@
                 <td>
                 
                 </td>
-                <td>name</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>address</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>phone</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>email</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
                 <td>url</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>orcid</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>first_name</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                NOT NULL
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>last_name</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                NOT NULL
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>middle_name</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -238,6 +246,21 @@
         
 
         <!-- Constraint List -->
+        
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>person Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>ck_orcid</td>
+                <td>CHECK (((orcid)::text ~ similar_escape(&#39;\A\d{4}-\d{4}-\d{4}-\d{4}\Z&#39;::text, NULL::text)))</td>
+            </tr>
+            
+        </table>
         
 
         <!-- Foreign Key Discovery -->

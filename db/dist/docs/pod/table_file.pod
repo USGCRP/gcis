@@ -27,6 +27,8 @@ file
  Indexes:
      "file_pkey" PRIMARY KEY, btree (identifier)
      "file_file_key" UNIQUE CONSTRAINT, btree (file)
+ Check constraints:
+     "ck_file_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:
      TABLE "publication_file_map" CONSTRAINT "publication_file_map_file_identifier_fkey" FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:

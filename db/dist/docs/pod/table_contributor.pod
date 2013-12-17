@@ -23,15 +23,17 @@ contributor
   id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    |              | 
   person_id               | integer           |                                                          | plain    |              | 
   role_type               | character varying | not null                                                 | extended |              | 
-  organization_identifier | character varying |                                                          | extended |              | 
+  organization_identifier | character varying | not null                                                 | extended |              | 
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
+     "contributor_person_id_role_type_organization_identifier_key" UNIQUE CONSTRAINT, btree (person_id, role_type, organization_identifier)
+ Check constraints:
+     "ck_person_org" CHECK (person_id IS NOT NULL OR organization_identifier IS NOT NULL)
  Foreign-key constraints:
-     "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL
-     "contributor_ibfk_3" FOREIGN KEY (role_type) REFERENCES contributor_role_type(identifier) MATCH FULL
-     "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier)
+     "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE
+     "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Referenced by:
-     TABLE "publication_contributor" CONSTRAINT "publication_contributor_ibfk_2" FOREIGN KEY (contributor_id) REFERENCES contributor(id) MATCH FULL
+     TABLE "publication_contributor_map" CONSTRAINT "publication_contributor_map_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "submitter" CONSTRAINT "submitter_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON contributor FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')

@@ -10,28 +10,32 @@ person
 =head1 FIELDS
 
  id (serial) - 
- name (character varying) - 
- address (character varying) - 
- phone (character varying) - 
- email (character varying) - 
  url (character varying) - 
+ orcid (character varying) - 
+ first_name (character varying) - 
+ last_name (character varying) - 
+ middle_name (character varying) - 
 
 
 =head1 SCHEMA
 
-                                                Table "gcis_metadata.person"
-  Column  |       Type        |                      Modifiers                      | Storage  | Stats target | Description 
- ---------+-------------------+-----------------------------------------------------+----------+--------------+-------------
-  id      | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | 
-  name    | character varying |                                                     | extended |              | 
-  address | character varying |                                                     | extended |              | 
-  phone   | character varying |                                                     | extended |              | 
-  email   | character varying |                                                     | extended |              | 
-  url     | character varying |                                                     | extended |              | 
+                                                  Table "gcis_metadata.person"
+    Column    |       Type        |                      Modifiers                      | Storage  | Stats target | Description 
+ -------------+-------------------+-----------------------------------------------------+----------+--------------+-------------
+  id          | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | 
+  url         | character varying |                                                     | extended |              | 
+  orcid       | character varying |                                                     | extended |              | 
+  first_name  | character varying | not null                                            | extended |              | 
+  last_name   | character varying | not null                                            | extended |              | 
+  middle_name | character varying |                                                     | extended |              | 
  Indexes:
      "person_pkey" PRIMARY KEY, btree (id)
+     "person_orcid_key" UNIQUE CONSTRAINT, btree (orcid)
+     "uk_first_last_orcid" UNIQUE, btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)))
+ Check constraints:
+     "ck_orcid" CHECK (orcid::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{4}\Z'::text, NULL::text))
  Referenced by:
-     TABLE "contributor" CONSTRAINT "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) MATCH FULL
+     TABLE "contributor" CONSTRAINT "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

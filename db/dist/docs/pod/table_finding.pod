@@ -36,6 +36,8 @@ finding
   confidence         | character varying |           | extended |              | Assessment of confidence based on evidence
  Indexes:
      "finding_pkey" PRIMARY KEY, btree (identifier, report_identifier)
+ Check constraints:
+     "ck_finding_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Foreign-key constraints:
      "finding_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier)
      "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE

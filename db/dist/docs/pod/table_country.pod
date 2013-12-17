@@ -1,0 +1,32 @@
+
+=head1 NAME
+
+country
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ code (character varying(2)) - 
+ name (character varying) - 
+
+
+=head1 SCHEMA
+
+                            Table "gcis_metadata.country"
+  Column |         Type         | Modifiers | Storage  | Stats target | Description 
+ --------+----------------------+-----------+----------+--------------+-------------
+  code   | character varying(2) | not null  | extended |              | 
+  name   | character varying    |           | extended |              | 
+ Indexes:
+     "country_pkey" PRIMARY KEY, btree (code)
+ Referenced by:
+     TABLE "organization" CONSTRAINT "fk_org_country" FOREIGN KEY (country_code) REFERENCES country(code)
+ Has OIDs: no
+ 
+
+=cut
+
+
