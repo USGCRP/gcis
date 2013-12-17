@@ -62,4 +62,5 @@
 0630_figure_comment.sql	76a864f8e55760d1ec3b048256998469
 0631_image_update.sql	10715270a4ce6842f7a71b4a0199304e
 0630_contributor_roles.sql	5466f4c79fb821389dd29f971ceca1ce
+0639_cleanup.sql	36a5ec3a34dbd32618d78239b1a12d86
 0640_identifier_checks.sql	b4ae3a7078a8bd99a80896fc934e43ea
