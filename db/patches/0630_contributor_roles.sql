@@ -49,7 +49,7 @@ update organization as o
 
 drop table organization_type_map;
 
-create table country (
+create table if not exists country (
     code varchar(2) not null primary key,
     name varchar
 );
