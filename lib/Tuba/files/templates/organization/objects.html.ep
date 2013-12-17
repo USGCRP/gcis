@@ -29,7 +29,7 @@
             <%= $o->name %>
         </td>
         <td>
-            %= join ',', map $_->identifier, $o->organization_types
+            <%= $o->type %>
         </td>
         <td>
             % for my $c (@{ $o->contributors }) {

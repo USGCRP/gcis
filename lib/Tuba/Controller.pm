@@ -13,6 +13,7 @@ use Tuba::Search;
 use Pg::hstore qw/hstore_encode/;
 use Path::Class qw/file/;
 use Tuba::Log;
+use Tuba::Util qw/nice_db_error/;
 use File::Temp;
 
 =head2 list
@@ -67,6 +68,7 @@ sub show {
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
     $c->stash(relationships => $c->_order_relationships(meta => $meta));
+    $c->stash(cols => $c->_order_columns(meta => $object->meta));
 
     $c->respond_to(
         json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c) ); },
@@ -142,13 +144,17 @@ sub create_form {
     or $c->render(template => "create_form");
 }
 
+sub _default_order {
+  return qw/report_identifier chapter_identifier identifier number ordinal
+    title description caption statement lat_min lat_max lon_min lon_max time_start time_end/;
+}
+
 sub _order_columns {
     # Default ordering; use heuristics to put things first
     my $c = shift;
     my %a = @_;
     my $meta = $a{meta};
-    my @first = qw/report_identifier chapter_identifier identifier number ordinal
-                   title description caption statement lat_min lat_max lon_min lon_max time_start time_end/;
+    my @first = $c->_default_order;
     my @ordered;
     my %col_names = map { $_->name => $_ } $meta->columns;
     for my $name (@first, keys %col_names) {
@@ -177,6 +183,7 @@ sub _redirect_to_view {
     my $c = shift;
     my $object = shift;
     my $url = $object->uri($c);
+    $url->query->param(no_header => 1) if $c->param('no_header');
     return $c->redirect_to( $url );
 }
 
@@ -219,8 +226,10 @@ sub create {
             },
         html => sub {
                 my $c = shift;
-                $c->flash(error => $new->error);
-                $c->redirect_to($object_class->uri($c,{tab => "create_form"}));
+                $c->flash(error => nice_db_error($new->error));
+                my $url = $object_class->uri($c,{tab => "create_form"});
+                $url->query->param(no_header => 1) if $c->param('no_header');
+                $c->redirect_to($url);
             }
         );
 }
@@ -434,6 +443,21 @@ sub update_files_form {
     $c->render(template => "update_files_form");
 }
 
+=head2 update_contributors_form
+
+Form for updating contributors.
+
+=cut
+
+sub update_contributors_form {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $c->stash(object => $object);
+    $c->stash(meta => $object->meta);
+    $c->render(template => "update_contributors_form");
+}
+
+
 =head2 update_files
 
 Update the files.
@@ -526,6 +550,49 @@ sub put_files {
         return $c->render(status => 500, text => $pub->error);
     };
     $c->render(text => "ok");
+}
+
+=head2 update_contributors
+
+Update the contributors associated with this publication.
+
+=cut
+
+sub update_contributors {
+    my $c = shift;
+    my $obj = $c->_this_object;
+    $c->stash(tab => 'update_contributors_form');
+    my $pub = $obj->get_publication(autocreate => 1);
+    $pub->save(audit_user => $c->user) unless $pub->id;
+
+    die "not implemented" if $c->req->json;
+
+    if (my $id = $c->param('delete_contributor')) {
+        PublicationContributorMaps->delete_objects({
+                contributor_id => $id,
+                publication_id => $pub->id,
+            }) or return $c->update_error("Failed to remove contributor");
+        $c->flash(info => "Saved changes.");
+    }
+    my $person = $c->param('person');
+    my $organization = $c->param('organization');
+    return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
+
+    $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
+    $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
+
+    my $role = $c->param('role') or return $c->update_error("missing role");
+    
+    my $contributor = Contributor->new(role_type => $role);
+    $contributor->organization_identifier($organization->identifier) if $organization;
+    $contributor->person_id($person->id) if $person;
+    $contributor->load(speculative => 1)
+        or $contributor->save(audit_user => $c->user)
+        or return $c->update_error($contributor->error);
+    $pub->add_contributors($contributor);
+    $pub->save(audit_user => $c->user) or return $c->update_error($contributor->error);
+    $c->flash(info => "Saved changes.");
+    return $c->redirect_without_error('update_contributors_form');
 }
 
 =head2 update_keywords
@@ -812,10 +879,16 @@ sub set_pages {
     $c->stash(count => $count);
 }
 
+sub update_error {
+    my $c = shift;
+    my $err = shift;
+    return $c->redirect_with_error($c->stash('tab'),$err);
+}
+
 sub redirect_with_error {
     my $c     = shift;
     my $tab   = shift;
-    my $error = shift;
+    my $error = nice_db_error(shift);
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
     $c->flash(error => $error);
     logger->debug("redirecting with error : $error");

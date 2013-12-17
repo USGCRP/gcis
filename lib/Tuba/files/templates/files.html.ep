@@ -1,0 +1,12 @@
+% if (my $pub = $object->get_publication) {
+
+    <center>Files</center>
+    <div class='row well'>
+    <div class='span12'>
+    %= include 'pub_thumbnails', pub => $pub, files => 1;
+    </div>
+    </div>
+
+% }
+
+

@@ -54,5 +54,11 @@ sub _this_object {
     return $obj;
 }
 
+sub _order_columns {
+    my $c = shift;
+    return [ qw/id first_name last_name orcid url/ ] unless $c->current_route =~ /create/;
+    return [ qw/first_name last_name orcid url/ ];
+}
+
 1;
 

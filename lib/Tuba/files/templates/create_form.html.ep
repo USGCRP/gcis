@@ -7,7 +7,7 @@
 
 <div class="row-fluid">
 
-%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well' => enctype => 'multipart/form-data' => begin
+%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well', id => 'create_form', enctype => 'multipart/form-data' => begin
 
 <legend>New <%= $meta->table %></legend>
 
@@ -18,10 +18,11 @@
 % my $cols = stash 'cols';
 % $cols ||= [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
+% $column = $meta->column($column) unless ref $column;
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
     <div class="control-group" style='margin-bottom:2px;'>
-        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= ucfirst $column->name %></label>
+        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
         <div class="controls">
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
@@ -29,7 +30,7 @@
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } else {
-                %= text_field $name, placeholder => $column->type, id => $name, class => 'span5';
+                %= text_field $name, placeholder => $column->type, id => $name, class => 'span8';
             % }
 
             <span class="help-inline">
@@ -44,7 +45,29 @@
     <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
 </div>
 
+%= hidden_field 'no_header' => +(param 'no_header');
+
 %= end
 
 </div>
 
+% if (param 'no_header') {
+% my $target = param 'modalbody';
+%= javascript begin
+
+$(function() {
+    $('#create_form').ajaxForm({
+        target : '#<%= $target %>',
+        success : function(response) {
+            if (response.indexOf('form') < 0) {
+                var dismiss='<button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">continue</button>'
+                $('#<%= $target %>').append('<center>' + dismiss + "</center>");
+            }
+        }
+    });
+
+} );
+
+%= end
+
+% }

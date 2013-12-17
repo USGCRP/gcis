@@ -8,6 +8,7 @@
 % for my $rel (@$rels) {
 % my $method = $rel->name;
 % next if $method =~ /^_/;
+% next if $method eq 'contributors';
 <tr>
 <td><%= $method %></td>
 <td class='row'>

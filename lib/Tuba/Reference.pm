@@ -84,12 +84,12 @@ sub update {
 }
 
 sub smartmatch {
-    # Match this reference to a child publication.
     my $c         = shift;
     my $reference = $c->_this_object;
     $c->app->log->debug("matching [".$reference->attr('reftype')."]");
     my @tables    = map $_->table, @{PublicationTypes->get_objects(all => 1)};
 
+    # Match this reference to a child publication.
     my @try = map $_->{obj}, values %{ $c->orm };
     my $existing = $reference->child_publication;
     if ($existing) {
@@ -118,6 +118,12 @@ sub smartmatch {
         $reference->save(audit_user => $c->user)
             or $c->redirect_with_error(update_rel_form => $reference->error);
     }
+
+    # Match contributors also. TODO
+    ##my @authors = split /\r/, $reference->attr('author');
+    ##do { s/,$// } for @authors;
+    ##$publication->update_contributor_names( authors => \@authors );
+
     $c->respond_to(
       json => sub {
         shift->render(

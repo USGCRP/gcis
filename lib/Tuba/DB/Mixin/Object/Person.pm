@@ -12,7 +12,16 @@ sub foaf_type {
 }
 sub stringify {
     my $c = shift;
+    my %a = @_;
+    if ($a{long} && $c->orcid) {
+        return sprintf ('%s (%s)',$c->name,$c->orcid // 'no orcid');
+    }
     return $c->name;
+}
+
+sub name {
+    my $s = shift;
+    return sprintf('%s %s', $s->first_name // '', $s->last_name // '');
 }
 
 sub uri {

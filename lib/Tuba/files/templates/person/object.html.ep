@@ -5,29 +5,35 @@
 <h2><%= $object->stringify %></h2>
 </center>
 
-%= include 'history_modal';
+% unless (param 'no_header') {
 
-% if (user_can('update')) {
-    <span style='float:right;'>
-    <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
-    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-    </span>
+    %= include 'history_modal';
+
+    % if (user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+    % my $base = url_for('current')->to_abs;
+    % $base =~ s/.html$//;
+
+
+    <pre>
+    <%= include 'other_formats' =%>
+    <%= include 'db_meta'; =%>
+    </pre>
+
 % }
-
-% my $base = url_for('current')->to_abs;
-% $base =~ s/.html$//;
-
-
-<pre>
-<%= include 'other_formats' =%>
-<%= include 'db_meta'; =%>
-</pre>
 
 % my $tree = $object->as_tree;
 <table class='table table-condensed table-bordered table-striped'>
 
 <tr> <td>id</td><td><%= $object->id %></td> </tr>
-<tr> <td>name</td><td><%= $object->name %></td> </tr>
+<tr> <td>orcid</td><td><%= $object->orcid %></td> </tr>
+<tr> <td>first_name</td><td><%= $object->first_name %></td> </tr>
+<tr> <td>last_name</td><td><%= $object->last_name %></td> </tr>
 <tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
 <tr> <td>org</td><td>
 <% for my $o ($object->contributors) { %>
@@ -38,4 +44,23 @@
 </td></tr>
 
 </table>
+
+% unless (param 'no_header') {
+    % my $ctr = $object->contributors;
+    <table class='table table-condensed table-bordered table-striped'>
+        <caption>Contributions</caption>
+        <tr><th>Organization</th><th>Role</th><th>Publications</th>
+        </tr>
+        % for my $ctr (@{ $object->contributors }) {
+        <tr>
+            <td><%= obj_link($ctr->organization) %></td>
+            <td><%= $ctr->role_type %></td>
+            <td><% for my $pub ($ctr->publications) { %>
+                <%= include 'obj_thumbnails', objs => [ $pub->to_object ] %>
+                <% } %>
+            </td>
+        </tr>    
+        % }
+    </table>
+% }
 

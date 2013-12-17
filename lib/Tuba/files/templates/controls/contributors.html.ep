@@ -1,0 +1,18 @@
+
+%= hidden_field 'delete_contributor';
+
+% my @cons = $object->get_publication(autocreate => 1)->contributors;
+<table class='table table-condensed table-bordered'>
+    <tr>
+        <th>Person</th><th>Organization</th><th>Role</th><th></th>
+    </tr>
+% for my $con (@cons) {
+<tr>
+    <td><%= obj_link($con->person, long => 1) %></td>
+    <td><%= obj_link($con->organization) %></td>
+    <td><%= $con->role_type %></td>
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+

@@ -38,5 +38,11 @@ sub stringify {
     return $s->name || $s->identifier;
 }
 
+sub type {
+    my $s = shift;
+    my $t = $s->organization_type or return "";
+    return $t->identifier;
+}
+
 1;
 

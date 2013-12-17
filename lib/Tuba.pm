@@ -135,6 +135,7 @@ sub startup {
             # Return a label for a database column.
             $str =~ s/_identifier//;
             $str =~ s/_dt$/_date/;
+            $str =~ s/_code//;
             $str =~ s/_/ /g;
             return $str;
         });
@@ -242,6 +243,11 @@ sub startup {
             $pub->save(audit_user => $c->user) unless $pub->id;
             return $pub;
         });
+    $app->helper(pl => sub {
+            my $c = shift;
+            my $str = shift;
+            { person => 'people'}->{$str} || "${str}s";
+        });
  
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -319,10 +325,10 @@ sub startup {
       my %defaults = $opts->{defaults} ? %{ $opts->{defaults} } : ();
       if ($opts->{wildcard}) {
         my $reserved = qr[^(?:form/update
-                                (?:_prov|_rel|_files)?
+                                (?:_prov|_rel|_files|_contributors)?
                              |form/create
                              |update
-                                (?:_prov|_rel|_files)?
+                                (?:_prov|_rel|_files|_contributors)?
                              |put_files
                              |history
                            )
@@ -351,6 +357,7 @@ sub startup {
           $authed->get("/form/update_rel/*$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
           $authed->get("/form/update_keywords/*$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/*$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
+          $authed->get("/form/update_contributors/*$identifier" => \%defaults)->to("$cname#update_contributors_form")->name("update_contributors_form_$name");
           $authed->get("/history/*$identifier" => \%defaults)          ->to("$cname#history")    ->name("history_$name");
           $authed->delete("*$identifier" => \%defaults)                ->to("$cname#remove")     ->name("remove_$name");
           $authed->post("*$identifier" => \%defaults)->over(not_match => { $identifier => qr[^(?:prov|rel|files)/] })
@@ -359,6 +366,7 @@ sub startup {
           $authed->post("/rel/*$identifier")       ->to("$cname#update_rel")->name("update_rel_$name");
           $authed->post("/keywords/*$identifier")       ->to("$cname#update_keywords")->name("update_keywords_$name");
           $authed->post("/files/*$identifier")     ->to("$cname#update_files")->name("update_files_$name");
+          $authed->post("/contributors/*$identifier")     ->to("$cname#update_contributors")->name("update_contributors_$name");
           $authed->put("/files/*$identifier/#filename") # a default filename for PUTs would be ambiguous.
                                                    ->to("$cname#put_files")->name("put_files_$name");
       } else {
@@ -367,6 +375,7 @@ sub startup {
           $authed->get("/form/update_rel/:$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
           $authed->get("/form/update_keywords/:$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/:$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
+          $authed->get("/form/update_contributors/:$identifier" => \%defaults)->to("$cname#update_contributors_form")->name("update_contributors_form_$name");
           $authed->get("/history/:$identifier" => \%defaults)    ->to("$cname#history")    ->name("history_$name");
           $authed->delete(":$identifier" => \%defaults)          ->to("$cname#remove")     ->name("remove_$name");
           $authed->post(":$identifier" => \%defaults)            ->to("$cname#update")     ->name("update_$name");
@@ -374,6 +383,7 @@ sub startup {
           $authed->post("/rel/:$identifier" => \%defaults)       ->to("$cname#update_rel")->name("update_rel_$name");
           $authed->post("/keywords/:$identifier" => \%defaults)       ->to("$cname#update_keywords")->name("update_keywords_$name");
           $authed->post("/files/:$identifier" => \%defaults)     ->to("$cname#update_files")->name("update_files_$name");
+          $authed->post("/contributors/:$identifier" => \%defaults)     ->to("$cname#update_contributors")->name("update_contributors_$name");
           $authed->put("/files/:$identifier/#filename" => {filename => 'unnamed', %defaults })
                                                    ->to("$cname#put_files")->name("put_files_$name");
       }

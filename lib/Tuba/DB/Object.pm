@@ -301,7 +301,7 @@ sub new_from_autocomplete {
     my %new;
     @new{@pks} = @keys;
     my $obj = $class->new( %new );
-    $obj->load(speculative => 1);
+    $obj->load(speculative => 1) or return;
     return $obj;
 }
 
@@ -316,6 +316,15 @@ sub keywords {
     my $c = shift;
     my $pub = $c->get_publication or return;
     return $pub->gcmd_keywords;
+}
+
+sub is_publication {
+    my $s = shift;
+    my $class = ref $s || $s;
+    our %_cache;
+
+    $_cache{ $class } //= Tuba::DB::Object::PublicationType::Manager->get_objects_count(query => [table => $s->meta->table]);
+    return $_cache{ $class };
 }
 
 1;

@@ -6,8 +6,10 @@
 <head>
 %= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
 %= stylesheet "/css/gcis.css";
-%= javascript '/mojo/jquery/jquery.js';
+%= javascript "//cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js";
 %= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
+%= javascript "//cdn.jsdelivr.net/jquery.form/3.45/jquery.form.min.js";
+
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
 %= javascript begin
 String.prototype.htmlEscape = function() {
@@ -85,7 +87,7 @@ String.prototype.htmlEscape = function() {
                 </ul>
             </div>
         </div>
-        <div class='container-fluid'>
+        <div class='container-fluid' id='maincontent'>
 % if (my $msg = flash 'message') {
 <div class='alert alert-info'>
 <button type="button" class="close" data-dismiss="alert">&times;</button>

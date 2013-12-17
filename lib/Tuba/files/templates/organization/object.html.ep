@@ -4,23 +4,49 @@
 <h2><%= $object->stringify %></h2>
 </center>
 
-%= include 'history_modal';
+% unless (param 'no_header') {
+    %= include 'history_modal';
 
-% if ($object->can('identifier') && user_can('update')) {
-    <span style='float:right;'>
-    <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
-    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-    </span>
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+    <pre>
+    <%= include 'other_formats'; =%>
+    <%= include 'db_meta'; =%>
+    </pre>
+
 % }
 
-<pre>
-<%= include 'other_formats'; =%>
-<%= include 'db_meta'; =%>
-</pre>
+%= include 'fields';
+
+% unless (param 'no_header') {
+
+    %= include 'relationships';
+
+% }
 
 %= include 'prov';
 
-%= include 'relationships';
-
-%= include 'fields';
+% unless (param 'no_header') {
+    % my $ctr = $object->contributors;
+    <table class='table table-condensed table-bordered table-striped'>
+        <caption>Contributions</caption>
+        <tr><th>Person</th><th>Role</th><th>Publications</th>
+        </tr>
+        % for my $ctr (@{ $object->contributors }) {
+        <tr>
+            <td><%= obj_link($ctr->person) %></td>
+            <td><%= $ctr->role_type %></td>
+            <td><% for my $pub ($ctr->publications) { %>
+                <%= include 'obj_thumbnails', objs => [ $pub->to_object ] %>
+                <% } %>
+            </td>
+        </tr>    
+        % }
+    </table>
+% }
 

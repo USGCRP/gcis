@@ -62,8 +62,7 @@ sub autocomplete_str_to_object {
                    \]
                   /x;
     return unless $type;
-    my $table = PublicationType->new(identifier => $type)->load->table or die "no table for $type";
-    my $class = $c->orm->{$table}->{obj} or die "no class for $table";
+    my $class = $c->orm->{$type}->{obj} or die "no class for $type";
     return $class->new_from_autocomplete($str);
 }
 

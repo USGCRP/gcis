@@ -1,0 +1,62 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+<div class='row-fluid'>
+
+%= include 'update_tabs', active => 'contributors';
+
+<div class='tab-content'>
+
+%= form_for obj_uri_for($object,'update_contributors') => class => 'form-horizontal well' => method => 'POST'  => begin
+
+% if (my $error = (flash 'error') || (stash 'error')) {
+<div class='alert alert-error'><%= $error %>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+</div>
+% }
+% if (my $info = (flash 'info') || (stash 'info')) {
+<div class='alert alert-success'><b><%= $info %></b>
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+</div>
+% }
+
+%= include 'controls/contributors';
+
+%= label_for 'person', class => 'control-label' => begin
+Person
+%= end
+<div class='controls'>
+    %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
+    <a href="#create_person" role="button" class="btn" data-toggle="modal">Create person</a>
+    %= include 'modal', url => url_for('create_form_person'), id => 'create_person'
+</div>
+
+%= label_for 'organization', class => 'control-label' => begin
+Organization
+%= end
+<div class='controls'>
+    %= include 'controls/autocomplete', input_name => 'organization', object_type => 'organization'
+    <a href="#create_organization" role="button" class="btn" data-toggle="modal">Create organization</a>
+    %= include 'modal', url => url_for('create_form_organization'), id => 'create_organization'
+</div>
+
+%= label_for 'role', class => 'control-label' => begin
+Role
+%= end
+<div class='controls'>
+    %= select_field 'role', [ 'author', 'convening lead author', 'lead author', 'contributing author' ], class => 'span8';
+</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn">Reset</button>
+</div>
+
+%= end
+
+</div>
+</div>
+
+

@@ -57,7 +57,36 @@ sub update_rel {
     return $c->redirect_to($next);
 }
 
+sub _default_order {
+    return ( qw/identifier name organization_type_identifier country url/ );
+}
 
+sub create_form {
+    my $c = shift;
+    $c->stash(
+      controls => {
+        organization_type_identifier => sub {
+          my $c = shift;
+          +{
+            template => 'select',
+            params   => { values => [sort map $_->identifier, @{ OrganizationTypes->get_objects(all => 1) }], }
+           };
+          },
+      country_code => sub {
+          my $c = shift;
+          +{
+            template => 'select',
+            params   => {
+                values => [sort { $a->[0] cmp $b->[0] }
+                map [ $_->name, $_->code ], @{ Countrys->get_objects(all => 1) }],
+                value => "US",
+              }
+           };
+      },
+    },
+    );
+    $c->SUPER::create_form(@_);
+}
 
 1;
 

@@ -11,7 +11,7 @@
 %   param $input_name => $input_value;
 % }
 
-%= text_field $input_name, id => $input_name, class => 'span8', placeholder => 'search '.( $object_type eq 'all' ? 'all' : $object_type.'s');
+%= text_field $input_name, id => $input_name, class => 'span8', placeholder => 'search '.( $object_type eq 'all' ? 'all' : pl($object_type));
 
 %= javascript begin
 $('#<%= $input_name %>').typeahead({

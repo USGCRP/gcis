@@ -1,7 +1,9 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
 
-% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
+% my $cols = ( stash 'cols' ) || [ sort {$a->name cmp $b->name} $meta->columns ];
+% for my $col (@$cols) {
+% $col = $meta->column($col) unless ref($col);
 % next if $col->name =~ /^_/;
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;

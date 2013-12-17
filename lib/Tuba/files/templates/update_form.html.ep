@@ -29,6 +29,7 @@
 
 % my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
+% $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
         <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
         <div class="controls">
