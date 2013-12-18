@@ -10,7 +10,7 @@
 <tr>
     <td><%= obj_link($con->person, long => 1) %></td>
     <td><%= obj_link($con->organization) %></td>
-    <td><%= $con->role_type %></td>
+    <td><%= $con->role_type->label %></td>
 <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }

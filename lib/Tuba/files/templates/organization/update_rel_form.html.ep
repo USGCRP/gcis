@@ -1,0 +1,72 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+% my $controls = stash 'controls' || {};
+
+%= include 'update_tabs', active => 'rel';
+
+<div class='tab-content'>
+
+%= form_for obj_uri_for($object,'update_rel') => autocomplete => 'off', class => 'form-horizontal well' => method => 'POST' => begin
+%= include 'messages';
+
+% my @ctrs = $organization->contributors;
+
+%= hidden_field 'delete_contributor';
+%= hidden_field 'contributor_id';
+%= hidden_field 'delete_publication';
+
+<table class='table table-condensed table-bordered table-striped'>
+    <caption>Contributions</caption>
+    % for my $c (sort {$a->role_type_identifier cmp $b->role_type_identifier} @ctrs) {
+        <tr>
+            <td><%= $c->role_type->label %></td>
+            <td><%= obj_link($c->person) %></td>
+            <td><%= tag 'button' => class => 'btn btn-danger squeezevert'
+                => onClick => qq[{this.form.elements["delete_contributor"].value = '].
+                       $c->id.qq['; this.form.submit(); }] => begin %>remove role, person, and publications<%= end %></td>
+        </tr>
+        % for my $pub  ($c->publications) {
+            <tr>
+                <td></td>
+                <td><%= include obj_thumbnails => objs => [ $pub->to_object ] %></td>
+                <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
+                    onClick => qq[{this.form.elements["contributor_id"].value = '].$c->id.
+                    qq[';this.form.elements["delete_publication"].value = '].$pub->id.
+                    qq[';this.form.submit(); }] => begin %>remove publication<%= end %></td>
+            </tr>
+        % }
+    % }
+
+</table>
+
+%= label_for 'role_type', class => 'control-label' => begin
+Role
+%= end
+<div class='controls'>
+    %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+</div>
+%= label_for 'person', class => 'control-label' => begin
+Person
+%= end
+<div class='controls'>
+    %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
+</div>
+%= label_for 'publication', class => 'control-label' => begin
+Publication
+%= end
+<div class='controls'>
+    %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
+</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn">Reset</button>
+</div>
+
+%= end
+
+</div>
+

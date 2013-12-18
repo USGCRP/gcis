@@ -33,6 +33,8 @@
 
 % unless (param 'no_header') {
     % my $ctr = $object->contributors;
+    <div class='row collapse-wrapper'>
+    %= include 'collapsible', row_content => begin
     <table class='table table-condensed table-bordered table-striped'>
         <caption>Contributions</caption>
         <tr><th>Person</th><th>Role</th><th>Publications</th>
@@ -40,7 +42,7 @@
         % for my $ctr (@{ $object->contributors }) {
         <tr>
             <td><%= obj_link($ctr->person) %></td>
-            <td><%= $ctr->role_type %></td>
+            <td><%= $ctr->role_type->label %></td>
             <td><% for my $pub ($ctr->publications) { %>
                 <%= include 'obj_thumbnails', objs => [ $pub->to_object ] %>
                 <% } %>
@@ -48,5 +50,6 @@
         </tr>    
         % }
     </table>
+    %= end
 % }
 

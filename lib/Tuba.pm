@@ -248,7 +248,14 @@ sub startup {
             my $str = shift;
             { person => 'people'}->{$str} || "${str}s";
         });
- 
+    $app->helper(db_labels => sub {
+            my $c = shift;
+            my $table = shift;
+            return [ map [ $_->label, $_->identifier ],
+                @{ $c->orm->{$table}->{mng}->get_objects(all => 1) } ];
+            return [1,2,3];
+        }); 
+
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;

@@ -86,5 +86,52 @@ sub lookup_name {
     return $c->render(json => { matches => [ map $_->as_tree(bonsai => 1), @$matches ] } );
 }
 
+=head2 update_rel
+
+Update the relationships.
+
+=cut
+
+sub update_rel {
+    my $c = shift;
+    my $person = $c->_this_object;
+    my $next = $person->uri($c,{tab => 'update_rel_form'});
+    $c->stash(tab => "update_rel_form");
+    my $json = $c->req->json;
+
+    if (my $pub_id = $json->{delete_publication} || $c->param('delete_publication')) {
+        my $con_id = $json->{contributor_id} || $c->param('contributor_id');
+        die "person does not match contributor" unless Contributor->new(id => $con_id)->load->person_id == $person->id;
+        PublicationContributorMaps->delete_objects({
+                contributor_id => $con_id,
+                publication_id => $pub_id,
+            }) or return $c->update_error("Failed to remove publication");
+    } elsif (my $id = $json->{delete_contributor} || $c->param('delete_contributor')) {
+        die "person does not match contributor" unless Contributor->new(id => $id)->load->person_id == $person->id;
+        Contributors->delete_objects({ id => $id })
+            or return $c->update_error("Failed to remove contributor");
+        $c->flash(info => "Saved changes.");
+    }
+
+    if (my $org = $c->param('organization')) {
+        my $organization = Organization->new_from_autocomplete($org) or return $c->update_error("failed to find org $org");
+        my $obj = $c->param('publication') or return $c->update_error("Missing publication");
+        $obj = $c->str_to_obj($obj) or return $c->update_error("No match for $obj");
+        my $pub = $obj->get_publication(autocreate => 1);
+        $pub->save(audit_user => $c->user) unless $pub->id;
+        my $role_type = $c->param('role_type');
+        my $ctr = Contributor->new(
+          role_type_identifier    => $role_type,
+          person_id               => $person->id,
+          organization_identifier => $organization->identifier
+        );
+        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error); 
+        $ctr->add_publications($pub);
+        $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error);
+    }
+
+    $c->redirect_to($next);
+}
+
 1;
 

@@ -5,7 +5,7 @@ sub stringify {
     my $c = shift;
     my $person = $c->person;
     my $org = $c->organization;
-    my $role =  $c->role_type;
+    my $role =  $c->role_type->label;
     if ($person && $org) {
         return sprintf('%s : %s (%s) ',$role, $person->stringify, $org->stringify );
     }

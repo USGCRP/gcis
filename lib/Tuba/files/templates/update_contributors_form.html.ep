@@ -46,7 +46,7 @@ Organization
 Role
 %= end
 <div class='controls'>
-    %= select_field 'role', [ 'author', 'convening lead author', 'lead author', 'contributing author' ], class => 'span8';
+    %= select_field 'role', db_labels('role_type'), class => 'span8';
 </div>
 
 <div class="form-actions">
