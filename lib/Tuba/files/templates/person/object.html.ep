@@ -31,7 +31,15 @@
 <table class='table table-condensed table-bordered table-striped'>
 
 <tr> <td>id</td><td><%= $object->id %></td> </tr>
-<tr> <td>orcid</td><td><%= $object->orcid %></td> </tr>
+<tr> <td>orcid</td>
+    <td>
+        % if ($person->orcid) {
+        %= link_to "http://orcid.org/".$person->orcid => begin
+        %= $person->orcid
+        %= end
+        % }
+    </td>
+</tr>
 <tr> <td>first_name</td><td><%= $object->first_name %></td> </tr>
 <tr> <td>last_name</td><td><%= $object->last_name %></td> </tr>
 <tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
