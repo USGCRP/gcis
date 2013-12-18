@@ -232,9 +232,14 @@ information :
     - a list of parent publications
     - a list of files
     - a list of gcmd keywords
+    - a list of contributors (if this is a publication)
+    - a list of publications for each contributor record (if this is a contributor)
 
 The parameter 'c' should have a controller object
 (so that we can look up a URL for an object).
+
+Pass the parameter bonsai => 1 to make a little tree
+without the stuff above.
 
 =cut
 
@@ -266,6 +271,17 @@ sub as_tree {
     $tree->{uri} //= $s->uri($c) if $c;
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
+    }
+    if ($c && !$bonsai && $tree->{contributors}) {
+        for my $t (@{ $tree->{contributors} }) {
+            $t->{publications} = [ map {uri => $_->to_object->uri($c)}, Tuba::DB::Object::Contributor->new(id => $t->{id})->load->publications ];
+        }
+    }
+    if ($c && !$bonsai) {
+        if (my $p = $s->get_publication) {
+            my @ctrs = $p->contributors;
+            $tree->{contributors} = [ map +{uri => $_->uri($c)}, @ctrs ];
+        }
     }
     return $tree;
 }
