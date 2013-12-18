@@ -122,10 +122,22 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 
 
 --
+-- Data for Name: role_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY role_type (identifier, label) FROM stdin;
+author	Author
+lead_author	Lead Author
+convening_lead_author	Conventing Lead Author
+contributing_author	Contributing Author
+\.
+
+
+--
 -- Data for Name: contributor; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY contributor (id, person_id, role_type, organization_identifier) FROM stdin;
+COPY contributor (id, person_id, role_type_identifier, organization_identifier) FROM stdin;
 \.
 
 

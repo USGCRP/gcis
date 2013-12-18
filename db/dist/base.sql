@@ -114,7 +114,7 @@ COMMENT ON COLUMN chapter.identifier IS 'A unique identifier for the chapter.';
 CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
-    role_type character varying NOT NULL,
+    role_type_identifier character varying NOT NULL,
     organization_identifier character varying NOT NULL,
     CONSTRAINT ck_person_org CHECK (((person_id IS NOT NULL) OR (organization_identifier IS NOT NULL)))
 );
@@ -503,6 +503,13 @@ COMMENT ON COLUMN report.identifier IS 'A unique identifier for the report.';
 
 
 
+CREATE TABLE role_type (
+    identifier character varying NOT NULL,
+    label character varying NOT NULL
+);
+
+
+
 CREATE TABLE submitter (
     id integer NOT NULL,
     person_id integer,
@@ -634,7 +641,7 @@ ALTER TABLE ONLY chapter
 
 
 ALTER TABLE ONLY contributor
-    ADD CONSTRAINT contributor_person_id_role_type_organization_identifier_key UNIQUE (person_id, role_type, organization_identifier);
+    ADD CONSTRAINT contributor_person_id_role_type_organization_identifier_key UNIQUE (person_id, role_type_identifier, organization_identifier);
 
 
 
@@ -800,6 +807,11 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY report
     ADD CONSTRAINT report_url_key UNIQUE (url);
+
+
+
+ALTER TABLE ONLY role_type
+    ADD CONSTRAINT role_type_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1260,6 +1272,11 @@ ALTER TABLE ONLY organization
 
 ALTER TABLE ONLY gcmd_keyword
     ADD CONSTRAINT fk_parent FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED;
+
+
+
+ALTER TABLE ONLY contributor
+    ADD CONSTRAINT fk_role_type FOREIGN KEY (role_type_identifier) REFERENCES role_type(identifier);
 
 
 

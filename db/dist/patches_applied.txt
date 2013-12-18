@@ -65,3 +65,4 @@
 0638_cleanup.sql	ad00ee7e44f3574d63cebe1537bcf549
 0639_cleanup.sql	36a5ec3a34dbd32618d78239b1a12d86
 0640_identifier_checks.sql	b4ae3a7078a8bd99a80896fc934e43ea
+0650_role_types.sql	627e7302df195d22340c00f0ff2fad1d
