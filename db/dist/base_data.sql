@@ -126,10 +126,8 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label) FROM stdin;
-author	Author
-lead_author	Lead Author
-convening_lead_author	Conventing Lead Author
-contributing_author	Contributing Author
+data_producer	Data Producer
+data_archive	Data Archive
 \.
 
 
