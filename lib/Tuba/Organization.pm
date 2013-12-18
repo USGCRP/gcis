@@ -39,8 +39,8 @@ sub update_rel {
         $c->flash(info => "Saved changes.");
     }
 
-    if (my $person = $c->param('person')) {
-        my $person = Person->new_from_autocomplete($person) or return $c->update_error("failed to find person $person");
+    if (my $obj = $c->param('publication')) {
+        my $person = Person->new_from_autocomplete($c->param('person') // '');
         my $obj = $c->param('publication') or return $c->update_error("Missing publication");
         $obj = $c->str_to_obj($obj) or return $c->update_error("No match for $obj");
         my $pub = $obj->get_publication(autocreate => 1);
@@ -48,7 +48,7 @@ sub update_rel {
         my $role_type = $c->param('role_type');
         my $ctr = Contributor->new(
           role_type_identifier    => $role_type,
-          person_id               => $person->id,
+          person_id               => $person ? $person->id : undef,
           organization_identifier => $org->identifier
         );
         $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error); 

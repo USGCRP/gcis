@@ -6,9 +6,9 @@
 %# % for my $contributor ($organization->contributor) {
 %# gcis:contributor "<%= $contributor->identifier %>";
 %# % }
-% for my $dataset ($organization->datasets) {
-   gcis:dataset "<%= $dataset->identifier %>";
-% }
+%# for my $dataset ($organization->datasets) {
+%#   gcis:dataset "<%= $dataset->identifier %>";
+%# }
 % if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
