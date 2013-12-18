@@ -34,7 +34,7 @@
 <tr> <td>orcid</td>
     <td>
         % if ($person->orcid) {
-        %= link_to "http://orcid.org/".$person->orcid => begin
+        %= link_to "http://orcid.org/".$person->orcid => target => 'blank' => begin
         %= $person->orcid
         %= end
         % }
