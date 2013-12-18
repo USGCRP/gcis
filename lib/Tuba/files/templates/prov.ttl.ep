@@ -1,13 +1,20 @@
 % my $pub = $object->get_publication;
-% my @parents = ();
-% @parents = $pub->get_parents if $pub;
-
-% if (@parents) {
+% if ($pub) {
+    % my @parents = $pub->get_parents;
+    % my @parents_with_references = $pub->get_parents_with_references;
+    % if (@parents) {
 <<%= current_resource %>> 
-% }
-% for (0..$#parents) {
-%   my $p = $parents[$_];
-    <%= $p->{relationship} %> <<%= $p->{publication}->to_object->uri($self)->to_abs %>> <%= $_ == $#parents ? '.' : ';' %>
-% }
+    % }
+    % for (0..$#parents) {
+    %   my $p = $parents[$_];
+        <%= $p->{relationship} %> <<%= uri($p->{publication}->to_object) %>> <%= $_ == $#parents ? '.' : ';' %>
+    % }
+    % if (@parents_with_references) {
+<<%= current_resource %>> 
+    % }
+    % for (0..$#parents_with_references) {
+    %   my $p = $parents_with_references[$_];
+        cito:isCitedBy <<%= uri($p->{parent}->to_object) %>> <%= $_ == $#parents_with_references ? '.' : ';' %>
+    % }
 
-
+% }

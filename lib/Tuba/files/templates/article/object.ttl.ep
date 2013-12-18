@@ -11,10 +11,10 @@
 %#   cito:isCitedBy "<%= obj_link($parent->{article}) %>";
 %#    % }
 
-% my @parents_with_references;
-% if (my $pub = $object->get_publication) {
-%   @parents_with_references = $pub->get_parents_with_references;
-% }
+%# my @parents_with_references;
+%# if (my $pub = $object->get_publication) {
+%#   @parents_with_references = $pub->get_parents_with_references;
+%# }
 
 %# % for my $chapter ($article->get_parents_with_references) {
 %#   cito:isCitedBy <%= obj_link($parent->{article}) %>;
