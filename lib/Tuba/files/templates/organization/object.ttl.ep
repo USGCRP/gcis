@@ -15,7 +15,9 @@
 % for my $report ($organization->reports) {
    prov:wasAssociatedWith "<%= $report->identifier %>";
 % }
-   dwc:countryCode "<%= $organization->country %>";
+% if (my $country = $organization->country) {
+   dwc:countryCode "<%= $country->code %>";
+% }
    dcterms:identifier "<%= $organization->identifier %>";
    foaf:name "<%= $organization->name %>";
    rdfs:label "<%= $organization->name %>";
