@@ -72,6 +72,7 @@ db/dist/docs/html/table_gcis_metadata.book.html
 db/dist/docs/html/table_gcis_metadata.chapter.html
 db/dist/docs/html/table_gcis_metadata.contributor.html
 db/dist/docs/html/table_gcis_metadata.contributor_role_type.html
+db/dist/docs/html/table_gcis_metadata.country.html
 db/dist/docs/html/table_gcis_metadata.dataset.html
 db/dist/docs/html/table_gcis_metadata.dataset_lineage.html
 db/dist/docs/html/table_gcis_metadata.dataset_organization.html
@@ -98,6 +99,7 @@ db/dist/docs/html/table_gcis_metadata.organization_type_map.html
 db/dist/docs/html/table_gcis_metadata.person.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
+db/dist/docs/html/table_gcis_metadata.publication_contributor_map.html
 db/dist/docs/html/table_gcis_metadata.publication_file_map.html
 db/dist/docs/html/table_gcis_metadata.publication_gcmd_keyword_map.html
 db/dist/docs/html/table_gcis_metadata.publication_map.html
@@ -106,6 +108,7 @@ db/dist/docs/html/table_gcis_metadata.publication_type.html
 db/dist/docs/html/table_gcis_metadata.ref_type.html
 db/dist/docs/html/table_gcis_metadata.reference.html
 db/dist/docs/html/table_gcis_metadata.report.html
+db/dist/docs/html/table_gcis_metadata.role_type.html
 db/dist/docs/html/table_gcis_metadata.submitter.html
 db/dist/docs/html/table_gcis_metadata.subpubref.html
 db/dist/docs/html/table_gcis_metadata.table.html
@@ -120,6 +123,7 @@ db/dist/docs/pod/table_book.pod
 db/dist/docs/pod/table_chapter.pod
 db/dist/docs/pod/table_contributor.pod
 db/dist/docs/pod/table_contributor_role_type.pod
+db/dist/docs/pod/table_country.pod
 db/dist/docs/pod/table_dataset.pod
 db/dist/docs/pod/table_dataset_lineage.pod
 db/dist/docs/pod/table_dataset_organization.pod
@@ -146,6 +150,7 @@ db/dist/docs/pod/table_organization_type_map.pod
 db/dist/docs/pod/table_person.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
+db/dist/docs/pod/table_publication_contributor_map.pod
 db/dist/docs/pod/table_publication_file_map.pod
 db/dist/docs/pod/table_publication_gcmd_keyword_map.pod
 db/dist/docs/pod/table_publication_map.pod
@@ -154,6 +159,7 @@ db/dist/docs/pod/table_publication_type.pod
 db/dist/docs/pod/table_ref_type.pod
 db/dist/docs/pod/table_reference.pod
 db/dist/docs/pod/table_report.pod
+db/dist/docs/pod/table_role_type.pod
 db/dist/docs/pod/table_submitter.pod
 db/dist/docs/pod/table_subpubref.pod
 db/dist/docs/pod/table_table.pod
@@ -222,10 +228,20 @@ db/patches/0590_journal.sql
 db/patches/0600_report.sql
 db/patches/0610_book.sql
 db/patches/0620_columns.sql
+db/patches/0630_contributor_roles.sql
+db/patches/0630_figure_comment.sql
+db/patches/0631_image_update.sql
+db/patches/0638_cleanup.sql
+db/patches/0639_cleanup.sql
+db/patches/0640_identifier_checks.sql
+db/patches/0650_role_types.sql
+db/patches/0660_more_role_types.sql
+db/patches/0670_drop_dataset_org.sql
 eg/atrac_upload.html
 eg/client.pl
 eg/compare.pl
 eg/image-meta.pl
+eg/import_countries.pl
 eg/import_gcmd_keywords
 eg/import_keywords
 eg/journal_images.pl
@@ -250,6 +266,7 @@ lib/Tuba/DB/Mixin/Object/Book.pm
 lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
 lib/Tuba/DB/Mixin/Object/Contributor.pm
+lib/Tuba/DB/Mixin/Object/Country.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
 lib/Tuba/DB/Mixin/Object/Figure/Manager.pm
 lib/Tuba/DB/Mixin/Object/File.pm
@@ -278,6 +295,14 @@ lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
+lib/Tuba/files/public/apple-touch-icon-114x114.png
+lib/Tuba/files/public/apple-touch-icon-120x120.png
+lib/Tuba/files/public/apple-touch-icon-144x144.png
+lib/Tuba/files/public/apple-touch-icon-152x152.png
+lib/Tuba/files/public/apple-touch-icon-57x57.png
+lib/Tuba/files/public/apple-touch-icon-72x72.png
+lib/Tuba/files/public/apple-touch-icon-76x76.png
+lib/Tuba/files/public/apple-touch-icon.png
 lib/Tuba/files/public/blank.png
 lib/Tuba/files/public/client/js/google/Code.gs
 lib/Tuba/files/public/client/js/google/Demo.gs
@@ -285,6 +310,7 @@ lib/Tuba/files/public/client/js/google/menu_item_1.gs
 lib/Tuba/files/public/client/js/google/menu_item_2.gs
 lib/Tuba/files/public/client/js/google/menuitems.json
 lib/Tuba/files/public/css/gcis.css
+lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/sparql.js
 lib/Tuba/files/public/test.html
@@ -298,10 +324,14 @@ lib/Tuba/files/templates/auth/login_key.html.ep
 lib/Tuba/files/templates/auth/login_key.yaml.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
+lib/Tuba/files/templates/book/object.ttl.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
 lib/Tuba/files/templates/collapsible.html.ep
+lib/Tuba/files/templates/contributors.html.ep
 lib/Tuba/files/templates/controls/arrays.html.ep
 lib/Tuba/files/templates/controls/autocomplete.html.ep
+lib/Tuba/files/templates/controls/contributors.html.ep
+lib/Tuba/files/templates/controls/contributors.sql
 lib/Tuba/files/templates/controls/datasets.html.ep
 lib/Tuba/files/templates/controls/figure.html.ep
 lib/Tuba/files/templates/controls/file.html.ep
@@ -328,6 +358,7 @@ lib/Tuba/files/templates/figure/object.ttl.ep
 lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/file/objects.html.ep
+lib/Tuba/files/templates/files.html.ep
 lib/Tuba/files/templates/finding/object.ttl.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
@@ -348,6 +379,8 @@ lib/Tuba/files/templates/journal/objects.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
 lib/Tuba/files/templates/list_formats.html.ep
+lib/Tuba/files/templates/messages.html.ep
+lib/Tuba/files/templates/modal.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/obj_thumbnails.html.ep
 lib/Tuba/files/templates/object.html.ep
@@ -357,12 +390,14 @@ lib/Tuba/files/templates/opensearch.xml.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/pager.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/object.ttl.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
+lib/Tuba/files/templates/person/update_rel_form.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.ep
 lib/Tuba/files/templates/pub_thumbnails.html.ep
@@ -376,6 +411,7 @@ lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/table/object.ttl.ep
 lib/Tuba/files/templates/table/objects.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
+lib/Tuba/files/templates/update_contributors_form.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
 lib/Tuba/files/templates/update_prov_form.html.ep
@@ -383,6 +419,7 @@ lib/Tuba/files/templates/update_rel_form.html.ep
 lib/Tuba/files/templates/update_tabs.html.ep
 lib/Tuba/files/templates/view_array.html.ep
 lib/Tuba/files/templates/watch.html.ep
+lib/Tuba/files/templates/webpage/object.ttl.ep
 lib/Tuba/Finding.pm
 lib/Tuba/Gcmdkeyword.pm
 lib/Tuba/Generic.pm
@@ -404,6 +441,7 @@ lib/Tuba/Reference.pm
 lib/Tuba/Report.pm
 lib/Tuba/Search.pm
 lib/Tuba/Table.pm
+lib/Tuba/Util.pm
 lib/Tuba/Webpage.pm
 Makefile.PL
 MANIFEST			This list of files
