@@ -16,7 +16,6 @@
     <th>name</th>
     <th>types</th>
     <th>people</th>
-    <th>datasets</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -32,13 +31,11 @@
             <%= $o->type %>
         </td>
         <td>
+            % my %seen;
             % for my $c (@{ $o->contributors }) {
-    <span class='btn squeezevert'><%= obj_link($c->person) %></span>
-            % }
-        </td>
-        <td>
-            % for my $d (@{ $o->datasets }) {
-    <span class='btn squeezevert'><%= obj_link($d) %></span>
+            % my $person = $c->person or next;
+            % next if $seen{$person->id}++;
+    <span class='btn squeezevert'><%= obj_link($person) %></span>
             % }
         </td>
     </tr>
