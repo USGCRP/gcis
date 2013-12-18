@@ -29,6 +29,10 @@
 
 %= include 'prov';
 
+<div class='row collapse-wrapper'>
+%= include 'collapsible', row_content => begin
 %= include 'contributors';
+%= end
+</div>
 
 %= include 'files';

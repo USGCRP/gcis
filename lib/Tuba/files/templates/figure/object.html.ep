@@ -48,7 +48,11 @@
 
 %= include 'prov';
 
+<div class='row' style='position:relative;'>
+%= include 'collapsible', row_content => begin
 %= include 'contributors';
+%= end
+</div>
 
 % if (my $pub = $object->get_publication) {
 <center>Files</center>
