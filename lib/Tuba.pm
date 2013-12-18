@@ -112,6 +112,13 @@ sub startup {
     $app->helper(all_reports => sub {
             return @{ Tuba::DB::Object::Report::Manager->get_objects(all => 1, sort_by => 'identifier') };
         });
+    $app->helper(default_report => sub {
+            my $c = shift;
+            my $obj;
+            $obj = Tuba::DB::Object::Report->new(identifier => 'nca3')->load(speculative => 1) and return $obj;
+            $obj = Tuba::DB::Object::Report->new(identifier => 'nca3draft')->load(speculative => 1) and return $obj;
+            return Tuba::DB::Object::Report->new(identifier => 'no default report');
+        });
     $app->helper(current_report => sub {
             my $c = shift;
             my $identifier = shift || $c->stash('report_identifier') || $c->session('report_identifier') || 'nca3draft';
