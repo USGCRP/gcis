@@ -187,13 +187,6 @@ ALTER SEQUENCE dataset_lineage_id_seq OWNED BY dataset_lineage.id;
 
 
 
-CREATE TABLE dataset_organization_map (
-    dataset_identifier character varying NOT NULL,
-    organization_identifier character varying NOT NULL
-);
-
-
-
 CREATE TABLE figure (
     identifier character varying NOT NULL,
     chapter_identifier character varying,
@@ -660,11 +653,6 @@ ALTER TABLE ONLY dataset_lineage
 
 
 
-ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_pkey PRIMARY KEY (dataset_identifier, organization_identifier);
-
-
-
 ALTER TABLE ONLY dataset
     ADD CONSTRAINT dataset_pkey PRIMARY KEY (identifier);
 
@@ -879,10 +867,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_lin
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset_organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON figure FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -975,6 +959,10 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON book FOR EA
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_contributor_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -992,10 +980,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset FOR EACH STATEMENT EX
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset_lineage FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON dataset_organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1088,6 +1072,10 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON webpage FOR EACH STATEMENT EX
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON book FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_contributor_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1232,16 +1220,6 @@ ALTER TABLE ONLY contributor
 
 ALTER TABLE ONLY contributor
     ADD CONSTRAINT contributor_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-
-ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_ibfk_1 FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON DELETE CASCADE;
-
-
-
-ALTER TABLE ONLY dataset_organization_map
-    ADD CONSTRAINT dataset_organization_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
 
 
 

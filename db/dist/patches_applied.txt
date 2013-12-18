@@ -67,3 +67,4 @@
 0640_identifier_checks.sql	b4ae3a7078a8bd99a80896fc934e43ea
 0650_role_types.sql	627e7302df195d22340c00f0ff2fad1d
 0660_more_role_types.sql	1fdba88f7db4cc6c9f16832c982040a2
+0670_drop_dataset_org.sql	adb3d26f1fbfc5d818f93d576aad8977

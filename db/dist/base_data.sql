@@ -126,8 +126,6 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label) FROM stdin;
-data_producer	Data Producer
-data_archive	Data Archive
 \.
 
 
@@ -167,14 +165,6 @@ COPY dataset_lineage (id, dataset_id, parent_id) FROM stdin;
 --
 
 SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
-
-
---
--- Data for Name: dataset_organization_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY dataset_organization_map (dataset_identifier, organization_identifier) FROM stdin;
-\.
 
 
 --
