@@ -327,7 +327,9 @@ sub update_form {
     if ($format eq 'json') {
         return $c->render(json => $object->as_tree(max_depth => 0));
     }
-    $c->render(template => "update_form");
+    my $table = $object->meta->table;
+    $c->render_maybe(template => "$table/update_form")
+        or $c->render(template => "update_form");
 }
 
 =head2 update_prov_form
