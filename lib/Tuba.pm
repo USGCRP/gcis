@@ -483,6 +483,8 @@ sub startup {
 
     # Person.
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
+    $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{4})])
+      ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
 
     $r->resource('organization');

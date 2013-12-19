@@ -63,6 +63,12 @@ sub redirect_by_name {
     );
 }
 
+sub redirect_by_orcid {
+    my $c = shift;
+    my $person = Person->new(orcid => $c->stash('orcid'))->load(speculative => 1) or return $c->render_not_found;
+    return $c->redirect_to('show_person', { person_identifier => $person->id } );
+}
+
 sub _this_object {
     my $c = shift;
     my $obj = Person->new(id => $c->stash('person_identifier'));
