@@ -12,7 +12,7 @@
 <tr>
     <th>Name</th>
     <th>ORCID</th>
-    <th>Organization</th>
+    <th>Organizations</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -27,9 +27,13 @@
             % }
         </td>
         <td>
+            % my %seen;
             % for my $contributor (@{ $o->contributors }) {
                 % if (my $org = $contributor->organization) {
+                % next if $seen{$org->{identifier}}++;
+                <span class='btn squeezevert'>
                 %= obj_link($org);
+                </span>
                 % }
             % }
         </td>
