@@ -687,7 +687,14 @@ sub update_rel {
         $c->flash(message => 'Saved changes');
     }
 
-    return $c->redirect_to($next);
+    $c->respond_to(
+        json => sub {
+            shift->render(json => { status => 'ok' })
+        },
+        html => sub {
+            return shift->redirect_to($next);
+        },
+    );
 }
 
 

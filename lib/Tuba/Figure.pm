@@ -88,19 +88,29 @@ sub update_rel_form {
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
-    my $next = $object->uri($c,{tab => 'update_rel_form'});
+    $c->stash(tab => "update_rel_form");
+    my $json = $c->req->json;
+
     $object->meta->error_mode('return');
+
     if (my $new = $c->param('new_image')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_images($img);
-        $object->save(audit_user => $c->user) or do {
-            $c->flash(error => $object->error);
-            return $c->redirect_to($next);
-        };
+        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
+    }
+    if (my $new = $json->{add_image_identifier}) {
+        my $img = Image->new(identifier => $new)->load(speculative => 1)
+            or return $c->update_error("Image $new not found");
+        $object->add_images($img);
+        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
     }
 
     my $report_identifier = $c->stash('report_identifier');
-    for my $id ($c->param('delete_image')) {
+    my @delete_images = $c->param('delete_image');
+    if (my $nother = $json->{delete_image_identifier}) {
+        push @delete_images, $nother;
+    }
+    for my $id (@delete_images) {
         ImageFigureMaps->delete_objects({ image_identifier => $id, figure_identifier => $object->identifier, report_identifier => $report_identifier });
         $c->flash(message => 'Saved changes');
     }
