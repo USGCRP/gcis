@@ -11,8 +11,12 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    $c->stash(objects => scalar Persons->get_objects(sort_by => 'last_name, first_name', page => $c->page));
-    $c->set_pages(Persons->get_objects_count);
+    if ($c->param('all')) {
+        $c->stash(objects => Persons->get_objects);
+    } else {
+        $c->stash(objects => scalar Persons->get_objects(sort_by => 'last_name, first_name', page => $c->page));
+        $c->set_pages(Persons->get_objects_count);
+    }
     $c->SUPER::list(@_);
 }
 
