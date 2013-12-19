@@ -92,6 +92,7 @@ sub login {
     return $c->render if $c->req->is_secure;
     return $c->render if ($c->app->mode eq 'development' && $c->tx->remote_address eq '127.0.0.1');
     return $c->render if $c->app->mode eq 'development' && $c->tx->remote_address =~ /^192\.168/;
+    return $c->render if $c->app->mode eq 'development' && $ENV{TUBA_ALLOW_INSECURE_LOGINS};
     my $secure = $c->req->url->clone->to_abs;
     $secure->base->scheme('https');
     $secure->scheme('https');
