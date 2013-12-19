@@ -11,12 +11,20 @@
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
     <th>Name</th>
+    <th>ORCID</th>
     <th>Organization</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
-        <td>
+        <td nowrap=true>
             <%= link_to "show_person", { person_identifier => $o->id } => begin %><%= $o->name %><%= end %>
+        </td>
+        <td nowrap=true>
+            % if ($o->orcid) {
+            %= link_to "http://orcid.org/".$o->orcid => target => 'blank' => begin
+            %= $o->orcid
+            %= end
+            % }
         </td>
         <td>
             % for my $contributor (@{ $o->contributors }) {
