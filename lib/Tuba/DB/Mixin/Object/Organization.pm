@@ -48,5 +48,17 @@ sub type {
     return $t->identifier;
 }
 
+sub people {
+    my $s = shift;
+     my %seen;
+     for my $c (@{ $s->contributors }) {
+         my $person = $c->person or next;
+         next if $seen{$person->id};
+         $seen{$person->id} = $person;
+     }
+     return values %seen;
+}
+
+
 1;
 
