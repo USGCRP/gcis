@@ -19,8 +19,19 @@ $t->post_ok("/report/test-report/finding" => form => { identifier => "test-findi
 $t->get_ok("/report/test-report/finding/test-finding.json")->json_is('/statement' => "Test Finding.");
 
 $t->post_ok("/report/test-report/chapter" => form => { identifier => "test-chapter", title => "Chapter one" } )->status_is(200);
-$t->post_ok("/report/test-report/chapter/test-chapter/finding" => form => { identifier => "test-chapter-finding", statement => "Test Chapter Finding." } )->status_is(200);
-$t->get_ok("/report/test-report/chapter/test-chapter/finding/test-chapter-finding.json")->json_is('/statement' => "Test Chapter Finding.");
+
+for my $i (1..10) {
+    $t->post_ok(
+      "/report/test-report/chapter/test-chapter/finding" => form => {
+        identifier => "test-chapter-finding-$i",
+        ordinal => $i,
+        statement  => "Test Chapter Finding number $i."
+      }
+    )->status_is(200);
+    $t->get_ok(
+      "/report/test-report/chapter/test-chapter/finding/test-chapter-finding-$i.json"
+    )->json_is('/statement' => "Test Chapter Finding number $i.");
+}
 
 $t->post_ok("/report" => json => { identifier => "test-report2" } )->status_is(200);
 $t->post_ok("/report" => { Accept => "application/json" } => json => { identifier => "test-report2" } )->status_is(409);
