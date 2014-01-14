@@ -4,7 +4,7 @@ Tuba::Plugin::Auth - Authentication and authorization.
 
 =head1 SYNOPSIS
 
- app->plugin('auth' => $config);
+ app->plugin('Auth' => $config);
 
 =head1 DESCRIPTION
 

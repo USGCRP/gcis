@@ -1,0 +1,66 @@
+%# send $object and $meta
+% my $sorters = stash 'sorters';
+
+% my %list_urls = (
+%  chapters => url_for('list_chapter', { report_identifier => $report->identifier }),
+%  figures => url_for('list_all_figures', { report_identifier => $report->identifier }),
+%  findings => url_for('list_all_findings', { report_identifier => $report->identifier }),
+%  tables => url_for('list_all_tables', { report_identifier => $report->identifier }),
+% );
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Relationships</caption>
+% my $rels = ( (stash 'relationships') || $meta->relationships );
+
+% for my $rel (@$rels) {
+% my $method = $rel->name;
+% next if $method =~ /^_/;
+% next if $method eq 'contributors';
+<tr>
+    <td>
+        % if (my $target = $list_urls{$method}) {
+            <%= link_to $target => begin %><%= $method %><%= end %>
+        % } else {
+            <%= $method %>
+        % }
+    </td>
+<td class='row'>
+    % my $got = $object->$method;
+    % if (ref($got) eq 'ARRAY') {
+    %    if (my $sorter = $sorters->{$method}) {
+    %       @$got = sort $sorter @$got;
+    %    } else {
+    %       @$got = sort { $a->sortkey cmp $b->sortkey } @$got;
+    %    }
+    % } elsif ($got) {
+    %   $got = [ $got ];
+    % } else {
+    %   $got = [];
+    % }
+    <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => $got;
+            %= end
+    </div>
+</td>
+</tr>
+% }
+
+% if (my $pub = $object->get_publication) {
+<tr>
+    <td>GCMD Keywords</td>
+    <td>
+    % my $objs = $pub->gcmd_keywords;
+    % if ($objs && @$objs) {
+    <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => $objs
+            %= end
+    </div>
+    % }
+    </td>
+</tr>
+% }
+
+</table>
+

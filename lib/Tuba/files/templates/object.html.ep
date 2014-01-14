@@ -1,8 +1,9 @@
 
 % layout 'default';
+% my $table = $object->meta->table;
 
 <center>
-<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+<h2><%= $table %> : <%= $object->stringify %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -25,7 +26,7 @@
 
 %= include 'fields';
 
-%= include 'relationships', object => $object, meta => $meta;
+%= include_first [ "$table/relationships", "relationships" ], object => $object, meta => $meta;
 
 %= include 'prov';
 
