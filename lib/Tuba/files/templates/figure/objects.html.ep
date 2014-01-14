@@ -22,6 +22,7 @@ Figures in report <%= stash 'report_identifier' %>
 % for my $c (@cols) {
     <th><%= $c %></th>
 % }
+    <th>files</th>
     <th>images</th>
 </tr>
 % for my $o (@$objects) {
@@ -47,9 +48,33 @@ Figures in report <%= stash 'report_identifier' %>
             % }
         </td>
 % }
+
+<td class='thumbnails'>
+<div class='span3'>
+   % if (my $pub = $o->get_publication) {
+        % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail" => begin
+                %= image '/img/'.$file->file, class => 'img-polaroid', style => 'padding:0px;'
+            %= end
+        % }
+    % }
+</div>
+</td>
 <td class='row'>
 %= include 'obj_thumbnails', objs => $o->images || [];
 </td>
+
+    % if (user_can('update')) {
+    <td>
+        <%= obj_link_to $o, update_form => class => 'btn squeezevert' => target => "form" => begin %>meta<%= end %>
+        <%= obj_link_to $o, 'update_files_form' => class => 'btn squeezevert', target => "form" => begin %>files<% end %>
+        %= form_for obj_uri_for($o,'update_files') => method => 'POST', target => "form" => enctype => 'multipart/form-data' => begin
+            %= file_field 'file_upload';
+            <button type="submit" class="btn btn-primary btn-mini">Save</button>
+        %= end
+    </td>
+    % }
+
 </tr>
 % }
 </table>
