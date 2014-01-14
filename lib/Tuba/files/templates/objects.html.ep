@@ -29,6 +29,8 @@
 % for my $c (@cols) {
     <th><%= $c %></th>
 % }
+<th>Files
+</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
