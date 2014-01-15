@@ -1,18 +1,29 @@
 
 %= hidden_field 'delete_contributor';
 
-% my @cons = $object->get_publication(autocreate => 1)->contributors;
-<table class='table table-condensed table-bordered'>
+% my $pub = $object->get_publication;
+% my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
+
+<table class='table table-condensed table-bordered densetable'>
     <tr>
-        <th>Person</th><th>Organization</th><th>Role</th><th></th>
+        <th>Role</th>
+        <th>Person</th>
+        <th>Organization</th>
+        <th></th>
     </tr>
-% for my $con (@cons) {
-<tr>
-    <td><%= obj_link($con->person, long => 1) %></td>
-    <td><%= obj_link($con->organization) %></td>
-    <td><%= $con->role_type->label %></td>
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
-</tr>
+% my $last;
+% for my $con (@$cons) {
+    <tr>
+        % if (!$last || $last->role_type_identifier ne $con->role_type_identifier) {
+            <td rowspan="<%= $role_count->{$con->role_type_identifier} %>"> <%= $con->role_type->label %></td>
+        % }
+        % if (!$last || $last->role_type_identifier ne $con->role_type_identifier || $last->person_id != $con->person_id) {
+            <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id} %>"><%= obj_link($con->person, long => 1) %></td>
+        % }
+        <td><%= obj_link($con->organization) %></td>
+        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+    </tr>
+% $last = $con;
 % }
 </table>
 

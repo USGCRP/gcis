@@ -205,5 +205,28 @@ sub uri {
     return $c->url_for($route_name, { publication_identifier => $s->id } );
 }
 
+sub contributors_grouped {
+    my $object = shift;
+    no warnings 'uninitialized';
+    my @cons = $object->contributors;
+    @cons = map $_->[0],
+            sort { $a->[1] cmp $b->[1] } map [$_,
+            sprintf(
+                "%100s%100s%100s",
+                $_->role_type_identifier,
+                ( $_->person_id               ? $_->person->name       : "" ),
+                ( $_->organization_identifier ? $_->organization->name : "" )
+            ),
+            ], @cons;
+
+    my $role_count;
+    my $person_count;
+    for (@cons) {
+      $role_count->{$_->role_type_identifier}++;
+      $person_count->{$_->role_type_identifier}{$_->person_id}++;
+    }
+    return (\@cons, $role_count, $person_count);
+}
+
 1;
 

@@ -1,9 +1,8 @@
 
 % my $pub = $object->get_publication;
-% my @con = $pub ? $pub->contributors : ();
+% my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
 
-% if (@con) {
-    % @con = sort { $a->role_type cmp $b->role_type } @con;
+% if (@$cons) {
 
     <table class='table table-condensed table-bordered'>
     <caption> Contributors</caption>
@@ -12,12 +11,18 @@
             <th>Person</th>
             <th>Organization</th>
         </tr>
-    % for my $ctr (@con) {
-    <tr>
-        <td><%= $ctr->role_type->label %></td>
-        <td><%= obj_link($ctr->person, long => 1) %></td>
-        <td><%= obj_link($ctr->organization) %></td>
-    </tr>
+    % my $last;
+    % for my $con (@$cons) {
+        <tr>
+            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier) {
+                <td rowspan="<%= $role_count->{$con->role_type_identifier} %>"> <%= $con->role_type->label %></td>
+            % }
+            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier || $last->person_id != $con->person_id) {
+                <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id} %>"><%= obj_link($con->person, long => 1) %></td>
+            % }
+            <td><%= obj_link($con->organization) %></td>
+        </tr>
+    % $last = $con;
     % }
     </table>
 
