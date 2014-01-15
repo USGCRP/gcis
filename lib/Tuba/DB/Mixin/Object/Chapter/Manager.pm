@@ -34,5 +34,15 @@ sub dbgrep {
     return @$found;
 }
 
+sub _make_query {
+    my $s = shift;
+    my ($str) = @_;
+    my @q = $s->SUPER::_make_query(@_);
+    if ($str =~ /chapter (\d+)/i) {
+        push @q, number => $1;
+    }
+    return @q;
+}
+
 1;
 

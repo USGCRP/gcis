@@ -42,23 +42,25 @@
 
 </table>
 
-%= label_for 'role_type', class => 'control-label' => begin
-Role
-%= end
-<div class='controls'>
-    %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+<div class='control-group' style='margin-bottom:0px;'>
+    <%= label_for 'role_type', class => 'control-label' => begin %>Role<%= end %>
+    <div class='controls'>
+        %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+    </div>
 </div>
-%= label_for 'organization', class => 'control-label' => begin
-Organization
-%= end
-<div class='controls'>
-    %= include 'controls/autocomplete', input_name => 'organization', object_type => 'organization'
+
+<div class='control-group' style='margin-bottom:0px;'>
+    <%= label_for 'organization', class => 'control-label' => begin %>Organization<%= end %>
+    <div class='controls'>
+        %= include 'controls/autocomplete', input_name => 'organization', object_type => 'organization'
+    </div>
 </div>
-%= label_for 'publication', class => 'control-label' => begin
-Publication
-%= end
-<div class='controls'>
-    %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
+
+<div class='control-group' style='margin-bottom:0px;'>
+    <%= label_for 'publication', class => 'control-label' => begin %>Publication<%= end %>
+    <div class='controls'>
+        %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
+    </div>
 </div>
 
 <div class="form-actions">
