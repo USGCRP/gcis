@@ -10,6 +10,7 @@ sub as_tree {
     my $tree = $s->SUPER::as_tree(@_);
     my $c = $a{c} or return $tree;
     $tree->{url} = '/img/'.$s->file;
+    $tree->{href} = $c->url_for($tree->{url})->to_abs;
     return $tree;
 }
 

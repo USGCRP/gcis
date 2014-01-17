@@ -107,7 +107,20 @@ sub render_yaml {
 Subclasses should override this but may call it for rendering,
 after setting 'object' and 'meta'.
 
+Override make_tree_for_show to make a datastructure to serialize
+for showing.
+
 =cut
+
+sub make_tree_for_show {
+    my $c = shift;
+    my $obj = shift;
+    return $obj->as_tree(c => $c,
+        ( $c->param('brief') ? (bonsai => 1) : ()),
+        ( $c->param('with_gcmd') ? (with_gcmd => 1) : ())
+    );
+}
+
 
 sub show {
     my $c = shift;
@@ -118,13 +131,10 @@ sub show {
     my $table = $meta->table;
     $c->stash(relationships => $c->_order_relationships(meta => $meta));
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
-    my %tree;
-    $tree{with_gcmd} = 1 if $c->param('with_gcmd');
-    $tree{bonsai} = 1 if $c->param('brief');
 
     $c->respond_to(
-        yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($object->as_tree(c => $c, %tree) ); },
-        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c, %tree) ); },
+        yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object) ); },
+        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
         ttl   => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         html  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         nt    => sub { shift->render_partial_ttl_as($table,'ntriples'); },

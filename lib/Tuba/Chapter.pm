@@ -77,5 +77,16 @@ sub make_tree_for_list {
     };
 }
 
+sub common_tree_fields {
+    my $c = shift;
+    my $obj = shift;
+    my $uri = $obj->uri($c);
+    my $href = $uri->clone->to_abs;
+    if (my $fmt = $c->stash('format')) {
+        $href .= ".$fmt";
+    }
+    return ( uri => $uri, href => $href );
+}
+
 1;
 

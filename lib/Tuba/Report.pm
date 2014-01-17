@@ -139,5 +139,29 @@ sub update_rel_form {
     $c->SUPER::update_rel_form(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $report = shift;
+    my $pub = $report->get_publication(autocreate => 1);
+    return {
+      organization_identifier => $report->organization_identifier,
+      files                   => [map +{uri => $_->uri($c)}, $pub->files],
+      uri                     => $report->uri($c),
+      identifier              => $report->identifier,
+      contributors => [map +{ uri => $_->uri($c) }, $pub->contributors ],
+      title        => $report->title,
+      doi          => $report->doi,
+      chapters     => [
+        map +{
+          number     => $_->number,
+          url        => $_->url,
+          title      => $_->title,
+          identifier => $_->identifier,
+          $c->common_tree_fields($_),
+        }, $report->chapters
+      ],
+    };
+}
+
 1;
 
