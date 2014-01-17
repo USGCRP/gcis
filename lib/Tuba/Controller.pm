@@ -971,7 +971,7 @@ sub page {
 
 sub per_page {
     my $c = shift;
-    return 21 if $c->param('thumbs');
+    return 24 if $c->param('thumbs');
     return 20;
 }
 

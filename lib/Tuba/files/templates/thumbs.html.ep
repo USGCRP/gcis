@@ -17,7 +17,7 @@
 %= include 'pager', page => $page;
 % }
 
-% while (my @next = splice(@clone, 0, 7)) {
+% while (my @next = splice(@clone, 0, 6)) {
     <div class='row'>
         %= include 'obj_thumbnails', objs => \@next, blanks => 1;
     </div>

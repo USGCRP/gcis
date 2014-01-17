@@ -13,7 +13,7 @@ sub list {
     my $figures;
     my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');
-    my @page = $all ? () : (page => $c->page);
+    my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
     if (my $ch = $c->stash('chapter_identifier')) {
         $figures = Figures->get_objects(
             query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],

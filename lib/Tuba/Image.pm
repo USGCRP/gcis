@@ -105,8 +105,8 @@ sub list {
     my $c = shift;
     my $identifier = $c->current_report->identifier;
     my $page = $c->page;
-    my $limit = 20;
-    my $offset = ( $page - 1 ) * 20;
+    my $limit = $c->per_page;
+    my $offset = ( $page - 1 ) * $limit;
     if ($c->param('all')) {
         $limit = 10_000;
         $offset = 0;
