@@ -267,7 +267,13 @@ sub as_tree {
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
             $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $with_gcmd;
         }
-        $tree->{uri} //= $s->uri($c);
+        my $uri = $s->uri($c);
+        my $href = $uri->clone->to_abs;
+        if (my $fmt = $c->stash('format')) {
+            $href .= ".$fmt";
+        }
+        $tree->{uri} //= $uri;
+        $tree->{href} //= $href;
     }
     $tree->{uri} //= $s->uri($c) if $c;
     for my $k (keys %$tree) {

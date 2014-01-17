@@ -6,6 +6,7 @@ Tuba::Chapter : Controller class for chapters.
 
 package Tuba::Chapter;
 use Mojo::Base qw/Tuba::Controller/;
+use Tuba::Contributor;
 use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
@@ -77,15 +78,22 @@ sub make_tree_for_list {
     };
 }
 
-sub common_tree_fields {
-    my $c = shift;
-    my $obj = shift;
-    my $uri = $obj->uri($c);
-    my $href = $uri->clone->to_abs;
-    if (my $fmt = $c->stash('format')) {
-        $href .= ".$fmt";
-    }
-    return ( uri => $uri, href => $href );
+sub make_tree_for_show {
+    my ($c, $chapter) = @_;
+    my $pub = $chapter->get_publication(autocreate => 1);
+    return {
+      number            => $chapter->number,
+      files             => [map +{uri => $_->uri($c)}, $pub->files],
+      figures           => [map +{$c->Tuba::Figure::common_tree_fields($_)}, $chapter->figures],
+      findings          => [map +{$c->Tuba::Finding::common_tree_fields($_)}, $chapter->findings],
+      tables            => [map +{$c->Tuba::Table::common_tree_fields($_)}, $chapter->tables],
+      report_identifier => $chapter->report_identifier,
+      identifier        => $chapter->identifier,
+      contributors      => [map +{$c->Tuba::Contributor::common_tree_fields($_)}, $pub->contributors],
+      url               => $chapter->url,
+      title             => $chapter->title,
+      $c->common_tree_fields($chapter),
+      }
 }
 
 1;
