@@ -1,0 +1,32 @@
+
+% my $pub = $object->get_publication;
+% my @con = $pub ? $pub->contributors : ();
+% @con = sort { $a->role_type cmp $b->role_type } @con;
+% for my $ctr (@con) {
+   % if ($ctr->role_type->identifier eq "data_producer") {
+     gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+     prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+     prov:role "<%= $ctr->role_type->label %>";
+      % if (my $person=$ctr->person) {
+        gcis:wasProducedBy <<%= uri($person) %>>;
+        prov:wasGeneratedBy <<%= uri($person) %>>;   
+        foaf:name "<%= $person->label %>";   
+      % }
+   % } elsif ($ctr->role_type->identifier eq "data_archive") {
+        gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+        prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+         % if ($ctr->person)   {
+            foaf:name "<%= $ctr->person->label %>";    
+        % }   
+% } elsif ($ctr->role_type->identifier eq "author") {
+        gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+        prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+         % if ($ctr->person)   {
+        foaf:name "<%= $ctr->person->name %>";
+   % }
+% }
+% }
+
+
+
+

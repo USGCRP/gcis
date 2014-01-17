@@ -1,7 +1,7 @@
 % layout "default";
 
 <<%= current_resource %>>
-   a org:Organization; a prov:Organization; a foaf:Organization;
+   a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;
         
 %# % for my $contributor ($organization->contributor) {
 %# gcis:contributor "<%= $contributor->identifier %>";
@@ -25,9 +25,10 @@
    gcis:hasURL "<%= $organization->url %>".
 
 %# parent organization(s) - to be added later               
-%# % for my $suborg ($organization->suborgs) {
- %#     org:subOrganizationof "<%= $suborg>parent_org %>"           
-%# % }
+%#  % for my $suborg ($organization->suborgs) {
+%#      org:subOrganizationOf "<%= $suborg->parent_org %>";           
+%#        prov:actedOnBehalfOf "<%= $suborg->parent_org %>";
+ %# % }
 
 %= include 'prov';
 

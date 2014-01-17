@@ -2,129 +2,33 @@
 
 <<%= current_resource %>>
    a prov:Entity; a dcmitype:Dataset;
-% for my $organization ($dataset->organizations) {
-   gcis:Organization "<%= $organization->identifier %>";    
-% }
+
    dcterms:date "<%= $dataset->access_dt %>";
-   cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";      
+   cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
    dcterms:description "<%= $dataset->description %>";
-   datacite:doi "<%= $dataset->doi %>";                       
-   dcterms:identifier "<%= $dataset->identifier %>";           
-   dcterms:title "<%= $dataset->name %>";                                     
+   datacite:doi "<%= $dataset->doi %>";
+   dcterms:identifier "<%= $dataset->identifier %>";
+   dcterms:title "<%= $dataset->name %>";
    prov:label "<%= $dataset->name %>";
    rdfs:label "<%= $dataset->name %>";
-   dcterms:nativeid "<%= $dataset->native_id %>";                       
-   gcis:processing-level "<%= $dataset->processing_level %>";                
-   dcterms:date "<%= $dataset->publication_dt %>";                
-   gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";                 
-   gcis:projection "<%= $dataset->spatial_ref_sys %>";            
+   dcterms:nativeid "<%= $dataset->native_id %>";
+   gcis:processing-level "<%= $dataset->processing_level %>";
+   dcterms:date "<%= $dataset->publication_dt %>";
+
+   gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
+   gcis:projection "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
-   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;         
-   gcis:hasURL "<%= $dataset->url %>";                   
-   dcterms:isVersionOf "<%= $dataset->version %>";                    
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>".   
+   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
+   gcis:accessURL "<%= $dataset->url %>";
+   gcis:hasURL "<%= $dataset->url %>";
+   dcterms:isVersionOf "<%= $dataset->version %>";
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
 
-%# for my sourceAlgorithm ($dataset->sourceAlgorithms) {   
-%#   gcis:sourceAlgorithm  "<%= $sourceAlgorithm->algorithm %>";
-%# % }
-
-gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
-
-%# data_qualifier - not sure what this means
-
-%# scale - prob not nec
-    %# scope -- unsure what this is
-
-%# % for my $PointOfContact ($dataset->PointOfContacts) {
-%# % }    gcis:PointOfContact "<%= $PointOfContact->Point_Of_Contact %>"                      
-%# % }     
-
-%# % for my $fileformat ($dataset->fileformats) {
-%# % }    dcterms:fileformat "<%= $fileformat->file_format %>"                                             %# file format
-%# % }
-
-%# % for my $issued ($dataset->issueds) {
-%# % }    dcterms:issued "<%= $issued->release_date %>"                                              %# release date
-%# % }
-                  
-%# % for my $limits ($dataset->limitss) {
-%# % }    dcterms:limits "<%= $limits->rights %>"                                   %# rights held vis-a-vis the dataset
-%# % }
-                
-%# % for my $dataCenter ($dataset->dataCenters) {
-%# % }    gcis:dataCenter "<%= $dataCenter->data_center %>"                      %# data center
-%# % }
-                  
-%# % for my $license ($dataset->licenses) {
-%# % }    dcterms:license "<%= $license->license %>"                                   %# license
-%# % }
-                  
-%# % for my $modified ($dataset->modifieds) {
-%# % }   dcterms:modified "<%= $modified->release_date %>"                      %# modified
-%# % }
-                     
-%# % for my $algorithm ($dataset->algorithms) {
-%# % }    gcis:sourceAlgorithm "<%= $algorithm->Algorithm %>.    %# Algorithm 
-%# % }
-   
-%# % for my $instrument ($dataset->instruments) {
-%# % }   gcis:sourceInstrument "<%= $instrument->Instrument %>.  %# Instrument from which dataset was 
-%# % }
-
-%# % for my $model ($dataset->models) {
-%# % }    gcis:sourceModel "<%= $model->Source_Model %>";                %# Dataset generated from model
-%# % }
-
-%# % for my $modelRun ($dataset->modelRuns) {
-%# % }    gcis:ModelRun "<%= $modelRun%>ModelRun %>"; %# Model run (see conn. in cmap)
-%# % }
-
-%# % for my $location ($dataset->locations) {
-%# % }    gcis:atLocation "<%= $dataset->Location %>";           %# Location
-%# % }
-
-   %# We now declare the specifics of temporal and spatial resolution in case we import them into the api,
- %# rather than .spatial extent., .temporal_extent.
-
-%# % for my $westBoundLongitude ($dataset->westBoundLongitudes)
-%# gcis:westBoundLongitude ($westBoundLongitude->westbound_longitude)
-%# % }
-
-%# % for my $eastBoundLongitude ($dataset->eastBoundLongitudes)
-%# gcis:eastBoundLongitude ($eastBoundLongitude->eastbound_longitude)
-%# % }
-
-%# % for my $northBoundLatitude ($dataset->northBoundLatitudes)
-%# gcis:northBoundLatitude ($northBoundLatitude->northbound_latitude)
-%# % }
-
-%# % for my $southBoundLatitude ($dataset->southBoundLatitudes)
-%# gcis:southBoundLatitude ($southBoundLatitude->southbound_latitude)
-%# % }
-
-%# % for my $startedAt ($dataset->startedAts)
-%# gcis:startedAt ($startedAt->startedAt)
-%# % }
-
-%# % for my $endedAt ($dataset->endedAts)
-%# gcis:endedAt ($endedAt->endedAt)
-%# % }
-
-%# % for my $resolution ($dataset->resolutions)
-%# gcis:resolution ($resolution->resolution)
-%# % }
-
-%# % for my $equivalentScale ($dataset->equivalentScales)
-%# gcis:equivalentScale ($equivalentScale->equivalentScale)
-%# % }
-
-%# % for my $hasTemporalUnit ($dataset->hasTemporalUnits)
-%# gcis:hasTemporalUnit ($hasTemporalUnit->hasTemporalUnit)
-%# % }
-
-%# % for my $type ($dataset->types) {
-%#    dcterms:types "<%= $type->type %>"
-%# % }
+% for my $keyword ($dataset->keywords) {
+   gcis:subject "<%== $keyword->stringify %>";
+   dcterms:subject "<%== $keyword->stringify %>";
+% }
 
 %= include 'prov';
+%= include 'contributors'; 
 

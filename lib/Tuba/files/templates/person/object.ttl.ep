@@ -7,12 +7,20 @@
    dcterms:identifier "<%= $person->id %>";
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
-   a prov:agent;
-   gcis:hasURL "<%= $person->url %>" .
+   gcis:hasURL "<%= $person->url %>" ;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:isMemberOf "<%= $org->identifier %>";
-<<%= current_resource =%>> gcis:hasOrganization "<%= $org->identifier %>".
+   prov:actedOnBehalfOf  "<%= $org->identifier %>";
+   gcis:worksAt "<%= $org->identifier %>";
+   gcis:hasOrganization "<%= $org->identifier %>";
 % }
-
+ % my $ctr = $object->contributors;
+ % for my $ctr (@{ $object->contributors }) {
+    gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
+    prov:Role "<%= $ctr->role_type->label %>";
+ <% for my $pub ($ctr->publications) { %>
+    gcis:hasPublication "<%= uri($pub->to_object) %>";
+  <% } %>
+        % }
 

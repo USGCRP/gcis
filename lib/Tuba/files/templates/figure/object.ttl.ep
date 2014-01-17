@@ -8,6 +8,7 @@
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
+   dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
 % }
 
 %# % for my $ref ($article->get_references) {
@@ -16,6 +17,7 @@
 
 %# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
+   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:figureNumber "<%= $figure->numeric %>";
    gcis:hasCaption "<%= $figure->caption %>";                              
    dcterms:description "<%= $figure->caption %>";
@@ -30,20 +32,17 @@
    dcterms:identifier "<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
    dcterms:dateSubmitted "<%= $figure->submission_dt %>";     
+   dcterms:date "<%= $figure->submission_dt %>";
    gcis:startedAt "<%= $figure->time_start %>";                          
    gcis:endedAt "<%= $figure->time_end %>";                           
    dcterms:title "<%= $figure->title %>";                                   
    rdfs:label "<%= $figure->title %>";
    prov:label "<%= $figure->title %>".
-%# gcis:description "<%= $figure->description %>";
 
-%# for my $keyword ($figure->keywords) {
-%#    gcis:attributes "<%= $keyword->attributes %>";
-%# % }
-
-   %# for my $keyword ($figure->keywords) {
-%#    skos:concept "<%= $keyword->attributes %>";
-%# % }
+% for my $keyword ($figure->keywords) {
+   gcis:attributes "<%= $keyword->attributes %>";
+   skos:concept "<%= $keyword->attributes %>"; 
+% }
 
 %# % for my $right ($figure->rights) {
  %#   dcterms:rights "<%= $right->usage_limits %>".                     

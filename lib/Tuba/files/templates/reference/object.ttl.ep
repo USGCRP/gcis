@@ -1,11 +1,8 @@
 % layout 'default';
 
 <<%= current_resource %>>
-   a gcis:Reference;
-   a biro:BibliographicRecord;
-   a co:Set;
-   a frbr:Work;
-
+   a biro:BibliographicRecord; a co:Set; a frbr:Work; a dcterms:bibliographicCitation;
+  
    dcterms:identifier "<%= $reference->identifier %>";
 % if (my $pub = $reference->publication) {
        %    my $report = $pub->to_object;

@@ -1,32 +1,46 @@
 % layout 'default';
 <<%= current_resource %>>
-   a bibo:book;
-   dcterms:type "book";
+   a bibo:Book;
 
- %# for my $person ($book->persons) {
- %#  gcis:hasAuthor  "<%= $person->author %>";
- %# }
-
+% for my $keyword ($book->keywords) {
+   gcis:subject "<%== $keyword->stringify %>";
+   dcterms:subject "<%== $keyword->stringify %>";
+ % }
+   dcterms:identifier "<%= $book->identifier %>";
+   bibo:isbn "<%= $book->isbn %>";
+   bibo:numPages "<%= $book->number_of_pages %>";
+   dcterms:SizeOrDuration "<%= $book->number_of_pages %>";
    bibo:uri "<%= $book->url %>";
-   gcis:url "<%= $book->url %>";
-
-% if (0) {
-   bibo:isbn "<%= $book->print_isbn %>";
-   gcis:Location "<%= $book->pub_location %>";
-   gcis:hasPublisher "<%= $book->hasPublisher %>";
-   bibo:doi "<%= $book->doi %>";
+   gcis:hasURL "<%= $book->url %>";
+   bibo:isbn "<%= $book->isbn %>";
+   gcis:hasPublisher "<%= $book->publisher %>";
+   prov:wasAttributedTo "<%= $book->publisher %>";
    dcterms:title "<%= $book->title %>";
-   dcterms:SizeOrDuration "<%= $book->pages %>";
-   dwc:year "<%= $book->year %>".
-% }
+   rdfs:label "<%= $book->title %>";
+   prov:label "<%= $book->title %>";
+   dwc:year "<%= $book->year %>";
+   xsd:gYear "<%= $book->year %>";
+
+%= include 'prov';
+
+%# % for my $person ($book->persons) {
+%#   gcis:hasAuthor  "<%= $person->author %>";
+%#   prov:wasAttributedTo  "<%= $person->author %>";
+%# % }
+
+%# bibo:doi "<%= $book->doi %>";
+%#   prov:wasAttributedTo  "<%= $person->author %>";
 
 %# % for my $eisbn ($book->eisbns) {
   %#       bibo:eisbn "<%= $eisbn->online_isbn %>";
-%# }
-
-
-%# book in Book Series
-%# for my $bookSeries ($book->bookSeries) {
-%#      bibo:volume  "<%= $bookSeries->volume %>". 
 %# % }
+
+
+%# Book in Book Series
+%# for my $bookSeries ($book->bookSeries) {
+%#      bibo:volume  "<%= $bookSeries->volume %>";
+%# % }
+
+%#  gcis:hasPublisher "<%= $book->publisher %>";
+
 

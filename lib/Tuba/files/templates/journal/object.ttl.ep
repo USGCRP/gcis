@@ -2,14 +2,21 @@
 
 <<%= current_resource %>>
    a prov:Entity; a bibo:Journal;
-% for my $article ($journal->articles) {
+ % for my $article ($journal->articles) {
    dcterms:hasPart "<%= $article->identifier %>";
-% }
+ % }
+
+% for my $keyword ($journal->keywords) {
+   gcis:subject "<%== $keyword->stringify %>";
+   dcterms:subject "<%== $keyword->stringify %>";
+ % }
+
    dwc:Countrycode "<%= $journal->country %>";
    dcterms:identifier "<%= $journal->identifier %>";
    bibo:eissn "<%= $journal->online_issn %>";
    bibo:issn "<%= $journal->print_issn %>";
    gcis:hasPublisher "<%= $journal->publisher %>";
+   prov:wasAttributedTo "<%= $journal->publisher %>";
    dcterms:title "<%= $journal->title %>";
    rdfs:label "<%= $journal->title %>";
    prov:label "<%= $journal->title %>";
