@@ -3,10 +3,12 @@
 % my @parents;
 % my @parents_with_references;
 % my @children_with_references;
+% my $references_url;
 % if ($pub) {
     % @parents = $pub->get_parents;
     % @parents_with_references = $pub->get_parents_with_references;
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
+    % $references_url = $pub->references_url($self);
 % }
 % if (@parents || @parents_with_references) {
 
@@ -51,7 +53,14 @@
 
 % if (@children_with_references) {
    <table class='table table-condensed table-bordered table-striped'>
-    <caption>References</caption>
+    <caption>
+        % if ($references_url) {
+            <%= link_to $references_url => begin %>References<%= end %>
+        % } else {
+            References
+        % }
+    </caption>
+
     % for my $child (@children_with_references) {
     <tr>
         % my $child_pub = $child->{child};

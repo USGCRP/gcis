@@ -18,7 +18,7 @@ use Tuba::Log;
 use Data::UUID::LibUUID;
 
 our $VERSION = '0.59';
-our @supported_formats = qw/json ttl html nt rdfxml dot rdfjson jsontriples svg/;
+our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg/;
 
 sub startup {
     my $app = shift;
@@ -215,11 +215,13 @@ sub startup {
     $r->lookup('select_chapter')->resource('finding');
     $r->lookup('select_chapter')->resource('figure');
     $r->lookup('select_chapter')->resource('table');
+    $r->lookup('select_chapter')->get('/reference')->to('reference#list')->name('list_chapter_references');
 
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');
     $report->get('/figure') ->to('figure#list') ->name('list_all_figures');
     $report->get('/table')  ->to('table#list')  ->name('list_all_tables');
+    $report->get('/reference')->to('reference#list')->name('list_report_references');
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding' });
     $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure' });
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table' });

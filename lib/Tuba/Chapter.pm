@@ -62,5 +62,20 @@ sub update_rel_form {
     $c->SUPER::update_rel_form(@_);
 }
 
+sub make_tree_for_list {
+    my $c = shift;
+    my $chapter = shift;
+    my $uri = $chapter->uri($c);
+    my $href = $uri->clone->to_abs;
+    $href .= ".".$c->stash('format') if $c->stash('format');
+    return +{
+        number     => $chapter->number,
+        title      => $chapter->title,
+        uri        => $uri,
+        identifier => $chapter->identifier,
+        href       => $href,
+    };
+}
+
 1;
 

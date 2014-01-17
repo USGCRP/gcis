@@ -15,13 +15,32 @@ use Path::Class qw/file/;
 use Tuba::Log;
 use Tuba::Util qw/nice_db_error/;
 use File::Temp;
+use YAML::XS qw/Dump/;
 use Data::Dumper;
 
 =head2 list
 
 Generic list.
 
+Override make_tree_for_list in order to generate a representation of each
+object for a list.
+
 =cut
+
+sub make_tree_for_list {
+    my $c = shift;
+    my $obj = shift;
+    my %t;
+    for my $method (@{ $obj->meta->column_accessor_method_names }) {
+        $t{$method} = $obj->$method;
+    }
+    my $uri = $obj->uri($c);
+    my $href = $uri->clone->to_abs;
+    $href .= '.'.$c->stash('format') if $c->stash('format');
+    $t{uri} = $uri;
+    $t{href} = $href;
+    return \%t;
+}
 
 sub list {
     my $c = shift;
@@ -36,7 +55,17 @@ sub list {
     my $meta = $object_class->meta;
     my $table = $meta->table;
     my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
+    my %tree;
+
     $c->respond_to(
+        yaml => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            # Trees are smaller when getting all objects.
+            $c->render_yaml([ map $c->make_tree_for_list($_), @$objects ]) },
         json => sub {
             my $c = shift;
             if (my $page = $c->stash('page')) {
@@ -44,7 +73,7 @@ sub list {
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
             # Trees are smaller when getting all objects.
-            $c->render(json => [ map $_->as_tree(c => $c, bonsai => $all), @$objects ]) },
+            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]) },
         html => sub {
              my $c = shift;
              $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )
@@ -53,6 +82,25 @@ sub list {
          }
     );
 };
+
+sub _stringify {
+    my $what = shift;
+    return $what unless ref $what;
+    for (ref $what) {
+        /ARRAY/ and return [ map _stringify($_), @$what ];
+        /HASH/ and return { map { $_ => _stringify($what->{$_}) } keys %$what };
+    }
+    return "$what";
+}
+
+sub render_yaml {
+    my $c = shift;
+    my $thing = shift;
+    $c->res->headers->content_type('text/x-yaml; charset=utf-8');
+    my $stringified = _stringify($thing);
+    $c->res->body(Dump($stringified));
+    $c->rendered;
+}
 
 =head2 show
 
@@ -70,9 +118,13 @@ sub show {
     my $table = $meta->table;
     $c->stash(relationships => $c->_order_relationships(meta => $meta));
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
+    my %tree;
+    $tree{with_gcmd} = 1 if $c->param('with_gcmd');
+    $tree{bonsai} = 1 if $c->param('brief');
 
     $c->respond_to(
-        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c) ); },
+        yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($object->as_tree(c => $c, %tree) ); },
+        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $object->as_tree(c => $c, %tree) ); },
         ttl   => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         html  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         nt    => sub { shift->render_partial_ttl_as($table,'ntriples'); },
@@ -943,5 +995,6 @@ sub redirect_without_error {
         json => sub { shift->render(json => { status => 'ok' }) }
     );
 }
+
 
 1;

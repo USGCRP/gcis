@@ -229,9 +229,9 @@ sub make_identifier {
 Override Rose::DB::Object::Helpers::as_tree, and provide more
 information :
 
-    - a list of parent publications
+    - a list of parent publications (unless no_parents is sent)
     - a list of files
-    - a list of gcmd keywords
+    - a list of gcmd keywords (iff with_keywords is sent)
     - a list of contributors (if this is a publication)
     - a list of publications for each contributor record (if this is a contributor)
 
@@ -247,13 +247,14 @@ sub as_tree {
     my $s = shift;
     my %a = @_;
     my $c = $a{c}; # controller object
-    my $bonsai = $a{bonsai}; # a small tree
+    my $bonsai = delete $a{bonsai}; # a small tree
+    my $with_gcmd = delete $a{with_gcmd}; # a large tree
     $a{deflate} = 0 unless exists($a{deflate});
 
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
     if ($c && !$bonsai) {
-        $tree->{parents} = [];
         if (my $pub = $s->get_publication) {
+            $tree->{parents} = [];
             for my $parent ($pub->get_parents) {
                 my $pub = $parent->{publication};
                 push @{ $tree->{parents} }, {
@@ -264,7 +265,7 @@ sub as_tree {
                 };
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
-            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ];
+            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $with_gcmd;
         }
         $tree->{uri} //= $s->uri($c);
     }
@@ -342,6 +343,7 @@ sub is_publication {
     $_cache{ $class } //= Tuba::DB::Object::PublicationType::Manager->get_objects_count(query => [table => $s->meta->table]);
     return $_cache{ $class };
 }
+
 
 1;
 

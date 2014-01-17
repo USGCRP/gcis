@@ -1,6 +1,7 @@
 % my $base = $self->req->url;
 % $base =~ s/.html$//;
 <%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
 <%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %> \
 <%= link_to "$base.ttl" => class => 'label label-info' => begin %>Turtle<%= end %> \
 <%= link_to "$base.nt" => class => 'label label-info' => begin %>N-Triples<%= end %> \

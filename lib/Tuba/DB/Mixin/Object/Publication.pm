@@ -228,5 +228,28 @@ sub contributors_grouped {
     return (\@cons, $role_count, $person_count);
 }
 
+sub references_url {
+    # If there is a URL to list the references, it goes here.
+    my $pub = shift;
+    my $c = shift;
+    for ($pub->publication_type_identifier) {
+        /chapter/ and do {
+            my $chapter = $pub->to_object;
+            my $url = $c->url_for(
+              'list_chapter_references',
+              {
+                report_identifier  => $chapter->report->identifier,
+                chapter_identifier => $chapter->identifier
+              }
+            );
+            return $url;
+        };
+        /report/ and do {
+            return $c->url_for('list_report_references', { report_identifier => $pub->to_object->identifier} );
+        };
+    }
+    return;
+}
+
 1;
 

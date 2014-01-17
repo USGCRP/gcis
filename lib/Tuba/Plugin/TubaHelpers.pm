@@ -133,6 +133,15 @@ sub register {
             $obj->load(speculative => 1) and $obj->_public and return $obj;
             return Tuba::DB::Object::Report->new(identifier => 'no report');
         });
+    $app->helper(current_chapter => sub {
+            my $c = shift;
+            my $report = $c->current_report;
+            return unless $report && $report->identifier ne 'no report';
+            my $chapter_identifier = $c->stash('chapter_identifier') or return;
+            my $chapter = Tuba::DB::Object::Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
+            $chapter->load(speculative => 1) or return;
+            return $chapter;
+        });
     $app->helper(elide => sub {
             my $c = shift;
             my $str = shift;
