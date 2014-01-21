@@ -1,8 +1,7 @@
 % layout 'default';
 
 <<%= current_resource %>>
-   a prov:Entity;
-   a gcis:Figure;
+   a prov:Entity; a gcis:Figure;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:inPublication <<%= uri($chapter) %>>;
 % }
@@ -10,11 +9,9 @@
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
 % }
-
 %# % for my $ref ($article->get_references) {
 %#   biro:isReferencedBy <<%= uri($ref); %>>
 %# % }
-
 %# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
@@ -38,7 +35,6 @@
    dcterms:title "<%= $figure->title %>";                                   
    rdfs:label "<%= $figure->title %>";
    prov:label "<%= $figure->title %>".
-
 % for my $keyword ($figure->keywords) {
    gcis:attributes "<%= $keyword->attributes %>";
    skos:concept "<%= $keyword->attributes %>"; 
