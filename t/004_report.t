@@ -11,6 +11,9 @@ my $t = Test::Mojo->new("Tuba");
 # To test 409 conflict
 Tuba::Plugin::Db->connection->dbh->{PrintError} = 0;
 
+$t->app->db->dbh->do(q[delete from publication_type where identifier='report']);
+$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report')]);
+
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
