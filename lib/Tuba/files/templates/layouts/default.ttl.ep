@@ -18,6 +18,7 @@
 @prefix datacite: <http://purl.org/spar/datacite/> .
 @prefix co: <http://purl.org/co/> .
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
 % }
 
