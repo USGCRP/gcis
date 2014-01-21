@@ -3,6 +3,7 @@
 <<%= current_resource %>>
    a prov:Person; a foaf:Person; a gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
+   vivo:orcidId "<%= $person->orcid %>";
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
    gcis:hasURL "<%= $person->url %>" ;
