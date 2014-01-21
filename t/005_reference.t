@@ -27,9 +27,15 @@ $t->post_ok(
   }
 )->status_is(200);
 
+my $base = $t->ua->app_url->clone;
+$base->path('');
+$base = "$base";
+$base =~ s[/$][];
+
 $t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)->json_is(
     {
         uri => "/reference/$id",
+        href => "$base/reference/$id.json",
         publication_id => 1,
         publication_uri => "/report/test-report",
         child_publication_id => undef,

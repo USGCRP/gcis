@@ -237,7 +237,11 @@ db/patches/0640_identifier_checks.sql
 db/patches/0650_role_types.sql
 db/patches/0660_more_role_types.sql
 db/patches/0670_drop_dataset_org.sql
+db/patches/0680_generic.sql
+db/patches/0690_cascades.sql
+db/patches/0700_file.sql
 eg/atrac_upload.html
+eg/cleanup.sql
 eg/client.pl
 eg/compare.pl
 eg/image-meta.pl
@@ -313,6 +317,13 @@ lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/sparql.js
+lib/Tuba/files/public/owl/extra.css
+lib/Tuba/files/public/owl/gcis.ttl
+lib/Tuba/files/public/owl/jquery.js
+lib/Tuba/files/public/owl/jquery_002.js
+lib/Tuba/files/public/owl/owl.css
+lib/Tuba/files/public/owl/Primer.css
+lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/test.html
 lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.ttl.ep
@@ -326,8 +337,10 @@ lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/book/object.ttl.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
+lib/Tuba/files/templates/chapter/relationships.html.ep
 lib/Tuba/files/templates/collapsible.html.ep
 lib/Tuba/files/templates/contributors.html.ep
+lib/Tuba/files/templates/contributors.ttl.ep
 lib/Tuba/files/templates/controls/arrays.html.ep
 lib/Tuba/files/templates/controls/autocomplete.html.ep
 lib/Tuba/files/templates/controls/contributors.html.ep
@@ -407,6 +420,7 @@ lib/Tuba/files/templates/reference/objects.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
+lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/table/object.ttl.ep
 lib/Tuba/files/templates/table/objects.html.ep
@@ -436,6 +450,7 @@ lib/Tuba/Organization.pm
 lib/Tuba/Person.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
+lib/Tuba/Plugin/TubaHelpers.pm
 lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
 lib/Tuba/Report.pm
@@ -454,5 +469,6 @@ t/003_lists.t
 t/004_report.t
 t/005_reference.t
 t/005_turtle.t
+t/006_figure.t
 t/999_stop_db.t
 t/tlib.pm
