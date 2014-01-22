@@ -1,14 +1,6 @@
 % layout "default";
-
 <<%= current_resource %>>
-   a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;
-        
-%# % for my $contributor ($organization->contributor) {
-%# gcis:contributor "<%= $contributor->identifier %>";
-%# % }
-%# for my $dataset ($organization->datasets) {
-%#   gcis:dataset "<%= $dataset->identifier %>";
-%# }
+   a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;        
 % if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
@@ -23,12 +15,15 @@
    rdfs:label "<%= $organization->name %>";
    prov:label "<%= $organization->name %>";
    gcis:hasURL "<%= $organization->url %>".
-
+%= include 'prov';
 %# parent organization(s) - to be added later               
 %#  % for my $suborg ($organization->suborgs) {
 %#      org:subOrganizationOf "<%= $suborg->parent_org %>";           
 %#        prov:actedOnBehalfOf "<%= $suborg->parent_org %>";
  %# % }
-
-%= include 'prov';
-
+%# % for my $contributor ($organization->contributor) {
+%# gcis:contributor "<%= $contributor->identifier %>";
+%# % }
+%# for my $dataset ($organization->datasets) {
+%#   gcis:dataset "<%= $dataset->identifier %>";
+%# }
