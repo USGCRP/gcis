@@ -36,10 +36,9 @@
    rdfs:label "<%= $figure->title %>";
    prov:label "<%= $figure->title %>".
 % for my $keyword ($figure->keywords) {
-   gcis:attributes "<%= $keyword->attributes %>";
-   skos:concept "<%= $keyword->attributes %>"; 
+   gcis:attributes "<%== $keyword->stringify %>";
+   skos:concept "<%== $keyword->stringify %>";
 % }
-
 %# % for my $right ($figure->rights) {
  %#   dcterms:rights "<%= $right->usage_limits %>".                     
 %# % }
