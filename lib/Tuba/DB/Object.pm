@@ -229,9 +229,9 @@ sub make_identifier {
 Override Rose::DB::Object::Helpers::as_tree, and provide more
 information :
 
-    - a list of parent publications (unless no_parents is sent)
+    - a list of parent publications
     - a list of files
-    - a list of gcmd keywords (iff with_keywords is sent)
+    - a list of gcmd keywords (iff with_gcmd is sent)
     - a list of contributors (if this is a publication)
     - a list of publications for each contributor record (if this is a contributor)
 

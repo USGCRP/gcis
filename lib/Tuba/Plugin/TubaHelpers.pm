@@ -185,9 +185,13 @@ sub register {
     $app->helper(detect_format => sub {
             # Taken from Mojolicious::Controller::respond_to
             my $c = shift;
+            my $stash   = $c->stash;
+            return $stash->{format} if $stash->{format}; 
             my @formats = @{$c->app->types->detect($c->req->headers->accept, $c->req->is_xhr)};
-            push @formats, $c->app->renderer->default_format;
-            push @formats, $c->stash('format') if $c->stash('format');
+            unless (@formats) {
+                my $format = $stash->{format} || $c->req->param('format');
+                push @formats, $format ? $format : $app->renderer->default_format;
+            }
             return $formats[0];
         });
     $app->helper(ontology_url => sub {

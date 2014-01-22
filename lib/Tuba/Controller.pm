@@ -397,12 +397,22 @@ sub update_form {
     $c->stash(meta => $object->meta);
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
     my $format = $c->detect_format;
-    if ($format eq 'json') {
-        return $c->render(json => $object->as_tree(max_depth => 0));
-    }
     my $table = $object->meta->table;
-    $c->render_maybe(template => "$table/update_form")
-        or $c->render(template => "update_form");
+    $c->respond_to(
+        json => sub {
+            my $tree = $object->as_tree(max_depth => 0, bonsai => 1);
+            return $c->render(json => $tree);
+        },
+        yaml => sub {
+            my $tree = $object->as_tree(max_depth => 0, bonsai => 1);
+            return $c->render_yaml($tree);
+        },
+        html => sub {
+            my $c = shift;
+            $c->render_maybe(template => "$table/update_form")
+                or $c->render(template => "update_form");
+        }
+    );
 }
 
 =head2 update_prov_form

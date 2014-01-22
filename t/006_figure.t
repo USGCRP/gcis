@@ -44,6 +44,27 @@ $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
 $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => $uuid );
 
+$t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")->json_is(
+ {
+   'attributes' => undef,
+   'caption' => undef,
+   'chapter_identifier' => 'carrots',
+   'create_dt' => undef,
+   'identifier' => 'orange',
+   'lat_max' => undef,
+   'lat_min' => undef,
+   'lon_max' => undef,
+   'lon_min' => undef,
+   'ordinal' => undef,
+   'report_identifier' => 'vegetables',
+   'source_citation' => undef,
+   'submission_dt' => undef,
+   'time_end' => undef,
+   'time_start' => undef,
+   'title' => 'Orange Carrots',
+   'usage_limits' => undef
+ }) or diag explain($t->tx->res->json);
+
 $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
     {delete_image_identifier => $uuid, title => "Orange Carrots"})
   ->status_is(200);
