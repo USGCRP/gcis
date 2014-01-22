@@ -1,7 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
    a bibo:Book;
-
 % for my $keyword ($book->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
@@ -20,7 +19,6 @@
    prov:label "<%= $book->title %>";
    dwc:year "<%= $book->year %>";
    xsd:gYear "<%= $book->year %>";
-
 %= include 'prov';
 
 %# % for my $person ($book->persons) {
