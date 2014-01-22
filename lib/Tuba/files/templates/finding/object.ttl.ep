@@ -4,14 +4,10 @@
 % if (my $chapter = $finding->chapter) {
    gcis:inPublication <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
-
-
 % if (my $chapter = stash 'chapter') {
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
-
-
 % for my $keyword ($finding->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
@@ -20,14 +16,12 @@
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-
 % if (my $chapter = stash 'chapter') { 
    dcterms:identifier "<%= $chapter->identifier %>";
 % }
 % if (my $chapter = $finding->chapter) {
    gcis:isBasedOn "<%= $chapter->identifier %>";
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-
 % }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
@@ -40,7 +34,6 @@
    rdfs:label "<%= $finding->statement %>";
    dcterms:description "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".
-
-%# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
 %= include 'prov';
+%# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
 
