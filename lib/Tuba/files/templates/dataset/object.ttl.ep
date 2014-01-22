@@ -1,5 +1,4 @@
 % layout "default";
-
 <<%= current_resource %>>
    a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
