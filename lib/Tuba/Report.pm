@@ -8,6 +8,7 @@ package Tuba::Report;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Pg::hstore qw/hstore_decode/;
+use Encode;
 use Tuba::Log;
 
 sub _user_can_view {
@@ -119,6 +120,7 @@ sub watch {
             $other = hstore_decode($other);
             %$vals = ( %$vals, %$other);
         }
+        $row->{changed_fields} = decode('UTF-8',$row->{changed_fields}) if defined($row->{changed_fields});
         $row->{obj} = eval { $class->new(%$vals); };
 
         #$row->{obj}->load(speculative => 1);

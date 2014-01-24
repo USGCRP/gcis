@@ -11,6 +11,8 @@ last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit
     }
     div.log .logrow {
         white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
     }
 </style>
 <div class='log well'>
