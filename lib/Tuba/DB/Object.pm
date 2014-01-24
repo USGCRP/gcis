@@ -288,6 +288,15 @@ sub as_tree {
         if (my $p = $s->get_publication) {
             my @ctrs = $p->contributors;
             $tree->{contributors} = [ map +{uri => $_->uri($c)}, @ctrs ];
+
+            my $refs = Tuba::DB::Object::Subpubref::Manager->get_objects(query => [ publication_id => $p->id ], limit => 200 );
+            my $format = $c->stash('format');
+            $format &&= ".$format";
+            my $base = $c->req->url->base;
+            $tree->{references} = [ map +{
+                                            uri => "/reference/".$_->reference_identifier,
+                                            href => "$base/reference/".$_->reference_identifier."$format"
+                                        }, @$refs ];
         }
     }
     return $tree;
