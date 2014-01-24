@@ -400,10 +400,12 @@ sub update_form {
     my $table = $object->meta->table;
     $c->respond_to(
         json => sub {
+            my $c = shift;
             my $tree = $object->as_tree(max_depth => 0, bonsai => 1);
             return $c->render(json => $tree);
         },
         yaml => sub {
+            my $c = shift;
             my $tree = $object->as_tree(max_depth => 0, bonsai => 1);
             return $c->render_yaml($tree);
         },
@@ -837,7 +839,7 @@ sub update {
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
         $new_attrs{$col->name} = $param if _differ($param,$new_attrs{$col->name});
-        if ($col->is_primary_key_member && ($param ne $object->$acc)) {
+        if ($col->is_primary_key_member && ($param//'' ne $object->$acc)) {
             die "$acc is not defined" unless defined($param);
             $pk_changes{$col->name} = $param;
             # $c->app->log->debug("Setting primary key member ".$col->name." to $param");
@@ -1007,7 +1009,7 @@ sub redirect_with_error {
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {
-            shift->render(json => { error => $error })
+            shift->render(status => 400, json => { error => $error })
         },
         html => sub {
             my $c = shift;

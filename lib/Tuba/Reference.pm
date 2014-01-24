@@ -82,14 +82,13 @@ sub update {
     my $c = shift;
     if (my $json = $c->req->json) {
         if (my $uri = delete $json->{publication_uri}) {
-            my $report = $c->uri_to_obj($uri) or return $c->render(code =>400, json => { error  => 'uri not found' } );
-            $report->meta->table eq 'report' or return $c->render(code =>501, json => { error => 'only reports for now' } );
-            my $pub = $report->get_publication(autocreate => 1);
+            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
+            my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
             $pub->save(audit_user => $c->user) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         } else {
-            return $c->render(code => 400, json => { error => 'missing publication uri (e.g. /report/nca3)' } );
+            return $c->render(status => 400, json => { error => 'missing publication uri (e.g. /report/nca3)' } );
         }
     }
     $c->SUPER::update(@_);
@@ -165,15 +164,31 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $reference = $c->_this_object;
+    my $reference = $c->_this_object or return $c->render_not_found;
     my $report = $reference->publication->to_object;
     undef $report unless $report->meta->table eq 'report';
+
+    if (my $json = $c->req->json) {
+        logger->info("got json");
+        if (my $subpubref = $json->{add_subpubref_uri}) {
+            logger->info("got $subpubref");
+            # Add the URI for a chapter, figure, finding -- "sub publications" of a report --
+            # to this references.
+            my $pub = $c->uri_to_pub($subpubref) or do {
+                return $c->render(status => 400, json => { error => "$subpubref not found" });
+            };
+            $reference->add_subpubrefs({publication_id => $pub->id});
+            $reference->save(audit_user => $c->user) or return $c->render_exception;
+        }
+        return $c->render(json => { status => 'ok'});
+    }
+
     if (my $child = $c->param('child_publication_id')) {
         my $obj = $c->str_to_obj($child);
         my $child_publication = $obj->get_publication(autocreate => 1);
         $child_publication->save(audit_user => $c->user) unless $child_publication->id;
         $reference->child_publication_id($child_publication->id);
-        $reference->save(audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
+        $reference->save(audit_user => $c->user) or return $c->redirect_with_error($reference->error);
     }
     if ( $report && (my $chapter_identifier = $c->param('chapter'))) {
         my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
@@ -194,6 +209,33 @@ sub update_rel {
     }
     # TODO allow deletion
     $c->redirect_without_error('update_rel_form');
+}
+
+# Look up a reference by record number.
+sub lookup {
+    my $c = shift;
+    my $record_number = $c->stash('record_number');
+
+    $record_number =~ /^[0-9]+$/ or return $c->render_not_found;
+
+    my $found = References->get_objects(query => [ \"attrs->'_record_number' = ${record_number}::varchar" ], limit => 10 );
+
+    unless ($found && @$found) {
+        return $c->render_not_found;
+    }
+    if (@$found > 1) {
+        return $c->respond_to(
+            html => { text => "multiple matches : ".join ',', map $_->identifier, @$found },
+            json => { json => { error => 'multiple matches : ', matches => [ map $_->identifier, @$found ] } },
+            yaml => { json => { error => 'multiple matches : ', matches => [ map $_->identifier, @$found ] } }
+        );
+    }
+    my $ref = $found->[0];
+    $c->respond_to(
+        html => sub { my $d = shift; $d->redirect_to($ref->uri($d)) },
+        json => sub { my $d = shift; $d->redirect_to($ref->uri($d).".json") },
+        yaml => sub { my $d = shift; $d->redirect_to($ref->uri($d).".yaml") },
+    )
 }
 
 1;

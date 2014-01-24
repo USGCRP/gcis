@@ -5,12 +5,6 @@
 <ul>
 
 <li>
-%= link_to import_form => begin
-Import spreadsheet
-%= end
-</li>
-
-<li>
 %= link_to '_watch' => begin
 Watch activity
 %= end

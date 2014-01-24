@@ -7,9 +7,8 @@
         padding-bottom: 60px;
       }
 
-      /* Main marketing message and sign up button */
       .jumbotron {
-        margin: 80px 0;
+        margin: 40px 0;
         text-align: center;
       }
       .jumbotron h1 {
@@ -19,10 +18,6 @@
       .jumbotron .lead {
         font-size: 24px;
         line-height: 1.25;
-      }
-      .jumbotron .btn {
-        font-size: 21px;
-        padding: 14px 24px;
       }
 
 </style>
@@ -38,6 +33,9 @@ mailing list<%= end %>.
 </p>
 </div>
 
+<div class="row" style='text-align:center;'>
+    <h6>Sample GCIS resources (refresh for more).</h6>
+</div>
 <div class="row well" style='position:relative;'>
 %= include 'obj_thumbnails', objs => [ map $_->to_object, @$demo_pubs ];
 <div style='position:absolute;top:2px;right:2px;'>

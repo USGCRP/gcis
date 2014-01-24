@@ -1,0 +1,8 @@
+there was an error
+<%= $exception =%>
+
+% for my $frame (@{ $exception->frames}) {
+<%= $frame->[1] %>, line <%= $frame->[2] %>
+<%= $frame->[0] %> <%= $frame->[3] %>
+% }
+
