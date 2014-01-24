@@ -383,7 +383,6 @@ lib/Tuba/files/templates/image/checkmet.html.ep
 lib/Tuba/files/templates/image/object.ttl.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
-lib/Tuba/files/templates/import.html.ep
 lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep

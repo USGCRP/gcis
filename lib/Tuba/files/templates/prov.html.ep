@@ -10,6 +10,7 @@
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
     % $references_url = $pub->references_url($self);
 % }
+
 % if (@parents || @parents_with_references) {
 
     % if (stash 'add_delete_buttons') {
@@ -67,7 +68,13 @@
         <td><%= link_to ontology_url('cito:cites') => target => "_blank" => begin %>cito:cites<%= end %>
             (ref:<%= obj_link($child->{reference}, short => 1) %>)
         </td>
-        <td><%= link_to 'show_publication' => { publication_identifier => $child_pub->id } => begin %><%= $child_pub->stringify %><%= end %></td>
+        <td>
+            % if ($child_pub) {
+            <%= link_to 'show_publication' => { publication_identifier => $child_pub->id } => begin %><%= $child_pub->stringify %><%= end %>
+            % } else {
+            no publication entry
+            % }
+        </td>
     </tr>
    % }
    % if (@children_with_references == $max_children && !param('show_all')) {

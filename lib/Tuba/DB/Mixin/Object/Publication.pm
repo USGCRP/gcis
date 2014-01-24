@@ -132,7 +132,7 @@ sub get_children_with_references {
         inner join publication p    on r.publication_id = p.id
         inner join subpubref s      on s.reference_identifier = r.identifier
         inner join publication subp on s.publication_id = subp.id
-      where s.publication_id  = ? and r.child_publication_id is not null
+      where s.publication_id  = ?
       limit $limit
 SQL
     my $dbs = DBIx::Simple->new($s->db->dbh);
@@ -153,7 +153,7 @@ SQL
     @results = @results[0..$limit-1] if @results > $limit;
     for (@results) {
         $_->{parent} = $s;
-        $_->{child} = (ref $s)->new(id => $_->{child_publication_id})->load;
+        $_->{child} = (ref $s)->new(id => $_->{child_publication_id})->load if $_->{child_publication_id};
         $_->{reference} = Tuba::DB::Object::Reference->new(identifier => $_->{reference_identifier});
     }
     return @results;
