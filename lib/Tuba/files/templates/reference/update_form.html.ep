@@ -1,0 +1,27 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+% my $controls = stash 'controls' || {};
+
+% my $textfield = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <input type="text" class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+% end
+
+% my $textarea = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
+% end
+
+<div class='row-fluid'>
+%= include 'update_tabs', active => 'fields';
+<div class='tab-content'>
+    To edit this reference, please choose a valid tab from above.
+</div>
+

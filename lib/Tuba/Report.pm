@@ -72,7 +72,7 @@ sub list {
                     and => [username => $user]
                   ]
         ],
-        with_objects => [qw/_report_viewers organization/],
+        with_objects => [qw/_report_viewers/],
         ($c->param('all')
           ? ()
           : (page => $c->page, per_page => $c->per_page)),
@@ -146,7 +146,6 @@ sub make_tree_for_show {
     my $report = shift;
     my $pub = $report->get_publication(autocreate => 1);
     return {
-      organization_identifier => $report->organization_identifier,
       files                   => [map +{uri => $_->uri($c)}, $pub->files],
       uri                     => $report->uri($c),
       identifier              => $report->identifier,

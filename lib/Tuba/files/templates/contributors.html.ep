@@ -10,6 +10,7 @@
             <th>Role</th>
             <th>Person</th>
             <th>Organization</th>
+            <th>Reference</th>
         </tr>
     % my $last;
     % for my $con (@$cons) {
@@ -21,6 +22,12 @@
                 <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id} %>"><%= obj_link($con->person, long => 1) %></td>
             % }
             <td><%= obj_link($con->organization) %></td>
+            <td><% for my $ref (@{ $con->publication_contributor_maps }) { %>
+            % next unless $ref->publication_id == $pub->id;
+            %# TODO: optimize
+            <%= obj_link($ref->reference, short => 1) %>
+            <% } %>
+            </td>
         </tr>
     % $last = $con;
     % }

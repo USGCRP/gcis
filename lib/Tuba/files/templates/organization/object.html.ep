@@ -43,8 +43,11 @@
         <tr>
             <td><%= obj_link($ctr->person) %></td>
             <td><%= $ctr->role_type->label %></td>
-            <td><% for my $pub ($ctr->publications) { %>
-                <%= include 'obj_thumbnails', objs => [ $pub->to_object ] %>
+            <td><% for my $map (@{ $ctr->publication_contributor_maps }) { %>
+                <%= include 'obj_thumbnails', objs => [ $map->publication->to_object ] %>
+                % if (my $ref = $map->reference) {
+                (<%= obj_link($ref, short => 1) %>)
+                % }
                 <% } %>
             </td>
         </tr>    

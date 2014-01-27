@@ -1,4 +1,6 @@
 
+% no warnings 'uninitialized';
+
 %= hidden_field 'delete_contributor';
 
 % my $pub = $object->get_publication;
@@ -9,6 +11,7 @@
         <th>Role</th>
         <th>Person</th>
         <th>Organization</th>
+        <th>Reference</th>
         <th></th>
     </tr>
 % my $last;
@@ -21,6 +24,10 @@
             <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id} %>"><%= obj_link($con->person, long => 1) %></td>
         % }
         <td><%= obj_link($con->organization) %></td>
+        <td><% for my $ref (@{ $con->publication_contributor_maps }) { %>
+            <%= obj_link($ref->reference, short => 1) %>
+            <% } %>
+        </td>
         <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
     </tr>
 % $last = $con;

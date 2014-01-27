@@ -665,9 +665,12 @@ sub update_contributors {
 
     my ($person,$organization);
 
+    my $reference_identifier;
     if ($c->req->json) {
         $person = $json->{person_id};
+        $reference_identifier = $json->{reference_identifier};
         $organization = $json->{organization_identifier};
+        logger->info("adding org $organization");
         if (my $id = $person) {
             $person = Person->new(id => $id)->load(speculative => 1)
                 or return $c->update_error("invalid person $person");
@@ -679,6 +682,7 @@ sub update_contributors {
     } else {
         $person = $c->param('person');
         $organization = $c->param('organization');
+        $reference_identifier = $c->param('reference_identifier') || undef;
         $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
         $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
     }
@@ -698,8 +702,13 @@ sub update_contributors {
                 or return $c->update_error($contributor->error);
     };
 
-    $pub->add_contributors($contributor);
     $pub->save(audit_user => $c->user) or return $c->update_error($contributor->error);
+    my $map = Tuba::DB::Object::PublicationContributorMap->new(
+        publication_id => $pub->id,
+        contributor_id => $contributor->id,
+        reference_identifier => $reference_identifier,
+    );
+    $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
 }
