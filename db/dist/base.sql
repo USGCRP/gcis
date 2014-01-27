@@ -220,7 +220,6 @@ COMMENT ON COLUMN figure.ordinal IS 'The numeric identifier for this figure whic
 
 CREATE TABLE file (
     file_type character varying,
-    dir character varying,
     file character varying NOT NULL,
     identifier character varying NOT NULL,
     CONSTRAINT ck_file_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
