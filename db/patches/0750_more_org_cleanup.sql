@@ -4,8 +4,6 @@ update organization set identifier = replace(identifier,'–','-') where identif
 
 update organization set identifier = replace(identifier,'&','-') where identifier not similar to '[a-z0-9_-]+';
 
-select identifier from organization where identifier not similar to '[a-z0-9_-]+';
-
 alter table organization add constraint
     organization_identifier_check
     CHECK (identifier similar to '[a-z0-9_-]+');
