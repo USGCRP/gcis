@@ -26,8 +26,12 @@
     </div>
     % if (my $child = $reference->child_publication) {
         <div class='span4 well'>
-            Publication referenced by this bibliographic entry :
+            Publication/contributor :
             %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span12'
+            % for my $map (@{ $reference->publication_contributor_maps }) {
+            %= obj_link($map->contributor)
+            % }
+
     % } else {
         <div class='span4 alert alert-error'>
         <p style='text-align:center;'>This reference is not associated with a publication.

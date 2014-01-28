@@ -59,7 +59,7 @@ sub stringify {
     }
     if ($args{short}) {
         if ($uuid =~ /^(\w+)-(\w+)-(\w+)-(\w+)-(\w+)$/) {
-            return "$1 $author $year" if $year && $author;
+            #return "$1 $author $year" if $year && $author;
             return "$1 $year" if $year;
             return $1;
         }
