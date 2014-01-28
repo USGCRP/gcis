@@ -47,28 +47,29 @@
 </table>
 
 % unless (param 'no_header') {
-
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-
     % my $ctr = $object->contributors;
+    <div class='row collapse-wrapper'>
     <table class='table table-condensed table-bordered table-striped'>
         <caption>Contributions</caption>
         <tr><th>Organization</th><th>Role</th><th>Publications</th>
         </tr>
-        % for my $ctr (@{ $object->contributors }) {
+        % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
         <tr>
             <td><%= obj_link($ctr->organization) %></td>
             <td><%= $ctr->role_type->label %></td>
-            <td><% for my $pub ($ctr->publications) { %>
-                <%= include 'obj_thumbnails', objs => [ $pub->to_object ] %>
-                <% } %>
+            <td>
+                <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
+                    % my $obj = $map->publication->to_object;
+                    <%= $obj->meta->table %> : <%= obj_link($obj) %>
+                    % if (my $ref = $map->reference) {
+                    <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
+                    % }
+                    <br>
+               <% } %>
             </td>
         </tr>    
         % }
     </table>
-
-%= end
 
 % }
 
