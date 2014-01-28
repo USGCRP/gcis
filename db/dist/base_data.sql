@@ -10,34 +10,10 @@ SET client_min_messages = warning;
 
 
 --
--- Data for Name: country; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY country (code, name) FROM stdin;
-\.
-
-
---
--- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization_type (identifier) FROM stdin;
-\.
-
-
---
--- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY organization (identifier, name, url, country_code, organization_type_identifier) FROM stdin;
-\.
-
-
---
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, organization_identifier, doi, _public) FROM stdin;
+COPY report (identifier, title, url, doi, _public) FROM stdin;
 \.
 
 
@@ -110,6 +86,30 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 --
 
 COPY book (identifier, title, isbn, year, publisher, number_of_pages, url) FROM stdin;
+\.
+
+
+--
+-- Data for Name: country; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY country (code, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: organization_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization_type (identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization (identifier, name, url, country_code, organization_type_identifier) FROM stdin;
 \.
 
 
@@ -254,10 +254,18 @@ COPY publication (id, publication_type_identifier, fk) FROM stdin;
 
 
 --
+-- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY reference (identifier, attrs, publication_id, child_publication_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: publication_contributor_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_contributor_map (publication_id, contributor_id) FROM stdin;
+COPY publication_contributor_map (publication_id, contributor_id, reference_identifier) FROM stdin;
 \.
 
 
@@ -297,29 +305,6 @@ COPY publication_map (child, relationship, parent, note) FROM stdin;
 --
 
 COPY ref_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: publication_ref; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY publication_ref (id, publication_id, type, fk) FROM stdin;
-\.
-
-
---
--- Name: publication_ref_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('publication_ref_id_seq', 1, false);
-
-
---
--- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY reference (identifier, attrs, publication_id, child_publication_id) FROM stdin;
 \.
 
 

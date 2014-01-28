@@ -334,7 +334,8 @@ CREATE TABLE organization (
     name character varying,
     url character varying,
     country_code character varying,
-    organization_type_identifier character varying
+    organization_type_identifier character varying,
+    CONSTRAINT organization_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -380,7 +381,8 @@ CREATE TABLE publication (
 
 CREATE TABLE publication_contributor_map (
     publication_id integer NOT NULL,
-    contributor_id integer NOT NULL
+    contributor_id integer NOT NULL,
+    reference_identifier character varying
 );
 
 
@@ -418,28 +420,6 @@ CREATE TABLE publication_map (
     parent integer NOT NULL,
     note character varying
 );
-
-
-
-CREATE TABLE publication_ref (
-    id integer NOT NULL,
-    publication_id integer,
-    type character varying NOT NULL,
-    fk integer NOT NULL
-);
-
-
-
-CREATE SEQUENCE publication_ref_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-
-ALTER SEQUENCE publication_ref_id_seq OWNED BY publication_ref.id;
 
 
 
@@ -483,7 +463,6 @@ CREATE TABLE report (
     identifier character varying NOT NULL,
     title character varying,
     url character varying,
-    organization_identifier character varying,
     doi character varying,
     _public boolean DEFAULT true,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
@@ -576,10 +555,6 @@ ALTER TABLE ONLY person ALTER COLUMN id SET DEFAULT nextval('person_id_seq'::reg
 
 
 ALTER TABLE ONLY publication ALTER COLUMN id SET DEFAULT nextval('publication_id_seq'::regclass);
-
-
-
-ALTER TABLE ONLY publication_ref ALTER COLUMN id SET DEFAULT nextval('publication_ref_id_seq'::regclass);
 
 
 
@@ -752,11 +727,6 @@ ALTER TABLE ONLY publication
 
 
 
-ALTER TABLE ONLY publication_ref
-    ADD CONSTRAINT publication_ref_pkey PRIMARY KEY (id);
-
-
-
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_type_fk UNIQUE (publication_type_identifier, fk);
 
@@ -894,10 +864,6 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_ref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
 CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1011,10 +977,6 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXE
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
-
-
-
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_ref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1290,6 +1252,11 @@ ALTER TABLE ONLY publication_contributor_map
 
 
 
+ALTER TABLE ONLY publication_contributor_map
+    ADD CONSTRAINT publication_contributor_map_reference_publication FOREIGN KEY (reference_identifier, publication_id) REFERENCES reference(identifier, child_publication_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
 ALTER TABLE ONLY publication_file_map
     ADD CONSTRAINT publication_file_map_file_identifier_fkey FOREIGN KEY (file_identifier) REFERENCES file(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1325,11 +1292,6 @@ ALTER TABLE ONLY publication_map
 
 
 
-ALTER TABLE ONLY publication_ref
-    ADD CONSTRAINT publication_ref_ibfk_1 FOREIGN KEY (type) REFERENCES ref_type(identifier) MATCH FULL;
-
-
-
 ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_child_publication_id_fkey FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE CASCADE;
 
@@ -1337,11 +1299,6 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
-
-
-
-ALTER TABLE ONLY report
-    ADD CONSTRAINT report_organization_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE;
 
 
 
