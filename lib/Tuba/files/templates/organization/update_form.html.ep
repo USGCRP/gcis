@@ -1,0 +1,24 @@
+
+%= javascript begin
+function confirm_merge() {
+    var target = $('#merge_organization').val();
+    $('#modalconfirm').show();
+    return confirm("Ready to merge with :\n"+target + "\n\nPress OK to confirm this merge operation.  This cannot be undone.");
+}
+%= end
+
+%= include 'update_form' => embed_footer => begin
+
+%= form_for obj_uri_for($object, 'merge') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
+To merge this organization into another organization, select an organization below :
+
+<div class='controls'>
+    %= include 'controls/autocomplete', id => "merge_org", input_name => 'merge_organization', object_type => 'organization'
+    <div class="form-actions">
+    <button type="submit" class="btn btn-primary btn-warning" onclick='return confirm_merge()'>Merge into other organization and remove this record</button>
+    </div>
+</div>
+
+%= end
+
+%= end

@@ -23,9 +23,7 @@
 %= include 'update_tabs', active => 'fields';
 <div class='tab-content'>
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
-% if (my $error = (flash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
-% }
+%= include 'messages';
 
 % my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
