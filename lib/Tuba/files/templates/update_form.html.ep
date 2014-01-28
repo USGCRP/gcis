@@ -63,5 +63,9 @@
 
 %= end
 </div>
+
+% if (my $footer = stash 'embed_footer') {
+%= $footer->();
+% }
 </div>
 

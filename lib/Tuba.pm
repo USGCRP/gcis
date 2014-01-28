@@ -273,6 +273,7 @@ sub startup {
     $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
+    $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
 
     # GcmdKeyword
     $r->resource('gcmd_keyword');

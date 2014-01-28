@@ -7,6 +7,7 @@ Tuba::Organization : Controller class for organizations.
 package Tuba::Organization;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Tuba::Log qw/logger/;
 
 sub show {
     my $c = shift;
@@ -100,6 +101,40 @@ sub lookup_name {
     }
     return $c->render_not_found;
 }
+
+sub merge {
+    my $c = shift;
+    my $org = $c->_this_object;
+    $c->stash(tab => "update_form");
+    $c->stash->{template} = 'update_form';
+    my $other
+      = $c->req->json
+      ? Organization->new(identifier => $c->req->json->{merge_organization})
+      : $c->str_to_obj($c->param('merge_organization'));
+    return $c->update_error("Missing other organization") unless $other;
+    logger->info(sprintf("Merging organization %s (%s) with %s (%s)",
+           $org->name, $org->identifier, $other->name, $other->identifier ));
+    if ($org->identifier eq $other->identifier) {
+        return $c->update_error("Cannot merge org with itself.");
+    }
+
+    my $dbs = $c->dbs;
+    eval {
+      $dbs->begin_work;
+      $dbs->update('contributor',
+        { organization_identifier => $other->identifier},
+        { organization_identifier => $org->identifier })
+        or die $dbs->errstr;
+      $org->delete;
+      $dbs->commit or die $dbs->error;
+    };
+    if ($@) { return $c->update_error($@) }
+
+    $c->stash(info => "Merged with ".$other->identifier);
+    my $uri = $other->uri($c, { tab => 'update_form' } );
+    return $c->redirect_to($uri);
+}
+
 
 1;
 

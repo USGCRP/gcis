@@ -15,11 +15,11 @@ sub _make_query {
         $str =~ s/^\s+//g;
         $str =~ s/\s+$//g;
         my $q = $dbh->quote('%'.$str.'%');
-        return \(qq[attrs->'Author' ilike '%$str%' and attrs->'Year' = '$year']);
+        return \(qq[attrs->'Author' ilike $q and attrs->'Year' = '$year']);
     }
 
     my $q = $dbh->quote('%'.$str.'%');
-    return \(qq[attrs->'Author' ilike '%$str%']);
+    return \(qq[attrs->'Author' ilike $q]);
 }
 
 1;
