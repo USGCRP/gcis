@@ -103,7 +103,7 @@ sub select {
 
 sub watch {
     my $c = shift;
-    my $limit = $c->param('limit') || 20;
+    my $limit = $c->param('limit') || 50;
     $limit = 50 unless $limit =~ /^\d+$/;
     my $result = $c->dbc->select(
         [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],

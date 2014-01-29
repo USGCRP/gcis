@@ -1,7 +1,7 @@
 % layout 'default';
 
 %= form_for current_route() => begin
-last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit();}', class => 'span1'; %> changes
+last <%= select_field 'limit' => [50,100,500], onChange => '{this.form.submit();}', class => 'span1'; %> changes
 %= end
 
 <style>
@@ -14,11 +14,28 @@ last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit
         overflow:hidden;
         text-overflow:ellipsis;
     }
+    div.log .btn {
+        overflow:hidden;
+        text-overflow:ellipsis;
+        width:100px;
+    }
 </style>
 <div class='log well'>
 % for my $row (@$change_log) {
     <div class='logrow'>
-        <%= format_ago($row->{action_tstamp_tx}) %>: <b><%= $row->{audit_username} %></b>
+        <%= format_ago($row->{action_tstamp_tx}) %>:
+
+         <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show'))) { %>
+             <%= link_to $uri => class => 'btn squeezevert' => begin =%>
+                 <%= $row->{obj}->pk_values =%>
+             <%= end %>
+         <% } else { %>
+         <b><%= $row->{obj} ? $row->{obj}->stringify
+             : $row->{yaml} ? $row->{yaml}
+             : "" %></b>
+         <% } %>
+
+        <b><%= $row->{audit_username} %></b>
 
         <%= $row->{action} eq 'I' ? 'inserted new'
          : $row->{action} eq 'D' ? 'deleted'
@@ -27,17 +44,6 @@ last <%= select_field 'limit' => [20,50,100,500], onChange => '{this.form.submit
          <%= $row->{action} eq 'U' ? " for" : "" =%>
 
          <%= $row->{table_name} %> 
-
-         <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show'))) { %>
-             <%= link_to $uri => class => 'btn squeezevert' => begin =%>
-                 <%= $row->{obj}->stringify =%>
-             <%= end %>
-         <% } else { %>
-         <b><%= $row->{obj} ? $row->{obj}->stringify
-             : $row->{yaml} ? $row->{yaml}
-             : "" %></b>
-         <% } %>
-
          <i><%= $row->{audit_note} ? "($row->{audit_note})" : "" %></i>
 
     </div>
