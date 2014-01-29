@@ -21,6 +21,7 @@
 
 <div class='row-fluid'>
 %= include 'update_tabs', active => 'fields';
+
 <div class='tab-content'>
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
