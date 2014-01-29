@@ -240,6 +240,12 @@ db/patches/0670_drop_dataset_org.sql
 db/patches/0680_generic.sql
 db/patches/0690_cascades.sql
 db/patches/0700_file.sql
+db/patches/0710_extra_author_entries.sql
+db/patches/0720_unused_table_pubref.sql
+db/patches/0730_pub_con_ref.sql
+db/patches/0740_org_cleanup.sql
+db/patches/0750_more_org_cleanup.sql
+db/patches/0760_publication_contributor_constraint.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -289,6 +295,7 @@ lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
 lib/Tuba/DB/Mixin/Object/Report.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
+lib/Tuba/DB/Mixin/Object/Subpubref.pm
 lib/Tuba/DB/Mixin/Object/Table.pm
 lib/Tuba/DB/Mixin/Object/Table/Manager.pm
 lib/Tuba/DB/Mixin/Object/Webpage.pm
@@ -325,6 +332,7 @@ lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/test.html
+lib/Tuba/files/templates/admin.html.ep
 lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.ttl.ep
 lib/Tuba/files/templates/article/object.ttl.ep
@@ -364,6 +372,7 @@ lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/doc/examples.html.ep
 lib/Tuba/files/templates/doc/resources.html.ep
 lib/Tuba/files/templates/exception.development.html.ep
+lib/Tuba/files/templates/exception.development.json.ep
 lib/Tuba/files/templates/exception.production.html.ep
 lib/Tuba/files/templates/fields.html.ep
 lib/Tuba/files/templates/figure/object.html.ep
@@ -402,6 +411,7 @@ lib/Tuba/files/templates/opensearch.xml.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/pager.html.ep
@@ -416,6 +426,7 @@ lib/Tuba/files/templates/pub_thumbnails.html.ep
 lib/Tuba/files/templates/reference/object.html.ep
 lib/Tuba/files/templates/reference/object.ttl.ep
 lib/Tuba/files/templates/reference/objects.html.ep
+lib/Tuba/files/templates/reference/update_form.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
