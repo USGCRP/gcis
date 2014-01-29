@@ -10,7 +10,10 @@ sub insert {
                 a an the and or nor for but so yet to of by at for but in with has
         /;
         my @words = grep { !$skip{lc $_} } split / /, $name;
-        my $identifier = @words ?  (join '', map lc(substr($_,0,1)), @words) : "unknown-".rand;
+        tr/a-zA-Z0-9-//dc for @words;
+        $_ = lc $_ for @words;
+        my $identifier = @words ?  (join '-', @words) : "unknown-".rand;
+        $identifier =~ s/--/-/g;
         $s->identifier($identifier);
     }
     return $s->SUPER::insert(@_);
