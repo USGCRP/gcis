@@ -50,15 +50,23 @@ sub type {
 
 sub people {
     my $s = shift;
-     my %seen;
-     for my $c (@{ $s->contributors }) {
+    my %seen;
+    for my $c (@{ $s->contributors }) {
          my $person = $c->person or next;
          next if $seen{$person->id};
          $seen{$person->id} = $person;
-     }
-     return values %seen;
+    }
+    return values %seen;
 }
 
+sub reports {
+    my $s = shift;
+    my $list = Tuba::DB::Object::Publication::Manager->get_objects(
+        query => [ organization_identifier => $s->identifier, publication_type_identifier => 'report' ],
+        with_objects => [qw/contributors/] );
+    my @reports = map $_->to_object, @$list;
+    return @reports;
+}
 
 1;
 

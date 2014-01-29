@@ -32,5 +32,14 @@ sub new_from_reference {
     return $s;
 }
 
+sub organizations {
+    my $s = shift;
+    my $pub = $s->get_publication or return;
+    my $orgs = Tuba::DB::Object::Organization::Manager->get_objects(
+        query => [ publication_id => $pub->id, person_id => undef ],
+        with_objects => [ qw/contributors.publications/ ] );
+    return @$orgs;
+}
+
 1;
 
