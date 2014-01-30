@@ -9,7 +9,7 @@ insert into organization_relationship (identifier, label)
          ('funded_by', 'funded by'),
          ('division_of', 'division of'),
          ('branch_of', 'branch of'),
-         ('affiliated_with', 'affiliated with')
+         ('affiliated_with', 'affiliated with');
 
 create table organization_map (
     organization_identifier varchar references organization(identifier) not null,
