@@ -65,6 +65,24 @@ $t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")-
    'usage_limits' => undef
  }) or diag explain($t->tx->res->json);
 
+# Create a keyword.
+$t->post_ok(
+  '/gcmd_keyword', json =>
+    {
+      identifier => "001f18d3-7e61-430b-9883-1960c6256fe5",
+      label      => "OPTICAL DEPTH",
+      definition => "The degree to which the ocean absorbs light, assuming vertical separation between light source and light receiver. "
+    }
+);
+
+# Assign it to the figure.
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/keywords/orange" => json =>
+    {identifier => "001f18d3-7e61-430b-9883-1960c6256fe5"})->status_is(200);
+
+$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_gcmd=1")
+    ->json_is( "/gcmd_keywords/0/identifier", "001f18d3-7e61-430b-9883-1960c6256fe5" );
+
 $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
     {delete_image_identifier => $uuid, title => "Orange Carrots"})
   ->status_is(200);
@@ -72,6 +90,7 @@ $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
 $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => undef );
 
+$t->delete_ok("/gcmd_keyword/001f18d3-7e61-430b-9883-1960c6256fe5");
 $t->delete_ok("/report/vegetables")->status_is(200);
 $t->delete_ok("/image/$uuid")->status_is(200);
 

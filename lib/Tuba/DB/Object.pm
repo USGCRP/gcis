@@ -54,7 +54,7 @@ sub pk_values {
 
 sub uri {
     my $s = shift;
-    my $c = shift;
+    my $c = shift or die "missing controller for uri";
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;

@@ -270,8 +270,7 @@ Generic create.  See above for overriding.
 sub create {
     my $c = shift;
     my $class = ref $c;
-    my ($object_class) = $class =~ /::(.*)$/;
-    $object_class = 'Tuba::DB::Object::'.$object_class;
+    my $object_class = $c->_guess_object_class;
     my $computed = $c->stash('computed_params') || {}; # to override incoming params in a subclass.
     my %obj;
     if (my $json = ($c->stash('object_json') || $c->req->json)) {
