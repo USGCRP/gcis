@@ -25,7 +25,7 @@
 
 % unless (param 'no_header') {
 
-    %= include 'relationships';
+    %= include "organization/relationships", object => $object, meta => $meta;
 
 % }
 

@@ -57,6 +57,31 @@ sub update_rel {
         $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error);
     }
 
+    if (my $related_org = $c->param('related_org')) {
+        my $related = $c->str_to_obj($related_org) or return $c->update_error("Could not find $related_org");
+        my $relationship = $c->param('organization_relationship_identifier') or return $c->update_error("missing relationship");
+        my $map = OrganizationMap->new(
+          organization_identifier              => $org->identifier,
+          other_organization_identifier        => $related->identifier,
+          organization_relationship_identifier => $relationship
+        );
+        $map->save(audit_user => $c->user) or return $c->update_error($map->error);
+        $c->flash(info => "Saved changes.");
+    }
+    if (my $delete_rel = $c->param('delete_relationship_to')) {
+        my $type = $c->param('delete_relationship_type');
+        my $related = Organization->new(identifier => $delete_rel);
+        $related->load(speculative => 1) or return $c->update_error("related org not found");
+        my $map = OrganizationMap->new(
+                organization_identifier => $org->identifier,
+                other_organization_identifier => $related->identifier,
+                organization_relationship_identifier => $type
+            );
+        $map->load(speculative => 1) or return $c->update_error("relationship not found");
+        $map->delete or return $c->update_error($map->error);
+        $c->stash(info => "Saved changes.");
+    }
+
     $c->redirect_to($next);
 }
 

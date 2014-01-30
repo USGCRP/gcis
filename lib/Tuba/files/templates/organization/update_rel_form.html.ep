@@ -31,7 +31,7 @@
         % for my $pub  ($c->publications) {
             <tr>
                 <td></td>
-                <td><%= include obj_thumbnails => objs => [ $pub->to_object ] %></td>
+                <td><%= include obj_button => obj => $pub->to_object %></td>
                 <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
                     onClick => qq[{this.form.elements["contributor_id"].value = '].$c->id.
                     qq[';this.form.elements["delete_publication"].value = '].$pub->id.
@@ -40,30 +40,69 @@
         % }
     % }
 
+    <tr>
+        <td colspan=3>
+            <center>New contributor</center>
+            <div class='row-fluid'>
+            <%= label_for 'role_type', class => 'control-label' => begin %>Role<%= end %>
+            <div class='controls'>
+                %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+            </div>
+
+            <%= label_for 'person', class => 'control-label' => begin %>Person<%= end %>
+            <div class='controls'>
+                %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
+            </div>
+
+            <%= label_for 'publication', class => 'control-label' => begin %>Publication<%= end %>
+            <div class='controls'>
+                %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
+            </div>
+    </td>
+</tr>
+
 </table>
 
-%= label_for 'role_type', class => 'control-label' => begin
-Role
-%= end
-<div class='controls'>
-    %= select_field 'role_type', db_labels('role_type'), class => 'span8';
-</div>
-%= label_for 'person', class => 'control-label' => begin
-Person
-%= end
-<div class='controls'>
-    %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
-</div>
-%= label_for 'publication', class => 'control-label' => begin
-Publication
-%= end
-<div class='controls'>
-    %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
-</div>
+%= hidden_field 'delete_relationship_to';
+%= hidden_field 'delete_relationship_type';
+
+<table class='table table-condensed table-bordered table-striped'>
+    <caption>Related organizations</caption>
+
+    % for my $map ($object->organization_maps) {
+    % my $other_org = $map->other_organization;
+    <tr>
+        <td><%= $map->organization_relationship->label %>
+            <td><%= include 'obj_button', obj => $other_org, no_table => 1 %></td>
+        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
+            onClick => qq[{this.form.elements["delete_relationship_to"].value = '].$other_org->identifier.
+            qq[';this.form.elements["delete_relationship_type"].value = '].$map->organization_relationship_identifier.
+            qq[';this.form.submit(); }] => begin %>remove relationship<%= end %>
+        </td>
+    </tr>
+    % }
+
+    <tr>
+        <td colspan=3>
+            <center>Associate with another organization</center>
+            <%= label_for 'organization_relationship_identifier', class => 'control-label' => begin %>Relationship<%= end %>
+            <div class='controls'>
+                %= select_field 'organization_relationship_identifier', db_labels('organization_relationship'), class => 'span8';
+            </div>
+
+            <%= label_for 'related_org', class => 'control-label' => begin %>Other organization<%= end %>
+            <div class='controls'>
+                %= include 'controls/autocomplete', input_name => 'related_org', object_type => 'organization'
+            </div>
+
+        </td>
+    </tr>
+</table>
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="reset" class="btn">Reset</button>
+</div>
 </div>
 
 %= end

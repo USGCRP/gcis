@@ -1,0 +1,25 @@
+% my $sorters = stash 'sorters';
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Relationships</caption>
+
+<tr> <td>organization_type</td><td><%= $organization->organization_type // '' %></td> </tr>
+<tr>
+    <td>Related to</td><td>
+        % for my $map ($organization->organization_maps) {
+            <%= $map->organization_relationship->label %> <%= include 'obj_button' , obj => $map->other_organization, no_table => 1 %>
+        % }
+    </td>
+</tr>
+<tr>
+    <td>Organizations related to this one</td>
+    <td>
+        % for my $map ($organization->organization_maps_objs) {
+        <%= include 'obj_button' , obj => $map->organization, no_table => 1 %>
+        <%= $map->organization_relationship->label %>
+        <%= $object->stringify %>
+        % }
+    </td>
+</tr>
+</table>
+
