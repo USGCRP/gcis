@@ -77,3 +77,4 @@
 0740_org_cleanup.sql	52dc746cdf6a959c2b2b7d26689638d3
 0750_more_org_cleanup.sql	f2eb9646fa571df6cc2c3914814bd6aa
 0760_publication_contributor_constraint.sql	50220f61e7cac0b2c3581c468376b278
+0780_related_org.sql	b6b1adc95f54783ec890670aaac29e74

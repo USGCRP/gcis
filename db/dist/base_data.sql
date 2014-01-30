@@ -231,6 +231,27 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 
 
 --
+-- Data for Name: organization_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization_relationship (identifier, label) FROM stdin;
+department	department of
+funded_by	funded by
+division_of	division of
+branch_of	branch of
+affiliated_with	affiliated with
+\.
+
+
+--
+-- Data for Name: organization_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization_map (organization_identifier, other_organization_identifier, organization_relationship_identifier) FROM stdin;
+\.
+
+
+--
 -- Name: person_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
 --
 

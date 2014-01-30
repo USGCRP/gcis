@@ -340,6 +340,21 @@ CREATE TABLE organization (
 
 
 
+CREATE TABLE organization_map (
+    organization_identifier character varying NOT NULL,
+    other_organization_identifier character varying NOT NULL,
+    organization_relationship_identifier character varying NOT NULL
+);
+
+
+
+CREATE TABLE organization_relationship (
+    identifier character varying NOT NULL,
+    label character varying NOT NULL
+);
+
+
+
 CREATE TABLE organization_type (
     identifier character varying NOT NULL
 );
@@ -677,6 +692,11 @@ ALTER TABLE ONLY journal
 
 
 
+ALTER TABLE ONLY organization_map
+    ADD CONSTRAINT organization_map_pkey PRIMARY KEY (organization_identifier, other_organization_identifier, organization_relationship_identifier);
+
+
+
 ALTER TABLE ONLY organization
     ADD CONSTRAINT organization_name_key UNIQUE (name);
 
@@ -684,6 +704,11 @@ ALTER TABLE ONLY organization
 
 ALTER TABLE ONLY organization
     ADD CONSTRAINT organization_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY organization_relationship
+    ADD CONSTRAINT organization_relationship_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1234,6 +1259,21 @@ ALTER TABLE ONLY image_figure_map
 
 ALTER TABLE ONLY image_figure_map
     ADD CONSTRAINT image_figure_map_image_fkey FOREIGN KEY (image_identifier) REFERENCES image(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY organization_map
+    ADD CONSTRAINT organization_map_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier);
+
+
+
+ALTER TABLE ONLY organization_map
+    ADD CONSTRAINT organization_map_organization_relationship_identifier_fkey FOREIGN KEY (organization_relationship_identifier) REFERENCES organization_relationship(identifier);
+
+
+
+ALTER TABLE ONLY organization_map
+    ADD CONSTRAINT organization_map_other_organization_identifier_fkey FOREIGN KEY (other_organization_identifier) REFERENCES organization(identifier);
 
 
 
