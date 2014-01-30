@@ -235,11 +235,6 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 --
 
 COPY organization_relationship (identifier, label) FROM stdin;
-department	department of
-funded_by	funded by
-division_of	division of
-branch_of	branch of
-affiliated_with	affiliated with
 \.
 
 

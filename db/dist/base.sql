@@ -957,6 +957,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON generic FOR
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1070,6 +1078,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_contributor_map F
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON generic FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1263,7 +1279,7 @@ ALTER TABLE ONLY image_figure_map
 
 
 ALTER TABLE ONLY organization_map
-    ADD CONSTRAINT organization_map_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier);
+    ADD CONSTRAINT organization_map_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -1273,7 +1289,7 @@ ALTER TABLE ONLY organization_map
 
 
 ALTER TABLE ONLY organization_map
-    ADD CONSTRAINT organization_map_other_organization_identifier_fkey FOREIGN KEY (other_organization_identifier) REFERENCES organization(identifier);
+    ADD CONSTRAINT organization_map_other_organization_identifier_fkey FOREIGN KEY (other_organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
