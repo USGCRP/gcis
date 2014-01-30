@@ -89,7 +89,7 @@ sub _default_order {
     return ( qw/identifier name organization_type_identifier country url/ );
 }
 
-sub create_form {
+sub _add_controls {
     my $c = shift;
     $c->stash(
       controls => {
@@ -105,15 +105,28 @@ sub create_form {
           +{
             template => 'select',
             params   => {
-                values => [sort { $a->[0] cmp $b->[0] }
-                map [ $_->name, $_->code ], @{ Countrys->get_objects(all => 1) }],
+                values => [ "", 
+                           sort { $a->[0] cmp $b->[0] }
+                           map [ $_->name, $_->code ], @{ Countrys->get_objects(all => 1) }
+                          ],
                 value => "US",
               }
            };
       },
     },
-    );
+   );
+}
+
+sub create_form {
+    my $c = shift;
+    $c->_add_controls;
     $c->SUPER::create_form(@_);
+}
+
+sub update_form {
+    my $c = shift;
+    $c->_add_controls;
+    $c->SUPER::update_form(@_);
 }
 
 sub lookup_name {

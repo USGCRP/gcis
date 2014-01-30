@@ -3,7 +3,12 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 
-<tr> <td>organization_type</td><td><%= $organization->organization_type // '' %></td> </tr>
+<tr> <td>organization_type</td>
+    <td><% if (my $t = $organization->organization_type) {
+        <%= $t->identifier %>
+        <% } %>
+    </td>
+</tr>
 <tr>
     <td>Related to</td><td>
         % for my $map ($organization->organization_maps) {
