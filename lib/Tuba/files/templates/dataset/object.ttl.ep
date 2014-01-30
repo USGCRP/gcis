@@ -1,8 +1,6 @@
 % layout "default";
-
 <<%= current_resource %>>
-   a prov:Entity; a dcmitype:Dataset;
-
+   a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
    dcterms:description "<%= $dataset->description %>";
@@ -14,7 +12,6 @@
    dcterms:nativeid "<%= $dataset->native_id %>";
    gcis:processing-level "<%= $dataset->processing_level %>";
    dcterms:date "<%= $dataset->publication_dt %>";
-
    gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
    gcis:projection "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
@@ -23,12 +20,10 @@
    gcis:hasURL "<%= $dataset->url %>";
    dcterms:isVersionOf "<%= $dataset->version %>";
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
-
 % for my $keyword ($dataset->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   dcterms:subject "<%== $keyword->stringify %>".
 % }
-
 %= include 'prov';
 %= include 'contributors'; 
 

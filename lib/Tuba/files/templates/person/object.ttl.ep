@@ -1,10 +1,8 @@
 % layout "default";
-
 <<%= current_resource %>>
-   a prov:Person;
-   a foaf:Person;
-   a gcis:Agent;
+   a prov:Person; a foaf:Person; a gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
+   vivo:orcidId "<%= $person->orcid %>";
    foaf:name "<%= $person->name %>";
    rdfs:label "<%= $person->name %>";
    gcis:hasURL "<%= $person->url %>" ;
@@ -17,10 +15,9 @@
 % }
  % my $ctr = $object->contributors;
  % for my $ctr (@{ $object->contributors }) {
-    gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
-    prov:Role "<%= $ctr->role_type->label %>";
- <% for my $pub ($ctr->publications) { %>
-    gcis:hasPublication "<%= uri($pub->to_object) %>";
+   gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
+   prov:Role "<%= $ctr->role_type->label %>";
+<% for my $pub ($ctr->publications) { %>
+   gcis:hasPublication "<%= uri($pub->to_object) %>";
   <% } %>
         % }
-

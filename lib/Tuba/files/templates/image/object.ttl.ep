@@ -1,11 +1,6 @@
 % layout 'default';
-
 <<%= current_resource %>>  
-   a prov:Entity;
-   a gcis:Image;
-   a bibo:Image;
-   a gcis:Publication;	
-   a dcmitype:Image;
+   a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
 %# The following only returns figure title without "2.1", so holding off and commented out
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
@@ -14,7 +9,7 @@
 % for my $keyword ($image->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
- % }
+% }
    prov:generatedAtTime "<%= $image->create_dt %>";
    gcis:description "<%= $image->description %>";
    dcterms:identifier "<%= $image->identifier %>";
@@ -29,19 +24,14 @@
    dcterms:title "<%= $image->title %>";      
    rdf:label "<%= $image->title %>";
    prov:label "<%= $image->title %>".
-
+%= include 'prov';
 %#  gcis:spatial_scale "<%= $image->scale %>";
 %#  gcis:spatial_ref_sys "<%= $image->projection %>";
-
 %# gcis:ishostedby "<%= $image->hosting_agency %>";                    
-
 %# dcterms:available "<%= $image->release_date %>";                 
-
-
 %# % for my $right ($image->rights) {
  %#   dcterms:rights "<%= $right->usage_limits %>";                      
  %# }
-
 %# dcterms:license "<%= $image->license %>";                           
 %# dcterms:rights  "<%= $image->license %>";
 
@@ -61,5 +51,3 @@
 
 %# dwc:year "<%= $image->year %>";
 %# xsd:gYear "<%= $image->year %>"; 
-%= include 'prov';
-

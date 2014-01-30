@@ -1,16 +1,13 @@
 % layout "default";
-
 <<%= current_resource %>>
    a prov:Entity; a bibo:Journal;
  % for my $article ($journal->articles) {
    dcterms:hasPart "<%= $article->identifier %>";
  % }
-
 % for my $keyword ($journal->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
  % }
-
    dwc:Countrycode "<%= $journal->country %>";
    dcterms:identifier "<%= $journal->identifier %>";
    bibo:eissn "<%= $journal->online_issn %>";
@@ -21,6 +18,4 @@
    rdfs:label "<%= $journal->title %>";
    prov:label "<%= $journal->title %>";
    gcis:hasURL "<%= $journal->url %>".
-
-%= include 'prov';
-
+%= include 'prov'; 

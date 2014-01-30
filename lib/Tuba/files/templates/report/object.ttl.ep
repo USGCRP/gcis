@@ -1,27 +1,22 @@
 %  layout 'default';
 <<%= current_resource %>>
    a prov:Entity; a bibo:Report; a gcis:Publication;
-
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
    dcterms:hasPart <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
-
 % for my $figure ($report->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($figure)->to_abs %>>;
 % }
-
 % for my $table ($report->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($table)->to_abs %>>;
  % }
-
 % for my $keyword ($report->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
  % }
-
 % for my $finding ($report->findings) {
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
@@ -41,7 +36,6 @@
 % }
 %#   dwc:year "<%= $report->year %>";
 %#   xsd:gyear "<%= $report->year %>".
-
 %= include 'prov';
  
 %# add gcis:hasCommittee somewhere?
