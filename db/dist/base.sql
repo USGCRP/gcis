@@ -1349,7 +1349,7 @@ ALTER TABLE ONLY publication_map
 
 
 ALTER TABLE ONLY reference
-    ADD CONSTRAINT reference_child_publication_id_fkey FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE CASCADE;
+    ADD CONSTRAINT reference_child_publication_id_fkey FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE SET NULL;
 
 
 
