@@ -29,7 +29,7 @@
             Publication/contributor :
             %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span12'
             % for my $map (@{ $reference->publication_contributor_maps }) {
-            %= obj_link($map->contributor)
+            %= include 'obj_button', obj => $map->contributor, no_table => 1
             % }
 
     % } else {

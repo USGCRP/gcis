@@ -37,6 +37,8 @@ sub to_object {
     if ($a{autoclean}) {
         logger->warn("autoclean : removing orphan publication ".$self->id);
         $self->delete;
+    } else {
+        logger->warn("not cleaning up");
     }
     return;
 }

@@ -23,12 +23,6 @@ sub new_from_reference {
     }
 
     $s->title($title);
-    my $org = Tuba::DB::Object::Organization->find_or_make(
-      name  => ( $ref->attr('institution') || $ref->attr('publisher') ),
-      audit => {audit_user => 'unknown'}
-    );
-    $s->organization_identifier($org->identifier);
-
     return $s;
 }
 

@@ -88,7 +88,10 @@ sub update {
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         } else {
-            return $c->render(status => 400, json => { error => 'missing publication uri (e.g. /report/nca3)' } );
+            my $obj = $c->_this_object;
+            $json->{publication_id} = $obj->publication_id;
+            $json->{child_publication_id} = $obj->child_publication_id;
+            $c->stash(object_json => $json);
         }
     }
     $c->SUPER::update(@_);
@@ -105,7 +108,7 @@ sub smartmatch {
     my $existing = $reference->child_publication;
     if ($existing) {
         $existing->load;
-        $existing = $existing->to_object(autoclean => 1) or die "orphan : ".$reference->child_publication->as_yaml;
+        $existing = $existing->to_object(autoclean => 1) or logger->warn("removed pub orphan : ".$reference->child_publication->as_yaml);
     }
     logger->debug("matching : ".$reference->identifier);
     unshift @try, $existing if $existing;
@@ -117,7 +120,8 @@ sub smartmatch {
     undef $match if $match && !is_in_db($match) && $c->param('updates_only');
     my $status = 'no match';
     if ($match) {
-        $match->save(audit_user => $c->user);
+        logger->debug("saving");
+        $match->save(audit_user => $c->user) or return $c->redirect_with_error($match->error);
         if (is_in_db($match)) {
             $status = 'match';
         } else {
@@ -127,13 +131,8 @@ sub smartmatch {
         $pub->save(audit_user => $c->user) unless $pub->id;
         $reference->child_publication_id($pub->id);
         $reference->save(audit_user => $c->user)
-            or $c->redirect_with_error(update_rel_form => $reference->error);
+            or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
-
-    # Match contributors also. TODO
-    ##my @authors = split /\r/, $reference->attr('author');
-    ##do { s/,$// } for @authors;
-    ##$publication->update_contributor_names( authors => \@authors );
 
     $c->respond_to(
       json => sub {

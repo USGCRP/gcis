@@ -31,6 +31,7 @@ sub new_from_reference {
     $s = $s->new unless ref $s;
 
     my $doi = $ref->attr('doi');
+    $doi =~ s/^([^1]+)//;
     $s->doi($doi);
     if ($doi) {
         $s->load(speculative => 1);
@@ -45,8 +46,8 @@ sub new_from_reference {
     $s->title($ref->attr('title'));
     $s->year($ref->attr('year'));
     $s->url($ref->attr('url'));
-    $s->journal_pages($ref->attr('journal_pages'));
-    $s->journal_vol($ref->attr('journal_vol'));
+    $s->journal_pages($ref->attr('journal_pages') || $ref->attr('pages'));
+    $s->journal_vol($ref->attr('journal_vol') || $ref->attr('volume'));
 
     my $journal_identifier;
     my $issns = $ref->attr('issn') || '';

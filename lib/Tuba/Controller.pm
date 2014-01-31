@@ -704,9 +704,10 @@ sub update_contributors {
     $pub->save(audit_user => $c->user) or return $c->update_error($contributor->error);
     my $map = Tuba::DB::Object::PublicationContributorMap->new(
         publication_id => $pub->id,
-        contributor_id => $contributor->id,
-        reference_identifier => $reference_identifier,
+        contributor_id => $contributor->id
     );
+    $map->load(speculative => 1);
+    $map->reference_identifier($reference_identifier);
     $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
