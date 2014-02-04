@@ -554,71 +554,61 @@ Update the files.
 sub update_files {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
-    my $next = $object->uri($c,{tab => 'update_files_form'});
+    $c->stash(tab => "update_files_form");
 
-    my $pub = $object->get_publication(autocreate => 1) or do {
-        $c->flash(error => "Sorry, file uploads have only been implemented for publications.");
-        # TODO
-        return $c->redirect_to($next);
-    };
+    my $pub = $object->get_publication(autocreate => 1) or
+        return $c->update_error( "Sorry, file uploads have only been implemented for publications.");
 
     my $file = $c->req->upload('file_upload');
     if ($file && $file->size) {
-        $pub->upload_file(c => $c, upload => $file) or do {
-            $c->flash(error => $pub->error);
-            return $c->redirect_to($next);
-        }
+        $pub->upload_file(c => $c, upload => $file) or
+            return $c->update_error($pub->error);
     }
     if (my $file_url = $c->param('file_url')) {
         $c->app->log->info("Getting $file_url for ".$object->meta->table."  ".(join '/',$object->pk_values));
         my $tx = $c->app->ua->get($file_url);
-        my $res = $tx->success or do {
-            $c->flash(error => "Error getting $file_url : ".$tx->error);
-            return $c->redirect_to($next);
-        };
+        my $res = $tx->success or
+            return $c->update_error( "Error getting $file_url : ".$tx->error);
         my $content = $res->body;
 
         my $filename = Mojo::URL->new($file_url)->path->parts->[-1];
         my $up = Mojo::Upload->new;
         $up->filename($filename);
         $up->asset(Mojo::Asset::File->new->add_chunk($content));
-        $pub->upload_file(c => $c, upload => $up) or do {
-            $c->flash(error => $pub->error);
-            return $c->redirect_to($next);
-        }
+        $pub->upload_file(c => $c, upload => $up) or
+            return $c->update_error( $pub->error);
     }
 
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
     if (my $id = $c->param('delete_file')) {
-        my $obj = File->new(identifier => $id)->load(speculative => 1) or do {
-            $c->flash(error => "could not find file $id");
-            return $c->redirect_to($next);
-        };
+        my $obj = File->new(identifier => $id)->load(speculative => 1) or
+        return $c->update_error("could not find file $id");
         $obj->meta->error_mode('return');
         my $filename = "$image_dir".'/'.$obj->file;
         my $entry = PublicationFileMap->new(
             publication => $pub->id,
             file => $obj->identifier
         );
-        $entry->delete or do {
-            $c->flash(error => $obj->error);
-            return $c->redirect_to($next);
-        };
+        $entry->delete or return $c->update_error($obj->error);
         $obj = File->new(identifier => $obj->identifier)->load;
         my @others = $obj->publications;
         unless (@others) {
-            $obj->delete or do {
-                $c->flash(error => $obj->error);
-                return $c->redirect_to($next);
-            };
+            $obj->delete or return $c->update_error($obj->error);
             -e $filename and do { unlink $filename or die $!; };
         }
         $c->flash(message => 'Saved changes');
-        return $c->redirect_to($next);
+        return $c->redirect_without_error('update_files_form');
+    }
+    if (my $existing = $c->param('add_existing_file')) {
+        my $file = File->new_from_autocomplete($existing)
+            or return $c->update_error("No match for $existing");
+        my $entry = PublicationFileMap->new(publication => $pub->id, file => $file->identifier);
+        $entry->save(audit_user => $c->user) or return $c->update_error($entry->error);
+        $c->stash(message => 'Saved changes.');
+        return $c->redirect_without_error('update_files_form');
     }
 
-
-    return $c->redirect_to($next);
+    return $c->redirect_without_error('update_files_form');
 }
 
 =head2 put_files

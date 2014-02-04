@@ -31,7 +31,7 @@ sub autocomplete {
     my $elide = $c->param('elide') || 80;
 
     my @tables;
-    if ($want && $want=~/^(gcmd_keyword|person|organization|reference)$/) {
+    if ($want && $want=~/^(gcmd_keyword|person|organization|reference|file)$/) {
        @tables = ( $want );
     } else {
        @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };

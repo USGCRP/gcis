@@ -1,3 +1,4 @@
+% use Encode;
 % layout 'default';
 
 % unless (param 'no_header') {
@@ -17,7 +18,7 @@ Change history for
 </tr>
 % for my $row (@$change_log) {
 <tr>
-<td><%= $row->{action} eq 'I' ? 'insert : '.$row->{row_data} : $row->{action} eq 'D' ? 'delete' : $row->{changed_fields} %></td>
+<td><%= decode('UTF-8', $row->{action} eq 'I' ? 'insert : '.$row->{row_data} : $row->{action} eq 'D' ? 'delete' : $row->{changed_fields} ) %></td>
 <td><%= format_ago($row->{action_tstamp_tx}) %></td>
 <td><%= $row->{audit_username} %></td>
 <td><%= $row->{table_name} %></td>
