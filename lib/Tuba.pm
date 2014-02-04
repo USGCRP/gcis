@@ -298,6 +298,7 @@ sub startup {
       ->post('/:reference_identifier')
       ->to('reference#smartmatch');
     $r->get("/reference/lookup/:record_number" => [ record_number => qr/\d+/])->to('reference#lookup');
+    $r->get('/reference/report/updates')->to('reference#updates_report')->name('reference_updates_report');
 
     # Generic publication.
     $r->resource('generic');

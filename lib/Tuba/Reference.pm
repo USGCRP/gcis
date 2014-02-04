@@ -237,5 +237,19 @@ sub lookup {
     )
 }
 
+sub updates_report {
+    my $c = shift;
+    my $rows = $c->dbs->query(<<SQL)->hashes;
+select
+attrs->'_uuid' as reference, attrs->'DOI' as endnote_doi, a.doi as gcis_doi
+from reference r
+    inner join publication p on r.child_publication_id = p.id
+    inner join article a on a.identifier = p.fk->'identifier'
+where ( (a.doi != (attrs->'DOI')) or (a.doi is not null and (attrs->'DOI')::varchar is null))
+SQL
+    $c->stash(rows => $rows);
+    return $c->render(template => "reference/report/updates");
+}
+
 1;
 

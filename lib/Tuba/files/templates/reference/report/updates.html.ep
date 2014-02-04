@@ -1,0 +1,28 @@
+% layout 'default';
+
+<table class='table table-condensed table-bordered table-striped densetable'>
+<caption>DOI Discrepancy Report</caption>
+<tr>
+    <th>Endnote</th>
+    <th>GCIS</th>
+    <th>Reference</th>
+</tr>
+% for my $row (@$rows) {
+    <tr>
+        <td><%= link_to "http://dx.doi.org/$row->{endnote_doi}" => target => "_blank" => begin %>
+            <%= $row->{endnote_doi} %>
+            <%= end %>
+        </td>
+        <td>
+            <%= link_to "http://dx.doi.org/$row->{gcis_doi}" => begin %>
+            <%= $row->{gcis_doi} %>
+            <%= end %>
+        </td>
+        <td>
+            <%= link_to 'show_reference', { reference_identifier => $row->{reference} } => target => "_blank" => begin %>
+            <%= $row->{reference} %>
+            <%= end %>
+        </td>
+    </tr>
+% }
+</table>
