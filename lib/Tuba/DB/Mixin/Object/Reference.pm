@@ -31,8 +31,9 @@ sub as_tree {
         = $c ? $s->publication->to_object->uri($c) : "/publication/$id";
     }
     if (my $id = $t->{child_publication_id}) {
+        my $obj = $s->child_publication->to_object(autoclean => 1);
       $t->{child_publication_uri}
-        = $c ? $s->child_publication->to_object->uri($c) : "/publication/$id";
+        = $c && $obj ? $obj->uri($c) : "/publication/$id";
     }
     if (my $sub = $s->subpubrefs) { # chapters
         $t->{sub_publication_uris} = [
