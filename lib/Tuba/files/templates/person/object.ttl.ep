@@ -8,16 +8,17 @@
    gcis:hasURL "<%= $person->url %>" ;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
-   gcis:isMemberOf "<%= $org->identifier %>";
-   prov:actedOnBehalfOf  "<%= $org->identifier %>";
-   gcis:worksAt "<%= $org->identifier %>";
-   gcis:hasOrganization "<%= $org->identifier %>";
+   gcis:isMemberOf <<%= uri($org) %>>;
+   prov:actedOnBehalfOf  <<%= uri($org) %>>;
+   gcis:worksAt <<%= uri($org) %>>;
+   gcis:hasOrganization <<%= uri($org) %>>;
 % }
  % my $ctr = $object->contributors;
  % for my $ctr (@{ $object->contributors }) {
    gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
    prov:Role "<%= $ctr->role_type->label %>";
 <% for my $pub ($ctr->publications) { %>
-   gcis:hasPublication "<%= uri($pub->to_object) %>";
+   gcis:hasPublication <<%= uri($pub->to_object) %>>;
   <% } %>
         % }
+                  
