@@ -262,6 +262,7 @@ sub as_tree {
                     publication_type_identifier => $pub->{publication_type_identifier},
                     label => $pub->stringify,
                     url   => $pub->to_object->uri($c),
+                    note  => $parent->{note},
                 };
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];

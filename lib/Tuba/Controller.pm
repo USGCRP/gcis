@@ -452,6 +452,7 @@ Update the provenance for this object.
 sub update_prov {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
+    $c->stash(tab => 'update_prov_form');
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1);
@@ -469,27 +470,35 @@ sub update_prov {
         return $c->render;
     }
 
-    my $parent_str = $c->param('parent') or return $c->render;
-    my $rel = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
-    my $parent = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
-    my $parent_pub = $parent->get_publication(autocreate => 1);
-    $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
-    my $reference;
-    if (my $ref = $c->param('reference')) {
-        $reference = Reference->new_from_autocomplete($ref);
+    my ($parent_pub,$rel,$note);
+    if (my $json = $c->req->json) {
+        my $parent_uri  = $json->{parent_uri} or return $c->update_error("Missing parent_uri");
+        my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
+        $parent_pub     = $parent->get_publication(autocreate => 1) or return $c->update_error("$parent_uri is not a publication");
+        $parent_pub->save(audit_user => $c->user) unless $parent_pub->id;
+        $rel  = $json->{parent_rel} or return $c->update_error("Missing parent_rel");
+        $note = $json->{note};
+    }  else {
+        my $parent_str   = $c->param('parent') or return $c->render;
+        my $parent       = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
+        $parent_pub      = $parent->get_publication(autocreate => 1);
+        $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
+        $rel  = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
+        $note = $c->param('note');
     }
+
+    return $c->render unless $parent_pub;
 
     my $map = PublicationMap->new(
         child        => $pub->id,
         parent       => $parent_pub->id,
         relationship => $rel,
-        note         => ($c->param('note') || undef),
+        note         => $note
     );
 
-    $map->save(audit_user => $c->user) or return $c->render(error => $map->error);
-
+    $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
-    return $c->render;
+    return $c->redirect_without_error;
 }
 
 =head2 update_rel_form
