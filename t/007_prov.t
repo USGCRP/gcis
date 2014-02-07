@@ -17,10 +17,10 @@ $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => {user => "unit_test", password => "anything"})->status_is(200);
 
 # Make a report
-$t->post_ok("/report" => form => {identifier => "pizzabrain"})->status_is(200);
+$t->post_ok("/report" => json => {identifier => "pizzabrain"})->status_is(200);
 
 # Make a chapter
-$t->post_ok("/report/pizzabrain/chapter" => form =>
+$t->post_ok("/report/pizzabrain/chapter" => json =>
     {identifier => "uno", title => "Chapter one"})->status_is(200);
 
 # Make a figure
@@ -41,31 +41,31 @@ $t->post_ok(
 
 # The figure wasBaked from that dataset
 $t->post_ok(
-    "/report/pizzabrain/figure/prov/pizza" => json => {
-        parent_uri => "/dataset/dough",
-        parent_rel => "prov:wasBaked",
-        note => "This pizza was baked from high quality gluten-free dough.",
-    }
+  "/report/pizzabrain/figure/prov/pizza" => json => {
+    parent_uri => "/dataset/dough",
+    parent_rel => "prov:wasBaked",
+    note       => "This pizza was baked from high quality gluten-free dough.",
+  }
 )->status_is(200);
 
 # GET it, and check
 $t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
   '/parents',
   [
-      {
-        url => "/dataset/dough",
-        relationship => "prov:wasBaked",
-        publication_type_identifier => "dataset",
-        label => 'dataset : dough',
-        note => "This pizza was baked from high quality gluten-free dough."
-      }
+    {
+      url                         => "/dataset/dough",
+      relationship                => "prov:wasBaked",
+      publication_type_identifier => "dataset",
+      label                       => 'dataset : dough',
+      note => "This pizza was baked from high quality gluten-free dough."
+    }
   ]
 );
 
 # Clean up
-$t->delete_ok( "/report/pizzabrain/chapter/uno/figure/pizza" ) ->status_is(200);
-$t->delete_ok( "/dataset/dough")->status_is(200);
-$t->delete_ok("/report/pizzabrain" ) ->status_is(200);
+$t->delete_ok("/report/pizzabrain/chapter/uno/figure/pizza")->status_is(200);
+$t->delete_ok("/dataset/dough")->status_is(200);
+$t->delete_ok("/report/pizzabrain")->status_is(200);
 
 done_testing();
 
