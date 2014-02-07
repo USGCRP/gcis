@@ -4,5 +4,5 @@ alter table article add constraint article_doi_check check (doi ~ '^10.[[:print:
 
 update article set identifier=doi where not (identifier = doi or identifier similar to '[a-z0-9_-]+');
 
-alter table article add constraint article_identifier_check check (identifier = doi or identifier similar to '[a-z0-9_-]+');
+alter table article add constraint article_identifier_check check (identifier similar to '[a-z0-9_-]+' or identifier ~ '10.[[:print:]]+/[[:print:]]+');
 
