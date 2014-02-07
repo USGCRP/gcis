@@ -78,7 +78,9 @@ CREATE TABLE article (
     journal_vol character varying,
     journal_pages character varying,
     url character varying,
-    notes character varying
+    notes character varying,
+    CONSTRAINT article_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)),
+    CONSTRAINT article_identifier_check CHECK ((((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)) OR ((identifier)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)))
 );
 
 

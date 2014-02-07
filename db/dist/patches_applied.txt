@@ -80,3 +80,4 @@
 0780_related_org.sql	b6b1adc95f54783ec890670aaac29e74
 0790_related_org_fix.sql	de573352ddbd0fc1eaac9bdc3aa8678a
 0800_reference_fk.sql	a779b1da6e4a2c4ae7565f11f57e5d4d
+0790_doi_check.sql	6b2644992a7b1141685001f4f9fe31a4
