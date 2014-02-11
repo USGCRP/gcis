@@ -3,7 +3,7 @@
 <div class='pull-right'>
     <div class='btn btn-group'>
         %= link_to $self->req->url->clone->query(whitespace => 0) => class => 'btn'.( param('whitespace') ? '' : ' active') => begin
-        fewer
+        less
         %= end
         %= link_to $self->req->url->clone->query(whitespace => 1) => class => 'btn'.( !param('whitespace') ? '' : ' active') => begin
         more
