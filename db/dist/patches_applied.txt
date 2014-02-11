@@ -82,3 +82,5 @@
 0800_reference_fk.sql	a779b1da6e4a2c4ae7565f11f57e5d4d
 0790_doi_check.sql	6b2644992a7b1141685001f4f9fe31a4
 0810_uuid.sql	901c31ff3003ecc986010e06d4f6a2be
+0820_orgtype.sql	b5047c3c9fa4e2e05c8daa3d730e99ad
+0830_orgrel.sql	44bfbb13497c1eedc903cc51276cf3e6
