@@ -464,14 +464,27 @@ sub update_prov {
         my $rel = $c->param('delete_relationship');
         my $other_pub = Publication->new(id => $delete)->load(speculative => 1);
         my $map = PublicationMap->new(child => $pub->id, parent => $delete, relationship => $rel);
-        $map->load(speculative => 1) or return $c->render(error => "could not find relationship");
-        $map->delete(audit_user => $c->user) or return $c->render(error => $map->error);
+        $map->load(speculative => 1) or return $c->update_error("could not find relationship");
+        $map->delete(audit_user => $c->user) or return $c->update_error($map->error);
         $c->stash(info => "Deleted $rel ".($other_pub ? $other_pub->stringify : ""));
         return $c->render;
     }
+    my $json = $c->req->json;
+    if ($json && (my $del = delete $json->{delete})) {
+        my $uri = $del->{parent_uri} or return $c->update_error("missing parent_uri to delete");
+        my $parent = $c->uri_to_obj($uri) or return $c->update_error("cannot find $uri");
+        my $rel = $del->{parent_rel} or return $c->update_error("missing parent_rel");
+        my $map = PublicationMap->new(
+          child        => $pub->id,
+          parent       => $parent->get_publication(autocreate => 1)->id,
+          relationship => $rel
+        );
+        $map->load(speculative => 1) or return $c->update_error("relationship $rel $uri not found");
+        $map->delete or return $c->update_error($map->error);
+    }
 
     my ($parent_pub,$rel,$note);
-    if (my $json = $c->req->json) {
+    if ($json) {
         my $parent_uri  = $json->{parent_uri} or return $c->update_error("Missing parent_uri");
         my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
         $parent_pub     = $parent->get_publication(autocreate => 1) or return $c->update_error("$parent_uri is not a publication");

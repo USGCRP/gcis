@@ -67,6 +67,21 @@ $t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
   ]
 );
 
+# Remove the association between this dataset and that figure.
+$t->post_ok(
+  "/report/pizzabrain/figure/prov/pizza" => json => {
+    delete => {
+        parent_uri => "/dataset/dough",
+        parent_rel => "prov:wasBaked",
+    }
+  }
+)->status_is(200);
+
+# Deleted?
+$t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
+  '/parents', [ ]
+);
+
 # Clean up
 $t->delete_ok("/report/pizzabrain/chapter/uno/figure/pizza")->status_is(200);
 $t->delete_ok("/dataset/dough")->status_is(200);
