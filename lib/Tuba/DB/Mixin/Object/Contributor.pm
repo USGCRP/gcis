@@ -36,10 +36,18 @@ sub as_tree {
     my %a = @_;
     my $c = $a{c} or return $s->SUPER::as_tree(@_);
     my $p = $s->person;
+    my $uri = $s->uri($c);
+    my $href = $uri->clone->to_abs;
+    if (my $fmt = $c->stash('format')) {
+        $href .= ".$fmt";
+    }
+
     my %h = (
             organization_uri => $s->organization->uri($c),
             person_uri   => $p ? $p->uri($c) : undef,
             role_type_identifier => $s->role_type_identifier,
+            uri => $uri,
+            href => $href,
     );
     return \%h;
 }

@@ -155,7 +155,7 @@ sub startup {
           $authed->get("/form/update_contributors/*$identifier" => \%defaults)->to("$cname#update_contributors_form")->name("update_contributors_form_$name");
           $authed->get("/history/*$identifier" => \%defaults)          ->to("$cname#history")    ->name("history_$name");
           $authed->delete("*$identifier" => \%defaults)                ->to("$cname#remove")     ->name("remove_$name");
-          $authed->post("*$identifier" => \%defaults)->over(not_match => { $identifier => qr[^(?:prov|rel|files)/] })
+          $authed->post("*$identifier" => \%defaults)->over(not_match => { $identifier => qr[^(?:prov|rel|keywords|files|contributors)/] })
                                                    ->to("$cname#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$cname#update_prov")->name("update_prov_$name");
           $authed->post("/rel/*$identifier")       ->to("$cname#update_rel")->name("update_rel_$name");
