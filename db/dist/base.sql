@@ -370,7 +370,7 @@ CREATE TABLE person (
     first_name character varying NOT NULL,
     last_name character varying NOT NULL,
     middle_name character varying,
-    CONSTRAINT ck_orcid CHECK (((orcid)::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{4}\Z'::text, NULL::text)))
+    CONSTRAINT ck_orcid CHECK (((orcid)::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\Z'::text, NULL::text)))
 );
 
 
