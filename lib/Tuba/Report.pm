@@ -149,7 +149,7 @@ sub make_tree_for_show {
       files                   => [map +{uri => $_->uri($c)}, $pub->files],
       uri                     => $report->uri($c),
       identifier              => $report->identifier,
-      contributors => [map +{ uri => $_->uri($c) }, $pub->contributors ],
+      contributors => [map $_->as_tree, $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,
       chapters     => [

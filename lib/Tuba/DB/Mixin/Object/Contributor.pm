@@ -31,4 +31,17 @@ sub uri {
     return $c->url_for($route_name, { contributor_identifier => $s->id } );
 }
 
+sub as_tree {
+    my $s = shift;
+    my %a = @_;
+    my $c = $a{c} or return $s->SUPER::as_tree(@_);
+    my $p = $s->person;
+    my %h = (
+            organization_uri => $s->organization->uri($c),
+            person_uri   => $p ? $p->uri($c) : undef,
+            role_type_identifier => $s->role_type_identifier,
+    );
+    return \%h;
+}
+
 1;

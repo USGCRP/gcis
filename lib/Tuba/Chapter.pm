@@ -89,7 +89,7 @@ sub make_tree_for_show {
       tables            => [map +{$c->Tuba::Table::common_tree_fields($_)}, $chapter->tables],
       report_identifier => $chapter->report_identifier,
       identifier        => $chapter->identifier,
-      contributors      => [map +{$c->Tuba::Contributor::common_tree_fields($_)}, $pub->contributors],
+      contributors      => [map +{$c->Tuba::Contributor::common_tree_fields($_), %{ $_->as_tree(c => $c) }}, $pub->contributors],
       url               => $chapter->url,
       title             => $chapter->title,
       $c->common_tree_fields($chapter),
