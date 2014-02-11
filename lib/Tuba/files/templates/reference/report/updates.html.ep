@@ -8,6 +8,7 @@
     <th>Reference</th>
 </tr>
 % for my $row (@$rows) {
+% next if look_similar($row->{endnote_doi},$row->{gcis_doi}) && !param('whitespace');
     <tr>
         <td><%= link_to "http://dx.doi.org/$row->{endnote_doi}" => target => "_blank" => begin %>
             <%= $row->{endnote_doi} %>

@@ -46,6 +46,17 @@ sub _include_first {
     return;
 }
 
+#
+# Usage _look_similar($a,$b)
+# Do $a and $b look similar?
+#
+sub _look_similar {
+    my ($x,$y) = @_;
+    s/^\s+// for ($x,$y);
+    s/\s+$// for ($x,$y);
+    return ($x // '') eq ($y // '');
+}
+
 sub register {
     my ($self, $app, $conf) = @_;
 
@@ -283,6 +294,7 @@ sub register {
                 @{ $c->orm->{$table}->{mng}->get_objects(all => 1) } ];
         }); 
     $app->helper(include_first => \&_include_first);
+    $app->helper(look_similar => sub { my $c = shift; _look_similar(@_);  });
 }
 
 1;
