@@ -51,7 +51,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.61"
+         "version" : "0.62"
       },
       "Tuba::Array" : {
          "file" : "lib/Tuba/Array.pm"
@@ -145,6 +145,9 @@
       },
       "Tuba::DB::Object::Person" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Person.pm"
+      },
+      "Tuba::DB::Object::Person::Manager" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Person/Manager.pm"
       },
       "Tuba::DB::Object::Publication" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Publication.pm"
@@ -270,5 +273,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.61"
+   "version" : "0.62"
 }

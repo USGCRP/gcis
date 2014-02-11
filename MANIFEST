@@ -246,6 +246,11 @@ db/patches/0730_pub_con_ref.sql
 db/patches/0740_org_cleanup.sql
 db/patches/0750_more_org_cleanup.sql
 db/patches/0760_publication_contributor_constraint.sql
+db/patches/0780_related_org.sql
+db/patches/0790_doi_check.sql
+db/patches/0790_related_org_fix.sql
+db/patches/0800_reference_fk.sql
+db/patches/0810_uuid.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -289,6 +294,7 @@ lib/Tuba/DB/Mixin/Object/Image.pm
 lib/Tuba/DB/Mixin/Object/Journal.pm
 lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
+lib/Tuba/DB/Mixin/Object/Person/Manager.pm
 lib/Tuba/DB/Mixin/Object/Publication.pm
 lib/Tuba/DB/Mixin/Object/PublicationMap.pm
 lib/Tuba/DB/Mixin/Object/Reference.pm
@@ -403,6 +409,7 @@ lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
 lib/Tuba/files/templates/not_found.html.ep
+lib/Tuba/files/templates/obj_button.html.ep
 lib/Tuba/files/templates/obj_thumbnails.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.ttl.ep
@@ -411,6 +418,7 @@ lib/Tuba/files/templates/opensearch.xml.ep
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.ep
 lib/Tuba/files/templates/organization/objects.html.ep
+lib/Tuba/files/templates/organization/relationships.html.ep
 lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
@@ -426,6 +434,7 @@ lib/Tuba/files/templates/pub_thumbnails.html.ep
 lib/Tuba/files/templates/reference/object.html.ep
 lib/Tuba/files/templates/reference/object.ttl.ep
 lib/Tuba/files/templates/reference/objects.html.ep
+lib/Tuba/files/templates/reference/report/updates.html.ep
 lib/Tuba/files/templates/reference/update_form.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
@@ -480,5 +489,6 @@ t/004_report.t
 t/005_reference.t
 t/005_turtle.t
 t/006_figure.t
+t/007_prov.t
 t/999_stop_db.t
 t/tlib.pm

@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.61
+    version: 0.62
   Tuba::Array:
     file: lib/Tuba/Array.pm
   Tuba::Article:
@@ -80,6 +80,8 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/Organization.pm
   Tuba::DB::Object::Person:
     file: lib/Tuba/DB/Mixin/Object/Person.pm
+  Tuba::DB::Object::Person::Manager:
+    file: lib/Tuba/DB/Mixin/Object/Person/Manager.pm
   Tuba::DB::Object::Publication:
     file: lib/Tuba/DB/Mixin/Object/Publication.pm
   Tuba::DB::Object::PublicationMap:
@@ -181,4 +183,4 @@ requires:
   YAML::XS: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.61
+version: 0.62
