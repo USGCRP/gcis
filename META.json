@@ -4,7 +4,7 @@
    "dynamic_config" : 1,
    "generated_by" : "Module::Build version 0.4203",
    "license" : [
-      "perl_5"
+      "agpl_3"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
@@ -31,7 +31,6 @@
             "DBIx::Simple" : "0",
             "Data::UUID::LibUUID" : "0",
             "Date::Parse" : "0",
-            "File::ShareDir" : "1.00",
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
             "Mojolicious" : "4.14",
@@ -268,10 +267,5 @@
       }
    },
    "release_status" : "stable",
-   "resources" : {
-      "license" : [
-         "http://dev.perl.org/licenses/"
-      ]
-   },
    "version" : "0.62"
 }

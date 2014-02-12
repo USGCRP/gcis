@@ -11,7 +11,6 @@ WriteMakefile
                    'DBIx::Simple' => 0,
                    'Data::UUID::LibUUID' => 0,
                    'Date::Parse' => 0,
-                   'File::ShareDir' => '1.00',
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
                    'Mojolicious' => '4.14',
