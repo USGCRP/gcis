@@ -20,8 +20,7 @@ my $dataset = {
     name       => "readings from my thermometer",
     type       => "observational",
     version    => 12,
-    description =>
-      "These are some readings from the thermometer in outside my house",
+    description => "These are some readings from the thermometer outside my house",
     native_id        => "my-12345",
     publication_dt   => "2014-01-23T00:00:00",
     access_dt        => "2013-01-24T00:00:00",
