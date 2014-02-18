@@ -52,9 +52,11 @@ sub _include_first {
 #
 sub _look_similar {
     my ($x,$y) = @_;
+    $x //= '';
+    $y //= '';
     s/^\s+// for ($x,$y);
     s/\s+$// for ($x,$y);
-    return ($x // '') eq ($y // '');
+    return $x eq $y;
 }
 
 sub register {
