@@ -11,9 +11,12 @@
     </div>
 </div>
 
+% my $i = 0;
+
 <table class='table table-condensed table-bordered table-striped densetable'>
 <caption>DOI Discrepancy Report</caption>
 <tr>
+    <th>#</th>
     <th>Endnote</th>
     <th>GCIS</th>
     <th>Reference</th>
@@ -21,6 +24,7 @@
 % for my $row (@$rows) {
 % next if look_similar($row->{endnote_doi},$row->{gcis_doi}) && !param('whitespace');
     <tr>
+        <td><%= ++$i %></td>
         <td><%= link_to "http://dx.doi.org/$row->{endnote_doi}" => target => "_blank" => begin %>
             <%= $row->{endnote_doi} %>
             <%= end %>
