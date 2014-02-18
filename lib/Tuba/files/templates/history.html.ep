@@ -1,5 +1,15 @@
 % use Encode;
 % layout 'default';
+<style>
+    .removed {
+        background-color:orange;
+        text-decoration:line-through;
+    }
+    .appended {
+        background-color:yellow;
+    }
+
+</style>
 
 % unless (param 'no_header') {
 <h5>
@@ -10,6 +20,7 @@ Change history for
 
 <table class='table table-condensed table-bordered squeeze'>
 <tr>
+<th>action</th>
 <th>changes</th>
 <th>when</th>
 <th>by</th>
@@ -18,7 +29,16 @@ Change history for
 </tr>
 % for my $row (@$change_log) {
 <tr>
-<td><%= decode('UTF-8', $row->{action} eq 'I' ? 'insert : '.$row->{row_data} : $row->{action} eq 'D' ? 'delete' : $row->{changed_fields} ) %></td>
+<td><%= {U => 'update', I => 'insert', D => 'delete'}->{$row->{action}} %></td>
+<td style='white-space:pre-line;'>
+% if ($row->{action} eq 'I') {
+%= decode('UTF-8',$row->{row_data});
+% } elsif ($row->{action} eq 'D') {
+
+% } elsif ($row->{action} eq 'U') {
+%= $row->{diffs};
+% }
+</td>
 <td><%= format_ago($row->{action_tstamp_tx}) %></td>
 <td><%= $row->{audit_username} %></td>
 <td><%= $row->{table_name} %></td>

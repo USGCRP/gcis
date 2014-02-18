@@ -6,6 +6,7 @@ use Test::Mojo;
 
 use Tuba;
 use Tuba::DB;
+use v5.14;
 
 my $t = Test::Mojo->new("Tuba");
 
@@ -23,7 +24,8 @@ $t->post_ok(
   "/reference" => json => {
     identifier      => $id,
     publication_uri => '/report/test-report',
-    attrs           => { description => $desc }
+    attrs           => { description => $desc },
+    audit_note      => "this is an audit note",
   }
 )->status_is(200);
 
@@ -43,6 +45,11 @@ $t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)
         identifier => $id,
         attrs => { description => $desc },
     });
+
+$t->get_ok("/reference/history/$id");
+my $body  = $t->tx->res->body;
+like $body, qr[this is an audit note], 'saved audit note in create';
+#like $body, qr[À l'exception de l'abondance de lichens], 'unicode okay on history page';
 
 $t->delete_ok("/reference/$id" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/report/test-report" => { Accept => "application/json" })->status_is(200);

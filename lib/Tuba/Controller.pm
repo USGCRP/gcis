@@ -10,10 +10,10 @@ use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/unset_state_in_db/;
 use List::Util qw/shuffle/;
 use Tuba::Search;
-use Pg::hstore qw/hstore_encode/;
+use Pg::hstore qw/hstore_encode hstore_decode/;
 use Path::Class qw/file/;
 use Tuba::Log;
-use Tuba::Util qw/nice_db_error/;
+use Tuba::Util qw/nice_db_error show_diffs/;
 use File::Temp;
 use YAML::XS qw/Dump/;
 use Data::Dumper;
@@ -282,13 +282,14 @@ sub create {
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
     }
+    my $audit_note = delete($obj{audit_note});
     if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
         $obj{report_identifier} = $c->stash('report_identifier');
     }
     my $new = $object_class->new(%obj);
     $new->meta->error_mode('return');
     my $table = $object_class->meta->table;
-    $new->save(audit_user => $c->user)
+    $new->save(audit_user => $c->user, audit_note => $audit_note)
           and $c->post_create($new)
           and return $c->_redirect_to_view($new);
     $c->respond_to(
@@ -851,6 +852,7 @@ sub update {
     }
 
     my $ok = 1;
+    my $audit_note = $c->stash('audit_note') || (delete $json->{audit_note}) || $c->param('audit_note');
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
@@ -880,7 +882,7 @@ sub update {
     if ($ok && keys %pk_changes) {
         $c->app->log->debug("Updating primary key");
         # See Tuba::DB::Object.
-        if (my $new = $object->update_primary_key(audit_user => $c->user, %pk_changes, %new_attrs)) {
+        if (my $new = $object->update_primary_key(audit_user => $c->user, audit_note => $audit_note, %pk_changes, %new_attrs)) {
             $new->$_($object->$_) for map { $_->is_primary_key_member ? () : $_->name } $object->meta->columns;
             $object = $new;
         } else {
@@ -888,7 +890,7 @@ sub update {
         }
     }
 
-    $ok &&= $object->save(changes_only => 1, audit_user => $c->user) if $ok;
+    $ok &&= $object->save(changes_only => 1, audit_user => $c->user, audit_note => $audit_note) if $ok;
     if ($c->detect_format eq 'json') {
         return $c->update_form if $ok;
         return $c->render(json => { error => $object->error });
@@ -974,6 +976,13 @@ sub history {
         @$change_log = sort { $b->{sort_key} cmp $a->{sort_key} } @$change_log;
     }
 
+    for my $row (reverse @$change_log) {
+        my $row_data = $row->{changed_fields} || $row->{row_data};
+        my $old = hstore_decode($row->{row_data});
+        my $changes = hstore_decode($row->{changed_fields});
+        my $new = { %$old, %$changes };
+        $row->{diffs} = show_diffs(Dump($old),Dump($new));
+    }
     $c->render(template => 'history', change_log => $change_log, object => $object, pk => $pk)
 }
 

@@ -64,6 +64,7 @@ my $builder = Module::Build::Database->new(
         'Text::Format' => 0,
         'Time::Duration' => 0,
         'YAML::XS' => 0,
+        'String::Diff' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',

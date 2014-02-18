@@ -74,17 +74,19 @@ sub post_create {
       or do { $reference->error("$uri not found"); return 0; };
     $reference->add_subpubrefs({publication_id => $pub->id});
   }
-  $reference->save(audit_user => $c->user);
+  $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   return 1;
 }
 
 sub update {
     my $c = shift;
     if (my $json = $c->req->json) {
+        my $audit_note = delete($json->{audit_note});
+        $c->stash(audit_note => $audit_note);
         if (my $uri = delete $json->{publication_uri}) {
             my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
-            $pub->save(audit_user => $c->user) unless $pub->id;
+            $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         } else {
@@ -101,6 +103,10 @@ sub smartmatch {
     my $c         = shift;
     my $reference = $c->_this_object;
     $c->app->log->debug("matching [".$reference->attr('reftype')."]");
+    my $audit_note;
+    if (my $json = $c->req->json) {
+        $audit_note = $json->{audit_note};
+    }
     my @tables    = map $_->table, @{PublicationTypes->get_objects(all => 1)};
 
     # Match this reference to a child publication.
@@ -121,16 +127,16 @@ sub smartmatch {
     my $status = 'no match';
     if ($match) {
         logger->debug("saving");
-        $match->save(audit_user => $c->user) or return $c->redirect_with_error($match->error);
+        $match->save(audit_user => $c->user, audit_note => $audit_note) or return $c->redirect_with_error($match->error);
         if (is_in_db($match)) {
             $status = 'match';
         } else {
             $status = 'new';
         }
         my $pub = $match->get_publication(autocreate => 1);
-        $pub->save(audit_user => $c->user) unless $pub->id;
+        $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
         $reference->child_publication_id($pub->id);
-        $reference->save(audit_user => $c->user)
+        $reference->save(audit_user => $c->user, audit_note => $audit_note)
             or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
 
