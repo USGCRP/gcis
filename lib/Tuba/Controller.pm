@@ -312,6 +312,13 @@ sub post_create {
     my $c = shift;
     my $obj = shift;
     # override to do something after saving succesfully
+    return 1;
+}
+sub post_update {
+    my $c = shift;
+    my $obj = shift;
+    # override to do something after saving succesfully
+    return 1;
 }
 
 
@@ -890,7 +897,10 @@ sub update {
         }
     }
 
-    $ok &&= $object->save(changes_only => 1, audit_user => $c->user, audit_note => $audit_note) if $ok;
+    if ($ok) {
+        $ok = $object->save(changes_only => 1, audit_user => $c->user, audit_note => $audit_note);
+        $ok &&= $c->post_update($object);
+    }
     if ($c->detect_format eq 'json') {
         return $c->update_form if $ok;
         return $c->render(json => { error => $object->error });

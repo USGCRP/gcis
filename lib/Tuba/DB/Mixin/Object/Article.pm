@@ -26,7 +26,9 @@ sub uri {
 sub new_from_reference {
     my $s = shift;
     my $ref = shift;
+    my %args = @_;
     return unless $ref->attr('reftype') eq 'Journal Article';
+    my ($audit_user, $audit_note) = @args{qw/audit_user audit_note/};
 
     $s = $s->new unless ref $s;
 
@@ -73,7 +75,7 @@ sub new_from_reference {
         $journal->identifier($identifier);
         $journal->load(speculative => 1) or do {
             logger->warn("making a new journal, identifier : $identifier");
-            $journal->save(audit_user => 'unknown');
+            $journal->save(audit_user => $audit_user, audit_note => $audit_note);
         };
     }
     $s->journal_identifier($journal->identifier);

@@ -83,21 +83,54 @@ sub update {
     if (my $json = $c->req->json) {
         my $audit_note = delete($json->{audit_note});
         $c->stash(audit_note => $audit_note);
+
+        # Turn uris into ids
         if (my $uri = delete $json->{publication_uri}) {
             my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
             $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{publication_id} = $pub->id;
-            $c->stash(object_json => $json);
         } else {
             my $obj = $c->_this_object;
             $json->{publication_id} = $obj->publication_id;
-            $json->{child_publication_id} = $obj->child_publication_id;
-            $c->stash(object_json => $json);
         }
+
+        # ditto
+        if (my $uri = delete $json->{child_publication_uri}) {
+            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
+            my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
+            $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
+            $json->{child_publication_id} = $pub->id;
+        } else {
+            my $obj = $c->_this_object;
+            $json->{child_publication_id} = $obj->child_publication_id;
+        }
+
+        $c->stash(object_json => $json);
+        $c->stash(sub_publication_uris => delete $json->{sub_publication_uris});
     }
     $c->SUPER::update(@_);
 }
+sub post_update {
+  my $c         = shift;
+  my $reference = shift;
+  my $uris      = $c->stash('sub_publication_uris') or return 1;
+  my %existing  = map { $_->publication_id => 1 } $reference->subpubrefs;
+  for my $uri (@$uris) {
+    my $pub = $c->uri_to_pub($uri)
+      or do { $reference->error("$uri not found"); return 0; };
+    next if delete($existing{$pub->id});
+    $reference->add_subpubrefs({publication_id => $pub->id});
+  }
+  $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
+  for my $pub_id (keys %existing) {
+      my $s = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
+      $s->load(speculative => 1) or next;
+      $s->delete or do { $reference->error($s->error); return 0; };
+  }
+  return 1;
+}
+
 
 sub smartmatch {
     my $c         = shift;
@@ -120,7 +153,7 @@ sub smartmatch {
     unshift @try, $existing if $existing;
     my $match;
     for my $class (@try) {
-        $match = $class->new_from_reference($reference) and last;
+        $match = $class->new_from_reference($reference, audit_user => $c->user, audit_note -> $audit_note) and last;
     }
     logger->debug("match : ".($match // '<none>'));
     undef $match if $match && !is_in_db($match) && $c->param('updates_only');
