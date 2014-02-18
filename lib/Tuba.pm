@@ -15,6 +15,7 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Tuba::Converter;
 use Tuba::Log;
+use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 
 our $VERSION = '0.63';
@@ -35,6 +36,7 @@ sub startup {
       : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
       :                                 './Tuba.conf';
     $app->plugin( 'yaml_config' => { file => $conf } );
+    set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
     if (my $path = $app->config('log_path')) {

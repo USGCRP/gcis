@@ -11,7 +11,7 @@ use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/xml_escape/;
 use Encode qw/decode/;
 
-our @EXPORT_OK = qw/nice_db_error show_diffs/;
+our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs/;
 
 sub nice_db_error {
     my $err = shift or return;
@@ -22,6 +22,7 @@ sub nice_db_error {
     return $err;
 }
 
+
 sub show_diffs {
     my ($x,$y) = @_;
     my ($old,$new) = diff($x,$y,
@@ -30,6 +31,17 @@ sub show_diffs {
         escape => \&xml_escape
     );
     return b($new);
+
+{
+our $conf;
+sub set_config {
+    my $new_conf = shift;
+    $conf = $new_conf;
+    return $conf;
+}
+sub get_config {
+    $conf;
+}
 }
 
 1;

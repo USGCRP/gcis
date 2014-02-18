@@ -54,7 +54,7 @@
 </table>
 
 %= link_to '/img/'.$object->file => begin
-<img width="600" height="600" style='border:1px solid #aaa;' src='<%= base %>/img/<%= $object->file %>' />
+<img width="600" height="600" style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
 %= end
 
 
