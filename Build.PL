@@ -62,6 +62,7 @@ my $builder = Module::Build::Database->new(
         'Pg::hstore' => 0,
         'Text::CSV_XS' => 0,
         'Text::Format' => 0,
+        'Time::Duration' => 0,
         'YAML::XS' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
