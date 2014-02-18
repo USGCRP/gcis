@@ -978,8 +978,8 @@ sub history {
 
     for my $row (reverse @$change_log) {
         my $row_data = $row->{changed_fields} || $row->{row_data};
-        my $old = hstore_decode($row->{row_data});
-        my $changes = hstore_decode($row->{changed_fields});
+        my $old = hstore_decode($row->{row_data} // '');
+        my $changes = hstore_decode($row->{changed_fields} // '');
         my $new = { %$old, %$changes };
         $row->{diffs} = show_diffs(Dump($old),Dump($new));
     }
