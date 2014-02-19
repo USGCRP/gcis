@@ -859,7 +859,9 @@ sub update {
     }
 
     my $ok = 1;
-    my $audit_note = $c->stash('audit_note') || (delete $json->{audit_note}) || $c->param('audit_note');
+    my $audit_note = $c->stash('audit_note');
+    $audit_note ||= (delete $json->{audit_note}) if $json;
+    $audit_note ||= $c->param('audit_note');
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
