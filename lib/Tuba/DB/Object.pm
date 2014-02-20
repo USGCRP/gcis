@@ -360,6 +360,11 @@ sub is_publication {
     return $_cache{ $class };
 }
 
+# overload for text rendering
+sub as_text {
+    my $s = shift;
+    return $s->stringify;
+}
 
 1;
 

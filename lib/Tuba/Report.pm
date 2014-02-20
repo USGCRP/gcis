@@ -145,9 +145,14 @@ sub make_tree_for_show {
     my $c = shift;
     my $report = shift;
     my $pub = $report->get_publication(autocreate => 1);
+    my $uri = $report->uri($c);
+    my $href = $uri->clone->to_abs;
+    $href .= ".".$c->stash('format') if $c->stash('format');
     return {
       files                   => [map +{uri => $_->uri($c)}, $pub->files],
-      uri                     => $report->uri($c),
+      uri                     => $uri,
+      href                    => $href,
+      url                     => $report->url,
       identifier              => $report->identifier,
       contributors => [map $_->as_tree, $pub->contributors ],
       title        => $report->title,

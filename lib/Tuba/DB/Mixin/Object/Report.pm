@@ -35,5 +35,16 @@ sub organizations {
     return @$orgs;
 }
 
+sub as_text {
+    my $s = shift;
+    if ($s->title && $s->doi && $s->url) {
+        return sprintf('%s, <%s> (%s)', $s->title, $s->url, $s->doi);
+    }
+    if ($s->title && $s->url) {
+        return sprintf('%s, <%s>', $s->title, $s->url);
+    }
+    return $s->title;
+}
+
 1;
 

@@ -153,6 +153,11 @@ sub show {
         dot   => sub { shift->render_partial_ttl_as($table,'dot'); },
         rdfjson => sub { shift->render_partial_ttl_as($table,'json'); },
         jsontriples => sub { shift->render_partial_ttl_as($table,'json-triples'); },
+        txt => sub {
+              my $c = shift;
+              $c->req->headers->content_type('text/plain');
+              $c->render(text => $object->as_text);
+          },
         svg   => sub {
             my $c = shift;
             $c->res->headers->content_type('image/svg+xml');
