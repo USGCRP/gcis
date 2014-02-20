@@ -8,6 +8,7 @@ sub _make_query {
     my $s = shift;
     my $str = shift;
     my $dbh = $s->object_class->meta->db->dbh;
+    my @query  = ( identifier => { like => "%$str%" } );
 
     # Search using year and author.
     if ($str =~ s/(\d{4})//) {
@@ -15,11 +16,12 @@ sub _make_query {
         $str =~ s/^\s+//g;
         $str =~ s/\s+$//g;
         my $q = $dbh->quote('%'.$str.'%');
-        return \(qq[attrs->'Author' ilike $q and attrs->'Year' = '$year']);
+        push @query, \(qq[attrs->'Author' ilike $q and attrs->'Year' = '$year']);
+    } else {
+        my $q = $dbh->quote('%'.$str.'%');
+        push @query, \(qq[attrs->'Author' ilike $q]);
     }
-
-    my $q = $dbh->quote('%'.$str.'%');
-    return \(qq[attrs->'Author' ilike $q]);
+    return @query;
 }
 
 1;
