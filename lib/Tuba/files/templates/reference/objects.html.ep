@@ -18,7 +18,9 @@
     <th>identifier</th>
     <th>type</th>
     <th>title</th>
+% unless (stash 'chapter') {
     <th>chapters</th>
+% }
     <th>publication</th>
 </tr>
 % for my $o (@$objects) {
@@ -30,11 +32,13 @@
     </td>
     <td> <%= $o->attrs->{reftype} %> </td>
     <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
+% unless (stash 'chapter') {
     <td class='thumbnails'>
         <div class='span2'>
-            %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, $o->subpubrefs ];
+            %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, $o->subpubrefs ]
         </div>
     </td>
+% }
     <td class='thumbnails'>
         % if (my $pub = $o->child_publication) {
             <div class='span2'>

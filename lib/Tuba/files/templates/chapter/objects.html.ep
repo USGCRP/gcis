@@ -1,0 +1,54 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>number: title</th>
+    <th>figures</th>
+    <th>findings</th>
+    <th>tables</th>
+    <th>references</th>
+</th>
+% for my $chapter (@$objects) {
+    <tr>
+    <td>
+        <%= link_to $chapter->uri($self) => begin %><%= $chapter->number // '' %>: <%= $chapter->title %><%= end %>
+    </td>
+    <td>
+        %= link_to 'list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $chapter->figures } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_finding', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $chapter->findings } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_table', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $chapter->tables } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_chapter_references', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
+        %= $chapter->reference_count;
+        %= end
+    </td>
+    </tr>
+% }
+</table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+
