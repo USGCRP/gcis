@@ -2,11 +2,14 @@
 <span style='float:right;'><%= include 'create_link'%></span>
 <% } %>
 % my $base = $self->req->url->clone;
+% my $query = $base->query->clone;
+% $base->query(Mojo::Parameters->new);
 % $base->path->parts->[-1] =~ s/.html$$//;
+% $query = "?$query" if $query;
 <pre>
-<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
-<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
-<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %>
+<%= link_to "$base.json".$query => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml".$query => class => 'label label-info' => begin %>YAML<%= end %> \
+<%= link_to "$base.html".$query => class => 'label label-info' => begin %>HTML<%= end %>
 Primary key : <%= $meta->primary_key %>
 Unique keys : <%= join ',', $meta->unique_keys %>
 Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relationships } %>
