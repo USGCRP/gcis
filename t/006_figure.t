@@ -33,7 +33,7 @@ $t->post_ok(
   }
 )->status_is(200);
 
-# test error handling
+# error handling for create
 $t->post_ok(
   "/report/vegetables/chapter/carrots/figure" =>
   { Accept => "application/json"} => json => {
@@ -44,6 +44,44 @@ $t->post_ok(
     uri                => "blue/lagoon",
   }
 )->status_is(422)->json_is({error => "uri is not a valid field."});
+
+# error handling for update
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/orange" =>
+  { Accept => "application/json"} => json => {
+    report_identifier  => "vegetables",
+    chapter_identifier => "carrots",
+    identifier         => "blue",
+    title              => "Blue Carrots",
+    uri                => "blue/lagoon",
+  }
+)->status_is(422)->json_is({error => "uri is not a valid field."});
+
+my %o = (
+   report_identifier  => "vegetables",
+   chapter_identifier => "carrots",
+   identifier         => "orange",
+   title              => "Orange Carrots!",
+   attributes         => undef,
+   caption            => undef,
+   create_dt         => undef,
+   lat_max           => undef,
+   lat_min           => undef,
+   lon_max           => undef,
+   lon_min           => undef,
+   ordinal           => undef,
+   source_citation   => undef,
+   submission_dt     => undef,
+   time_end          => undef,
+   time_start        => undef,
+   usage_limits      => undef
+);
+
+# successful update
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/orange" =>
+  { Accept => "application/json" } => json => \%o
+)->status_is(200)->json_is(\%o);
 
 my $uuid = "77285d0f-ea9b-4bf2-80aa-3b968420c8b9";
 
@@ -73,7 +111,7 @@ $t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")-
    'submission_dt' => undef,
    'time_end' => undef,
    'time_start' => undef,
-   'title' => 'Orange Carrots',
+   'title' => 'Orange Carrots!',
    'usage_limits' => undef
  }) or diag explain($t->tx->res->json);
 

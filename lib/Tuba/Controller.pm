@@ -863,6 +863,15 @@ sub update {
     $object->meta->error_mode('return');
     my $json = ($c->stash('object_json') || $c->req->json);
 
+    my $error;
+    if ($json) {
+        my %valid = map { $_ => 1 } @{ $object->meta->columns };
+        my @invalid = grep !$valid{$_}, keys %$json;
+        if (@invalid) {
+            $error = join "\n", map "$_ is not a valid field.", @invalid;
+        }
+    }
+
     if ($c->param('delete')) {
         if ($object->delete) {
             $c->flash(message => "Deleted $table");
@@ -873,6 +882,7 @@ sub update {
     }
 
     my $ok = 1;
+    $ok = 0 if $error;
     my $audit_note = $c->stash('audit_note');
     $audit_note ||= (delete $json->{audit_note}) if $json;
     $audit_note ||= $c->param('audit_note');
@@ -898,6 +908,7 @@ sub update {
             $err = "$acc : $err";
             $ok = 0;
             $object->error($err);
+            $error = $err;
             last;
         }
     }
@@ -917,15 +928,28 @@ sub update {
         $ok = $object->save(changes_only => 1, audit_user => $c->user, audit_note => $audit_note);
         $ok &&= $c->post_update($object);
     }
-    if ($c->detect_format eq 'json') {
-        return $c->update_form if $ok;
-        return $c->render(json => { error => $object->error });
+    if ($ok && ($c->detect_format eq 'json')) {
+        return $c->update_form;
     }
-    $ok and do {
+    $error //= $object->error;
+    if ($ok) {
         $next = $object->uri($c,{tab => 'update_form'});
-        $c->flash(message => "Saved changes"); return $c->redirect_to($next); };
-    $c->flash(error => substr($object->error,0,1000));
-    $c->redirect_to($next);
+        $c->flash(message => "Saved changes");
+        return $c->redirect_to($next);
+    }
+    $c->respond_to(
+      html => sub {
+        my $c = shift;
+        $c->flash(error => substr($error, 0, 1000));
+        $c->redirect_to($next);
+      },
+      json => sub {
+        my $c = shift;
+        $c->res->code(
+          $error =~ /(already exists|violates unique constraint)/ ? 409 : 422);
+        $c->render(json => {error => $error});
+      }
+    );
 }
 
 =head2 remove
