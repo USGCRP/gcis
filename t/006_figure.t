@@ -33,6 +33,18 @@ $t->post_ok(
   }
 )->status_is(200);
 
+# test error handling
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure" =>
+  { Accept => "application/json"} => json => {
+    report_identifier  => "vegetables",
+    chapter_identifier => "carrots",
+    identifier         => "blue",
+    title              => "Blue Carrots",
+    uri                => "blue/lagoon",
+  }
+)->status_is(422)->json_is({error => "uri is not a valid field."});
+
 my $uuid = "77285d0f-ea9b-4bf2-80aa-3b968420c8b9";
 
 $t->post_ok("/image" => json => { identifier => $uuid } )->status_is(200);

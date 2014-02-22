@@ -291,21 +291,30 @@ sub create {
     if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
         $obj{report_identifier} = $c->stash('report_identifier');
     }
-    my $new = $object_class->new(%obj);
-    $new->meta->error_mode('return');
-    my $table = $object_class->meta->table;
-    $new->save(audit_user => $c->user, audit_note => $audit_note)
-          and $c->post_create($new)
-          and return $c->_redirect_to_view($new);
+    my %valid = map { $_ => 1 } @{ $object_class->meta->columns };
+    my @invalid = grep !$valid{$_}, keys %obj;
+    my $error;
+    if (@invalid) {
+        $error = join "\n", map "$_ is not a valid field.", @invalid;
+    } else {
+        my $new = $object_class->new(%obj);
+        $new->meta->error_mode('return');
+        my $table = $object_class->meta->table;
+        $new->save(audit_user => $c->user, audit_note => $audit_note)
+              and $c->post_create($new)
+              and return $c->_redirect_to_view($new);
+        $error = $new->error;
+    } 
     $c->respond_to(
         json => sub {
                 my $c = shift;
-                $c->res->code($new->error =~ /(already exists|violates unique constraint)/ ? 409 : 500);
-                $c->render(json => { error => $new->error } );
+                # 422 is a webdav extension : "Unprocessable entity"
+                $c->res->code($error =~ /(already exists|violates unique constraint)/ ? 409 : 422);
+                $c->render(json => { error => $error } );
             },
         html => sub {
                 my $c = shift;
-                $c->flash(error => nice_db_error($new->error));
+                $c->flash(error => nice_db_error($error));
                 my $url = $object_class->uri($c,{tab => "create_form"});
                 $url->query->param(no_header => 1) if $c->param('no_header');
                 $c->redirect_to($url);
