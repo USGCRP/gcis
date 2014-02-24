@@ -482,12 +482,19 @@ CREATE TABLE report (
     url character varying,
     doi character varying,
     _public boolean DEFAULT true,
+    report_type_identifier character varying,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
 
 COMMENT ON COLUMN report.identifier IS 'A unique identifier for the report.';
+
+
+
+CREATE TABLE report_type (
+    identifier character varying NOT NULL
+);
 
 
 
@@ -786,6 +793,11 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY report
     ADD CONSTRAINT report_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY report_type
+    ADD CONSTRAINT report_type_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1357,6 +1369,11 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY report
+    ADD CONSTRAINT report_report_type_identifier_fkey FOREIGN KEY (report_type_identifier) REFERENCES report_type(identifier);
 
 
 

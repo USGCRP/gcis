@@ -10,10 +10,20 @@ SET client_min_messages = warning;
 
 
 --
+-- Data for Name: report_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY report_type (identifier) FROM stdin;
+report
+assessment
+\.
+
+
+--
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier) FROM stdin;
 \.
 
 
@@ -102,10 +112,6 @@ COPY country (code, name) FROM stdin;
 --
 
 COPY organization_type (identifier) FROM stdin;
-city
-county
-regional
-tribal
 \.
 
 
@@ -239,8 +245,6 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 --
 
 COPY organization_relationship (identifier, label) FROM stdin;
-bureau_of	bureau of
-program_of	program of
 \.
 
 

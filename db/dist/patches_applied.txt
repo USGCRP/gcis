@@ -84,3 +84,4 @@
 0810_uuid.sql	901c31ff3003ecc986010e06d4f6a2be
 0820_orgtype.sql	b5047c3c9fa4e2e05c8daa3d730e99ad
 0830_orgrel.sql	44bfbb13497c1eedc903cc51276cf3e6
+0600_report_type.sql	836b3ba12b9a13e7211c6f81aee7aaaa
