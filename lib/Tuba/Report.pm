@@ -157,6 +157,7 @@ sub make_tree_for_show {
       contributors => [map $_->as_tree, $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,
+      report_type_identifier => $report->report_type_identifier,
       chapters     => [
         map +{
           number     => $_->number,

@@ -385,8 +385,16 @@ sub _default_controls {
         chapter_identifier => sub { my $c = shift;
                             +{ template => 'select',
                                params => { values => $c->_chaplist($c->stash('report_identifier')) } } },
-        report_identifier  => sub { +{ template => 'select',
-                                params => { values => shift->_rptlist() } } },
+        report_identifier  => sub { +{ template => 'select', params => { values => shift->_rptlist() } } },
+        report_type_identifier => sub {
+          +{
+            template => 'select',
+            params   => {
+              values =>
+                ['', map $_->identifier, @{ReportTypes->get_objects(all => 1)}]
+            }
+          };
+          },
     );
 }
 
