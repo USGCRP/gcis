@@ -77,7 +77,7 @@ $t->get_ok("/report/animals/chapter/alligators.nt")
 
 # Figure
 $t->post_ok("/report/animals/chapter/alligators/figure" => \%h
-     => json => { report => "animals", chapter_identifier => "alligators", identifier => "caimans", title => "Little alligators" } )->status_is(200);
+     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "caimans", title => "Little alligators" } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/figure.json")
     ->status_is(200);
@@ -98,7 +98,7 @@ $t->get_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a.nt")
 
 # Table
 $t->post_ok("/report/animals/chapter/alligators/table" => \%h
-     => json => { report => "animals", chapter_identifier => "alligators", identifier => "population", title => "Some numbers" } )->status_is(200);
+     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "population", title => "Some numbers" } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/table.json")
     ->status_is(200);
@@ -117,7 +117,7 @@ $t->get_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e.nt")->status_is(200);
 
 # Finding
 $t->post_ok("/report/animals/chapter/alligators/finding" => \%h
-     => json => { report => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
+     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/finding.json")
     ->status_is(200);

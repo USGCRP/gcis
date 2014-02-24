@@ -33,7 +33,7 @@ $t->post_ok(
   "/report/pizzabrain/figure" => json => {
     identifier         => "pizza",
     chapter_identifier => "uno",
-    report             => "pizzabrain"
+    report_identifier  => "pizzabrain"
   }
 )->status_is(200);
 
