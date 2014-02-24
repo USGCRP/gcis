@@ -264,10 +264,7 @@ sub _redirect_to_view {
     my $object = shift;
     my $url = $object->uri($c);
     $url->query->param(no_header => 1) if $c->param('no_header');
-    $c->respond_to(
-        html => sub { shift->redirect_to($url) },
-        json => sub { shift->render({ status => 'ok' }) },
-    );
+    return $c->redirect_to( $url );
 }
 
 =head2 create
