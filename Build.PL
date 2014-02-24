@@ -47,6 +47,7 @@ my $builder = Module::Build::Database->new(
         'Mojolicious' => '4.14',
         'YAML::Syck'  => 0,
         'YAML::XS'    => 0,
+        'YAML'        => 0,
         'Data::UUID::LibUUID'  => 0,
         'Rose::DB' => '0.772',
         'Rose::DB::Object' => 0,

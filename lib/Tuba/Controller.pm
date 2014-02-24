@@ -15,7 +15,7 @@ use Path::Class qw/file/;
 use Tuba::Log;
 use Tuba::Util qw/nice_db_error show_diffs/;
 use File::Temp;
-use YAML::XS qw/Dump/;
+use YAML qw/Dump/;
 use Encode qw/encode decode/;
 use Data::Dumper;
 
@@ -1029,8 +1029,8 @@ sub history {
 
     for my $row (reverse @$change_log) {
         my $row_data = $row->{changed_fields} || $row->{row_data};
-        my $old = hstore_decode(decode('UTF-8',$row->{row_data} // ''));
-        my $changes = hstore_decode(decode('UTF-8',$row->{changed_fields} // ''));
+        my $old = hstore_decode($row->{row_data} // '');
+        my $changes = hstore_decode($row->{changed_fields} // '');
         my $new = { %$old, %$changes };
         $row->{diffs} = show_diffs(Dump($old),Dump($new));
     }
