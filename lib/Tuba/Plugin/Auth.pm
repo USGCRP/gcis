@@ -35,6 +35,8 @@ sub register {
             return 1 if $c->session('user');
             if ($c->Tuba::Auth::check_api_key) {
                 return 1;
+            } else  {
+                $c->app->log->info("auth required for ".$c->req->url);
             }
             $c->flash(destination => $c->req->url);
             $c->redirect_to('login');

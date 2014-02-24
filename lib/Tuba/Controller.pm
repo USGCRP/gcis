@@ -264,7 +264,10 @@ sub _redirect_to_view {
     my $object = shift;
     my $url = $object->uri($c);
     $url->query->param(no_header => 1) if $c->param('no_header');
-    return $c->redirect_to( $url );
+    $c->respond_to(
+        html => sub { shift->redirect_to($url) },
+        json => sub { shift->render({ status => 'ok' }) },
+    );
 }
 
 =head2 create
@@ -303,9 +306,13 @@ sub create {
         my $table = $object_class->meta->table;
         $new->save(audit_user => $c->user, audit_note => $audit_note)
               and $c->post_create($new)
-              and return $c->_redirect_to_view($new);
+              and do {
+                  $c->app->log->info("Successfully created ".$new->meta->table." : ".$new->stringify);
+                  return $c->_redirect_to_view($new);
+              };
         $error = $new->error;
     } 
+    $c->app->log->error("Error creating $object_class : $error");
     $c->respond_to(
         json => sub {
                 my $c = shift;
