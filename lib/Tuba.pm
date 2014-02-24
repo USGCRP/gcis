@@ -17,7 +17,7 @@ use Tuba::Converter;
 use Tuba::Log;
 use Data::UUID::LibUUID;
 
-our $VERSION = '0.62';
+our $VERSION = '0.63';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {

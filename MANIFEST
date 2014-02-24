@@ -226,6 +226,7 @@ db/patches/0570_audit.sql
 db/patches/0580_webpage.sql
 db/patches/0590_journal.sql
 db/patches/0600_report.sql
+db/patches/0600_report_type.sql
 db/patches/0610_book.sql
 db/patches/0620_columns.sql
 db/patches/0630_contributor_roles.sql
@@ -251,6 +252,8 @@ db/patches/0790_doi_check.sql
 db/patches/0790_related_org_fix.sql
 db/patches/0800_reference_fk.sql
 db/patches/0810_uuid.sql
+db/patches/0820_orgtype.sql
+db/patches/0830_orgrel.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -351,6 +354,7 @@ lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/book/object.ttl.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
+lib/Tuba/files/templates/chapter/objects.html.ep
 lib/Tuba/files/templates/chapter/relationships.html.ep
 lib/Tuba/files/templates/collapsible.html.ep
 lib/Tuba/files/templates/contributors.html.ep
@@ -490,5 +494,8 @@ t/005_reference.t
 t/005_turtle.t
 t/006_figure.t
 t/007_prov.t
+t/008_dataset.t
+t/009_article.t
+t/010_stringify.t
 t/999_stop_db.t
 t/tlib.pm
