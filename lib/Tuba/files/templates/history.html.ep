@@ -36,7 +36,7 @@ Change history for
 % } elsif ($row->{action} eq 'D') {
 
 % } elsif ($row->{action} eq 'U') {
-%= $row->{diffs};
+%== decode('UTF-8',$row->{diffs});
 % }
 </td>
 <td><%= format_ago($row->{action_tstamp_tx}) %></td>
