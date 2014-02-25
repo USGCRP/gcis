@@ -363,6 +363,17 @@ sub is_publication {
 # overload for text rendering
 sub as_text {
     my $s = shift;
+    my %cols = map { $_ => 1} $s->meta->columns;
+    if ($cols{title} && $cols{doi} && $cols{url}) {
+        if ($s->title && $s->doi && $s->url) {
+            return sprintf('%s, <%s> (%s)', $s->title, $s->url, $s->doi);
+        }
+    }
+    if ($cols{title} && $cols{url}) {
+        if ($s->title && $s->url) {
+            return sprintf('%s, <%s>', $s->title, $s->url);
+        }
+    }
     return $s->stringify;
 }
 
