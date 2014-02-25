@@ -19,42 +19,27 @@
 <%= include 'db_meta'; =%>
 </pre>
 
-% my $dumplist = begin
-% my $k = shift;
-% my $list = shift;
-% for my $row (@$list) {
-%= link_to "show_$k", { "$k\_identifier" => $row->{identifier} } => begin
-%= $row->{identifier}
-%= end
-% }
-% end
-
-% my $dumphash = begin
-% my $k = shift;
-% my $h = shift;
-% $k =~ s/_obj//;
-%= link_to "show_$k", { %{ $self->stash() }, "$k\_identifier" => $h->{identifier} } => begin
-%= $h->{identifier}
-%= end
-% end
-
 %= include 'relationships', object => $object, meta => $meta;
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
-% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
-% my $k = $col->accessor_method_name;
-% my $val = $object->$k;
+% for my $col (qw/identifier file_type file thumbnail/) {
     <tr>
-        <td><%= $k %></td>
-        <td><%= $val %></td>
+        <td><%= $col %></td>
+        <td><%= $object->$col // ''%></td>
     </tr>
 % }
 
 </table>
 
-%= link_to '/img/'.$object->file => begin
-<img width="600" height="600" style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
-%= end
+<div class='thumbnails row-fluid'>
+    <div class='span2 offset5 thumbnail'>
+        %= link_to '/img/'.$object->file => class => "btn btn-inverse btn-large" => begin
+        <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
+        <div class='caption centered' style='color:white;'>download<br>
+        <%= $file->basename %></div>
+        %= end
+    </div>
+</div>
 
 

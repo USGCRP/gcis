@@ -31,9 +31,10 @@ sub show_diffs {
         escape => \&xml_escape
     );
     return b($new);
+}
 
 {
-our $conf;
+my $conf;
 sub set_config {
     my $new_conf = shift;
     $conf = $new_conf;

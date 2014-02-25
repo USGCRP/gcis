@@ -377,5 +377,17 @@ sub as_text {
     return $s->stringify;
 }
 
+sub reference_count {
+    my $ch = shift;
+    my $pub = $ch->get_publication or return 0;
+    # chapter, figures, findings, tables are in subpubref, but reports are not.
+    # So this is overloaded in mixin/report.pm
+    my $sql = q[select count(1) from subpubref where publication_id = ?];
+    my $dbs = DBIx::Simple->new($ch->db->dbh);
+    my ($count) = $dbs->query($sql, $pub->id)->flat;
+    return $count;
+}
+
+
 1;
 

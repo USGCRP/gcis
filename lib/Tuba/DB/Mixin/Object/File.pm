@@ -5,6 +5,7 @@ use Data::UUID::LibUUID;
 use Path::Class ();
 use Tuba::Log qw/logger/;
 use Tuba::Util qw/get_config/;
+use Path::Class ();
 use strict;
 
 __PACKAGE__->meta->primary_key_generator(sub {
@@ -65,6 +66,14 @@ sub _generate_pdf_thumbnail {
     return 1;
 }
 
+sub basename {
+    my $s = shift;
+    return Path::Class::file($s->file)->basename;
+}
+
+sub stringify {
+    return shift->basename;
+}
 
 1;
 
