@@ -150,7 +150,6 @@ CREATE TABLE dataset (
     version character varying,
     description character varying,
     native_id character varying,
-    publication_dt timestamp(3) without time zone,
     access_dt timestamp(3) without time zone,
     url character varying,
     data_qualifier character varying,
@@ -163,7 +162,11 @@ CREATE TABLE dataset (
     vertical_extent character varying,
     processing_level character varying,
     spatial_res character varying,
-    doi character varying
+    doi character varying,
+    release_dt timestamp without time zone,
+    publication_year integer,
+    attributes character varying,
+    CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999)))
 );
 
 
