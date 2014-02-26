@@ -11,7 +11,7 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 
 $t->ua->max_redirects(1);
 
-my $base = $t->ua->app_url;
+my $base = $t->ua->server->url;
 
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
@@ -22,8 +22,10 @@ my $dataset = {
     version    => 12,
     description => "These are some readings from the thermometer outside my house",
     native_id        => "my-12345",
-    publication_dt   => "2014-01-23T00:00:00",
+    publication_year => "2014",
     access_dt        => "2013-01-24T00:00:00",
+    release_dt       => "2013-01-24T00:00:00",
+    attributes       => "foo bar baz",
     url              => "http://example.com/my-temps",
     data_qualifier   => "taken only on tuesdays",
     scale            => "1-1",
