@@ -3,8 +3,10 @@
    a prov:Person; a foaf:Person; a gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
    vivo:orcidId "<%= $person->orcid %>";
-   foaf:name "<%= $person->name %>";
-   rdfs:label "<%= $person->name %>";
+   foaf:firstName "<%= $person->first_name %>";
+   foaf:givenName "<%= $person->first_name %>";
+   foaf:lastName "<%= $person->last_name %>";
+   foaf:familyName "<%= $person->last_name %>";
    gcis:hasURL "<%= $person->url %>" ;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
