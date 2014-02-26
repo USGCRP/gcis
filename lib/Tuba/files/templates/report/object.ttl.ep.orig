@@ -21,20 +21,27 @@
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
 % }
+<<<<<<< HEAD
+   gcis:Organization "<%= $report->organization_identifier %>";
+   gcis:hasCommittee "<%= $report->organization_identifier %>";
+   prov:wasAttributedTo  "<%= $report->organization_identifier %>";
+=======
+
+>>>>>>> b3ea6b0bd0e5de260cc43d34f9abdf1db53a683b
+   bibo:doi "<%= $report->doi %>";
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>";
    rdfs:label "<%= $report->title %>";
    prov:label "<%= $report->title %>";
-   dcterms:type  "<%= $report->report_type %>";
    gcis:url "<%= $report->url %>". 
-   bibo:doi "<%= $report->doi %>";
 % for my $org ($report->organizations) {
    gcis:Organization "<%= $org->identifier %>";
    gcis:hasCommittee "<%= $org->identifier %>";
    prov:wasAttributedTo  "<%= $org->identifier %>";
    gcis:Organization "<%= $org->identifier %>";
 % }
-%= include 'prov';
 %#   dwc:year "<%= $report->year %>";
 %#   xsd:gyear "<%= $report->year %>".
+%= include 'prov';
+ 
 %# add gcis:hasCommittee somewhere?
