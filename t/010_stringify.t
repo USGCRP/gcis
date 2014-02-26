@@ -21,7 +21,7 @@ my %r = (
     title      => "Test Report",
     url        => 'http://example.com/foo',
     doi        => '10.123/45',
-    report_type_identifier => 'report',
+    report_type_identifier => undef,
 );
 $t->post_ok( "/report" => form => \%r )->status_is(200);
 
@@ -30,7 +30,7 @@ $t->get_ok("/report/test-report.json")->json_is(
       files => [],
       chapters => [],
       href => "${base}report/test-report.json",
-      report_type_identifier => 'report',
+      report_type_identifier => undef,
   }
 );
 
