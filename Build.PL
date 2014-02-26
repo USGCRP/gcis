@@ -44,7 +44,7 @@ my $builder = Module::Build::Database->new(
     },
     requires => {
         'Mojolicious::Plugin::YamlConfig' => 0,
-        'Mojolicious' => '4.14',
+        'Mojolicious' => '4.84',
         'YAML::Syck'  => 0,
         'YAML::XS'    => 0,
         'YAML'        => 0,
