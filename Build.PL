@@ -71,12 +71,14 @@ my $builder = Module::Build::Database->new(
     create_makefile_pl => 'traditional',
 );
 
-# Temporary bootstrapping until we have real images; just check to see
-# if this little symlink is in place.
+# backend asset handling (rsync'ed to front end so nginx can handle
+# most of the load)
 my $dir = eval { dist_dir('Tuba'); };
 if ($dir && !$@) {
-    -l "$dir/public/img" or do {
-        warn "\n\nPlease run ln -s /var/local/projects/raw/data/images $dir/public/img\n\n";
+    -l "$dir/public/assets" or do {
+        warn "\n\nPlease run ln -s /var/www/assets $dir/public/assets\n\n";
+        # migration path :
+        # cp -rl /var/local/projects/raw/data/images/* to /var/www/assets/.
     };
 }
 

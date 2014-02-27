@@ -27,7 +27,7 @@ function() {
     var img_txt = UrlFetchApp.fetch(api_base + '/image/' + first_image + '.json');
     var img_json = JSON.parse(img_txt);
     var file = img_json.file[0].file;
-    var img_url = '<img src="' + api_base + '/img/' + file + '" width="400" height="300">';
+    var img_url = '<img src="' + api_base + '/assets/' + file + '" width="400" height="300">';
      
     var htmlApp = HtmlService
         .createHtmlOutput('<a href="' + url + '">' + json.identifier + '</a>' + img_url + '<hr><p>' + json.caption + '</p>')

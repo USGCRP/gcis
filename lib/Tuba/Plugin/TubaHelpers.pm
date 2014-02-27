@@ -13,6 +13,7 @@ use Mojo::Base qw/Mojolicious::Plugin/;
 use Time::Duration qw/ago/;
 use List::Util qw/min/;
 use Date::Parse qw/str2time/;
+use Tuba::Util qw/get_config/;
 use Tuba::Log;
 
 #
@@ -297,6 +298,15 @@ sub register {
         }); 
     $app->helper(include_first => \&_include_first);
     $app->helper(look_similar => sub { my $c = shift; _look_similar(@_);  });
+    $app->helper(
+      asset_location => sub {
+        my $c        = shift;
+        my $filename = shift;
+        my $base = get_config('asset_path') or die "no asset_path configured";
+        return "$base/$filename";
+      }
+    );
+
 }
 
 1;

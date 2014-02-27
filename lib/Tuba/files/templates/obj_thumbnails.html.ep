@@ -13,10 +13,10 @@
                     % for my $file (@$files) {
                         % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
-                            <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
                         <%= end =%>
                         % } else {
-                            <%= image '/img/'.$file->file, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
                         % }
                     % }
                 % } elsif (stash 'blanks') {

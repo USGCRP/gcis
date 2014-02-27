@@ -17,7 +17,7 @@ sub as_tree {
     my %a = @_;
     my $tree = $s->SUPER::as_tree(@_);
     my $c = $a{c} or return $tree;
-    $tree->{url} = '/img/'.$s->file;
+    $tree->{url} = get_config('asset_path').'/'.$s->file;
     $tree->{href} = $c->url_for($tree->{url})->to_abs;
     return $tree;
 }
@@ -25,15 +25,7 @@ sub as_tree {
 sub thumbnail_path {
     my $s = shift;
     my $thumb = $s->maybe_generate_thumbnail;
-    return "/img/$thumb";
-    #my $filename = $s->file;
-    #if ($filename =~ /(jpe?g|png)$/i) {
-    #    return "/img/$filename";
-    #}
-    $s->generate_thumbnail;
-    #die "turning $filename into $new_thumbnail";
-    #return "/img/40/68/583c09961417ec23cbeef8d00222/4068583c09961417ec23cbeef8d00222.jpg"
-    # <%= base %>/img/<%= $object->file %>
+    return join '/', get_config->{asset_path},"$thumb";
 }
 
 sub maybe_generate_thumbnail {
@@ -57,7 +49,6 @@ sub _generate_pdf_thumbnail {
     my $source = $s->file;
     my $dir = Path::Class::File->new($filename);
     my $base = get_config->{image_upload_dir} or die "no image_upload_dir configured";
-    my $cmd = "genthumb $base/$source $base/$filename";
     my $cmd = sprintf("convert -resize 600x600 %s[0] %s", "$base/$source", "$base/$filename");
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");

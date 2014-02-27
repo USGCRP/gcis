@@ -16,67 +16,6 @@ use Data::UUID::LibUUID;
 
 =head1 ROUTES
 
-=head2 setmet
-
-Upload metadata for this image.  Write two files : met.yaml, atrac.xml, into
-a subdirectory of a directory named after the image identifier.
-
-=cut
-
-sub setmet {
-    my $c      = shift;
-    my $image_identifier  = $c->stash('image_identifier');
-    my $image = Image->new(identifier => $image_identifier)->load(speculative => 1)
-        or return $c->render_exception("image not found");
-
-    my $figure = $c->param('figure') or return $c->render_exception('Error : no figure identifier');
-    my $chapter = $c->param('chapter') or return $c->render_exception('Error : no chapter identifier');
-    my $file = $c->req->upload('atracfile') or return $c->render_exception('Error : no actracfile');
-
-    my $size   = $file->size;
-    my $name   = $file->filename;
-    my $up_dir = $c->app->config->{data_dir} . '/upload';
-    -d $up_dir or mkdir $up_dir or die "couldn't mkdir $up_dir : $!";
-    $up_dir .= "/$image_identifier";
-    -d $up_dir or mkdir $up_dir or die "could not mkdir $up_dir : $!";
-
-    my $temp = File::Temp->newdir( "setmet_XXXXXX", CLEANUP => 0, DIR => $up_dir );
-    my $token = basename("$temp");
-    $token =~ s/setmet_//;
-
-    $file->move_to("$temp/atrac.xml") or die "failed";
-    my $meta = { params => $c->req->params->to_hash };
-    $meta->{timestamp} = time;
-    $meta->{remote_ip} = $c->tx->remote_address;
-    $meta->{dir}       = "$temp";
-    $meta->{filename}  = $name;
-    $meta->{filesize}  = $size;
-
-    DumpFile("$temp/met.yaml", $meta) or die "could not write yaml";
-    $c->render( name => $name, size => $size, chapter => $chapter, figure => $figure, image => $image);
-}
-
-=head2 checkmet
-
-Check that metadata was uploaded.
-
-=cut
-
-sub checkmet {
-    my $c = shift;
-    my $image = Image->new(identifier => $c->stash('image_identifier'))->load(speculative => 1)
-        or return $c->render_not_found;
-    my $dir = dir(sprintf('%s/upload/%s',$c->app->config->{data_dir},$image->identifier));
-    my @got;
-    for my $subdir ($dir->children) {
-        $subdir->is_dir or next;
-        my $met = LoadFile("$subdir/met.yaml");
-        my $xml = file("$subdir/atrac.xml")->slurp;
-        push @got, { met => $met, xml => $xml };
-    }
-    $c->render(uploads => \@got);
-}
-
 =head1 show
 
 Show metadata about an image.

@@ -41,6 +41,7 @@ sub set_config {
     return $conf;
 }
 sub get_config {
+    return $conf->{$_[0]} if @_==1;
     $conf;
 }
 }
