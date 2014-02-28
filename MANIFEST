@@ -389,7 +389,6 @@ lib/Tuba/files/templates/figure/object.html.ep
 lib/Tuba/files/templates/figure/object.ttl.ep
 lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
-lib/Tuba/files/templates/file/objects.html.ep
 lib/Tuba/files/templates/files.html.ep
 lib/Tuba/files/templates/finding/object.ttl.ep
 lib/Tuba/files/templates/forms.html.ep
