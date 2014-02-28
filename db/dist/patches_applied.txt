@@ -86,3 +86,4 @@
 0830_orgrel.sql	44bfbb13497c1eedc903cc51276cf3e6
 0600_report_type.sql	836b3ba12b9a13e7211c6f81aee7aaaa
 0700_dataset.sql	90402ac519afae1e2405482f86b78c6c
+0840_thumbnail.sql	f12b1081a8e7e4352f88097b7fa3540c

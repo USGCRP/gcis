@@ -187,7 +187,7 @@ COPY figure (identifier, chapter_identifier, title, caption, attributes, time_st
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (file_type, file, identifier) FROM stdin;
+COPY file (file, identifier, thumbnail, mime_type, sha1) FROM stdin;
 \.
 
 
