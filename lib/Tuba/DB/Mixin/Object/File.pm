@@ -82,7 +82,7 @@ sub _generate_pdf_thumbnail {
         logger->error("cannot open ".$s->fullpath);
         return;
     };
-    my $cmd = sprintf("convert -resize 600x600 %s[0] %s", $s->fullpath, $s->fullpath($filename));
+    my $cmd = sprintf("gm convert -resize 600x600 %s[0] %s", $s->fullpath, $s->fullpath($filename));
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");
         return 0;
@@ -101,7 +101,7 @@ sub _generate_image_thumbnail {
         logger->error("cannot find ".$s->fullpath);
         return;
     };
-    my $cmd = sprintf("convert -resize 140x140 %s %s", $s->fullpath, $s->fullpath($filename));
+    my $cmd = sprintf("gm convert -resize 140x140 %s %s", $s->fullpath, $s->fullpath($filename));
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");
         return 0;
