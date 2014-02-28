@@ -46,11 +46,11 @@ sub thumbnail_path {
 sub _maybe_generate_thumbnail {
     my $s = shift;
     if (my $existing = $s->thumbnail) {
-        if (-e $s->fullpath($existing)) {
-            return $existing;
+        unless (-e $s->fullpath($existing)) {
+            logger->warn("Thumbnail in db does not exist : $existing");
+            # may be on front end
         }
-        logger->warn("Thumbnail in db does not exist : $existing");
-        $s->thumbnail(undef);
+        return $existing;
     }
     my $file = $s->file or return;
     my $new_thumbnail = Path::Class::File->new($file)->dir."/thumb.png";
