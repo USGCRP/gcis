@@ -23,7 +23,8 @@ sub show {
     my $meta = File->meta;
     my $object = File->new(identifier => $identifier)->load(speculative => 1 ) or return $c->render_not_found;
     $c->respond_to(
-        json => sub { shift->render(json => $object->as_tree) },
+        json => sub { shift->render(json => $c->make_tree_for_show($object)) },
+        yaml  => sub { shift->render_yaml($c->make_tree_for_show($object)) },
         nt    => sub { shift->render(template => 'object',    meta => $meta, object => $object ) },
         html => sub { shift->render(template => 'file/object', meta => $meta, object => $object ) }
     );

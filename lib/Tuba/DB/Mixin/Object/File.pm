@@ -47,7 +47,7 @@ sub _maybe_generate_thumbnail {
     my $s = shift;
     if (my $existing = $s->thumbnail) {
         unless (-e $s->fullpath($existing)) {
-            logger->warn("Thumbnail in db does not exist : $existing");
+            logger->warn("Thumbnail in db does not exist : ".$s->fullpath($existing));
             # may be on front end
         }
         return $existing;
