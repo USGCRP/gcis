@@ -52,7 +52,7 @@
         % }
 % }
 
-% if (@children_with_references) {
+% if (!(stash 'no_refs') && @children_with_references) {
    <table class='table table-condensed table-bordered table-striped'>
     <caption>
         % if ($references_url) {

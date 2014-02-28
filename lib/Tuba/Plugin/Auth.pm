@@ -32,7 +32,10 @@ sub register {
 
     $app->helper(auth => sub {
             my $c = shift;
-            return 1 if $c->session('user');
+            if (my $u = $c->session('user')) {
+                $c->app->log->info("user: $u");
+                return 1;
+            }
             if ($c->Tuba::Auth::check_api_key) {
                 return 1;
             } else  {
@@ -49,9 +52,16 @@ sub register {
             my $user = $c->user() or return 0;
             my $authz = $c->config->{authz};
             return 1 if $ENV{HARNESS_ACTIVE};
-            return 0 unless $authz->{$role}{$user}; # from the config file.
+            unless ($authz->{$role}{$user}) {
+                # from the config file.
+                $c->app->log->info("no auth for $user to perform $role");
+                return 0;
+            }
             my $report = $c->stash('report') or return 1;
-            return 0 unless $c->Tuba::Report::_user_can_edit($report);
+            unless ($c->Tuba::Report::_user_can_edit($report)) {
+                $c->app->log->info("no auth for $user to edit $report");
+                return 0;
+            }
             return 1;
         });
     $app->helper(user_can => sub {
@@ -59,7 +69,7 @@ sub register {
             my $role = shift;
             return $c->authz(role => $role);
         });
-    $app->secret($ENV{HARNESS_ACTIVE} ? 1 : $conf->{secret});
+    $app->secrets([$ENV{HARNESS_ACTIVE} ? 1 : $conf->{secret}]);
 }
 
 

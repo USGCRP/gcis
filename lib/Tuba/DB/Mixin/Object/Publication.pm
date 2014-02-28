@@ -184,12 +184,20 @@ sub upload_file {
     my $f = file("$image_dir/$name");
     $f->dir->mkpath;
     $file->move_to("$f") or die $!;
-    my $obj = Tuba::DB::Object::File->new(file => $name);
-    $pub->add_files($obj);
+    my $tfile = Tuba::DB::Object::File->new(file => $name);
+    $tfile->set_sha1 or do {
+        $pub->error("Could compute sha1");
+        return 0;
+    };
+    $tfile->checkfix_mime_type or do {
+        $pub->error("Could not determine mime type from filename $filename.  Supported suffixes are : ".join ',', $tfile->supported_suffixes);
+        return 0;
+    };
+    $pub->add_files($tfile);
     $pub->save(audit_user => $c->user);
-    $obj->meta->error_mode('return');
-    $obj->save(audit_user => $c->user) or do {
-        $pub->error($obj->error);
+    $tfile->meta->error_mode('return');
+    $tfile->save(audit_user => $c->user) or do {
+        $pub->error($tfile->error);
         return 0;
     };
 

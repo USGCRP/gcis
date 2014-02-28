@@ -8,6 +8,39 @@ Tuba -- Tremendously Useful Backend API
 
 Tuba provides a RESTful API to GCIS data.
 
+=head1 CONFIGURATION
+
+    %# This is a sample config file for Tuba.  This file should be
+    %# either in the TUBA_CONFIG environment variable, in the current
+    %# directory, or in /usr/local/etc/Tuba.conf.
+
+    %# This file is a Mojo::Template of a YAML document.
+    %# (see 'perldoc Mojo::Template' for more info)
+
+    hypnotoad :
+        workers : 5
+        listen :
+           - http://*:8080
+    image_upload_dir : /var/www/assets
+    asset_path : /assets
+    database :
+        dbname   : gcis
+        schema   : gcis_metadata
+        host     : 
+        port     :
+        username :
+        password :
+    auth :
+        secret : this_should_be_replaced_with_a_server_secret
+        valid_users :
+            brian : tuba
+            andrew : tuba
+        google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
+    authz :
+        update :
+            bduggan2@gmail.com : 0
+            bduggan@usgcrp.gov : 1
+
 =cut
 
 package Tuba;
@@ -15,9 +48,10 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Tuba::Converter;
 use Tuba::Log;
+use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 
-our $VERSION = '0.63';
+our $VERSION = '0.64';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
@@ -35,6 +69,7 @@ sub startup {
       : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
       :                                 './Tuba.conf';
     $app->plugin( 'yaml_config' => { file => $conf } );
+    set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
     if (my $path = $app->config('log_path')) {

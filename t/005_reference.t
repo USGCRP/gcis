@@ -29,7 +29,7 @@ $t->post_ok(
   }
 )->status_is(200);
 
-my $base = $t->ua->app_url->clone;
+my $base = $t->ua->server->url->clone;
 $base->path('');
 $base = "$base";
 $base =~ s[/$][];

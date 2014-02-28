@@ -15,7 +15,7 @@ function identify_figure() {
  var img_txt = UrlFetchApp.fetch('http://data.globalchange.gov/image/' + first_image + '.json');
  var img_json = JSON.parse(img_txt);
  var file = img_json.file[0].file;
- var img_url = '<img src="http://data.globalchange.gov/img/' + file + '" width="400" height="300">';
+ var img_url = '<img src="http://data.globalchange.gov/assets/' + file + '" width="400" height="300">';
   
  var htmlApp = HtmlService
      .createHtmlOutput('<a href="' + url + '">' + json.identifier + '</a>' + img_url + '<hr><p>' + json.caption + '</p>')

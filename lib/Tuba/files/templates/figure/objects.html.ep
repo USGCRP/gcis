@@ -54,7 +54,7 @@ Figures in report <%= stash 'report_identifier' %>
    % if (my $pub = $o->get_publication) {
         % for my $file ($pub->files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail" => begin
-                %= image '/img/'.$file->file, class => 'img-polaroid', style => 'padding:0px;'
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;'
             %= end
         % }
     % }

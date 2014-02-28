@@ -14,14 +14,14 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
-my $base = $t->ua->app_url;
+my $base = $t->ua->server->url;
 
 my %r = (
     identifier => "test-report",
     title      => "Test Report",
     url        => 'http://example.com/foo',
     doi        => '10.123/45',
-    report_type_identifier => 'report',
+    report_type_identifier => undef,
 );
 $t->post_ok( "/report" => form => \%r )->status_is(200);
 
@@ -30,7 +30,7 @@ $t->get_ok("/report/test-report.json")->json_is(
       files => [],
       chapters => [],
       href => "${base}report/test-report.json",
-      report_type_identifier => 'report',
+      report_type_identifier => undef,
   }
 );
 

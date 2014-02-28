@@ -19,7 +19,7 @@
                 <td rowspan="<%= $role_count->{$con->role_type_identifier} %>"> <%= $con->role_type->label %></td>
             % }
             % if (!$last || $last->role_type_identifier ne $con->role_type_identifier || $last->person_id != $con->person_id) {
-                <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id} %>"><%= obj_link($con->person, long => 1) %></td>
+                <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id // ''} %>"><%= obj_link($con->person, long => 1) %></td>
             % }
             <td><%= obj_link($con->organization) %></td>
             <td><% for my $ref (@{ $con->publication_contributor_maps }) { %>

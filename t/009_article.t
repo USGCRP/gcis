@@ -15,7 +15,7 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
-my $base = $t->ua->app_url;
+my $base = $t->ua->server->url;
 
 my %j = (
   identifier  => 'nature',

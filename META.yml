@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.63
+    version: 0.64
   Tuba::Array:
     file: lib/Tuba/Array.pm
   Tuba::Article:
@@ -170,7 +170,7 @@ requires:
   File::ShareDir: 1.00
   JSON::WebToken: 0
   JSON::XS: 0
-  Mojolicious: 4.14
+  Mojolicious: 4.84
   Mojolicious::Plugin::YamlConfig: 0
   Pg::hstore: 0
   Rose::DB: 0.772
@@ -184,4 +184,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 0.63
+version: 0.64

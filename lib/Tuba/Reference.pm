@@ -35,6 +35,7 @@ sub list {
         $c->stash(title => "References for ".$c->current_report->identifier." report");
         $refs = References->get_objects(
                query => [publication_id => $pub->id],
+               with_objects => ['subpubrefs'],
                ( $all ? () : (page => $c->page, per_page => $c->per_page))
         );
         $c->set_pages(References->get_objects_count( query => [publication_id => $pub->id])) unless $all;

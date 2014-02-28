@@ -20,7 +20,7 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     </td>
     <td>
     %= link_to $file->uri($self) => begin
-    <%= image '/img/'.$file->file, class => 'img-polaroid span3' => style => 'padding:0px;' =%>
+    <%= image $file->thumbnail_path, class => 'img-polaroid span3' => style => 'padding:0px;' =%>
     %= end
     </td>
     <td>

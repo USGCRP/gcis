@@ -25,9 +25,10 @@ sub uri {
 
 sub stringify {
     my $s = shift;
-    return $s->identifier unless $s->title || $s->number;
-    return $s->title unless $s->number;
-    return "Chapter ".$s->number." : ".($s->title || '');
+    my $str = ' ('.$s->report_identifier.')';
+    return $s->identifier.$str unless $s->title || $s->number;
+    return $s->title.$str unless $s->number;
+    return "Chapter ".$s->number." : ".($s->title || '').$str;
 }
 
 sub sortkey {
@@ -35,15 +36,6 @@ sub sortkey {
     return $s->{_sortkey} if defined($s->{_sortkey});
     my $num = $s->number || 0;
     $s->{_sortkey} = sprintf('%10d%s',$num,$s->title || '');
-}
-
-sub reference_count {
-    my $ch = shift;
-    my $pub = $ch->get_publication or return 0;
-    my $sql = q[select count(1) from subpubref where publication_id = ?];
-    my $dbs = DBIx::Simple->new($ch->db->dbh);
-    my ($count) = $dbs->query($sql, $pub->id)->flat;
-    return $count;
 }
 
 1;
