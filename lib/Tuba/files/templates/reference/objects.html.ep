@@ -35,14 +35,16 @@
 % unless (stash 'chapter') {
     <td class='thumbnails'>
         <div class='span2'>
-            %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, $o->subpubrefs ]
+            % for my $sub ($o->subpubrefs) {
+            <%= link_to $sub->uri($self) => class => "btn btn-default" => begin %><%= $sub->publication->stringify %><%= end %>
+            % }
         </div>
     </td>
 % }
     <td class='thumbnails'>
         % if (my $pub = $o->child_publication) {
             <div class='span2'>
-                %= include 'obj_thumbnails', objs => [ $pub->to_object ];
+                <%= link_to $pub->uri($self) => class => "btn btn-default" => begin %><%= $pub->stringify %><%= end %>
             </div>
         % } else {
             no publication

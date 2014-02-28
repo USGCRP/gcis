@@ -39,14 +39,18 @@ sub as_tree {
 
 sub thumbnail_path {
     my $s = shift;
-    my $thumb = $s->maybe_generate_thumbnail;
+    my $thumb = $s->_maybe_generate_thumbnail;
     return join '/', get_config->{asset_path},"$thumb";
 }
 
-sub maybe_generate_thumbnail {
+sub _maybe_generate_thumbnail {
     my $s = shift;
     if (my $existing = $s->thumbnail) {
-           return $existing if -e $existing;
+        if (-e $s->fullpath($existing)) {
+            return $existing;
+        }
+        logger->warn("Thumbnail in db does not exist : $existing");
+        $s->thumbnail(undef);
     }
     my $file = $s->file or return;
     my $new_thumbnail = Path::Class::File->new($file)->dir."/thumb.png";
@@ -91,7 +95,8 @@ sub _generate_image_thumbnail {
     my $filename = shift or die "missing filename";
     my $source = $s->file;
     my $dir = Path::Class::File->new($filename);
-    logger->info("generating thumbnail for ".$s->fullpath);
+    logger->info("generating image thumbnail for ".$s->fullpath);
+    die "already has one" if $s->thumbnail;
     -e $s->fullpath or do {
         logger->error("cannot find ".$s->fullpath);
         return;
