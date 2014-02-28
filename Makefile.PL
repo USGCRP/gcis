@@ -14,7 +14,7 @@ WriteMakefile
                    'File::ShareDir' => '1.00',
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
-                   'Mojolicious' => '4.14',
+                   'Mojolicious' => '4.84',
                    'Mojolicious::Plugin::YamlConfig' => 0,
                    'Pg::hstore' => 0,
                    'Rose::DB' => '0.772',

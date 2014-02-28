@@ -240,6 +240,7 @@ db/patches/0660_more_role_types.sql
 db/patches/0670_drop_dataset_org.sql
 db/patches/0680_generic.sql
 db/patches/0690_cascades.sql
+db/patches/0700_dataset.sql
 db/patches/0700_file.sql
 db/patches/0710_extra_author_entries.sql
 db/patches/0720_unused_table_pubref.sql
@@ -254,6 +255,7 @@ db/patches/0800_reference_fk.sql
 db/patches/0810_uuid.sql
 db/patches/0820_orgtype.sql
 db/patches/0830_orgrel.sql
+db/patches/0840_thumbnail.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -264,6 +266,7 @@ eg/import_gcmd_keywords
 eg/import_keywords
 eg/journal_images.pl
 eg/login.pl
+eg/nginx.conf
 eg/report_thumbnails.pl
 eg/update-array.pl
 eg/update-findings.pl
@@ -441,6 +444,7 @@ lib/Tuba/files/templates/reference/report/updates.html.ep
 lib/Tuba/files/templates/reference/update_form.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
+lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
