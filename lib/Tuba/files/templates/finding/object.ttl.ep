@@ -33,7 +33,7 @@
    gcis:inPublication "<%= $report->identifier %>";
    rdfs:label "<%= $finding->statement %>";
    dcterms:description "<%= $finding->statement %>";
-   gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>".
+   gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>";
 %= include 'prov';
 %# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
 
