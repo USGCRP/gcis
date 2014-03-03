@@ -21,7 +21,7 @@ COPY report_type (identifier) FROM stdin;
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary) FROM stdin;
 \.
 
 

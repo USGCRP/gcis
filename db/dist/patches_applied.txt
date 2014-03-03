@@ -87,3 +87,4 @@
 0600_report_type.sql	836b3ba12b9a13e7211c6f81aee7aaaa
 0700_dataset.sql	90402ac519afae1e2405482f86b78c6c
 0840_thumbnail.sql	f12b1081a8e7e4352f88097b7fa3540c
+0850_report_summary.sql	7f289dcb3533893b215cdf26455d64a0

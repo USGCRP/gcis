@@ -488,6 +488,7 @@ CREATE TABLE report (
     doi character varying,
     _public boolean DEFAULT true,
     report_type_identifier character varying,
+    summary character varying,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
