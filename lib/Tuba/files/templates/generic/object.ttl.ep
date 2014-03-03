@@ -1,0 +1,8 @@
+% layout 'default';
+<<%= current_resource %>>
+   a biro:BibliographicReference;
+ %#  dcterms:identifier "<%= $generic->identifier %>";
+   dcterms:type "<%= $generic->type %>";
+ %#  dwc:year "<%= $generic->year %>";
+ %#  xsd:gYear "<%= $generic->year %>".
+
