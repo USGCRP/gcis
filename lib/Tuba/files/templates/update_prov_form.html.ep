@@ -32,7 +32,7 @@ This publication
 Relationship
 </label>
 <div class='controls'>
-%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:obtainsSupportFrom', 'cito:cites' ], class => 'input span10',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:isCitedBy' ], class => 'input span10',
 </div>
 
 <label class="control-label" for="parent">

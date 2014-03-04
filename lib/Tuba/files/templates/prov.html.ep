@@ -3,15 +3,17 @@
 % my @parents;
 % my @parents_with_references;
 % my @children_with_references;
+% my @children;
 % my $references_url;
 % if ($pub) {
     % @parents = $pub->get_parents;
+    % @children = $pub->children;
     % @parents_with_references = $pub->get_parents_with_references;
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
     % $references_url = $pub->references_url($self);
 % }
 
-% if (@parents || @parents_with_references) {
+% if (@parents || @parents_with_references || @children) {
 
     % if (stash 'add_delete_buttons') {
     %= hidden_field 'delete_publication';
@@ -21,6 +23,7 @@
     <table class='table table-condensed table-bordered table-striped'>
     <caption>Provenance</caption>
     <tr>
+        <th>publication</th>
         <th>relationship</th>
         <th>publication</th>
         <th>note</th>
@@ -31,7 +34,8 @@
     % for my $parent (@parents) {
         % my $parent_pub = $parent->{publication};
         <tr>
-            <td><%= link_to ontology_url($parent->{relationship}) => target => "_blank" => begin %><%= $parent->{relationship} %><%= end %></td>
+        <td>this <%= $object->meta->table %></td>
+        <td><%= link_to ontology_url($parent->{relationship}) => target => "_blank" => begin %><%= $parent->{relationship} %><%= end %></td>
         <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
         <td><%= $parent->{note} || "" %></td>
         % if (stash 'add_delete_buttons') {
@@ -40,9 +44,23 @@
     </tr>
     % }
 
+    % for my $child (@children) {
+        % my $child_pub = $child->{publication};
+        <tr>
+            <td><%= link_to 'show_publication' => { publication_identifier => $child->publication->id } => begin %><%= $child->publication->stringify %><%= end %></td>
+            <td><%= link_to ontology_url($child->relationship) => target => "_blank" => begin %><%= $child->relationship %><%= end %></td>
+            <td>this <%= $object->meta->table %></td>
+            <td><%= $child->note || "" %></td>
+            % if (stash 'add_delete_buttons') {
+                <td></td>
+            % }
+        </tr>
+    % }
+
     % for my $parent (@parents_with_references) {
         <tr>
             % my $parent_pub = $parent->{parent};
+            <td>this <%= $object->meta->table %></td>
             <td><%= link_to ontology_url('cito:isCitedBy') => target => "_blank" => begin %>cito:isCitedBy<%= end %>
                 (ref:<%= obj_link($parent->{reference}, short => 1) %>)
             </td>
