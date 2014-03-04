@@ -42,6 +42,30 @@ COPY _report_viewer (report, username) FROM stdin;
 
 
 --
+-- Data for Name: publication_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_type (identifier, "table") FROM stdin;
+\.
+
+
+--
+-- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication (id, publication_type_identifier, fk) FROM stdin;
+\.
+
+
+--
+-- Data for Name: activity; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY activity (identifier, data_usage, methodology, methodology_publication_id, start_time, end_time, duration, computing_environment, output_artifacts, output_publication_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: array; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -134,6 +158,9 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label) FROM stdin;
+funding_agency	Funding Agency
+distributor	Distributor
+host	Host
 \.
 
 
@@ -156,7 +183,7 @@ SELECT pg_catalog.setval('contributor_id_seq', 1, false);
 -- Data for Name: dataset; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes) FROM stdin;
+COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max) FROM stdin;
 \.
 
 
@@ -259,22 +286,6 @@ COPY organization_map (organization_identifier, other_organization_identifier, o
 --
 
 SELECT pg_catalog.setval('person_id_seq', 1, false);
-
-
---
--- Data for Name: publication_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY publication_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY publication (id, publication_type_identifier, fk) FROM stdin;
-\.
 
 
 --

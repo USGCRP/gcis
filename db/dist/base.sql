@@ -52,6 +52,22 @@ CREATE TABLE _report_viewer (
 
 
 
+CREATE TABLE activity (
+    identifier character varying NOT NULL,
+    data_usage character varying,
+    methodology character varying,
+    methodology_publication_id integer,
+    start_time timestamp without time zone,
+    end_time timestamp without time zone,
+    duration interval,
+    computing_environment character varying,
+    output_artifacts character varying,
+    output_publication_id integer,
+    CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text))
+);
+
+
+
 CREATE TABLE "array" (
     identifier character varying NOT NULL,
     rows_in_header integer DEFAULT 0,
@@ -166,6 +182,13 @@ CREATE TABLE dataset (
     release_dt timestamp without time zone,
     publication_year integer,
     attributes character varying,
+    variables character varying,
+    start_time timestamp without time zone,
+    end_time timestamp without time zone,
+    lat_min numeric,
+    lat_max numeric,
+    lon_min numeric,
+    lon_max numeric,
     CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999)))
 );
 
@@ -599,6 +622,11 @@ ALTER TABLE ONLY _report_editor
 
 ALTER TABLE ONLY _report_viewer
     ADD CONSTRAINT _report_viewer_pkey PRIMARY KEY (report, username);
+
+
+
+ALTER TABLE ONLY activity
+    ADD CONSTRAINT activity_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1220,6 +1248,16 @@ ALTER TABLE ONLY _report_editor
 
 ALTER TABLE ONLY _report_viewer
     ADD CONSTRAINT _report_viewer_report_fkey FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY activity
+    ADD CONSTRAINT activity_methodology_publication_id_fkey FOREIGN KEY (methodology_publication_id) REFERENCES publication(id);
+
+
+
+ALTER TABLE ONLY activity
+    ADD CONSTRAINT activity_output_publication_id_fkey FOREIGN KEY (output_publication_id) REFERENCES publication(id);
 
 
 
