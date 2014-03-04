@@ -38,6 +38,13 @@ my $dataset = {
     processing_level => "3",
     spatial_res      => "point",
     doi              => "10.123/123",
+    lat_min          => 0,
+    lon_min          => 0,
+    lat_max          => 0,
+    lon_max          => 0,
+    start_time       => "2010-01-22T00:00:00",
+    end_time         => "2011-01-29T00:00:00",
+    variables        => "x y z",
 };
 
 
