@@ -3,12 +3,14 @@
 %# or input_name, input_value
 
 % my $input_name = stash 'input_name';
-% my $input_value = stash 'input_name';
 % if (my $col = stash 'column') {
 %   $input_name = $col->name;
 % }
 % if (my $val = stash 'value') {
-%   param $input_name => $input_value;
+%   if ($object_type eq 'all') {
+%       $val = Tuba::DB::Object::Publication->new(id => $val)->load->to_object->as_autocomplete_str;
+%   }
+%   param $input_name => $val;
 % }
 
 %= text_field $input_name, autocomplete => 'off', id => $input_name, class => 'span8', placeholder => 'search '.( $object_type eq 'all' ? 'publications' : pl($object_type));

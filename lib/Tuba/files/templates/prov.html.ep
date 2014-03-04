@@ -5,12 +5,16 @@
 % my @children_with_references;
 % my @children;
 % my $references_url;
+% my @production_activities;
+% my @methodology_activities;
 % if ($pub) {
     % @parents = $pub->get_parents;
     % @children = $pub->children;
     % @parents_with_references = $pub->get_parents_with_references;
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
     % $references_url = $pub->references_url($self);
+    % @production_activities = $pub->production_activities;
+    % @methodology_activities = $pub->methodology_activities;
 % }
 
 % if (@parents || @parents_with_references || @children) {
@@ -104,5 +108,25 @@
        </td>
    </tr>
    % }
+</table>
+% }
+
+% if (@production_activities || @methodology_activities) {
+<table class='table table-condensed table-bordered table-striped'>
+    <caption>Activities</caption>
+    <tr>
+        <th>Category</th>
+        <th>Activity</th>
+    </tr>
+    % for my $a (@production_activities) {
+    <tr><td>Production activity</td>
+        <td><%= obj_link($a) %></td>
+    </tr>
+    % }
+    % for my $a (@methodology_activities) {
+    <tr><td>Methodology activity</td>
+        <td><%= obj_link($a) %></td>
+    </tr>
+    % }
 </table>
 % }

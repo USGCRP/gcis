@@ -30,6 +30,8 @@
                 %= end
             % } elsif (ref($val) eq 'ARRAY') {
                 %= include 'view_array', val => $val, header_rows => ($object->can('rows_in_header') ? $object->rows_in_header : 0)
+            % } elsif (ref($val) eq 'DateTime::Duration') {
+            <%= human_duration($val) %>
             % } else {
             <%= $val %>
             % }

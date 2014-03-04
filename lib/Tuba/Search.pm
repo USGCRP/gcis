@@ -43,9 +43,7 @@ sub autocomplete {
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
         for (@got) {
-            push @results, join ' ', "[".$table."]",
-                                      ( map "{".$_."}", $_->pk_values ),
-                                      $c->elide($_->stringify,$elide);
+            push @results, $_->as_autocomplete_str($elide,$table);
         }
     }
 

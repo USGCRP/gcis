@@ -261,5 +261,19 @@ sub references_url {
     return;
 }
 
+sub production_activities {
+    my $pub = shift;
+    my $objs = Tuba::DB::Object::Activity::Manager->get_objects(
+        query => [ output_publication_id => $pub->id ] );
+    return wantarray ? @$objs : $objs;
+}
+
+sub methodology_activities {
+    my $pub = shift;
+    my $objs = Tuba::DB::Object::Activity::Manager->get_objects(
+        query => [ methodology_publication_id => $pub->id ] );
+    return wantarray ? @$objs : $objs;
+}
+
 1;
 

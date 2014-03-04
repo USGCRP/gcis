@@ -295,6 +295,9 @@ sub startup {
     $r->resource('book');
     $report->get('/book')->to('book#list');
 
+    # activity (globally unique)
+    $r->resource('activity');
+
     # Metadata processing routes.
     #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');

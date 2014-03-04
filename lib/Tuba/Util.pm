@@ -11,7 +11,7 @@ use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/xml_escape/;
 use Encode qw/decode/;
 
-our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs/;
+our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs elide_str/;
 
 sub nice_db_error {
     my $err = shift or return;
@@ -44,6 +44,13 @@ sub get_config {
     return $conf->{$_[0]} if @_==1;
     $conf;
 }
+}
+
+sub elide_str {
+    my $str = shift;
+    my $len = shift or die "missing length";
+    return $str if !$str || length($str) < $len;
+    return substr($str,0,$len-3).'...';
 }
 
 1;

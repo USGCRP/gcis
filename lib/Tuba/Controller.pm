@@ -226,7 +226,7 @@ sub create_form {
 
 sub _default_order {
   return qw/report_identifier chapter_identifier identifier number ordinal
-    title description caption statement lat_min lat_max lon_min lon_max time_start time_end/;
+    title description caption statement start_time end_time duration lat_min lat_max lon_min lon_max time_start time_end/;
 }
 
 sub _order_columns {
@@ -850,6 +850,7 @@ sub _differ {
     return 1 if !defined($x) && defined($y);
     return 1 if defined($x) && !defined($y);
     return 0 if !defined($x) && !defined($y);
+    return 1 if ref($x) || ref($y);
     return 1 if $x ne $y;
     return 0;
 }

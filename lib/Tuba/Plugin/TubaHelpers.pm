@@ -15,6 +15,7 @@ use List::Util qw/min/;
 use Date::Parse qw/str2time/;
 use Tuba::Util qw/get_config/;
 use Tuba::Log;
+use DateTime::Format::Human::Duration;
 
 #
 # Usage :
@@ -306,7 +307,27 @@ sub register {
         return "$base/$filename";
       }
     );
-
+    $app->helper(plural => sub {
+            my $c = shift;
+            my $what = shift;
+            return $what.'s' if $what =~ /array/i;
+            $what =~ s/y$/ies/;
+            return $what;
+        });
+    $app->helper(to_textfield_value => sub {
+            my $c = shift;
+            my $val = shift;
+            return "" unless defined($val);
+            return $val unless ref($val);
+            if (ref($val) =~ /DateTime::Duration/) {
+                return DateTime::Format::Human::Duration->new()->format_duration($val);
+            }
+        });
+    $app->helper(human_duration => sub {
+            my $c = shift;
+            my $val = shift;
+            return DateTime::Format::Human::Duration->new()->format_duration($val);
+        });
 }
 
 1;

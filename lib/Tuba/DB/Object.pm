@@ -10,6 +10,7 @@ package Tuba::DB::Object;
 use DBIx::Simple;
 use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
+use Tuba::Util qw/elide_str/;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -300,6 +301,12 @@ sub as_tree {
                                         }, @$refs ];
         }
     }
+    for my $k (keys %$tree) {
+        next unless $tree->{$k};
+        if (ref($tree->{$k}) eq 'DateTime::Duration') {
+            $tree->{$k} = DateTime::Format::Human::Duration->new()->format_duration($tree->{$k});
+        }
+    }
     return $tree;
 }
 
@@ -388,6 +395,14 @@ sub reference_count {
     return $count;
 }
 
+sub as_autocomplete_str {
+    my $obj = shift;
+    my $elide = shift || 80;
+    my $table = shift || $obj->meta->table;
+    return join ' ', "[".$table."]", ( map "{".$_."}", $obj->pk_values ), elide_str($obj->stringify,$elide);
+
+
+}
 
 1;
 
