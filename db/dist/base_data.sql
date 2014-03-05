@@ -42,26 +42,10 @@ COPY _report_viewer (report, username) FROM stdin;
 
 
 --
--- Data for Name: publication_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY publication_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY publication (id, publication_type_identifier, fk) FROM stdin;
-\.
-
-
---
 -- Data for Name: activity; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY activity (identifier, data_usage, methodology, methodology_publication_id, start_time, end_time, duration, computing_environment, output_artifacts, output_publication_id) FROM stdin;
+COPY activity (identifier, data_usage, methodology, start_time, end_time, duration, computing_environment, output_artifacts) FROM stdin;
 \.
 
 
@@ -158,9 +142,6 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label) FROM stdin;
-funding_agency	Funding Agency
-distributor	Distributor
-host	Host
 \.
 
 
@@ -266,6 +247,30 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 
 
 --
+-- Data for Name: publication_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_type (identifier, "table") FROM stdin;
+\.
+
+
+--
+-- Data for Name: publication; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication (id, publication_type_identifier, fk) FROM stdin;
+\.
+
+
+--
+-- Data for Name: methodology; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY methodology (activity_identifier, publication_id) FROM stdin;
+\.
+
+
+--
 -- Data for Name: organization_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -331,7 +336,7 @@ SELECT pg_catalog.setval('publication_id_seq', 1, false);
 -- Data for Name: publication_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_map (child, relationship, parent, note) FROM stdin;
+COPY publication_map (child, relationship, parent, note, activity_identifier) FROM stdin;
 \.
 
 

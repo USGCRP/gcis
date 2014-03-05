@@ -56,13 +56,11 @@ CREATE TABLE activity (
     identifier character varying NOT NULL,
     data_usage character varying,
     methodology character varying,
-    methodology_publication_id integer,
     start_time timestamp without time zone,
     end_time timestamp without time zone,
     duration interval,
     computing_environment character varying,
     output_artifacts character varying,
-    output_publication_id integer,
     CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text))
 );
 
@@ -359,6 +357,13 @@ CREATE TABLE journal (
 
 
 
+CREATE TABLE methodology (
+    activity_identifier character varying NOT NULL,
+    publication_id integer NOT NULL
+);
+
+
+
 CREATE TABLE organization (
     identifier character varying NOT NULL,
     name character varying,
@@ -463,7 +468,8 @@ CREATE TABLE publication_map (
     child integer NOT NULL,
     relationship character varying NOT NULL,
     parent integer NOT NULL,
-    note character varying
+    note character varying,
+    activity_identifier character varying
 );
 
 
@@ -732,6 +738,11 @@ ALTER TABLE ONLY image
 
 ALTER TABLE ONLY journal
     ADD CONSTRAINT journal_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY methodology
+    ADD CONSTRAINT methodology_pkey PRIMARY KEY (activity_identifier, publication_id);
 
 
 
@@ -1251,16 +1262,6 @@ ALTER TABLE ONLY _report_viewer
 
 
 
-ALTER TABLE ONLY activity
-    ADD CONSTRAINT activity_methodology_publication_id_fkey FOREIGN KEY (methodology_publication_id) REFERENCES publication(id);
-
-
-
-ALTER TABLE ONLY activity
-    ADD CONSTRAINT activity_output_publication_id_fkey FOREIGN KEY (output_publication_id) REFERENCES publication(id);
-
-
-
 ALTER TABLE ONLY array_table_map
     ADD CONSTRAINT array_table_map_array_identifier_fkey FOREIGN KEY (array_identifier) REFERENCES "array"(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1336,6 +1337,16 @@ ALTER TABLE ONLY image_figure_map
 
 
 
+ALTER TABLE ONLY methodology
+    ADD CONSTRAINT methodology_activity_identifier_fkey FOREIGN KEY (activity_identifier) REFERENCES activity(identifier);
+
+
+
+ALTER TABLE ONLY methodology
+    ADD CONSTRAINT methodology_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id);
+
+
+
 ALTER TABLE ONLY organization_map
     ADD CONSTRAINT organization_map_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1393,6 +1404,11 @@ ALTER TABLE ONLY publication_gcmd_keyword_map
 
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_ibfk_2 FOREIGN KEY (publication_type_identifier) REFERENCES publication_type(identifier) MATCH FULL;
+
+
+
+ALTER TABLE ONLY publication_map
+    ADD CONSTRAINT publication_map_activity_identifier_fkey FOREIGN KEY (activity_identifier) REFERENCES activity(identifier);
 
 
 

@@ -90,3 +90,4 @@
 0850_report_summary.sql	7f289dcb3533893b215cdf26455d64a0
 0860_dataset_mods.sql	c43c22d976feac091a5d5f9e17151d7e
 0870_activity.sql	ce351b3a91730a881e9d2af420b018c0
+0880_methodology.sql	42e5d9ff68f0d24e4ddceb6f0f5a8126
