@@ -60,7 +60,7 @@ sub get_parents {
     my $class = ref($self) || $self;
     my $dbh = $self->db->dbh;
     my $sth = $dbh->prepare(<<'SQL');
-select p.*, m.relationship, m.note from publication p
+select p.*, m.relationship, m.note, m.activity_identifier from publication p
     inner join publication_map m on m.parent=p.id
     where m.child = ?
 SQL
@@ -69,14 +69,16 @@ SQL
     my @parents;
     for my $row (@$rows) {
         my %pub;
-        @pub{qw/id publication_type_identifier fk/}
-          = @$row{qw/id publication_type_identifier fk/};
-        push @parents,
-          {
+        @pub{qw/id publication_type_identifier fk/} = @$row{qw/id publication_type_identifier fk/};
+        my %rec  = (
               relationship => $row->{relationship},
               note         => $row->{note},
               publication  => $class->new(%pub)
-          };
+        );
+        if (my $id = $row->{activity_identifier}) {
+              $rec{activity} = Tuba::DB::Object::Activity->new(identifier => $id)->load();
+        };
+        push @parents, \%rec;
     };
     return @parents;
 }
@@ -259,20 +261,6 @@ sub references_url {
         };
     }
     return;
-}
-
-sub production_activities {
-    my $pub = shift;
-    my $objs = Tuba::DB::Object::Activity::Manager->get_objects(
-        query => [ output_publication_id => $pub->id ] );
-    return wantarray ? @$objs : $objs;
-}
-
-sub methodology_activities {
-    my $pub = shift;
-    my $objs = Tuba::DB::Object::Activity::Manager->get_objects(
-        query => [ methodology_publication_id => $pub->id ] );
-    return wantarray ? @$objs : $objs;
 }
 
 1;

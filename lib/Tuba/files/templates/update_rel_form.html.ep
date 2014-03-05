@@ -18,6 +18,7 @@
 % }
 
 % for my $rel (@{ (stash 'relationships') || $meta->relationships }) {
+% $rel = $object->meta->relationship($rel) unless ref $rel;
 <div class='control-group' style='margin:10px;'>
 <label class='control-label'>
 %= $rel->name
@@ -28,7 +29,7 @@
         % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
         %= include 'controls/'.$entry->{template}, object => $object, rel => $rel, %{ $entry->{params} || {} };
     % } else {
-    <span class='alert alert-danger'>not implemented</span>
+    <span class='alert alert-danger'>not implemented (<%= $rel->name %>)</span>
     % }
 </div>
 </div>

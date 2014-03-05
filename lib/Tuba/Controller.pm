@@ -518,7 +518,7 @@ sub update_prov {
         $map->delete or return $c->update_error($map->error);
     }
 
-    my ($parent_pub,$rel,$note);
+    my ($parent_pub,$rel,$note,$activity_identifier);
     if ($json) {
         my $parent_uri  = $json->{parent_uri} or return $c->update_error("Missing parent_uri");
         my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
@@ -526,6 +526,7 @@ sub update_prov {
         $parent_pub->save(audit_user => $c->user) unless $parent_pub->id;
         $rel  = $json->{parent_rel} or return $c->update_error("Missing parent_rel");
         $note = $json->{note};
+        $activity_identifier = $json->{activity};
     }  else {
         my $parent_str   = $c->param('parent') or return $c->render;
         my $parent       = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
@@ -533,20 +534,31 @@ sub update_prov {
         $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
         $rel  = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
         $note = $c->param('note');
+        $activity_identifier = $c->param('activity');
     }
 
     return $c->render unless $parent_pub;
+    if ($activity_identifier) {
+        unless ($json) {
+            my $activity = $c->_text_to_object($activity_identifier)
+                or return $c->update_error("Could not find activity identifier '$activity_identifier'.");
+            $activity_identifier = $activity->identifier;
+        }
+        Activity->new(identifier => $activity_identifier)->load(speculative => 1)
+            or return $c->update_error("Could not find activity identifier '$activity_identifier'.");
+    }
 
     my $map = PublicationMap->new(
         child        => $pub->id,
         parent       => $parent_pub->id,
         relationship => $rel,
-        note         => $note
+        note         => $note,
+        activity_identifier => $activity_identifier,
     );
 
     $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
-    return $c->redirect_without_error;
+    return $c->redirect_without_error('update_prov_form');
 }
 
 =head2 update_rel_form

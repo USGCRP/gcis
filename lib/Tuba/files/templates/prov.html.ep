@@ -5,16 +5,12 @@
 % my @children_with_references;
 % my @children;
 % my $references_url;
-% my @production_activities;
-% my @methodology_activities;
 % if ($pub) {
     % @parents = $pub->get_parents;
     % @children = $pub->children;
     % @parents_with_references = $pub->get_parents_with_references;
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
     % $references_url = $pub->references_url($self);
-    % @production_activities = $pub->production_activities;
-    % @methodology_activities = $pub->methodology_activities;
 % }
 
 % if (@parents || @parents_with_references || @children) {
@@ -30,6 +26,7 @@
         <th>publication</th>
         <th>relationship</th>
         <th>publication</th>
+        <th>activity</th>
         <th>note</th>
         % if (stash 'add_delete_buttons') {
         <th>delete?</th>
@@ -41,6 +38,9 @@
         <td>this <%= $object->meta->table %></td>
         <td><%= link_to ontology_url($parent->{relationship}) => target => "_blank" => begin %><%= $parent->{relationship} %><%= end %></td>
         <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
+        <td>
+            <%= obj_link($parent->{activity}) %>
+        </td>
         <td><%= $parent->{note} || "" %></td>
         % if (stash 'add_delete_buttons') {
             <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
@@ -54,6 +54,8 @@
             <td><%= link_to 'show_publication' => { publication_identifier => $child->publication->id } => begin %><%= $child->publication->stringify %><%= end %></td>
             <td><%= link_to ontology_url($child->relationship) => target => "_blank" => begin %><%= $child->relationship %><%= end %></td>
             <td>this <%= $object->meta->table %></td>
+            <td>
+            </td>
             <td><%= $child->note || "" %></td>
             % if (stash 'add_delete_buttons') {
                 <td></td>
@@ -68,6 +70,7 @@
             <td><%= link_to ontology_url('cito:isCitedBy') => target => "_blank" => begin %>cito:isCitedBy<%= end %>
                 (ref:<%= obj_link($parent->{reference}, short => 1) %>)
             </td>
+            <td></td>
             <td><%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %></td>
             <td></td>
         </tr>
@@ -111,22 +114,3 @@
 </table>
 % }
 
-% if (@production_activities || @methodology_activities) {
-<table class='table table-condensed table-bordered table-striped'>
-    <caption>Activities</caption>
-    <tr>
-        <th>Category</th>
-        <th>Activity</th>
-    </tr>
-    % for my $a (@production_activities) {
-    <tr><td>Production activity</td>
-        <td><%= obj_link($a) %></td>
-    </tr>
-    % }
-    % for my $a (@methodology_activities) {
-    <tr><td>Methodology activity</td>
-        <td><%= obj_link($a) %></td>
-    </tr>
-    % }
-</table>
-% }

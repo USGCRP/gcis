@@ -11,9 +11,7 @@
 
 <legend>New <%= $meta->table %></legend>
 
-% if (my $error = (flash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
-% }
+%= include 'messages';
 
 % my $cols = stash 'cols';
 % $cols ||= [ sort { $a->name cmp $b->name } $meta->columns ];

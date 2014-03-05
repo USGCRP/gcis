@@ -1,0 +1,37 @@
+
+%= hidden_field 'delete_publication';
+
+<table class='table table-condensed table-bordered'>
+% my @objs = $object->$method;
+% for my $obj (@objs) {
+<tr>
+<td class='row'>
+    %= obj_link_to $obj, 'show', class => 'btn' => begin
+    %= $obj->stringify
+    %= end
+</td>
+
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = '].$obj->publication_id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+</tr>
+% }
+</table>
+<div style='font-size:75%;'>
+%= text_field 'new_publication', placeholder => "search publications", id => "new_publication", class => 'span9', autocomplete => 'off';
+%= link_to 'create_form_article' => class => 'btn' => target => '_blank' => begin
+New article
+%= end
+</div>
+
+
+%= javascript begin
+$('#new_publication').typeahead({
+    minLength : 1,
+    items : 15,
+    source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'all', elide : 120 }, function(data) {
+                 return process(data);
+            });
+        }
+});
+
+%= end

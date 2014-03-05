@@ -10,13 +10,8 @@
 <div class='tab-content'>
 
 %= form_for obj_uri_for($object, 'update_prov') => method => 'POST', class => 'form-horizontal well' => begin
-% if (my $error = (stash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
-% }
-% if (my $info = (stash 'info')) {
-    <div class='alert alert-success'><b><%= $info %></b></div>
-% }
 
+%= include 'messages';
 
 %= include 'prov', object => $object, add_delete_buttons => 1;
 
@@ -39,7 +34,7 @@ Relationship
 Other publication
 </label>
 <div class='controls'>
-%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'type here to search';
+%= text_field 'parent', class => 'span10', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search publications';
 </div>
 
 <label class="control-label" for="parent">
@@ -48,6 +43,17 @@ Note
 <div class='controls'>
 %= text_field 'note', class => 'span10', id => 'note', placeholder => 'Note about the relationship';
 </div>
+
+<label class="control-label" for="parent_rel">
+Activity
+</label>
+<div class='controls'>
+%= text_field 'activity', class => 'span10', id => 'activity', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search activities';
+%= link_to 'create_form_activity' => class => 'btn squeezevert' => target => '_blank' => begin
+new
+%= end
+</div>
+
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -68,16 +74,14 @@ $('#parent').typeahead({
             });
         }
 });
-
-$('#reference').typeahead({
+$('#activity').typeahead({
     minLength : 2,
     items : 15,
     source : function(query,process) {
-            return $.get('/autocomplete', { q : query, items : 15, type : 'reference' }, function(data) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'activity' }, function(data) {
                  return process(data);
             });
         }
 });
-
 
 %= end

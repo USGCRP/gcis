@@ -1,0 +1,25 @@
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Relationships</caption>
+
+<tr>
+    <td>publications</td>
+    <td>
+        % for my $map ($activity->publication_maps) {
+        <div class='btn-group'>
+            <%= obj_link_to $map->child_publication => 'show', class => 'btn' => begin %><%= $map->child_publication->stringify %><%= end %>
+            <%= link_to ontology_url($map->{relationship}) => class => 'btn' => target => "_blank" => begin %><%= $map->{relationship} %><%= end %>
+            <%= obj_link_to $map->parent_publication => 'show', class => 'btn' => begin %><%= $map->parent_publication->stringify %><%= end %>
+        </div>
+        % }
+     </td>
+</tr>
+
+<tr>
+    <td>methodologies</td>
+    <td>
+        %= include 'obj_thumbnails', objs => [ $activity->methodologies ],
+    </td>
+</tr>
+
+</table>
+

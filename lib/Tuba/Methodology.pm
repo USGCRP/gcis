@@ -64,6 +64,7 @@ sub update_rel {
     $c->stash(tab => 'update_rel_for');
 
     # TODO handle JSON
+
     if (my $new = $c->param('new_publication')) {
         my $obj = $c->str_to_obj($new);
         my $pub = $obj->get_publication(autocreate => 1);
@@ -77,7 +78,7 @@ sub update_rel {
     }
     for my $id ($c->param('delete_publication')) {
         next unless $id;
-        Tuba::DB::Object::Methodology::Manager->delete_objects(
+        Methodology->delete_objects(
             { activity_identifier => $activity->identifier,
               publication_id => $id });
         $c->flash(message => 'Saved changes');
