@@ -19,6 +19,22 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $obj = shift;
+    my $tree = $obj->as_tree(c => $c,
+        ( $c->param('brief') ? (bonsai => 1) : ()),
+        ( $c->param('with_gcmd') ? (with_gcmd => 1) : ())
+    );
+    $tree->{metholodogies} = [
+        map $_->as_tree(c => $c), $obj->methodologies
+    ];
+    $tree->{publication_maps} = [
+        map $_->as_tree, $obj->publication_maps
+    ];
+    return $tree;
+}
+
 sub normalize_form_parameter {
     my $c = shift;
     my %args = @_;
