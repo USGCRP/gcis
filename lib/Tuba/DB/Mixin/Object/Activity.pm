@@ -12,10 +12,10 @@ sub stringify {
     return $s->identifier;
 }
 
-#sub uri {
-#    my $s = shift;
-#
-#}
+sub uri {
+    my $s = shift;
+    return "/activity/".$s->identifier;
+}
 
 1;
 

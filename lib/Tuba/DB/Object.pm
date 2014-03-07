@@ -258,9 +258,11 @@ sub as_tree {
             $tree->{parents} = [];
             for my $parent ($pub->get_parents) {
                 my $pub = $parent->{publication};
+                my $activity = $parent->{activity};
                 push @{ $tree->{parents} }, {
                     relationship => $parent->{relationship},
                     publication_type_identifier => $pub->{publication_type_identifier},
+                    activity_uri => ($activity ? $activity->uri : undef ),
                     label => $pub->stringify,
                     url   => $pub->to_object->uri($c),
                     note  => $parent->{note},
