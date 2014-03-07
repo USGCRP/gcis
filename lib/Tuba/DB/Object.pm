@@ -262,7 +262,7 @@ sub as_tree {
                 push @{ $tree->{parents} }, {
                     relationship => $parent->{relationship},
                     publication_type_identifier => $pub->{publication_type_identifier},
-                    activity_uri => ($activity ? $activity->uri : undef ),
+                    activity_uri => ($activity ? $activity->uri($c) : undef ),
                     label => $pub->stringify,
                     url   => $pub->to_object->uri($c),
                     note  => $parent->{note},
