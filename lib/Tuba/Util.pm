@@ -10,8 +10,9 @@ use Mojo::Base 'Exporter';
 use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/xml_escape/;
 use Encode qw/decode/;
+use DateTime::Format::Human::Duration;
 
-our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs elide_str/;
+our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs elide_str human_duration/;
 
 sub nice_db_error {
     my $err = shift or return;
@@ -51,6 +52,12 @@ sub elide_str {
     my $len = shift or die "missing length";
     return $str if !$str || length($str) < $len;
     return substr($str,0,$len-3).'...';
+}
+
+sub human_duration {
+    my $d = shift;
+    return $d unless defined($d) && length($d) && ref($d) eq 'DateTime::Duration';
+    return DateTime::Format::Human::Duration->new()->format_duration($d);
 }
 
 1;

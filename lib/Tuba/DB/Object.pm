@@ -10,7 +10,7 @@ package Tuba::DB::Object;
 use DBIx::Simple;
 use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
-use Tuba::Util qw/elide_str/;
+use Tuba::Util qw/elide_str human_duration/;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -306,7 +306,7 @@ sub as_tree {
     for my $k (keys %$tree) {
         next unless $tree->{$k};
         if (ref($tree->{$k}) eq 'DateTime::Duration') {
-            $tree->{$k} = DateTime::Format::Human::Duration->new()->format_duration($tree->{$k});
+            $tree->{$k} = human_duration($tree->{$k});
         }
     }
     return $tree;

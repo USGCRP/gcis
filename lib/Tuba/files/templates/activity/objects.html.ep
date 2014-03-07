@@ -1,0 +1,49 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title') || (stash 'plural') || ucfirst(plural($meta->table));
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+<table class='table table-condensed table-bordered table-striped'>
+<caption>
+</caption>
+<tr>
+    <th>identifier</th>
+    <th>methodologies</th>
+    <th>publication_maps</th>
+</tr>
+% for my $o (@$objects) {
+    <tr>
+        <td>
+            %= link_to $o->uri($self) => begin
+            %= $o->identifier
+            %= end
+        </td>
+        <td>
+            %   for ($o->methodologies) {
+                <span class='btn squeezevert'><%= obj_link($_); %></span>
+            %   }
+        </td>
+        <td>
+            %  for my $map ($o->publication_maps) {
+                <div class='btn-group'>
+                    <%= obj_link_to $map->child_publication => 'show', class => 'btn' => begin %><%= $map->child_publication->to_object->identifier %><%= end %>
+                <%= link_to ontology_url($map->{relationship}) => class => 'btn' => target => "_blank" => begin %><%= $map->{relationship} %><%= end %>
+                <%= obj_link_to $map->parent_publication => 'show', class => 'btn' => begin %><%= $map->parent_publication->to_object->identifier %><%= end %>
+                </div>
+            % }
+        </td>
+    </tr>
+% }
+</table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

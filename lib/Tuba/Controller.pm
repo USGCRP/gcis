@@ -17,6 +17,7 @@ use Tuba::Util qw/nice_db_error show_diffs/;
 use File::Temp;
 use YAML qw/Dump/;
 use Encode qw/encode decode/;
+use Tuba::Util qw/human_duration/;
 use Data::Dumper;
 
 =head2 list
@@ -33,7 +34,10 @@ sub make_tree_for_list {
     my $obj = shift;
     my %t;
     for my $method (@{ $obj->meta->column_accessor_method_names }) {
-        $t{$method} = $obj->$method;
+        my $val = $obj->$method;
+        $t{$method} =
+             ref($val) && ref($val) eq 'DateTime::Duration' ?
+                human_duration($val) : $val;
     }
     my $uri = $obj->uri($c);
     my $href = $uri->clone->to_abs;
