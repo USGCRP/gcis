@@ -39,7 +39,7 @@ sub update_form {
     my $c = shift;
     $c->stash(
         controls => {
-            journal => sub {
+            journal_identifier => sub {
                 my $c   = shift;
                 my $obj = shift;
                 +{
