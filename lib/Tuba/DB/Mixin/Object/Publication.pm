@@ -219,17 +219,11 @@ sub uri {
 
 sub contributors_grouped {
     my $object = shift;
-    no warnings 'uninitialized';
-    my @cons = $object->contributors;
-    @cons = map $_->[0],
-            sort { $a->[1] cmp $b->[1] } map [$_,
-            sprintf(
-                "%100s%100s%100s",
-                $_->role_type_identifier,
-                ( $_->person_id               ? $_->person->name       : "" ),
-                ( $_->organization_identifier ? $_->organization->name : "" )
-            ),
-            ], @cons;
+    my @cons = @{ Tuba::DB::Object::Contributor::Manager->get_objects(
+        query => [ publication_id => $object->id ],
+        with_objects => [ qw/publication_contributor_maps/ ],
+        sort_by => [ qw/role_type_identifier t2.ordinal/]
+    ) };
 
     my $role_count;
     my $person_count;

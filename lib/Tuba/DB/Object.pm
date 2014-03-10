@@ -290,8 +290,8 @@ sub as_tree {
     }
     if ($c && !$bonsai) {
         if (my $p = $s->get_publication) {
-            my @ctrs = $p->contributors;
-            $tree->{contributors} = [ map $_->as_tree(c => $c), @ctrs ];
+            my ($ctrs, $role_count, $person_count) = $p->contributor_grouped;
+            $tree->{contributors} = [ map $_->as_tree(c => $c), @$ctrs ];
 
             my $refs = Tuba::DB::Object::Subpubref::Manager->get_objects(query => [ publication_id => $p->id ], limit => 200 );
             my $format = $c->stash('format');

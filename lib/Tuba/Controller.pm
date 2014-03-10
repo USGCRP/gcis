@@ -724,10 +724,26 @@ sub update_contributors {
             }) or return $c->update_error("Failed to remove contributor");
         $c->flash(info => "Saved changes.");
     }
+    if ($json && keys %$json) {
+        # TODO
+    } else {
+        for my $con ($pub->contributors) {
+            my $ordinal = $c->param('ordinal_'.$con->id);
+            next unless defined($ordinal) && length($ordinal);
+            next unless $ordinal =~ /^[0-9]+$/;
+            my $map = PublicationContributorMap->new(publication_id => $pub->id, contributor_id => $con->id);
+            $map->load(speculative => 1) or return $c->update_error("bad pub/contributor map ids");
+            next if $map->ordinal && $map->ordinal == $ordinal;
+            $map->ordinal($ordinal);
+            $map->save(audit_user => $c->user) or return $c->update_error("could not save ".$map->error);
+            $c->flash(info => "Saved changes");
+        }
+    }
 
     my ($person,$organization);
 
     my $reference_identifier;
+    my %ordinals;
     if ($c->req->json) {
         $person = $json->{person_id};
         $reference_identifier = $json->{reference_identifier};
