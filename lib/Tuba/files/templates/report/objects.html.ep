@@ -1,0 +1,79 @@
+% layout 'default';
+
+<center>
+<h2>
+    Reports
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+<table class='table table-condensed table-bordered table-striped'>
+<caption>
+</caption>
+<tr>
+    <th>identifier</th>
+    <th>type</th>
+    <th>chapters</th>
+    <th>figures</th>
+    <th>findings</th>
+    <th>tables</th>
+    <th>references</th>
+    <th>url</th>
+    <th>Files</th>
+</tr>
+% for my $report (@$objects) {
+    <tr>
+    <td><%= link_to $report->uri($self) => begin %><%= $report->identifier %><%= end %></td>
+    <td><%= $report->report_type_identifier // '' %></td>
+    <td>
+        %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $report->chapters } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $report->figures } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $report->findings } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        <%= scalar @{ $report->tables } %>
+        %= end
+    </td>
+    <td>
+        %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= $report->reference_count;
+        %= end
+    </td>
+    <td>
+        % if ($report->url) {
+        %= link_to $report->url => target => '_blank' => begin
+        <%= Mojo::URL->new($report->url)->host %>
+        %= end
+        % }
+    </td>
+
+    <td class='thumbnails'>
+    <div class='span2'>
+       % if (my $pub = $report->get_publication) {
+       %= include 'pub_thumbnails', pub => $pub, simple => 1;
+       % }
+    </div>
+    </td>
+
+    </tr>
+% }
+</table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+
