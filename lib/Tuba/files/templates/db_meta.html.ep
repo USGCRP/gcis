@@ -1,2 +1,4 @@
+% if ($ENV{TUBA_DEBUG}) { 
 Primary key : <%= $meta->primary_key %>
 Relationships : <%= join ',', grep { $_ !~ /^_/ } map $_->name, @{ $meta->relationships } %>
+% }

@@ -17,10 +17,7 @@
         </span>
     % }
 
-    <pre>
-    <%= include 'other_formats'; =%>
-    <%= include 'db_meta'; =%>
-    </pre>
+    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
 
 % }
 
