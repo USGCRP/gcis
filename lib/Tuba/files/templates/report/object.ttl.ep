@@ -26,6 +26,8 @@
    rdfs:label "<%= $report->title %>";
    prov:label "<%= $report->title %>";
    dcterms:type "<%= $report->report_type_identifier %>";
+   dcterms:frequency "<%= $report->frequency %>";
+   dcterms:description "<%= $report->summary %>";
    gcis:url "<%= $report->url %>". 
    bibo:doi "<%= $report->doi %>";
 % for my $org ($report->organizations) {
