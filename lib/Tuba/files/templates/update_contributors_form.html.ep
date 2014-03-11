@@ -33,7 +33,7 @@ Person
     %= include 'modal', url => url_for('create_form_person'), id => 'create_person'
 </div>
 
-%= label_for 'organization', class => 'control-label' => begin
+%= label_for 'organization', class => 'control-label required' => begin
 Organization
 %= end
 <div class='controls'>
@@ -42,7 +42,7 @@ Organization
     %= include 'modal', url => url_for('create_form_organization'), id => 'create_organization'
 </div>
 
-%= label_for 'role', class => 'control-label' => begin
+%= label_for 'role', class => 'control-label required' => begin
 Role
 %= end
 <div class='controls'>
@@ -58,5 +58,6 @@ Role
 
 </div>
 </div>
+<div class='required_note'>required</div>
 
 
