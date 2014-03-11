@@ -432,7 +432,8 @@ CREATE TABLE publication (
 CREATE TABLE publication_contributor_map (
     publication_id integer NOT NULL,
     contributor_id integer NOT NULL,
-    reference_identifier character varying
+    reference_identifier character varying,
+    ordinal integer
 );
 
 

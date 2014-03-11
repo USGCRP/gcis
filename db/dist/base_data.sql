@@ -305,7 +305,7 @@ COPY reference (identifier, attrs, publication_id, child_publication_id) FROM st
 -- Data for Name: publication_contributor_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY publication_contributor_map (publication_id, contributor_id, reference_identifier) FROM stdin;
+COPY publication_contributor_map (publication_id, contributor_id, reference_identifier, ordinal) FROM stdin;
 \.
 
 
