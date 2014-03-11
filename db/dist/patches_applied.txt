@@ -93,3 +93,4 @@
 0880_methodology.sql	42e5d9ff68f0d24e4ddceb6f0f5a8126
 0890_report_attributes.sql	8bc07d6145a3719e0c0b4ec3f3a85d34
 0900_contributor_ordinal.sql	335c432d41965d03deec70cbe0628fb5
+0910_ordinal_sortkey.sql	913d3f2b56718465f8cf25171ceb60d7
