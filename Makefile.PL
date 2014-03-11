@@ -11,6 +11,7 @@ WriteMakefile
                    'DBIx::Simple' => 0,
                    'Data::UUID::LibUUID' => 0,
                    'Date::Parse' => 0,
+                   'DateTime::Format::Human::Duration' => 0,
                    'File::ShareDir' => '1.00',
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,

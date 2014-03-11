@@ -31,6 +31,7 @@
             "DBIx::Simple" : "0",
             "Data::UUID::LibUUID" : "0",
             "Date::Parse" : "0",
+            "DateTime::Format::Human::Duration" : "0",
             "File::ShareDir" : "1.00",
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
@@ -54,7 +55,10 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.64"
+         "version" : "0.65"
+      },
+      "Tuba::Activity" : {
+         "file" : "lib/Tuba/Activity.pm"
       },
       "Tuba::Array" : {
          "file" : "lib/Tuba/Array.pm"
@@ -85,6 +89,9 @@
       },
       "Tuba::DB::Object" : {
          "file" : "lib/Tuba/DB/Object.pm"
+      },
+      "Tuba::DB::Object::Activity" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Activity.pm"
       },
       "Tuba::DB::Object::Array" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Array.pm"
@@ -142,6 +149,9 @@
       },
       "Tuba::DB::Object::Manager" : {
          "file" : "lib/Tuba/DB/Object/Manager.pm"
+      },
+      "Tuba::DB::Object::Methodology" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Methodology.pm"
       },
       "Tuba::DB::Object::Organization" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm"
@@ -271,5 +281,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.64"
+   "version" : "0.65"
 }

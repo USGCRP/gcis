@@ -256,6 +256,12 @@ db/patches/0810_uuid.sql
 db/patches/0820_orgtype.sql
 db/patches/0830_orgrel.sql
 db/patches/0840_thumbnail.sql
+db/patches/0850_report_summary.sql
+db/patches/0860_dataset_mods.sql
+db/patches/0870_activity.sql
+db/patches/0880_methodology.sql
+db/patches/0890_report_attributes.sql
+db/patches/0900_contributor_ordinal.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -271,6 +277,7 @@ eg/report_thumbnails.pl
 eg/update-array.pl
 eg/update-findings.pl
 lib/Tuba.pm
+lib/Tuba/Activity.pm
 lib/Tuba/Array.pm
 lib/Tuba/Article.pm
 lib/Tuba/Auth.pm
@@ -281,6 +288,7 @@ lib/Tuba/Controller.pm
 lib/Tuba/Converter.pm
 lib/Tuba/Dataset.pm
 lib/Tuba/DB.pm
+lib/Tuba/DB/Mixin/Object/Activity.pm
 lib/Tuba/DB/Mixin/Object/Array.pm
 lib/Tuba/DB/Mixin/Object/Article.pm
 lib/Tuba/DB/Mixin/Object/Book.pm
@@ -298,6 +306,7 @@ lib/Tuba/DB/Mixin/Object/Generic.pm
 lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
 lib/Tuba/DB/Mixin/Object/Journal.pm
+lib/Tuba/DB/Mixin/Object/Methodology.pm
 lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
 lib/Tuba/DB/Mixin/Object/Person/Manager.pm
@@ -344,6 +353,8 @@ lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/test.html
+lib/Tuba/files/templates/activity/objects.html.ep
+lib/Tuba/files/templates/activity/relationships.html.ep
 lib/Tuba/files/templates/admin.html.ep
 lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.ttl.ep
@@ -375,6 +386,7 @@ lib/Tuba/files/templates/controls/image.html.ep
 lib/Tuba/files/templates/controls/one_to_many.html.ep
 lib/Tuba/files/templates/controls/organizations.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
+lib/Tuba/files/templates/controls/publications.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/controls/table.html.ep
 lib/Tuba/files/templates/create_form.html.ep
@@ -398,6 +410,7 @@ lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
 lib/Tuba/files/templates/generic/object.html.ep
+lib/Tuba/files/templates/generic/object.ttl.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
@@ -446,6 +459,7 @@ lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
+lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/table/object.ttl.ep
@@ -472,6 +486,7 @@ lib/Tuba/Importer/Processor/Findings.pm
 lib/Tuba/Importer/Processor/Journals.pm
 lib/Tuba/Journal.pm
 lib/Tuba/Log.pm
+lib/Tuba/Methodology.pm
 lib/Tuba/Organization.pm
 lib/Tuba/Person.pm
 lib/Tuba/Plugin/Auth.pm
