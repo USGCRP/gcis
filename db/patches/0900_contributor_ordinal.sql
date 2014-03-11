@@ -1,2 +1,2 @@
-alter table contributor add column ordinal integer;
+alter table publication_contributor_map add column ordinal integer;
 
