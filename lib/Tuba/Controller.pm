@@ -728,13 +728,13 @@ sub update_contributors {
         # TODO
     } else {
         for my $con ($pub->contributors) {
-            my $ordinal = $c->param('ordinal_'.$con->id);
-            next unless defined($ordinal) && length($ordinal);
-            next unless $ordinal =~ /^[0-9]+$/;
+            my $sort_key = $c->param('sort_key_'.$con->id);
+            next unless defined($sort_key) && length($sort_key);
+            next unless $sort_key =~ /^[0-9]+$/;
             my $map = PublicationContributorMap->new(publication_id => $pub->id, contributor_id => $con->id);
             $map->load(speculative => 1) or return $c->update_error("bad pub/contributor map ids");
-            next if $map->ordinal && $map->ordinal == $ordinal;
-            $map->ordinal($ordinal);
+            next if $map->sort_key && $map->sort_key == $sort_key;
+            $map->sort_key($sort_key);
             $map->save(audit_user => $c->user) or return $c->update_error("could not save ".$map->error);
             $c->flash(info => "Saved changes");
         }
@@ -743,7 +743,6 @@ sub update_contributors {
     my ($person,$organization);
 
     my $reference_identifier;
-    my %ordinals;
     if ($c->req->json) {
         $person = $json->{person_id};
         $reference_identifier = $json->{reference_identifier};
