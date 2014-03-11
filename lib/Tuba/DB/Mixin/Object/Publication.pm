@@ -222,7 +222,7 @@ sub contributors_grouped {
     my @cons = @{ Tuba::DB::Object::Contributor::Manager->get_objects(
         query => [ publication_id => $object->id ],
         with_objects => [ qw/publication_contributor_maps/ ],
-        sort_by => [ qw/role_type_identifier t2.ordinal/]
+        sort_by => [ qw/role_type_identifier t2.ordinal person_id/]
     ) };
 
     my $role_count;
