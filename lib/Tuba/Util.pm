@@ -31,7 +31,7 @@ sub show_diffs {
         append_open => '<b class="appended">', append_close => '</b>',
         escape => \&xml_escape
     );
-    return b($new);
+    return (b($old), b($new));
 }
 
 {

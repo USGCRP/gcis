@@ -111,6 +111,7 @@ sub update {
 
         $c->stash(object_json => $json);
         $c->stash(sub_publication_uris => delete $json->{sub_publication_uris});
+        $c->stash(subpub_update_category => delete $json->{subpub_update_category});
     }
     $c->SUPER::update(@_);
 }
@@ -128,6 +129,9 @@ sub post_update {
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   for my $pub_id (keys %existing) {
       my $s = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
+      if (my $cat = $c->stash('subpub_update_category')) {
+          next unless $s->publication->publication_type_identifier eq $cat;
+      }
       $s->load(speculative => 1) or next;
       $s->delete or do { $reference->error($s->error); return 0; };
   }
