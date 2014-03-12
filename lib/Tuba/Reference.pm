@@ -160,7 +160,7 @@ sub smartmatch {
     unshift @try, $existing if $existing;
     my $match;
     for my $class (@try) {
-        $match = $class->new_from_reference($reference, audit_user => $c->user, audit_note -> $audit_note) and last;
+        $match = $class->new_from_reference($reference, audit_user => $c->user, audit_note => $audit_note) and last;
     }
     logger->debug("match : ".($match // '<none>'));
     undef $match if $match && !is_in_db($match) && $c->param('updates_only');
