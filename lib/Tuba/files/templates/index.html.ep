@@ -8,8 +8,11 @@
       }
 
       .jumbotron {
-        margin: 40px 0;
         text-align: center;
+        min-height: 260px;
+        margin: 0;
+      	padding: 40px 0;
+      	background: #ffffff url("usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
         font-size: 100px;
@@ -19,8 +22,19 @@
         font-size: 24px;
         line-height: 1.25;
       }
+      .navbar .nav {
+      	margin:  0 10px 0 15px;
+      }
+      .navbar img.logo {
+      	float: left;
+      }
+      .span2 {
+      width: 16%;
+      }
 
 </style>
+
+
 
 <div class="jumbotron">
 <h1>GCIS API</h1>
