@@ -9,67 +9,54 @@
 
 %= include 'list_formats';
 
-<%
-  my @cols = (
-    grep { $_ !~ /^_/ }
-    ( map $_->name, map $_->columns, $meta->primary_key ),
-    ( map $_->name, @{ $meta->relationships } ),
-    ( map $_->name, map $_->columns, $meta->unique_keys ),
-  );
-%>
-% push @cols, @{ stash 'extra_cols' } if stash 'extra_cols';
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
+
 <table class='table table-condensed table-bordered table-striped'>
-<caption>
-</caption>
 <tr>
-% for my $c (@cols) {
-    <th><%= $c %></th>
-% }
+    <th>identifier</th>
+    <th>articles</th>
+    <th>online_issn</th>
+    <th>print_issn</th>
+    <th></th>
 </tr>
-% for my $o (@$objects) {
-    <tr>
-    % my $first = $cols[0];
-    % my $val = $o->can($first) ? $o->$first : "error, cannot call $first";
-        <td>
-            %= link_to $o->uri($self) => begin
-            <%= $val %>
-            %= end
-        </td>
-% for my $c (@cols[1..$#cols]) {
-        % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
-        <td>
-            % if (ref($got) eq 'ARRAY') {
-            %   for (@$got) {
-                    <span class='btn squeezevert'><%= obj_link($_); %></span>
-            %   }
-            % } elsif (ref($got)) {
-                %= obj_link($got);
-            % } else {
-                %= $got
-            % }
-        </td>
-% }
+% for my $journal (@$objects) {
+<tr>
+    <td><%= link_to $journal->uri($self) => begin %><%= $journal->identifier %><%= end %></td>
+    <td><%= link_to $journal->uri($self) => class => 'btn btn-default' => begin %><%= scalar @{ $journal->articles } %><%= end %></td>
+    <td>
+         % if (my $issn = $journal->online_issn) {
+         %= link_to "http://www.worldcat.org/issn/$issn" => target => "_blank" => begin
+         %= $issn
+         %= end
+         % }
+    </td>
+    <td>
+         % if (my $issn = $journal->print_issn) {
+         %= link_to "http://www.worldcat.org/issn/$issn" => target => "_blank" => begin
+         %= $issn
+         %= end
+         % }
+    </td>
 
     <td class='thumbnails'>
     <div class='span2'>
-       % if (my $pub = $o->get_publication) {
+       % if (my $pub = $journal->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
     </div>
     </td>
 
-% if (user_can('update') && (param 'util')) {
-    <td>
-    % my $url = Mojo::URL->new('http://www.google.com/search')->query(q => $o->title, btnI => 1 );
-    <%= link_to $url , target => '_other' => begin %>google<%= end %>
-    <%= form_for 'update_files_journal', { journal_identifier => $o->identifier } => begin %>
-    <%= text_field 'file_url', placeholder => "cover url" %><%= submit_button 'go' %>
-    <%= end %>
-    </td>
-% }
+    % if (user_can('update') && (param 'util')) {
+        <td>
+            % my $url = Mojo::URL->new('http://www.google.com/search')->query(q => $journal->title, btnI => 1 );
+            <%= link_to $url , target => '_other' => begin %>google<%= end %>
+            <%= form_for 'update_files_journal', { journal_identifier => $journal->identifier } => begin %>
+            <%= text_field 'file_url', placeholder => "cover url" %><%= submit_button 'go' %>
+            <%= end %>
+        </td>
+    % }
     </tr>
 % }
 </table>

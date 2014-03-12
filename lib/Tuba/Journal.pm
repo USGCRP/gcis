@@ -27,5 +27,10 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+sub _default_order {
+    my $c = shift;
+    return qw/identifier title online_issn print_issn url publisher country notes/;
+}
+
 1;
 

@@ -18,7 +18,7 @@
 % }
 
 % while (my @next = splice(@clone, 0, 6)) {
-    <div class='row'>
+    <div class='row-fluid'>
         %= include 'obj_thumbnails', objs => \@next, blanks => 1;
     </div>
 % }

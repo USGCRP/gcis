@@ -26,7 +26,10 @@ String.prototype.htmlEscape = function() {
     <body>
         <div class="navbar">
             <div class="navbar-inner">
-                <%= link_to 'index', class => 'brand' => begin %>GCIS<%= end %>
+                <a href="/" class='pull-left'><img class="logo" src="/logo-small.png" ></a>
+                <%= link_to 'index', class => 'brand' => begin %>
+                    GCIS
+                <%= end %>
                 <ul class='nav pull-right'>
                     <li><%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
                     </li>

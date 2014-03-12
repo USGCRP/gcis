@@ -1,32 +1,15 @@
 %# send $object and $meta
-% my $sorters = stash 'sorters';
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
-% my $rels = ( (stash 'relationships') || $meta->relationships );
 
-% for my $rel (@$rels) {
-% my $method = $rel->name;
-% next if $method =~ /^_/;
-% next if $method eq 'contributors';
+% for my $method (default_html_relationships($object)) {
 <tr>
 <td><%= $method %></td>
-<td class='row'>
-    % my $got = $object->$method;
-    % if (ref($got) eq 'ARRAY') {
-    %    if (my $sorter = $sorters->{$method}) {
-    %       @$got = sort $sorter @$got;
-    %    } else {
-    %       @$got = sort { $a->sortkey cmp $b->sortkey } @$got;
-    %    }
-    % } elsif ($got) {
-    %   $got = [ $got ];
-    % } else {
-    %   $got = [];
-    % }
-    <div class='row' style='position:relative;'>
+<td class='row-fluid'>
+    <div class='row-fluid' style='position:relative;'>
             %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => $got;
+            %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
             %= end
     </div>
 </td>

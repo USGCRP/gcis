@@ -327,6 +327,35 @@ sub register {
             my $val = shift;
             return DateTime::Format::Human::Duration->new()->format_duration($val);
         });
+    $app->helper(default_html_relationships => sub {
+        my $c = shift;
+        my $obj = shift;
+        my $rels = ( $c->stash('relationships') || $obj->meta->relationships );
+
+        my @methods = grep {
+                ( $_ !~ /^_/ ) && ($_ ne 'contributors')
+            } map $_->name, @$rels;
+        return wantarray ? @methods : \@methods;
+    });
+    $app->helper(sorted_list => sub {
+        my $c = shift;
+        my $object = shift;
+        my $method = shift;
+        my $sorters = $c->stash('sorters');
+        my $got = $object->$method;
+        if (ref($got) eq 'ARRAY') {
+           if (my $sorter = $sorters->{$method}) {
+              @$got = sort $sorter @$got;
+           } else {
+              @$got = sort { $a->sortkey cmp $b->sortkey } @$got;
+           }
+        } elsif ($got) {
+          $got = [ $got ];
+        } else {
+          $got = [];
+        }
+        return wantarray ? @$got : $got;
+    });
 }
 
 1;
