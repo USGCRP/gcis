@@ -352,7 +352,8 @@ CREATE TABLE journal (
     publisher character varying,
     country character varying,
     url character varying,
-    notes character varying
+    notes character varying,
+    CONSTRAINT ck_journal_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -537,7 +538,8 @@ CREATE TABLE report_type (
 
 CREATE TABLE role_type (
     identifier character varying NOT NULL,
-    label character varying NOT NULL
+    label character varying NOT NULL,
+    sort_key integer
 );
 
 

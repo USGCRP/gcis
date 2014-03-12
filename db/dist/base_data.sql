@@ -141,7 +141,7 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 -- Data for Name: role_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY role_type (identifier, label) FROM stdin;
+COPY role_type (identifier, label, sort_key) FROM stdin;
 \.
 
 
