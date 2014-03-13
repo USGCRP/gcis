@@ -54,9 +54,7 @@ sub _maybe_generate_thumbnail {
     }
     my $file = $s->file or return;
     my $file_obj = Path::Class::File->new($file);
-    my $thumbnail_filename = '.thumb-'.$file_obj->basename;
-    $thumbnail_filename =~ s/\.$_$// for keys %typeMap;
-    $thumbnail_filename .= '.png';
+    my $thumbnail_filename = '.thumb-'.$s->identifier.'.png';
     my $new_thumbnail = $file_obj->dir."/".$thumbnail_filename;
     if ($s->mime_type eq 'application/pdf') {
         $s->_generate_pdf_thumbnail($new_thumbnail) or return;
