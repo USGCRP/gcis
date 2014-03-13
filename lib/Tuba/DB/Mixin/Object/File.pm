@@ -53,7 +53,11 @@ sub _maybe_generate_thumbnail {
         return $existing;
     }
     my $file = $s->file or return;
-    my $new_thumbnail = Path::Class::File->new($file)->dir."/thumb.png";
+    my $file_obj = Path::Class::File->new($file);
+    my $thumbnail_filename = '.thumb-'.$file_obj->basename;
+    $thumbnail_filename =~ s/\.$_$// for keys %typeMap;
+    $thumbnail_filename .= '.png';
+    my $new_thumbnail = $file_obj->dir."/".$thumbnail_filename;
     if ($s->mime_type eq 'application/pdf') {
         $s->_generate_pdf_thumbnail($new_thumbnail) or return;
         $s->thumbnail($new_thumbnail);
@@ -101,7 +105,7 @@ sub _generate_image_thumbnail {
         logger->error("cannot find ".$s->fullpath);
         return;
     };
-    my $cmd = sprintf("gm convert -resize 140x140 %s %s", $s->fullpath, $s->fullpath($filename));
+    my $cmd = sprintf("gm convert -resize 320x320 %s %s", $s->fullpath, $s->fullpath($filename));
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");
         return 0;
