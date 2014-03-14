@@ -20,6 +20,7 @@
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix sweet: <http://http://sweet.jpl.nasa.gov/2.3/quanTime.owl#> .
 % }
 
 %= content
