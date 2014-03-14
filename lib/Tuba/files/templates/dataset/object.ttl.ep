@@ -11,9 +11,13 @@
    prov:label "<%= $dataset->name %>";
    rdfs:label "<%= $dataset->name %>";
    dwc:decimalLatitude "<%= $dataset->lat_min %>";
+   geo:lat "<%= $dataset->lat_min %>";
    dwc:decimalLatitude "<%= $dataset->lat_max %>";
+   geo:lat "<%= $dataset->lat_max %>";   
    dwc:decimalLongitude "<%= $dataset->lon_min %>";
+   geo:long "<%= $dataset->lon_min %>";   
    dwc:decimalLongitude "<%= $dataset->lon_max %>";
+   geo:long "<%= $dataset->lon_max %>";
    dcterms:nativeid "<%= $dataset->native_id %>";
    xsd:gYear "<%= $dataset->publication_year %>";
    dwc:year "<%= $dataset->publication_year %>";
@@ -29,7 +33,7 @@
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
 % for my $keyword ($dataset->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>".
+   dcterms:subject "<%== $keyword->stringify %>";
 % }
 %= include 'prov';
 %= include 'contributors'; 
