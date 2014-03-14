@@ -2,6 +2,7 @@
 <<%= current_resource %>>
    a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
+   dcterms:date "<%= $dataset->release_dt %>";
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
    dcterms:description "<%= $dataset->description %>";
    datacite:doi "<%= $dataset->doi %>";
@@ -9,16 +10,22 @@
    dcterms:title "<%= $dataset->name %>";
    prov:label "<%= $dataset->name %>";
    rdfs:label "<%= $dataset->name %>";
+   dwc:decimalLatitude "<%= $dataset->lat_min %>";
+   dwc:decimalLatitude "<%= $dataset->lat_max %>";
+   dwc:decimalLongitude "<%= $dataset->lon_min %>";
+   dwc:decimalLongitude "<%= $dataset->lon_max %>";
    dcterms:nativeid "<%= $dataset->native_id %>";
-   gcis:processing-level "<%= $dataset->processing_level %>";
-   dcterms:date "<%= $dataset->publication_dt %>";
+   xsd:gYear "<%= $dataset->publication_year %>";
+   dwc:year "<%= $dataset->publication_year %>";
    gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
    gcis:projection "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
+   sweet:StartTime  "<%= $dataset->start_time %>";
+   sweet:EndTime  "<%= $dataset->end_time %>";
    gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
    gcis:accessURL "<%= $dataset->url %>";
    gcis:hasURL "<%= $dataset->url %>";
-   dcterms:isVersionOf "<%= $dataset->version %>";
+   dcterms:hasVersion "<%= $dataset->version %>";
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
 % for my $keyword ($dataset->keywords) {
    gcis:subject "<%== $keyword->stringify %>";
