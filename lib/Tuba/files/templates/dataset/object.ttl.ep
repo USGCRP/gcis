@@ -20,8 +20,8 @@
    gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
    gcis:projection "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
-   sweet:StartTime  "<%= $dataset->start_time %>";
-   sweet:EndTime  "<%= $dataset->end_time %>";
+   sweet:StartTime "<%= $dataset->start_time %>";
+   sweet:EndTime "<%= $dataset->end_time %>";
    gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
    gcis:accessURL "<%= $dataset->url %>";
    gcis:hasURL "<%= $dataset->url %>";
