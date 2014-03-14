@@ -1,5 +1,5 @@
 <!-- Modal -->
-% my $history_url = url_for('history_'.$object->meta->table);
+% my $history_url = $object->uri($self,{ tab => 'history' } );
      
 <div id="myModal"
  data-remote='<%= $history_url->clone->query(no_header => 1) %>'

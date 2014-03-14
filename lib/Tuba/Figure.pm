@@ -47,8 +47,7 @@ sub show {
       or return $c->render_not_found;
     if (my $chapter_identifier = $object->chapter_identifier) {
         if (!$c->stash('chapter_identifier')) {
-            # This is not a report wide figure, head to the right URL
-            return $c->redirect_to( $object->uri($c) );
+            $c->stash(chapter_identifier => $chapter_identifier);
         }
     }
     $c->stash(object => $object);
