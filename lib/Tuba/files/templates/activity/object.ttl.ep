@@ -2,9 +2,9 @@
 <<%= current_resource %>>
    a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
-   prov:startTime "<%= $activity->start_time %>";
+   prov:startedAtTime "<%= $activity->start_time %>";
    sweet:StartTime "<%= $activity->start_time %>";
-   prov:startTime "<%= $activity->end_time %>";   
+   prov:startedAtTime "<%= $activity->end_time %>";   
    sweet:EndTime "<%= $activity->start_time %>";  
    dcterms:SizeOrDuration "<%= $activity->duration %>";   
 
