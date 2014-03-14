@@ -40,13 +40,19 @@ sub list {
 
 sub show {
     my $c = shift;
-    my $report_identifier = $c->stash('report_identifier');
-    my $identifier = $c->stash('figure_identifier');
-    my $meta = Figure->meta;
-    my $object = Figure->new(identifier => $identifier, report_identifier => $report_identifier)
-        ->load(speculative => 1, with => [qw/chapter images/]) or return $c->render_not_found;
+    my $object = Figure->new(
+      identifier        => $c->stash('figure_identifier'),
+      report_identifier => $c->stash('report_identifier')
+      )->load(speculative => 1, with => [qw/chapter images/])
+      or return $c->render_not_found;
+    if (my $chapter_identifier = $object->chapter_identifier) {
+        if (!$c->stash('chapter_identifier')) {
+            # This is not a report wide figure, head to the right URL
+            return $c->redirect_to( $object->uri($c) );
+        }
+    }
     $c->stash(object => $object);
-    $c->stash(meta => $meta);
+    $c->stash(meta => Figure->meta);
     $c->SUPER::show(@_);
 }
 
