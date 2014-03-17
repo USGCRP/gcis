@@ -247,10 +247,18 @@ sub startup {
 
     # Chapters.
     my $chapter = $report->resource('chapter');
-    $r->lookup('select_chapter')->resource('finding');
-    $r->lookup('select_chapter')->resource('figure');
-    $r->lookup('select_chapter')->resource('table');
-    $r->lookup('select_chapter')->get('/reference')->to('reference#list')->name('list_chapter_references');
+    my $ch = $r->lookup('select_chapter');
+
+    # Redirect from ordinals to names.
+    $ch->get('/table/:table_number' => [ table_number => qr/\d+/ ]
+      )->to('table#redirect_to_identifier')->name('table_redirect');
+    $ch->get('/finding/:finding_number' => [ finding_number => qr/\d+/ ]
+      )->to('finding#redirect_to_identifier')->name('finding_redirect');
+
+    $ch->resource('finding');
+    $ch->resource('figure');
+    $ch->resource('table');
+    $ch->get('/reference')->to('reference#list')->name('list_chapter_references');
 
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');
@@ -261,13 +269,6 @@ sub startup {
     $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure' });
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table' });
 
-    # Redirect from chapter numbers to names.
-    $r->get('/report/:report_identifier/chapter/:chapter_number/figure/:figure_number'
-        => [ chapter_number => qr/\d+/, figure_number => qr/\d+/ ]
-      )->to('figure#redirect_to_identifier')->name('figure_redirect');
-    $r->get('/report/:report_identifier/chapter/:chapter_number/table/:table_number'
-        => [ chapter_number => qr/\d+/, table_number => qr/\d+/ ]
-      )->to('table#redirect_to_identifier')->name('table_redirect');
 
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.

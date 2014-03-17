@@ -40,11 +40,23 @@ sub list {
 
 sub show {
     my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
     my $object = Figure->new(
-      identifier        => $c->stash('figure_identifier'),
+      identifier        => $identifier,
       report_identifier => $c->stash('report_identifier')
-      )->load(speculative => 1, with => [qw/chapter images/])
-      or return $c->render_not_found;
+      )->load(speculative => 1, with => [qw/chapter images/]);
+
+    if (!$object && $identifier =~ /^[0-9]+$/ && $c->stash('chapter') ) {
+        my $chapter = $c->stash('chapter');
+        $object = Figure->new(
+          report_identifier  => $c->stash('report_identifier'),
+          chapter_identifier => $chapter->identifier,
+          ordinal            => $identifier,
+        )->load(speculative => 1, with => [qw/chapter images/]);
+        return $c->redirect_to($object->uri($c));
+    };
+    return $c->render_not_found unless $object;
+
     if (my $chapter_identifier = $object->chapter_identifier) {
         if (!$c->stash('chapter_identifier')) {
             $c->stash(chapter_identifier => $chapter_identifier);
@@ -53,21 +65,6 @@ sub show {
     $c->stash(object => $object);
     $c->stash(meta => Figure->meta);
     $c->SUPER::show(@_);
-}
-
-sub redirect_to_identifier {
-    my $c = shift;
-    my $chapter_number = $c->stash('chapter_number');
-    my $figure_number = $c->stash('figure_number');
-    my $found = Figures->get_objects(
-            with_objects => ['chapter'],
-            query => [
-                'chapter.number' => $chapter_number,
-                'ordinal' => $figure_number,
-            ]
-        );
-    return $c->render_not_found unless $found && @$found;
-    return $c->redirect_to( 'show_figure' => { figure_identifier => $found->[0]->identifier } );
 }
 
 sub update_form {

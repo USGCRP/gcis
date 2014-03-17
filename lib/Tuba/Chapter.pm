@@ -96,5 +96,17 @@ sub make_tree_for_show {
       }
 }
 
+sub _this_object {
+    my $c = shift;
+    my $chapter = $c->SUPER::_this_object(@_);
+    return $chapter if $chapter;
+    my $identifier = $c->stash('chapter_identifier');
+    $identifier =~ /^[0-9]+$/ or return;
+    my $number = $identifier;
+    $chapter = Chapter->new(report_identifier => $c->stash('report_identifier'), number => $number);
+    $chapter->load(speculative => 1) or return;
+    return $chapter;
+}
+
 1;
 
