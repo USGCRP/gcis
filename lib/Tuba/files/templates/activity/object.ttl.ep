@@ -7,7 +7,8 @@
    prov:startedAtTime "<%= $activity->end_time %>";   
    sweet:EndTime "<%= $activity->start_time %>";  
    dcterms:SizeOrDuration "<%= $activity->duration %>";   
-   dcmitype:software "<%= $activity->computing_environment %>";
+   fabio:DataFile "<%= $activity->duration %>";
+   dcmitype:software "<%= $activity->output_artifacts %>";
    gcis:Software "<%= $activity->computing_environment %>";
    sweet:Methodology "<%= $activity->computing_environment %>";
 %= include 'relationships';
