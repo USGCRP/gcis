@@ -705,6 +705,11 @@ ALTER TABLE ONLY figure
 
 
 
+ALTER TABLE ONLY figure
+    ADD CONSTRAINT figure_report_identifier_chapter_identifier_ordinal_key UNIQUE (report_identifier, chapter_identifier, ordinal);
+
+
+
 ALTER TABLE ONLY file
     ADD CONSTRAINT file_file_key UNIQUE (file);
 
@@ -717,6 +722,11 @@ ALTER TABLE ONLY file
 
 ALTER TABLE ONLY finding
     ADD CONSTRAINT finding_pkey PRIMARY KEY (identifier, report_identifier);
+
+
+
+ALTER TABLE ONLY finding
+    ADD CONSTRAINT finding_report_identifier_chapter_identifier_ordinal_key UNIQUE (report_identifier, chapter_identifier, ordinal);
 
 
 
@@ -872,6 +882,11 @@ ALTER TABLE ONLY subpubref
 
 ALTER TABLE ONLY "table"
     ADD CONSTRAINT table_pkey PRIMARY KEY (identifier, report_identifier);
+
+
+
+ALTER TABLE ONLY "table"
+    ADD CONSTRAINT table_report_identifier_chapter_identifier_ordinal_key UNIQUE (report_identifier, chapter_identifier, ordinal);
 
 
 

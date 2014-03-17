@@ -96,3 +96,5 @@
 0910_ordinal_sortkey.sql	913d3f2b56718465f8cf25171ceb60d7
 0920_journal_identifier.sql	916210454b810f2d2abb7503fc463f23
 0930_role_type_sort.sql	edbb092f3a857639fed5f4569c70cb0e
+0940_role_type_sort.sql	329cde8fdac15851e3f0f28ca7bbf102
+0960_figure_ordinal.sql	f6f63c789d8b942bda36e5409ff6a37e
