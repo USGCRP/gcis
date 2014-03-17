@@ -7,5 +7,7 @@
    prov:startedAtTime "<%= $activity->end_time %>";   
    sweet:EndTime "<%= $activity->start_time %>";  
    dcterms:SizeOrDuration "<%= $activity->duration %>";   
-
+   dcmitype:software "<%= $activity->computing_environment %>";
+   gcis:Software "<%= $activity->computing_environment %>";
+   sweet:Methodology "<%= $activity->computing_environment %>";
 %= include 'relationships';
