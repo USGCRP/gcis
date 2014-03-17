@@ -249,12 +249,6 @@ sub startup {
     my $chapter = $report->resource('chapter');
     my $ch = $r->lookup('select_chapter');
 
-    # Redirect from ordinals to names.
-    $ch->get('/table/:table_number' => [ table_number => qr/\d+/ ]
-      )->to('table#redirect_to_identifier')->name('table_redirect');
-    $ch->get('/finding/:finding_number' => [ finding_number => qr/\d+/ ]
-      )->to('finding#redirect_to_identifier')->name('finding_redirect');
-
     $ch->resource('finding');
     $ch->resource('figure');
     $ch->resource('table');

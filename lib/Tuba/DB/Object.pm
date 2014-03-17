@@ -75,6 +75,14 @@ sub uri {
     return $c->url_for( $route_name, \%url_params );
 }
 
+sub uri_with_format {
+    my $obj = shift;
+    my $c = shift;
+    my $uri = $obj->uri($c);
+    my $format = $c->stash('format') or return $uri;
+    return "$uri.$format";
+}
+
 # https://groups.google.com/forum/?fromgroups#!searchin/rose-db-object/update$20primary$20key/rose-db-object/f8evi1dhp7c/IPhUUFS9aiEJ
 sub update_primary_key {
     my $object = shift;

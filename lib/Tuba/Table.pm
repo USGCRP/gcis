@@ -44,7 +44,19 @@ sub show {
     my $identifier = $c->stash('table_identifier');
     my $meta = Table->meta;
     my $object = Table->new(identifier => $identifier, report_identifier => $report_identifier)
-        ->load(speculative => 1, with => [qw/chapter arrays/]) or return $c->render_not_found;
+        ->load(speculative => 1, with => [qw/chapter arrays/]);
+    if (!$object && ($identifier =~ /^[0-9]+$/) && $c->stash('chapter') ) {
+        my $chapter = $c->stash('chapter');
+        $object = Table->new(
+          report_identifier  => $c->stash('report_identifier'),
+          chapter_identifier => $chapter->identifier,
+          ordinal            => $identifier,
+        )->load(speculative => 1, with => [qw/chapter arrays/]);
+        my $uri = $object->uri_with_format($c);
+        return $c->redirect_to($object->uri_with_format($c)) if $object;
+    };
+    return $c->render_not_found unless $object;
+
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->SUPER::show(@_);

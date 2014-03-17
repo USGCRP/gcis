@@ -53,7 +53,7 @@ sub show {
           chapter_identifier => $chapter->identifier,
           ordinal            => $identifier,
         )->load(speculative => 1, with => [qw/chapter images/]);
-        return $c->redirect_to($object->uri($c));
+        return $c->redirect_to($object->uri_with_format($c)) if $object;
     };
     return $c->render_not_found unless $object;
 

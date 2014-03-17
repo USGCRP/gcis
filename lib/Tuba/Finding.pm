@@ -52,11 +52,19 @@ sub show {
     my $meta = Finding->meta;
     my $identifier = $c->stash('finding_identifier');
     my $report_identifier = $c->stash('report_identifier');
-    my $object = Finding->new(
-      identifier        => $identifier,
-      report_identifier => $report_identifier
-      )->load(speculative => 1)
-      or return $c->render_not_found;
+    my $object = $c->_this_object();
+
+    if (!$object && $identifier =~ /^[0-9]+$/ && $c->stash('chapter') ) {
+        my $chapter = $c->stash('chapter');
+        $object = Finding->new(
+          report_identifier  => $c->stash('report_identifier'),
+          chapter_identifier => $chapter->identifier,
+          ordinal            => $identifier,
+        )->load(speculative => 1);
+        return $c->redirect_to($object->uri_with_format($c)) if $object;
+    };
+
+    return $c->render_not_found unless $object;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }
