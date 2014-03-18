@@ -23,7 +23,7 @@
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
-% for my $col (qw/identifier mime_type file sha1 thumbnail/) {
+% for my $col (qw/identifier mime_type file sha1 size thumbnail/) {
     <tr>
         <td><%= $col %></td>
         <td><%= $object->$col // ''%></td>
