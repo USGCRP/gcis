@@ -195,6 +195,7 @@ sub upload_file {
         $pub->error("Could not determine mime type from filename $filename.  Supported suffixes are : ".join ',', $tfile->supported_suffixes);
         return 0;
     };
+    $tfile->size($file->size);
     $pub->add_files($tfile);
     $pub->save(audit_user => $c->user);
     $tfile->meta->error_mode('return');
