@@ -262,6 +262,12 @@ db/patches/0870_activity.sql
 db/patches/0880_methodology.sql
 db/patches/0890_report_attributes.sql
 db/patches/0900_contributor_ordinal.sql
+db/patches/0910_filesize.sql
+db/patches/0910_ordinal_sortkey.sql
+db/patches/0920_journal_identifier.sql
+db/patches/0930_role_type_sort.sql
+db/patches/0940_role_type_sort.sql
+db/patches/0960_figure_ordinal.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -345,6 +351,7 @@ lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/sparql.js
+lib/Tuba/files/public/logo-small.png
 lib/Tuba/files/public/owl/extra.css
 lib/Tuba/files/public/owl/gcis.ttl
 lib/Tuba/files/public/owl/jquery.js
@@ -353,6 +360,8 @@ lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/test.html
+lib/Tuba/files/public/usgcrp-globe-trans.png
+lib/Tuba/files/templates/activity/object.ttl.ep
 lib/Tuba/files/templates/activity/objects.html.ep
 lib/Tuba/files/templates/activity/relationships.html.ep
 lib/Tuba/files/templates/admin.html.ep
