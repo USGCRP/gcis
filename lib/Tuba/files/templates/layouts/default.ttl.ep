@@ -20,6 +20,9 @@
 @prefix frbr: <http://purl.org/vocab/frbr/core#> .
 @prefix dcat: <http://www.w3.org/ns/dcat#> .
 @prefix vivo: <http://vivoweb.org/ontology/core#> .
+@prefix sweet: <http://http://sweet.jpl.nasa.gov/2.3/sweetAll.owl#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix fabio: <http://purl.org/spar/fabio/> .
 % }
 
 %= content

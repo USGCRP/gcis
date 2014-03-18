@@ -14,9 +14,17 @@
    gcis:description "<%= $image->description %>";
    dcterms:identifier "<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>";
+   dwc:decimalLatitude "<%= $image->lat_max %>";
+   geo:lat "<%= $image->lat_max %>";
    gcis:southBoundLatitude "<%= $image->lat_min %>";
+   dwc:decimalLatitude "<%= $image->lat_min %>";
+   geo:lat "<%= $image->lat_min %>";
    gcis:westBoundLongitude "<%= $image->lon_max %>";
+   dwc:decimalLongitude "<%= $image->lon_max %>";
+   geo:long "<%= $image->lon_max %>";
    gcis:eastBoundLongitude "<%= $image->lon_min %>";
+   dwc:decimalLongitude "<%= $image->lon_min %>";
+   geo:long "<%= $image->lon_min %>";
    dcterms:dateSubmitted "<%= $image->submission_dt %>";
    dcterms:date "<%= $image->submission_dt %>";
    gcis:endedAt "<%= $image->time_end %>";
