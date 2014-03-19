@@ -3,9 +3,9 @@
    a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
    prov:startedAtTime "<%= $activity->start_time %>";
-   sweet:StartTime "<%= $activity->start_time %>";
+   ext:StartTime "<%= $activity->start_time %>";
    prov:startedAtTime "<%= $activity->end_time %>";   
-   sweet:EndTime "<%= $activity->start_time %>";  
+   ext:EndTime "<%= $activity->start_time %>";  
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>";   
    fabio:DataFile "<%= $activity->output_artifacts %>";
    dcmitype:software "<%= $activity->computing_environment %>";
