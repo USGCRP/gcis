@@ -10,5 +10,5 @@
    fabio:DataFile "<%= $activity->output_artifacts %>";
    dcmitype:software "<%= $activity->computing_environment %>";
    gcis:Software "<%= $activity->computing_environment %>";
-   sweet:Methodology "<%= $activity->methodology %>";
+   meth:Methodology "<%= $activity->methodology %>";
 %= include 'relationships';
