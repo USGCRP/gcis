@@ -187,6 +187,7 @@ CREATE TABLE dataset (
     lat_max numeric,
     lon_min numeric,
     lon_max numeric,
+    CONSTRAINT ck_dataset_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999)))
 );
 
