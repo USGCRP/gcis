@@ -1,0 +1,5 @@
+% my ($k, $v) = @$vals;
+<tr>
+    <td><%= $k %></td>
+    <td><%= ref($v) =~ /Tuba/ ? obj_link($v) : $v // '' %></td>
+</tr>
