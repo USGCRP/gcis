@@ -46,6 +46,8 @@ $t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)
         attrs => { description => $desc },
     });
 
+$t->get_ok("/reference/$id.yaml")->content_like(qr[À l'exception de l'abondance de lichens]);
+
 $t->get_ok("/reference/history/$id");
 my $body  = $t->tx->res->body;
 like $body, qr[this is an audit note], 'saved audit note in create';
