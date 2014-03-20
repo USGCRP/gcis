@@ -252,7 +252,12 @@ sub update_rel {
         $reference->save(audit_user => $c->user) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
-    # TODO allow deletion
+    if (my $which = $c->param('delete_subpub')) {
+        my $sub = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $which);
+        $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$sub not found");
+        $sub->delete or return $c->redirect_with_error(update_rel_form => $sub->error);
+        $c->stash(message => "saved changes");
+    }
     $c->redirect_without_error('update_rel_form');
 }
 

@@ -3,7 +3,7 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 
-% for my $method ($object->default_html_relationships($object)) {
+% for my $method (default_html_relationships($object)) {
 <tr>
 <td><%= $method %></td>
 <td class='row-fluid'>
