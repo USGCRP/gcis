@@ -142,7 +142,7 @@ sub make_tree_for_show {
 sub show {
     my $c = shift;
 
-    my $object = $c->stash('object') or die "no object";
+    my $object = $c->stash('object') or return $c->render_not_found;
     my $meta  = $c->stash('meta') || $object->meta;
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;

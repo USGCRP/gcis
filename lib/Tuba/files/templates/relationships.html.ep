@@ -3,7 +3,7 @@
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 
-% for my $method (default_html_relationships($object)) {
+% for my $method ($object->default_html_relationships($object)) {
 <tr>
 <td><%= $method %></td>
 <td class='row-fluid'>
@@ -17,19 +17,7 @@
 % }
 
 % if (my $pub = $object->get_publication) {
-<tr>
-    <td>GCMD Keywords</td>
-    <td>
-    % my $objs = $pub->gcmd_keywords;
-    % if ($objs && @$objs) {
-    <div class='row' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => $objs
-            %= end
-    </div>
-    % }
-    </td>
-</tr>
+% include 'keywords', pub => $pub;
 % }
 
 </table>

@@ -21,9 +21,13 @@
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Fields</caption>
+
+% for my $field (qw/identifier ordinal title caption source_citation report chapter/) {
+%= include pair => vals => [$field => $figure->$field];
+% }
 <tr>
-<td>chapter.ordinal</td>
-<td><%= $object->chapter ? $object->chapter->number : "[no chapter]" %>.<%= $object->ordinal %>
+    <td>chapter.ordinal</td>
+    <td><%= $object->chapter ? $object->chapter->number : "[no chapter]" %>.<%= $object->ordinal %>
 </td>
 </tr>
 <tr>
@@ -34,17 +38,34 @@
     </td>
 </tr>
 
-% for my $col (sort {$a->name cmp $b->name} $meta->columns) {
-% my $k = $col->accessor_method_name;
-% my $val = $object->$k;
-    <tr>
-        <td><nobr><%= labelize($k) %></nobr></td>
-        <td><%= $val %></td>
-    </tr>
+<% for my $field (qw/
+     time_start time_end
+     create_dt submission_dt
+     lat_min lat_max lon_min lon_max
+     attributes usage_limits/) { %>
+%= include pair => vals => [$field => $figure->$field];
 % }
+
+<tr>
+<td>images</td>
+<td class='row-fluid'>
+    <div class='row-fluid' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1;
+            %= end
+    </div>
+</td>
+
+</tr>
+<tr><td>files</td>
+<td>
+%= include 'pub_thumbnails', pub => $figure->get_publication(autocreate => 1), files => 1;
+</td>
+</tr>
+
 </table>
 
-%= include 'relationships', object => $object, meta => $meta;
+%= include 'keywords', pub => $figure->get_publication(autocreate => 1);
 
 %= include 'prov';
 
@@ -53,14 +74,5 @@
 %= include 'contributors';
 %= end
 </div>
-
-% if (my $pub = $object->get_publication) {
-<center>Files</center>
-<div class='row well'>
-<div class='span12'>
-%= include 'pub_thumbnails', pub => $pub, files => 1;
-</div>
-</div>
-% }
 
 
