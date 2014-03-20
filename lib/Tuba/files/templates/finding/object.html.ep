@@ -21,25 +21,9 @@
 
 % }
 
-%= include 'fields', open_table => 1;
-<tr>
-    <td>articles</td>
-    <td>
-        <div class='row-fluid' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => [ $journal->articles ];
-            %= end
-        </div>
-    </td>
-</tr>
-<tr>
-    <td>files</td>
-<td>
-%= include 'pub_thumbnails', pub => $journal->get_publication(autocreate => 1), files => 1;
-</td>
-</tr>
+%= include 'fields';
 
-</table>
+%= include_first [ "$table/relationships", "relationships" ], object => $object, meta => $meta;
 
 %= include 'prov';
 

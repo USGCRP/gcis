@@ -57,15 +57,16 @@
 </td>
 
 </tr>
-<tr><td>files</td>
+<tr>
+<td>files</td>
 <td>
 %= include 'pub_thumbnails', pub => $figure->get_publication(autocreate => 1), files => 1;
 </td>
 </tr>
 
-</table>
-
 %= include 'keywords', pub => $figure->get_publication(autocreate => 1);
+
+</table>
 
 %= include 'prov';
 

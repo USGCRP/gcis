@@ -1,0 +1,66 @@
+% layout 'default';
+
+<center>
+<h2>Chapter: <%= $object->stringify %></h2>
+</center>
+
+%= include 'history_modal';
+
+% if (user_can('update')) {
+<span style='float:right;'>
+<%= link_to obj_uri_for($object,'update_form') => class => "btn" => begin %>edit<%= end %>
+<a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+</span>
+% }
+
+<pre>
+<%= include 'other_formats'; =%>
+<%= include 'db_meta'; =%>
+</pre>
+
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Fields</caption>
+
+% for my $field (qw/report identifier number title url/) {
+%= include pair => vals => [$field => $chapter->$field];
+% }
+
+% my %list_urls = (
+%  figures => url_for('list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier }),
+%  findings => url_for('list_finding', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier }),
+%  tables => url_for('list_table', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier }),
+% );
+
+% for my $what (qw/figures findings tables/) {
+<tr>
+    <td><%= link_to $list_urls{$what} => begin %><%= $what %><%= end %></td>
+    <td>
+        <div class='row-fluid' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => [ $chapter->$what ];
+            %= end
+        </div>
+    </td>
+</tr>
+% }
+
+<tr>
+    <td>files</td>
+<td>
+%= include 'pub_thumbnails', pub => $chapter->get_publication(autocreate => 1), files => 1;
+</td>
+</tr>
+%= include 'keywords', pub => $chapter->get_publication(autocreate => 1);
+
+</table>
+
+
+%= include 'prov';
+
+<div class='row' style='position:relative;'>
+%= include 'collapsible', row_content => begin
+%= include 'contributors';
+%= end
+</div>
+
+

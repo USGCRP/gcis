@@ -1,5 +1,15 @@
 % my ($k, $v) = @$vals;
 <tr>
     <td><%= $k %></td>
-    <td><%= ref($v) =~ /Tuba/ ? obj_link($v) : $v // '' %></td>
+    <td>
+        % if (ref($v) =~ /Tuba/) {
+            %= obj_link($v)
+        % } elsif ($k eq 'url') {
+            %= link_to $v => target => "_blank" => begin
+            <%= $v %>
+            %= end
+        % } else {
+            <%= $v // '' %>
+        % }
+    </td>
 </tr>

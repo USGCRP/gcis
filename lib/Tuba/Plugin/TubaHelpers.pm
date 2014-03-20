@@ -334,7 +334,7 @@ sub register {
         my $rels = ( $c->stash('relationships') || $obj->meta->relationships );
 
         my @methods = grep {
-                ( $_ !~ /^_/ ) && ($_ ne 'contributors')
+                ( $_ !~ /^_/ ) && ($_ !~ /^(contributors|report|chapter)$/)
             } map $_->name, @$rels;
         return wantarray ? @methods : \@methods;
     });

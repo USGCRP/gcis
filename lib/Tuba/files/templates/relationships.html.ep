@@ -1,24 +1,26 @@
 %# send $object and $meta
+% if (my @rels = default_html_relationships($object)) {
 
-<table class='table table-condensed table-bordered table-striped'>
-<caption>Relationships</caption>
+    <table class='table table-condensed table-bordered table-striped'>
+    <caption>Relationships</caption>
 
-% for my $method (default_html_relationships($object)) {
-<tr>
-<td><%= $method %></td>
-<td class='row-fluid'>
-    <div class='row-fluid' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
-            %= end
-    </div>
-</td>
-</tr>
+    % for my $method (@rels) {
+    <tr>
+    <td><%= $method %></td>
+    <td class='row-fluid'>
+        <div class='row-fluid' style='position:relative;'>
+                %= include 'collapsible', row_content => begin
+                %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
+                %= end
+        </div>
+    </td>
+    </tr>
+    % }
+    % if (my $pub = $object->get_publication) {
+    % include 'keywords', pub => $pub;
+    % }
+
+    </table>
+
 % }
-
-% if (my $pub = $object->get_publication) {
-% include 'keywords', pub => $pub;
-% }
-
-</table>
 
