@@ -17,6 +17,9 @@ String.prototype.htmlEscape = function() {
 };
 (function($) {
     $.fn.hasScrollBar = function() {
+        if (this.height() < 0) {
+            return false;
+        }
         return this.get(0).scrollHeight > this.height();
     }
 })(jQuery);

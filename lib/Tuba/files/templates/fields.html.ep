@@ -36,6 +36,8 @@
                 %= obj_link($object->report)
             % } elsif ($k eq 'chapter_identifier')  {
                 %= obj_link($object->chapter)
+            % } elsif ($k eq 'journal_identifier')  {
+                %= obj_link($object->journal)
             % } else {
             <%= $val %>
             % }
