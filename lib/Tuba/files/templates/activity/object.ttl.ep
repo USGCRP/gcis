@@ -3,12 +3,12 @@
    a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
    prov:startedAtTime "<%= $activity->start_time %>";
-   sweet:StartTime "<%= $activity->start_time %>";
-   prov:startedAtTime "<%= $activity->end_time %>";   
-   sweet:EndTime "<%= $activity->start_time %>";  
+   ext:StartTime "<%= $activity->start_time %>";
+   prov:endedAtTime "<%= $activity->end_time %>";   
+   ext:EndTime "<%= $activity->end_time %>";  
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>";   
    fabio:DataFile "<%= $activity->output_artifacts %>";
    dcmitype:software "<%= $activity->computing_environment %>";
    gcis:Software "<%= $activity->computing_environment %>";
-   sweet:Methodology "<%= $activity->methodology %>";
+   meth:Methodology "<%= $activity->methodology %>";
 %= include 'relationships';
