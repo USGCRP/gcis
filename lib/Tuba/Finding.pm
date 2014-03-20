@@ -69,17 +69,5 @@ sub show {
     $c->SUPER::show(@_);
 }
 
-sub update_rel_form {
-    my $c = shift;
-    
-    $c->SUPER::update_rel_form(@_);
-}
-
-sub update_rel {
-    my $c = shift;
-
-    return $c->SUPER::update_rel(@_);
-}
-
 1;
 
