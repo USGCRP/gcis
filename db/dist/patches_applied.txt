@@ -99,3 +99,4 @@
 0940_role_type_sort.sql	329cde8fdac15851e3f0f28ca7bbf102
 0960_figure_ordinal.sql	f6f63c789d8b942bda36e5409ff6a37e
 0910_filesize.sql	0a6a3ebab878b44db23062d69828f5d5
+0970_remove_old_generics.sql	9d1f65987a4102263da7ab6d1247add2
