@@ -265,9 +265,12 @@ db/patches/0900_contributor_ordinal.sql
 db/patches/0910_filesize.sql
 db/patches/0910_ordinal_sortkey.sql
 db/patches/0920_journal_identifier.sql
+db/patches/0930_dataset_identifiers.sql
 db/patches/0930_role_type_sort.sql
 db/patches/0940_role_type_sort.sql
+db/patches/0950_publication_cleanup.sql
 db/patches/0960_figure_ordinal.sql
+db/patches/0970_remove_old_generics.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -367,6 +370,7 @@ lib/Tuba/files/templates/activity/relationships.html.ep
 lib/Tuba/files/templates/admin.html.ep
 lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.ttl.ep
+lib/Tuba/files/templates/article/object.html.ep
 lib/Tuba/files/templates/article/object.ttl.ep
 lib/Tuba/files/templates/article/objects.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
@@ -376,6 +380,7 @@ lib/Tuba/files/templates/auth/login_key.yaml.ep
 lib/Tuba/files/templates/auth/login_pw.html.ep
 lib/Tuba/files/templates/auth/login_tabs.html.ep
 lib/Tuba/files/templates/book/object.ttl.ep
+lib/Tuba/files/templates/chapter/object.html.ep
 lib/Tuba/files/templates/chapter/object.ttl.ep
 lib/Tuba/files/templates/chapter/objects.html.ep
 lib/Tuba/files/templates/chapter/relationships.html.ep
@@ -414,6 +419,7 @@ lib/Tuba/files/templates/figure/object.ttl.ep
 lib/Tuba/files/templates/figure/objects.html.ep
 lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/files.html.ep
+lib/Tuba/files/templates/finding/object.html.ep
 lib/Tuba/files/templates/finding/object.ttl.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
@@ -423,14 +429,17 @@ lib/Tuba/files/templates/generic/object.ttl.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/checkmet.html.ep
+lib/Tuba/files/templates/image/object.html.ep
 lib/Tuba/files/templates/image/object.ttl.ep
 lib/Tuba/files/templates/image/objects.html.ep
 lib/Tuba/files/templates/image/setmet.html.ep
 lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
+lib/Tuba/files/templates/journal/object.html.ep
 lib/Tuba/files/templates/journal/object.ttl.ep
 lib/Tuba/files/templates/journal/objects.html.ep
+lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
 lib/Tuba/files/templates/list_formats.html.ep
@@ -451,6 +460,7 @@ lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/pager.html.ep
+lib/Tuba/files/templates/pair.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/object.ttl.ep
 lib/Tuba/files/templates/person/objects.html.ep
