@@ -16,7 +16,7 @@
 
 <tr>
     <td>methodologies</td>
-    <td>
+    <td class='row-fluid'>
         %= include 'obj_thumbnails', objs => [ $activity->methodologies ],
     </td>
 </tr>
