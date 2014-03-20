@@ -1,0 +1,52 @@
+
+% layout 'default';
+% my $table = $object->meta->table;
+
+<center>
+<h2><%= $table %> : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
+
+% }
+
+%= include 'fields', open_table => 1;
+
+<tr>
+    <td>figures</td>
+    <td>
+        <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => [ $image->figures ], size => 'span3';
+            %= end
+        </div>
+    </td>
+</tr>
+<tr>
+    <td>files</td>
+<td>
+%= include 'pub_thumbnails', pub => $image->get_publication(autocreate => 1), files => 1;
+</td>
+</tr>
+
+</table>
+
+%= include 'prov';
+
+<div class='row collapse-wrapper'>
+%= include 'collapsible', row_content => begin
+%= include 'contributors';
+%= end
+</div>
+
