@@ -101,3 +101,4 @@
 0910_filesize.sql	0a6a3ebab878b44db23062d69828f5d5
 0970_remove_old_generics.sql	9d1f65987a4102263da7ab6d1247add2
 0930_dataset_identifiers.sql	8f18472af841a4200bc269067d105dba
+0950_publication_cleanup.sql	fa014c7ab207b34485c1c0a02f03fb78
