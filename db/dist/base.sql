@@ -61,7 +61,8 @@ CREATE TABLE activity (
     duration interval,
     computing_environment character varying,
     output_artifacts character varying,
-    CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text))
+    CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text)),
+    CONSTRAINT ck_activity_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -1045,6 +1046,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organizatio
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON activity FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON methodology FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1166,6 +1175,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_map FOR EACH STA
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON organization_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON activity FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON methodology FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
