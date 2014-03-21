@@ -525,13 +525,14 @@ sub update_prov {
 
     my ($parent_pub,$rel,$note,$activity_identifier);
     if ($json) {
-        my $parent_uri  = $json->{parent_uri} or return $c->update_error("Missing parent_uri");
-        my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
-        $parent_pub     = $parent->get_publication(autocreate => 1) or return $c->update_error("$parent_uri is not a publication");
-        $parent_pub->save(audit_user => $c->user) unless $parent_pub->id;
-        $rel  = $json->{parent_rel} or return $c->update_error("Missing parent_rel");
-        $note = $json->{note};
-        $activity_identifier = $json->{activity};
+        if (my $parent_uri  = $json->{parent_uri}) {
+            my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
+            $parent_pub     = $parent->get_publication(autocreate => 1) or return $c->update_error("$parent_uri is not a publication");
+            $parent_pub->save(audit_user => $c->user) unless $parent_pub->id;
+            $rel  = $json->{parent_rel} or return $c->update_error("Missing parent_rel");
+            $note = $json->{note};
+            $activity_identifier = $json->{activity};
+        }
     }  else {
         my $parent_str   = $c->param('parent') or return $c->render;
         my $parent       = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
@@ -542,7 +543,8 @@ sub update_prov {
         $activity_identifier = $c->param('activity');
     }
 
-    return $c->render unless $parent_pub;
+    return $c->redirect_without_error('update_prov_form') unless $parent_pub;
+
     if ($activity_identifier) {
         unless ($json) {
             my $activity = $c->_text_to_object($activity_identifier)
@@ -1151,7 +1153,7 @@ sub redirect_without_error {
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
     $c->respond_to(
         html => sub { shift->redirect_to($uri) },
-        json => sub { shift->render(json => { status => 'ok' }) }
+        json => sub { shift->render(json => { status => 'ok' }) },
     );
 }
 

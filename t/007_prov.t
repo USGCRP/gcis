@@ -70,7 +70,9 @@ $t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
 
 # Remove the association between this dataset and that figure.
 $t->post_ok(
-  "/report/pizzabrain/figure/prov/pizza" => json => {
+  "/report/pizzabrain/figure/prov/pizza"
+  => { Accept => 'application/json' }
+  => json => {
     delete => {
         parent_uri => "/dataset/dough",
         parent_rel => "prov:wasBaked",
