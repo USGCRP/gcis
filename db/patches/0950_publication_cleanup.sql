@@ -5,7 +5,7 @@ delete from report where identifier in (
     left join reference r on r.child_publication_id = p.id
     left join methodology m on m.publication_id = p.id
     where r.identifier is null and m.publication_id is null
-    and g.identifier != 'nca3'
+    and g.identifier != 'nca3' and g.identifier != 'nca3draft'
 );
 
 delete from webpage where identifier in (
