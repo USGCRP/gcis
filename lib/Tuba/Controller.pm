@@ -18,6 +18,7 @@ use File::Temp;
 use YAML qw/Dump/;
 use Encode qw/encode decode/;
 use Tuba::Util qw/human_duration/;
+use Mojo::Util qw/camelize decamelize/;
 use Data::Dumper;
 
 =head2 list
@@ -55,7 +56,9 @@ sub common_tree_fields {
     if (my $fmt = $c->stash('format')) {
         $href .= ".$fmt";
     }
-    return ( uri => $uri, href => $href );
+    return ( uri => $uri, href => $href,
+        $c->maybe_include_generic_pub_rels($obj), # keywords, regions
+    );
 }
 
 sub list {
@@ -132,10 +135,21 @@ for showing.
 sub make_tree_for_show {
     my $c = shift;
     my $obj = shift;
-    return $obj->as_tree(c => $c,
-        ( $c->param('brief') ? (bonsai => 1) : ()),
-        ( $c->param('with_gcmd') ? (with_gcmd => 1) : ())
-    );
+    my %params;
+    $params{with_gcmd} = 1 if $c->param('with_gcmd');
+    $params{with_regions} = 1 if $c->param('with_regions');
+    $params{bonsai} = 1 if $c->param('brief');
+    return $obj->as_tree(c => $c, %params);
+}
+
+sub maybe_include_generic_pub_rels {
+    my $c = shift;
+    my $obj = shift;
+    my $pub = $obj->get_publication or return ();
+    my $tree = {};
+    $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $c->param('with_gcmd');
+    $tree->{regions} = [ map $_->as_tree(@_), $pub->regions] if $c->param('with_regions');
+    return %$tree;
 }
 
 
@@ -795,6 +809,44 @@ sub update_contributors {
     return $c->redirect_without_error('update_contributors_form');
 }
 
+sub _update_pub_many {
+    my $c = shift;
+    my $what = shift;
+    my $obj = $c->_this_object or return $c->render_not_found;
+    my $pub = $obj->get_publication(autocreate => 1);
+    my $cwhat = "Tuba::DB::Object::$what";
+    my $dwhat = decamelize($what);
+    my $pwhat = $dwhat.'s';
+    my $mwhat = "Tuba::DB::Object::Publication${what}Map";
+
+    $pub->save(audit_user => $c->user) unless $pub->id;
+    if (my $json = $c->req->json) {
+        my $delete_extra = delete $json->{_delete_extra};
+        $json = [ $json ] if ref($json) eq 'HASH';
+        my %to_delete = map { ($_->identifier => 1) } @{ $pub->$pwhat };
+
+        for my $k (@$json) {
+            ref $k eq 'HASH' or return $c->render(json => { error => { data => $k, msg => "not a hash" }} );
+            my $kw = exists $k->{identifier} ? $cwhat->new(%$k) : $cwhat->new_from_flat(%$k);
+            $kw->load(speculative => 1) or return $c->render(json => { error => { data => $k, msg => 'not found' }} );
+            my $method = "add_${dwhat}s";
+            $pub->$method($kw);
+            delete $to_delete{$kw->identifier};
+        }
+        $pub->save(audit_user => $c->user);
+        if ($delete_extra) {
+            for my $extra (keys %to_delete) {
+                $mwhat->new(
+                  publication        => $pub->id,
+                  "${dwhat}_identifier" => $extra
+                )->delete;
+            }
+        }
+        return $c->render(json => 'ok');
+    }
+    return $c->render(text => "html not implemented"); # handled in update_rel.
+}
+
 =head2 update_keywords
 
 Assign GCMD keywords to a resource.
@@ -802,34 +854,17 @@ Assign GCMD keywords to a resource.
 =cut
 
 sub update_keywords {
-    my $c = shift;
-    my $obj = $c->_this_object or return $c->render_not_found;
-    my $pub = $obj->get_publication(autocreate => 1);
-    $pub->save(audit_user => $c->user) unless $pub->id;
-    if (my $json = $c->req->json) {
-        my $delete_extra = delete $json->{_delete_extra};
-        $json = [ $json ] if ref($json) eq 'HASH';
-        my %to_delete = map { ($_->identifier => 1) } @{ $pub->gcmd_keywords };
+    return shift->_update_pub_many('GcmdKeyword');
+}
 
-        for my $k (@$json) {
-            ref $k eq 'HASH' or return $c->render(json => { error => { data => $k, msg => "not a hash" }} );
-            my $kw = exists $k->{identifier} ? GcmdKeyword->new(%$k) : GcmdKeyword->new_from_flat(%$k);
-            $kw->load(speculative => 1) or return $c->render(json => { error => { data => $k, msg => 'not found' }} );
-            $pub->add_gcmd_keywords($kw);
-            delete $to_delete{$kw->identifier};
-        }
-        $pub->save(audit_user => $c->user);
-        if ($delete_extra) {
-            for my $extra (keys %to_delete) {
-                PublicationGcmdKeywordMap->new(
-                  publication        => $pub->id,
-                  gcmd_keyword_identifier => $extra
-                )->delete;
-            }
-        }
-        return $c->render(json => 'ok');
-    }
-    return $c->render(text => "html not implemented"); # TODO
+=head2 update_regions
+
+Assign regions to a resource.
+
+=cut
+
+sub update_regions {
+    return shift->_update_pub_many('Region');
 }
 
 =head2 update_rel
@@ -846,21 +881,28 @@ sub update_rel {
     my $pub = $object->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user) unless $pub->id;
 
-    # Update generic relationships for all publication types.
-    if (my $new = $c->param('new_gcmd_keyword')) {
-        my $kwd = GcmdKeyword->new_from_autocomplete($new);
-        $pub->add_gcmd_keywords($kwd);
-        $pub->save(audit_user => $c->user) or do {
-            $c->flash(error => $object->error);
-            return $c->redirect_to($next);
-        };
-    }
-    for my $id ($c->param('delete_gcmd_keyword')) {
-        next unless $id;
-        PublicationGcmdKeywordMaps->delete_objects(
-            { gcmd_keyword_identifier => $id,
-              publication_id => $pub->id });
-        $c->flash(message => 'Saved changes');
+    # Update generic many-many relationships for all publication types.
+    for my $what (qw/GcmdKeyword Region/) {
+        my $cwhat = "Tuba::DB::Object::$what";
+        my $dwhat = decamelize($what);
+        my $mwhat = "Tuba::DB::Object::Publication${what}Map::Manager";
+
+        if (my $new = $c->param("new_$dwhat")) {
+            my $kwd = $cwhat->new_from_autocomplete($new);
+            my $add_method = "add_${dwhat}s";
+            $pub->$add_method($kwd);
+            $pub->save(audit_user => $c->user) or do {
+                $c->flash(error => $object->error);
+                return $c->redirect_to($next);
+            };
+        }
+        for my $id ($c->param("delete_$dwhat")) {
+            next unless $id;
+            $mwhat->delete_objects(
+                { "${dwhat}_identifier" => $id,
+                  publication_id => $pub->id });
+            $c->flash(message => 'Saved changes');
+        }
     }
 
     $c->respond_to(

@@ -185,7 +185,6 @@ sub startup {
           $authed->get("/form/update/*$identifier" => \%defaults)      ->to("$cname#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/*$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/form/update_rel/*$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
-          $authed->get("/form/update_keywords/*$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/*$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
           $authed->get("/form/update_contributors/*$identifier" => \%defaults)->to("$cname#update_contributors_form")->name("update_contributors_form_$name");
           $authed->get("/history/*$identifier" => \%defaults)          ->to("$cname#history")    ->name("history_$name");
@@ -194,7 +193,8 @@ sub startup {
                                                    ->to("$cname#update")     ->name("update_$name");
           $authed->post("/prov/*$identifier")      ->to("$cname#update_prov")->name("update_prov_$name");
           $authed->post("/rel/*$identifier")       ->to("$cname#update_rel")->name("update_rel_$name");
-          $authed->post("/keywords/*$identifier")       ->to("$cname#update_keywords")->name("update_keywords_$name");
+          $authed->post("/keywords/*$identifier")  ->to("$cname#update_keywords")->name("update_keywords_$name");
+          $authed->post("/regions/*$identifier")   ->to("$cname#update_regions")->name("update_regions_$name");
           $authed->post("/files/*$identifier")     ->to("$cname#update_files")->name("update_files_$name");
           $authed->post("/contributors/*$identifier")     ->to("$cname#update_contributors")->name("update_contributors_$name");
           $authed->put("/files/*$identifier/#filename") # a default filename for PUTs would be ambiguous.
@@ -203,7 +203,6 @@ sub startup {
           $authed->get("/form/update/:$identifier")                    ->to("$cname#update_form")->name("update_form_$name");
           $authed->get("/form/update_prov/:$identifier" => \%defaults) ->to("$cname#update_prov_form")->name("update_prov_form_$name");
           $authed->get("/form/update_rel/:$identifier" => \%defaults)  ->to("$cname#update_rel_form")->name("update_rel_form_$name");
-          $authed->get("/form/update_keywords/:$identifier" => \%defaults)  ->to("$cname#update_keywords_form")->name("update_keywords_form_$name");
           $authed->get("/form/update_files/:$identifier" => \%defaults)->to("$cname#update_files_form")->name("update_files_form_$name");
           $authed->get("/form/update_contributors/:$identifier" => \%defaults)->to("$cname#update_contributors_form")->name("update_contributors_form_$name");
           $authed->get("/history/:$identifier" => \%defaults)    ->to("$cname#history")    ->name("history_$name");
@@ -211,7 +210,8 @@ sub startup {
           $authed->post(":$identifier" => \%defaults)            ->to("$cname#update")     ->name("update_$name");
           $authed->post("/prov/:$identifier" => \%defaults)      ->to("$cname#update_prov")->name("update_prov_$name");
           $authed->post("/rel/:$identifier" => \%defaults)       ->to("$cname#update_rel")->name("update_rel_$name");
-          $authed->post("/keywords/:$identifier" => \%defaults)       ->to("$cname#update_keywords")->name("update_keywords_$name");
+          $authed->post("/keywords/:$identifier" => \%defaults)  ->to("$cname#update_keywords")->name("update_keywords_$name");
+          $authed->post("/regions/:$identifier" => \%defaults)   ->to("$cname#update_regions")->name("update_regions_$name");
           $authed->post("/files/:$identifier" => \%defaults)     ->to("$cname#update_files")->name("update_files_$name");
           $authed->post("/contributors/:$identifier" => \%defaults)     ->to("$cname#update_contributors")->name("update_contributors_$name");
           $authed->put("/files/:$identifier/#filename" => {filename => 'unnamed', %defaults })
@@ -308,8 +308,8 @@ sub startup {
     $r->post('/person/lookup/name')->to('person#lookup_name');
     $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
 
-    # GcmdKeyword
     $r->resource('gcmd_keyword');
+    $r->resource('region');
 
     # Others, some of which aren't yet implemented.
     $r->resource($_) for qw/dataset model software algorithm activity

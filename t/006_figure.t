@@ -133,6 +133,24 @@ $t->post_ok(
 $t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_gcmd=1")
     ->json_is( "/gcmd_keywords/0/identifier", "001f18d3-7e61-430b-9883-1960c6256fe5" );
 
+# Create a region.
+$t->post_ok(
+  '/region', json =>
+    {
+      identifier => "bermuda_triangle",
+      label      => "Bermuda Triangle",
+      description => "The Bermuda Triangle, also known as the Devil's Triangle, is a loosely defined region in the western part of the North Atlantic Ocean, where a number of aircraft and ships are said to have disappeared under mysterious circumstances."
+    }
+);
+
+# Assign it to the figure.
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/regions/orange" => json =>
+    {identifier => "bermuda_triangle"})->status_is(200);
+
+$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_regions=1")
+    ->json_is( "/regions/0/identifier", "bermuda_triangle" );
+
 $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
     {delete_image_identifier => $uuid, title => "Orange Carrots"})
   ->status_is(200);

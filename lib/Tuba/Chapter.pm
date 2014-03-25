@@ -93,7 +93,7 @@ sub make_tree_for_show {
       url               => $chapter->url,
       title             => $chapter->title,
       $c->common_tree_fields($chapter),
-      }
+    };
 }
 
 sub _this_object {

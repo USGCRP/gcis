@@ -40,10 +40,19 @@
 <label class='control-label'>
     GCMD Keywords
 </label>
-
 <div class="controls" style='border:1px solid #ddd;'>
 %= include 'controls/gcmd_keywords'
 </div>
+
+<label class='control-label'>
+    Regions
+</label>
+
+
+<div class="controls" style='border:1px solid #ddd;'>
+    %= include 'controls/regions'
+</div>
+
 </div>
 % }
 
