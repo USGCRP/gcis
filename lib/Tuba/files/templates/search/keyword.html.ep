@@ -1,12 +1,42 @@
 % layout 'default';
 
-% my @clone = @$results;
+%= form_for 'search' => class => "form form-inline well" => begin
+<label>Search for </label>
+%= text_field 'q'
+<label> in</label>
+%= select_field 'type' => [ 'all', db_identifiers('publication_type')];
+and show
+%= select_field 'format' => [ 'detailed', 'brief'];
+match results
 <center>
-    Searched for <b><%= param 'q' %></b>.<br>
-    <%= @clone %> result<%= @clone==1 ? '' : 's' %>
+%= submit_button 'search', class => "btn btn-search btn-primary"
+<br>
+<small>When search across all types, only the first 10 results for each type are shown.</small>
 </center>
-% while (my @next = splice(@clone, 0, 6)) {
-    <div class='row'>
-        %= include 'obj_thumbnails', objs => \@next;
+%= end
+
+% my @clone = @$results;
+<p class='alert'>
+Your search returned <%= $result_count_text %>
+</p>
+
+% if ( ( (param 'format') // '') eq 'detailed') {
+    % for my $obj (@clone) {
+    <div class='row-fluid'>
+        <div class='span12'>
+            <h4>
+            <%= obj_link_to $obj, 'show'  => begin %>
+            <%= $obj->meta->table %> <%= $obj->stringify(brief => 1) %>
+            <%= end %><br>
+            </h4>
+            <p><%= $obj->as_text %></p>
+        </div>
     </div>
+    % }
+% } else {
+    % while (my @next = splice(@clone, 0, 6)) {
+        <div class='row-fluid'>
+            %= include 'obj_thumbnails', objs => \@next;
+        </div>
+    % }
 % }

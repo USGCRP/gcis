@@ -357,6 +357,13 @@ sub register {
         }
         return wantarray ? @$got : $got;
     });
+    $app->helper(db_identifiers => sub {
+            my $c = shift;
+            my $table = shift;
+            my @ids = map $_->identifier,
+                @{ $c->orm->{$table}->{mng}->get_objects(all => 1) };
+            return wantarray ? @ids : \@ids;
+    }); 
 }
 
 1;

@@ -10,15 +10,28 @@ sub keyword {
     my $c = shift;
     my $q = $c->param('q') or return $c->render(results => []);
 
-    my $all = $c->orm;
+    my $orm = $c->orm;
+    my @tables = keys %$orm;
+    my $type = $c->param('type');
+    @tables = ( $type ) if exists($orm->{$type});
     my @results;
-    for my $table (keys %$all) {
+    my $result_count_text;
+    for my $table (@tables) {
         next if $table eq 'publication';
-        my $manager = $all->{$table}->{mng};
+        my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        push @results, $manager->dbgrep(query_string => $q, user => $c->user, limit => 10);
+        push @results, $manager->dbgrep(query_string => $q, user => $c->user, limit => (@tables > 1 ? 10 : 50));
     }
 
+    $result_count_text = scalar @results;
+    if (@tables == 1 && $result_count_text == 50) {
+        $result_count_text = "more than 50 results.  Only showing the first 50.";
+    } else {
+        $result_count_text = "$result_count_text result";
+        $result_count_text .= 's' if @results==1;
+        $result_count_text .= '.';
+    }
+    $c->stash(result_count_text => $result_count_text);
     $c->render(results => \@results);
 }
 
