@@ -6,4 +6,5 @@ update report g
 from
     publication p inner join reference r on r.child_publication_id = p.id
     where p.publication_type_identifier='report' and p.fk->'identifier' = g.identifier
+    and r.attrs->'Year' similar to '[0-9]+';
 
