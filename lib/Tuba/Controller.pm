@@ -541,6 +541,7 @@ sub update_prov {
         $rel  = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
         $note = $c->param('note');
         $activity_identifier = $c->param('activity');
+        $activity_identifier = undef unless defined($activity_identifier) && length($activity_identifier);
     }
 
     return $c->redirect_without_error('update_prov_form') unless $parent_pub;
