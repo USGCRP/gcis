@@ -65,6 +65,7 @@
 </tr>
 
 %= include 'keywords', pub => $figure->get_publication(autocreate => 1);
+%= include 'regions', pub => $figure->get_publication(autocreate => 1);
 
 </table>
 

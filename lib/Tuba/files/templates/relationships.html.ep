@@ -18,6 +18,7 @@
     % }
     % if (my $pub = $object->get_publication) {
     % include 'keywords', pub => $pub;
+    % include 'regions', pub => $pub;
     % }
 
     </table>

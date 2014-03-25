@@ -51,6 +51,7 @@
 </td>
 </tr>
 %= include 'keywords', pub => $chapter->get_publication(autocreate => 1);
+%= include 'regions', pub => $chapter->get_publication(autocreate => 1);
 
 </table>
 
