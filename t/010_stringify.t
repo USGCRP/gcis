@@ -21,6 +21,7 @@ my %r = (
     title      => "Test Report",
     url        => 'http://example.com/foo',
     doi        => '10.123/45',
+    publication_year => '2000',
     report_type_identifier => undef,
 );
 $t->post_ok( "/report" => form => \%r )->status_is(200);
@@ -34,7 +35,7 @@ $t->get_ok("/report/test-report.json")->json_is(
   }
 );
 
-$t->get_ok("/report/test-report.txt")->content_is("Test Report, <http://example.com/foo> (10.123/45)");
+$t->get_ok("/report/test-report.txt")->content_is("2000: Test Report, <doi : 10.123/45>");
 
 $t->delete_ok('/report/test-report');
 

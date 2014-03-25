@@ -23,6 +23,7 @@ sub new_from_reference {
     }
 
     $s->title($title);
+    $s->publication_year($ref->attr('year'));
     return $s;
 }
 
@@ -38,8 +39,11 @@ sub organizations {
 sub as_text {
     my $s = shift;
     # TODO authors, year : title <url>
-    my @contributors = $s->get_publication->contributors_having_role('author');
-    my $cons = join ',', map $_->as_text, @contributors;
+    my $cons = "";
+    if (my $pub = $s->get_publication) {
+        my @contributors = $pub->contributors_having_role('author');
+        $cons = join ',', map $_->as_text, @contributors;
+    }
     return sprintf('%s %04d: %s, <%s>',
         $cons,
         $s->publication_year,
