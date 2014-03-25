@@ -37,13 +37,15 @@ sub organizations {
 
 sub as_text {
     my $s = shift;
-    if ($s->title && $s->doi && $s->url) {
-        return sprintf('%s, <%s> (%s)', $s->title, $s->url, $s->doi);
-    }
-    if ($s->title && $s->url) {
-        return sprintf('%s, <%s>', $s->title, $s->url);
-    }
-    return $s->title;
+    # TODO authors, year : title <url>
+    my @contributors = $s->get_publication->contributors_having_role('author');
+    my $cons = join ',', map $_->as_text, @contributors;
+    return sprintf('%s %04d: %s, <%s>',
+        $cons,
+        $s->publication_year,
+        $s->title,
+        $s->doi ? 'doi : '.$s->doi : $s->url,
+    );
 }
 
 sub reference_count {

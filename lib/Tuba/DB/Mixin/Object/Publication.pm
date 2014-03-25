@@ -235,6 +235,17 @@ sub contributors_grouped {
     return (\@cons, $role_count, $person_count);
 }
 
+sub contributors_having_role {
+    my $object = shift;
+    my $role_type_identifier = shift or die 'missing role';
+    my @cons = @{ Tuba::DB::Object::Contributor::Manager->get_objects(
+        query => [ publication_id => $object->id, role_type_identifier => $role_type_identifier ],
+        with_objects => [ qw/publication_contributor_maps/ ],
+    ) };
+    return wantarray ? @cons : \@cons;
+}
+
+
 sub references_url {
     # If there is a URL to list the references, it goes here.
     my $pub = shift;

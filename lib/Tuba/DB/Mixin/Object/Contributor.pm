@@ -21,6 +21,14 @@ sub stringify {
     return sprintf('Unknown %s : %s ',$role, $c->id );
 }
 
+sub as_text {
+    my $c = shift;
+    if (my $person = $c->person) {
+        return sprintf('%s (%s)', $person->stringify, $c->organization->stringify);
+    }
+    return $c->organization->stringify;
+}
+
 sub uri {
     my $s = shift;
     my $c = shift;

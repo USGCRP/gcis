@@ -16,11 +16,14 @@ sub keyword {
     @tables = ( $type ) if exists($orm->{$type});
     my @results;
     my $result_count_text;
+    my $hit_max = 0;
     for my $table (@tables) {
         next if $table eq 'publication';
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        push @results, $manager->dbgrep(query_string => $q, user => $c->user, limit => (@tables > 1 ? 10 : 50));
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, limit => (@tables > 1 ? 10 : 50));
+        $hit_max = 1 if @these==10 && @tables > 1;
+        push @results, @these;
     }
 
     $result_count_text = scalar @results;
@@ -28,8 +31,11 @@ sub keyword {
         $result_count_text = "more than 50 results.  Only showing the first 50.";
     } else {
         $result_count_text = "$result_count_text result";
-        $result_count_text .= 's' if @results==1;
+        $result_count_text .= 's' unless @results==1;
         $result_count_text .= '.';
+        $result_count_text .= "  Only the first 10 results of each type are shown. ".
+            "To see more, chose a type in the form above." if $hit_max;
+
     }
     $c->stash(result_count_text => $result_count_text);
     $c->render(results => \@results);
