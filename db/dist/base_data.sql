@@ -14,6 +14,7 @@ SET client_min_messages = warning;
 --
 
 COPY report_type (identifier) FROM stdin;
+technical_input
 \.
 
 
@@ -21,7 +22,7 @@ COPY report_type (identifier) FROM stdin;
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year) FROM stdin;
 \.
 
 
@@ -337,6 +338,32 @@ SELECT pg_catalog.setval('publication_id_seq', 1, false);
 --
 
 COPY publication_map (child, relationship, parent, note, activity_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: region; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY region (identifier, label, description) FROM stdin;
+northeast-us	Northeast	Connecticut, Delaware, District of Columbia, Maine, Maryland, Massachusetts, New Hampshire, New York, Pennsylvania, Rhode  Island, Vermont, West Virginia
+southeast-us	Southeast and Caribbean	Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina, Puerto Rico, Tennessee, South Carolina, U.S. Virgin Islands, Virginia
+midwest-us	Midwest	Illinois, Indiana, Iowa, Michigan, Minnesota, Missouri, Ohio, Wisconsin
+greatplains-us	Great Plains	Kansas, Montana, Nebraska, North Dakota, Oklahoma, South Dakota, Texas, Wyoming
+northwest-us	Northwest	Idaho, Oregon, Washington
+southwest-us	Southwest	Arizona, California, Colorado, Nevada, New Mexico, Utah
+alaska-us	Alaska	Alaska and surrounding waters
+hawaii-pacific-us	Hawaiʻi and U.S. Affiliated Pacific Islands	Commonwealth of the Northern Mariana Islands, Federated States of Micronesia, Hawai‘i,Republic of the Marshall Islands, Republic of Palau, Territory of American Samoa, Territory of Guam
+coasts-us	U.S. Coasts	\N
+oceans	Oceans	\N
+\.
+
+
+--
+-- Data for Name: publication_region_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_region_map (publication_id, region_identifier) FROM stdin;
 \.
 
 

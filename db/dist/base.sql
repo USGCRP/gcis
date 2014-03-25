@@ -479,6 +479,13 @@ CREATE TABLE publication_map (
 
 
 
+CREATE TABLE publication_region_map (
+    publication_id integer NOT NULL,
+    region_identifier character varying NOT NULL
+);
+
+
+
 CREATE TABLE publication_type (
     identifier character varying NOT NULL,
     "table" character varying
@@ -515,6 +522,15 @@ COMMENT ON COLUMN reference.publication_id IS 'Primary publication whose bibliog
 
 
 
+CREATE TABLE region (
+    identifier character varying NOT NULL,
+    label character varying NOT NULL,
+    description character varying,
+    CONSTRAINT ck_region_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+);
+
+
+
 CREATE TABLE report (
     identifier character varying NOT NULL,
     title character varying,
@@ -524,7 +540,9 @@ CREATE TABLE report (
     report_type_identifier character varying,
     summary character varying,
     frequency interval,
-    CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    publication_year integer,
+    CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999)))
 );
 
 
@@ -823,6 +841,11 @@ ALTER TABLE ONLY publication
 
 
 
+ALTER TABLE ONLY publication_region_map
+    ADD CONSTRAINT publication_region_map_pkey PRIMARY KEY (publication_id, region_identifier);
+
+
+
 ALTER TABLE ONLY publication
     ADD CONSTRAINT publication_type_fk UNIQUE (publication_type_identifier, fk);
 
@@ -850,6 +873,11 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY region
+    ADD CONSTRAINT region_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1054,6 +1082,14 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON methodology
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON region FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_region_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1183,6 +1219,14 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON activity FOR EACH STATEMENT E
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON methodology FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON region FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_region_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1457,6 +1501,16 @@ ALTER TABLE ONLY publication_map
 
 ALTER TABLE ONLY publication_map
     ADD CONSTRAINT publication_map_parent_fkey FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_region_map
+    ADD CONSTRAINT publication_region_map_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY publication_region_map
+    ADD CONSTRAINT publication_region_map_region_identifier_fkey FOREIGN KEY (region_identifier) REFERENCES region(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
