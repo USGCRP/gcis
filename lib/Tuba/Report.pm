@@ -154,6 +154,7 @@ sub make_tree_for_show {
       href                    => $href,
       url                     => $report->url,
       identifier              => $report->identifier,
+      publication_year        => $report->publication_year,
       contributors => [map $_->as_tree, $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,

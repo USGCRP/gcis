@@ -35,7 +35,7 @@ $t->get_ok("/report/test-report.json")->json_is(
   }
 );
 
-$t->get_ok("/report/test-report.txt")->content_is("2000: Test Report, <doi : 10.123/45>");
+$t->get_ok("/report/test-report.txt")->content_is(" 2000: Test Report, <doi : 10.123/45>");
 
 $t->delete_ok('/report/test-report');
 
