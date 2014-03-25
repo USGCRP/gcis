@@ -1,0 +1,14 @@
+<tr>
+    <td>Regions</td>
+    <td>
+        % my $objs = $pub->regions;
+    % if ($objs && @$objs) {
+    <div class='row' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => $objs
+            %= end
+    </div>
+    % }
+    </td>
+</tr>
+
