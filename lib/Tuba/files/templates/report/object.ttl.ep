@@ -25,6 +25,9 @@
    dcterms:title "<%= $report->title %>";
    rdfs:label "<%= $report->title %>";
    prov:label "<%= $report->title %>";
+   dcterms:year "<%= $report->year %>";
+   xsd:gYear "<%= $report->year %>";
+   dwc:year "<%= $report->year %>";
    dcterms:type "<%= $report->report_type_identifier %>";
    dcterms:frequency "<%= $report->frequency %>";
    dcterms:description "<%= $report->summary %>";
