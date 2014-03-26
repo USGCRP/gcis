@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.67
+    version: 0.68
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -156,6 +156,8 @@ provides:
     file: lib/Tuba/Publication.pm
   Tuba::Reference:
     file: lib/Tuba/Reference.pm
+  Tuba::Region:
+    file: lib/Tuba/Region.pm
   Tuba::Report:
     file: lib/Tuba/Report.pm
   Tuba::Search:
@@ -191,4 +193,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 0.67
+version: 0.68

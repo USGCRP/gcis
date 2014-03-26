@@ -55,7 +55,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "0.67"
+         "version" : "0.68"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -264,6 +264,9 @@
       "Tuba::Reference" : {
          "file" : "lib/Tuba/Reference.pm"
       },
+      "Tuba::Region" : {
+         "file" : "lib/Tuba/Region.pm"
+      },
       "Tuba::Report" : {
          "file" : "lib/Tuba/Report.pm"
       },
@@ -281,5 +284,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "0.67"
+   "version" : "0.68"
 }

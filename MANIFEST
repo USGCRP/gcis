@@ -270,7 +270,11 @@ db/patches/0930_role_type_sort.sql
 db/patches/0940_role_type_sort.sql
 db/patches/0950_publication_cleanup.sql
 db/patches/0960_figure_ordinal.sql
+db/patches/0970_activity.sql
 db/patches/0970_remove_old_generics.sql
+db/patches/0980_report_fields.sql
+db/patches/0990_report_type.sql
+db/patches/1000_region.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -401,6 +405,7 @@ lib/Tuba/files/templates/controls/one_to_many.html.ep
 lib/Tuba/files/templates/controls/organizations.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
 lib/Tuba/files/templates/controls/publications.html.ep
+lib/Tuba/files/templates/controls/regions.html.ep
 lib/Tuba/files/templates/controls/select.html.ep
 lib/Tuba/files/templates/controls/table.html.ep
 lib/Tuba/files/templates/create_form.html.ep
@@ -475,6 +480,7 @@ lib/Tuba/files/templates/reference/objects.html.ep
 lib/Tuba/files/templates/reference/report/updates.html.ep
 lib/Tuba/files/templates/reference/update_form.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
+lib/Tuba/files/templates/regions.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.ep
@@ -513,6 +519,7 @@ lib/Tuba/Plugin/Db.pm
 lib/Tuba/Plugin/TubaHelpers.pm
 lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
+lib/Tuba/Region.pm
 lib/Tuba/Report.pm
 lib/Tuba/Search.pm
 lib/Tuba/Table.pm
