@@ -66,8 +66,18 @@ sub _favorite_page {
 sub list {
     my $c = shift;
     my $user = $c->user;
+
+    my %query;
+    if ($_ = $c->param('report_type')) {
+        $query{report_type_identifier} = $_
+    }
+    if ($_ = $c->param('publication_year')) {
+        $query{publication_year} = $_ if /^[0-9]{4}$/;
+    }
+
     my $objects = Reports->get_objects(
         query => [
+            %query,
             or => [ and => [_public => 't'],
                     and => [username => $user]
                   ]
@@ -80,6 +90,7 @@ sub list {
     );
     my $count = Reports->get_objects_count(
         query => [
+            %query,
             or => [ and => [_public => 't'],
                     and => [username => $user]
                   ]
