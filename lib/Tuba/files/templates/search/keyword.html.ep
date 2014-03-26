@@ -13,7 +13,11 @@ match results.
 
 % my @clone = @$results;
 <p class='alert'>
+% if (param 'q') {
 Your search returned <%= $result_count_text %>
+% } else {
+Please enter some search terms above.
+% }
 </p>
 
 % if ( ( (param 'format') // '') eq 'detailed') {

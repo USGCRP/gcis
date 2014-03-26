@@ -8,7 +8,7 @@ use strict;
 
 sub keyword {
     my $c = shift;
-    my $q = $c->param('q') or return $c->render(results => []);
+    my $q = $c->param('q') or return $c->render(results => [], result_count_text => 'Please enter search terms');
 
     my $orm = $c->orm;
     my @tables = keys %$orm;
