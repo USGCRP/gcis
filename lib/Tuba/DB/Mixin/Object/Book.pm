@@ -10,8 +10,12 @@ __PACKAGE__->meta->primary_key_generator(sub {
 
 sub stringify {
     my $s = shift;
-    return $s->title if $s->title;
-    return $s->identifier;
+    my %args = @_;
+    my $str = $s->title || $s->identifier;
+    if ($args{short}) {
+        return $str unless length($str) > 30;
+    }
+    return substr($str,0,30).'...';
 }
 
 sub new_from_reference {

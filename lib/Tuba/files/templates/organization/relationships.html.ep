@@ -13,6 +13,7 @@
     <td>Related to</td><td>
         % for my $map ($organization->organization_maps) {
             <%= $map->organization_relationship->label %> <%= include 'obj_button' , obj => $map->other_organization, no_table => 1 %>
+            <br>
         % }
     </td>
 </tr>
@@ -23,6 +24,7 @@
         <%= include 'obj_button' , obj => $map->organization, no_table => 1 %>
         <%= $map->organization_relationship->label %>
         <%= $object->stringify %>
+        <br>
         % }
     </td>
 </tr>
