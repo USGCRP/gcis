@@ -160,7 +160,7 @@ sub make_tree_for_show {
     my $href = $uri->clone->to_abs;
     $href .= ".".$c->stash('format') if $c->stash('format');
     return {
-      files                   => [map +{uri => $_->uri($c)}, $pub->files],
+      files                   => [map $_->as_tree(c => $c), $pub->files],
       uri                     => $uri,
       href                    => $href,
       url                     => $report->url,
