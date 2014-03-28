@@ -106,7 +106,7 @@ DELETE
         % my $doc = doc_for($trying->name);
         %= $doc->description
         % if (my $params = $doc->params) {
-        <div class='alert'>
+        <div class='alert alert-info'>
             Parameters :<br>
             % for my $p (@$params) {
                 <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>

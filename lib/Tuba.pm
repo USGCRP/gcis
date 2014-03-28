@@ -274,7 +274,7 @@ sub startup {
     $r->resource(article => { wildcard => 1} );
 
     # Journals, papers.
-    $r->resource($_) for qw/journal paper/;
+    $r->resource($_) for qw/journal/;
 
     # Images (globally unique)
     $r->resource('image');
@@ -312,11 +312,7 @@ sub startup {
 
     $r->resource('gcmd_keyword');
     $r->resource('region');
-
-    # Others, some of which aren't yet implemented.
-    $r->resource($_) for qw/dataset model software algorithm activity
-                            instrument platform
-                            role country/;
+    $r->resource('dataset');
 
     # Files.
     $r->resource("file");
