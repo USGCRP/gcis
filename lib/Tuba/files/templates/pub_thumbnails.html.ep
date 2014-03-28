@@ -25,7 +25,7 @@
 <ul class='thumbnails'>
 %   for my $file ($pub->files) {
     <li class='span3 thumbnail'>
-    %= link_to 'show_file', { file_identifier =>$ file->identifier } => begin
+    %= link_to 'show_file', { file_identifier => $file->identifier } => begin
     %= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;';
     %= end
     % my $obj = $pub->to_object($self);

@@ -39,7 +39,7 @@ sub as_tree {
 
 sub thumbnail_path {
     my $s = shift;
-    my $thumb = $s->_maybe_generate_thumbnail;
+    my $thumb = $s->_maybe_generate_thumbnail or return '/blank.png';
     return join '/', get_config->{asset_path},"$thumb";
 }
 
@@ -52,6 +52,7 @@ sub _maybe_generate_thumbnail {
         }
         return $existing;
     }
+    return if $s->location; # no remote retrieval for thumbnails
     my $file = $s->file or return;
     my $file_obj = Path::Class::File->new($file);
     my $thumbnail_filename = '.thumb-'.$s->identifier.'.png';
@@ -148,6 +149,12 @@ sub set_sha1 {
     $s->sha1($sha1);
     close $fh;
     return 1;
+}
+
+sub asset_location {
+    my $s = shift;
+    my $base = $s->location || get_config('asset_path');
+    return join '/', $base, $s->file;
 }
 
 1;

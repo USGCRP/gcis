@@ -229,7 +229,7 @@ sub update_rel {
     }
 
     if (my $child = $c->param('child_publication_id')) {
-        my $obj = $c->str_to_obj($child);
+        my $obj = $c->str_to_obj($child) or return $c->redirect_with_error("could not find $child");
         my $child_publication = $obj->get_publication(autocreate => 1);
         $child_publication->save(audit_user => $c->user) unless $child_publication->id;
         $reference->child_publication_id($child_publication->id);

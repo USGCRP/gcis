@@ -34,7 +34,7 @@
 
 <div class='thumbnails row-fluid'>
     <div class='span2 offset5 thumbnail'>
-        %= link_to asset_location($object->file) => download => $file->file => class => "btn btn-inverse btn-large" => begin
+        %= link_to $object->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
         <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
         <div class='caption centered' style='color:white;'>download<br>
         <%= $file->basename %></div>
