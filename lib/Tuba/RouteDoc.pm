@@ -8,8 +8,10 @@ package Tuba::RouteDoc;
 use Mojo::Base qw/-base/;
 
 has 'name';
+has 'brief';
 has 'description';
 has 'params';
+has 'note';
 
 1;
 

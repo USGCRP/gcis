@@ -77,6 +77,11 @@ DELETE
            % }
            %= $show_node->($node)
          </td>
+         <td>
+          % if (my $doc = doc_for($node->name)) {
+          %= $doc->brief;
+          % }
+         </td>
        </tr>
    % }
 
@@ -90,6 +95,7 @@ DELETE
   <tr>
     <th>Methods</th>
     <th>Path</th>
+    <th>Description</th>
   </tr>
   %= $walk->($walk, $_, 0) for @{app->routes->children};
  </table>
@@ -103,13 +109,21 @@ DELETE
   </div>
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
-        % my $doc = doc_for($trying->name);
-        %= $doc->description
-        % if (my $params = $doc->params) {
-        <div class='alert alert-info'>
-            Parameters :<br>
-            % for my $p (@$params) {
-                <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>
+        % if (my $doc = doc_for($trying->name)) {
+            %= $doc->description
+            % if (my $params = $doc->params) {
+                <div class='alert alert-info'>
+                    Parameters :<br>
+                    % for my $p (@$params) {
+                        <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>
+                    % }
+               </div>
+            % }
+            % if (my $note = $doc->note) {
+            <div class='alert'>
+            Note:
+             %= $note
+            </div>
             % }
         % }
         </div>
