@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.68
+    version: 0.69
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -114,6 +114,8 @@ provides:
     file: lib/Tuba/Dataset.pm
   Tuba::Doc:
     file: lib/Tuba/Doc.pm
+  Tuba::DocManager:
+    file: lib/Tuba/DocManager.pm
   Tuba::Figure:
     file: lib/Tuba/Figure.pm
   Tuba::File:
@@ -160,6 +162,10 @@ provides:
     file: lib/Tuba/Region.pm
   Tuba::Report:
     file: lib/Tuba/Report.pm
+  Tuba::RouteDoc:
+    file: lib/Tuba/RouteDoc.pm
+  Tuba::RouteParam:
+    file: lib/Tuba/RouteParam.pm
   Tuba::Search:
     file: lib/Tuba/Search.pm
   Tuba::Table:
@@ -193,4 +199,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 0.68
+version: 0.69

@@ -275,6 +275,7 @@ db/patches/0970_remove_old_generics.sql
 db/patches/0980_report_fields.sql
 db/patches/0990_report_type.sql
 db/patches/1000_region.sql
+db/patches/1010_file_location.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/client.pl
@@ -338,6 +339,7 @@ lib/Tuba/DB/Object/ConventionManager.pm
 lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
+lib/Tuba/DocManager.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
 lib/Tuba/files/public/apple-touch-icon-114x114.png
@@ -521,6 +523,8 @@ lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
 lib/Tuba/Region.pm
 lib/Tuba/Report.pm
+lib/Tuba/RouteDoc.pm
+lib/Tuba/RouteParam.pm
 lib/Tuba/Search.pm
 lib/Tuba/Table.pm
 lib/Tuba/Util.pm
