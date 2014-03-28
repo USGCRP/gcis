@@ -103,6 +103,16 @@ DELETE
   </div>
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
+        % my $doc = doc_for($trying->name);
+        %= $doc->description
+        % if (my $params = $doc->params) {
+        <div class='alert'>
+            Parameters :<br>
+            % for my $p (@$params) {
+                <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>
+            % }
+        % }
+        </div>
         %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
             %= hidden_field '_route_name' => $trying->name;
             % for my $p (@{ (stash 'placeholders') }) {

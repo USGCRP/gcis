@@ -13,9 +13,11 @@ use Mojo::Base qw/Mojolicious::Plugin/;
 use Time::Duration qw/ago/;
 use List::Util qw/min/;
 use Date::Parse qw/str2time/;
+use DateTime::Format::Human::Duration;
+
 use Tuba::Util qw/get_config/;
 use Tuba::Log;
-use DateTime::Format::Human::Duration;
+use Tuba::DocManager;
 
 #
 # Usage :
@@ -364,6 +366,12 @@ sub register {
                 @{ $c->orm->{$table}->{mng}->get_objects(all => 1) };
             return wantarray ? @ids : \@ids;
     }); 
+    $app->helper(doc_for => sub {
+            my $c = shift;
+            my $route_name = shift;
+            state $mng //= Tuba::DocManager->new();
+            return $mng->find_doc($route_name);
+    });
 }
 
 1;

@@ -231,8 +231,10 @@ sub startup {
         $count = 1 unless $count =~ /^[0-9]+$/;
         return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
         $c->res->headers->content_type('text/plain');
-        $c->render(
-          text => join "\n", (map new_uuid_string(4), 1..$count)
+        $c->respond_to(
+          text => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
+          html => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
+          json => sub { shift->render( json => [ map new_uuid_string(4), 1..$count ] ) },
         );
       } => 'uuid'
     );
