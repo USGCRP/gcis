@@ -38,7 +38,7 @@
 
 <div class="jumbotron">
 <h1>GCIS API</h1>
-<p class="lead">A programmatic interface to the Global Change Information System.</p>
+<p class="lead">A programming interface to the Global Change Information System.</p>
 <p>This is the preliminary API for the Global Change Information System (GCIS).  The
 current version of this API is <%= $Tuba::VERSION %>.  If you'd like to be informed
 of updates and/or be involved in the evolution of this API, please
