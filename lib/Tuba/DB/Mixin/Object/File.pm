@@ -155,6 +155,7 @@ sub asset_location {
     my $s = shift;
     my $base = $s->location || get_config('asset_path');
     my $path = $s->file;
+    $path = "/$path" unless $path =~ m[^/];
     return $base . $path;
 }
 
