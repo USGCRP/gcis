@@ -14,7 +14,6 @@ SET client_min_messages = warning;
 --
 
 COPY report_type (identifier) FROM stdin;
-technical_input
 \.
 
 
@@ -196,7 +195,7 @@ COPY figure (identifier, chapter_identifier, title, caption, attributes, time_st
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (file, identifier, thumbnail, mime_type, sha1, size) FROM stdin;
+COPY file (file, identifier, thumbnail, mime_type, sha1, size, location) FROM stdin;
 \.
 
 
@@ -346,16 +345,6 @@ COPY publication_map (child, relationship, parent, note, activity_identifier) FR
 --
 
 COPY region (identifier, label, description) FROM stdin;
-northeast-us	Northeast	Connecticut, Delaware, District of Columbia, Maine, Maryland, Massachusetts, New Hampshire, New York, Pennsylvania, Rhode  Island, Vermont, West Virginia
-southeast-us	Southeast and Caribbean	Alabama, Arkansas, Florida, Georgia, Kentucky, Louisiana, Mississippi, North Carolina, Puerto Rico, Tennessee, South Carolina, U.S. Virgin Islands, Virginia
-midwest-us	Midwest	Illinois, Indiana, Iowa, Michigan, Minnesota, Missouri, Ohio, Wisconsin
-greatplains-us	Great Plains	Kansas, Montana, Nebraska, North Dakota, Oklahoma, South Dakota, Texas, Wyoming
-northwest-us	Northwest	Idaho, Oregon, Washington
-southwest-us	Southwest	Arizona, California, Colorado, Nevada, New Mexico, Utah
-alaska-us	Alaska	Alaska and surrounding waters
-hawaii-pacific-us	Hawaiʻi and U.S. Affiliated Pacific Islands	Commonwealth of the Northern Mariana Islands, Federated States of Micronesia, Hawai‘i,Republic of the Marshall Islands, Republic of Palau, Territory of American Samoa, Territory of Guam
-coasts-us	U.S. Coasts	\N
-oceans	Oceans	\N
 \.
 
 

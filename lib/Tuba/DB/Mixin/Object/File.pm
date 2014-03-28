@@ -32,7 +32,7 @@ sub as_tree {
     my %a = @_;
     my $tree = $s->SUPER::as_tree(@_);
     my $c = $a{c} or return $tree;
-    $tree->{url} = get_config('asset_path').'/'.$s->file;
+    $tree->{url} = $s->asset_location;
     $tree->{href} = $c->url_for($tree->{url})->to_abs;
     return $tree;
 }

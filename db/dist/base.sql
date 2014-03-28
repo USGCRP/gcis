@@ -253,6 +253,7 @@ CREATE TABLE file (
     mime_type character varying NOT NULL,
     sha1 character varying,
     size integer,
+    location character varying,
     CONSTRAINT ck_file_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
