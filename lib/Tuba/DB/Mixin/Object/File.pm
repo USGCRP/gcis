@@ -154,7 +154,8 @@ sub set_sha1 {
 sub asset_location {
     my $s = shift;
     my $base = $s->location || get_config('asset_path');
-    return join '/', $base, $s->file;
+    my $path = $s->file;
+    return $base . $path;
 }
 
 1;
