@@ -163,6 +163,13 @@ SQL
     return @results;
 }
 
+=head2 upload_file
+
+Add a Mojo::Upload object to this publication.
+Returns the new Tuba::DB::Object::File on success or false on failure.  
+
+=cut
+
 sub upload_file {
     my $pub = shift;
     my %args = @_;
@@ -189,11 +196,11 @@ sub upload_file {
     my $tfile = Tuba::DB::Object::File->new(file => $name);
     $tfile->set_sha1 or do {
         $pub->error("Could compute sha1");
-        return 0;
+        return;
     };
     $tfile->checkfix_mime_type or do {
         $pub->error("Could not determine mime type from filename $filename.  Supported suffixes are : ".join ',', $tfile->supported_suffixes);
-        return 0;
+        return;
     };
     $tfile->size($file->size);
     $pub->add_files($tfile);
@@ -201,10 +208,11 @@ sub upload_file {
     $tfile->meta->error_mode('return');
     $tfile->save(audit_user => $c->user) or do {
         $pub->error($tfile->error);
-        return 0;
+        return;
     };
 
-    return 1;
+    $tfile->load;
+    return $tfile;
 }
 
 sub uri {

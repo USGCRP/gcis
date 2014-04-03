@@ -663,12 +663,25 @@ sub update_files {
             return $c->update_error( "Error getting $file_url : ".$tx->error);
         my $content = $res->body;
 
-        my $filename = Mojo::URL->new($file_url)->path->parts->[-1];
+        my $remote_url = Mojo::URL->new($file_url);
+        my $filename = $remote_url->path->parts->[-1];
         my $up = Mojo::Upload->new;
         $up->filename($filename);
         $up->asset(Mojo::Asset::File->new->add_chunk($content));
-        $pub->upload_file(c => $c, upload => $up) or
-            return $c->update_error( $pub->error);
+        my $new_file = $pub->upload_file(c => $c, upload => $up) or return $c->update_error( $pub->error);
+        if ($c->param('use_remote_location')) {
+            # generate thumbnail first then remove it.
+            $new_file->generate_thumbnail;
+            $new_file->unlink_asset;
+            my $new = Mojo::URL->new;
+            $new->scheme($remote_url->scheme);
+            $new->host($remote_url->host);
+            $new->port($remote_url->port) if $remote_url->port;
+            $new_file->location($new->to_string);
+            $new_file->file($remote_url->path);
+            $new_file->save(audit_user => $c->user);
+            logger->info("saving remote asset ".$remote_url);
+        }
     }
 
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };

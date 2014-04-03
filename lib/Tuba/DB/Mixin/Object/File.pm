@@ -43,6 +43,10 @@ sub thumbnail_path {
     return join '/', get_config->{asset_path},"$thumb";
 }
 
+sub generate_thumbnail {
+    shift->_maybe_generate_thumbnail;
+}
+
 sub _maybe_generate_thumbnail {
     my $s = shift;
     if (my $existing = $s->thumbnail) {
@@ -157,6 +161,14 @@ sub asset_location {
     my $path = $s->file;
     $path = "/$path" unless $path =~ m[^/];
     return $base . $path;
+}
+
+sub unlink_asset {
+    my $s = shift;
+    my $path = $s->fullpath($s->file);
+    -e $path or return;
+    unlink $path or die $!;
+    return 1;
 }
 
 1;

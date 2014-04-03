@@ -46,3 +46,10 @@ Retrieve a file from a url
 %= text_field 'file_url', class => 'span10', placeholder => 'http://example.com/image.jpg'
 </div>
 
+<label class="control-label" for='do_not_keep'>
+Use remote location.
+</label>
+<div class="controls span10">
+    %= check_box 'use_remote_location' => 1;
+</div>
+

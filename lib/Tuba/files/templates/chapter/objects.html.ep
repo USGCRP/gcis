@@ -19,6 +19,7 @@
     <th>findings</th>
     <th>tables</th>
     <th>references</th>
+    <th>files</th>
 </th>
 % for my $chapter (@$objects) {
     <tr>
@@ -44,6 +45,20 @@
         %= link_to 'list_chapter_references', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
         %= $chapter->reference_count;
         %= end
+    </td>
+    <td>
+     <div class='span2'>
+       % if (my $pub = $chapter->get_publication) {
+           % for my $file ($pub->files) {
+
+            %= link_to $file->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
+            <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
+            <div class='caption centered' style='color:white;'>download</div>
+            %= end
+
+           % }
+       % }
+    </div>
     </td>
     </tr>
 % }
