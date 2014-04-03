@@ -527,10 +527,11 @@ sub update_prov {
     if ($json && (my $del = delete $json->{delete})) {
         my $uri = $del->{parent_uri} or return $c->update_error("missing parent_uri to delete");
         my $parent = $c->uri_to_obj($uri) or return $c->update_error("cannot find $uri");
+        my $parent_pub = $parent->get_publication or return $c->update_error("No publication entry for $uri.");
         my $rel = $del->{parent_rel} or return $c->update_error("missing parent_rel");
         my $map = PublicationMap->new(
           child        => $pub->id,
-          parent       => $parent->get_publication(autocreate => 1)->id,
+          parent       => $parent_pub->id,
           relationship => $rel
         );
         $map->load(speculative => 1) or return $c->update_error("relationship $rel $uri not found");
