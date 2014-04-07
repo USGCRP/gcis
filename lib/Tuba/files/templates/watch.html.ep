@@ -1,7 +1,7 @@
 % layout 'default';
 
 %= form_for current_route() => begin
-last <%= select_field 'limit' => [50,100,500], onChange => '{this.form.submit();}', class => 'span2'; %>
+last <%= select_field 'limit' => [50,100,500,1000], onChange => '{this.form.submit();}', class => 'span2'; %>
 <%= select_field 'type' => ['changes',[ 'updates' => 'U' ],['inserts' => 'I'],['deletes' => 'D']], onChange => '{this.form.submit();}', class => 'span2'; %>
 on
 <%= select_field 't' => [['any table' => 'any'],map[$_,$_], all_tables()], onChange => '{this.form.submit();}', class => 'span2'; %>.

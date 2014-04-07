@@ -21,7 +21,7 @@
 
 % }
 
-%= include 'fields', cols => [qw/identifier doi title journal_identifier journal_pages journal_vol notes year/];
+%= include 'fields', cols => [qw/identifier doi url title journal_identifier journal_pages journal_vol notes year/];
 
 %= include 'prov';
 
