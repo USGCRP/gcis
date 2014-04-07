@@ -7,6 +7,7 @@ Tuba::Figure : Controller class for figures.
 package Tuba::Figure;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Tuba::Log qw/logger/;
 
 sub list {
     my $c = shift;
@@ -58,7 +59,13 @@ sub show {
     return $c->render_not_found unless $object;
 
     if (my $chapter_identifier = $object->chapter_identifier) {
-        if (!$c->stash('chapter_identifier')) {
+        if (my $sent = $c->stash('chapter_identifier')) {
+            unless ($sent eq $chapter_identifier) {
+                # You are looking for this figure in the wrong chapter.
+                logger->info("Request for figure $identifier from $sent, not $chapter_identifier");
+                return $c->render_not_found;
+            }
+        } else {
             $c->stash(chapter_identifier => $chapter_identifier);
         }
     }
