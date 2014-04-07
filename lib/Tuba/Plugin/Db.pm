@@ -12,7 +12,9 @@ This plugin sets up the following helpers :
 
  db : a DBIx::Connector object
  dbs : a DBIx::Simple object
+ dbc : a DBIx::Custom object
  orm : a hashref mapping table names to class names.
+ all_tables : a list of all the tables in the database
 
 =head1 SEE ALSO
 
@@ -62,9 +64,17 @@ sub register {
     $app->helper( dbs => sub { DBIx::Simple->new( shift->db->dbh ) } );
     $app->helper( dbc => sub { DBIx::Custom->connect( connector => $dbix ) } );
 
+    my @all_tables = map $_->[0], @{ $dbix->dbh->selectall_arrayref(<<SQL) };
+select table_name
+from information_schema.tables
+where table_schema='gcis_metadata' and table_type='BASE TABLE'
+order by table_name
+SQL
+
     Tuba::DB::Objects->init( $app );
 
     $app->helper( orm => sub { Tuba::DB::Objects->table2class });
+    $app->helper( all_tables => sub { wantarray ? @all_tables : \@all_tables } );
 
     1;
 }

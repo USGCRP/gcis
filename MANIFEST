@@ -278,7 +278,6 @@ db/patches/1000_region.sql
 db/patches/1010_file_location.sql
 eg/atrac_upload.html
 eg/cleanup.sql
-eg/client.pl
 eg/compare.pl
 eg/image-meta.pl
 eg/import_countries.pl

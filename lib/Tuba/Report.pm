@@ -116,9 +116,25 @@ sub watch {
     my $c = shift;
     my $limit = $c->param('limit') || 50;
     $limit = 50 unless $limit =~ /^\d+$/;
+    my $where = ['and'];
+    my %where;
+
+    if (my $table = $c->param('t')) {
+        if ($table ne 'any') { push @$where,":table_name{=}"; $where{table_name} = $table }
+    }
+    if (my $type = $c->param('type')) {
+        if ($type ne 'changes') { push @$where,":action{=}"; $where{action} = $type; }
+    }
+
+    if (my $user = $c->param('user')) { push @$where, ":audit_username{like}"; $where{audit_username} = "%$user%"; }
+    if (my $note = $c->param('note')) { push @$where, ":audit_note{like}";     $where{audit_note} = "%$note%";     }
+
     my $result = $c->dbc->select(
         [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
         table => "audit.logged_actions",
+        (@$where > 1 ? 
+            ( where => [ $where, \%where ] ) : ()
+        ),
         append => "order by action_tstamp_tx desc limit $limit",
     );
     my $change_log = $result->all;
