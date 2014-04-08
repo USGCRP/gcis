@@ -276,6 +276,7 @@ db/patches/0980_report_fields.sql
 db/patches/0990_report_type.sql
 db/patches/1000_region.sql
 db/patches/1010_file_location.sql
+db/patches/1010_topic.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/compare.pl
@@ -545,4 +546,6 @@ t/008_dataset.t
 t/009_article.t
 t/010_stringify.t
 t/999_stop_db.t
+t/tinit.pm
 t/tlib.pm
+t/Tuba-test.conf
