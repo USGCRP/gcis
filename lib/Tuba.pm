@@ -102,6 +102,10 @@ sub startup {
         my $forward_base = $c->req->headers->header('X-Forwarded-Base');
         $c->req->url->base(Mojo::URL->new($forward_base)) if $forward_base;
     }) if $app->mode eq 'production';
+    $app->hook(after_static => sub {
+           my $c = shift;
+            $c->res->headers->content_disposition('attachment;') if $c->param('download');
+        });
 
     # Shortcuts (see Mojolicious::Guides::Routing)
     # For a given resource we create several routes.  As an
