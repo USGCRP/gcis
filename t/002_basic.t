@@ -1,5 +1,8 @@
 #!perl
 
+use FindBin;
+use lib $FindBin::Bin;
+use tinit;
 use Test::More tests => 7;
 use Test::Mojo;
 

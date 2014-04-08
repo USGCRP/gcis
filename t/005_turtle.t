@@ -4,11 +4,12 @@
 # This test creates a report, a chapter, and a finding, and tests that the
 # result is valid turtle.
 #
+use FindBin;
+use lib $FindBin::Bin;
+use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
-use FindBin;
-use lib $FindBin::Bin;
 use tlib;
 
 use_ok "Tuba";

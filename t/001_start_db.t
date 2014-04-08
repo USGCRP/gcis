@@ -1,5 +1,8 @@
 #!perl
 
+use FindBin;
+use lib $FindBin::Bin;
+use tinit;
 use Test::More tests => 2;
 use Test::MBD qw/-autostart/;
 use DBI;
