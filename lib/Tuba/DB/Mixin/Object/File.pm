@@ -52,9 +52,7 @@ sub _maybe_generate_thumbnail {
     if (my $existing = $s->thumbnail) {
         unless (-e $s->fullpath($existing)) {
             logger->warn("Thumbnail in db does not exist : ".$s->fullpath($existing));
-            # may be on front end
         }
-        return $existing;
     }
     return if $s->location; # no remote retrieval for thumbnails
     my $file = $s->file or return;
@@ -103,7 +101,7 @@ sub _generate_image_thumbnail {
     my $source = $s->file;
     my $dir = Path::Class::File->new($filename);
     logger->info("generating image thumbnail for ".$s->fullpath);
-    die "already has one" if $s->thumbnail;
+    return 1 if $s->thumbnail && -e $s->fullpath($s->thumbnail);
     -e $s->fullpath or do {
         logger->error("cannot find ".$s->fullpath);
         return;
