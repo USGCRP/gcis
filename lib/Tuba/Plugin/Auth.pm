@@ -19,6 +19,18 @@ use Mojo::Base qw/Mojolicious::Plugin/;
 sub register {
     my ($self, $app, $conf) = @_;
 
+    $app->secrets([$ENV{HARNESS_ACTIVE} ? 1 : $conf->{secret}]);
+
+    if ($conf->{read_only}) {
+        for my $helper (qw/user user_short/) {
+            $app->helper($helper => sub { return; } );
+        }
+        for my $helper (qw/auth authz user_can/) {
+            return 0;
+        }
+        return;
+    }
+
     $app->helper(user => sub {
             my $c = shift;
             $c->session('user');
@@ -69,7 +81,6 @@ sub register {
             my $role = shift;
             return $c->authz(role => $role);
         });
-    $app->secrets([$ENV{HARNESS_ACTIVE} ? 1 : $conf->{secret}]);
 }
 
 

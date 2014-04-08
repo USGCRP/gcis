@@ -1,6 +1,7 @@
 <!-- Modal -->
 % my $history_url = $object->uri($self,{ tab => 'history' } );
-     
+% if ($history_url) {
+
 <div id="myModal"
  data-remote='<%= $history_url->clone->query(no_header => 1) %>'
  class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -17,4 +18,5 @@ change history
     <div class="modal-body"> <p>loading…</p> </div>
 </div>
 
+% }
 

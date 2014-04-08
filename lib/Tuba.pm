@@ -21,8 +21,11 @@ Tuba provides a RESTful API to GCIS data.
         workers : 5
         listen :
            - http://*:8080
+
     image_upload_dir : /var/www/assets
+
     asset_path : /assets
+
     database :
         dbname   : gcis
         schema   : gcis_metadata
@@ -30,12 +33,17 @@ Tuba provides a RESTful API to GCIS data.
         port     :
         username :
         password :
+
+    read_only : 0
+    hide_login_link : 0
+
     auth :
         secret : this_should_be_replaced_with_a_server_secret
         valid_users :
             brian : tuba
             andrew : tuba
         google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
+
     authz :
         update :
             bduggan2@gmail.com : 0
@@ -69,6 +77,7 @@ sub startup {
       : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
       :                                 './Tuba.conf';
     $app->plugin( 'yaml_config' => { file => $conf } );
+    my $config = $app->config;
     set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
@@ -173,6 +182,8 @@ sub startup {
         $resource->get(":$identifier" => \@restrict => \%defaults )->to('#show')->name("show_$name");
         $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
       }
+
+      return $select if $config->{read_only};
 
       my $authed = $r->bridge("/$path_base")->to(cb => sub {
               my $c = shift;
@@ -320,7 +331,7 @@ sub startup {
     # Bibliographic entry.
     my $reference = $r->resource('reference');
     $report->get('/reference')->to('reference#list');
-    $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch');
+    $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
     $r->bridge('/reference/match')
       ->to(cb => sub {
               my $c = shift;
@@ -368,19 +379,21 @@ sub startup {
     $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/autocomplete')->to('search#autocomplete');
 
-    my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
-    $authed->get('/admin')->to(cb => sub { shift->render })->name('admin');
-    $authed->get('/watch')->to('report#watch')->name('_watch');
-    $r->get('/login')->to('auth#login')->name('login');
-    $r->get('/login_pw')->to('auth#login_pw')->name('_login_pw');
-    $r->get('/login_key')->to('auth#login_key')->name('_login_key');
+    unless ($config->{read_only}) {
+        my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
+        $authed->get('/admin')->to(cb => sub { shift->render })->name('admin');
+        $authed->get('/watch')->to('report#watch')->name('_watch');
+        $r->get('/login')->to('auth#login')->name('login');
+        $r->get('/login_pw')->to('auth#login_pw')->name('_login_pw');
+        $r->get('/login_key')->to('auth#login_key')->name('_login_key');
 
-    $r->post('/login')->to('auth#check_login')->name('check_login');
-    $r->get('/oauth2callback')->to('auth#oauth2callback')->name('_oauth2callback');
-    $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
+        $r->post('/login')->to('auth#check_login')->name('check_login');
+        $r->get('/oauth2callback')->to('auth#oauth2callback')->name('_oauth2callback');
+        $r->get('/logout')->to(cb => sub { my $c = shift; $c->session(expires => 1); $c->redirect_to('index') });
 
-    $authed->get('/import_form')->to('importer#form')->name('import_form');
-    $authed->post('/process_import')->to('importer#process_import')->name('process_import');
+        $authed->get('/import_form')->to('importer#form')->name('import_form');
+        $authed->post('/process_import')->to('importer#process_import')->name('process_import');
+    }
 
     $r->post('/calculate_url' => sub {
         my $c = shift;

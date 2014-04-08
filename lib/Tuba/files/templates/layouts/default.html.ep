@@ -36,21 +36,23 @@ String.prototype.htmlEscape = function() {
                 <ul class='nav pull-right'>
                     <li><%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
                     </li>
-                    <li><% if (my $user = user()) { %>
-                        <a class="dropdown-toggle" data-toggle="dropdown"><%= user_short() %></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><%= link_to 'logout' => begin %>logout <%= $user %><%= end %>
-                            % if (user_can('update')) {
-                            <li><%= link_to '_login_key' => begin %>API key<%= end %>
-                            % }
-                        </ul>
-                        <% } else { %>
+                    <li><% if (!config('read_only')) { %>
+                        <% if (my $user = user()) { %>
+                            <a class="dropdown-toggle" data-toggle="dropdown"><%= user_short() %></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><%= link_to 'logout' => begin %>logout <%= $user %><%= end %>
+                                % if (user_can('update')) {
+                                <li><%= link_to '_login_key' => begin %>API key<%= end %>
+                                % }
+                            </ul>
+                        <% } elsif (!config('hide_login_link')) { %>
                             % my $dest = $self->req->url->path;
                             % if ($dest && $dest ne '/') {
                             <%= link_to url_for('login')->query(destination => $self->req->url->path) => begin %>log in<%= end %>
                             % } else {
                             <%= link_to url_for('login') => begin %>log in<%= end %>
                             % }
+                        <% } %>
                         <% } %>
                     </li>
                 </ul>
