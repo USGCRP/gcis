@@ -34,7 +34,16 @@ String.prototype.htmlEscape = function() {
                     GCIS
                 <%= end %>
                 <ul class='nav pull-right'>
-                    <li><%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    <li>
+                    <% if (config('google_site_search')) { %>
+                       <form action="http://google.com/cse" target="_blank" class="form navbar-search">
+                           <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
+                           <input name="ie" type="hidden" value="UTF-8">
+                           <input name="q" placeholder="Search" type="search">
+                       </form>
+                    <% } else { %>
+                    <%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    <% } %>
                     </li>
                     <li><% if (!config('read_only')) { %>
                         <% if (my $user = user()) { %>

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
- <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
    <ShortName>data.globalchange.gov search</ShortName>
    <Description>Search data.globalchange.gov.</Description>
-   <Tags>earth science data</Tags>
+   <Tags>global climate change science data</Tags>
+% if (config('google_site_search')) {
+   <Contact>bduggan@usgcrp.gov</Contact>
+   <Url type="text/html" template="http://www.google.com/cse?q={searchTerms}&amp;cx=013381772809718463072%3A8vyf_-czy98&amp;ie=UTF-8" />
+% } else {
    <Contact>bduggan@usgcrp.gov</Contact>
    <Url type="text/html" template="<%= url_for('search')->to_abs %>?q={searchTerms}" />
+% }
 </OpenSearchDescription>
