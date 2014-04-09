@@ -22,7 +22,6 @@ sub list {
             with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier");
-        $c->stash(title => sprintf("Findings in chapter %s of %s",$chapter->stringify(tiny => 1), $chapter->report->title));
         $c->set_pages(
             Findings->get_objects_count(
                 query => [chapter_identifier => $chapter->identifier, report_identifier => $report_identifier],
@@ -39,12 +38,20 @@ sub list {
         $c->set_pages(
             Findings->get_objects_count( query => [ report_identifier => $report_identifier ] )
         ) unless $all;
-        $c->stash(title => sprintf("Findings in %s",$c->stash('report')->title));
     }
 
     $c->stash(objects => $objects);
     $c->stash(extra_cols => [ 'numeric' ]);
     $c->SUPER::list(@_);
+}
+
+sub set_title {
+    my $c = shift;
+    if (my $ch = $c->stash('chapter')) {
+        $c->stash(title => sprintf("Findings in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
+    } else {
+        $c->stash(title => sprintf("Findings in %s",$c->stash('report')->title));
+    }
 }
 
 sub show {

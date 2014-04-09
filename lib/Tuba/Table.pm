@@ -23,7 +23,6 @@ sub list {
         $c->set_pages(Tables->get_objects_count(
             query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
-        $c->stash(title => sprintf("Tables in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
     } else {
         $tables = Tables->get_objects(
            with_objects => ['chapter'], sort_by => "number, ordinal, t1.identifier",
@@ -33,11 +32,19 @@ sub list {
        $c->set_pages(Tables->get_objects_count(
            query => [ report_identifier => $report_identifier ])
        ) unless $all;
-        $c->stash(title => sprintf("Tables in %s",$c->stash('report')->title));
     }
     
     $c->stash(objects => $tables);
     $c->SUPER::list(@_);
+}
+
+sub set_title {
+    my $c = shift;
+    if (my $ch = $c->stash('chapter')) {
+        $c->stash(title => sprintf("Tables in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
+    } else {
+        $c->stash(title => sprintf("Tables in %s",$c->stash('report')->title));
+    }
 }
 
 sub show {
