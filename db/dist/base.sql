@@ -534,7 +534,7 @@ CREATE TABLE region (
 
 CREATE TABLE report (
     identifier character varying NOT NULL,
-    title character varying,
+    title character varying NOT NULL,
     url character varying,
     doi character varying,
     _public boolean DEFAULT true,
