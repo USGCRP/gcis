@@ -543,6 +543,7 @@ CREATE TABLE report (
     frequency interval,
     publication_year integer,
     topic character varying,
+    in_library boolean,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999)))
 );
