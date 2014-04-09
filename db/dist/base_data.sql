@@ -142,6 +142,7 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label, sort_key) FROM stdin;
+coordinator	Coordinator	78
 \.
 
 
