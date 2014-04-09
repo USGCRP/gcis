@@ -33,6 +33,7 @@
    dcterms:description "<%= $report->summary %>";
    gcis:url "<%= $report->url %>". 
    bibo:doi "<%= $report->doi %>";
+   dcterms:subject "<%= $report->topic %>";
 % for my $org ($report->organizations) {
    gcis:Organization "<%= $org->identifier %>";
    gcis:hasCommittee "<%= $org->identifier %>";
