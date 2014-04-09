@@ -20,7 +20,7 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
-$t->post_ok("/report" => form => { identifier => "test-report" } )->status_is(200);
+$t->post_ok("/report" => form => { identifier => "test-report", title => "Test report" } )->status_is(200);
 $t->post_ok("/report/test-report/finding" => form => { identifier => "test-finding", statement => "Test Finding." } )->status_is(200);
 $t->get_ok("/report/test-report/finding/test-finding.json")->json_is('/statement' => "Test Finding.");
 
@@ -39,8 +39,8 @@ for my $i (1..10) {
     )->json_is('/statement' => "Test Chapter Finding number $i.");
 }
 
-$t->post_ok("/report" => json => { identifier => "test-report2" } )->status_is(200);
-$t->post_ok("/report" => { Accept => "application/json" } => json => { identifier => "test-report2" } )->status_is(409);
+$t->post_ok("/report" => json => { identifier => "test-report2", title => "test 2 report" } )->status_is(200);
+$t->post_ok("/report" => { Accept => "application/json" } => json => { identifier => "test-report2", title => "test 2 report" } )->status_is(409);
 
 $t->get_ok("/report/test-report" => { Accept => "application/json" } )->status_is(200)
   ->json_is("/identifier" => "test-report");

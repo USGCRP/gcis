@@ -20,7 +20,7 @@ $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => {user => "unit_test", password => "anything"})->status_is(200);
 
 # Make a report
-$t->post_ok("/report" => json => {identifier => "pizzabrain"})->status_is(200);
+$t->post_ok("/report" => json => {identifier => "pizzabrain", title => "Pizzabrain"})->status_is(200);
 
 # Make a chapter
 $t->post_ok(

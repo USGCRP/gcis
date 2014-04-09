@@ -25,7 +25,7 @@ $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
 # Create a report called animals
-$t->post_ok("/report" => form => { identifier => "animals" } )->status_is(200);
+$t->post_ok("/report" => form => { identifier => "animals", title => "Animals" } )->status_is(200);
 
 # Create a chapter called alligators
 $t->post_ok("/report/animals/chapter" => form => { identifier => "alligators", title => "All about alligators" } )->status_is(200);

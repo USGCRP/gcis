@@ -15,7 +15,7 @@ my $t = Test::Mojo->new("Tuba");
 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
-$t->post_ok("/report" => form => { identifier => "test-report" } )->status_is(200);
+$t->post_ok("/report" => form => { identifier => "test-report", title => "test report" } )->status_is(200);
 
 my $desc = q[À l'exception de l'abondance de lichens, il y avait peu de différences dans la végétation entre les sites brûlés (moyenne = 37 ± 1,7 ans) et non brûlés.];
 my $id = q[f13367d9-1e7f-40ca-a495-542d7a3faf98];
