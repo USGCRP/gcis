@@ -16,16 +16,16 @@ sub list {
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page);
 
-    if (my $chapter_identifier = $c->stash('chapter_identifier')) {
+    if (my $chapter = $c->stash('chapter')) {
         $objects = Findings->get_objects(
-            query => [chapter_identifier => $chapter_identifier, report_identifier => $report_identifier],
+            query => [chapter_identifier => $chapter->identifier, report_identifier => $report_identifier],
             with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier");
-        $c->title("Findings in report : $report_identifier, chapter $chapter_identifier");
+        $c->stash(title => sprintf("Findings in chapter %s of %s",$chapter->stringify(tiny => 1), $chapter->report->title));
         $c->set_pages(
             Findings->get_objects_count(
-                query => [chapter_identifier => $chapter_identifier, report_identifier => $report_identifier],
+                query => [chapter_identifier => $chapter->identifier, report_identifier => $report_identifier],
                 with_objects => ['chapter'],
             )
         ) unless $all;
@@ -39,7 +39,7 @@ sub list {
         $c->set_pages(
             Findings->get_objects_count( query => [ report_identifier => $report_identifier ] )
         ) unless $all;
-        $c->title("Findings in report $report_identifier");
+        $c->stash(title => sprintf("Findings in %s",$c->stash('report')->title));
     }
 
     $c->stash(objects => $objects);

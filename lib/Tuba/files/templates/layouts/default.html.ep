@@ -24,7 +24,7 @@ String.prototype.htmlEscape = function() {
     }
 })(jQuery);
 %= end
-<title>GCIS <%= $Tuba::VERSION %></title>
+<title><%= title %></title>
 </head>
     <body>
         <div class="navbar">

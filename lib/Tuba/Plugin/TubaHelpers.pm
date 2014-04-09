@@ -302,9 +302,12 @@ sub register {
     $app->helper(plural => sub {
             my $c = shift;
             my $what = shift;
+            return 'people' if $what eq 'person';
             return $what.'s' if $what =~ /array/i;
-            $what =~ s/y$/ies/;
-            return $what;
+            if ($what =~ s/y$/ies/) {
+                return $what;
+            }
+            return $what.'s';
         });
     $app->helper(to_textfield_value => sub {
             my $c = shift;

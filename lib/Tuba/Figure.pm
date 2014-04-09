@@ -15,14 +15,14 @@ sub list {
     my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
-    if (my $ch = $c->stash('chapter_identifier')) {
+    if (my $ch = $c->stash('chapter')) {
         $figures = Figures->get_objects(
-            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier",
             );
         $c->set_pages(Figures->get_objects_count(
-            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
     } else {
         $figures = Figures->get_objects(
@@ -37,6 +37,15 @@ sub list {
     
     $c->stash(objects => $figures);
     $c->SUPER::list(@_);
+}
+
+sub set_title {
+    my $c = shift;
+    if (my $ch = $c->stash('chapter')) {
+        $c->stash(title => sprintf("Figures in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
+    } else {
+        $c->stash(title => sprintf("Figures in %s",$c->stash('report')->title));
+    }
 }
 
 sub show {

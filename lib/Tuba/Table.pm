@@ -14,15 +14,16 @@ sub list {
     my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page);
-    if (my $ch = $c->stash('chapter_identifier')) {
+    if (my $ch = $c->stash('chapter')) {
         $tables = Tables->get_objects(
-            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             @page,
             sort_by => "number, ordinal, t1.identifier",
             );
         $c->set_pages(Tables->get_objects_count(
-            query => [chapter_identifier => $ch, report_identifier => $report_identifier], with_objects => ['chapter'],
+            query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
+        $c->stash(title => sprintf("Tables in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
     } else {
         $tables = Tables->get_objects(
            with_objects => ['chapter'], sort_by => "number, ordinal, t1.identifier",
@@ -32,6 +33,7 @@ sub list {
        $c->set_pages(Tables->get_objects_count(
            query => [ report_identifier => $report_identifier ])
        ) unless $all;
+        $c->stash(title => sprintf("Tables in %s",$c->stash('report')->title));
     }
     
     $c->stash(objects => $tables);

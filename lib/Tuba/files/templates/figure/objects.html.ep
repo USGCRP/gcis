@@ -2,13 +2,7 @@
 % layout 'default';
 
 <center>
-<h2>
-    % if (stash('chapter_identifier')) { 
-Figures in report : <%= stash 'report_identifier' %>, chapter : <%= stash 'chapter_identifier' %>
-    % } else {
-Figures in report <%= stash 'report_identifier' %>
-    % }
-</h2>
+<h2><%= title %></h2>
 </center>
 
 %= include 'list_formats';

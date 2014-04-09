@@ -25,6 +25,8 @@ sub uri {
 
 sub stringify {
     my $s = shift;
+    my %args = @_;
+    return ($s->number // $s->identifier) if $args{tiny};
     my $str = ' ('.$s->report_identifier.')';
     return $s->identifier.$str unless $s->title || $s->number;
     return $s->title.$str unless $s->number;

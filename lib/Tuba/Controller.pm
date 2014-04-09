@@ -75,6 +75,7 @@ sub list {
     my $table = $meta->table;
     my $template = $c->param('thumbs') ? 'thumbs' : 'objects';
     my %tree;
+    $c->set_title(table => $table);
 
     $c->respond_to(
         yaml => sub {
@@ -152,6 +153,23 @@ sub maybe_include_generic_pub_rels {
     return %$tree;
 }
 
+sub set_title {
+    my $c = shift;
+    my %args = @_;
+    if (my $object = $args{object}) {
+        $c->stash(title => sprintf('%s: %s',
+            $object->meta->table,
+            $object->stringify(short => 1),
+            ));
+        return;
+    }
+    if (my $table = $args{table}) {
+        $c->stash(title => ($c->stash('plural') || $c->plural($table)));
+        return;
+    }
+    $c->stash(title => $c->req->url->path);
+    return;
+}
 
 sub show {
     my $c = shift;
@@ -162,6 +180,7 @@ sub show {
     my $table = $meta->table;
     $c->stash(relationships => $c->_order_relationships(meta => $meta));
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
+    $c->set_title(object => $object);
 
     $c->respond_to(
         yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object) ); },
