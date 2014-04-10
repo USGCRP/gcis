@@ -454,6 +454,20 @@ sub _default_rel_controls {
 }
 
 
+sub verify_consistent_chapter {
+    # Ensure that the chapter of an object matches the one in the URL.
+    # Returns 1 on success, 0 on failure
+    my $c = shift;
+    my $object = shift;
+    my $chapter = $object->chapter;
+    my $chapter_identifier = $c->stash('chapter_identifier');
+    return 1 if !$chapter && !$chapter_identifier;
+    return 1 if $chapter && $chapter_identifier && $chapter->identifier eq $chapter_identifier;
+    $c->app->log->info("Chapter identifier ".($chapter_identifier // 'undef')
+        . " does not match chapter ".($chapter ? $chapter->identifier : 'undef'));
+    return 0;
+}
+
 =head2 update_form
 
 Generic update_form.

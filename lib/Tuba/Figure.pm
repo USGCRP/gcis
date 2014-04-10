@@ -67,17 +67,11 @@ sub show {
     };
     return $c->render_not_found unless $object;
 
-    if (my $chapter_identifier = $object->chapter_identifier) {
-        if (my $sent = $c->stash('chapter_identifier')) {
-            unless ($sent eq $chapter_identifier) {
-                # You are looking for this figure in the wrong chapter.
-                logger->info("Request for figure $identifier from $sent, not $chapter_identifier");
-                return $c->render_not_found;
-            }
-        } else {
-            $c->stash(chapter_identifier => $chapter_identifier);
-        }
+    if (!$c->stash('chapter_identifier') && $object->chapter_identifier) {
+        $c->stash(chapter_identifier => $object->chapter_identifier);
     }
+    return $c->render_not_found unless $c->verify_consistent_chapter($object);
+
     $c->stash(object => $object);
     $c->stash(meta => Figure->meta);
     $c->SUPER::show(@_);
@@ -85,6 +79,8 @@ sub show {
 
 sub update_form {
     my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $c->verify_consistent_chapter($object) or return $c->render_not_found;
     $c->SUPER::update_form(@_);
 }
 
