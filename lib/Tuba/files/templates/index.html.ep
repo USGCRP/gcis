@@ -9,13 +9,13 @@
 
       .jumbotron {
         text-align: center;
-        min-height: 260px;
+        min-height: 110px;
         margin: 0;
-      	padding: 40px 0;
+      	padding: 120px 0;
       	background: #ffffff url("usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
-        font-size: 100px;
+        font-size: 50px;
         line-height: 1;
       }
       .jumbotron .lead {
@@ -34,48 +34,68 @@
 
 </style>
 
-
-
 <div class="jumbotron">
-<h1>GCIS API</h1>
-<p class="lead">A programming interface to the Global Change Information System.</p>
-<p>This is the preliminary API for the Global Change Information System (GCIS).  The
-current version of this API is <%= $Tuba::VERSION %>.  If you'd like to be informed
-of updates and/or be involved in the evolution of this API, please
-subscribe to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>
-mailing list<%= end %>.
-</p>
+<h1>Global Change Information System</h1>
 </div>
 
-<div class="row" style='text-align:center;'>
-    <h6>Sample GCIS resources (refresh for more).</h6>
-</div>
-<div class="row well" style='position:relative;'>
-%= include 'obj_thumbnails', objs => [ map $_->to_object, @$demo_pubs ];
-<div style='position:absolute;top:2px;right:2px;'>
-    <%= link_to current_route(), class => 'btn btn-mini' => begin %>
-    <i class='icon-refresh'></i>
-    <%= end %>
-</div>
-</div>
+<p class="lead">
+The GCIS provides an
+<%= link_to 'api_reference' => begin %>API<%= end %>
+for accessing resources related to <a href="/about#global_change">global change</a>.
+The GCIS connects  global change information and relationships across the participating agencies to generate actionable and integrated summaries of information for scientists, decision makers and the public. GCIS summaries are considered to be of high quality and to represent current best available information. They are relevant to the <a href="http://www.globalchange.gov">USGCRP</a>'s mandates. 
+</p>
+<p class="lead">
+GCIS products link to accepted global change research that has been conducted by participating agencies and organizations. A gateway, the System is designed to guide users to this trusted information managed by these agencies and organizations; the GCIS  does not duplicate, manage or disseminate information products produced by other agencies. The USGCRP works closely with participating agencies and organizations to identify and select sound scientific information for listing by the GCIS.
+</p>
+<p class="lead">
+Appropriate products span the full spectrum of credible global change information. This spectrum includes but is not limited to  data (direct and derived), models, analyses, graphical visualizations, factual inputs, technical information, assessments, synthesis reports, and highly influential scientific assessments. The appraisal and final selection of listed products is administered by USGCRP.
+</p>
+
+<center>
+    <a class='btn btn-primary btn-large' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
+</center>
+<br>
+<br>
 
 <div class="row-fluid">
 
-<div class="span4">
-    <h2>API Reference</h2>
-    <p>The current complete <%= link_to 'api_reference' => begin %>API Reference<%= end %>.</p>
+<div class="span3">
+    <h2>About</h2>
+    <p><%= link_to 'about' => begin %>About<%= end %> the GCIS.  How we use identifiers, semantic information, and other things to provide traceability and points of reference.</p>
 </div>
 
-<div class="span4">
+<div class="span3">
+    <h2>Examples</h2>
+<%= link_to 'examples' => begin %>Examples<%= end %>
+and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+</div>
+
+<div class="span3">
     <h2>Resources</h2>
     A description of how various <%= link_to 'resources' => begin %>resources<%= end %>
 are represented, including how we represent their current state and provenance.
 </div>
 
-<div class="span4">
-    <h2>Examples</h2>
-<%= link_to 'examples' => begin %>Examples<%= end %>
- and tutorials for using this API.
+<div class="span3">
+    <h2>API Reference</h2>
+    <p>The complete <%= link_to 'api_reference' => begin %>reference<%= end %> for the API, including the representations of various resource and ways to get them.</p>
 </div>
 
 </div>
+
+<br><br>
+<div class="navbar navbar-fixed-bottom">
+<ul class="thumbnails">
+    <li class='pull-left' style='width:40%;padding:0px;'>
+    GCIS is made possible by our participating agencies.<br>
+    <i>Thirteen Agencies, One Vision: Empower the Nation with Global Change Science</i>
+    </li>
+% for my $agency (qw/DOC DOD DOE DOI DOS DOT EPA HHS NASA NSF SI USAID USDA/) {
+    <li class="pull-right" style='padding:1px;margin:1px;width:4%;'>
+        <img src="/logo/<%= $agency %>.png"></img>
+    </li>
+% }
+</ul>
+</div>
+
+

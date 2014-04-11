@@ -381,6 +381,7 @@ sub startup {
 
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');
+    $r->get('/about')->to('doc#about')->name('about');
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {
