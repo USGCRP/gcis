@@ -71,6 +71,9 @@ sub list {
     if ($_ = $c->param('report_type')) {
         $query{report_type_identifier} = $_
     }
+    if (defined($_ = $c->param('in_library'))) {
+        $query{in_library} = $_ if length($_);
+    }
     if ($_ = $c->param('publication_year')) {
         $query{publication_year} = $_ if /^[0-9]{4}$/;
     }
