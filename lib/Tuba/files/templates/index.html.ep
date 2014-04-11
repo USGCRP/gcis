@@ -78,7 +78,7 @@ are represented, including how we represent their current state and provenance.
 
 <div class="span3">
     <h2>API Reference</h2>
-    <p>The complete <%= link_to 'api_reference' => begin %>reference<%= end %> for the API, including the representations of various resource and ways to get them.</p>
+    <p>The complete <%= link_to 'api_reference' => begin %>reference<%= end %> for the API, including the various serializations of resources and methods for browsing and finding resources.</p>
 </div>
 
 </div>
