@@ -63,5 +63,20 @@ sub reference_count {
     return $count;
 }
 
+sub count_figures {
+    my $s = shift;
+    return Tuba::DB::Object::Figure::Manager->get_objects_count({ report_identifier => $s->identifier});
+}
+
+sub count_findings {
+    my $s = shift;
+    return Tuba::DB::Object::Finding::Manager->get_objects_count({report_identifier => $s->identifier});
+}
+
+sub count_tables {
+    my $s = shift;
+    return Tuba::DB::Object::Table::Manager->get_objects_count({report_identifier => $s->identifier});
+}
+
 1;
 
