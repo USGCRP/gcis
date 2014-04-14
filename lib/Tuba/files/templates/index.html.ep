@@ -11,7 +11,7 @@
         text-align: center;
         min-height: 110px;
         margin: 0;
-      	padding: 60px 0;
+      	padding: 100px 0;
       	background: #ffffff url("usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
