@@ -1,6 +1,16 @@
-% layout 'default';
+% layout 'default', title => "Global Change Information System Examples";
 
-<h2>Examples</h2>
+<h2><center>Examples</center>
+</h2>
+
+<p>
+The GCIS provides a RESTful
+interface and a SPARQL interface for getting data.  Each has various capabilities for viewing
+individual resources and querying for lists of resources.  The RESTful
+interface is more practical for building applications and examining individual
+resources.  The SPARQL interfaces is more advanced, and better suited for
+complex queries, possibly related to other external semantic information
+</p>
 
 <h3>JSON, YAML</h3>
 
@@ -12,6 +22,19 @@ using command line tools such as curl.
 <pre>
 $ curl http://data.globalchange.gov/report/nca3.yaml
 </pre>
+
+<h4>Get a list of chapters in the third national climate assessment.</h4>
+<pre>
+$ curl http://data.globalchange.gov/report/nca3/chapter.json
+</pre>
+
+<p>Requests can be made either using the suffix or using content negotiation.</p>
+
+<h4>Get the first 20 figures in the third national climate assessment.</h4>
+<pre>
+$ curl -H 'Accept: application/json' http://data.globalchange.gov/report/nca3/figure
+</pre>
+
 
 <h3>SPARQL</h3>
 <p>The GCIS API exposes a SPARQL endpoint at <%= link_to '/sparql' => begin %><%= $sparql_url %><%= end %>.
