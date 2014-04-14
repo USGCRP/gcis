@@ -15,7 +15,7 @@
       	background: #ffffff url("usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
-        font-size: 50px;
+        font-size: 70px;
         line-height: 1;
       }
       .jumbotron .lead {
@@ -36,66 +36,79 @@
 
 <div class="jumbotron">
 <h1>Global Change Information System</h1>
+<h2>Providing structured global change information.</h2>
 </div>
 
 <p class="lead">
-The GCIS provides an
-<%= link_to 'api_reference' => begin %>API<%= end %>
-for accessing resources related to <a href="/about#global_change">global change</a>.
-The GCIS connects  global change information and relationships across the participating agencies to generate actionable and integrated summaries of information for scientists, decision makers and the public. GCIS summaries are considered to be of high quality and to represent current best available information. They are relevant to the <a href="http://www.globalchange.gov">USGCRP</a>'s mandates. 
-</p>
-<p class="lead">
-GCIS products link to accepted global change research that has been conducted by participating agencies and organizations. This system is designed to guide users to this trusted information managed by these agencies and organizations; the GCIS  does not duplicate, manage or disseminate information products produced by other agencies. The USGCRP works closely with participating agencies and organizations to identify and select sound scientific information for listing by the GCIS.
-</p>
-<p class="lead">
-Appropriate products span the full spectrum of credible global change information. This spectrum includes but is not limited to  data (direct and derived), models, analyses, graphical visualizations, factual inputs, technical information, assessments, synthesis reports, and highly influential scientific assessments. The appraisal and final selection of listed products is administered by USGCRP.
+The Global Change Information System (GCIS) is a web based resource for traceable, sound global change data, information and products.
+Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
+products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
+products selected by the thirteen member agencies, the GCIS serves as a key access point to assessments, reports and tools produced
+by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program</a>. The GCIS is managed, integrated and curated by USGCRP.
 </p>
 
 <center>
     <a class='btn btn-primary btn-large' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
 </center>
 <br>
-<br>
 
 <div class="row-fluid">
 
 <div class="span3">
     <h2>About</h2>
-    <p><%= link_to 'about' => begin %>About<%= end %> the GCIS.  How we use identifiers, semantic information, and other things to provide traceability and points of reference.</p>
+    <p>How we use identifiers and semantic
+    information to provide points of reference and traceability.
+    </p>
 </div>
 
 <div class="span3">
     <h2>Examples</h2>
-<%= link_to 'examples' => begin %>Examples<%= end %>
-and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+    <p>
+Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+</p>
 </div>
 
 <div class="span3">
-    <h2>Resources</h2>
-    A description of how various <%= link_to 'resources' => begin %>resources<%= end %>
-are represented, including how we represent their current state and provenance.
+    <h2>Data model</h2>
+    <p>
+    A description of how the information here is structured, including
+    the overlaps between relational and semantic presentations of
+    the information
+    </p>
 </div>
 
 <div class="span3">
     <h2>API Reference</h2>
-    <p>The complete <%= link_to 'api_reference' => begin %>reference<%= end %> for the API, including the various serializations of resources and methods for browsing and finding resources.</p>
+    <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
 </div>
 
+</div>
+<div class='row-fluid' style='text-align:center;'>
+<div class="span3">
+%= link_to 'about' => class => 'btn btn-default' => begin
+Learn about the GCIS
+%= end
+</div>
+<div class="span3">
+    <%= link_to 'examples' => class => "btn btn-default" => begin %>See some examples<%= end %>
+</div>
+<div class="span3">
+    <%= link_to 'resources' => class => "btn btn-default" => begin %>Understand the data model<%= end %>
+</div>
+<div class="span3">
+    <%= link_to 'api_reference' => class => "btn btn-default" => begin %>See the API reference.<%= end %>
+</div>
 </div>
 
 <br><br>
-<div class="navbar navbar-fixed-bottom">
-<ul class="thumbnails">
-    <li class='pull-left' style='width:40%;padding:0px;'>
-    GCIS is made possible by our participating agencies.<br>
-    <i>Thirteen Agencies, One Vision: Empower the Nation with Global Change Science</i>
-    </li>
+<div class="navbar">
+        <div class='thumbnails' style='text-align:center;'>
 % for my $agency (qw/DOC DOD DOE DOI DOS DOT EPA HHS NASA NSF SI USAID USDA/) {
-    <li class="pull-right" style='padding:1px;margin:1px;width:4%;'>
-        <img src="/logo/<%= $agency %>.png"></img>
-    </li>
+    <span style='padding:1px;margin:1px;'>
+        <img src="/logo/<%= $agency %>.png" style='width:41px;'></img>
+    </span>
 % }
-</ul>
+</div>
 </div>
 
 
