@@ -51,8 +51,12 @@ sub as_tree {
     }
 
     my %h = (
+            organization => $s->organization->as_tree,
             organization_uri => $s->organization->uri($c),
             person_uri   => $p ? $p->uri($c) : undef,
+            person_id    => $p ? $p->id : undef,
+            person => ( $p ? $p->as_tree : {} ),
+            id => $s->id,
             role_type_identifier => $s->role_type_identifier,
             uri => $uri,
             href => $href,
