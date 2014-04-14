@@ -2,17 +2,15 @@
 
 <h2>Examples</h2>
 
-<h3>Shell</h3>
+<h3>JSON, YAML</h3>
 
 <p>
-The GCIS provides JSON representations of resources, which can be parsed using tools
-such as <a href="http://mojolicio.us">mojo</a> from the command line.
+The GCIS provides JSON and YAML representations of resources, which can be accessed
+using command line tools such as curl.
 </p>
-
-<h4>Download a chapter of the <a href="/report/nca3draft">draft NCA3 report</a>.</h4>
+<h4>See the structure of the third national climate assessment.</h4>
 <pre>
-$ mojo get http://data.globalchange.gov/report/nca3draft.json /chapter/2/url &gt; url
-$ wget `cat url`
+$ curl http://data.globalchange.gov/report/nca3.yaml
 </pre>
 
 <h3>SPARQL</h3>
