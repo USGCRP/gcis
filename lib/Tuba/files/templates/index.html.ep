@@ -11,7 +11,7 @@
         text-align: center;
         min-height: 110px;
         margin: 0;
-      	padding: 120px 0;
+      	padding: 60px 0;
       	background: #ffffff url("usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
@@ -36,7 +36,7 @@
 
 <div class="jumbotron">
 <h1>Global Change Information System</h1>
-<h2>Providing structured global change information.</h2>
+<h3>Providing structured global change information.</h3>
 </div>
 
 <p class="lead">
