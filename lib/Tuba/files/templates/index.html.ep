@@ -86,17 +86,17 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 <div class='row-fluid' style='text-align:center;'>
 <div class="span3">
 %= link_to 'about' => class => 'btn btn-default btn-inverse btn-large white' => begin
-Learn about the GCIS
+About the GCIS
 %= end
 </div>
 <div class="span3">
-    <%= link_to 'examples' => class => "btn btn-default btn-inverse btn-large white" => begin %>See some examples<%= end %>
+    <%= link_to 'examples' => class => "btn btn-default btn-inverse btn-large white" => begin %>GCIS examples<%= end %>
 </div>
 <div class="span3">
-    <%= link_to 'resources' => class => "btn btn-default btn-inverse btn-large white" => begin %>Understand the data model<%= end %>
+    <%= link_to 'resources' => class => "btn btn-default btn-inverse btn-large white" => begin %>GCIS data model<%= end %>
 </div>
 <div class="span3">
-    <%= link_to 'api_reference' => class => "btn btn-default btn-large btn-inverse white" => begin %>See the API reference<%= end %>
+    <%= link_to 'api_reference' => class => "btn btn-default btn-large btn-inverse white" => begin %>GCIS API reference<%= end %>
 </div>
 </div>
 
