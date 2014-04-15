@@ -74,3 +74,9 @@ table.densetable tr th {
 .navbar .nav {
 	margin:  0 10px 0 15px;
 }
+a.white {
+    color:white;
+}
+h2.centered {
+    text-align:center;
+}
