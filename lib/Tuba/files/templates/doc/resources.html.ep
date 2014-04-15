@@ -1,6 +1,80 @@
-% layout 'default';
+% layout 'default', title => "GCIS Data Model";
 
 <h2><center>Data Model</center></h2>
+<p>The GCIS maintains two concurrent models of the data : a relational model, and a semantic model.
+Entities represented by the GCIS are refered to as <b>resources</b>, as defined in <a href="http://https://tools.ietf.org/html/rfc2396">RFC 2396</a>.
+They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
+<p>The terminology below describes the resources represented in the GCIS :</p>
+<dl class='dl-horizontal'>
+    <dt>Report</dt>
+    <dd>A report, such as the <%= link_to 'show_report', { report_identifier => "nca3" } => begin %>nca3<%= end %>
+    or the <%= link_to 'show_report', { report_identifier => 'nca2' } => begin %>nca2<%= end %>
+    may have chapters, figures, tables, findings, and references associated with it.</dd>
+    <dt>Chapter</dt>
+    <dd>A chapter of a report, such as 
+    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-planet" } => begin
+    our-changing-planet
+    %= end
+    has a unique mnemonic identifiers, and possibly, a number.  Some chapters, for instance, an
+    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science" } => begin
+    appendix
+    %= end
+    , do not have a number.  Chapters may also have figures, tables, findings, and references associated with them.
+    </dd>
+    <dt>Figure</dt><dd>A figure in a report, such as
+    %= link_to 'show_figure', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', figure_identifier => 'observed-us-temperature-change' } => begin
+    observed-us-temperature-change
+    %= end
+    may be composed of one or more images.
+    </dd>
+    <dt>Finding</dt><dd>
+    A finding in a report, such as
+    %= link_to 'show_finding', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', finding_identifier => 'global-climate-is-changing' } => begin
+    global-climate-is-changing
+    %= end
+    has a statement as well as phrases and bibliographic references describing the confidence level, uncertainties, and evidence for that finding.
+    </dd>
+    <dt>Table</dt><dd>A table, like a figure, is embedded in a report, and possibly in a chapter in a report.</dd>
+    <dt>Reference</dt><dd>A reference is a bibliographic entry or citation.  They are uniquely identified with UUIDs, like
+    %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
+    e679d754-46b3-4d62-a7dd-4a7f0c727ebe
+    %= end
+    .  A reference
+    in a report may appear in a chapter, figure, finding or table of that report.  Moreover, a reference refers to
+    a publication such as an article, web page, or book.</dd>
+    <dt>Publication</dt>
+    <dd>A <i>publication</i> in the GCIS may be a report, a report-specific resource -- a chapter, figure, finding, table -- or
+    a non-report-specific resource :  a journal, article, image, web page, or book.  The former category is described above, and the
+    latter category is described below.</dd>
+    <dt>Book</dt>
+    <dd>A
+    %= link_to 'show_book', { book_identifier => "70466915-7ddb-4edc-bdc6-b5fbe0de90cd" } => begin
+    book
+    %= end
+    has an ISBN number, but is uniquely identified within GCIS using a UUID.</dd>
+    <dt>Journals</dt>
+    <dd>A journal
+    may have a print and online ISSN number, and is uniquely identified within GCIS using a mnemonic identifier, like
+    %= link_to 'show_journal', { journal_identifier => "climatic-change" } => begin
+    climatic-change
+    <%= end =%>.
+    .</dd>
+    <dt>Article</dt>
+    <dd>A article in a journal has a DOI, like
+    %= link_to 'show_article', { article_identifier => "10.1007/s10584-011-0213-7" } => begin
+    10.1007/s10584-011-0213-7
+    %= end
+    and this is used as part of the URI with the GCIS.
+    </dd>
+</dl>
+<h3>Identifiers</h3>
+<p>Resources in GCIS are identified by URIs.  These URIs have been designed to be
+<a href="http://www.w3.org/TR/cooluris/" target='_blank'>Cool URIs for the Semantic Web</a>.
+The URIs may contain mnemonic identifiers, which are ASCII strings composed of lower case letters, numbers,
+underscores and dashes.  UUIDs are sometimes used, as are Digital Object Identifiers (DOIs), when they exist.
+DOIs are standardized as <a href="http://www.iso.org/iso/catalogue_detail?csnumber=43506" target="_blank">ISO 26324</a>.
+<h3>Relational Model</h3>
+<h3>Semantic Model</h3>
 <p>The URLs within the GCIS API are representations of resources which are formally
 described by the
 <a href="<%= url_for('gcis.owl') %>">GCIS ontology</a>.
