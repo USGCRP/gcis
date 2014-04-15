@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.report">report</a>
+            <a name="gcis-metadata.table.activity">activity</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>report Structure</caption>
+                <caption>activity Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -148,46 +148,6 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>title</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                NOT NULL
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                
-                </td>
-                <td>url</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE
-                    
-                
-
-                
-                
-                </i>
                 
                 </td>
              </tr>
@@ -196,7 +156,7 @@
                 <td>
                 
                 </td>
-                <td>doi</td>
+                <td>data_usage</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -212,13 +172,13 @@
                 <td>
                 
                 </td>
-                <td>_public</td>
-                <td>boolean</td>
+                <td>methodology</td>
+                <td>character varying</td>
                 <td><i>
                 
 
                 
-                DEFAULT true
+                
                 </i>
                 
                 </td>
@@ -227,18 +187,10 @@
             <tr class="tr1">
                 <td>
                 
-                  
-                  <a href="table_gcis_metadata.report_type.html#gcis-metadata.table.report-type">report_type.identifier</a>
-                  
-                
                 </td>
-                <td>report_type_identifier</td>
-                <td>character varying</td>
+                <td>start_time</td>
+                <td>timestamp without time zone</td>
                 <td><i>
-                
-                    
-
-                    
                 
 
                 
@@ -252,8 +204,8 @@
                 <td>
                 
                 </td>
-                <td>summary</td>
-                <td>character varying</td>
+                <td>end_time</td>
+                <td>timestamp without time zone</td>
                 <td><i>
                 
 
@@ -268,7 +220,7 @@
                 <td>
                 
                 </td>
-                <td>frequency</td>
+                <td>duration</td>
                 <td>interval</td>
                 <td><i>
                 
@@ -284,8 +236,8 @@
                 <td>
                 
                 </td>
-                <td>publication_year</td>
-                <td>integer</td>
+                <td>computing_environment</td>
+                <td>character varying</td>
                 <td><i>
                 
 
@@ -300,24 +252,8 @@
                 <td>
                 
                 </td>
-                <td>topic</td>
+                <td>output_artifacts</td>
                 <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>in_library</td>
-                <td>boolean</td>
                 <td><i>
                 
 
@@ -337,20 +273,20 @@
         
         <p>&nbsp;</p>
         <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>report Constraints</caption>
+            <caption>activity Constraints</caption>
             <tr>
                 <th>Name</th>
                 <th>Constraint</th>
             </tr>
             
             <tr class="tr0">
-                <td>ck_report_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+                <td>ck_activity_identifer</td>
+                <td>CHECK (((identifier)::text ~ &#39;[a-z0-9_-]+&#39;::text))</td>
             </tr>
             
             <tr class="tr1">
-                <td>ck_report_pubyear</td>
-                <td>CHECK (((publication_year &gt; 0) AND (publication_year &lt; 9999)))</td>
+                <td>ck_activity_identifier</td>
+                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
             </tr>
             
         </table>
@@ -360,17 +296,9 @@
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata._report_editor.html">_report_editor</a><br>
+                <a href="table_gcis_metadata.methodology.html">methodology</a><br>
         
-                <a href="table_gcis_metadata._report_viewer.html">_report_viewer</a><br>
-        
-                <a href="table_gcis_metadata.chapter.html">chapter</a><br>
-        
-                <a href="table_gcis_metadata.figure.html">figure</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
-                <a href="table_gcis_metadata.table.html">table</a><br>
+                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
         
         
 

@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.publication">publication</a>
+            <a name="gcis-metadata.table.methodology">methodology</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>publication Structure</caption>
+                <caption>methodology Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -133,11 +133,19 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.activity.html#gcis-metadata.table.activity">activity.identifier</a>
+                  
+                
+                  
                 
                 </td>
-                <td>id</td>
-                <td>serial</td>
+                <td>activity_identifier</td>
+                <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
                 
                     PRIMARY KEY
                     
@@ -156,16 +164,17 @@
                 <td>
                 
                   
-                  <a href="table_gcis_metadata.publication_type.html#gcis-metadata.table.publication-type">publication_type.identifier</a>
-                  
                 
+                  
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
                   
                 
                 </td>
-                <td>publication_type_identifier</td>
-                <td>character varying</td>
+                <td>publication_id</td>
+                <td>integer</td>
                 <td><i>
                 
+                    PRIMARY KEY
                     
 
                     
@@ -173,35 +182,9 @@
                     
 
                     
-                       UNIQUE#1
-                    
                 
 
-                NOT NULL
                 
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                
-                </td>
-                <td>fk</td>
-                <td>hstore</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE#1
-                    
-                
-
-                NOT NULL
                 
                 </i>
                 
@@ -217,25 +200,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.methodology.html">methodology</a><br>
-        
-                <a href="table_gcis_metadata.publication_contributor_map.html">publication_contributor_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_gcmd_keyword_map.html">publication_gcmd_keyword_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_region_map.html">publication_region_map</a><br>
-        
-                <a href="table_gcis_metadata.reference.html">reference</a><br>
-        
-                <a href="table_gcis_metadata.subpubref.html">subpubref</a><br>
-        
         
 
     <!-- Indexes -->

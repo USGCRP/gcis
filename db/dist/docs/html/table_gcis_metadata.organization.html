@@ -247,6 +247,21 @@
 
         <!-- Constraint List -->
         
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>organization Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>organization_identifier_check</td>
+                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+        </table>
+        
 
         <!-- Foreign Key Discovery -->
         
@@ -254,9 +269,7 @@
         
                 <a href="table_gcis_metadata.contributor.html">contributor</a><br>
         
-                <a href="table_gcis_metadata.dataset_organization_map.html">dataset_organization_map</a><br>
-        
-                <a href="table_gcis_metadata.report.html">report</a><br>
+                <a href="table_gcis_metadata.organization_map.html">organization_map</a><br>
         
         
 

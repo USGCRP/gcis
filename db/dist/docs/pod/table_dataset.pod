@@ -15,7 +15,6 @@ dataset
  version (character varying) - 
  description (character varying) - 
  native_id (character varying) - 
- publication_dt (timestamp(3) without time zone) - 
  access_dt (timestamp(3) without time zone) - 
  url (character varying) - 
  data_qualifier (character varying) - 
@@ -29,6 +28,16 @@ dataset
  processing_level (character varying) - 
  spatial_res (character varying) - 
  doi (character varying) - 
+ release_dt (timestamp without time zone) - 
+ publication_year (integer) - 
+ attributes (character varying) - 
+ variables (character varying) - 
+ start_time (timestamp without time zone) - 
+ end_time (timestamp without time zone) - 
+ lat_min (numeric) - 
+ lat_max (numeric) - 
+ lon_min (numeric) - 
+ lon_max (numeric) - 
 
 
 =head1 SCHEMA
@@ -42,7 +51,6 @@ dataset
   version          | character varying              |           | extended |              | 
   description      | character varying              |           | extended |              | 
   native_id        | character varying              |           | extended |              | 
-  publication_dt   | timestamp(3) without time zone |           | plain    |              | 
   access_dt        | timestamp(3) without time zone |           | plain    |              | 
   url              | character varying              |           | extended |              | 
   data_qualifier   | character varying              |           | extended |              | 
@@ -56,10 +64,21 @@ dataset
   processing_level | character varying              |           | extended |              | 
   spatial_res      | character varying              |           | extended |              | 
   doi              | character varying              |           | extended |              | 
+  release_dt       | timestamp without time zone    |           | plain    |              | 
+  publication_year | integer                        |           | plain    |              | 
+  attributes       | character varying              |           | extended |              | 
+  variables        | character varying              |           | extended |              | 
+  start_time       | timestamp without time zone    |           | plain    |              | 
+  end_time         | timestamp without time zone    |           | plain    |              | 
+  lat_min          | numeric                        |           | main     |              | 
+  lat_max          | numeric                        |           | main     |              | 
+  lon_min          | numeric                        |           | main     |              | 
+  lon_max          | numeric                        |           | main     |              | 
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
- Referenced by:
-     TABLE "dataset_organization_map" CONSTRAINT "dataset_organization_ibfk_1" FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON DELETE CASCADE
+ Check constraints:
+     "ck_dataset_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+     "ck_year" CHECK (publication_year > 1800 AND publication_year < 9999)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON dataset FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON dataset FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

@@ -303,6 +303,26 @@
 
         <!-- Constraint List -->
         
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>article Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>article_doi_check</td>
+                <td>CHECK (((doi)::text ~ &#39;^10.[[:print:]]+/[[:print:]]+$&#39;::text))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>article_identifier_check</td>
+                <td>CHECK ((((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)) OR ((identifier)::text ~ &#39;^10.[[:print:]]+/[[:print:]]+$&#39;::text)))</td>
+            </tr>
+            
+        </table>
+        
 
         <!-- Foreign Key Discovery -->
         

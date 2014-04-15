@@ -257,7 +257,7 @@
             
             <tr class="tr0">
                 <td>ck_orcid</td>
-                <td>CHECK (((orcid)::text ~ similar_escape(&#39;\A\d{4}-\d{4}-\d{4}-\d{4}\Z&#39;::text, NULL::text)))</td>
+                <td>CHECK (((orcid)::text ~ similar_escape(&#39;\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\Z&#39;::text, NULL::text)))</td>
             </tr>
             
         </table>

@@ -9,10 +9,13 @@ file
 
 =head1 FIELDS
 
- file_type (character varying) - 
- dir (character varying) - 
  file (character varying) - 
  identifier (character varying) - 
+ thumbnail (character varying) - 
+ mime_type (character varying) - 
+ sha1 (character varying) - 
+ size (integer) - 
+ location (character varying) - 
 
 
 =head1 SCHEMA
@@ -20,10 +23,13 @@ file
                                                   Table "gcis_metadata.file"
     Column   |       Type        |                     Modifiers                     | Storage  | Stats target | Description 
  ------------+-------------------+---------------------------------------------------+----------+--------------+-------------
-  file_type  | character varying |                                                   | extended |              | 
-  dir        | character varying |                                                   | extended |              | 
   file       | character varying | not null                                          | extended |              | 
   identifier | character varying | not null default nextval('file_id_seq'::regclass) | extended |              | 
+  thumbnail  | character varying |                                                   | extended |              | 
+  mime_type  | character varying | not null                                          | extended |              | 
+  sha1       | character varying |                                                   | extended |              | 
+  size       | integer           |                                                   | plain    |              | 
+  location   | character varying |                                                   | extended |              | 
  Indexes:
      "file_pkey" PRIMARY KEY, btree (identifier)
      "file_file_key" UNIQUE CONSTRAINT, btree (file)

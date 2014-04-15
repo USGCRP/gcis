@@ -1,0 +1,39 @@
+
+=head1 NAME
+
+organization_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ organization_identifier (character varying) - 
+ other_organization_identifier (character varying) - 
+ organization_relationship_identifier (character varying) - 
+
+
+=head1 SCHEMA
+
+                                     Table "gcis_metadata.organization_map"
+                 Column                |       Type        | Modifiers | Storage  | Stats target | Description 
+ --------------------------------------+-------------------+-----------+----------+--------------+-------------
+  organization_identifier              | character varying | not null  | extended |              | 
+  other_organization_identifier        | character varying | not null  | extended |              | 
+  organization_relationship_identifier | character varying | not null  | extended |              | 
+ Indexes:
+     "organization_map_pkey" PRIMARY KEY, btree (organization_identifier, other_organization_identifier, organization_relationship_identifier)
+ Foreign-key constraints:
+     "organization_map_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "organization_map_organization_relationship_identifier_fkey" FOREIGN KEY (organization_relationship_identifier) REFERENCES organization_relationship(identifier)
+     "organization_map_other_organization_identifier_fkey" FOREIGN KEY (other_organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

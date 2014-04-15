@@ -1,0 +1,36 @@
+
+=head1 NAME
+
+publication_region_map
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ publication_id (integer) - 
+ region_identifier (character varying) - 
+
+
+=head1 SCHEMA
+
+                        Table "gcis_metadata.publication_region_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target | Description 
+ -------------------+-------------------+-----------+----------+--------------+-------------
+  publication_id    | integer           | not null  | plain    |              | 
+  region_identifier | character varying | not null  | extended |              | 
+ Indexes:
+     "publication_region_map_pkey" PRIMARY KEY, btree (publication_id, region_identifier)
+ Foreign-key constraints:
+     "publication_region_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
+     "publication_region_map_region_identifier_fkey" FOREIGN KEY (region_identifier) REFERENCES region(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_region_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON publication_region_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

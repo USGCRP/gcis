@@ -236,22 +236,6 @@
                 <td>
                 
                 </td>
-                <td>publication_dt</td>
-                <td>timestamp(3) without time zone</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
                 <td>access_dt</td>
                 <td>timestamp(3) without time zone</td>
                 <td><i>
@@ -264,7 +248,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -280,7 +264,7 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -296,7 +280,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -312,7 +296,7 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -328,7 +312,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -344,7 +328,7 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -360,7 +344,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -376,7 +360,7 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -392,7 +376,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -408,7 +392,7 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -424,7 +408,7 @@
                 </td>
              </tr>
             
-            <tr class="tr0">
+            <tr class="tr1">
                 <td>
                 
                 </td>
@@ -440,12 +424,172 @@
                 </td>
              </tr>
             
-            <tr class="tr1">
+            <tr class="tr0">
                 <td>
                 
                 </td>
                 <td>doi</td>
                 <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>release_dt</td>
+                <td>timestamp without time zone</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>publication_year</td>
+                <td>integer</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>attributes</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>variables</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>start_time</td>
+                <td>timestamp without time zone</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>end_time</td>
+                <td>timestamp without time zone</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>lat_min</td>
+                <td>numeric</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>lat_max</td>
+                <td>numeric</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>lon_min</td>
+                <td>numeric</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>lon_max</td>
+                <td>numeric</td>
                 <td><i>
                 
 
@@ -463,13 +607,28 @@
 
         <!-- Constraint List -->
         
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>dataset Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>ck_dataset_identifier</td>
+                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>ck_year</td>
+                <td>CHECK (((publication_year &gt; 1800) AND (publication_year &lt; 9999)))</td>
+            </tr>
+            
+        </table>
+        
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.dataset_organization_map.html">dataset_organization_map</a><br>
-        
         
 
     <!-- Indexes -->
