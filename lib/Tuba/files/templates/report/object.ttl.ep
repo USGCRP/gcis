@@ -36,9 +36,7 @@
    dcterms:subject "<%= $report->topic %>";
 % for my $org ($report->organizations) {
    gcis:Organization "<%= $org->identifier %>";
-   gcis:hasCommittee "<%= $org->identifier %>";
    prov:wasAttributedTo  "<%= $org->identifier %>";
-   gcis:Organization "<%= $org->identifier %>";
 % }
 %= include 'prov';
 %= include 'contributors';
