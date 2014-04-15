@@ -42,10 +42,19 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     .  A reference
     in a report may appear in a chapter, figure, finding or table of that report.  Moreover, a reference refers to
     a publication such as an article, web page, or book.</dd>
+
     <dt>Publication</dt>
     <dd>A <i>publication</i> in the GCIS may be a report, a report-specific resource -- a chapter, figure, finding, table -- or
-    a non-report-specific resource :  a journal, article, image, web page, or book.  The former category is described above, and the
-    latter category is described below.</dd>
+    a non-report-specific resource :  a journal, article, image, web page, or book.</dd>
+    <dt>Image</dt>
+    <dd>
+    An image may be associated with one or more figures.  For
+    instance,
+    %= link_to 'show_image', { image_identifier => "1f5a3cdd-fc45-403e-bf11-d1772005b430" } => begin
+    this image
+    %= end
+    is a part of the figure described above.
+    </dd>
     <dt>Book</dt>
     <dd>A
     %= link_to 'show_book', { book_identifier => "70466915-7ddb-4edc-bdc6-b5fbe0de90cd" } => begin
@@ -64,7 +73,22 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     %= link_to 'show_article', { article_identifier => "10.1007/s10584-011-0213-7" } => begin
     10.1007/s10584-011-0213-7
     %= end
-    and this is used as part of the URI with the GCIS.
+    which is used to identify it uniquely in the GCIS.
+    </dd>
+    <dt>Web Page</dt>
+    <dd>A web page is assigned a UUID, like
+    %= link_to 'show_webpage', { webpage_identifier => '26625ddf-dd19-4dd1-a35d-33c68c5b2d6e' } => begin
+    26625ddf-dd19-4dd1-a35d-33c68c5b2d6e
+    %= end
+    to identify its state at a particular point in time.</dd>
+    <dt>Contributor</dt>
+    <dd>A <i>contributor</i> to a <i>publication</i> is an organization, a role, and optionally a person.</dd>
+    <dt>Organization</dt>
+    <dd>An organization may be related to other organizations, and is identified uniquely by a mnemonic identifier.</dd>
+    <dt>Person</dt>
+    <dd>A person is given a numeric id.  If a person has an <a href="http://orcid.org" target="_blank">orcid</a>, it is
+    used to uniquely identify the person within the GCIS.  The only associations between people and organizations is
+    via their affiliations when contributing to GCIS publications.
     </dd>
 </dl>
 <h3>Identifiers</h3>
