@@ -2,11 +2,7 @@
 <<%= current_resource %>>
    a prov:Entity; a bibo:Journal;
  % for my $article ($journal->articles) {
-   dcterms:hasPart "<%= $article->identifier %>";
- % }
-% for my $keyword ($journal->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
    dwc:Countrycode "<%= $journal->country %>";
    dcterms:identifier "<%= $journal->identifier %>";
