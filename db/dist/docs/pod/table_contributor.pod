@@ -11,7 +11,7 @@ contributor
 
  id (serial) - 
  person_id (integer) - 
- role_type (character varying) - 
+ role_type_identifier (character varying) - 
  organization_identifier (character varying) - 
 
 
@@ -22,16 +22,17 @@ contributor
  -------------------------+-------------------+----------------------------------------------------------+----------+--------------+-------------
   id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    |              | 
   person_id               | integer           |                                                          | plain    |              | 
-  role_type               | character varying | not null                                                 | extended |              | 
+  role_type_identifier    | character varying | not null                                                 | extended |              | 
   organization_identifier | character varying | not null                                                 | extended |              | 
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
-     "contributor_person_id_role_type_organization_identifier_key" UNIQUE CONSTRAINT, btree (person_id, role_type, organization_identifier)
+     "contributor_person_id_role_type_organization_identifier_key" UNIQUE CONSTRAINT, btree (person_id, role_type_identifier, organization_identifier)
  Check constraints:
      "ck_person_org" CHECK (person_id IS NOT NULL OR organization_identifier IS NOT NULL)
  Foreign-key constraints:
      "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE
      "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "fk_role_type" FOREIGN KEY (role_type_identifier) REFERENCES role_type(identifier)
  Referenced by:
      TABLE "publication_contributor_map" CONSTRAINT "publication_contributor_map_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "submitter" CONSTRAINT "submitter_contributor_id_fkey" FOREIGN KEY (contributor_id) REFERENCES contributor(id)

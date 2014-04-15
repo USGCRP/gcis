@@ -54,6 +54,13 @@ sub set_title {
     }
 }
 
+sub update_form {
+    my $c = shift;
+    my $object = $c->_this_object or return $c->render_not_found;
+    $c->verify_consistent_chapter($object) or return $c->render_not_found;
+    $c->SUPER::update_form(@_);
+}
+
 sub show {
     my $c = shift;
     my $meta = Finding->meta;
@@ -72,6 +79,12 @@ sub show {
     };
 
     return $c->render_not_found unless $object;
+
+    if (!$c->stash('chapter_identifier') && $object->chapter_identifier) {
+        $c->stash(chapter_identifier => $object->chapter_identifier);
+    }
+    return $c->render_not_found unless $c->verify_consistent_chapter($object);
+
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }

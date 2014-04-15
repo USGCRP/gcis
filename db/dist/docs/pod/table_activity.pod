@@ -1,0 +1,51 @@
+
+=head1 NAME
+
+activity
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ data_usage (character varying) - 
+ methodology (character varying) - 
+ start_time (timestamp without time zone) - 
+ end_time (timestamp without time zone) - 
+ duration (interval) - 
+ computing_environment (character varying) - 
+ output_artifacts (character varying) - 
+
+
+=head1 SCHEMA
+
+                                      Table "gcis_metadata.activity"
+         Column         |            Type             | Modifiers | Storage  | Stats target | Description 
+ -----------------------+-----------------------------+-----------+----------+--------------+-------------
+  identifier            | character varying           | not null  | extended |              | 
+  data_usage            | character varying           |           | extended |              | 
+  methodology           | character varying           |           | extended |              | 
+  start_time            | timestamp without time zone |           | plain    |              | 
+  end_time              | timestamp without time zone |           | plain    |              | 
+  duration              | interval                    |           | plain    |              | 
+  computing_environment | character varying           |           | extended |              | 
+  output_artifacts      | character varying           |           | extended |              | 
+ Indexes:
+     "activity_pkey" PRIMARY KEY, btree (identifier)
+ Check constraints:
+     "ck_activity_identifer" CHECK (identifier::text ~ '[a-z0-9_-]+'::text)
+     "ck_activity_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+ Referenced by:
+     TABLE "methodology" CONSTRAINT "methodology_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier)
+     TABLE "publication_map" CONSTRAINT "publication_map_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON activity FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON activity FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

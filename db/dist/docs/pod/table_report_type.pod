@@ -1,0 +1,30 @@
+
+=head1 NAME
+
+report_type
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+
+
+=head1 SCHEMA
+
+                          Table "gcis_metadata.report_type"
+    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------+-------------------+-----------+----------+--------------+-------------
+  identifier | character varying | not null  | extended |              | 
+ Indexes:
+     "report_type_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "report" CONSTRAINT "report_report_type_identifier_fkey" FOREIGN KEY (report_type_identifier) REFERENCES report_type(identifier)
+ Has OIDs: no
+ 
+
+=cut
+
+

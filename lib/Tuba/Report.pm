@@ -71,6 +71,9 @@ sub list {
     if ($_ = $c->param('report_type')) {
         $query{report_type_identifier} = $_
     }
+    if (defined($_ = $c->param('in_library'))) {
+        $query{in_library} = $_ if length($_);
+    }
     if ($_ = $c->param('publication_year')) {
         $query{publication_year} = $_ if /^[0-9]{4}$/;
     }
@@ -182,7 +185,7 @@ sub make_tree_for_show {
       url                     => $report->url,
       identifier              => $report->identifier,
       publication_year        => $report->publication_year,
-      contributors => [map $_->as_tree, $pub->contributors ],
+      contributors => [map $_->as_tree(c => $c), $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,
       report_type_identifier => $report->report_type_identifier,

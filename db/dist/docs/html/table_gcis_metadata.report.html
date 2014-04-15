@@ -161,7 +161,7 @@
                 <td><i>
                 
 
-                
+                NOT NULL
                 
                 </i>
                 
@@ -195,12 +195,44 @@
             <tr class="tr1">
                 <td>
                 
+                </td>
+                <td>doi</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>_public</td>
+                <td>boolean</td>
+                <td><i>
+                
+
+                
+                DEFAULT true
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
                   
-                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
+                  <a href="table_gcis_metadata.report_type.html#gcis-metadata.table.report-type">report_type.identifier</a>
                   
                 
                 </td>
-                <td>organization_identifier</td>
+                <td>report_type_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -220,7 +252,7 @@
                 <td>
                 
                 </td>
-                <td>doi</td>
+                <td>summary</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -236,13 +268,61 @@
                 <td>
                 
                 </td>
-                <td>_public</td>
+                <td>frequency</td>
+                <td>interval</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>publication_year</td>
+                <td>integer</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>topic</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>in_library</td>
                 <td>boolean</td>
                 <td><i>
                 
 
                 
-                DEFAULT true
+                
                 </i>
                 
                 </td>
@@ -266,6 +346,11 @@
             <tr class="tr0">
                 <td>ck_report_identifier</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>ck_report_pubyear</td>
+                <td>CHECK (((publication_year &gt; 0) AND (publication_year &lt; 9999)))</td>
             </tr>
             
         </table>

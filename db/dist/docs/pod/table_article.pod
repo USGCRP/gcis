@@ -37,6 +37,9 @@ article
  Indexes:
      "article_pkey" PRIMARY KEY, btree (identifier)
      "article_doi_key" UNIQUE CONSTRAINT, btree (doi)
+ Check constraints:
+     "article_doi_check" CHECK (doi::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)
+     "article_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text) OR identifier::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)
  Foreign-key constraints:
      "article_ibfk_1" FOREIGN KEY (journal_identifier) REFERENCES journal(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:

@@ -33,7 +33,7 @@ person
      "person_orcid_key" UNIQUE CONSTRAINT, btree (orcid)
      "uk_first_last_orcid" UNIQUE, btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)))
  Check constraints:
-     "ck_orcid" CHECK (orcid::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{4}\Z'::text, NULL::text))
+     "ck_orcid" CHECK (orcid::text ~ similar_escape('\A\d{4}-\d{4}-\d{4}-\d{3}[0-9X]\Z'::text, NULL::text))
  Referenced by:
      TABLE "contributor" CONSTRAINT "contributor_ibfk_1" FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:

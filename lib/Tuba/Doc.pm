@@ -14,7 +14,7 @@ sub examples {
     $sparql_url->path->parts(['sparql']);
 
     my $global_slr = $sparql_url->clone;
-    $global_slr->path(q[/report/nca3draft/chapter/our-changing-climate/figure/global-slr]);
+    $global_slr->path(q[/report/nca3/chapter/our-changing-climate/figure/past-and-projected-changes-in-global-slr]);
 
     my $sparql = [
         { desc => "List URLs for 10 figures.",
@@ -23,7 +23,7 @@ sub examples {
 where { ?s a gcis:Figure }
 limit 10",
         },
-        { desc => "List all of the findings from the NCA3 draft report.",
+        { desc => "List all of the findings from the Third National Climate Assessment.",
           code => 
 "select * FROM <http://data.globalchange.gov>
 where {
@@ -33,7 +33,7 @@ where {
 ",
         },
         {
-          desc => "Find publications from which figure 2.26 (global-slr) in the draft nca3 was derived.",
+          desc => "Find publications from which figure 2.26 (past-and-projected-changes-in-global-slr) in the NCA3 was derived.",
 code =>
 "select ?y FROM <http://data.globalchange.gov>
 where {

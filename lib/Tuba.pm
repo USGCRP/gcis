@@ -59,7 +59,7 @@ use Tuba::Log;
 use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 
-our $VERSION = '0.70';
+our $VERSION = '1.00';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
@@ -381,6 +381,7 @@ sub startup {
 
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');
+    $r->get('/about')->to('doc#about')->name('about');
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {

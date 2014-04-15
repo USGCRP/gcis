@@ -31,22 +31,22 @@
     <td><%= $report->report_type_identifier // '' %></td>
     <td>
         %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $report->chapters } %>
+        <%= @{ $report->chapters } %>
         %= end
     </td>
     <td>
         %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $report->figures } %>
+        <%= $report->count_figures %>
         %= end
     </td>
     <td>
         %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $report->findings } %>
+        <%= $report->count_findings %>
         %= end
     </td>
     <td>
         %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $report->tables } %>
+        <%= $report->count_tables %>
         %= end
     </td>
     <td>

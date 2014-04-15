@@ -13,20 +13,23 @@ publication_map
  relationship (character varying) - 
  parent (integer) - 
  note (character varying) - 
+ activity_identifier (character varying) - 
 
 
 =head1 SCHEMA
 
-                         Table "gcis_metadata.publication_map"
-     Column    |       Type        | Modifiers | Storage  | Stats target | Description 
- --------------+-------------------+-----------+----------+--------------+-------------
-  child        | integer           | not null  | plain    |              | 
-  relationship | character varying | not null  | extended |              | 
-  parent       | integer           | not null  | plain    |              | 
-  note         | character varying |           | extended |              | 
+                             Table "gcis_metadata.publication_map"
+        Column        |       Type        | Modifiers | Storage  | Stats target | Description 
+ ---------------------+-------------------+-----------+----------+--------------+-------------
+  child               | integer           | not null  | plain    |              | 
+  relationship        | character varying | not null  | extended |              | 
+  parent              | integer           | not null  | plain    |              | 
+  note                | character varying |           | extended |              | 
+  activity_identifier | character varying |           | extended |              | 
  Indexes:
      "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
  Foreign-key constraints:
+     "publication_map_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier)
      "publication_map_child_fkey" FOREIGN KEY (child) REFERENCES publication(id) ON DELETE CASCADE
      "publication_map_parent_fkey" FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE
  Triggers:

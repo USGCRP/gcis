@@ -3,7 +3,7 @@
 <% my $relaxed_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
 
 % layout 'default';
-<h2>API Reference</h2>
+<h2 class='centered'>API Reference</h2>
 <p>Below is a list of methods and URLs supported by the GCIS.
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
 

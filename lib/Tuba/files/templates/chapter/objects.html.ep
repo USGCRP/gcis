@@ -28,17 +28,17 @@
     </td>
     <td>
         %= link_to 'list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $chapter->figures } %>
+        <%= $chapter->count_figures %>
         %= end
     </td>
     <td>
         %= link_to 'list_finding', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $chapter->findings } %>
+        <%= $chapter->count_findings %>
         %= end
     </td>
     <td>
         %= link_to 'list_table', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
-        <%= scalar @{ $chapter->tables } %>
+        <%= $chapter->count_tables %>
         %= end
     </td>
     <td>

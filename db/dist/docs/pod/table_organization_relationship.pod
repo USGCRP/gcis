@@ -1,0 +1,35 @@
+
+=head1 NAME
+
+organization_relationship
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ identifier (character varying) - 
+ label (character varying) - 
+
+
+=head1 SCHEMA
+
+                   Table "gcis_metadata.organization_relationship"
+    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
+ ------------+-------------------+-----------+----------+--------------+-------------
+  identifier | character varying | not null  | extended |              | 
+  label      | character varying | not null  | extended |              | 
+ Indexes:
+     "organization_relationship_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "organization_map" CONSTRAINT "organization_map_organization_relationship_identifier_fkey" FOREIGN KEY (organization_relationship_identifier) REFERENCES organization_relationship(identifier)
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON organization_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

@@ -52,6 +52,7 @@ figure
   report_identifier  | character varying              | not null  | extended |              | 
  Indexes:
      "figure_pkey" PRIMARY KEY, btree (identifier, report_identifier)
+     "figure_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
  Check constraints:
      "ck_figure_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Foreign-key constraints:
