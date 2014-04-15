@@ -12,7 +12,7 @@ resources.  The SPARQL interfaces is more advanced, and better suited for
 complex queries, possibly related to other external semantic information
 </p>
 
-<h3>JSON, YAML</h3>
+<h3>RESTful interface</h3>
 
 <p>
 The GCIS provides JSON and YAML representations of resources, which can be accessed
@@ -36,12 +36,11 @@ $ curl -H 'Accept: application/json' http://data.globalchange.gov/report/nca3/fi
 </pre>
 
 
-<h3>SPARQL</h3>
+<h3>SPARQL interface</h3>
 <p>The GCIS API exposes a SPARQL endpoint at <%= link_to '/sparql' => begin %><%= $sparql_url %><%= end %>.
 Try your own queries in the <%= link_to '/sparql' => begin %>SPARQL Query Editor<%= end %> or run
 some of the ones below.</p>
-<p>The <a href="/gcis.owl">GCIS ontology</a> is still under development, but will eventually
-describe the contents of the triple store which supports the SPARQL endpoint.
+<p>The <a href="/gcis.owl">GCIS ontology</a> formally defines the concepts used in the gcis namespace.
 </p>
 % for my $eg (@$sparql) {
 <h4><%= $eg->{desc} %></h4>
