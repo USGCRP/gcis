@@ -112,3 +112,4 @@
 1030_in_library.sql	3373fc2e5c3562513c5ba2e94d3675c4
 1040_coordinator.sql	b88e7228d36de8069f732225e3203d8f
 1050_territory.sql	d1e0345a8c2dd5d0a4fba69ce791c4f8
+1060_in_library.sql	7ac686c7c8a6678ca8266f19fd2cd349
