@@ -2,10 +2,11 @@
 <h2>
     <center>About the Global Change Information System</center>
 </h2>
-<p>This is GCIS version <%= $Tuba::VERSION %>.</p>
 <p>
-The U.S. Global Change Research Program (USGCRP) is a Federal program that coordinates and integrates global change research across thirteen government agencies. Established by Presidential initiative in 1989 and mandated by Congress in the Global Change Research Act (GCRA) of 1990, the USGCRP works to provide sound scientific information about climate and related global change that is useful and accessible to people, communities, businesses, and decision makers. The USGCRP has established an information framework to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society. This framework is named the Global Change Information System. 
+The <a href="http://www.globalchange.gov">USGCRP</a> has established the Global Change Information System (GCIS) to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society.
+<a class='btn btn-default squeezevert' href="http://www.globalchange.gov/about">About the USGCRP.</a>
 </p>
+<p>This is version <%= $Tuba::VERSION %> of the GCIS.</p>
 
 <h3>Global Change</h3>
 <p>
