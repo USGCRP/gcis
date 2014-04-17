@@ -8,17 +8,15 @@ The <a href="http://www.globalchange.gov">USGCRP</a> has established the Global 
 <p><a class='btn btn-inverse white' href="http://www.globalchange.gov/about">About USGCRP</a></p>
 <h3>Global Change</h3>
 <p>
-For the purposes of the GCIS, “global change” refers to changes in the global environment that may alter the capacity of the Earth to sustain life (GCRA, 1990). This includes alterations in: 
+For the purposes of the GCIS, “global change” refers to changes
+in the global environment that may alter the
+capacity of the Earth to sustain life. Global change encompasses climate
+change, but it also includes other critical drivers of environmental change
+that may interact with climate change, such as land use change, the
+alteration of the water cycle, changes in biogeochemical cycles, and
+biodiversity loss.
 </p>
-<ul>
-    <li>Climate</li>
-    <li>Land productivity</li>
-    <li>Oceans or other water resources</li>
-    <li>Atmospheric chemistry</li>
-    <li>Ecological systems</li>
-    <li>Demographic and socioeconomic trends</li>
-</ul>
-
+<p>
 Global change information is structured using the <%= link_to 'resources' => begin %>GCIS data model<%= end %>;
 this data model represents relationships and entities such
 as reports, report chapters, figures, images, tables, bibliographic
