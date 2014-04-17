@@ -8,10 +8,6 @@
    rdfs:label "<%= $webpage->title %>";
    bibo:uri "<%= $webpage->url %>";
    gcis:hasURL "<%= $webpage->url %>";
-% for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>".
- % }
 %= include 'prov';
    
  %#  gcis:Location "<%= $webpage->pub_location %>";
@@ -23,3 +19,8 @@
 %# % for my $webpage ($webpage->persons) {
 %#   gcis:hasAuthor  "<%= $webpage->author %>";
 %#   prov:wasAttributedTo  "<%= $webpage->author %>".
+% for my $keyword ($webpage->keywords) {
+   gcis:subject "<%== $keyword->stringify %>";
+   dcterms:subject "<%== $keyword->stringify %>".
+ % }
+

@@ -8,10 +8,6 @@
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
-% for my $keyword ($finding->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
-% }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>;
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
@@ -36,4 +32,8 @@
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>";
 %= include 'prov';
 %# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
+%# % for my $keyword ($finding->keywords) {
+%#   gcis:subject "<%== $keyword->stringify %>";
+%#   dcterms:subject "<%== $keyword->stringify %>";
+%# % }
 

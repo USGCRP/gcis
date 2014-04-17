@@ -13,10 +13,6 @@
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($table)->to_abs %>>;
  % }
-% for my $keyword ($report->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
- % }
 % for my $finding ($report->findings) {
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
@@ -34,16 +30,16 @@
    gcis:url "<%= $report->url %>". 
    bibo:doi "<%= $report->doi %>";
    dcterms:subject "<%= $report->topic %>";
-% for my $org ($report->organizations) {
-   gcis:Organization "<%= $org->identifier %>";
-   gcis:hasCommittee "<%= $org->identifier %>";
-   prov:wasAttributedTo  "<%= $org->identifier %>";
-   gcis:Organization "<%= $org->identifier %>";
-% }
 %= include 'prov';
 %= include 'contributors';
 %#   dwc:year "<%= $report->year %>";
 %#   xsd:gyear "<%= $report->year %>".
 %# add gcis:hasCommittee somewhere?
-
-
+%# % for my $keyword ($report->keywords) {
+%#   gcis:subject "<%== $keyword->stringify %>";
+%#   dcterms:subject "<%== $keyword->stringify %>";
+%# % }
+%# % for my $org ($report->organizations) {
+%#   gcis:Organization "<%= $org->identifier %>";
+%#   prov:wasAttributedTo "<%= $org->identifier %>";
+%# % }
