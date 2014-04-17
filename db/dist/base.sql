@@ -108,6 +108,7 @@ CREATE TABLE book (
     publisher character varying,
     number_of_pages numeric,
     url character varying,
+    in_library boolean,
     CONSTRAINT ck_book_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 

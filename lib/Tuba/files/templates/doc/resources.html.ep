@@ -2,7 +2,7 @@
 
 <h2><center>Data Model</center></h2>
 <p>The GCIS maintains two concurrent models of the data : a relational model, and a semantic model.
-Entities represented by the GCIS are refered to as <b>resources</b>, as defined in <a href="http://https://tools.ietf.org/html/rfc2396">RFC 2396</a>.
+Entities represented by the GCIS are refered to as <b>resources</b>, as defined in <a href="http://tools.ietf.org/html/rfc2396">RFC 2396</a>.
 They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
 <p>The terminology below describes the resources represented in the GCIS :</p>
 <dl class='dl-horizontal'>
