@@ -36,5 +36,13 @@ sub update_rel_form {
     $c->SUPER::update_rel_form(@_);
 }
 
+sub update {
+    my $c = shift;
+    if ($c->param('convert_into_report')) {
+        return $c->render(text => 'sorry, not implemented');
+    }
+    $c->SUPER::update(@_);
+}
+
 1;
 
