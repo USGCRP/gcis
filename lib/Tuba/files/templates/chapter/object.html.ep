@@ -58,10 +58,5 @@
 
 %= include 'prov';
 
-<div class='row' style='position:relative;'>
-%= include 'collapsible', row_content => begin
 %= include 'contributors';
-%= end
-</div>
-
 

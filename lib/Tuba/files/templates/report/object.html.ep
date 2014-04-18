@@ -64,10 +64,6 @@
 
 %= include 'prov', no_refs => 1;
 
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
 %= include 'contributors';
-%= end
-</div>
 
 %= include 'files';
