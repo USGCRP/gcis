@@ -2,7 +2,7 @@
 <% my $wildcard_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
 <% my $relaxed_link = begin %><% my $which = shift; %><b>:<%= $which%></b><% end %>
 
-% layout 'default';
+% layout 'default', fixed => 1;
 <h2 class='centered'>API Reference</h2>
 <p>Below is a list of methods and URLs supported by the GCIS.
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>

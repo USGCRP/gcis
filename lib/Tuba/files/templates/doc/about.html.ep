@@ -1,4 +1,4 @@
-% layout 'default', title => "About the Global Change Information System";
+% layout 'default', title => "About the Global Change Information System", fixed => 1;
 <h2>
     <center>About the Global Change Information System</center>
 </h2>

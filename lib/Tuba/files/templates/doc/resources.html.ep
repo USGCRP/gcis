@@ -1,4 +1,4 @@
-% layout 'default', title => "GCIS Data Model";
+% layout 'default', title => "GCIS Data Model", fixed => 1;
 
 <h2><center>Data Model</center></h2>
 <p>The GCIS maintains two concurrent models of the data : a relational model, and a semantic model.

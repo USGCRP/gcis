@@ -105,7 +105,11 @@ String.prototype.htmlEscape = function() {
                 </ul>
             </div>
         </div>
+        % if (stash 'fixed') {
+        <div class='container' id='maincontent'>
+        % } else {
         <div class='container-fluid' id='maincontent'>
+        % }
 % if (my $msg = flash 'message') {
 <div class='alert alert-info'>
 <button type="button" class="close" data-dismiss="alert">&times;</button>
