@@ -101,7 +101,7 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 -- Data for Name: book; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library) FROM stdin;
+COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic) FROM stdin;
 \.
 
 
