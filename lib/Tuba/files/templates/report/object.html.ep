@@ -23,7 +23,7 @@
 
 % }
 
-%= include 'fields';
+%= include 'fields', cols => [ qw/identifier title summary publication_year frequency topic url doi in_library report_type_identifier/ ];
 
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
