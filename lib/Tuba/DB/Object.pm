@@ -424,5 +424,44 @@ sub new_from_flat {
     die "Don't know how to make a $c from a string";
 }
 
+sub all_orgs {
+    my $c = shift;
+    my $pub = $c->get_publication or return;
+    my $dbh = $c->db->dbh;
+    my $sth = $dbh->prepare(<<'SQL');
+select
+c.organization_identifier as identifier
+from publication_contributor_map m
+inner join contributor c on c.id = m.contributor_id
+where m.publication_id=?
+group by 1
+order by min(m.sort_key)
+SQL
+    $sth->execute($pub->id) or die $dbh->errstr;
+    my $rows = $sth->fetchall_arrayref({});
+    my @orgs = map Tuba::DB::Object::Organization->new(identifier => $_->{identifier})->load, @$rows;
+    return (wantarray ? @orgs : \@orgs);
+}
+
+sub all_people {
+    my $c = shift;
+    my $pub = $c->get_publication or return;
+    my $dbh = $c->db->dbh;
+    my $sth = $dbh->prepare(<<'SQL');
+select
+c.person_id as id
+from publication_contributor_map m
+inner join contributor c on c.id = m.contributor_id
+where m.publication_id=?
+and c.person_id is not null
+group by 1
+order by min(m.sort_key)
+SQL
+    $sth->execute($pub->id) or die $dbh->errstr;
+    my $rows = $sth->fetchall_arrayref({});
+    my @people = map Tuba::DB::Object::Person->new(id => $_->{id})->load, @$rows;
+    return (wantarray ? @people : \@people);
+}
+
 1;
 
