@@ -44,6 +44,23 @@ sub show {
             tables => sub($$) { no warnings; $_[0]->stringify <=> $_[1]->stringify },
         }
     );
+
+    if ($c->user_can('update')) {
+        my $next = Reports->get_objects(
+            query => [ identifier => { '>', $object->identifier }],
+            sort_by => 'identifier',
+            limit => 1,
+        );
+        $c->stash(next => $next->[0]);
+
+        my $prev = Reports->get_objects(
+            query => [ identifier => { '<', $object->identifier }],
+            sort_by => 'identifier desc',
+            limit => 1,
+        );
+        $c->stash(prev => $prev->[0]);
+    }
+
     $c->SUPER::show(@_);
 }
 
