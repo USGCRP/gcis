@@ -14,6 +14,7 @@ use Time::Duration qw/ago/;
 use List::Util qw/min/;
 use Date::Parse qw/str2time/;
 use DateTime::Format::Human::Duration;
+use Number::Format;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -289,7 +290,15 @@ sub register {
     $app->helper(pl => sub {
             my $c = shift;
             my $str = shift;
-            { person => 'people'}->{$str} || "${str}s";
+            my $plural = { person => 'people'}->{$str} || "${str}s";
+            return $plural unless @_;
+            my $count = shift;
+            my $no_numbers = pop;
+            if ($no_numbers) {
+                return $count==1 ? $str : $plural;
+            }
+            $count = Number::Format->new->format_number($count);
+            return $count==1 ? "$count $str" : "$count $plural";
         });
     $app->helper(db_labels => sub {
             my $c = shift;
