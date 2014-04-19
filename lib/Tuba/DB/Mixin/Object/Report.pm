@@ -78,5 +78,10 @@ sub count_tables {
     return Tuba::DB::Object::Table::Manager->get_objects_count({report_identifier => $s->identifier});
 }
 
+sub count_chapters {
+    my $s = shift;
+    return Tuba::DB::Object::Chapter::Manager->get_objects_count({report_identifier => $s->identifier });
+}
+
 1;
 

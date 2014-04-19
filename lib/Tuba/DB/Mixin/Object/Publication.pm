@@ -10,12 +10,14 @@ use strict;
 
 sub stringify {
     my $self = shift;
+    my %args = @_;
     my $label;
     if (my $obj = $self->to_object) {
-        $label = $obj->stringify;
+        $label = $obj->stringify(%args);
     } else {
         $label = join '/', map $self->$_, $self->meta->primary_key_column_names;
     }
+    return $self->publication_type_identifier.' '.$label if $args{tiny};
     return $self->publication_type_identifier.' : '.$label;
 }
 
