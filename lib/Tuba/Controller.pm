@@ -689,11 +689,15 @@ sub update_files {
         $pub->upload_file(c => $c, upload => $file) or
             return $c->update_error($pub->error);
     }
-    if (my $file_url = $c->param('file_url')) {
+    my $json = $c->req->json || {};
+    if (my $file_url = ($json->{file_url} || $c->param('file_url'))) {
         $c->app->log->info("Getting $file_url for ".$object->meta->table."  ".(join '/',$object->pk_values));
-        my $tx = $c->app->ua->get($file_url);
+        my $ua = $c->app->ua;
+        $ua->max_redirects(3);
+        my $tx = $ua->get($file_url);
         my $res = $tx->success or
             return $c->update_error( "Error getting $file_url : ".$tx->error);
+        $c->app->log->info("Got $file_url, code is ".$res->code);
         my $content = $res->body;
 
         my $remote_url = Mojo::URL->new($file_url);
@@ -702,7 +706,7 @@ sub update_files {
         $up->filename($filename);
         $up->asset(Mojo::Asset::File->new->add_chunk($content));
         my $new_file = $pub->upload_file(c => $c, upload => $up) or return $c->update_error( $pub->error);
-        if ($c->param('use_remote_location')) {
+        if ($json->{use_remote_location} || $c->param('use_remote_location')) {
             # generate thumbnail first then remove it.
             $new_file->generate_thumbnail;
             $new_file->unlink_asset;
