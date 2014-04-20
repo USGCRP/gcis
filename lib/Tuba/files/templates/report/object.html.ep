@@ -39,7 +39,7 @@
         % my $pub = $report->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } =>  begin
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
                 %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
                 %= end
             % }
