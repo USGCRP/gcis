@@ -21,11 +21,13 @@
 
 %= include 'controls/pubfile';
 
+<div class='control-group'>
 <label class='control-label'>
     Add an existing file
 </label>
 <div class='controls'>
     %= include 'controls/autocomplete', input_name => "add_existing_file", object_type => "file";
+</div>
 </div>
 
 <div class="form-actions">

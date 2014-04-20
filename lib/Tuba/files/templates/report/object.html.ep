@@ -17,13 +17,16 @@
         </div>
         <div class='row-fluid'>
             <div class='span2 pull-right'>
+            <div class='btn-group'>
             % if (my $prev = stash 'prev') {
                 <%= obj_link_to $prev => 'show', class => 'btn', => begin %><i class='icon-arrow-left'></i><%= end %>
             % }
-
+            <%= link_to url_with->query([long => 1]), class => 'btn' => begin %>long<%= end %>
             % if (my $next = stash 'next') {
                 <%= obj_link_to $next => 'show', class => 'btn', => begin %><i class='icon-arrow-right'></i><%= end %>
             % }
+            </div>
+            </div>
         </div>
     % }
     <br>
@@ -69,7 +72,9 @@
    </p>
         % }
 
-        <p><%= $report->url %></p>
+        % if ($report->url) {
+        <p><%= link_to $report->url => target => "_blank" => begin %><%= $report->url %><%= end %></p>
+        % }
         <p><%= $report->doi %></p>
         % my @pubs = $pub ? $pub->get_parents_with_references : ();
         % if (@pubs) {

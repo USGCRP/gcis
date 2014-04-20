@@ -32,24 +32,31 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
 
 </table>
 
+<div class='control-group'>
 <label class="control-label">
 Upload a file
 </label>
 <div class="controls">
 %= file_field 'file_upload';
 </div>
+</div>
 
+<div class='control-group'>
 <label class="control-label">
 Retrieve a file from a url
 </label>
 <div class="controls">
 %= text_field 'file_url', class => 'span10', placeholder => 'http://example.com/image.jpg'
 </div>
+</div>
 
-<label class="control-label" for='do_not_keep'>
+<div class='control-group'>
+<label class="control-label" for='use_remote_location'>
 Use remote location.
 </label>
-<div class="controls span10">
+<div class="controls">
     %= check_box 'use_remote_location' => 1;
 </div>
+</div>
+
 

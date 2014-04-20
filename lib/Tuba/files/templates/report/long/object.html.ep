@@ -1,0 +1,69 @@
+% layout 'default';
+% my $table = $object->meta->table;
+
+<center>
+<h2><%= $table %> : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+    <pre>
+    <%= include 'other_formats'; =%>
+    <%= include 'db_meta'; =%>
+    </pre>
+
+% }
+
+%= include 'fields', cols => [ qw/identifier title summary publication_year frequency topic url doi in_library report_type_identifier/ ];
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>chapters</th>
+    <th>figures</th>
+    <th>findings</th>
+    <th>tables</th>
+    <th>references</th>
+</th>
+<tr>
+<td>
+    %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    <%= scalar @{ $report->chapters } %>
+    %= end
+</td>
+<td>
+    %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    <%= scalar @{ $report->figures } %>
+    %= end
+</td>
+<td>
+    %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    <%= scalar @{ $report->findings } %>
+    %= end
+</td>
+<td>
+    %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    <%= scalar @{ $report->tables } %>
+    %= end
+</td>
+<td>
+    %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= $report->reference_count;
+    %= end
+</td>
+</tr>
+</table>
+
+%= include 'prov', no_refs => 1;
+
+%= include 'contributors';
+
+%= include 'files';

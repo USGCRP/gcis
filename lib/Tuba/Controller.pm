@@ -186,7 +186,9 @@ sub show {
         yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object) ); },
         json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
         ttl   => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
-        html  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
+        html  => sub { my $c = shift;
+            $c->param('long') and $c->render_maybe(template => "$table/long/object") and return;
+            $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         nt    => sub { shift->render_partial_ttl_as($table,'ntriples'); },
         rdfxml=> sub { shift->render_partial_ttl_as($table,'rdfxml'); },
         dot   => sub { shift->render_partial_ttl_as($table,'dot'); },
