@@ -47,7 +47,7 @@
         </div>
         <h2><%= $report->title %></h2>
         <h5><%= $report->publication_year %>
-            <%= $report->report_type_identifier // '' %>
+            <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "every ".$report->frequency : "" %></small></h5>
         <i>
         %= include commify => objs => scalar $report->all_orgs
