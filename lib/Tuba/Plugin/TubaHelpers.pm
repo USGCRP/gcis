@@ -15,6 +15,7 @@ use List::Util qw/min/;
 use Date::Parse qw/str2time/;
 use DateTime::Format::Human::Duration;
 use Number::Format;
+use Number::Bytes::Human qw/format_bytes/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -334,6 +335,12 @@ sub register {
             return "" unless defined($val) && length($val);
             return DateTime::Format::Human::Duration->new()->format_duration($val);
         });
+    $app->helper(human_size => sub {
+            my $c = shift;
+            my $val = shift;
+            return format_bytes($val, precision => 0);
+        });
+
     $app->helper(default_html_relationships => sub {
         my $c = shift;
         my $obj = shift;
@@ -376,6 +383,12 @@ sub register {
             state $mng //= Tuba::DocManager->new();
             return $mng->find_doc($route_name);
     });
+    $app->helper(url_host => sub {
+            my $c = shift;
+            my $url = shift or return "";
+            my $obj = Mojo::URL->new($url) or return $url;
+            return ($obj->host || $url);
+        });
 }
 
 1;

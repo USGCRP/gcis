@@ -43,6 +43,7 @@ my $builder = Module::Build::Database->new(
         'Test::More' => 0,
     },
     requires => {
+        'Number::Bytes::Human' => 0,
         'Mojolicious::Plugin::YamlConfig' => 0,
         'Mojolicious' => '4.84',
         'Number::Format' => 0,
