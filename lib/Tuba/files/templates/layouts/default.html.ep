@@ -83,11 +83,11 @@ String.prototype.htmlEscape = function() {
                         <a href='#' data-toggle='dropdown'>publications<span class='caret'></span></a>
                         <ul class='dropdown-menu'>
                             <li><%= link_to 'show_report'  => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->title %><%= end %></li>
-                            <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
                             <li><%= link_to 'list_report'  => begin %>reports<%= end %></li>
+                            <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
+                            <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
                             <li><%= link_to 'list_journal' => begin %>journals<%= end %></li>
                             <li><%= link_to 'list_article' => begin %>articles<%= end %></li>
-                            <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
                             <li><%= link_to 'list_webpage' => begin %>web pages<%= end %></li>
                             <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                         </ul>

@@ -297,8 +297,9 @@ sub register {
             if ($no_numbers) {
                 return $count==1 ? $str : $plural;
             }
-            $count = Number::Format->new->format_number($count);
-            return $count==1 ? "$count $str" : "$count $plural";
+            $count //= 0;
+            my $fmted = Number::Format->new->format_number($count);
+            return $count==1 ? "$fmted $str" : "$fmted $plural";
         });
     $app->helper(db_labels => sub {
             my $c = shift;
