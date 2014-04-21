@@ -328,6 +328,7 @@ sub register {
             if (ref($val) =~ /DateTime::Duration/) {
                 return DateTime::Format::Human::Duration->new()->format_duration($val);
             }
+            return "$val";
         });
     $app->helper(human_duration => sub {
             my $c = shift;
