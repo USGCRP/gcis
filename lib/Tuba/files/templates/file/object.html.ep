@@ -38,7 +38,7 @@
             </div>
         </div>
         % if (my @pubs = $file->publications) {
-        <p>This file is associated with <%= include 'commify', objs => \@pubs %>.</p>
+        <p>This file is associated with <%= include 'commify', objs => [ map $_->to_object, @pubs ] %>.</p>
         % } else {
         <p>This file is not associated with any publications.</p>
         % }
