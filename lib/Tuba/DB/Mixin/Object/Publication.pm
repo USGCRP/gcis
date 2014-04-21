@@ -17,8 +17,8 @@ sub stringify {
     } else {
         $label = join '/', map $self->$_, $self->meta->primary_key_column_names;
     }
-    return $self->publication_type_identifier.' '.$label if $args{tiny};
-    return $self->publication_type_identifier.' : '.$label;
+    return 'the '.$label.' '.$self->publication_type_identifier if $self->publication_type_identifier =~ /report/;
+    return $self->publication_type_identifier.' '.$label;
 }
 
 sub to_object {
