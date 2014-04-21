@@ -1,0 +1,34 @@
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) {
+<p>
+
+    % for my $parent (@parents) {
+        % my $parent_pub = $parent->{publication};
+        This <%= $object->meta->table %>
+        <%= ontology_human($parent->{relationship}) %>
+        <%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %>
+        <% if ($parent->{activity}) { %>using the activity <%= obj_link($parent->{activity}) %><% } %>.
+        <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
+    % }
+
+    %# TODO
+    <table>
+    % for my $child (@children) {
+        % my $child_pub = $child->{publication};
+        <tr>
+            <td><%= link_to 'show_publication' => { publication_identifier => $child->publication->id } => begin %><%= $child->publication->stringify %><%= end %></td>
+            <td><%= link_to ontology_url($child->relationship) => target => "_blank" => begin %><%= $child->relationship %><%= end %></td>
+            <td>this <%= $object->meta->table %></td>
+            <td> </td>
+            <td><%= $child->note || "" %></td>
+            % if (stash 'add_delete_buttons') {
+                <td></td>
+            % }
+        </tr>
+    % }
+    </table>
+</p>
+% }
+

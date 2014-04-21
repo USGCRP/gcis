@@ -72,7 +72,7 @@
         % if (my @images = sorted_list($figure,'images')) {
         <br>
         This figure is composed of <%= @images==1 ? 'this image' : 'these images' %> :
-        %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1;
+        %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1, tiny_captions => 1;
         % }
 
     </div>

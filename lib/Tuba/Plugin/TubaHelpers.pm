@@ -17,6 +17,7 @@ use DateTime::Format::Human::Duration;
 use Number::Format;
 use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
+use Mojo::Util qw/decamelize/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -241,7 +242,17 @@ sub register {
             my $base = $map{$namespace} or return;
             return $base.$frag;
         });
-
+    $app->helper(ontology_human => sub {
+            my $c = shift;
+            my $full = shift or return;
+            # turn prov:wasInformedBy into "was informed by"
+            # turn prov:wasDerivedFrom into "was derived from";
+            my ($ns,$str) = split /:/, $full;
+            $str = decamelize(ucfirst $str);
+            $str =~ s/_/ /g;
+            return $str;
+    });
+ 
     $app->helper(uri => sub {
         my $c = shift;
         my $obj = shift or return "";

@@ -24,7 +24,7 @@
                     <%= image '/blank.png', class => 'img-polaroid' => style => 'padding:0px;' =%>
                 % }
                 % my $val = $obj->stringify;
-                % my $short = $obj->stringify(short => 1);
+                % my $short = $obj->stringify( (scalar 'tiny_captions' ? ( tiny => 1) : (short => 1)) );
                 <div class="caption" style='overflow:hidden;' title='<%= $val %>'>
 
                 % if ($uri) {

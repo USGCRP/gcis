@@ -7,46 +7,73 @@
 </center>
 
 % unless (param 'no_header') {
-
-    %= include 'history_modal';
-
     % if ($object->can('identifier') && user_can('update')) {
+        %= include 'history_modal';
         <span style='float:right;'>
         <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
         <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
         </span>
     % }
-
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
-
 % }
 
-%= include 'fields', open_table => 1;
-
-<tr>
-    <td>figures</td>
-    <td>
-        <div class='row' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => [ $image->figures ], size => 'span3';
-            %= end
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+        % my $pub = $image->get_publication;
+        % if ($pub) {
+            % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= end
+            % }
+        % }
         </div>
-    </td>
-</tr>
-<tr>
-    <td>files</td>
-<td>
-%= include 'pub_thumbnails', pub => $image->get_publication(autocreate => 1), files => 1;
-</td>
-</tr>
+        <h2><%= $image->title %></h2>
+        <i>
+        %= include commify => objs => scalar $image->all_orgs
+        </i>
+        <br>
+        %= include commify => objs => scalar $image->all_people
+        <p><%= $image->description // ''%></p>
 
-</table>
+        % if ($image->time_start && $image->time_end) {
+        <p>The time range for this image is <%= $image->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
+         to <%= $image->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % } elsif ($image->time_start) {
+        <p>The time range for this image starts at <%= $image->time_start->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % } elsif ($image->time_end) {
+        <p>The time range for this image ends at <%= $image->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % }
 
-%= include 'prov';
+        % if ($image->create_dt) {
+        <p>This image was created on <%= $image->create_dt->strftime('%B %d, %Y') %>.</p>
+        % }
 
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
+        % if ($image->submission_dt) {
+        <p>This image was submitted on <%= $image->submission_dt->strftime('%B %d, %Y') %>.</p>
+        % }
+
+        % if ($image->lat_min || $image->lat_max || $image->lon_min || $image->lon_max) { 
+        <p>
+        The spatial range for this image is <%= $image->lat_min // 'unknown' %>° to <%= $image->lat_max // 'unknown' %>° latitude,
+        and <%= $image->lon_min // 'unknown' %>° to <%= $image->lon_max // 'unknown' %>° longitude.
+        </p>
+        % }
+        % if ($image->attributes) {
+        <p>Attributes : <%= $image->attributes %>.</p>
+        % }
+        %= include 'h/prov', pub => $image->get_publication;
+        %= include 'h/cited_by', pub => $image->get_publication;
+        %= include 'h/cites', pub => $image->get_publication;
+        % if (my @figures = sorted_list($image,'figures')) {
+        <p>
+        This image is part of <%= @figures==1 ? 'this figure' : 'these figures' %> :
+        %= include 'obj_thumbnails', objs => [ sorted_list($image,'figures') ], no_table => 1, tiny_captions => 1;
+        % }
+        </p>
+
+    </div>
 </div>
+
+<%= include 'h/other_formats'; =%>
 
