@@ -76,20 +76,8 @@
         <p><%= link_to $report->url => target => "_blank" => begin %><%= $report->url %><%= end %></p>
         % }
         <p><%= $report->doi %></p>
-        % my @pubs = $pub ? $pub->get_parents_with_references : ();
-        % if (@pubs) {
-        % my %refs;
-        <p>Cited by
-        % for my $i (0..$#pubs) {
-        % my $p = $pubs[$i];
-        % $refs{$p->{reference}->identifier} = $p->{reference};
-        <%= link_to 'show_publication', { publication_identifier => $p->{parent}->id }, begin %><%= $p->{parent}->stringify(tiny => 1) =%><%= end =%><%=
-          $i==$#pubs - 1 ? ", and "
-          : $i==$#pubs ? ""
-          : "," =%><% } %>. (<%= pl('reference', scalar values %refs, 1 ) %>: <%= include 'commify', objs => [ values %refs ], short => 1; =%>)
-        </p>
-        % }
-    </div>
+        %= include 'h/cited_by', pub => $pub;
+        </div>
 </div>
 
 <%= include 'h/other_formats'; =%>

@@ -80,3 +80,6 @@ a.white {
 h2.centered {
     text-align:center;
 }
+.tbib {
+    vertical-align:super;
+}

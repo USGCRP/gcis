@@ -16,6 +16,7 @@ use Date::Parse qw/str2time/;
 use DateTime::Format::Human::Duration;
 use Number::Format;
 use Number::Bytes::Human qw/format_bytes/;
+use Mojo::ByteStream qw/b/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -389,6 +390,24 @@ sub register {
             my $url = shift or return "";
             my $obj = Mojo::URL->new($url) or return $url;
             return ($obj->host || $url);
+        });
+    $app->helper(tbibs_to_links => sub {
+            my $c = shift;
+            my $str = shift;
+            return "" unless $str && length($str);
+            my $out;
+            my $i = 1;
+            my @pieces = split qr[<tbib>([^<]+)</tbib>], $str;
+            while (@pieces) {
+                my $next = shift @pieces;
+                $next =~  s[<sup>,</sup>][ ];
+                $out .= b($next)->xml_escape;
+                my $tbib = shift @pieces;
+                next unless $tbib;
+                $out .= qq[<a href="/reference/$tbib" class="tbib badge badge-default">$i</a>];
+                $i++;
+            }
+            return b($out);
         });
 }
 

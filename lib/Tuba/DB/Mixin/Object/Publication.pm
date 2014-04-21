@@ -17,7 +17,10 @@ sub stringify {
     } else {
         $label = join '/', map $self->$_, $self->meta->primary_key_column_names;
     }
-    return 'the '.$label.' '.$self->publication_type_identifier if $self->publication_type_identifier =~ /report/;
+    for ($self->publication_type_identifier) {
+        /report/ and return 'the '.$label.' '.$self->publication_type_identifier;
+        /article/ and return $label;
+    }
     return $self->publication_type_identifier.' '.$label;
 }
 

@@ -72,6 +72,7 @@ CUT
         $row =~ s/\)$//;
         my ($figure,$report) = split /,/, $row;
         my $obj = Tuba::DB::Object::Figure->new(identifier => $figure, report_identifier => $report);
+        $obj->load(speculative => 1);
         push @objs, $obj;
     }
     return @objs;
