@@ -27,7 +27,7 @@
         <p><%= link_to $chapter->url, target => "_blank" => begin %><%= $chapter->url %><%= end %>
         % }
 
-        %= include 'h/contributors'; 
+        %= include 'h/contributors', object => $chapter;
         % my ($fig, $fin,$tab, $ref) = ($chapter->count_figures, $chapter->count_findings, $chapter->count_tables, $chapter->reference_count);
         % if ($fig > 0 && ($fin + $tab + $ref == 0)) {
             <p>This chapter has

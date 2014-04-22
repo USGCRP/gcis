@@ -1,4 +1,4 @@
 % $objs ||= [];
 % my $count = @$objs;
 <% for my $i (0..$count - 1) { %>
-<%= obj_link($objs->[$i], tiny => (stash 'tiny'), short => (stash 'short')) %><%= ($i < $count - 1) ? ',' : '' %><%= $i == $count-2 ? 'and' : "" =%><% } =%>
+<%= obj_link($objs->[$i], tiny => (stash 'tiny'), short => (stash 'short')) %><%= ($i < $count - 1) ? ',' : '' %><%= ($i == $count-2 and (stash 'and')) ? 'and' : "" =%><% } =%>
