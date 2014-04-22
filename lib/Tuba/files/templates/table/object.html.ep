@@ -34,8 +34,9 @@
         %= include commify => objs => scalar $table->all_people
         % if (my $chapter = $table->chapter) {
         <p>This table appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
-        of the <%= obj_link($table->report) %> report.
+        of the <%= obj_link($table->report) %> report.</p>
         % } else {
+        <p>This table appears in the <%= obj_link($table->report) %> report.</p>
         % }
 
         <p><%= tbibs_to_links($table->caption) %></p>
