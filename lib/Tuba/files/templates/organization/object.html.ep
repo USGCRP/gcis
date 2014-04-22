@@ -40,22 +40,27 @@
 
     % unless (param 'no_header') {
         <dl>
-            <dt>This organization is related to these organizations : </dt>
-            <dd>
+            % if (my @maps = $organization->organization_maps) {
+                <dt>This organization is related to these organizations : </dt>
+                <dd>
+                    <ul class='unstyled'>
+                    % for my $map (@maps) {
+                    <li><%= $map->organization_relationship->label %> <%= obj_link($map->other_organization) %></li>
+                    % }
+                    </ul>
+                </dd>
+            % }
+
+            % if (my @maps = $organization->organization_maps_objs) {
+                <dt>These organizations are related to this organization :</dt>
+                <dd>
                 <ul class='unstyled'>
-                % for my $map ($organization->organization_maps) {
-                <li><%= $map->organization_relationship->label %> <%= obj_link($map->other_organization) %></li>
+                % for my $map (@maps) {
+                    <li><%= obj_link($map->organization)  %> <%= $map->organization_relationship->label %> <%= $object->stringify %></li>
                 % }
                 </ul>
-            </dd>
-            <dt>These organizations are related to this organization :</dt>
-            <dd>
-            <ul class='unstyled'>
-            % for my $map ($organization->organization_maps_objs) {
-                <li><%= obj_link($map->organization)  %> <%= $map->organization_relationship->label %> <%= $object->stringify %></li>
+                </dd>
             % }
-            </ul>
-            </dd>
 
         </dl>
     % }
