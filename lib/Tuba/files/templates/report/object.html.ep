@@ -41,11 +41,7 @@
         <h5><%= $report->publication_year %>
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
-        <i>
-        %= include commify => objs => scalar $report->all_orgs
-        </i>
-        <br>
-        %= include commify => objs => scalar $report->all_people
+        %= include 'h/contributors_short', object => $report;
         <p><%= $report->summary %></p>
         % my ($chp, $fig, $fin,$tab, $ref) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {

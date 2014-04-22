@@ -6,12 +6,12 @@
 % my $p = $pubs[$i];
 % $refs{$p->{reference}->identifier} = $p->{reference};
 % if ($p->{child}) {
-<%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(tiny => 1) =%><%= end =%><%=
+<%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(no_elide => 1, tiny => 1) =%><%= end =%><%=
   $i==$#pubs - 1 ? ", and "
   : $i==$#pubs ? ""
   : "," =%>
-  <% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>.
+  <% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>
   (<%= pl('reference', scalar values %refs, 1 ) %>: <%= include 'commify', objs => [ values %refs ], short => 1; =%>)
-</p>
 % }
+.</p>
 % }
