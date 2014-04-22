@@ -1,0 +1,9 @@
+% if ($object->start_time && $object->end_time) {
+<p>The time range for this <%= $label %> is <%= $object->start_time->strftime('%B %d, %Y (%H:%M %p)') %>
+ to <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+% } elsif ($object->start_time) {
+<p>The time range for this <%= $label %> starts at <%= $object->start_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+% } elsif ($object->end_time) {
+<p>The time range for this <%= $label %> ends at <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+% }
+

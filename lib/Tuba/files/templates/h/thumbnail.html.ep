@@ -1,0 +1,11 @@
+<div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+% my $pub = $object->get_publication;
+% if ($pub) {
+    % for my $file ($pub->files) {
+    %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+        %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+        %= end
+    % }
+% }
+</div>
+
