@@ -3,6 +3,10 @@
 <center>
 <h2>
     %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
+    % if (my $ch = stash 'chapter') {
+    in
+    %= $ch->stringify
+    % }
 </h2>
 </center>
 

@@ -249,6 +249,43 @@ sub contributors_grouped {
     return (\@cons, $role_count, $person_count);
 }
 
+sub _cons_with_role {
+    my $pub = shift;
+    my $role = shift;
+    my $cons = shift;
+    my %seen;
+    my @out;
+    for my $con (@$cons) {
+        next unless $con->role_type_identifier eq $role->identifier;
+        next if $seen{$con->person_id}++;
+        push @out, +{
+            person => $con->person,
+            orgs => [ map $_->organization, grep { $_->person_id == $con->person_id
+                                                    and $_->role_type_identifier eq $con->role_type_identifier
+                                                 } @$cons
+            ],
+        };
+    }
+    return \@out;
+}
+
+sub contributors_nested {
+    my $object = shift;
+    my @cons = @{ Tuba::DB::Object::Contributor::Manager->get_objects(
+        query => [ publication_id => $object->id ],
+        with_objects => [ qw/publication_contributor_maps role_type/ ],
+        sort_by => [ qw/role_type.sort_key role_type.identifier t2.sort_key person_id/]
+    ) };
+
+    my @nested;
+    my %seen;
+    for my $row (@cons) {
+        next if $seen{$row->role_type_identifier}++;
+        push @nested, { role => $row->role_type, people => $object->_cons_with_role($row->role_type, \@cons) };
+    }
+    return \@nested;
+}
+
 sub contributors_having_role {
     my $object = shift;
     my $role_type_identifier = shift or die 'missing role';

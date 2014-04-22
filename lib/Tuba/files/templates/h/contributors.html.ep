@@ -1,0 +1,20 @@
+% my $pub = $object->get_publication;
+% my $nest = $pub->contributors_nested;
+<dl>
+% for my $row (@$nest) {
+<dt><%= pl($row->{role}->label) %></dt>
+<dd><ul>
+    % for my $con (@{ $row->{people} }) {
+    <li>
+        <%= obj_link($con->{person}, short => 1) %>
+        % my $first;
+        % for my $org (@{ $con->{orgs} }) {
+        <%= ($first++) ? "," : ""  =%>
+        <i><%= obj_link($org, short => 1) =%></i>
+        % }
+     </li>
+    % }
+</dd>
+% }
+</dl>
+

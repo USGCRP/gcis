@@ -35,16 +35,8 @@
 
 <div class='row-fluid'>
     <div class='span10 offset1 well'>
-        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
         % my $pub = $report->get_publication;
-        % if ($pub) {
-            % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
-                %= end
-            % }
-        % }
-        </div>
+        %= include 'h/thumbnail', pub => $pub;
         <h2><%= $report->title %></h2>
         <h5><%= $report->publication_year %>
             <%= labelize($report->report_type_identifier // '') %>
