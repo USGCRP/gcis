@@ -27,7 +27,7 @@
         % }
         </div>
         <h2><%= $figure->title %></h2>
-        <h3>Figure <%= $figure->numeric %></h3>
+        <h3>Figure <%= $figure->numeric || $figure->identifier %></h3>
         <i>
         %= include commify => objs => scalar $figure->all_orgs
         </i>
@@ -35,8 +35,9 @@
         %= include commify => objs => scalar $figure->all_people
         % if (my $chapter = $figure->chapter) {
         <p>This figure appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
-        of the <%= obj_link($figure->report) %> report.
+        of the <%= obj_link($figure->report) %> report.</p>
         % } else {
+        <p>This figure appears in the <%= obj_link($figure->report) %> report.</p>
         % }
 
         <p><%= tbibs_to_links($figure->caption) %></p>
@@ -67,6 +68,7 @@
         and <%= $figure->lon_min // 'unknown' %>° to <%= $figure->lon_max // 'unknown' %>° longitude.
         </p>
         % }
+        %= include 'h/prov', pub => $figure->get_publication;
         %= include 'h/cited_by', pub => $figure->get_publication;
         %= include 'h/cites', pub => $figure->get_publication;
         % if (my @images = sorted_list($figure,'images')) {

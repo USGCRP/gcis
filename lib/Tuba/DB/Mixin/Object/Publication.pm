@@ -20,7 +20,7 @@ sub stringify {
     for ($self->publication_type_identifier) {
         /report/ and return "the $label report";
         /article/ and return $label;
-        /^(image|book)$/ and $args{tiny} and return $label;
+        /^(image|figure|book)$/ and $args{tiny} and return $label;
     }
     return $self->publication_type_identifier.' '.$label;
 }

@@ -24,7 +24,7 @@
     % for my $type (keys %by_type_rel) {
     %   for my $rel (keys %{ $by_type_rel{$type} } ) {
             %   my $count = @{ $by_type_rel{$type}{$rel} };
-            <li><%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this dataset :
+            <li><%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
             <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
             </li>
     %   }
