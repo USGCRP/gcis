@@ -13,22 +13,23 @@
         <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
     % }
 
-    %# TODO
-    <table>
+    % my %by_type_rel = ();
     % for my $child (@children) {
-        % my $child_pub = $child->{publication};
-        <tr>
-            <td><%= link_to 'show_publication' => { publication_identifier => $child->publication->id } => begin %><%= $child->publication->stringify %><%= end %></td>
-            <td><%= link_to ontology_url($child->relationship) => target => "_blank" => begin %><%= $child->relationship %><%= end %></td>
-            <td>this <%= $object->meta->table %></td>
-            <td> </td>
-            <td><%= $child->note || "" %></td>
-            % if (stash 'add_delete_buttons') {
-                <td></td>
-            % }
-        </tr>
+    %       my $type = $child->publication->publication_type_identifier;
+    %       my $rel = $child->relationship;
+    %       $by_type_rel{$type}{$rel} //= [];
+    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
     % }
-    </table>
+    <ul class='unstyled'>
+    % for my $type (keys %by_type_rel) {
+    %   for my $rel (keys %{ $by_type_rel{$type} } ) {
+            %   my $count = @{ $by_type_rel{$type}{$rel} };
+            <li><%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this dataset :
+            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
+            </li>
+    %   }
+    % }
+    </ul>
 </p>
 % }
 

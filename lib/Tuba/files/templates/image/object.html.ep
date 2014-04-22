@@ -1,9 +1,7 @@
 
 % layout 'default';
-% my $table = $object->meta->table;
-
 <center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
+<h2>image : <%= $object->stringify %></h2>
 </center>
 
 % unless (param 'no_header') {

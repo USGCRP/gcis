@@ -252,6 +252,16 @@ sub register {
             $str =~ s/_/ /g;
             return $str;
     });
+    $app->helper(ontology_human_pl => sub {
+            my $c = shift;
+            my $full = shift or return;
+            my $count = shift;
+            my $str = $c->ontology_human($full);
+            return $str if $count==1;
+            $str =~ s/was/were/;
+            $str =~ s/is/are/g;
+            return $str;
+        } );
  
     $app->helper(uri => sub {
         my $c = shift;

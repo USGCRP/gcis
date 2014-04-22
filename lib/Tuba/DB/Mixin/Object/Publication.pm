@@ -18,8 +18,9 @@ sub stringify {
         $label = join '/', map $self->$_, $self->meta->primary_key_column_names;
     }
     for ($self->publication_type_identifier) {
-        /report/ and return 'the '.$label.' '.$self->publication_type_identifier;
+        /report/ and return "the $label report";
         /article/ and return $label;
+        /image/ and $args{tiny} and return $label;
     }
     return $self->publication_type_identifier.' '.$label;
 }
