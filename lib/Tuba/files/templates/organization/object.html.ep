@@ -1,7 +1,7 @@
 % layout 'default';
 
 <center>
-<h2><%= $object->stringify %></h2>
+<h2><%= $organization->stringify %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -14,28 +14,58 @@
         </span>
     % }
 
-    <pre>
-    <%= include 'other_formats'; =%>
-    <%= include 'db_meta'; =%>
-    </pre>
-
 % }
 
-%= include 'fields';
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <h2><%= $organization->name %></h2>
+        <p>
+        % if (my $country = $organization->country) {
+        <%= $country->name %>
+        % }
+        </p>
+        % if (my $url = $organization->url) {
+            <p>
+            %= link_to $organization->url, target => "_blank" => begin
+            <%= $organization->url %>
+            %= end
+            </p>
+        % }
 
-% unless (param 'no_header') {
 
-    %= include "organization/relationships", object => $object, meta => $meta;
 
-% }
+    % if (my $type = $organization->organization_type_identifier) {
+    <%= $organization->organization_type_identifier %> organization
+    % }
 
-%= include 'prov';
+    % unless (param 'no_header') {
+        <dl>
+            <dt>This organization is related to these organizations : </dt>
+            <dd>
+                <ul class='unstyled'>
+                % for my $map ($organization->organization_maps) {
+                <li><%= $map->organization_relationship->label %> <%= obj_link($map->other_organization) %></li>
+                % }
+                </ul>
+            </dd>
+            <dt>These organizations are related to this organization :</dt>
+            <dd>
+            <ul class='unstyled'>
+            % for my $map ($organization->organization_maps_objs) {
+                <li><%= obj_link($map->organization)  %> <%= $map->organization_relationship->label %> <%= $object->stringify %></li>
+            % }
+            </ul>
+            </dd>
+
+        </dl>
+    % }
+
 
 % unless (param 'no_header') {
     % my $ctr = $object->contributors;
     <div class='row collapse-wrapper'>
     <table class='table table-condensed table-bordered table-striped'>
-        <caption>Contributions</caption>
+        <caption>People and publications</caption>
         <tr><th>Person</th><th>Role</th><th>Publications</th>
         </tr>
         % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
@@ -56,4 +86,9 @@
         % }
     </table>
 % }
+
+    </div>
+</div>
+ 
+
 
