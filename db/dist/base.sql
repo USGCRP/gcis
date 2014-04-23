@@ -61,6 +61,9 @@ CREATE TABLE activity (
     duration interval,
     computing_environment character varying,
     output_artifacts character varying,
+    software character varying,
+    visualization_software character varying,
+    notes character varying,
     CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text)),
     CONSTRAINT ck_activity_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
