@@ -17,7 +17,7 @@
 % }
 
 <center>
-    % if ($finding->chapter->number) {
+    % if ($finding->chapter && $finding->chapter->number) {
     <h2>finding <%= $finding->numeric %> : <%= $finding->identifier %></h2>
     % } else {
     <h2>finding <%= $finding->identifier %></h2>

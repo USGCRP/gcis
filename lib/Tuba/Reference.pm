@@ -94,7 +94,7 @@ sub update {
             $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{publication_id} = $pub->id;
         } else {
-            my $obj = $c->_this_object;
+            my $obj = $c->_this_object or return $c->render(status => 400, json => { error => "no object found" } );
             $json->{publication_id} = $obj->publication_id;
         }
 
@@ -225,6 +225,15 @@ sub update_rel {
             $reference->add_subpubrefs({publication_id => $pub->id});
             $reference->save(audit_user => $c->user) or return $c->render_exception;
         }
+        if (my $subpubref = $json->{delete_subpub}) {
+            my $pub = $c->uri_to_pub($subpubref) or do {
+                return $c->render(status => 400, json => { error => "$subpubref not found" });
+            };
+            my $sub = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $pub->id);
+            $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$subpubref not found");
+            $sub->delete or return $c->render_exception;
+        }
+
         return $c->render(json => { status => 'ok'});
     }
 
