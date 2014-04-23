@@ -14,11 +14,10 @@ $(function() {
         var uuid = $(this).attr('data_tbib');
         $('#' + uuid).toggleClass('alert-success');
     });
-    $('.tbib').click(function(e) {
+    $('.tbib').attr('href', function() {
         var uuid = $(this).attr('data_tbib');
         var ref_target = $('#' + uuid + ' > a').attr('href');
-        e.preventDefault();
-        location.href = ref_target;
+        return ref_target;
     });
 })
 %= end
