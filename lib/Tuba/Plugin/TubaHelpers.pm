@@ -425,7 +425,7 @@ sub register {
                 $out .= b($next)->xml_escape;
                 my $tbib = shift @pieces;
                 next unless $tbib;
-                $out .= qq[<a href="/reference/$tbib" class="tbib badge badge-default">$i</a>];
+                $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
                 $i++;
             }
             return b($out);

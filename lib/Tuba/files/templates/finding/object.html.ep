@@ -46,4 +46,5 @@
 </div>
 
 %= include 'h/other_formats';
+%= include 'h/tbibjs';
 
