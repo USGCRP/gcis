@@ -30,7 +30,9 @@ sub new_from_reference {
     my $url = $ref->attr('url');
     $url = "http://$url" if $url && $url !~ m|^http://|;
     $s->url($url);
-    $s->isbn($ref->attr('isbn'));
+    if (defined($ref->attr('isbn')) && length($ref->attr('isbn'))) {
+        $s->isbn($ref->attr('isbn'));
+    }
     $s->year($ref->attr('year'));
     $s->publisher($ref->attr('publisher'));
     $s->number_of_pages($ref->attr('number of pages'));

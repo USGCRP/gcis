@@ -63,7 +63,9 @@
         % if ($report->url) {
         <p><%= link_to $report->url => target => "_blank" => begin %><%= $report->url %><%= end %></p>
         % }
-        <p><%= $report->doi %></p>
+        % if (my $doi = $report->doi) {
+        <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
+        % }
         %= include 'h/cited_by', pub => $pub;
         </div>
 </div>
