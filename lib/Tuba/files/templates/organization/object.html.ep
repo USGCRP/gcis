@@ -1,7 +1,7 @@
 % layout 'default';
 
 <center>
-<h2><%= $organization->stringify %></h2>
+<h2><%= $organization->identifier %></h2>
 </center>
 
 % unless (param 'no_header') {
