@@ -6,13 +6,10 @@
 % for my $i (0..$#pubs) {
 % my $p = $pubs[$i];
 % $refs{$p->{reference}->identifier} = $p->{reference};
-% if ($p->{child}) {
 <li>
-<%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(no_elide => 1, tiny => 1) =%><%= end =%><%=
-  $i==$#pubs - 1 ? ", and "
-  : $i==$#pubs ? ""
-  : "," =%>
-  <% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>
+% if ($p->{child}) {
+<%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(no_elide => 1, tiny => 1) =%><%= end =%>
+<% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>
   (<%= obj_link_to $p->{reference}, 'show' => begin %><%= $p->{reference}->stringify(short => 1) %><%= end %>)
 </li>
 % }
