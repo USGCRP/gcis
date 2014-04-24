@@ -35,7 +35,8 @@ String.prototype.htmlEscape = function() {
                 <%= end %>
                 <ul class='nav pull-right'>
                     <li>
-                    <% if (config('google_site_search')) { %>
+                    % if(config('no_search')) {
+                    % } elsif (config('google_site_search')) {
                        <form action="http://google.com/cse" target="_blank" class="form navbar-search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
