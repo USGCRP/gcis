@@ -195,7 +195,12 @@ sub make_tree_for_show {
     my $uri = $report->uri($c);
     my $href = $uri->clone->to_abs;
     $href .= ".".$c->stash('format') if $c->stash('format');
+    my %regions;
+    if ($pub && $c->param('with_regions')) {
+        $regions{regions} = [ map $_->as_tree(c => $c), $pub->regions];
+    }
     return {
+      %regions,
       files                   => [map $_->as_tree(c => $c), $pub->files],
       uri                     => $uri,
       href                    => $href,
