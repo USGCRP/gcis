@@ -6,6 +6,7 @@ use Tuba::Log;
 use File::Temp;
 use Path::Class qw/file/;
 use Mojo::ByteStream qw/b/;
+use List::Util qw/reduce/;
 use strict;
 
 sub stringify {
@@ -319,6 +320,19 @@ sub references_url {
     }
     return;
 }
+
+sub largest_file {
+    my $p = shift;
+    my $found = reduce { $a->size > $b->size ? $a : $b } $p->files;
+    return $found;
+}
+
+sub smallest_file {
+    my $p = shift;
+    my $found = reduce { $a->size < $b->size ? $a : $b } $p->files;
+    return $found;
+}
+
 
 1;
 

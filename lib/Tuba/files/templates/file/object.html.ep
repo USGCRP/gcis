@@ -17,7 +17,7 @@
     <div class='span10 offset1 well'>
 
         <div class='thumbnails row-fluid'>
-            <div class='span4 offset4 thumbnail'>
+            <div class='span4 offset4 thumbnail' style='text-align:center;'>
                 %= link_to $object->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
                 <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
                 <div class='caption centered' style='color:white;'>download (<%= human_size($file->size) %>)

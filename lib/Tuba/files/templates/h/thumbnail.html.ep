@@ -1,11 +1,37 @@
 <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
 % my $pub = $object->get_publication;
 % if ($pub) {
-    % for my $file ($pub->files) {
-    %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-        %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
-        %= end
+    % my @files = $pub->files;
+    % if (@files==1) {
+        % for my $file (@files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+            %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+            %= end
+        % }
+    % } else {
+    %# Assume one high and one low-res.
+        % for my $file ($pub->smallest_file) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                <center>
+                <div class='caption btn'>
+                screen version
+                </div>
+                </center>
+                %= end
+            % }
+        <br>
+        % for my $file ($pub->largest_file) {
+        <center>
+        %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'btn btn-default' => begin
+                <div class='caption btn'>
+                print version
+                </div>
+            %= end
+        % }
+        </center>
     % }
+
 % }
 </div>
 
