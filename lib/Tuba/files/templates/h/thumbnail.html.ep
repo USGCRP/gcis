@@ -2,7 +2,7 @@
 % my $pub = $object->get_publication;
 % if ($pub) {
     % my @files = $pub->files;
-    % if (@files==1) {
+    % if (@files <= 1) {
         % for my $file (@files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
             %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
