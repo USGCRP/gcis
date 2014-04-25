@@ -34,11 +34,11 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
     e679d754-46b3-4d62-a7dd-4a7f0c727ebe<%= end %>.  A <i>reference</i>
     in a <i>report</i> may appear in a <i>chapter</i>, <i>figure</i>, <i>finding</i> or <i>table</i> of that <i>report</i>.  Moreover, a <i>reference</i> refers to
-    a <i>publication</i> such as an <i>article</i>, web page, or book.</dd>
+    a <i>publication</i> such as an <i>article</i>, <i>web page</i>, or <i>book</i>.</dd>
 
     <dt>Publication</dt>
     <dd>A <i>publication</i> in the GCIS may be a <i>report</i>, a report-specific resource -- a <i>chapter</i>, <i>figure</i>, <i>finding</i>, <i>table</i> -- or
-    a non-report-specific resource :  a <i>journal</i>, <i>article</i>, <i>image</i>, web page, book, or <i>dataset</i>.</dd>
+    a non-report-specific resource :  a <i>journal</i>, <i>article</i>, <i>image</i>, <i>web page</i>, <i>book</i>, or <i>dataset</i>.</dd>
     <dt>Image</dt>
     <dd>
     An <i>image</i> may be associated with one or more figures.  For
