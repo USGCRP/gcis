@@ -2,7 +2,7 @@
 % if (@pubs) {
 % my %refs;
 <p>References :
-<ul>
+<ul class="references" style="list-style-type: none;">
 % for my $i (0..$#pubs) {
 % my $p = $pubs[$i];
 % $refs{$p->{reference}->identifier} = $p->{reference};
