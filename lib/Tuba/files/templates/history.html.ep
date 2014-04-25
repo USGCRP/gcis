@@ -14,7 +14,7 @@
 % unless (param 'no_header') {
 <h5>
 Change history for
-%= obj_link($object)
+%= obj_link($object, tiny => 1)
 </h5>
 % }
 

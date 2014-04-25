@@ -83,5 +83,13 @@ sub count_chapters {
     return Tuba::DB::Object::Chapter::Manager->get_objects_count({report_identifier => $s->identifier });
 }
 
+sub stringify {
+    my $s = shift;
+    my %args = @_;
+    return $s->identifier if $args{short} || $args{tiny};
+    my $str = $s->title || $s->identifier;
+    return $str;
+}
+
 1;
 

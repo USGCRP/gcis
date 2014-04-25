@@ -2,7 +2,7 @@
 % my $table = $object->meta->table;
 
 <center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
+    <h2>Report : <%= $report->identifier %>
 </center>
 
 % unless (param 'no_header') {
