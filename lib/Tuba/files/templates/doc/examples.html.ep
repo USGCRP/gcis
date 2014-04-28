@@ -49,7 +49,7 @@ some of the ones below.</p>
     <pre><%= $eg->{code} %></pre>
     </div>
     <div class='span4'>
-    <%= link_to $eg->{link} => class => 'btn btn-info' => begin %>Try it<%= end %>
+        <%= link_to $eg->{link} => class => 'btn btn-info' => target => "_blank" => begin %>Try it<%= end %>
     </div>
 </div>
 % }

@@ -27,8 +27,7 @@ limit 10",
           code => 
 "select * FROM <http://data.globalchange.gov>
 where {
- ?s a gcis:Finding .
- ?s <http://purl.org/dc/terms/description> ?d
+ ?s a gcis:Finding
  }
 ",
         },
