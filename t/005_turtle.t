@@ -12,6 +12,7 @@ use Test::MBD qw/-autostart/;
 use Test::Mojo;
 use tlib;
 
+use strict;
 use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
@@ -183,6 +184,64 @@ $t->get_ok("/reference/ref-ref-ref.nt")
     ->status_is(200)
     ->content_like( qr[ref-ref-ref] );
 
+# Dataset
+my $dataset = {
+    identifier => "my-temps",
+    name       => "readings from my thermometer",
+    type       => "observational",
+    version    => 12,
+    description => "These are some readings from the thermometer outside my house",
+    native_id        => "my-12345",
+    publication_year => "2014",
+    access_dt        => "2013-01-24T00:00:00",
+    release_dt       => "2013-01-24T00:00:00",
+    attributes       => "foo bar baz",
+    url              => "http://example.com/my-temps",
+    data_qualifier   => "taken only on tuesdays",
+    scale            => "1-1",
+    spatial_ref_sys  => "wgs84",
+    cite_metadata    => "yes",
+    scope            => "local",
+    spatial_extent   => "my house",
+    temporal_extent  => "tuesdays feb 2014",
+    vertical_extent  => "high",
+    processing_level => "3",
+    spatial_res      => "point",
+    doi              => "10.123/123",
+    lat_min          => 0,
+    lon_min          => 0,
+    lat_max          => 0,
+    lon_max          => 0,
+    start_time       => "2010-01-22T00:00:00",
+    end_time         => "2011-01-29T00:00:00",
+    variables        => "x y z",
+};
+
+$t->post_ok( "/dataset" => json => $dataset )->status_is(200);
+
+$t->get_ok("/dataset/my-temps.ttl")->status_is(200);
+$t->get_ok("/dataset/my-temps.nt")->status_is(200);
+
+# Activity
+
+my $activity = {
+    identifier => "teeth-brush",
+    data_usage => "a little\ntooth paste",
+    methodology => "back and forth\nside to side",
+    start_time => '2001-01-01',
+    end_time => '2001-01-02',
+    duration => '1 day',
+    computing_environment => "sink\nand faucet",
+    output_artifacts => "plaque\non teeth",
+    software => "crest\nor tom's",
+    visualization_software => "mirror\nmirror on the wall",
+    notes => "every day\n is a good to brush your teeth",
+};
+
+$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
+$t->get_ok('/activity/teeth-brush.nt')->status_is(200);
+
 # Clean up
 $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
@@ -192,6 +251,11 @@ $t->delete_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
+$t->delete_ok("/dataset/my-temps")->status_is(200);
+$t->delete_ok("/activity/teeth-brush")->status_is(200);
+$t->delete_ok("/article/gatorade")->status_is(200);
+$t->delete_ok("/journal/gators")->status_is(200);
+
 
 done_testing();
 

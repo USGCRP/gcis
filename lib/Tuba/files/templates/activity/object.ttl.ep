@@ -7,8 +7,8 @@
    prov:endedAtTime "<%= $activity->end_time %>";   
    ext:EndTime "<%= $activity->end_time %>";  
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>";   
-   fabio:DataFile "<%= $activity->output_artifacts %>";
-   dcmitype:software "<%= $activity->computing_environment %>";
-   gcis:Software "<%= $activity->computing_environment %>";
-   meth:Methodology "<%= $activity->methodology %>";
+   fabio:DataFile '''<%= $activity->output_artifacts %>''';
+   dcmitype:software '''<%= $activity->computing_environment %>''';
+   gcis:Software '''<%= $activity->computing_environment %>''';
+   meth:Methodology '''<%= $activity->methodology %>''';
 %= include 'relationships';
