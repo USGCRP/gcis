@@ -186,32 +186,34 @@ $t->get_ok("/reference/ref-ref-ref.nt")
 
 # Dataset
 my $dataset = {
-    identifier => "my-temps",
-    name       => "readings from my thermometer",
-    type       => "observational",
-    version    => 12,
-    description => "These are some readings from the thermometer outside my house",
-    native_id        => "my-12345",
-    publication_year => "2014",
+    identifier => "cmip3",
+    name       => "readings\n from my thermometer",
+    type       => undef,
+    version    => "N/A",
+    description => "These are
+    some readings from the\n\r
+    \n\r\n thermometer outside my house",
+    native_id        => "Unknown",
+    publication_year => "2007",
     access_dt        => "2013-01-24T00:00:00",
-    release_dt       => "2013-01-24T00:00:00",
-    attributes       => "foo bar baz",
+    release_dt       => undef,
+    attributes       => "2-meter surface temperature and others as listed at: http://www-pcmdi.llnl.gov/ipcc/standard_output.html",
     url              => "http://example.com/my-temps",
-    data_qualifier   => "taken only on tuesdays",
-    scale            => "1-1",
+    data_qualifier   => "taken\nonly on tuesdays",
+    scale            => undef,
     spatial_ref_sys  => "wgs84",
-    cite_metadata    => "yes",
+    cite_metadata    => "a big\nmetadata document\nwith returns",
     scope            => "local",
-    spatial_extent   => "my house",
-    temporal_extent  => "tuesdays feb 2014",
+    spatial_extent   => "maximum_latitude: 90; minimum_latitude: -90; maximum_longitude: 180; minimum_longitude: -180;",
+    temporal_extent  => "1850-01-01T00:00:00 2300-12-31T23:59:59",
     vertical_extent  => "high",
-    processing_level => "3",
+    processing_level => undef,
     spatial_res      => "point",
     doi              => "10.123/123",
-    lat_min          => 0,
-    lon_min          => 0,
-    lat_max          => 0,
-    lon_max          => 0,
+    lat_min          => undef,
+    lon_min          => undef,
+    lat_max          => undef,
+    lon_max          => undef,
     start_time       => "2010-01-22T00:00:00",
     end_time         => "2011-01-29T00:00:00",
     variables        => "x y z",
@@ -219,8 +221,8 @@ my $dataset = {
 
 $t->post_ok( "/dataset" => json => $dataset )->status_is(200);
 
-$t->get_ok("/dataset/my-temps.ttl")->status_is(200);
-$t->get_ok("/dataset/my-temps.nt")->status_is(200);
+$t->get_ok("/dataset/cmip3.ttl")->status_is(200);
+$t->get_ok("/dataset/cmip3.nt")->status_is(200);
 
 # Activity
 
@@ -251,7 +253,7 @@ $t->delete_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
-$t->delete_ok("/dataset/my-temps")->status_is(200);
+$t->delete_ok("/dataset/cmip3")->status_is(200);
 $t->delete_ok("/activity/teeth-brush")->status_is(200);
 $t->delete_ok("/article/gatorade")->status_is(200);
 $t->delete_ok("/journal/gators")->status_is(200);

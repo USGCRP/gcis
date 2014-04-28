@@ -431,6 +431,16 @@ sub register {
             }
             return b($out);
         });
+    $app->helper(t => sub {
+            # escape a turtle literal enclosed in double quotes
+            # http://www.w3.org/TR/turtle/#literals
+            my $c = shift;
+            my $str = shift;
+            $str =~ s/"/\\"/g;
+            $str =~ s/\n/\\n/g;
+            $str =~ s/\r/\\r/g;
+            return $str;
+        });
 }
 
 1;
