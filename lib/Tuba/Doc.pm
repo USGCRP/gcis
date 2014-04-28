@@ -32,12 +32,12 @@ where {
 ",
         },
         {
-          desc => "Find publications from which figure 2.26 (past-and-projected-changes-in-global-slr) in the NCA3 was derived.",
-code =>
-"select ?y FROM <http://data.globalchange.gov>
+          desc => "List 10 figures and datasets from which they were derived.",
+          code =>
+"select ?figure,?dataset FROM <http://data.globalchange.gov>
 where {
- <$global_slr> gcis:hasImage ?img .
- ?img prov:wasDerivedFrom ?y
+ ?figure gcis:hasImage ?img .
+ ?img prov:wasDerivedFrom ?dataset
 }
 limit 10"
 }
