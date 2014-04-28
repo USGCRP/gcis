@@ -50,7 +50,7 @@ sub autocomplete {
     my $elide = $c->param('elide') || 80;
 
     my @tables;
-    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article)$/) {
+    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
        @tables = ( $want );
     } elsif ($want && ($want ne 'all')) {
         return $c->render(json => { error => "undefined type" } );
