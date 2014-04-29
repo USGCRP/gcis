@@ -471,6 +471,7 @@ lib/Tuba/files/templates/file/object.html.ep
 lib/Tuba/files/templates/files.html.ep
 lib/Tuba/files/templates/finding/object.html.ep
 lib/Tuba/files/templates/finding/object.ttl.ep
+lib/Tuba/files/templates/finding/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
