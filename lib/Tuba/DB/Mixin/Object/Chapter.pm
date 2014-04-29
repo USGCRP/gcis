@@ -18,7 +18,7 @@ sub uri {
         $route_name,
         {
             chapter_identifier => $s->identifier,
-            report_identifier  => $s->report->identifier
+            report_identifier  => $s->report_identifier
         }
     );
 }
