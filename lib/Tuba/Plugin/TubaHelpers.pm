@@ -441,6 +441,13 @@ sub register {
             $str =~ s/\r/\\r/g;
             return $str;
         });
+    $app->helper( fix_url => sub {
+            my $c = shift;
+            my $to = shift or return;
+            $to = "http://$to" if $to !~ /:\/\//;
+            return unless $to =~ m[^(http|ftp)://];
+            return $to;
+        });
 }
 
 1;

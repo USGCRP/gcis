@@ -73,14 +73,12 @@
                 <%= $val %>
                 %= end
             % } elsif ($k =~ /urls?/i) {
-                % my $to = $val;
-                % $to = "http://$val" if ($to && $to !~ /:\/\//);
-                % if ($to and $to =~ m[^(http|ftp)://]) {
-                %= link_to $to => target => "_blank" => begin
-                <%= $val %>
-                %= end
+                % if (my $to = fix_url($val)) {
+                    %= link_to $to => target => "_blank" => begin
+                    <%= $val %>
+                    %= end
                 % } else {
-                <%= $val %>
+                    <%= $val %>
                 % }
             % } else {
             <%= $val %>

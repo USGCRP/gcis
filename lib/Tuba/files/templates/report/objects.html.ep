@@ -55,9 +55,9 @@
         %= end
     </td>
     <td>
-        % if ($report->url) {
-        %= link_to $report->url => target => '_blank' => begin
-        <%= Mojo::URL->new($report->url)->host %>
+        % if (my $to = fix_url($report->url)) {
+        %= link_to $to => target => '_blank' => begin
+        <%= Mojo::URL->new($to)->host %>
         %= end
         % }
     </td>
