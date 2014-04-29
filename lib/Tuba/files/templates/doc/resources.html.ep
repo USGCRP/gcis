@@ -12,10 +12,10 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     may have <i>chapters</i>, <i>figures</i>, <i>tables</i>, <i>findings</i>, and <i>references</i> associated with it.</dd>
     <dt><i>chapter</i></dt>
     <dd>A <i>chapter</i> of a <i>report</i>, such as 
-    %= link_to 'show_<i>chapter</i>', { report_identifier => 'nca3', chapter_identifier => "our-changing-planet" } => begin
+    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-planet" } => begin
     our-changing-planet<%= end %>,
     has a unique mnemonic identifiers, and possibly, a number.  Some <i>chapters</i>, for instance, an
-    %= link_to 'show_<i>chapter</i>', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science" } => begin
+    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science" } => begin
     appendix<%= end %>, do not have a number.  <i>Chapters</i> may also have <i>figures</i>, <i>tables,</i>, <i>findings</i>, and <i>references</i> associated with them.
     </dd>
     <dt>Figure</dt><dd>A <i>figure</i> in a <i>report</i>, such as
