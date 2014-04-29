@@ -17,7 +17,9 @@
     <th><%= $c %></th>
 % }
     <th>files</th>
+% if (user_can('update')) {
     <th>images</th>
+% }
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -54,9 +56,11 @@
     % }
 </div>
 </td>
+% if (user_can('update')) {
 <td class='row'>
 %= include 'obj_thumbnails', objs => $o->images || [];
 </td>
+% }
 
     % if (user_can('update')) {
     <td>
