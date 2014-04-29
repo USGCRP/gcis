@@ -77,5 +77,6 @@ Tuba.conf
 
 # avoid log files
 \.log$
+\blog\b/
 \bclient_secrets.json
 \bscratch\b

@@ -578,10 +578,6 @@ lib/Tuba/Search.pm
 lib/Tuba/Table.pm
 lib/Tuba/Util.pm
 lib/Tuba/Webpage.pm
-log/development.log.1
-log/development.log.2
-log/production.log.1.gz
-log/production.log.2.gz
 Makefile.PL
 MANIFEST			This list of files
 META.json
