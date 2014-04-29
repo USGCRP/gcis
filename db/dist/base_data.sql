@@ -61,7 +61,7 @@ COPY "array" (identifier, rows_in_header, rows) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report_identifier, number, url) FROM stdin;
+COPY chapter (identifier, title, report_identifier, number, url, sort_key) FROM stdin;
 \.
 
 
