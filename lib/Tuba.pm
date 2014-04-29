@@ -162,7 +162,7 @@ sub startup {
 
       # Build bridges and routes.
       my $resource = $r->route("$path_base")->to("$cname#");
-      $resource->get->to('#list')->name("list_$name");
+      $resource->get->to('#list')->name("list_$name") unless $opts->{no_list};
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
       my %defaults = $opts->{defaults} ? %{ $opts->{defaults} } : ();
@@ -276,10 +276,6 @@ sub startup {
     $report->get('/figure') ->to('figure#list') ->name('list_all_figures');
     $report->get('/table')  ->to('table#list')  ->name('list_all_tables');
     $report->get('/reference')->to('reference#list')->name('list_report_references');
-    $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding' });
-    $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure' });
-    $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table' });
-
 
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
@@ -330,7 +326,7 @@ sub startup {
     $r->resource('dataset');
 
     # Files.
-    $r->resource("file");
+    $r->resource("file", {no_list => 1});
 
     # Bibliographic entry.
     my $reference = $r->resource('reference');
@@ -343,8 +339,9 @@ sub startup {
         })
       ->post('/:reference_identifier')
       ->to('reference#smartmatch');
-    $r->get("/reference/lookup/:record_number" => [ record_number => qr/\d+/])->to('reference#lookup');
-    $r->get('/reference/report/updates')->to('reference#updates_report')->name('reference_updates_report');
+    #$r->get("/reference/lookup/:record_number" => [ record_number => qr/\d+/])->to('reference#lookup');
+    $r->get('/reference/report/updates')->to('reference#updates_report')->name('reference_updates_report')
+        unless $config->{read_only};
 
     # Generic publication.
     $r->resource('generic');
