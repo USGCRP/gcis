@@ -15,7 +15,7 @@ sub list {
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page);
     $c->stash(objects => Chapters->get_objects(query => [ report_identifier => $report ],
-             sort_by => 'chapter.number, chapter.identifier',
+             sort_by => 'chapter.sort_key, chapter.number, chapter.identifier',
              @page,
          )
     );
