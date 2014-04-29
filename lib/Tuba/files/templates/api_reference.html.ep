@@ -6,6 +6,8 @@
 <h2 class='centered'>API Reference</h2>
 <p>Below is a list of methods and URLs supported by the GCIS.
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
+<p>For definitions of the terms below, please read about the <a href="/resources">data model</a>.</p>
+<p>Click the method name on the left to see more information about a particular route.</p>
 
 % my $show_method = ( (param 'show_method') || 'GET');
 <ul class='nav nav-tabs'>
@@ -30,7 +32,7 @@ DELETE
 </ul>
 
 <div class="row-fluid">
-<div class="span8">
+<div class="span12">
 %#-----------------------------------------------------------------
 % my $show_node = begin
   % my $node = shift;
@@ -48,7 +50,7 @@ DELETE
 % my $walk = begin
   % my ($walk, $node, $depth, $parent_pattern) = @_;
   % return if $node->name =~ /^_/;
-  % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|api_reference|resources|import_form)$/;
+  % return if $node->name =~ /^(index|try|calculate_url|login|logout|forms|examples|api_reference|resources|import_form|(open)?search|about|sparql)$/;
   % unless (user_can('update')) {
   %     return if $node->name =~ m[^((create|update)_(prov_|rel_|files_|contributors_|keywords_)?form)];
   %     return if $node->name =~ m[^autocomplete$];
@@ -110,19 +112,23 @@ DELETE
     % my $defaults = $trying->pattern->defaults;
     <div class='well'>
         % if (my $doc = doc_for($trying->name)) {
-            %= $doc->description
+            <p><%= $doc->description %></p>
             % if (my $params = $doc->params) {
                 <div class='alert alert-info'>
                     Parameters :<br>
-                    % for my $p (@$params) {
-                        <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>
+                    % if (@$params==0) {
+                    none
+                    % } else {
+                        % for my $p (@$params) {
+                            <%= $p->name %> (<%= $p->type %>) : <%= $p->description %><br>
+                        % }
                     % }
                </div>
             % }
             % if (my $note = $doc->note) {
-            <div class='alert'>
-            Note:
+            <p> Note:
              %= $note
+            </p>
             </div>
             % }
         % }
