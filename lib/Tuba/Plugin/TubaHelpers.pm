@@ -294,9 +294,17 @@ sub register {
              m[^/report/([^/]+)/chapter/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $3);
              m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $3);
+             m[^/report/([^/]+)/finding/([^/]+)$]  and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/table/([^/]+)$]   and $obj = Tuba::DB::Object::Table->new(report_identifier => $1, identifier => $3);
-             m[^/article/(.*)$]   and $obj = Tuba::DB::Object::Article->new(identifier => $1);
-             m[^/dataset/([^/]+)$]   and $obj = Tuba::DB::Object::Dataset->new(identifier => $1);
+             m[^/article/(.*)$]     and $obj = Tuba::DB::Object::Article->new(identifier => $1);
+             m[^/activity/([^/]+)$] and $obj = Tuba::DB::Object::Activity->new(identifier => $1);
+             m[^/journal/([^/]+)$]  and $obj = Tuba::DB::Object::Journal->new(identifier => $1);
+             m[^/book/([^/]+)$]     and $obj = Tuba::DB::Object::Book->new(identifier => $1);
+             m[^/dataset/([^/]+)$]  and $obj = Tuba::DB::Object::Dataset->new(identifier => $1);
+             m[^/image/([^/]+)$]    and $obj = Tuba::DB::Object::Image->new(identifier => $1);
+             m[^/array/([^/]+)$]    and $obj = Tuba::DB::Object::Array->new(identifier => $1);
+             m[^/webpage/([^/]+)$]  and $obj = Tuba::DB::Object::Webpage->new(identifier => $1);
+             m[^/generic/([^/]+)$]  and $obj = Tuba::DB::Object::Generic->new(identifier => $1);
          }
          if ($obj && $obj->load(speculative => 1)) {
              return $obj;
