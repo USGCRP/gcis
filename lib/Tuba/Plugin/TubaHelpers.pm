@@ -431,7 +431,7 @@ sub register {
             }
             return b($out);
         });
-    $app->helper(t => sub {
+    $app->helper(tl => sub {
             # escape a turtle literal enclosed in double quotes
             # http://www.w3.org/TR/turtle/#literals
             my $c = shift;

@@ -3,8 +3,8 @@
    a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
    dcterms:date "<%= $dataset->release_dt %>";
-   cito:citesAsMetadataDocument "<%= t($dataset->cite_metadata) %>";
-   dcterms:description "<%= t($dataset->description) %>";
+   cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
+   dcterms:description "<%= tl($dataset->description) %>";
    datacite:doi "<%= $dataset->doi %>";
    dcterms:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>";
