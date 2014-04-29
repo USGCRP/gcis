@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 0.70
+    version: 1.00
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -128,18 +128,6 @@ provides:
     file: lib/Tuba/Generic.pm
   Tuba::Image:
     file: lib/Tuba/Image.pm
-  Tuba::Importer:
-    file: lib/Tuba/Importer.pm
-  Tuba::Importer::Processor:
-    file: lib/Tuba/Importer/Processor.pm
-  Tuba::Importer::Processor::Ant:
-    file: lib/Tuba/Importer/Processor/Ant.pm
-  Tuba::Importer::Processor::Datasets:
-    file: lib/Tuba/Importer/Processor/Datasets.pm
-  Tuba::Importer::Processor::Findings:
-    file: lib/Tuba/Importer/Processor/Findings.pm
-  Tuba::Importer::Processor::Journals:
-    file: lib/Tuba/Importer/Processor/Journals.pm
   Tuba::Journal:
     file: lib/Tuba/Journal.pm
   Tuba::Log:
@@ -182,11 +170,12 @@ requires:
   Data::UUID::LibUUID: 0
   Date::Parse: 0
   DateTime::Format::Human::Duration: 0
-  File::ShareDir: 1.00
   JSON::WebToken: 0
   JSON::XS: 0
   Mojolicious: 4.84
   Mojolicious::Plugin::YamlConfig: 0
+  Number::Bytes::Human: 0
+  Number::Format: 0
   Pg::hstore: 0
   Rose::DB: 0.772
   Rose::DB::Object: 0
@@ -199,4 +188,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 0.70
+version: 1.00
