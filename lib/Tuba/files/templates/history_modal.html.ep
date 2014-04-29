@@ -1,3 +1,4 @@
+% if (!config('read_only')) {
 <!-- Modal -->
 % my $history_url = $object->uri($self,{ tab => 'history' } );
 % if ($history_url) {
@@ -18,4 +19,5 @@ change history
     <div class="modal-body"> <p>loading…</p> </div>
 </div>
 
+% }
 % }
