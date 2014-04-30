@@ -69,12 +69,17 @@ our %RouteDoc = (
   list_gcmd_keyword => { _list_defaults('GCMD keyword', add => "in the GCIS", not_all => 1) },
   list_reference => { _list_defaults('reference', not_all => 1) },
   list_generic => { _list_defaults('generic publication' ) },
-
   show_report => { _show_defaults('report', withs => 1) },
   show_chapter => { _show_defaults('chapter', withs => 1) },
-  show_figure => { _show_defaults('figure', withs => 1) },
-  show_finding => { _show_defaults('finding', withs => 1) },
-  show_table => { _show_defaults('table', withs => 1) },
+
+  show_figure => { _show_defaults('figure', withs => 1, add => "in a chapter") },
+  show_finding => { _show_defaults('finding', withs => 1, add => "in a chapter") },
+  show_table => { _show_defaults('table', withs => 1, add => "in a chapter") },
+
+  show_report_figure => { _show_defaults('figure', withs => 1) },
+  show_report_finding => { _show_defaults('finding', withs => 1) },
+  show_report_table => { _show_defaults('table', withs => 1) },
+
   show_article => { _show_defaults('article', withs => 1) },
   show_journal => { _show_defaults('journal') },
   show_image => { _show_defaults('image', withs => 1) },
@@ -161,9 +166,11 @@ sub _show_defaults {
     my %a = @_;
     my $an = "a";
     $an = "an" if $what =~ /^[aeiou]/;
+    my $phrase = $what;
+    $phrase .= " $a{add}" if $a{add};
     return (
-      brief =>  "Get a representation of $an $what.",
-      description => "Get JSON which represents the structure of $an $what.",
+      brief =>  "Get a representation of $an $phrase.",
+      description => "Get JSON which represents the structure of $an $phrase.",
       $a{withs} ? 
       (
           params => [
