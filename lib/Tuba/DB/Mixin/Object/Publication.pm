@@ -324,12 +324,14 @@ sub references_url {
 sub largest_file {
     my $p = shift;
     my $found = reduce { $a->size > $b->size ? $a : $b } $p->files;
+    return unless $found;
     return $found;
 }
 
 sub smallest_file {
     my $p = shift;
     my $found = reduce { $a->size < $b->size ? $a : $b } $p->files;
+    return unless $found;
     return $found;
 }
 

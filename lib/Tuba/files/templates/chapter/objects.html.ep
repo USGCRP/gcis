@@ -49,14 +49,7 @@
     <td>
      <div class='span2'>
        % if (my $pub = $chapter->get_publication) {
-           % for my $file ($pub->files) {
-
-            %= link_to $file->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
-            <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
-            <div class='caption centered' style='color:white;'>download</div>
-            %= end
-
-           % }
+       %= include 'pub_thumbnails', pub => $pub, simple => 1
        % }
     </div>
     </td>

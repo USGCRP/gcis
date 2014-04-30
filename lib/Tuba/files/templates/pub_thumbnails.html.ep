@@ -1,14 +1,14 @@
 
 
 % if (stash 'simple') {
-    % for my $file ($pub->files) {
+    % for my $file ($pub->smallest_file) {
         %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "thumbnail" => begin
         %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;'
         %= end
     % }
 % } elsif (stash 'files') {
 <ul class='thumbnails'>
-%   for my $file ($pub->files) {
+%   for my $file ($pub->smallest_file) {
     <li class='span3 thumbnail'>
     %= link_to 'show_file', { file_identifier => $file->identifier } => begin
     %= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;';
@@ -23,7 +23,7 @@
 
 % } else {
 <ul class='thumbnails'>
-%   for my $file ($pub->files) {
+%   for my $file ($pub->smallest_file) {
     <li class='span3 thumbnail'>
     %= link_to 'show_file', { file_identifier => $file->identifier } => begin
     %= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;';

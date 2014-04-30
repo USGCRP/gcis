@@ -11,7 +11,7 @@
                 % }
                 % my $files = $pub ? $pub->files : undef;
                 % if ($files && @$files) {
-                    % for my $file (@$files) {
+                    % for my $file ($pub->smallest_file) {
                         % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
                             <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
