@@ -83,3 +83,6 @@ h2.centered {
 .tbib {
     vertical-align:super;
 }
+p.linebreaks {
+    white-space: pre-line;
+}

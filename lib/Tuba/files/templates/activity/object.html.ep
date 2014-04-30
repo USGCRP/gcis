@@ -22,9 +22,9 @@
     <div class='span10 offset1 well'>
     <h2><%= $activity->identifier %></h2>
     % if ($activity->data_usage) {
-    <p><%= $activity->data_usage %></p>
+    <p class='linebreaks'><%= $activity->data_usage %></p>
     % }
-    <p><%= $activity->methodology // '' %></p>
+    <p class='linebreaks'><%= $activity->methodology // '' %></p>
     %= include 'h/thumbnail';
 
 % if ($object->start_time) {
