@@ -4,9 +4,13 @@
     % my @files = $pub->files;
     % if (@files <= 1) {
         % for my $file (@files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-            %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
-            %= end
+            % if (stash 'no_link') {
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+            % } else {
+                %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= end
+            % }
         % }
     % } else {
     %# Assume one high and one low-res.

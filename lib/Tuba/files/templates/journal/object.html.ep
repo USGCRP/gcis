@@ -24,7 +24,7 @@
 <div class='row-fluid'>
     <div class='span10 offset1 well'>
         % my $pub = $journal->get_publication;
-        %= include 'h/thumbnail', pub => $pub;
+        %= include 'h/thumbnail', pub => $pub, no_link => 1;
         <h2><%= $journal->title %></h2>
 
         % if ($journal->publisher) {
