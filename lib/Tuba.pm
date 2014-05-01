@@ -78,6 +78,7 @@ sub startup {
     $app->plugin( 'yaml_config' => { file => $conf } );
     my $config = $app->config;
     $ENV{MOJO_MAX_MESSAGE_SIZE} = 300 * 1024 * 1024 * 1024 unless $config->{read_only};
+    $ENV{MOJO_INACTIVITY_TIMEOUT} = 300 unless $config->{read_only};
     set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
