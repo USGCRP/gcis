@@ -323,7 +323,10 @@ sub register {
     $app->helper(pl => sub {
             my $c = shift;
             my $str = shift;
-            my $plural = { person => 'people'}->{$str} || "${str}s";
+            my $plural = {person => 'people',
+                "Funding Agency" => "Funding Agencies",
+                "Point of Contact" => "Points of Contact",
+                }->{$str} || "${str}s";
             return $plural unless @_;
             my $count = shift;
             my $no_numbers = pop;
