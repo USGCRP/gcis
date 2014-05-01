@@ -47,7 +47,7 @@ It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, an
 a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
 <h4>Authors</h4>
 <p>Brian Duggan (USGCRP/UCAR),
-Andrew Buddenberg (USGCRP/UCAR),
+Andrew Buddenberg (NOAA/NCDC),
 Justin Goldstein (USGCRP/UCAR),
 Tania Sizer (UCAR)</p>
 <h4>Data Curation</h4>
