@@ -40,24 +40,32 @@ allows this triple store to be queried, as described in these
 <%= link_to '/examples' => begin %>examples<%= end %>.
 </p>
 
-<h3>Development</h3>
+<h3>GCIS Software Development</h3>
+<p>GCIS is written in <a href="http://perl.org">Perl</a> using the <a href="http://mojolicio.us">mojolicious</a> web framework
+and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
+It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
+a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.
 
 <h4>Version</h4>
 <p>This is GCIS version <%= $Tuba::VERSION %>.</p>
 
 <h4>Authors</h4>
 
-<h5>System Development</h5>
-<p>Brian Duggan, Andrew Buddenberg, Justin Goldstein, Tania Sizer</p>
+<h5>Core Developers</h5>
+<p>Brian Duggan</p>
+<h5>Contributors</h5>
+<p class='linebreaks'>Andrew Buddenberg
+Justin Goldstein
+Tania Sizer
+</p>
+<h5>Thanks to</h5>
+<p class='linebreaks'>Amanda McQueen
+Curt Tilmes
+Robert Wolfe
+Steve Aulenbach
+Xiagoang (Marshall) Ma and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a>
+</p>
 
-<h5>Data Curation</h5>
-<p>Steve Aulenbach, Justin Goldstein, Amanda McQueen</p>
-
-<h5>Project Manager</h5>
-<p>Robert Wolfe</p>
-
-<h5>Project Manager Emeritus</h5>
-<p>Curt Tilmes</p>
 
 <h4>Mailing List</h4>
 <p>If you're interested in contributing to our following the
