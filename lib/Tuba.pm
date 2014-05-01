@@ -69,13 +69,14 @@ sub startup {
 
     Tuba::Log->set_logger($app->log);
 
-    $ENV{MOJO_MAX_MESSAGE_SIZE} = 52428800;
-
     # Plugins, configuration
     my $conf =
         $ENV{TUBA_CONFIG}             ? $ENV{TUBA_CONFIG}
       : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
       :                                 './Tuba.conf';
+
+    $ENV{MOJO_MAX_MESSAGE_SIZE} = 300 * 1024 * 1024 * 1024 unless $conf->{read_only};
+
     $app->plugin( 'yaml_config' => { file => $conf } );
     my $config = $app->config;
     set_config($app->config);
