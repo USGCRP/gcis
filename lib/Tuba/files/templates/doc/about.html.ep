@@ -40,34 +40,27 @@ allows this triple store to be queried, as described in these
 <%= link_to '/examples' => begin %>examples<%= end %>.
 </p>
 
-<h3>GCIS Software Development</h3>
+<h3>GCIS Development Effort</h3>
 <p>GCIS is written in <a href="http://perl.org">Perl</a> using the <a href="http://mojolicio.us">mojolicious</a> web framework
 and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
 It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
-a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.
-
-<h4>Version</h4>
+a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
+<h4>Authors</h4>
+<p>Brian Duggan (USGCRP/UCAR),
+Andrew Buddenberg (USGCRP/UCAR),
+Justin Goldstein (USGCRP/UCAR),
+Tania Sizer (UCAR)</p>
+<h4>Data Curation</h4>
+<p>Steve Aulenbach (USGCRP/UCAR), Justin Goldstein (USGCRP/UCAR), Amanda McQueen (USGCRP)</p>
+<h4>Project Management</h4>
+<p>Robert Wolfe (NASA), Curt Tilmes (NASA) <i>emeritus</i></p>
+<h4>Ontology Development</h4>
+<p class='linebreaks'>Xiagoang (Marshall) Ma and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a>
+</p>
+<h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
 
-<h4>Authors</h4>
-
-<h5>Core Developers</h5>
-<p>Brian Duggan</p>
-<h5>Contributors</h5>
-<p class='linebreaks'>Andrew Buddenberg
-Justin Goldstein
-Tania Sizer
-</p>
-<h5>Thanks to</h5>
-<p class='linebreaks'>Amanda McQueen
-Curt Tilmes
-Robert Wolfe
-Steve Aulenbach
-Xiagoang (Marshall) Ma and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a>
-</p>
-
-
-<h4>Mailing List</h4>
-<p>If you're interested in contributing to our following the
-development of the GCIS API, please consider subscribing
+<h3>Contacting us and contributing</h3>
+<p>If you're interested in contributing to the
+development and evolution of the Global Change Information System, please subscribe 
 to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.
