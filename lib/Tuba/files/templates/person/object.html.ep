@@ -21,9 +21,9 @@
 
 % }
 
-<div class='row-fluid'>
+<div itemscope itemtype="http://schema.org/Person" class='row-fluid'>
     <div class='span10 offset1 well'>
-        <h2><%= $person->first_name %> <%= $person->last_name %></h2>
+        <h2 itemprop="name"><%= $person->first_name %> <%= $person->last_name %></h2>
     % if (my $orcid = $person->orcid) {
     <p>ORCID : <%= link_to "http://orcid.org/$orcid" => target => "_blank" => begin %><%= $orcid %><%= end %></p>
     % }

@@ -33,11 +33,11 @@
 % }
 
 
-<div class='row-fluid'>
+<div itemscope itemtype="http://schema.org/CreativeWork" class='row-fluid'>
     <div class='span10 offset1 well'>
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
-        <h2><%= $report->title %></h2>
+        <h2 itemprop="name"><%= $report->title %></h2>
         <h5><%= $report->publication_year %>
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>

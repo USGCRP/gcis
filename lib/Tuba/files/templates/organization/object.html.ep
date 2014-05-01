@@ -16,9 +16,9 @@
 
 % }
 
-<div class='row-fluid'>
+<div itemscope itemtype="http://schema.org/Organization" class='row-fluid'>
     <div class='span10 offset1 well'>
-        <h2><%= $organization->name %></h2>
+        <h2 itemprop="name"><%= $organization->name %></h2>
         <p>
         % if (my $country = $organization->country) {
         <%= $country->name %>
