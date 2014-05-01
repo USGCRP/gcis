@@ -3,9 +3,10 @@
     <center>About the Global Change Information System</center>
 </h2>
 <p>
-The <a href="http://www.globalchange.gov">USGCRP</a> has established the Global Change Information System (GCIS) to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society.
+The
+<a href="http://www.globalchange.gov/about">US Global Change Research Program</a>
+(USGCRP) has established the Global Change Information System (GCIS) to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society.
 </p>
-<p><a class='btn btn-inverse white' href="http://www.globalchange.gov/about">About USGCRP</a></p>
 <h3>Global Change</h3>
 <p>
 For the purposes of the GCIS, “global change” refers to changes
@@ -37,10 +38,28 @@ Relationships between URIs within the GCIS are represented in a triple
 store.  A <%= link_to '/sparql' => begin %>SPARQL endpoint<%= end %>
 allows this triple store to be queried, as described in these
 <%= link_to '/examples' => begin %>examples<%= end %>.
-
 </p>
 
 <h3>Development</h3>
-<p>This is version <%= $Tuba::VERSION %> of the GCIS.</p>
-<p>If you're interested in the development of the API,
-please consider subscribing to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.
+
+<h4>Version</h4>
+<p>This is GCIS version <%= $Tuba::VERSION %>.</p>
+
+<h4>Authors</h4>
+
+<h5>System Development</h5>
+<p>Brian Duggan, Andrew Buddenberg, Justin Goldstein, Tania Sizer</p>
+
+<h5>Data Curation</h5>
+<p>Steve Aulenbach, Justin Goldstein, Amanda McQueen</p>
+
+<h5>Project Manager</h5>
+<p>Robert Wolfe</p>
+
+<h5>Project Manager Emeritus</h5>
+<p>Curt Tilmes</p>
+
+<h4>Mailing List</h4>
+<p>If you're interested in contributing to our following the
+development of the GCIS API, please consider subscribing
+to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.
