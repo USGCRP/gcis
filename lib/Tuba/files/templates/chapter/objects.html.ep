@@ -23,8 +23,14 @@
 </th>
 % for my $chapter (@$objects) {
     <tr>
-    <td>
-        <%= link_to $chapter->uri($self) => begin %><%= $chapter->number // '' %>: <%= $chapter->title %><%= end %>
+        <td>
+            <%= link_to $chapter->uri($self) => begin %>
+            % if ($chapter->number) {
+            <%= $chapter->number %>: <%= $chapter->title %>
+            % } else {
+            <%= $chapter->title %>
+            % }
+            <%= end %>
     </td>
     <td>
         %= link_to 'list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
