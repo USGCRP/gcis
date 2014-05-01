@@ -75,10 +75,9 @@ sub startup {
       : -f '/usr/local/etc/Tuba.conf' ? '/usr/local/etc/Tuba.conf'
       :                                 './Tuba.conf';
 
-    $ENV{MOJO_MAX_MESSAGE_SIZE} = 300 * 1024 * 1024 * 1024 unless $conf->{read_only};
-
     $app->plugin( 'yaml_config' => { file => $conf } );
     my $config = $app->config;
+    $ENV{MOJO_MAX_MESSAGE_SIZE} = 300 * 1024 * 1024 * 1024 unless $config->{read_only};
     set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
