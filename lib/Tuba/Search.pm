@@ -13,7 +13,7 @@ sub keyword {
     my $orm = $c->orm;
     my @tables = keys %$orm;
     my $type = $c->param('type');
-    @tables = ( $type ) if exists($orm->{$type});
+    @tables = ( $type ) if $type && exists($orm->{$type});
     my @results;
     my $result_count_text;
     my $hit_max = 0;
@@ -50,7 +50,7 @@ sub autocomplete {
     my $elide = $c->param('elide') || 80;
 
     my @tables;
-    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset)$/) {
+    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
        @tables = ( $want );
     } elsif ($want && ($want ne 'all')) {
         return $c->render(json => { error => "undefined type" } );

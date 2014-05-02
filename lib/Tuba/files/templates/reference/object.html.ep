@@ -73,9 +73,13 @@
                 <%= $val %>
                 %= end
             % } elsif ($k =~ /urls?/i) {
-                %= link_to $val => target => "_blank" => begin
-                <%= $val %>
-                %= end
+                % if (my $to = fix_url($val)) {
+                    %= link_to $to => target => "_blank" => begin
+                    <%= $val %>
+                    %= end
+                % } else {
+                    <%= $val %>
+                % }
             % } else {
             <%= $val %>
             % }

@@ -2,7 +2,7 @@
 % layout 'default';
 
 <center>
-<h2><%= $object->stringify %></h2>
+<h2>person <%= $person->id %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -19,57 +19,48 @@
     % my $base = url_for('current')->to_abs;
     % $base =~ s/.html$//;
 
-
-    <pre>
-    <%= include 'other_formats' =%>
-    <%= include 'db_meta'; =%>
-    </pre>
-
 % }
 
-% my $tree = $object->as_tree;
-<table class='table table-condensed table-bordered table-striped'>
+<div itemscope itemtype="http://schema.org/Person" class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <h2 itemprop="name"><%= $person->first_name %> <%= $person->last_name %></h2>
+    % if (my $orcid = $person->orcid) {
+    <p>ORCID : <%= link_to "http://orcid.org/$orcid" => target => "_blank" => begin %><%= $orcid %><%= end %></p>
+    % }
+    % if (my $url = $person->url) {
+    <p>
+    %= link_to $person->url, target => "_blank" => begin
+    <%= $person->url %>
+    %= end
+    </p>
+    % }
+    % unless (param 'no_header') {
+        % my $ctr = $object->contributors;
+        <div class='row collapse-wrapper'>
+        <table class='table table-condensed table-bordered table-striped'>
+            <tr><th>Organization</th><th>Role</th><th>Publications</th>
+            </tr>
+            % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
+            <tr>
+                <td><%= obj_link($ctr->organization) %></td>
+                <td><%= $ctr->role_type->label %></td>
+                <td>
+                    <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
+                        % my $obj = $map->publication->to_object;
+                        <%= $obj->meta->table %> : <%= obj_link($obj) %>
+                        % if (my $ref = $map->reference) {
+                        <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
+                        % }
+                        <br>
+                   <% } %>
+                </td>
+            </tr>    
+            % }
+        </table>
+        </div>
+    % }
+    </div>
+</div>
 
-<tr> <td>id</td><td><%= $object->id %></td> </tr>
-<tr> <td>orcid</td>
-    <td>
-        % if ($person->orcid) {
-        %= link_to "http://orcid.org/".$person->orcid => target => 'blank' => begin
-        %= $person->orcid
-        %= end
-        % }
-    </td>
-</tr>
-<tr> <td>first_name</td><td><%= $object->first_name %></td> </tr>
-<tr> <td>last_name</td><td><%= $object->last_name %></td> </tr>
-<tr> <td>url</td><td><%= link_to $object->url => begin %><%= $object->url %><%= end %></td> </tr>
-
-</table>
-
-% unless (param 'no_header') {
-    % my $ctr = $object->contributors;
-    <div class='row collapse-wrapper'>
-    <table class='table table-condensed table-bordered table-striped'>
-        <caption>Contributions</caption>
-        <tr><th>Organization</th><th>Role</th><th>Publications</th>
-        </tr>
-        % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
-        <tr>
-            <td><%= obj_link($ctr->organization) %></td>
-            <td><%= $ctr->role_type->label %></td>
-            <td>
-                <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
-                    % my $obj = $map->publication->to_object;
-                    <%= $obj->meta->table %> : <%= obj_link($obj) %>
-                    % if (my $ref = $map->reference) {
-                    <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
-                    % }
-                    <br>
-               <% } %>
-            </td>
-        </tr>    
-        % }
-    </table>
-
-% }
+%= include 'h/other_formats';
 

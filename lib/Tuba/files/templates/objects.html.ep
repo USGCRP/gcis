@@ -50,7 +50,7 @@
                     <div style='position:relative;'>
                         %= include 'collapsible', row_content => begin
                         %   for (@$got) {
-                                <span class='btn squeezevert'><%= obj_link($_); %></span>
+                        <span class='btn squeezevert'><%= obj_link($_, tiny => 1); %></span>
                         %   }
                         %= end
                     </div>

@@ -5,41 +5,45 @@
 <h2>file : <%= $object->stringify %></h2>
 </center>
 
-%= include 'history_modal';
-
 % if (user_can('update')) {
+%= include 'history_modal';
 <span style='float:right;'>
 <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
 <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
 </span>
 % }
 
-<pre>
-<%= include 'other_formats' =%>
-<%= include 'db_meta'; =%>
-</pre>
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
 
-%= include 'relationships', object => $object, meta => $meta;
-
-<table class='table table-condensed table-bordered table-striped'>
-<caption>Fields</caption>
-% for my $col (qw/identifier mime_type file sha1 size thumbnail location/) {
-    <tr>
-        <td><%= $col %></td>
-        <td><%= $object->$col // ''%></td>
-    </tr>
+        <div class='thumbnails row-fluid'>
+            <div class='span4 offset4 thumbnail' style='text-align:center;'>
+                %= link_to $object->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
+                <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
+                <div class='caption centered' style='color:white;'>download (<%= human_size($file->size) %>)
+% if ($file->location) {
+<br>from <%= url_host($file->location) %>
 % }
+                </div>
+                %= end
+            </div>
+        </div>
 
-</table>
-
-<div class='thumbnails row-fluid'>
-    <div class='span2 offset5 thumbnail'>
-        %= link_to $object->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
-        <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
-        <div class='caption centered' style='color:white;'>download<br>
-        <%= $file->basename %></div>
-        %= end
+        <br>
+        <div class='row-fluid'>
+            <div class='span12'>
+% if ($file->sha1) {
+                <p>SHA1 hash : <%= $file->sha1 %>.</p>
+% }
+            </div>
+        </div>
+        % if (my @pubs = $file->publications) {
+        <p>This file is associated with <%= include 'commify', objs => \@pubs %>.</p>
+        % } else {
+        <p>This file is not associated with any publications.</p>
+        % }
     </div>
 </div>
 
+<%= include 'h/other_formats' =%>
 

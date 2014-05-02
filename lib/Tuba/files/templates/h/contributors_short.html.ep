@@ -1,0 +1,6 @@
+<i>
+%= include commify => objs => scalar $object->all_orgs
+</i>
+<br>
+%= include commify => objs => scalar $object->all_people
+

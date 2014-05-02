@@ -1,0 +1,55 @@
+% layout 'default';
+
+<center>
+<h2>table : <%= $table->identifier %></h2>
+</center>
+
+% if (user_can('update')) {
+%= include 'history_modal';
+
+<span style='float:right;'>
+<%= link_to obj_uri_for($object,'update_form') => class => "btn" => begin %>edit<%= end %>
+<a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+</span>
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+        % my $pub = $table->get_publication;
+        % if ($pub) {
+            % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= end
+            % }
+        % }
+        </div>
+        <h2><%= $table->title %></h2>
+        <h3>table <%= $table->numeric %></h3>
+        <i>
+        %= include commify => objs => scalar $table->all_orgs
+        </i>
+        <br>
+        %= include commify => objs => scalar $table->all_people
+        % if (my $chapter = $table->chapter) {
+        <p>This table appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
+        of the <%= obj_link($table->report) %> report.</p>
+        % } else {
+        <p>This table appears in the <%= obj_link($table->report) %> report.</p>
+        % }
+
+        <p><%= tbibs_to_links($table->caption) %></p>
+        %= include 'h/cited_by', pub => $table->get_publication;
+        %= include 'h/cites', pub => $table->get_publication;
+        % if (my @arrays = sorted_list($table,'arrays')) {
+        <br>
+        This table is composed of <%= @arrays==1 ? 'this array' : 'these arrays' %> :
+        %= include 'obj_thumbnails', objs => [ sorted_list($table,'arrays') ], no_table => 1, tiny_captions => 1;
+        % }
+
+    </div>
+</div>
+
+<%= include 'h/other_formats'; =%>
+

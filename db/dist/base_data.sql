@@ -45,7 +45,7 @@ COPY _report_viewer (report, username) FROM stdin;
 -- Data for Name: activity; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY activity (identifier, data_usage, methodology, start_time, end_time, duration, computing_environment, output_artifacts) FROM stdin;
+COPY activity (identifier, data_usage, methodology, start_time, end_time, duration, computing_environment, output_artifacts, software, visualization_software, notes) FROM stdin;
 \.
 
 
@@ -61,7 +61,7 @@ COPY "array" (identifier, rows_in_header, rows) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report_identifier, number, url) FROM stdin;
+COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi) FROM stdin;
 \.
 
 
@@ -101,7 +101,7 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 -- Data for Name: book; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library) FROM stdin;
+COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic) FROM stdin;
 \.
 
 

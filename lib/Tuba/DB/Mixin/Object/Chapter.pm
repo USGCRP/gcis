@@ -18,7 +18,7 @@ sub uri {
         $route_name,
         {
             chapter_identifier => $s->identifier,
-            report_identifier  => $s->report->identifier
+            report_identifier  => $s->report_identifier
         }
     );
 }
@@ -27,10 +27,10 @@ sub stringify {
     my $s = shift;
     my %args = @_;
     return ($s->number // $s->identifier) if $args{tiny};
-    my $str = ' ('.$s->report_identifier.')';
-    return $s->identifier.$str unless $s->title || $s->number;
-    return $s->title.$str unless $s->number;
-    return "Chapter ".$s->number." : ".($s->title || '').$str;
+    my $str = $s->report_identifier;
+    return $str.' chapter : '.$s->identifier unless $s->title || $s->number;
+    return $str.' '.$s->title unless $s->number;
+    return "$str chapter ".$s->number." : ".($s->title || '');
 }
 
 sub sortkey {

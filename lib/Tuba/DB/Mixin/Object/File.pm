@@ -50,9 +50,10 @@ sub generate_thumbnail {
 sub _maybe_generate_thumbnail {
     my $s = shift;
     if (my $existing = $s->thumbnail) {
-        unless (-e $s->fullpath($existing)) {
-            logger->warn("Thumbnail in db does not exist : ".$s->fullpath($existing));
+        if (-e $s->fullpath($existing)) {
+            return $s->thumbnail;
         }
+        logger->warn("Thumbnail in db does not exist : ".$s->fullpath($existing));
     }
     return if $s->location; # no remote retrieval for thumbnails
     my $file = $s->file or return;

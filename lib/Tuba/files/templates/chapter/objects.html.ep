@@ -23,8 +23,14 @@
 </th>
 % for my $chapter (@$objects) {
     <tr>
-    <td>
-        <%= link_to $chapter->uri($self) => begin %><%= $chapter->number // '' %>: <%= $chapter->title %><%= end %>
+        <td>
+            <%= link_to $chapter->uri($self) => begin %>
+            % if ($chapter->number) {
+            <%= $chapter->number %>: <%= $chapter->title %>
+            % } else {
+            <%= $chapter->title %>
+            % }
+            <%= end %>
     </td>
     <td>
         %= link_to 'list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn squeezevert' => begin
@@ -49,14 +55,7 @@
     <td>
      <div class='span2'>
        % if (my $pub = $chapter->get_publication) {
-           % for my $file ($pub->files) {
-
-            %= link_to $file->asset_location => download => $file->file => class => "btn btn-inverse btn-large" => begin
-            <img style='border:1px solid #aaa;' src='<%= $file->thumbnail_path %>' />
-            <div class='caption centered' style='color:white;'>download</div>
-            %= end
-
-           % }
+       %= include 'pub_thumbnails', pub => $pub, simple => 1
        % }
     </div>
     </td>

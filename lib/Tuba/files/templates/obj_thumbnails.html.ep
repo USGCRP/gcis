@@ -11,7 +11,7 @@
                 % }
                 % my $files = $pub ? $pub->files : undef;
                 % if ($files && @$files) {
-                    % for my $file (@$files) {
+                    % for my $file ($pub->smallest_file) {
                         % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
                             <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
@@ -24,7 +24,7 @@
                     <%= image '/blank.png', class => 'img-polaroid' => style => 'padding:0px;' =%>
                 % }
                 % my $val = $obj->stringify;
-                % my $short = $obj->stringify(short => 1);
+                % my $short = $obj->stringify( (scalar 'tiny_captions' ? ( tiny => 1) : (short => 1)) );
                 <div class="caption" style='overflow:hidden;' title='<%= $val %>'>
 
                 % if ($uri) {

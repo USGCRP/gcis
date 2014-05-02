@@ -80,3 +80,9 @@ a.white {
 h2.centered {
     text-align:center;
 }
+.tbib {
+    vertical-align:super;
+}
+p.linebreaks {
+    white-space: pre-line;
+}

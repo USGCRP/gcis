@@ -36,7 +36,8 @@ $t->get_ok("/journal/nature.json")->json_is(
     {
         %j,
         uri => "/journal/nature",
-        href => "${base}journal/nature.json"
+        href => "${base}journal/nature.json",
+        articles  => [],
     }
 );
 
@@ -52,7 +53,8 @@ $t->get_ok("/journal/nurture.json")->json_is(
     {
         %k,
         uri => "/journal/nurture",
-        href => "${base}journal/nurture.json"
+        href => "${base}journal/nurture.json",
+        articles  => [],
     }
 );
 

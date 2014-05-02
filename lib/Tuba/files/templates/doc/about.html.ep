@@ -1,11 +1,12 @@
-% layout 'default', title => "About the Global Change Information System";
+% layout 'default', title => "About the Global Change Information System", fixed => 1;
 <h2>
     <center>About the Global Change Information System</center>
 </h2>
 <p>
-The <a href="http://www.globalchange.gov">USGCRP</a> has established the Global Change Information System (GCIS) to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society.
+The
+<a href="http://www.globalchange.gov/about">US Global Change Research Program</a>
+(USGCRP) has established the Global Change Information System (GCIS) to better coordinate and integrate the use of Federal information products on changes in the global environment and the implications of those changes for society.
 </p>
-<p><a class='btn btn-inverse white' href="http://www.globalchange.gov/about">About USGCRP</a></p>
 <h3>Global Change</h3>
 <p>
 For the purposes of the GCIS, “global change” refers to changes
@@ -37,10 +38,30 @@ Relationships between URIs within the GCIS are represented in a triple
 store.  A <%= link_to '/sparql' => begin %>SPARQL endpoint<%= end %>
 allows this triple store to be queried, as described in these
 <%= link_to '/examples' => begin %>examples<%= end %>.
-
 </p>
 
-<h3>Development</h3>
-<p>This is version <%= $Tuba::VERSION %> of the GCIS.</p>
-<p>If you're interested in the development of the API,
-please consider subscribing to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.
+<h3>GCIS Development Effort</h3>
+<p>GCIS is written in <a href="http://perl.org">Perl</a> using the <a href="http://mojolicio.us">mojolicious</a> web framework
+and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
+It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
+a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
+
+<p class='linebreaks'>GCIS Visionary : Curt Tilmes
+System Engineer : Brian Duggan
+
+Also thanks to :
+Andrew Buddenberg : Client development
+Steve Aulenbach : Data Curator
+Justin Goldstein : Researcher
+Robert Wolfe : Project Manager
+Amanda McQueen : GCIS Intern
+Tania Sizer : Web Designer
+Xiagoang (Marshall) Ma, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+
+<h4>GCIS Version</h4>
+<p><%= $Tuba::VERSION %></p>
+
+<h3>Contacting us and contributing</h3>
+<p>If you're interested in contributing to the
+development and evolution of the Global Change Information System, please subscribe 
+to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.

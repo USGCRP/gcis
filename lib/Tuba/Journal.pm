@@ -19,6 +19,14 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $obj = shift;
+    my $h = $c->SUPER::make_tree_for_show($obj);
+    $h->{articles} = [ map $_->as_tree(c => $c), $obj->articles ];
+    return $h;
+}
+
 sub list {
     my $c = shift;
     if ($c->param('all')) {

@@ -1,0 +1,34 @@
+
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>numeric</th>
+    <th>identifier</th>
+    <th>chapter</th>
+</th>
+% for my $finding (@$objects) {
+    <tr>
+       <td><%= obj_link_to $finding, 'show' => begin %><%= $finding->numeric %><%= end %></td>
+       <td><%= obj_link_to $finding, 'show' => begin %><%= $finding->identifier %><%= end %></td>
+       <td><%= obj_link($finding->chapter) %></td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

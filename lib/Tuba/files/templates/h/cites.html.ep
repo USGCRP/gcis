@@ -1,0 +1,18 @@
+% my @pubs = $pub ? $pub->get_children_with_references : ();
+% if (@pubs) {
+% my %refs;
+<p>References :
+<ul class="references" style="list-style-type: none;">
+% for my $i (0..$#pubs) {
+% my $p = $pubs[$i];
+% $refs{$p->{reference}->identifier} = $p->{reference};
+<li id='<%= $p->{reference}->identifier %>'>
+% if ($p->{child}) {
+<%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(no_elide => 1, tiny => 1) =%><%= end =%>
+<% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>
+  (<%= obj_link_to $p->{reference}, 'show' => begin %><%= $p->{reference}->stringify(short => 1) %><%= end %>)
+</li>
+% }
+</ul>
+</p>
+% }

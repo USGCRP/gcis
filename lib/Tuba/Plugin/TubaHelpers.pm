@@ -14,6 +14,10 @@ use Time::Duration qw/ago/;
 use List::Util qw/min/;
 use Date::Parse qw/str2time/;
 use DateTime::Format::Human::Duration;
+use Number::Format;
+use Number::Bytes::Human qw/format_bytes/;
+use Mojo::ByteStream qw/b/;
+use Mojo::Util qw/decamelize/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -238,7 +242,27 @@ sub register {
             my $base = $map{$namespace} or return;
             return $base.$frag;
         });
-
+    $app->helper(ontology_human => sub {
+            my $c = shift;
+            my $full = shift or return;
+            # turn prov:wasInformedBy into "was informed by"
+            # turn prov:wasDerivedFrom into "was derived from";
+            my ($ns,$str) = split /:/, $full;
+            $str = decamelize(ucfirst $str);
+            $str =~ s/_/ /g;
+            return $str;
+    });
+    $app->helper(ontology_human_pl => sub {
+            my $c = shift;
+            my $full = shift or return;
+            my $count = shift;
+            my $str = $c->ontology_human($full);
+            return $str if $count==1;
+            $str =~ s/was/were/;
+            $str =~ s/is/are/g;
+            return $str;
+        } );
+ 
     $app->helper(uri => sub {
         my $c = shift;
         my $obj = shift or return "";
@@ -268,9 +292,19 @@ sub register {
              m[^/report/([^/]+)$]                 and $obj = Tuba::DB::Object::Report->new(identifier => $1);
              m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $3);
+             m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $3);
+             m[^/report/([^/]+)/finding/([^/]+)$]  and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/table/([^/]+)$]   and $obj = Tuba::DB::Object::Table->new(report_identifier => $1, identifier => $3);
-             m[^/dataset/([^/]+)$]   and $obj = Tuba::DB::Object::Dataset->new(identifier => $1);
+             m[^/article/(.*)$]     and $obj = Tuba::DB::Object::Article->new(identifier => $1);
+             m[^/activity/([^/]+)$] and $obj = Tuba::DB::Object::Activity->new(identifier => $1);
+             m[^/journal/([^/]+)$]  and $obj = Tuba::DB::Object::Journal->new(identifier => $1);
+             m[^/book/([^/]+)$]     and $obj = Tuba::DB::Object::Book->new(identifier => $1);
+             m[^/dataset/([^/]+)$]  and $obj = Tuba::DB::Object::Dataset->new(identifier => $1);
+             m[^/image/([^/]+)$]    and $obj = Tuba::DB::Object::Image->new(identifier => $1);
+             m[^/array/([^/]+)$]    and $obj = Tuba::DB::Object::Array->new(identifier => $1);
+             m[^/webpage/([^/]+)$]  and $obj = Tuba::DB::Object::Webpage->new(identifier => $1);
+             m[^/generic/([^/]+)$]  and $obj = Tuba::DB::Object::Generic->new(identifier => $1);
          }
          if ($obj && $obj->load(speculative => 1)) {
              return $obj;
@@ -289,7 +323,19 @@ sub register {
     $app->helper(pl => sub {
             my $c = shift;
             my $str = shift;
-            { person => 'people'}->{$str} || "${str}s";
+            my $plural = {person => 'people',
+                "Funding Agency" => "Funding Agencies",
+                "Point of Contact" => "Points of Contact",
+                }->{$str} || "${str}s";
+            return $plural unless @_;
+            my $count = shift;
+            my $no_numbers = pop;
+            if ($no_numbers) {
+                return $count==1 ? $str : $plural;
+            }
+            $count //= 0;
+            my $fmted = Number::Format->new->format_number($count);
+            return $count==1 ? "$fmted $str" : "$fmted $plural";
         });
     $app->helper(db_labels => sub {
             my $c = shift;
@@ -317,6 +363,7 @@ sub register {
             if (ref($val) =~ /DateTime::Duration/) {
                 return DateTime::Format::Human::Duration->new()->format_duration($val);
             }
+            return "$val";
         });
     $app->helper(human_duration => sub {
             my $c = shift;
@@ -324,6 +371,12 @@ sub register {
             return "" unless defined($val) && length($val);
             return DateTime::Format::Human::Duration->new()->format_duration($val);
         });
+    $app->helper(human_size => sub {
+            my $c = shift;
+            my $val = shift;
+            return format_bytes($val, precision => 0);
+        });
+
     $app->helper(default_html_relationships => sub {
         my $c = shift;
         my $obj = shift;
@@ -366,6 +419,47 @@ sub register {
             state $mng //= Tuba::DocManager->new();
             return $mng->find_doc($route_name);
     });
+    $app->helper(url_host => sub {
+            my $c = shift;
+            my $url = shift or return "";
+            my $obj = Mojo::URL->new($url) or return $url;
+            return ($obj->host || $url);
+        });
+    $app->helper(tbibs_to_links => sub {
+            my $c = shift;
+            my $str = shift;
+            return "" unless $str && length($str);
+            my $out;
+            my $i = 1;
+            my @pieces = split qr[<tbib>([^<]+)</tbib>], $str;
+            while (@pieces) {
+                my $next = shift @pieces;
+                $next =~  s[<sup>,</sup>][ ];
+                $out .= b($next)->xml_escape;
+                my $tbib = shift @pieces;
+                next unless $tbib;
+                $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
+                $i++;
+            }
+            return b($out);
+        });
+    $app->helper(tl => sub {
+            # escape a turtle literal enclosed in double quotes
+            # http://www.w3.org/TR/turtle/#literals
+            my $c = shift;
+            my $str = shift;
+            $str =~ s/"/\\"/g;
+            $str =~ s/\n/\\n/g;
+            $str =~ s/\r/\\r/g;
+            return $str;
+        });
+    $app->helper( fix_url => sub {
+            my $c = shift;
+            my $to = shift or return;
+            $to = "http://$to" if $to !~ /:\/\//;
+            return unless $to =~ m[^(http|ftp)://];
+            return $to;
+        });
 }
 
 1;

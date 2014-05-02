@@ -1,0 +1,35 @@
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) {
+<p>
+
+    % for my $parent (@parents) {
+        % my $parent_pub = $parent->{publication};
+        This <%= $object->meta->table %>
+        <%= ontology_human($parent->{relationship}) %>
+        <%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %>
+        <% if ($parent->{activity}) { %>using the activity <%= obj_link($parent->{activity}) %><% } %>.
+        <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
+    % }
+
+    % my %by_type_rel = ();
+    % for my $child (@children) {
+    %       my $type = $child->publication->publication_type_identifier;
+    %       my $rel = $child->relationship;
+    %       $by_type_rel{$type}{$rel} //= [];
+    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
+    % }
+    <ul class='unstyled'>
+    % for my $type (keys %by_type_rel) {
+    %   for my $rel (keys %{ $by_type_rel{$type} } ) {
+            %   my $count = @{ $by_type_rel{$type}{$rel} };
+            <li><%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
+            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
+            </li>
+    %   }
+    % }
+    </ul>
+</p>
+% }
+

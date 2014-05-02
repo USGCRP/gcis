@@ -1,0 +1,44 @@
+% layout 'default';
+
+<center>
+<h2>webpage : <%= $webpage->identifier %></h2>
+</center>
+
+% if (user_can('update')) {
+%= include 'history_modal';
+
+<span style='float:right;'>
+<%= link_to obj_uri_for($object,'update_form') => class => "btn" => begin %>edit<%= end %>
+<a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+</span>
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+        % my $pub = $webpage->get_publication;
+        % if ($pub) {
+            % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= end
+            % }
+        % }
+        </div>
+        <h4>
+            <%= link_to $webpage->url, target => "_blank" => begin %><%= $webpage->url %><%= end %>
+        </h4>
+        <h5><%= $webpage->title %></h5>
+        % if ($webpage->access_date) {
+        <p>Accessed on <%= $webpage->access_dt->strftime('%B %d, %Y') %>.</p>
+        % }
+
+        %= include 'h/cited_by', pub => $webpage->get_publication;
+        %= include 'h/cites', pub => $webpage->get_publication;
+        %= include 'h/prov', pub => $webpage->get_publication;
+
+    </div>
+</div>
+
+<%= include 'h/other_formats'; =%>
+

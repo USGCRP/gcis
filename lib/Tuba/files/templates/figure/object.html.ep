@@ -2,79 +2,84 @@
 % layout 'default';
 
 <center>
-<h2>Figure: <%= $object->stringify %></h2>
+<h2>Figure : <%= $figure->identifier %></h2>
 </center>
 
+% if (user_can('update')) {
 %= include 'history_modal';
 
-% if (user_can('update')) {
 <span style='float:right;'>
 <%= link_to obj_uri_for($object,'update_form') => class => "btn" => begin %>edit<%= end %>
 <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
 </span>
 % }
 
-<pre>
-<%= include 'other_formats'; =%>
-<%= include 'db_meta'; =%>
-</pre>
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+        % my $pub = $figure->get_publication;
+        % if ($pub) {
+            % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= end
+            % }
+        % }
+        </div>
+        <h2><%= $figure->title %></h2>
+        <h3>Figure <%= $figure->numeric || $figure->identifier %></h3>
+        <i>
+        %= include commify => objs => scalar $figure->all_orgs
+        </i>
+        <br>
+        %= include commify => objs => scalar $figure->all_people
+        % if (my $chapter = $figure->chapter) {
+        <p>This figure appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
+        of the <%= obj_link($figure->report) %> report.</p>
+        % } else {
+        <p>This figure appears in the <%= obj_link($figure->report) %> report.</p>
+        % }
 
-<table class='table table-condensed table-bordered table-striped'>
-<caption>Fields</caption>
+        <p><%= tbibs_to_links($figure->caption) %></p>
+        % if ($figure->source_citation){
+        <p>When citing this figure, please reference <%= tbibs_to_links($figure->source_citation) %>.</p>
+        % }
+        % if (my @figs = $figure->kindred_figures) {
+        <p>Other figures containing images in this figure : <%= include 'commify', objs => \@figs %></p>
+        % }
+        % if ($figure->time_start && $figure->time_end) {
+        <p>The time range for this figure is <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
+         to <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % } elsif ($figure->time_start) {
+        <p>The time range for this figure starts at <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % } elsif ($figure->time_end) {
+        <p>The time range for this figure ends at <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        % }
+        % if ($figure->create_dt) {
+        <p>This figure was created on <%= $figure->create_dt->strftime('%B %d, %Y') %>.</p>
+        % }
 
-% for my $field (qw/identifier ordinal title caption source_citation report chapter/) {
-%= include pair => vals => [$field => $figure->$field];
-% }
-<tr>
-    <td>chapter.ordinal</td>
-    <td><%= $object->chapter ? $object->chapter->number : "[no chapter]" %>.<%= $object->ordinal %>
-</td>
-</tr>
-<tr>
-    <td>kindred figures</td>
-    <td><% for my $f ($object->kindred_figures) { %>
-        <%= obj_link($f) %>
-        <% } %>
-    </td>
-</tr>
+        % if ($figure->submission_dt) {
+        <p>This figure was submitted on <%= $figure->submission_dt->strftime('%B %d, %Y') %>.</p>
+        % }
+        % if ($figure->lat_min || $figure->lat_max || $figure->lon_min || $figure->lon_max) { 
+        <p>
+        The spatial range for this figure is <%= $figure->lat_min // 'unknown' %>° to <%= $figure->lat_max // 'unknown' %>° latitude,
+        and <%= $figure->lon_min // 'unknown' %>° to <%= $figure->lon_max // 'unknown' %>° longitude.
+        </p>
+        % }
+        %= include 'h/prov', pub => $figure->get_publication;
+        %= include 'h/cited_by', pub => $figure->get_publication;
+        %= include 'h/cites', pub => $figure->get_publication;
+        % if (my @images = sorted_list($figure,'images')) {
+        <br>
+        This figure is composed of <%= @images==1 ? 'this image' : 'these images' %> :
+        %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1, tiny_captions => 1;
+        % }
 
-<% for my $field (qw/
-     time_start time_end
-     create_dt submission_dt
-     lat_min lat_max lon_min lon_max
-     attributes usage_limits/) { %>
-%= include pair => vals => [$field => $figure->$field];
-% }
-
-<tr>
-<td>images</td>
-<td class='row-fluid'>
-    <div class='row-fluid' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1;
-            %= end
     </div>
-</td>
-
-</tr>
-<tr>
-<td>files</td>
-<td>
-%= include 'pub_thumbnails', pub => $figure->get_publication(autocreate => 1), files => 1;
-</td>
-</tr>
-
-%= include 'keywords', pub => $figure->get_publication(autocreate => 1);
-%= include 'regions', pub => $figure->get_publication(autocreate => 1);
-
-</table>
-
-%= include 'prov';
-
-<div class='row' style='position:relative;'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
 </div>
 
+<%= include 'h/other_formats'; =%>
+%= include 'h/tbibjs';
 

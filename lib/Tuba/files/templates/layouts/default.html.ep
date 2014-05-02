@@ -35,7 +35,8 @@ String.prototype.htmlEscape = function() {
                 <%= end %>
                 <ul class='nav pull-right'>
                     <li>
-                    <% if (config('google_site_search')) { %>
+                    % if(config('no_search')) {
+                    % } elsif (config('google_site_search')) {
                        <form action="http://google.com/cse" target="_blank" class="form navbar-search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
@@ -83,29 +84,33 @@ String.prototype.htmlEscape = function() {
                         <a href='#' data-toggle='dropdown'>publications<span class='caret'></span></a>
                         <ul class='dropdown-menu'>
                             <li><%= link_to 'show_report'  => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->title %><%= end %></li>
-                            <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
                             <li><%= link_to 'list_report'  => begin %>reports<%= end %></li>
+                            <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
+                            <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
                             <li><%= link_to 'list_journal' => begin %>journals<%= end %></li>
                             <li><%= link_to 'list_article' => begin %>articles<%= end %></li>
-                            <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
                             <li><%= link_to 'list_webpage' => begin %>web pages<%= end %></li>
+                            <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                         </ul>
                     </li>
                     <li class='dropdown'>
                         <a href='#' data-toggle='dropdown'>contributors<span class='caret'></span></a>
                         <ul class='dropdown-menu'>
-                            <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
                             <li><%= link_to 'list_person' => begin %>people<%= end %></li>
+                            <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
                         </ul>
                     </li>
-                    <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                     % if (user_can('update')) {
                     <li><%= link_to 'admin' => begin %>admin<%= end %></li>
                     % }
                 </ul>
             </div>
         </div>
+        % if (stash 'fixed') {
+        <div class='container' id='maincontent'>
+        % } else {
         <div class='container-fluid' id='maincontent'>
+        % }
 % if (my $msg = flash 'message') {
 <div class='alert alert-info'>
 <button type="button" class="close" data-dismiss="alert">&times;</button>

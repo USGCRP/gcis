@@ -1,0 +1,53 @@
+%= javascript begin
+
+$(function() {
+
+    var footnotes = $('.tbib');
+    var fnarray = new Array();
+    var refslist = $('ul.references');
+    var seen = new Array();
+
+    footnotes.each(function(x) {
+    var txt = $(this).text();
+        if ($.inArray(txt, seen) == -1) {  //new footnote
+            seen.push(txt);
+            fnarray[x] = 1;
+            }
+        else { 
+            fnarray[x] = 0;  //duplicate footnote
+        };
+    });
+
+    var ftnum = 1;
+    footnotes.each(function(y) {
+    /**  add the footnote number to the reference, but not for duplicates  ****/
+        if (fnarray[y] == 1) {	  
+            var fid = $(this).attr('data_tbib');
+            var note = $("#" + fid);
+            note.prepend(ftnum);
+            ftnum++;
+            note.appendTo(refslist);     //move reference to end of list
+        }
+    });
+
+    var refmap = {};
+    var i = 0;
+    $('.tbib').text(function(x,t) {
+        if (refmap[t]) {
+            return refmap[t];
+        }
+        i++;
+        refmap[t] = i;
+        return i;
+    });
+    $('.tbib').hover(function(e) {
+        var uuid = $(this).attr('data_tbib');
+        $('#' + uuid).toggleClass('alert-success');
+    });
+    $('.tbib').attr('href', function() {
+        var uuid = $(this).attr('data_tbib');
+        var ref_target = $('#' + uuid + ' > a').attr('href');
+        return ref_target;
+    });
+})
+%= end

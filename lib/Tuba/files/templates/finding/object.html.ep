@@ -1,35 +1,50 @@
 
 % layout 'default';
-% my $table = $object->meta->table;
-
-<center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
-</center>
+% my %labels = (
+% 'process'       => 'Process for developing key messages',
+% 'evidence'      => 'Description of evidence base',
+% 'uncertainties' => 'New information and remaining uncertainties',
+% 'confidence'    => 'Assessment of confidence based on evidence');
 
 % unless (param 'no_header') {
-
     %= include 'history_modal';
-
     % if ($object->can('identifier') && user_can('update')) {
         <span style='float:right;'>
         <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
         <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
         </span>
     % }
-
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
-
 % }
 
-%= include 'fields';
+<center>
+    % if ($finding->chapter && $finding->chapter->number) {
+    <h2>finding <%= $finding->numeric %> : <%= $finding->identifier %></h2>
+    % } else {
+    <h2>finding <%= $finding->identifier %></h2>
+    % }
+</center>
 
-%= include_first [ "$table/relationships", "relationships" ], object => $object, meta => $meta;
-
-%= include 'prov';
-
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $report->get_publication;
+        <p class='lead'><%= $finding->statement %></p>
+        %= include 'h/contributors_short', object => $finding;
+        % if ($finding->chapter) {
+        <p>This finding is from chapter <%= obj_link($finding->chapter, tiny => 1) %> of <%= obj_link_to $finding->report, 'show' => begin %>
+        <%= $finding->report->title %><%= end %>.</p>
+        % } else {
+        <p>This finding is from <%= obj_link_to $finding->report, 'show' => begin %>
+        <%= $finding->report->title %><%= end %>.</p>
+        % }
+        % for my $what (qw/process evidence uncertainties confidence/) {
+            % if ($finding->$what) {
+            <p><b><%= $labels{$what} %> :</b><%= tbibs_to_links($finding->$what) %></p>
+            % }
+        % }
+        %= include 'h/cites', pub => $finding->get_publication;
+    </div>
 </div>
+
+%= include 'h/other_formats';
+%= include 'h/tbibjs';
 

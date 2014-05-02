@@ -12,6 +12,7 @@ use Test::MBD qw/-autostart/;
 use Test::Mojo;
 use tlib;
 
+use strict;
 use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
@@ -183,6 +184,66 @@ $t->get_ok("/reference/ref-ref-ref.nt")
     ->status_is(200)
     ->content_like( qr[ref-ref-ref] );
 
+# Dataset
+my $dataset = {
+    identifier => "cmip3",
+    name       => "readings\n from my thermometer",
+    type       => undef,
+    version    => "N/A",
+    description => "These are
+    some readings from the\n\r
+    \n\r\n thermometer outside my house",
+    native_id        => "Unknown",
+    publication_year => "2007",
+    access_dt        => "2013-01-24T00:00:00",
+    release_dt       => undef,
+    attributes       => "2-meter surface temperature and others as listed at: http://www-pcmdi.llnl.gov/ipcc/standard_output.html",
+    url              => "http://example.com/my-temps",
+    data_qualifier   => "taken\nonly on tuesdays",
+    scale            => undef,
+    spatial_ref_sys  => "wgs84",
+    cite_metadata    => "a big\nmetadata document\nwith returns",
+    scope            => "local",
+    spatial_extent   => "maximum_latitude: 90; minimum_latitude: -90; maximum_longitude: 180; minimum_longitude: -180;",
+    temporal_extent  => "1850-01-01T00:00:00 2300-12-31T23:59:59",
+    vertical_extent  => "high",
+    processing_level => undef,
+    spatial_res      => "point",
+    doi              => "10.123/123",
+    lat_min          => undef,
+    lon_min          => undef,
+    lat_max          => undef,
+    lon_max          => undef,
+    start_time       => "2010-01-22T00:00:00",
+    end_time         => "2011-01-29T00:00:00",
+    variables        => "x y z",
+};
+
+$t->post_ok( "/dataset" => json => $dataset )->status_is(200);
+
+$t->get_ok("/dataset/cmip3.ttl")->status_is(200);
+$t->get_ok("/dataset/cmip3.nt")->status_is(200);
+
+# Activity
+
+my $activity = {
+    identifier => "teeth-brush",
+    data_usage => "a little\ntooth paste",
+    methodology => "back and forth\nside to side",
+    start_time => '2001-01-01',
+    end_time => '2001-01-02',
+    duration => '1 day',
+    computing_environment => "sink\nand faucet",
+    output_artifacts => "plaque\non teeth",
+    software => "crest\nor tom's",
+    visualization_software => "mirror\nmirror on the wall",
+    notes => "every day\n is a good to brush your teeth",
+};
+
+$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
+$t->get_ok('/activity/teeth-brush.nt')->status_is(200);
+
 # Clean up
 $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
@@ -192,6 +253,11 @@ $t->delete_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(200);
 $t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
+$t->delete_ok("/dataset/cmip3")->status_is(200);
+$t->delete_ok("/activity/teeth-brush")->status_is(200);
+$t->delete_ok("/article/gatorade")->status_is(200);
+$t->delete_ok("/journal/gators")->status_is(200);
+
 
 done_testing();
 

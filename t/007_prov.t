@@ -64,7 +64,7 @@ $t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
       url                         => "/dataset/dough",
       relationship                => "prov:wasBaked",
       publication_type_identifier => "dataset",
-      label                       => 'dataset : dough',
+      label                       => 'dataset dough',
       activity_uri                => undef,
       note => "This pizza was baked from high quality gluten-free dough."
     }

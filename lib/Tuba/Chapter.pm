@@ -13,9 +13,9 @@ sub list {
     my $c = shift;
     my $report = $c->stash('report_identifier');
     my $all = $c->param('all');
-    my @page = $all ? () : (page => $c->page);
+    my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
     $c->stash(objects => Chapters->get_objects(query => [ report_identifier => $report ],
-             sort_by => 'chapter.number, chapter.identifier',
+             sort_by => 'chapter.sort_key, chapter.number, chapter.identifier',
              @page,
          )
     );
@@ -81,7 +81,7 @@ sub make_tree_for_show {
     my $pub = $chapter->get_publication(autocreate => 1);
     return {
       number            => $chapter->number,
-      files             => [map +{uri => $_->uri($c)}, $pub->files],
+      files             => [map $_->as_tree(c => $c), $pub->files],
       figures           => [map +{$c->Tuba::Figure::common_tree_fields($_)}, $chapter->figures],
       findings          => [map +{$c->Tuba::Finding::common_tree_fields($_)}, $chapter->findings],
       tables            => [map +{$c->Tuba::Table::common_tree_fields($_)}, $chapter->tables],
@@ -89,6 +89,7 @@ sub make_tree_for_show {
       identifier        => $chapter->identifier,
       contributors      => [map +{$c->Tuba::Contributor::common_tree_fields($_), %{ $_->as_tree(c => $c) }}, $pub->contributors],
       url               => $chapter->url,
+      doi               => $chapter->doi,
       title             => $chapter->title,
       $c->common_tree_fields($chapter),
     };

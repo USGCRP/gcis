@@ -3,8 +3,8 @@
    a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
    dcterms:date "<%= $dataset->release_dt %>";
-   cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
-   dcterms:description "<%= $dataset->description %>";
+   cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
+   dcterms:description "<%= tl($dataset->description) %>";
    datacite:doi "<%= $dataset->doi %>";
    dcterms:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>";
@@ -34,10 +34,10 @@
    gcis:accessURL "<%= $dataset->url %>";
    gcis:hasURL "<%= $dataset->url %>";
    dcterms:hasVersion "<%= $dataset->version %>";
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
 % for my $keyword ($dataset->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+<<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
+<<%= current_resource %>> dcterms:subject "<%== $keyword->stringify %>" .
 % }
 %= include 'prov';
 %= include 'contributors'; 

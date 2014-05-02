@@ -1,9 +1,8 @@
 
 % layout 'default';
-% my $table = $object->meta->table;
 
 <center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
+<h2>article : <%= $article->identifier %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -17,18 +16,44 @@
         </span>
     % }
 
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
-
 % }
 
-%= include 'fields', cols => [qw/identifier doi url title journal_identifier journal_pages journal_vol notes year/];
 
-%= include 'prov';
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        <h2><%= $article->title %></h2>
+        % if ($article->year) {
+        <h4><%= $article->year %></h4>
+        % }
+        %= include 'h/contributors_short', object => $article;
+        <%= obj_link($article->journal) %>
+        % if ($article->journal_vol) {
+        volume <%= $article->journal_vol %>
+        % }
+        % if ($article->journal_pages) {
+        pages <%= $article->journal_pages %>
+        % }
+<p>
+        % if (my $doi = $article->doi) {
+        DOI :
+            %= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin
+            <%= $doi %>
+            %= end
+        % } elsif ($article->url) {
+        %= link_to $article->url => target => "_blank" => begin
+        %= $article->url
+        %= end
+        % }
+        </p>
 
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
+        <p>
+        %= include 'h/prov', pub => $article->get_publication;
+        </p>
+        <p>
+        %= include 'h/cited_by', pub => $article->get_publication;
+        </p>
+    </div>
 </div>
 
-%= include 'files';
+%= include 'h/other_formats';
+

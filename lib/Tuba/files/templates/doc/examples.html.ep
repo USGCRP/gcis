@@ -1,4 +1,4 @@
-% layout 'default', title => "Global Change Information System Examples";
+% layout 'default', title => "Global Change Information System Examples", fixed => 1;
 
 <h2><center>Examples</center>
 </h2>
@@ -49,7 +49,13 @@ some of the ones below.</p>
     <pre><%= $eg->{code} %></pre>
     </div>
     <div class='span4'>
-    <%= link_to $eg->{link} => class => 'btn btn-info' => begin %>Try it<%= end %>
+        <%= link_to $eg->{link} => class => 'btn btn-info' => target => "_blank" => begin %>Try it<%= end %>
     </div>
 </div>
 % }
+
+<h3>Applications</h3>
+<p>The website for the Third National Climate Assessment, <a href="http://nca2014.globalchange.gov">http://nca2014.globalchange.gov</a>,
+uses JQuery to call the GCIS API for the figure and image metadata.</p>
+<p>The web page for the USGCRP, <a href="http://www.globalchange.gov">http://www.globalchange.gov</a>, uses GCIS data on the server side.</p>
+

@@ -3,7 +3,7 @@
 % my $table = $object->meta->table;
 
 <center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
+    <h2>journal : <%= $journal->identifier %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -17,35 +17,55 @@
         </span>
     % }
 
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
-
 % }
 
-%= include 'fields', open_table => 1;
-<tr>
-    <td>articles</td>
-    <td>
-        <div class='row-fluid' style='position:relative;'>
-            %= include 'collapsible', row_content => begin
-            %= include 'obj_thumbnails', objs => [ $journal->articles ];
-            %= end
+
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $journal->get_publication;
+        %= include 'h/thumbnail', pub => $pub, no_link => 1;
+        <h2><%= $journal->title %></h2>
+
+        % if ($journal->publisher) {
+        <p><%= $journal->publisher %></p>
+        % }
+
+        %= include 'h/contributors_short', object => $journal;
+        % if ($journal->url) {
+        <p><%= link_to $journal->url => target => "_blank" => begin %><%= $journal->url %><%= end %></p>
+        % }
+
+        % if (my $issn = $journal->online_issn) {
+        <p>
+        Online ISSN : <%= link_to "http://www.worldcat.org/issn/$issn" => target => "_blank" => begin %><%= $issn %><%= end %>
+        </p>
+        % }
+        % if (my $issn = $journal->print_issn) {
+        <p>
+        Print ISSN : <%= link_to "http://www.worldcat.org/issn/$issn" => target => "_blank" => begin %><%= $issn %><%= end %>
+        </p>
+        % }
+        % if (my @articles = $journal->articles) {
+        <p>The following articles from this journal are listed in GCIS :
+        <ul>
+            % for my $article (@articles) {
+            <li>
+                %= obj_link_to $article, 'show' => begin
+                %= $article->title
+                % if ($article->year) {
+                (<%= $article->year %>)
+                % }
+                %= end
+            </li>
+            % }
+        </ul>
+        </p>
+        % }
         </div>
-    </td>
-</tr>
-<tr>
-    <td>files</td>
-<td>
-%= include 'pub_thumbnails', pub => $journal->get_publication(autocreate => 1), files => 1;
-</td>
-</tr>
-
-</table>
-
-%= include 'prov';
-
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
 </div>
+
+<%= include 'h/other_formats'; =%>
+
+
 

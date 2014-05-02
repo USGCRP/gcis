@@ -61,6 +61,9 @@ CREATE TABLE activity (
     duration interval,
     computing_environment character varying,
     output_artifacts character varying,
+    software character varying,
+    visualization_software character varying,
+    notes character varying,
     CONSTRAINT ck_activity_identifer CHECK (((identifier)::text ~ '[a-z0-9_-]+'::text)),
     CONSTRAINT ck_activity_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
@@ -109,6 +112,7 @@ CREATE TABLE book (
     number_of_pages numeric,
     url character varying,
     in_library boolean,
+    topic character varying,
     CONSTRAINT ck_book_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -120,6 +124,8 @@ CREATE TABLE chapter (
     report_identifier character varying NOT NULL,
     number integer,
     url character varying,
+    sort_key integer,
+    doi character varying,
     CONSTRAINT ck_chapter_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
