@@ -81,7 +81,7 @@ sub make_tree_for_show {
     my $pub = $chapter->get_publication(autocreate => 1);
     return {
       number            => $chapter->number,
-      files             => [map +{uri => $_->uri($c)}, $pub->files],
+      files             => [map $_->as_tree(c => $c), $pub->files],
       figures           => [map +{$c->Tuba::Figure::common_tree_fields($_)}, $chapter->figures],
       findings          => [map +{$c->Tuba::Finding::common_tree_fields($_)}, $chapter->findings],
       tables            => [map +{$c->Tuba::Table::common_tree_fields($_)}, $chapter->tables],
