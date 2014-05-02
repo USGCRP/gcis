@@ -53,3 +53,9 @@ some of the ones below.</p>
     </div>
 </div>
 % }
+
+<h3>Applications</h3>
+<p>The website for the third national climate assessment, <a href="http://nca2014.globalchange.gov">http://nca2014.globalchange.gov</a>
+uses JQuery to call the GCIS API for the figure and image metadata.</p>
+<p>The web page for the USGCRP, <a href="http://www.globalchange.gov">http://www.globalchange.gov</a>, uses GCIS data on the server side.</p>
+

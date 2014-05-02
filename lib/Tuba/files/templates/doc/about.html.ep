@@ -45,18 +45,19 @@ allows this triple store to be queried, as described in these
 and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
 It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
 a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
-<h4>Authors</h4>
-<p>Brian Duggan (USGCRP/UCAR),
-Andrew Buddenberg (NOAA/NCDC),
-Justin Goldstein (USGCRP/UCAR),
-Tania Sizer (UCAR)</p>
-<h4>Data Curation</h4>
-<p>Steve Aulenbach (USGCRP/UCAR), Justin Goldstein (USGCRP/UCAR), Amanda McQueen (USGCRP)</p>
-<h4>Project Management</h4>
-<p>Robert Wolfe (NASA), Curt Tilmes (NASA) <i>emeritus</i></p>
-<h4>Ontology Development</h4>
-<p class='linebreaks'>Xiagoang (Marshall) Ma and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a>
-</p>
+
+<p class='linebreaks'>GCIS Visionary : Curt Tilmes
+System Engineer : Brian Duggan
+
+Also thanks to :
+Andrew Buddenberg : Client development
+Steve Aulenbach : Data Curator
+Justin Goldstein : Researcher
+Robert Wolfe : Project Manager
+Amanda McQueen : GCIS Intern
+Tania Sizer : Web Designer
+Xiagoang (Marshall) Ma, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+
 <h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
 
