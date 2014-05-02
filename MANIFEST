@@ -299,6 +299,7 @@ db/patches/1060_in_library.sql
 db/patches/1070_book_topic.sql
 db/patches/1080_activity.sql
 db/patches/1090_chapter_sortkey.sql
+db/patches/1100_chapter_doi.sql
 eg/atrac_upload.html
 eg/cleanup.sql
 eg/compare.pl
