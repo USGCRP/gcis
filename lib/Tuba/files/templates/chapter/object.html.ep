@@ -26,6 +26,9 @@
         % if ($chapter->url) {
         <p><%= link_to $chapter->url, target => "_blank" => begin %><%= $chapter->url %><%= end %>
         % }
+        % if (my $doi = $chapter->doi) {
+        <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
+        % }
 
         %= include 'h/contributors', object => $chapter;
         % my ($fig, $fin,$tab, $ref) = ($chapter->count_figures, $chapter->count_findings, $chapter->count_tables, $chapter->reference_count);
