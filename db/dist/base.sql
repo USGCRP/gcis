@@ -125,6 +125,7 @@ CREATE TABLE chapter (
     number integer,
     url character varying,
     sort_key integer,
+    doi character varying,
     CONSTRAINT ck_chapter_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
