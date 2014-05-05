@@ -37,7 +37,7 @@ on
                  <%= $row->{obj}->pk_values =%>
              <%= end %>
          <% } else { %>
-         <b><%= $row->{obj} ? $row->{obj}->stringify
+         <b><%= $row->{obj} ? ( eval{$row->{obj}->stringify} || scalar $row->{obj}->pk_values  )
              : $row->{yaml} ? $row->{yaml}
              : "" %></b>
          <% } %>
