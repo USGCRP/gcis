@@ -1,5 +1,7 @@
+% layout 'default',
+%    title => "Image ".$image->identifier.' : '.$image->title,
+%    description => "Image ".$image->identifier.' : '.$image->title;
 
-% layout 'default';
 <center>
 <h2>image : <%= $object->stringify %></h2>
 </center>
