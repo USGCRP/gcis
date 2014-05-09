@@ -41,7 +41,7 @@
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <h2 itemprop="name"><%= $report->title %></h2>
-        <h5><%= $report->publication_year %>
+        <h5><span itemprop="copyrightYear"><%= $report->publication_year %></span>
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
         %= include 'h/contributors_short', object => $report, role_regex => '(editor|author|distributor)';

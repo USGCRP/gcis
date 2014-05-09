@@ -14,7 +14,7 @@
 <meta name="Description" content="<%= $desc %>">
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
-<title><%= title %></title>
+<title><%= title %> - GCIS</title>
 </head>
     <body>
         <div class="navbar">

@@ -13,7 +13,7 @@ sub numeric {
 sub stringify {
     my $c = shift;
     if (my $num = $c->numeric) {
-        return join ' ', $num, ($c->title || $c->identifier);
+        return join ': ', $num, ($c->title || $c->identifier);
     }
     return $c->title || $c->identifier;
 }

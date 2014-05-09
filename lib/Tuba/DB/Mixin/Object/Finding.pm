@@ -16,7 +16,7 @@ sub stringify {
     my $val = $args{long} ? $c->statement : $c->identifier;
     if (my $num = $c->numeric) {
         return $num if $args{tiny};
-        return "$num $val";
+        return "$num: $val";
     }
     return $val;
 }
