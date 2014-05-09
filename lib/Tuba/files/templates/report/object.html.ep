@@ -1,6 +1,6 @@
 % layout 'default',
 %  title => $report->stringify,
-%  description => $report->stringify.' : '.$report->summary;
+%  description => ( $report->summary ? $report->stringify.' : '.$report->summary : $report->stringify);
 
 % my $table = $object->meta->table;
 
