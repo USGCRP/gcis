@@ -69,8 +69,9 @@
         % } elsif ($dataset->end_time) {
         <p>The time range for this dataset ends at <%= $dataset->end_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
         % }
-        % if ($dataset->temporal_extent) {
-        <p>The temporal extent of this dataset is <%= $dataset->temporal_extent %>.
+        % if (my $extent = $dataset->temporal_extent) {
+        % $extent =~ s[ ][/] if ( ( $extent =~ tr/ / /) == 1 );
+        <p>The temporal extent of this dataset is <span itemprop="temporal"><%= $extent %></span>.
         % }
 
         % if ($dataset->lat_min || $dataset->lat_max || $dataset->lon_min || $dataset->lon_max) { 
