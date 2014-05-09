@@ -410,7 +410,7 @@ sub register {
             my $c = shift;
             my $table = shift;
             my @ids = map $_->identifier,
-                @{ $c->orm->{$table}->{mng}->get_objects(all => 1) };
+                @{ $c->orm->{$table}->{mng}->get_objects(all => 1, sort_by => "identifier") };
             return wantarray ? @ids : \@ids;
     }); 
     $app->helper(doc_for => sub {
