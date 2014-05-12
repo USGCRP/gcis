@@ -17,7 +17,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 1.00
+    version: 1.01
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -170,6 +170,7 @@ requires:
   Data::UUID::LibUUID: 0
   Date::Parse: 0
   DateTime::Format::Human::Duration: 0
+  File::ShareDir: 1.00
   JSON::WebToken: 0
   JSON::XS: 0
   Mojolicious: 4.84
@@ -188,4 +189,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 1.00
+version: 1.01

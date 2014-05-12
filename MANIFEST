@@ -382,6 +382,7 @@ lib/Tuba/files/public/client/js/google/menuitems.json
 lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis.owl
+lib/Tuba/files/public/js/gcis.js
 lib/Tuba/files/public/js/sparql.js
 lib/Tuba/files/public/logo-small.png
 lib/Tuba/files/public/logo/DOC.png

@@ -59,7 +59,7 @@ use Tuba::Log;
 use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 
-our $VERSION = '1.00';
+our $VERSION = '1.01';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
@@ -245,7 +245,7 @@ sub startup {
         my $c = shift;
         my $count = $c->param('count') || 1;
         $count = 1 unless $count =~ /^[0-9]+$/;
-        return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
+        return $c->render( text => "sorry, max is 1.01 at once" ) if $count > 1000;
         $c->res->headers->content_type('text/plain');
         $c->respond_to(
           text => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
