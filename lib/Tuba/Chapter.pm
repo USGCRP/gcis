@@ -107,5 +107,14 @@ sub _this_object {
     return $chapter;
 }
 
+sub set_title {
+    my $c = shift;
+    my %args = @_;
+    if (my $ch = $args{object}) {
+        return $c->SUPER::set_title(%args);
+    }
+    $c->stash(title => sprintf("Chapters in %s",$c->stash('report')->title));
+}
+
 1;
 

@@ -311,5 +311,22 @@ SQL
     return $c->render(template => "reference/report/updates");
 }
 
+sub set_title {
+    my $c = shift;
+    my %args = @_;
+    if (my $ch = $args{object}) {
+        return $c->SUPER::set_title(%args);
+    }
+    if (my $ch = $c->stash('chapter')) {
+        $c->stash(title => sprintf("References in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
+        return;
+    }
+    if (my $rp = $c->stash('report')) {
+        $c->stash(title => sprintf("References in %s",$rp->title));
+        return;
+    }
+    return $c->SUPER::set_title(%args);
+}
+
 1;
 
