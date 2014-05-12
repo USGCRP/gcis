@@ -1,10 +1,10 @@
 
-% layout 'default';
+% layout 'default',
+%   title => "Chapters in ".$report->stringify(short => 1),
+%    description => "Chapters in ".$report->stringify;
 
 <center>
-<h2>
-    %= (stash 'title');
-</h2>
+    <h2>Chapters in <%= $report->stringify %></h2>
 </center>
 
 %= include 'list_formats';
