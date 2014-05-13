@@ -1,4 +1,6 @@
-% layout 'default';
+% layout 'default',
+% title => "Global Change Information System",
+% description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
 <style>
 <style type="text/css">
@@ -34,12 +36,12 @@
 
 </style>
 
-<div class="jumbotron">
-<h1>Global Change Information System</h1>
+<div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
+<h1 itemprop="name">Global Change Information System</h1>
 <h3>Providing structured global change information.</h3>
 </div>
 
-<p class="lead">
+<p class="lead" itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
 The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
 Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
 products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research

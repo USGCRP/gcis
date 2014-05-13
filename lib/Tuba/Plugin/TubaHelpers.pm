@@ -410,7 +410,7 @@ sub register {
             my $c = shift;
             my $table = shift;
             my @ids = map $_->identifier,
-                @{ $c->orm->{$table}->{mng}->get_objects(all => 1) };
+                @{ $c->orm->{$table}->{mng}->get_objects(all => 1, sort_by => "identifier") };
             return wantarray ? @ids : \@ids;
     }); 
     $app->helper(doc_for => sub {
@@ -442,6 +442,12 @@ sub register {
                 $i++;
             }
             return b($out);
+        });
+    $app->helper(no_tbibs => sub {
+            my $c = shift;
+            my $str = shift or return "";
+            $str =~ s[<tbib>([^<]+)</tbib>][]g;
+            return $str;
         });
     $app->helper(tl => sub {
             # escape a turtle literal enclosed in double quotes

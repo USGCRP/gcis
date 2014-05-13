@@ -1,4 +1,6 @@
-% layout 'default';
+% layout 'default',
+%    title => "Table ".$table->stringify(short => 1),
+%    description => "Table ".$table->stringify(short => 1).': '.no_tbibs($table->caption);
 
 <center>
 <h2>table : <%= $table->identifier %></h2>
@@ -52,4 +54,4 @@
 </div>
 
 <%= include 'h/other_formats'; =%>
-
+%= include 'h/tbibjs';

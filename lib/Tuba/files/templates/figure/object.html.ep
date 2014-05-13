@@ -1,5 +1,7 @@
 
-% layout 'default';
+% layout 'default',
+%    title => "Figure ".$figure->stringify(short => 1),
+%    description => "Figure ".$figure->stringify(short => 1).': '.no_tbibs($figure->caption);
 
 <center>
 <h2>Figure : <%= $figure->identifier %></h2>
@@ -14,14 +16,14 @@
 </span>
 % }
 
-<div class='row-fluid'>
+<div class='row-fluid' itemscope itemtype="http://schema.org/ImageObject">
     <div class='span10 offset1 well'>
         <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
         % my $pub = $figure->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => itemprop => "url" => begin
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl"
                 %= end
             % }
         % }

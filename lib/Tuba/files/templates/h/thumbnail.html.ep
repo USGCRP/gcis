@@ -5,10 +5,10 @@
     % if (@files <= 1) {
         % for my $file (@files) {
             % if (stash 'no_link') {
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+            %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
             % } else {
                 %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
                 %= end
             % }
         % }
@@ -16,7 +16,7 @@
     %# Assume one high and one low-res.
         % for my $file ($pub->smallest_file) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
                 <center>
                 <div class='caption btn'>
                 screen version

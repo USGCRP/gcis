@@ -1,5 +1,7 @@
+% layout 'default',
+%    title => "Finding ".$finding->stringify(short => 1),
+%    description => "Finding ".$finding->stringify(short => 1).' : '.$finding->statement;
 
-% layout 'default';
 % my %labels = (
 % 'process'       => 'Process for developing key messages',
 % 'evidence'      => 'Description of evidence base',

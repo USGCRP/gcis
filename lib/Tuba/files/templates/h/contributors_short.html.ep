@@ -1,6 +1,6 @@
 <i>
-%= include commify => objs => scalar $object->all_orgs
+    %= include commify => objs => scalar $object->all_orgs(role_regex => scalar stash 'role_regex');
 </i>
 <br>
-%= include commify => objs => scalar $object->all_people
+%= include commify => objs => scalar $object->all_people(role_regex => scalar stash 'role_regex');
 

@@ -1,4 +1,4 @@
-% layout 'default';
+% layout 'default', description => $chapter->stringify.". Report : ".$chapter->report->stringify;
 
 <center>
 <h2>Chapter: <%= $chapter->identifier %></h2>

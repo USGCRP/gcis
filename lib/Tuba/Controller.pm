@@ -685,6 +685,10 @@ sub update_files {
 
     my $pub = $object->get_publication(autocreate => 1) or
         return $c->update_error( "Sorry, file uploads have only been implemented for publications.");
+   unless ($pub->id) {
+      $pub->save(audit_user => $c->user)
+        or return $c->update_error($pub->error);
+   }
 
     my $file = $c->req->upload('file_upload');
     if ($file && $file->size) {
