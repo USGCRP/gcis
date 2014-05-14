@@ -10,7 +10,7 @@
    gcis:subject "<%== $keyword->stringify %>";
    dcterms:subject "<%== $keyword->stringify %>";
 % }
-   prov:generatedAtTime "<%= $image->create_dt %>";
+   dcterms:created "<%= $image->create_dt %>";
    gcis:description "<%= $image->description %>";
    dcterms:identifier "<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>";
@@ -26,12 +26,12 @@
    dwc:decimalLongitude "<%= $image->lon_min %>";
    geo:long "<%= $image->lon_min %>";
    dcterms:dateSubmitted "<%= $image->submission_dt %>";
-   dcterms:date "<%= $image->submission_dt %>";
    gcis:endedAt "<%= $image->time_end %>";
    gcis:startedAt "<%= $image->time_start %>";
    dcterms:title "<%= $image->title %>";      
    rdf:label "<%= $image->title %>";
-   prov:label "<%= $image->title %>".
+   prov:label "<%= $image->title %>";
+   dcterms:subject "<%= $image->attributes %>".
 %= include 'prov';
 %#  gcis:spatial_scale "<%= $image->scale %>";
 %#  gcis:spatial_ref_sys "<%= $image->projection %>";
