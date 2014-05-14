@@ -26,7 +26,7 @@
    dcterms:identifier "<%= $finding->identifier %>";
    rdf:rest "<%= $finding->ordinal %>";
    gcis:findingProcess "<%= $finding->process %>";
-   gcis:inPublication "<%= $report->identifier %>";
+   gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    rdfs:label "<%= $finding->statement %>";
    dcterms:description "<%= $finding->statement %>";
    gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>";
