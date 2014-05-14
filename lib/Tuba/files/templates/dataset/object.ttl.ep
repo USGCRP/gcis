@@ -1,6 +1,6 @@
 % layout "default";
 <<%= current_resource %>>
-   a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
+   a prov:Entity; a dcmitype:Dataset; a dcat:Dataset; a gcis:Dataset;
    dcterms:date "<%= $dataset->access_dt %>";
    dcterms:date "<%= $dataset->release_dt %>";
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
