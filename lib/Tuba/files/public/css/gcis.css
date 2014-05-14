@@ -86,3 +86,9 @@ h2.centered {
 p.linebreaks {
     white-space: pre-line;
 }
+.elidden {
+   white-space:nowrap;
+   overflow:hidden;
+   text-overflow:ellipsis;
+}
+
