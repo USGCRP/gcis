@@ -21,15 +21,15 @@
 % }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:confidence "<%= $finding->confidence %>";
-   gcis:descriptionOfEvidenceBase "<%= $finding->evidence %>";
+   gcis:confidence "<%= tl($finding->confidence) %>";
+   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>";
    dcterms:identifier "<%= $finding->identifier %>";
    rdf:rest "<%= $finding->ordinal %>";
-   gcis:findingProcess "<%= $finding->process %>";
+   gcis:findingProcess "<%= tl($finding->process) %>";
    gcis:inPublication "<%= $report->identifier %>";
    rdfs:label "<%= $finding->statement %>";
-   dcterms:description "<%= $finding->statement %>";
-   gcis:newInformationAndRemainingUncertainties "<%= $finding->uncertainties %>";
+   dcterms:description "<%= tl($finding->statement) %>";
+   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>";
 %= include 'prov';
 %# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
 %# % for my $keyword ($finding->keywords) {
