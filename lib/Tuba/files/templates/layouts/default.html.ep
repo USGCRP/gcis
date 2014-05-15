@@ -62,7 +62,9 @@
 
         <div class="navbar">
             <div class="navbar-inner">
-                <a id="simple-menu" class='pull-left btn btn-default' href="#sidr" style='color:black;'>&#9776;</a>
+                <a id="simple-menu" class='pull-left btn btn-medium' href="#sidr" style='color:black;height:22px;'>
+                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                    </a>
                 <a href="/" class='pull-left'><img class="logo" src="/logo-small.png" ></a>
                 <%= link_to 'index', class => 'brand' => begin %>
                     GCIS

@@ -91,4 +91,13 @@ p.linebreaks {
    overflow:hidden;
    text-overflow:ellipsis;
 }
-
+.icon-bar {
+  display: block;
+  width: 22px;
+  padding-left:0px;
+  padding-right:0px;
+  margin-bottom:3px;
+  height: 4px;
+  background-color: #777;
+  border-radius: 3px;
+}
