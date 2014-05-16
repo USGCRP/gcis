@@ -1,3 +1,4 @@
+<<%= current_resource %>>
 % my $pub = $object->get_publication;
 % my @con = $pub ? $pub->contributors : ();
 % @con = sort { $a->role_type cmp $b->role_type } @con;
@@ -10,7 +11,7 @@
       gcis:wasProducedBy <<%= uri($person) %>>;
       prov:wasGeneratedBy <<%= uri($person) %>>;   
       foaf:name "<%= $person->label %>";   
-    % }
+      % }
  % } elsif ($ctr->role_type->identifier eq "data_archive") {
       gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
       prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
@@ -22,7 +23,109 @@
       prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
        % if ($ctr->person)   {
       foaf:name "<%= $ctr->person->name %>";
- % }
+      % }
+% } elsif ($ctr->role_type->identifier eq "author") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+      % }
+% } elsif ($ctr->role_type->identifier eq "contributing author") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+      % }
+% } elsif ($ctr->role_type->identifier eq "contributing lead author") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "convening lead author") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "lead author") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "editor") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "distributor") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "graphic artist") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "point of contact") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "executive editor") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+     % }
+% } elsif ($ctr->role_type->identifier eq "contributing editor") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+      % }
+% } elsif ($ctr->role_type->identifier eq "advisor") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
+% } elsif ($ctr->role_type->identifier eq "analyst") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
+% } elsif ($ctr->role_type->identifier eq "funding agency") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
+% } elsif ($ctr->role_type->identifier eq "host") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
+% } elsif ($ctr->role_type->identifier eq "coordinator") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
+% } elsif ($ctr->role_type->identifier eq "scientist") {
+      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
+      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
+       % if ($ctr->person)   {
+      foaf:name "<%= $ctr->person->name %>";
+       % }
 % }
 % }
 
