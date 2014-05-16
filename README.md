@@ -1,5 +1,6 @@
 
 Global Change Information System
+build [![Build Status](https://secure.travis-ci.org/bduggan/gcis.png)](http://travis-ci.org/bduggan/gcis)
 ================================
 
 This is the HTML front end and API for the Global Change Information System (GCIS).
