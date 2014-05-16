@@ -47,7 +47,6 @@
    gcis:attributes "<%== $keyword->stringify %>";
    skos:concept "<%== $keyword->stringify %>";
 % }
-
 %= include 'prov';
 %# % for my $right ($figure->rights) {
  %#   dcterms:rights "<%= $right->usage_limits %>".                     
