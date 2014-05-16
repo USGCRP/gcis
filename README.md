@@ -2,7 +2,7 @@
 Global Change Information System [![Build Status](https://secure.travis-ci.org/bduggan/gcis.png)](http://travis-ci.org/bduggan/gcis)
 ================================
 
-This is the HTML front end and API for the Global Change Information System (GCIS).
+This is the HTML front end and API for the [Global Change Information System](http://data.globalchange.gov) (GCIS).
 
 This portion of the GCIS is called Tuba.
 
