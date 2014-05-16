@@ -23,7 +23,7 @@
 <div id="sidr">
     <ul>
         % my $report_identifier = current_report->identifier;
-        <li>Search
+        <li><span>Search</span>
         <ul>
             <li><%= link_to 'gcid_lookup' => begin %>GCID lookup<%= end %></li>
             <li><%= link_to 'search' => begin %>Advanced search<%= end %></li>
