@@ -2,7 +2,9 @@
 Global Change Information System
 ================================
 
-This is Tuba : the web front end and API for the Global Change Information System (GCIS).
+This is the web front end and API for the Global Change Information System (GCIS).
+
+This portion of the GCIS is called Tuba.
 
 Prerequisites can be installed using cpanminus (http://cpanmin.us), e.g.
 
