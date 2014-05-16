@@ -353,6 +353,7 @@ sub startup {
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
+    $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
 
     # To regenerate the owl file, get this URL :
     # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl

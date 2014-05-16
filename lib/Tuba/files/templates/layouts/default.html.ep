@@ -23,6 +23,13 @@
 <div id="sidr">
     <ul>
         % my $report_identifier = current_report->identifier;
+        <li>Search
+        <ul>
+            <li><%= link_to 'gcid_lookup' => begin %>GCID lookup<%= end %></li>
+            <li><%= link_to 'search' => begin %>Advanced search<%= end %></li>
+            <li><%= link_to '/sparql' => begin %>SPARQL query<%= end %></li>
+        </ul>
+        </li>
         <li>
                 <span class='elidden'><%= $report_identifier %> report </span>
          <ul>

@@ -413,8 +413,14 @@ sub as_autocomplete_str {
     my $elide = shift || 80;
     my $table = shift || $obj->meta->table;
     return join ' ', "[".$table."]", ( map "{".$_."}", $obj->pk_values ), elide_str($obj->stringify,$elide);
+}
 
-
+sub as_gcid_str {
+    my $obj = shift;
+    my $c = shift;
+    my $elide = shift || 80;
+    my $table = shift || $obj->meta->table;
+    return sprintf('%s : %s',$obj->uri($c), elide_str($obj->stringify,$elide));
 }
 
 sub new_from_flat {
