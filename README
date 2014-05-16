@@ -1,5 +1,8 @@
 
-This is Tuba : the API for the Global Change Information System (GCIS).
+Global Change Information System
+================================
+
+This is Tuba : the web front end and API for the Global Change Information System (GCIS).
 
 Prerequisites can be installed using cpanminus (http://cpanmin.us), e.g.
 
@@ -18,9 +21,11 @@ Also, to install the database :
 
     ./Build dbinstall
 
-To run :
+Configuration :
 
    cp eg/Tuba.conf.sample Tuba.conf
-   # modify it, change the users, etc.
+
+Starting :
+
    hypnotoad tuba
 
