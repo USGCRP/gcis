@@ -38,10 +38,10 @@ my $builder = Module::Build::Database->new(
     configure_requires => {
         'Module::Build' => 0.38,
         'Module::Build::Mojolicious' => 0,
+        'Module::Build::Database' => 0,
     },
     build_requires => {
         'Test::More' => 0,
-        'Module::Build::Database => 0,
     },
     requires => {
         'Number::Bytes::Human' => 0,
