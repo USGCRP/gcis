@@ -41,6 +41,7 @@ my $builder = Module::Build::Database->new(
     },
     build_requires => {
         'Test::More' => 0,
+        'Module::Build::Database => 0,
     },
     requires => {
         'Number::Bytes::Human' => 0,
