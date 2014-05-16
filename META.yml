@@ -6,6 +6,7 @@ build_requires:
   Test::More: 0
 configure_requires:
   Module::Build: 0.38
+  Module::Build::Database: 0
   Module::Build::Mojolicious: 0
 dynamic_config: 1
 generated_by: 'Module::Build version 0.4203, CPAN::Meta::Converter version 2.131560'

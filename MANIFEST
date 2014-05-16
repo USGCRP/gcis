@@ -490,11 +490,9 @@ lib/Tuba/files/templates/h/thumbnail.html.ep
 lib/Tuba/files/templates/h/times.html.ep
 lib/Tuba/files/templates/history.html.ep
 lib/Tuba/files/templates/history_modal.html.ep
-lib/Tuba/files/templates/image/checkmet.html.ep
 lib/Tuba/files/templates/image/object.html.ep
 lib/Tuba/files/templates/image/object.ttl.ep
 lib/Tuba/files/templates/image/objects.html.ep
-lib/Tuba/files/templates/image/setmet.html.ep
 lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
@@ -585,7 +583,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.json
 META.yml
-README
+README.md
 t/001_start_db.t
 t/002_basic.t
 t/003_lists.t
