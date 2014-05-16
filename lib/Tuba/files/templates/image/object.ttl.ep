@@ -33,6 +33,7 @@
    prov:label "<%= $image->title %>";
    dcterms:subject "<%= $image->attributes %>".
 %= include 'prov';
+%= include 'contributors';
 %#  gcis:spatial_scale "<%= $image->scale %>";
 %#  gcis:spatial_ref_sys "<%= $image->projection %>";
 %# gcis:ishostedby "<%= $image->hosting_agency %>";                    
