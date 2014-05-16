@@ -3,3 +3,5 @@ perl:
   - "5.16"
 before_install :
   - sudo apt-get install libuuid1 uuid-dev
+  - cpanm Module::Build::Database
+
