@@ -43,7 +43,7 @@ sub register {
     if ($ENV{HARNESS_ACTIVE}) {
         my $mbd = Module::Build::Database->current;
         my $dbname = $mbd->database_options->{name} or die "no dbname in mbd object";
-        my $host = $mbd->notes( 'dbtest_host' );
+        my $host = $mbd->notes( 'dbtest_host' ) || '';
         $dsn = "dbi:Pg:dbname=gcis;host=$host";
         $dbix = DBIx::Connector->new( $dsn, '', '' , { RaiseError => 1, AutoCommit => 1 } );
         $schema = $mbd->database_options->{schema} || 'testschema';

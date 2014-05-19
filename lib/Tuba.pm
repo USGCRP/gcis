@@ -58,6 +58,7 @@ use Tuba::Converter;
 use Tuba::Log;
 use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
+use strict;
 
 our $VERSION = '1.01';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
@@ -66,6 +67,26 @@ sub startup {
     my $app = shift;
 
     $app->plugin('InstallablePaths');
+    if (1) {
+        use File::Spec;
+      my $app_class = ref $app;
+      warn "# app_class is $app_class";
+      my $class_path = $app_class;
+      $class_path =~ s{::}{/}g;
+      $class_path = $INC{"$class_path.pm"};
+      $class_path =~ s/\.pm$//;
+      warn "# class_path is $class_path";
+      my $files_path = File::Spec->catdir($class_path, 'files');
+      my $public = File::Spec->catdir($files_path, 'public');
+      warn "# public is $public";
+      if (-d $public) {
+          warn "# exists : $public";
+      } else {
+          warn "# does not exist : $public";
+      }
+      warn "# set public path : ".$app->static->paths->[0];
+      warn "# dist_dir is ".File::ShareDir::dist_dir('Tuba');
+    }
 
     Tuba::Log->set_logger($app->log);
 
