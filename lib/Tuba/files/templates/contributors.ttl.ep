@@ -115,13 +115,34 @@
       foaf:name "<%= $ctr->person->name %>";
        % }
 % } elsif ($ctr->role_type->identifier eq "coordinator") {
+% } elsif ($ctr->role_type->identifier eq "scientist") {
+   :derivationActivity;
+      a prov:Activity;
+      prov:wasAssociatedWith <%= $ctr->person->name %>;
+.
+:<%= $ctr->person->name %> a prov:Agent .
+   prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
+
+%#   : <<%= obj_uri_for ($activity)->to_abs %>>;
+     prov:qualifiedAssociation [
+        a prov:Association;
+        prov:agent <%= $ctr->person->name %>;
+
+        prov:hadRole :scientist;
+        prov:hadPlan :<<%= obj_uri_for($image)->to_abs %>>;
+
+];
+.
+
+:<<%= obj_uri_for($image)->to_abs %>> a prov:Entity; gcis:Image a bibo:Image; a gcis:Publication; a dcmitype:Image.
+:scientist a prov: Role.
       gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
       prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
        % if ($ctr->person)   {
       foaf:name "<%= $ctr->person->name %>";
        % }
 % } elsif ($ctr->role_type->identifier eq "scientist") {
-   :derivationActivity;
+   :illustrationActivity;
       a prov:Activity;
       prov:wasAssociatedWith <%= $ctr->person->name %>;
 .
