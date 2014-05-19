@@ -121,11 +121,24 @@
       foaf:name "<%= $ctr->person->name %>";
        % }
 % } elsif ($ctr->role_type->identifier eq "scientist") {
-      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
-      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
-       % if ($ctr->person)   {
-      foaf:name "<%= $ctr->person->name %>";
-       % }
+   :derivationActivity;
+      a prov:Activity;
+      prov:wasAssociatedWith <%= $ctr->person->name %>;
+.
+:<%= $ctr->person->name %> a prov:Agent .
+
+   :derivationActivity
+     prov:qualifiedAssociation [
+        a prov:Association;
+        prov:agent <%= $ctr->person->name %>;
+
+        prov:hadRole :scientist;
+        prov:hadPlan :image;
+];    
+.
+
+:image a prov:Entity; gcis:Image .
+:scientist a prov: Role.
 % }
 % }
 
