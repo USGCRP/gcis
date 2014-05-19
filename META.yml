@@ -3,6 +3,7 @@ abstract: 'The Useful Backend API'
 author:
   - unknown
 build_requires:
+  Module::Build::Mojolicious: 0
   Mojolicious::Plugin::InstallablePaths: 0
   Test::More: 0
 configure_requires:

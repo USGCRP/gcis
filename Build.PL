@@ -43,6 +43,7 @@ my $builder = Module::Build::Database->new(
     },
     build_requires => {
         'Test::More' => 0,
+        'Module::Build::Mojolicious' => 0,
         'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     requires => {

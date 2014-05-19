@@ -17,6 +17,7 @@ WriteMakefile
                    'File::ShareDir' => '1.00',
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
+                   'Module::Build::Mojolicious' => 0,
                    'Mojolicious' => '4.84',
                    'Mojolicious::Plugin::InstallablePaths' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
