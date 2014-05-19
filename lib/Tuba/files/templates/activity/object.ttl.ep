@@ -10,4 +10,4 @@
    fabio:DataFile "<%= tl($activity->output_artifacts) %>";
    dcmitype:software "<%= tl($activity->computing_environment) %>";
    gcis:Software "<%= tl($activity->computing_environment) %>";
-   meth:Methodology "<%= tl($activity->methodology) %>" .
+   meth:Methodology "<%= tl($activity->methodology) %>".
