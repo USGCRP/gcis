@@ -82,20 +82,4 @@ my $builder = Module::Build::Database->new(
     share_dir => { dist => ["lib/Tuba/files"] },
 );
 
-use Data::Dumper;
-warn "isas : ";
-warn join "\n", @Module::Build::Database::PostgreSQL::ISA;
-warn "--sharedir : ";
-warn Dumper($builder->share_dir);
-warn "------";
-
-# backend asset handling (rsync'ed to front end so nginx can handle
-# most of the load)
-my $dir = eval { dist_dir('Tuba'); };
-if ($dir && !$@) {
-    -l "$dir/public/assets" or do {
-        warn "\n\nPlease run ln -s /var/www/assets $dir/public/assets\n\n";
-    };
-}
-
 $builder->create_build_script();
