@@ -39,9 +39,11 @@ my $builder = Module::Build::Database->new(
         'Module::Build' => 0.38,
         'Module::Build::Mojolicious' => 0,
         'Module::Build::Database' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     build_requires => {
         'Test::More' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     requires => {
         'Number::Bytes::Human' => 0,

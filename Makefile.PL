@@ -7,6 +7,8 @@ WriteMakefile
   'PREREQ_PM' => {
                    'Algorithm::Permute' => 0,
                    'Crypt::OpenSSL::RSA' => 0,
+                   'DBD::Pg' => 0,
+                   'DBIx::Connector' => 0,
                    'DBIx::Custom' => 0,
                    'DBIx::Simple' => 0,
                    'Data::UUID::LibUUID' => 0,
@@ -16,6 +18,7 @@ WriteMakefile
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
                    'Mojolicious' => '4.84',
+                   'Mojolicious::Plugin::InstallablePaths' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
                    'Number::Bytes::Human' => 0,
                    'Number::Format' => 0,

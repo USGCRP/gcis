@@ -3,11 +3,13 @@ abstract: 'The Useful Backend API'
 author:
   - unknown
 build_requires:
+  Mojolicious::Plugin::InstallablePaths: 0
   Test::More: 0
 configure_requires:
   Module::Build: 0.38
   Module::Build::Database: 0
   Module::Build::Mojolicious: 0
+  Mojolicious::Plugin::InstallablePaths: 0
 dynamic_config: 1
 generated_by: 'Module::Build version 0.4203, CPAN::Meta::Converter version 2.131560'
 license: open_source
@@ -166,6 +168,8 @@ provides:
 requires:
   Algorithm::Permute: 0
   Crypt::OpenSSL::RSA: 0
+  DBD::Pg: 0
+  DBIx::Connector: 0
   DBIx::Custom: 0
   DBIx::Simple: 0
   Data::UUID::LibUUID: 0
@@ -175,6 +179,7 @@ requires:
   JSON::WebToken: 0
   JSON::XS: 0
   Mojolicious: 4.84
+  Mojolicious::Plugin::InstallablePaths: 0
   Mojolicious::Plugin::YamlConfig: 0
   Number::Bytes::Human: 0
   Number::Format: 0
