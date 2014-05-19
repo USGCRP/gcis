@@ -76,16 +76,20 @@ sub startup {
       $class_path = $INC{"$class_path.pm"};
       $class_path =~ s/\.pm$//;
       warn "# class_path is $class_path";
-      my $files_path = File::Spec->catdir($class_path, 'files');
-      my $public = File::Spec->catdir($files_path, 'public');
-      warn "# public is $public";
-      if (-d $public) {
-          warn "# exists : $public";
+      my $dist_dir = File::ShareDir::dist_dir('Tuba');
+      warn "# dist_dir is $dist_dir";
+      if (-d $dist_dir) {
+          warn "# $dist_dir exists";
       } else {
-          warn "# does not exist : $public";
+          warn "# $dist_dir does not exist";
       }
+      if (-d "$dist_dir/public") {
+          warn "# $dist_dir/public exists";
+      } else {
+          warn "# $dist_dir/public does not exist";
+      }
+
       warn "# set public path : ".$app->static->paths->[0];
-      warn "# dist_dir is ".File::ShareDir::dist_dir('Tuba');
     }
 
     Tuba::Log->set_logger($app->log);
