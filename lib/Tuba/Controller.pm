@@ -183,15 +183,19 @@ sub show {
     $c->set_title(object => $object);
 
     $c->respond_to(
-        yaml  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object) ); },
-        json  => sub { my $c = shift; $c->render_maybe(template => "$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
+        yaml => sub { my $c = shift;
+          $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object)); },
+        json => sub { my $c = shift;
+          $c->render_maybe(template => "$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
         ttl   => sub { my $c = shift;
             $c->res->headers->content_type("application/x-turtle");
             $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
         html  => sub { my $c = shift;
             $c->param('long') and $c->render_maybe(template => "$table/long/object") and return;
             $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
-        nt    => sub { shift->render_partial_ttl_as($table,'ntriples'); },
+        nt    => sub { my $c = shift;
+            $c->res->headers->content_type("text/plain");
+            $c->render_partial_ttl_as($table,'ntriples'); },
         rdfxml=> sub { my $c = shift;
             $c->res->headers->content_type("application/rdf+xml");
             $c->render_partial_ttl_as($table,'rdfxml'); },
@@ -204,13 +208,10 @@ sub show {
         jsontriples => sub { my $c = shift;
             $c->res->headers->content_type('application/json');
             $c->render_partial_ttl_as($table,'json-triples'); },
-        txt => sub {
-              my $c = shift;
+        txt => sub { my $c = shift;
               $c->req->headers->content_type('text/plain');
-              $c->render(text => $object->as_text);
-          },
-        svg   => sub {
-            my $c = shift;
+              $c->render(text => $object->as_text); },
+        svg   => sub { my $c = shift;
             $c->res->headers->content_type('image/svg+xml');
             $c->render_partial_ttl_as($table,'svg'); },
     );
