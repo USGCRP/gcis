@@ -72,6 +72,7 @@ my $builder = Module::Build::Database->new(
         'YAML::XS' => 0,
         'String::Diff' => 0,
         'DateTime::Format::Human::Duration' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
