@@ -126,22 +126,21 @@
       prov:wasAssociatedWith <%= $ctr->person->name %>;
 .
 :<%= $ctr->person->name %> a prov:Agent .
-
-   :derivationActivity
+   prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
+   
+%#   : <<%= obj_uri_for ($activity)->to_abs %>>;
      prov:qualifiedAssociation [
         a prov:Association;
         prov:agent <%= $ctr->person->name %>;
 
         prov:hadRole :scientist;
-        prov:hadPlan :image;
+        prov:hadPlan :<<%= obj_uri_for($image)->to_abs %>>;
+
 ];    
 .
 
-:image a prov:Entity; gcis:Image .
+:<<%= obj_uri_for($image)->to_abs %>> a prov:Entity; gcis:Image a bibo:Image; a gcis:Publication; a dcmitype:Image.
 :scientist a prov: Role.
 % }
 % }
-
-
-
 
