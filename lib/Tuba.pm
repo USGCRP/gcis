@@ -67,30 +67,6 @@ sub startup {
     my $app = shift;
 
     $app->plugin('InstallablePaths');
-    if (1) {
-        use File::Spec;
-      my $app_class = ref $app;
-      warn "# app_class is $app_class";
-      my $class_path = $app_class;
-      $class_path =~ s{::}{/}g;
-      $class_path = $INC{"$class_path.pm"};
-      $class_path =~ s/\.pm$//;
-      warn "# class_path is $class_path";
-      my $dist_dir = File::ShareDir::dist_dir('Tuba');
-      warn "# dist_dir is $dist_dir";
-      if (-d $dist_dir) {
-          warn "# $dist_dir exists";
-      } else {
-          warn "# $dist_dir does not exist";
-      }
-      if (-d "$dist_dir/public") {
-          warn "# $dist_dir/public exists";
-      } else {
-          warn "# $dist_dir/public does not exist";
-      }
-
-      warn "# set public path : ".$app->static->paths->[0];
-    }
 
     Tuba::Log->set_logger($app->log);
 
