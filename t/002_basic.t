@@ -18,5 +18,10 @@ $t->get_ok('/test.html')->content_is("This is the GCIS API.\n")->status_is(200)
         diag "template path : ".$t->app->renderer->paths->[0];
     };
 
+if ($ENV{HOME} =~ /travis/i) {
+    # travis-ci
+    diag "Tuba.pm : ".$INC{'Tuba.pm'};
+}
+
 1;
 
