@@ -12,7 +12,11 @@ my $t = Test::Mojo->new('Tuba');
 
 $t->get_ok('/')->status_is(200)->header_is('X-API-Version' => $Tuba::VERSION);
 
-$t->get_ok('/test.html')->content_is("This is the GCIS API.\n")->status_is(200);
+$t->get_ok('/test.html')->content_is("This is the GCIS API.\n")->status_is(200)
+    or do {
+        diag "public path : ".$t->app->static->paths->[0];
+        diag "template path : ".$t->app->renderer->paths->[0];
+    };
 
 1;
 
