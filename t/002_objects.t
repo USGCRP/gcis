@@ -21,7 +21,7 @@ $dbh->do(q[insert into publication_type ("table",identifier) values ('report','r
 my $report = Report->new(identifier => "soccer", title => "scouting report");
 ok $report->save(audit_user => "test"), "Saved report";
 my $pub = $report->get_publication(autocreate => 1);
-$pub->save(audit_user => "test"), "Saved publication";
+ok $pub->save(audit_user => "test"), "Saved publication";
 
 my $ref = Reference->new(
     identifier => "ronaldo",
