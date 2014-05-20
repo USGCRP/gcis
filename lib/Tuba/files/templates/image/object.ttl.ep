@@ -1,7 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>  
    a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
-%# The following only returns figure title without "2.1", so holding off and commented out
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
@@ -28,7 +27,7 @@
    dcterms:dateSubmitted "<%= $image->submission_dt %>";
    gcis:endedAt "<%= $image->time_end %>";
    gcis:startedAt "<%= $image->time_start %>";
-   dcterms:title "<%= $image->title %>";      
+   dcterms:title "<%= $image->title %>"^^xsd:string;      
    rdf:label "<%= $image->title %>";
    prov:label "<%= $image->title %>";
    dcterms:subject "<%= $image->attributes %>".
