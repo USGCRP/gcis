@@ -3,6 +3,7 @@
 use FindBin;
 use lib $FindBin::Bin;
 use tinit;
+use open ':std', ':encoding(utf8)';
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
