@@ -2,16 +2,16 @@
 :<<%= current_resource %>>
    a prov:Activity, :<<%= current_resource %>>;
    dcterms:identifier :<%= $activity->identifier %>;
-   prov:startedAtTime "<%= $activity->start_time %>""^^xsd:dateTime;
-   ext:StartTime "<%= $activity->start_time %>;
+   prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
+   ext:StartTime "<%= $activity->start_time %>"^^xsd:dateTime;
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
-   ext:EndTime :<%= $activity->end_time %>"; 
-   dcterms:SizeOrDuration :<%= human_duration ($activity->duration) %>;   
+   ext:EndTime  "<%= $activity->end_time %>"^^xsd:dateTime;
+   dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
    fabio:DataFile :<%= tl($activity->output_artifacts) %>;
    prov:generated :<%= tl($activity->output_artifacts) %>;
-   dcmitype:software :<%= tl($activity->computing_environment) %>;
-   gcis:Software :<%= tl($activity->computing_environment) %>;
-   meth:Methodology :<%= tl($activity->methodology) %>;
+   dcmitype:software "<%= tl($activity->computing_environment) %>"^^xsd:string;
+   gcis:Software "<%= tl($activity->computing_environment) %>"^^xsd:string;
+   meth:Methodology "<%= tl($activity->methodology) %>;"^^xsd:string;
 .
 
 :<%= tl($activity->output_artifacts) %> a prov:entity .
