@@ -1,13 +1,18 @@
 % layout "default";
-<<%= current_resource %>>
-   a prov:Activity;
-   dcterms:identifier "<%= $activity->identifier %>";
-   prov:startedAtTime "<%= $activity->start_time %>";
-   ext:StartTime "<%= $activity->start_time %>";
-   prov:endedAtTime "<%= $activity->end_time %>";   
-   ext:EndTime "<%= $activity->end_time %>";  
-   dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>";   
-   fabio:DataFile "<%= tl($activity->output_artifacts) %>";
-   dcmitype:software "<%= tl($activity->computing_environment) %>";
-   gcis:Software "<%= tl($activity->computing_environment) %>";
-   meth:Methodology "<%= tl($activity->methodology) %>".
+:<<%= current_resource %>>
+   a prov:Activity, :<<%= current_resource %>>;
+   dcterms:identifier :<%= $activity->identifier %>;
+   prov:startedAtTime "<%= $activity->start_time %>";"^^xsd:dateTime;
+   ext:StartTime "<%= $activity->start_time %>;
+   prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
+   ext:EndTime :<%= $activity->end_time %>"; 
+   dcterms:SizeOrDuration :<%= human_duration ($activity->duration) %>;   
+   fabio:DataFile :<%= tl($activity->output_artifacts) %>;
+   prov:generated :<%= tl($activity->output_artifacts) %>;
+   dcmitype:software :<%= tl($activity->computing_environment) %>;
+   gcis:Software :<%= tl($activity->computing_environment) %>;
+   meth:Methodology :<%= tl($activity->methodology) %>;
+.
+
+:<%= tl($activity->output_artifacts) %> a prov:entity .
+:<%= tl($activity->computing_environment) %> a prov:entity .
