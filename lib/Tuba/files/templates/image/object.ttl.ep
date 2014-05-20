@@ -34,29 +34,3 @@
    dcterms:subject "<%= $image->attributes %>".
 %= include 'prov';
 %= include 'contributors';
-%#  gcis:spatial_scale "<%= $image->scale %>";
-%#  gcis:spatial_ref_sys "<%= $image->projection %>";
-%# gcis:ishostedby "<%= $image->hosting_agency %>";                    
-%# dcterms:available "<%= $image->release_date %>";                 
-%# % for my $right ($image->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>";                      
- %# }
-%# dcterms:license "<%= $image->license %>";                           
-%# dcterms:rights  "<%= $image->license %>";
-
-%# dcterms:format "<%= $image->format %>";                            
-%# gcis:hasURL "<%= $image->URL %>";                    
- 
- %# % for my $person ($image->persons) {                    
- %#   gcis:PointOfContact "<%= $person->point_of_contact %>";  
-%# % }   
-    
-%# % for my $person ($image->persons) {
-%#    gcis:wasCreatedBy "<%= $person->author %>"; 
-%# }
-
-
-%# dwc:geodeticDatum "<%= $image->image_datum %>";
-
-%# dwc:year "<%= $image->year %>";
-%# xsd:gYear "<%= $image->year %>"; 
