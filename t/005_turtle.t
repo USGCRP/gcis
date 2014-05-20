@@ -63,10 +63,13 @@ $t->get_ok("/report/animals.dot")
     ->content_like( qr[report/animals] )
     ->content_like( qr[hasChapter] );
 
-$t->get_ok("/report/animals.svg")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[hasChapter] );
+SKIP: {
+    skip "no svg on travis version of raptor", 4 if $ENV{TRAVIS};
+    $t->get_ok("/report/animals.svg")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[hasChapter] );
+}
 
 # Check representation of a chapter.
 $t->get_ok("/report/animals/chapter/alligators.ttl")
