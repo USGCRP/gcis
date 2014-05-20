@@ -34,6 +34,8 @@ my $found = Reference->new(identifier => "ronaldo");
 ok $found->load(speculative => 1), "loaded reference";
 is $found->attrs->{num}, "7 ± 1", "got unicode value back";
 
+my $rows = $dbh->selectall_arrayref("select * from reference where identifier='ronaldo'",{Slice =>{}});
+is $rows->[0]{attrs}, q["num"=>"7 ± 1"], "db handle returned unicode";
 ok $report->delete, 'delete report';
 ok $ref->delete, 'delete ref';
 
