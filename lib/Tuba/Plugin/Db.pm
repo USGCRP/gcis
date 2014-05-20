@@ -45,7 +45,7 @@ sub register {
         my $dbname = $mbd->database_options->{name} or die "no dbname in mbd object";
         my $host = $mbd->notes( 'dbtest_host' ) || '';
         $dsn = "dbi:Pg:dbname=gcis;host=$host";
-        $dbix = DBIx::Connector->new( $dsn, '', '' , { RaiseError => 1, AutoCommit => 1} );
+        $dbix = DBIx::Connector->new( $dsn, '', '' , { RaiseError => 1, AutoCommit => 1, pg_enable_utf8 => 1} );
         $schema = $mbd->database_options->{schema} || 'testschema';
     } else {
         my $dbname = $conf->{dbname} or die "no dbname in config file";
@@ -56,7 +56,7 @@ sub register {
         $app->log->info("Registering database $dbname");
         $dbix = DBIx::Connector->new( $dsn, ($conf->{user} || ''),
            ( $conf->{password} || '' ),
-           { RaiseError => 1, AutoCommit => 1} );
+           { RaiseError => 1, AutoCommit => 1, pg_enable_utf8 => 1} );
 
     }
 

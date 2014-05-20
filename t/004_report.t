@@ -24,7 +24,20 @@ $t->post_ok("/report" => form => { identifier => "test-report", title => "Test r
 $t->post_ok("/report/test-report/finding" => form => { identifier => "test-finding", statement => "Test Finding." } )->status_is(200);
 $t->get_ok("/report/test-report/finding/test-finding.json")->json_is('/statement' => "Test Finding.");
 
-$t->post_ok("/report/test-report/chapter" => form => { identifier => "test-chapter", title => "Chapter one" } )->status_is(200);
+my $title = "Chapter one ± two";
+$t->post_ok("/report/test-report/chapter" => form => { identifier => "test-chapter", title => $title, number => 1 } )->status_is(200);
+$t->get_ok("/report/test-report/chapter/form/update/test-chapter.json")
+  ->status_is(200)->json_is(
+  {
+    report_identifier => "test-report",
+    identifier        => 'test-chapter',
+    title             => $title,
+    number            => 1,
+    url               => undef,
+    sort_key          => undef,
+    doi               => undef,
+  }
+  );
 
 for my $i (1..10) {
     $t->post_ok(
