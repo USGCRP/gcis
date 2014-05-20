@@ -71,7 +71,7 @@ where table_schema='gcis_metadata' and table_type='BASE TABLE'
 order by table_name
 SQL
 
-    Tuba::DB::Objects->init( $app );
+    Tuba::DB::Objects->init( );
 
     $app->helper( orm => sub { Tuba::DB::Objects->table2class });
     $app->helper( all_tables => sub { wantarray ? @all_tables : \@all_tables } );
