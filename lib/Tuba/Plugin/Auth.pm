@@ -71,14 +71,14 @@ sub register {
             }
             my $report = $c->stash('report') or return 1;
             unless ($c->Tuba::Report::_user_can_edit($report)) {
-                $c->app->log->info("no auth for $user to edit $report");
+                $c->app->log->info("no auth for $user to edit ".$report->identifier);
                 return 0;
             }
             return 1;
         });
     $app->helper(deny_auth => sub {
             my $c = shift;
-            $c->render(text => "unauthorized", code => 403);
+            $c->render(text => "unauthorized", status => 403);
             return 0;
         });
     $app->helper(user_can => sub {
