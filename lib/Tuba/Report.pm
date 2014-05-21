@@ -167,7 +167,7 @@ sub watch {
             $other = hstore_decode($other);
             %$vals = ( %$vals, %$other);
         }
-        $row->{changed_fields} = decode('UTF-8',$row->{changed_fields}) if defined($row->{changed_fields});
+        $row->{changed_fields} = $row->{changed_fields} if defined($row->{changed_fields});
         $row->{obj} = eval { $class->new(%$vals); };
 
         #$row->{obj}->load(speculative => 1);
