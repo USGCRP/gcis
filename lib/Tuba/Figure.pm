@@ -11,6 +11,7 @@ use Tuba::Log qw/logger/;
 
 sub list {
     my $c = shift;
+    $c->param(thumbs => 1) unless defined($c->param('thumbs')) && length($c->param('thumbs'));
     my $figures;
     my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');

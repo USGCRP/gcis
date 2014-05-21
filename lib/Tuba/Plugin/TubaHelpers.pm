@@ -454,6 +454,7 @@ sub register {
             # http://www.w3.org/TR/turtle/#literals
             my $c = shift;
             my $str = shift;
+            return "" unless defined($str) && length($str);
             $str =~ s/"/\\"/g;
             $str =~ s/\n/\\n/g;
             $str =~ s/\r/\\r/g;

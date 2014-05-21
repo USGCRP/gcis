@@ -38,9 +38,13 @@ my $builder = Module::Build::Database->new(
     configure_requires => {
         'Module::Build' => 0.38,
         'Module::Build::Mojolicious' => 0,
+        'Module::Build::Database' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     build_requires => {
         'Test::More' => 0,
+        'Module::Build::Mojolicious' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     requires => {
         'Number::Bytes::Human' => 0,
@@ -53,8 +57,10 @@ my $builder = Module::Build::Database->new(
         'Data::UUID::LibUUID'  => 0,
         'Rose::DB' => '0.772',
         'Rose::DB::Object' => 0,
+        'DBD::Pg' => '3.0',
         'DBIx::Simple' => 0,
         'DBIx::Custom' => 0,
+        'DBIx::Connector' => 0,
         'SQL::Abstract' => 0,
         'SQL::Interp' => 0,
         'Date::Parse' => 0,
@@ -69,20 +75,11 @@ my $builder = Module::Build::Database->new(
         'YAML::XS' => 0,
         'String::Diff' => 0,
         'DateTime::Format::Human::Duration' => 0,
+        'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
+    share_dir => { dist => ["lib/Tuba/files"] },
 );
-
-# backend asset handling (rsync'ed to front end so nginx can handle
-# most of the load)
-my $dir = eval { dist_dir('Tuba'); };
-if ($dir && !$@) {
-    -l "$dir/public/assets" or do {
-        warn "\n\nPlease run ln -s /var/www/assets $dir/public/assets\n\n";
-        # migration path :
-        # cp -rl /var/local/projects/raw/data/images/* to /var/www/assets/.
-    };
-}
 
 $builder->create_build_script();

@@ -48,6 +48,7 @@ sub autocomplete {
     my $max = $c->param('items') || 20;
     my $want = $c->param('type');
     my $elide = $c->param('elide') || 80;
+    my $gcids = $c->param('gcids');
 
     my @tables;
     if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
@@ -64,7 +65,11 @@ sub autocomplete {
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
         for (@got) {
-            push @results, $_->as_autocomplete_str($elide,$table);
+            if ($gcids) {
+                push @results, $_->as_gcid_str($c,$elide,$table);
+            } else {
+                push @results, $_->as_autocomplete_str($elide,$table);
+            }
         }
     }
 
@@ -84,5 +89,11 @@ sub autocomplete_str_to_object {
     my $class = $c->orm->{$type}->{obj} or die "no class for $type";
     return $class->new_from_autocomplete($str);
 }
+
+sub gcid {
+    my $c = shift;
+    $c->render(template => "search/gcid");
+}
+
 
 1;

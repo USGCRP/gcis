@@ -43,7 +43,7 @@ sub register {
     if ($ENV{HARNESS_ACTIVE}) {
         my $mbd = Module::Build::Database->current;
         my $dbname = $mbd->database_options->{name} or die "no dbname in mbd object";
-        my $host = $mbd->notes( 'dbtest_host' );
+        my $host = $mbd->notes( 'dbtest_host' ) || '';
         $dsn = "dbi:Pg:dbname=gcis;host=$host";
         $dbix = DBIx::Connector->new( $dsn, '', '' , { RaiseError => 1, AutoCommit => 1 } );
         $schema = $mbd->database_options->{schema} || 'testschema';
@@ -57,7 +57,6 @@ sub register {
         $dbix = DBIx::Connector->new( $dsn, ($conf->{user} || ''),
            ( $conf->{password} || '' ),
            { RaiseError => 1, AutoCommit => 1 } );
-
     }
 
     $app->helper( db => sub { $dbix } );
@@ -71,7 +70,7 @@ where table_schema='gcis_metadata' and table_type='BASE TABLE'
 order by table_name
 SQL
 
-    Tuba::DB::Objects->init( $app );
+    Tuba::DB::Objects->init( );
 
     $app->helper( orm => sub { Tuba::DB::Objects->table2class });
     $app->helper( all_tables => sub { wantarray ? @all_tables : \@all_tables } );
@@ -81,7 +80,6 @@ SQL
 
 sub connection {
     $dbix->dbh->{private_pid} = $$;
-    $dbix->dbh->{pg_enable_utf8} = 1;
     $dbix;    
 }
 

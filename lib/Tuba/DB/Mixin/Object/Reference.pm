@@ -3,22 +3,20 @@ package Tuba::DB::Object::Reference;
 use strict;
 use Pg::hstore;
 use Encode qw/encode decode is_utf8/;
+use Data::Dumper;
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     inflate => sub {
         my ($o,$v) = @_;
         my $h = Pg::hstore::decode($v);
-        do { $_ = decode('UTF8',$_) } for values %$h;
         return $h;
     });
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
-        return $v unless ref($v);
         do { $_ = encode('UTF8',$_) } for values %$v;
-        my $deflated = Pg::hstore::encode($v);
-        return $deflated;
+        return Pg::hstore::encode($v);
     });
 
 sub as_tree {

@@ -86,3 +86,18 @@ h2.centered {
 p.linebreaks {
     white-space: pre-line;
 }
+.elidden {
+   white-space:nowrap;
+   overflow:hidden;
+   text-overflow:ellipsis;
+}
+.icon-bar {
+  display: block;
+  width: 22px;
+  padding-left:0px;
+  padding-right:0px;
+  margin-bottom:4px;
+  height: 3px;
+  background-color: #777;
+  border-radius: 3px;
+}

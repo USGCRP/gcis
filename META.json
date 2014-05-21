@@ -14,19 +14,25 @@
    "prereqs" : {
       "build" : {
          "requires" : {
+            "Module::Build::Mojolicious" : "0",
+            "Mojolicious::Plugin::InstallablePaths" : "0",
             "Test::More" : "0"
          }
       },
       "configure" : {
          "requires" : {
             "Module::Build" : "0.38",
-            "Module::Build::Mojolicious" : "0"
+            "Module::Build::Database" : "0",
+            "Module::Build::Mojolicious" : "0",
+            "Mojolicious::Plugin::InstallablePaths" : "0"
          }
       },
       "runtime" : {
          "requires" : {
             "Algorithm::Permute" : "0",
             "Crypt::OpenSSL::RSA" : "0",
+            "DBD::Pg" : "3.0",
+            "DBIx::Connector" : "0",
             "DBIx::Custom" : "0",
             "DBIx::Simple" : "0",
             "Data::UUID::LibUUID" : "0",
@@ -36,6 +42,7 @@
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
             "Mojolicious" : "4.84",
+            "Mojolicious::Plugin::InstallablePaths" : "0",
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
             "Number::Format" : "0",
@@ -57,7 +64,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.01"
+         "version" : "1.02"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -277,5 +284,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.01"
+   "version" : "1.02"
 }

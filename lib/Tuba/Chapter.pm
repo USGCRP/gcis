@@ -11,6 +11,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
+    $c->param(thumbs => 1) unless defined($c->param('thumbs')) && length($c->param('thumbs'));
     my $report = $c->stash('report_identifier');
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page, per_page => $c->per_page);

@@ -98,6 +98,11 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
 The URIs may contain mnemonic identifiers, which are ASCII strings composed of lower case letters, numbers,
 underscores and dashes.  UUIDs are sometimes used, as are Digital Object Identifiers (DOIs), when they exist.
 DOIs are standardized as <a href="http://www.iso.org/iso/catalogue_detail?csnumber=43506" target="_blank">ISO 26324</a>.
+</p>
+<p>GCIS identifiers (GCIDs) may be composed of identifiers for individual resources.  For instance, the chapter identifier,
+<i>our-changing-climate</i>, is part of the GCID
+<%= link_to 'show_chapter' => { report_identifier => 'nca3', chapter_identifier => 'our-changing-climate' } => begin %>/report/nca3/chapter/our-changing-climate<%= end %>.
+Because of this, resource identifiers for chapters, figures, findings, and tables may not be globally unique.</p>
 <h3>Relational Model</h3>
 <p>The relational model used by GCIS captures one-to-many, many-to-many, and many-to-one relationships between the
 resources above.  Journals have many articles, reports have many figures, findings, tables, and <i>chapter</i>s.  The relationship

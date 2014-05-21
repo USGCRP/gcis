@@ -48,9 +48,12 @@ sub import {
     if ($ENV{TUBA_CLI} or (grep /-autoconnect/, @_)) {
         # Load configuration from app.
         my $app = Tuba->new();
+        my $db = $app->db or die "no database object";
+        $class->init( db => $app->db );
+    } else {
+        $class->init();
     }
 
-    $class->init();
     no strict 'refs';
     if (grep /-nicknames/, @_) {
         for my $table (keys %table2class) {
@@ -74,6 +77,7 @@ sub import {
 
 sub init {
     my $class = shift;
+    my %args = @_;
     return if keys %table2class;
 
     my $db_schema = Tuba::Plugin::Db->schema;
@@ -87,7 +91,10 @@ sub init {
         convention_manager => $cm,
     );
 
-    my @made = $loader->make_classes(db_class => 'Tuba::DB' );
+    my @made = $loader->make_classes(
+        $args{db} ? ( db => $args{db} ) :
+                    ( db_class => 'Tuba::DB' )
+    );
     for my $made (@made) {
         my $mixin = $made;
         $mixin =~ s/Tuba::DB/Tuba::DB::Mixin/;

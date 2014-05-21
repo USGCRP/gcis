@@ -3,6 +3,7 @@
 use FindBin;
 use lib $FindBin::Bin;
 use tinit;
+use open ':std', ':encoding(utf8)';
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
@@ -37,11 +38,15 @@ $base->path('');
 $base = "$base";
 $base =~ s[/$][];
 
+my $got = $t->app->db->dbh->selectall_arrayref(q[select id from publication where fk->'identifier' = 'test-report']);
+my $pub_id = $got->[0][0];
+like $pub_id, qr/\d+/, "got a publication id";
+
 $t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)->json_is(
     {
         uri => "/reference/$id",
         href => "$base/reference/$id.json",
-        publication_id => 1,
+        publication_id => $pub_id,
         publication_uri => "/report/test-report",
         child_publication_id => undef,
         sub_publication_uris => [],

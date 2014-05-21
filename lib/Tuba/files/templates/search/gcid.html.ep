@@ -1,0 +1,30 @@
+% layout 'default';
+
+<div class='well'>
+<h3>
+GCID Lookup
+</h3>
+
+<p>Type in the box below to find GCIS identifiers.  The first few matches of each resource type are shown.</p>
+
+%= text_field 'lookup', autocomplete => 'off', id => 'lookup', class => 'span12', placeholder => 'search resources';
+
+%= javascript begin
+$('#lookup').typeahead({
+    minLength : 1,
+    items : 15,
+    updater: function(str) {
+        var pieces = str.split(' ');
+        window.location.href = pieces[0];
+    },
+    source : function(query,process) {
+    return $.get('/autocomplete', { q : query, items : 15, type : 'all', 'gcids' : 1 }, function(data) {
+                 return process(data);
+            });
+        }
+   });
+
+%= end
+
+</div>
+
