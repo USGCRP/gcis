@@ -193,8 +193,9 @@ sub startup {
 
       my $authed = $r->bridge("/$path_base")->to(cb => sub {
               my $c = shift;
-              $c->auth && $c->authz(role => 'update') }
-      )->name("authed_select_$name");
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          })->name("authed_select_$name");
       $authed->post->to("$cname#create")->name("create_$name");
       $authed->get('/form/create')->to("$cname#create_form")->name("create_form_$name");
 
@@ -341,7 +342,8 @@ sub startup {
     $r->bridge('/reference/match')
       ->to(cb => sub {
               my $c = shift;
-              $c->auth && $c->authz(role => 'update')
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
         })
       ->post('/:reference_identifier')
       ->to('reference#smartmatch');
@@ -389,7 +391,13 @@ sub startup {
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {
-        my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
+        my $authed = $r->bridge->to(
+          cb => sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update')
+              return 1;
+          }
+        );
         $authed->get('/admin')->to(cb => sub { shift->render })->name('admin');
         $authed->get('/watch')->to('report#watch')->name('_watch');
         $r->get('/login')->to('auth#login')->name('login');
