@@ -394,7 +394,7 @@ sub startup {
         my $authed = $r->bridge->to(
           cb => sub {
               my $c = shift;
-              return $c->deny_auth unless $c->auth && $c->authz(role => 'update')
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
               return 1;
           }
         );
