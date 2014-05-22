@@ -1,5 +1,5 @@
 <<% layout 'default';
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Entity; a gcis:Figure;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
@@ -7,18 +7,13 @@
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
-% }
-%# % for my $ref ($article->get_references) {
-%#   biro:isReferencedBy <<%= uri($ref); %>>
-%# % }
-%# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:figureNumber "<%= $figure->numeric %>";
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;                              
    dcterms:description "<%= $figure->caption %>"^^xsd:string;
    dcterms:identifier "<%= $figure->chapter_identifier %>";      
-   prov:generatedAtTime "<%= $figure->create_dt %>";      
+   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
    dcterms:identifier "<%= $figure->identifier %>";                           
    gcis:northBoundLatitude "<%= $figure->lat_max %>";
    dwc:decimalLatitude "<%= $figure->lat_max %>";
