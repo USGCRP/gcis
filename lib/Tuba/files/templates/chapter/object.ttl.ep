@@ -14,18 +14,17 @@
    dcterms:hasPart <<%= obj_uri_for($table)->to_abs %>>;
 % }
 % for my $keyword ($chapter->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   gcis:subject "<%== $keyword->stringify %>^^xsd:string;
+   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>";
-   gcis:inPublication "<%= $chapter->report_identifier %>";
-   dcterms:title "<%= $chapter->title %>";
-   prov:label "<%= $chapter->title %>";
-   rdfs:label "<%= $chapter->title %>";
-   gcis:hasURL "<%= $chapter->url %>".
+   dcterms:title "<%= $chapter->title %>"^^xsd:string;
+   prov:label "<%= $chapter->title %>"^^xsd:string;
+   rdfs:label "<%= $chapter->title %>"^^xsd:string;
+   gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI.
 % my $max_children = 10;
 % my $pub = $object->get_publication;
 % my @parents;
