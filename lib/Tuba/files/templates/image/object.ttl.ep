@@ -1,5 +1,5 @@
 % layout 'default';
-:%= current_resource %  
+:<<%= current_resource %>>
    a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
@@ -9,8 +9,8 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;";
    dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;";
 % }
-   dcterms:created "<%= $image->create_dt %>"""^^xsd:date;;
-   gcis:description "<%= $image->description %>"^^xsd:string;";
+   dcterms:created "<%= $image->create_dt %>"^^xsd:date;
+   gcis:description "<%= $image->description %>"^^xsd:string;;
    dcterms:identifier "<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>";
    dwc:decimalLatitude "<%= $image->lat_max %>";
@@ -24,12 +24,12 @@
    gcis:eastBoundLongitude "<%= $image->lon_min %>";
    dwc:decimalLongitude "<%= $image->lon_min %>";
    geo:long "<%= $image->lon_min %>";
-   dcterms:dateSubmitted "<%= $image->submission_dt %>""^^xsd:date;
-   gcis:endedAt "<%= $image->time_end %>""^^xsd:dateTime;
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
+   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    dcterms:title "<%= $image->title %>"^^xsd:string;      
    rdf:label "<%= $image->title %>"^^xsd:string;
    prov:label "<%= $image->title %>"^^xsd:string;
-   dcterms:subject "<%= $image->attributes %>""^^xsd:string.
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string.
 %= include 'prov';
 %= include 'contributors';
