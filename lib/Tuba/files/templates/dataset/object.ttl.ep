@@ -4,7 +4,7 @@
    dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
    dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
-   dcterms:description "<%= tl($dataset->description) %>^^xsd:string";
+   dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
    datacite:doi "<%= $dataset->doi %>";
    dcterms:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
@@ -30,7 +30,7 @@
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
    ext:StartTime "<%= $dataset->start_time %>"^^xsd:time;
    ext:EndTime "<%= $dataset->end_time %>"^^xsd:time;
-   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
+   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>";
    gcis:accessURL "<%= $dataset->url %>";
    gcis:hasURL "<%= $dataset->url %>";
    dcterms:hasVersion "<%= $dataset->version %>";
