@@ -1,8 +1,8 @@
 % layout 'default';
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Entity; a gcis:Finding;
 % if (my $chapter = $finding->chapter) {
-   gcis:inPublication <<%= obj_uri_for($chapter)->to_abs %>>;
+   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
 % if (my $chapter = stash 'chapter') {
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
@@ -21,20 +21,14 @@
 % }
    gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:confidence "<%= tl($finding->confidence) %>";
-   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>";
+   gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
+   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
    dcterms:identifier "<%= $finding->identifier %>";
    rdf:rest "<%= $finding->ordinal %>";
-   gcis:findingProcess "<%= tl($finding->process) %>";
-   gcis:inPublication <<%= obj_uri_for($report)->to_abs %>";
-   gcis:inPublication "<%= $report->identifier %>";
-   rdfs:label "<%= $finding->statement %>";
-   dcterms:description "<%= tl($finding->statement) %>";
-   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>";
+   gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
+   rdfs:label "<%= $finding->statement %>"^^xsd:string;
+   dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
+   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
 %= include 'prov';
-%# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
-%# % for my $keyword ($finding->keywords) {
-%#   gcis:subject "<%== $keyword->stringify %>";
-%#   dcterms:subject "<%== $keyword->stringify %>";
-%# % }
+
 
