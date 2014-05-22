@@ -30,6 +30,8 @@
    gcis:spatialResolution "<%= $dataset->spatial_res %>";
    ext:StartTime "<%= $dataset->start_time %>"^^xsd:time;
    ext:EndTime "<%= $dataset->end_time %>"^^xsd:time;
+   gcis:startedAt "<%= $dataset->end_time %>"^^xsd:time;
+   gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time;
    gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>";
    gcis:accessURL "<%= $dataset->url %>";
    gcis:hasURL "<%= $dataset->url %>";
