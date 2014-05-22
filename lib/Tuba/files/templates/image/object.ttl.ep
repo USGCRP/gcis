@@ -6,11 +6,11 @@
    dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
  % }
 % for my $keyword ($image->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;";
+   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;";
 % }
-   dcterms:created "<%= $image->create_dt %>";
-   gcis:description "<%= $image->description %>";
+   dcterms:created "<%= $image->create_dt %>"""^^xsd:date;;
+   gcis:description "<%= $image->description %>"^^xsd:string;";
    dcterms:identifier "<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>";
    dwc:decimalLatitude "<%= $image->lat_max %>";
@@ -24,12 +24,12 @@
    gcis:eastBoundLongitude "<%= $image->lon_min %>";
    dwc:decimalLongitude "<%= $image->lon_min %>";
    geo:long "<%= $image->lon_min %>";
-   dcterms:dateSubmitted "<%= $image->submission_dt %>";
-   gcis:endedAt "<%= $image->time_end %>";
-   gcis:startedAt "<%= $image->time_start %>";
+   dcterms:dateSubmitted "<%= $image->submission_dt %>""^^xsd:date;
+   gcis:endedAt "<%= $image->time_end %>""^^xsd:dateTime;
+   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    dcterms:title "<%= $image->title %>"^^xsd:string;      
-   rdf:label "<%= $image->title %>";
-   prov:label "<%= $image->title %>";
-   dcterms:subject "<%= $image->attributes %>".
+   rdf:label "<%= $image->title %>"^^xsd:string;
+   prov:label "<%= $image->title %>"^^xsd:string;
+   dcterms:subject "<%= $image->attributes %>""^^xsd:string.
 %= include 'prov';
 %= include 'contributors';
