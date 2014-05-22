@@ -1,5 +1,5 @@
 % layout 'default';
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Entity; a gcis:Table;
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
@@ -11,37 +11,17 @@
    dcterms:hasPart <<%= obj_uri_for($array)->to_abs %>>;
 % }
 % for my $keyword ($table->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+   dcterms:subject "<%== $keyword->stringify %>"^^xsd:strong;
 % }
-   gcis:hasCaption "<%= $table->caption %>";
-   dcterms:description "<%= $table->caption %>";
+   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
+   dcterms:description "<%= $table->caption %>"^^xsd:string;
    dcterms:identifier "<%= $table->chapter_identifier %>";
    dcterms:identifier "<%= $table->identifier %>";
    rdf:rest "<%= $table->ordinal %>";
    dcterms:identifier "<%= $table->report_identifier %>";
-   dcterms:title "<%= $table->title %>";
-   rdfs:label "<%= $table->title %>";
-   prov:label "<%= $table->title %>".
+   dcterms:title "<%= $table->title %>"^^xsd:string;
+   rdfs:label "<%= $table->title %>"^^xsd:string;
+   prov:label "<%= $table->title %>"^^xsd:string.
 %= include 'prov';
-%#   cito:cites "<%= $table->source_citation %>";
-%#   dcterms:dateSubmitted "<%= $table->submission_dt %>";
-%#   dcterms:date "<%= $image->submission_dt %>";
-%#   gcis:startedAt "<%= $table->time_start %>";
-%#   gcis:endedAt "<%= $table->time_end %>";
-%# gcis:description "<%= $table->description %>";
-%# for my $keyword ($table->keywords) {
-%#    gcis:attributes "<%= $keyword->attributes %>"
-%# % }
-   %# for my $keyword ($table->keywords) {
-%#    skos:concept "<%= $keyword->attributes %>"
-%# % }
-%# % for my $right ($table->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>".
-%# % }
-%# % for my $ref ($article->get_references) {
-%# dcterms:isReferencedBy <<%= uri($ref); %>>;
-%# % }
-%# uuid
-%# gcis:tableNumber "<%= $table->numeric %>";
 
