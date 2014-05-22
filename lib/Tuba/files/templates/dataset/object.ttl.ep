@@ -33,8 +33,8 @@
    gcis:startedAt "<%= $dataset->end_time %>"^^xsd:time;
    gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time;
    gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>";
-   gcis:accessURL "<%= $dataset->url %>";
-   gcis:hasURL "<%= $dataset->url %>";
+   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
+   gcis:hasURL "<%= $dataset->url %>"^^xsd:anyURI;
    dcterms:hasVersion "<%= $dataset->version %>";
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
 % for my $keyword ($dataset->keywords) {
