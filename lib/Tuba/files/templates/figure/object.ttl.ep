@@ -15,8 +15,8 @@
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:figureNumber "<%= $figure->numeric %>";
-   gcis:hasCaption "<%= $figure->caption %>";                              
-   dcterms:description "<%= $figure->caption %>";
+   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;                              
+   dcterms:description "<%= $figure->caption %>"^^xsd:string;
    dcterms:identifier "<%= $figure->chapter_identifier %>";      
    prov:generatedAtTime "<%= $figure->create_dt %>";      
    dcterms:identifier "<%= $figure->identifier %>";                           
@@ -35,22 +35,17 @@
    rdf:rest "<%= $figure->ordinal %>";
    dcterms:identifier "<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>";     
-   dcterms:date "<%= $figure->submission_dt %>";
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:date;     
+   dcterms:date "<%= $figure->submission_dt %>"^^xsd:date;
    gcis:startedAt "<%= $figure->time_start %>";                          
    gcis:endedAt "<%= $figure->time_end %>";                           
-   dcterms:title "<%= $figure->title %>";                                   
-   rdfs:label "<%= $figure->title %>";
-   prov:label "<%= $figure->title %>".
+   dcterms:title "<%= $figure->title %>"^^xsd:string;                                   
+   rdfs:label "<%= $figure->title %>"^^xsd:string;
+   prov:label "<%= $figure->title %>"^^xsd:string.
 % for my $keyword ($figure->keywords) {
-   gcis:attributes "<%== $keyword->stringify %>";
-   skos:concept "<%== $keyword->stringify %>";
+   gcis:attributes "<%== $keyword->stringify %>"^^xsd:string;
+   skos:concept "<%== $keyword->stringify %>"^^xsd:string;
 % }
 %= include 'prov';
-%# % for my $right ($figure->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>".                     
-%# % }
-
-%# uuid
 
 
