@@ -8,6 +8,7 @@
    foaf:lastName "<%= $person->last_name %>";
    foaf:familyName "<%= $person->last_name %>";
    gcis:hasURL "<%= $person->url %>"^^xsd:anyURI;
+   foaf:page "<%= $person->url %>"^^xsd:anyURI;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:isMemberOf <<%= uri($org) %>>;
