@@ -20,7 +20,7 @@
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:identifier "<%= $chapter->identifier %>";
-   gcis:chapterNumber "<%= $chapter->number %>";
+   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
    prov:label "<%= $chapter->title %>"^^xsd:string;
    rdfs:label "<%= $chapter->title %>"^^xsd:string;
