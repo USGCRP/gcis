@@ -167,7 +167,7 @@ sub watch {
             $other = hstore_decode($other);
             %$vals = ( %$vals, %$other);
         }
-        $row->{changed_fields} = decode('UTF-8',$row->{changed_fields}) if defined($row->{changed_fields});
+        $row->{changed_fields} = $row->{changed_fields} if defined($row->{changed_fields});
         $row->{obj} = eval { $class->new(%$vals); };
 
         #$row->{obj}->load(speculative => 1);
@@ -178,6 +178,7 @@ sub watch {
 
 sub update_rel_form {
     my $c = shift;
+    return $c->render(code => 403) unless $c->_user_can_edit($c->_this_object, $c->user);
     $c->stash(relationships => [ map Report->meta->relationship($_), qw/chapters figures findings tables/ ]);
     $c->stash(controls => {
             chapters  => { template => 'one_to_many' },
@@ -221,6 +222,29 @@ sub make_tree_for_show {
         }, $report->chapters
       ],
     };
+}
+
+for my $method (qw[
+update_files_form
+update_contributors_form
+update_files
+put_files
+update_contributors
+update_keywords
+update_regions
+update_rel
+update 
+remove
+history
+]) {
+eval <<DONE;
+sub $method {
+    my \$c = shift;
+    return \$c->render(text => "unauthorized", status => 403) unless \$c->_user_can_edit(\$c->_this_object, \$c->user);
+    return \$c->SUPER::$method(\@_);
+}
+DONE
+die $@ if $@;
 }
 
 1;

@@ -6,28 +6,34 @@ This is the HTML front end and API for the [Global Change Information System](ht
 
 This portion of the GCIS is called Tuba.
 
-Prerequisites can be installed using cpanminus (http://cpanmin.us), e.g.
+Prerequisites :
 
-   curl -L http://cpanmin.us > cpanm
-   chmod +x cpanm
-   ./cpanm --installdeps .
+    - PostgreSQL
+    - Perl 5.10 or later
+    - uuid-dev package
 
-Installation of the software uses the CPAN method :
+Install of Perl prerequisites :
+
+    curl -L http://cpanmin.us > cpanm
+    chmod +x cpanm
+    ./cpanm --installdeps .
+
+Software installation :
 
     perl Build.PL
     ./Build
     ./Build test
     ./Build install
 
-Also, to install the database :
+Database installation :
 
     ./Build dbinstall
 
 Configuration :
 
-   cp eg/Tuba.conf.sample Tuba.conf
+    cp eg/Tuba.conf.sample Tuba.conf
 
 Starting :
 
-   hypnotoad tuba
+    hypnotoad tuba
 
