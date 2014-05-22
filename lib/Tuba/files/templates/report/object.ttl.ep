@@ -1,5 +1,5 @@
 %  layout 'default';
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Entity; a bibo:Report; a gcis:Publication;
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
@@ -17,29 +17,18 @@
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-   dcterms:identifier "<%= $report->identifier %>";
-   dcterms:title "<%= $report->title %>";
-   rdfs:label "<%= $report->title %>";
-   prov:label "<%= $report->title %>";
-   dcterms:year "<%= $report->publication_year %>";
-   xsd:gYear "<%= $report->publication_year %>";
-   dwc:year "<%= $report->publication_year %>";
+   dcterms:identifier <%= $report->:identifier %>;
+   dcterms:title "<%= $report->title %>"^^xsd:string;
+   rdfs:label "<%= $report->title %>"^^xsd:string;
+   prov:label "<%= $report->title %>"^^xsd:string;
+   dcterms:year "<%= $report->publication_year %>"^^xsd:gYear;
+   dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
    dcterms:type "<%= $report->report_type_identifier %>";
-   dcterms:frequency "<%= $report->frequency %>";
-   dcterms:description "<%= $report->summary %>";
-   gcis:url "<%= $report->url %>". 
-   bibo:doi "<%= $report->doi %>";
-   dcterms:subject "<%= $report->topic %>";
+   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
+   gcis:url "<%= $report->url %>"^^xsd:anyURI; 
+   bibo:doi "<%= $report->doi %>"^^xsd:anyURI;
+   dcterms:subject "<%= $report->topic %>"xsd:string.
 %= include 'prov';
 %= include 'contributors';
-%#   dwc:year "<%= $report->year %>";
-%#   xsd:gyear "<%= $report->year %>".
-%# add gcis:hasCommittee somewhere?
-%# % for my $keyword ($report->keywords) {
-%#   gcis:subject "<%== $keyword->stringify %>";
-%#   dcterms:subject "<%== $keyword->stringify %>";
-%# % }
-%# % for my $org ($report->organizations) {
-%#   gcis:Organization "<%= $org->identifier %>";
-%#   prov:wasAttributedTo "<%= $org->identifier %>";
-%# % }
+
