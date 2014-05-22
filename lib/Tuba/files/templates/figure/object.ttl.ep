@@ -30,10 +30,10 @@
    rdf:rest "<%= $figure->ordinal %>";
    dcterms:identifier "<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:date;     
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;     
    dcterms:date "<%= $figure->submission_dt %>"^^xsd:date;
-   gcis:startedAt "<%= $figure->time_start %>";                          
-   gcis:endedAt "<%= $figure->time_end %>";                           
+   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;                          
+   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;                           
    dcterms:title "<%= $figure->title %>"^^xsd:string;                                   
    rdfs:label "<%= $figure->title %>"^^xsd:string;
    prov:label "<%= $figure->title %>"^^xsd:string.
