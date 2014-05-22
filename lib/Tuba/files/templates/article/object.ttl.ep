@@ -1,7 +1,6 @@
 % layout 'default';
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Entity; a bibo:Article;   
-   gcis:inPublication <<%= uri($article->journal) %>>;
    dcterms:isPartOf <<%= uri($article->journal) %>>;
    gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:doi "<%= $article->doi %>";
@@ -9,34 +8,9 @@
    bibo:pages "<%= $article->journal_pages %>";
    bibo:volume "<%= $article->journal_vol %>";
    dcterms:title "<%= $article->title %>";
-   rdfs:label "<%= $article->title %>";
-   prov:label "<%= $article->title %>";
-   gcis:hasURL "<%= $article->url %>";
-   bibo:uri "<%= $article->uri($self) %>";
-   dwc:year "<%= $article->year %>";
-   xsd:gYear "<%= $article->year %>".
-%= include "prov";
-
-%# % for my $keyword ($article->keywords) {
-%#   gcis:subject "<%== $keyword->stringify %>";
-%#   dcterms:subject "<%== $keyword->stringify %>";
-%# % }
-
-%# % for my $parent (@parents_with_references) {
-%# % my $parent_pub = $parent->{parent};
-%#   cito:isCitedBy "<%= obj_link($parent->{article}) %>";
-%#    % }
-   %# my @parents_with_references;
-%# if (my $pub = $object->get_publication) {
-%#   @parents_with_references = $pub->get_parents_with_references;
-%# }
-   %# % for my $chapter ($article->get_parents_with_references) {
-%#   cito:isCitedBy <%= obj_link($parent->{article}) %>;
-%# % }
-   %# % if (my $report = ( (stash 'report') || $article->report)) {
-%#   cito:isCitedBy  <<%= uri($report) %>>;
-%# % }
-   %# % for my $ref ($article->get_references) {
-%# dcterms:isReferencedBy <<%= uri($ref); %>>;
-%#  % }
-
+   rdfs:label "<%= $article->title %>"^^xsd:string;
+   prov:label "<%= $article->title %>"^^xsd:string;
+   gcis:hasURL "<%= $article->url %>"^^xsd:string;
+   bibo:uri "<%= $article->uri($self) %>"^^xsd:anyURI;
+   dwc:year "<%= $article->year %>"^^xsd:gYear.
+%= include 'prov';
