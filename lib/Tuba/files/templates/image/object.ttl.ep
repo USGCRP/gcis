@@ -11,7 +11,7 @@
 % }
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    gcis:description "<%= $image->description %>"^^xsd:string;
-   dcterms:identifier :"<%= $image->identifier %>";
+   dcterms:identifier :<%= $image->identifier %>;
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
    dwc:decimalLatitude "<%= $image->lat_max %>";
    geo:lat "<%= $image->lat_max %>";
