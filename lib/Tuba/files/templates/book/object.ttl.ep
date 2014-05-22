@@ -1,48 +1,25 @@
 % layout 'default';
-<<%= current_resource %>>
-   a bibo:Book;
+:<<%= current_resource %>>
+   a prov:Entity; a bibo:Book;
 % for my $keyword ($book->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
  % }
-   dcterms:identifier "<%= $book->identifier %>";
+   dcterms:identifier :"<%= $book->identifier %>";
    bibo:isbn "<%= $book->isbn %>";
-   bibo:numPages "<%= $book->number_of_pages %>";
+   bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
    schema:numberOfPages "<%= $book->number_of_pages %>";
    dcterms:SizeOrDuration "<%= $book->number_of_pages %>";
-   bibo:uri "<%= $book->url %>";
-   gcis:hasURL "<%= $book->url %>";
-   bibo:isbn "<%= $book->isbn %>";
+   bibo:uri "<%= $book->url %>"^^xsd:anyURI;
+   gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
    gcis:hasPublisher "<%= $book->publisher %>";
    schema:publisher "<%= $book->publisher %>";
    prov:wasAttributedTo "<%= $book->publisher %>";
-   dcterms:title "<%= $book->title %>";
-   schema:name "<%= $book->title %>";
-   rdfs:label "<%= $book->title %>";
-   prov:label "<%= $book->title %>";
-   dwc:year "<%= $book->year %>";
-   xsd:gYear "<%= $book->year %>";
-   schema:copyrightYear "<%= $book->year %>";
+   dcterms:title "<%= $book->title %>"^^xsd:string;
+   schema:name "<%= $book->title %>"^^xsd:string;
+   rdfs:label "<%= $book->title %>"^^xsd:string;
+   prov:label "<%= $book->title %>"^^xsd:string;
+   dwc:year "<%= $book->year %>"^^xsd:gYear;
+   schema:copyrightYear "<%= $book->year %>"^^xsd:gYear.
 %= include 'prov';
-
-%# % for my $person ($book->persons) {
-%#   gcis:hasAuthor  "<%= $person->author %>";
-%#   prov:wasAttributedTo  "<%= $person->author %>";
-%# % }
-
-%# bibo:doi "<%= $book->doi %>";
-%#   prov:wasAttributedTo  "<%= $person->author %>";
-
-%# % for my $eisbn ($book->eisbns) {
-  %#       bibo:eisbn "<%= $eisbn->online_isbn %>";
-%# % }
-
-
-%# Book in Book Series
-%# for my $bookSeries ($book->bookSeries) {
-%#      bibo:volume  "<%= $bookSeries->volume %>";
-%# % }
-
-%#  gcis:hasPublisher "<%= $book->publisher %>";
-
 
