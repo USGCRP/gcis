@@ -6,11 +6,11 @@
    dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
  % }
 % for my $keyword ($image->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;";
-   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;";
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
    dcterms:created "<%= $image->create_dt %>"^^xsd:date;
-   gcis:description "<%= $image->description %>"^^xsd:string;;
+   gcis:description "<%= $image->description %>"^^xsd:string;
    dcterms:identifier :"<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
    dwc:decimalLatitude "<%= $image->lat_max %>";
