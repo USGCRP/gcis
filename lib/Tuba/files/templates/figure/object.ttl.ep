@@ -2,7 +2,7 @@
 <<%= current_resource %>>
    a prov:Entity; a gcis:Figure;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   gcis:inPublication <<%= uri($chapter) %>>;
+   gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
