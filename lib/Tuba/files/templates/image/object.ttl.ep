@@ -25,6 +25,8 @@
    dwc:decimalLongitude "<%= $image->lon_min %>";
    geo:long "<%= $image->lon_min %>";
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
+   ext:StartTime "<%= $image->start_time %>"^^xsd:time;
+   ext:EndTime "<%= $image->end_time %>"^^xsd:time;
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    dcterms:title "<%= $image->title %>"^^xsd:string;      
