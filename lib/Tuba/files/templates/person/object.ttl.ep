@@ -1,5 +1,5 @@
 % layout "default";
-<<%= current_resource %>>
+:<<%= current_resource %>>
    a prov:Person; a foaf:Person; a gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
    vivo:orcidId "<%= $person->orcid %>";
@@ -7,17 +7,16 @@
    foaf:givenName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
    foaf:familyName "<%= $person->last_name %>";
-   gcis:hasURL "<%= $person->url %>" ;
+   gcis:hasURL "<%= $person->url %>"^^xsd:anyURI;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:isMemberOf <<%= uri($org) %>>;
    prov:actedOnBehalfOf <<%= uri($org) %>>;
    gcis:worksAt <<%= uri($org) %>>;
    gcis:hasOrganization <<%= uri($org) %>>;
-% }
+
  % my $ctr = $object->contributors;
  % for my $ctr (@{ $object->contributors }) {
-   gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
    prov:Role "<%= $ctr->role_type->label %>";
 <% for my $pub ($ctr->publications) { %>
    gcis:hasPublication <<%= uri($pub->to_object) %>>;
