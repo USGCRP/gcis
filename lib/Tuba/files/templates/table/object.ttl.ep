@@ -16,10 +16,7 @@
 % }
    gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
    dcterms:description "<%= $table->caption %>"^^xsd:string;
-   dcterms:identifier "<%= $table->chapter_identifier %>";
    dcterms:identifier "<%= $table->identifier %>";
-   rdf:rest "<%= $table->ordinal %>";
-   dcterms:identifier "<%= $table->report_identifier %>";
    dcterms:title "<%= $table->title %>"^^xsd:string;
    rdfs:label "<%= $table->title %>"^^xsd:string;
    prov:label "<%= $table->title %>"^^xsd:string.
