@@ -5,7 +5,7 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
    dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
  % }
-   dcterms:identifier :"<%= $book->identifier %>";
+   dcterms:identifier "<%= $book->identifier %>";
    bibo:isbn "<%= $book->isbn %>";
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
    schema:numberOfPages "<%= $book->number_of_pages %>"^^xsd:integer;
