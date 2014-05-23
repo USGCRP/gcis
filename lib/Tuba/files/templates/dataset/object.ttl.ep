@@ -7,7 +7,7 @@
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
    datacite:doi "<%= $dataset->doi %>";
    dcterms:identifier ":<%= $dataset->identifier %>";
-   datacite:AlternateResourceIdentifier "<%= $dataset->identifier %>";
+   datacite:AlternateResourceIdentifier "<%= $dataset->native-id %>";
    datacite:identifier ":<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
    prov:label "<%= $dataset->name %>"^^xsd:string;
