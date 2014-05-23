@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Chapter; a bibo:Chapter; a gcis:Publication;
+   a prov:Entity, gcis:Chapter, bibo:Chapter, gcis:Publication;
 % for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($figure)->to_abs %>>;
