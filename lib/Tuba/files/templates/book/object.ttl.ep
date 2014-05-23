@@ -1,5 +1,5 @@
 % layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a bibo:Book;
 % for my $keyword ($book->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
