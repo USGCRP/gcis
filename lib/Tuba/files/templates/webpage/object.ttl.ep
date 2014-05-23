@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a bibo:Webpage;
+   a prov:Entity, a bibo:Webpage;
    dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
