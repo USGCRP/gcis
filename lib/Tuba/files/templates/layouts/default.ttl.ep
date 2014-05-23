@@ -26,6 +26,7 @@
 @prefix fabio: <http://purl.org/spar/fabio/> .
 @prefix schema: <http://schema.org/> .
 @prefix : <http://data.globalchange.gov/image/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 % }
 
 %= content
