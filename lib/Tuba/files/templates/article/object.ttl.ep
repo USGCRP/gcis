@@ -1,5 +1,5 @@
 % layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a bibo:Article;   
    dcterms:isPartOf <<%= uri($article->journal) %>>;
    gcis:inPublication <<%= uri($article->journal) %>>;
