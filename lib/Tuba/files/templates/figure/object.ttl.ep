@@ -29,7 +29,7 @@
    dwc:decimalLongitude "<%= $figure->lon_min %>";
    geo:long "<%= $figure->lon_min %>";
    rdf:rest "<%= $figure->ordinal %>";
-   dcterms:identifier ":<%= $figure->report_identifier %>"; 
+   dcterms:identifier "<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;     
    dcterms:date "<%= $figure->submission_dt %>"^^xsd:date;
