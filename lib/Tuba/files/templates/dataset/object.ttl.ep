@@ -41,8 +41,8 @@
    dcterms:subject "<%= $dataset->attributes %>"^^xsd:string.
 
 % for my $keyword ($dataset->keywords) {
-<<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
-<<%= current_resource %>> dcterms:subject "<%== $keyword->stringify %>" .
+   gcis:attributes "<%== $keyword->stringify %>"^^xsd:string;
+   skos:concept "<%== $keyword->stringify %>"^^xsd:string;
 % }
 %= include 'prov';
 %= include 'contributors'; 
