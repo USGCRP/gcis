@@ -31,7 +31,7 @@
    ext:EndTime "<%= $dataset->end_time %>"^^xsd:time;
    gcis:startedAt "<%= $dataset->end_time %>"^^xsd:time;
    gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time;
-   gcis:temporalExtents "<%= $dataset->temporal_extent %>";
+   gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
    dcterms:temporal "<%= $dataset->temporal_extent %>";
    dcterms:PeriodOfTime "<%= $dataset->temporal_extent %>";
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
