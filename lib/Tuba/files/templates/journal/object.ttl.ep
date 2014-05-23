@@ -5,7 +5,7 @@
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
    dwc:Countrycode "<%= $journal->country %>";
-   dcterms:identifier :"<%= $journal->identifier %>";
+   dcterms:identifier "<%= $journal->identifier %>";
    bibo:eissn "<%= $journal->online_issn %>";
    bibo:issn "<%= $journal->print_issn %>";
    gcis:hasPublisher "<%= $journal->publisher %>";
