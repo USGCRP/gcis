@@ -1,6 +1,6 @@
 %  layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Report; a bibo:Report; a gcis:Publication;
+   a prov:Entity, gcis:Report, bibo:Report, gcis:Publication;
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
    dcterms:hasPart <<%= obj_uri_for($chapter)->to_abs %>>;
