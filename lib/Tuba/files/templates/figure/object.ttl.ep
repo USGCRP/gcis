@@ -10,7 +10,7 @@
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
-   gcis:figureNumber "<%= $figure->numeric %>"^^xsd:float;
+   rdf:value "<%= $figure->numeric %>"^^xsd:integer;
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;                  
    dcterms:description "<%= $figure->caption %>"^^xsd:string;
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
