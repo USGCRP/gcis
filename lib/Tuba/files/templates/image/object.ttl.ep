@@ -1,5 +1,5 @@
 % layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
