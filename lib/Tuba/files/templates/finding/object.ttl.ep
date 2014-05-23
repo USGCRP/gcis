@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Finding;
+   a prov:Entity, gcis:Finding;
 % if (my $chapter = $finding->chapter) {
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
 % }
