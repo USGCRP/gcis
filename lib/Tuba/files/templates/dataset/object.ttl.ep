@@ -37,8 +37,8 @@
    dcterms:temporal "<%= $dataset->temporal_extent %>";
    dcterms:PeriodOfTime "<%= $dataset->temporal_extent %>";
    dcterms:hasVersion "<%= $dataset->version %>;
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
-dcterms:subject "<%= $image->attributes %>"^^xsd:string.
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>" ,
+   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string.
 
 % for my $keyword ($dataset->keywords) {
 <<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
