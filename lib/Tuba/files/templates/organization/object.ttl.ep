@@ -14,5 +14,6 @@
    foaf:name "<%= $organization->name %>";
    rdfs:label "<%= $organization->name %>";
    prov:label "<%= $organization->name %>";
+   skos:prefLabel "<%= $organization->name %>";
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI.
 %= include 'prov';
