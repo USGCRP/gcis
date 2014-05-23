@@ -1,6 +1,6 @@
 % layout "default";
 <<%= current_resource %>>
-   a prov:Entity; a bibo:Journal;
+   a prov:Entity, bibo:Journal;
  % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
