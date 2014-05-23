@@ -1,5 +1,5 @@
 %  layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a gcis:Report; a bibo:Report; a gcis:Publication;
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
@@ -17,7 +17,7 @@
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-   dcterms:identifier <%= $report->:identifier %>;
+   dcterms:identifier <%= $report->identifier %>;
    dcterms:title "<%= $report->title %>"^^xsd:string;
    rdfs:label "<%= $report->title %>"^^xsd:string;
    prov:label "<%= $report->title %>"^^xsd:string;
