@@ -17,7 +17,7 @@
    gcis:hasFinding  <<%= obj_uri_for($finding)->to_abs %>>;
    dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
 % }
-   dcterms:identifier <%= $report->identifier %>;
+   dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
    rdfs:label "<%= $report->title %>"^^xsd:string;
    prov:label "<%= $report->title %>"^^xsd:string;
