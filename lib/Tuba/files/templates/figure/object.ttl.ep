@@ -1,5 +1,5 @@
 % layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a gcis:Figure;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
