@@ -1,4 +1,4 @@
-% layout "default";
+% layout 'default';
 :<<%= current_resource %>>
    a prov:Entity; a dcmitype:Dataset; a dcat:Dataset; a gcis:Dataset;
    dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
@@ -24,7 +24,6 @@
    gcis:eastBoundLongitude "<%= $dataset->lon_min %>""^^xsd:float;;
    dwc:decimalLongitude "<%= $dataset->lon_min %>";
    geo:long "<%= $dataset->lon_min %>";   
-   dcterms:nativeid "<%= $dataset->native_id %>";
    dwc:year "<%= $dataset->publication_year %>"^^xsd:gYear;
    gcis:spatialExtents "<%= $dataset->spatial_extent %>"; 
    dcterms:spatial "<%= $dataset->spatial_extent %>";
