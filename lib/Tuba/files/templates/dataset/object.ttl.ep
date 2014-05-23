@@ -7,6 +7,7 @@
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
    datacite:doi "<%= $dataset->doi %>";
    dcterms:identifier ":<%= $dataset->identifier %>";
+   datacite:identifier ":<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
    prov:label "<%= $dataset->name %>"^^xsd:string;
    rdfs:label "<%= $dataset->name %>"^^xsd:string;
@@ -37,6 +38,8 @@
    dcterms:PeriodOfTime "<%= $dataset->temporal_extent %>";
    dcterms:hasVersion "<%= $dataset->version %>;
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
+dcterms:subject "<%= $image->attributes %>"^^xsd:string.
+
 % for my $keyword ($dataset->keywords) {
 <<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
 <<%= current_resource %>> dcterms:subject "<%== $keyword->stringify %>" .
