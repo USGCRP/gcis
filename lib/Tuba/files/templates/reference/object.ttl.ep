@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a biro:BibliographicRecord; a co:Set; a frbr:Work; a dcterms:bibliographicCitation;  
+   a biro:BibliographicRecord, co:Set, frbr:Work, dcterms:bibliographicCitation;  
    dcterms:identifier "<%= $reference->identifier %>";
 % if (my $pub = $reference->publication) {
        %    my $report = $pub->to_object;
