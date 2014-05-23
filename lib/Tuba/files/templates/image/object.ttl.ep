@@ -9,6 +9,8 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
    dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
+   gcis:atLocation "<%= $image->position %>";
+   prov:atLocation "<%= $image->position %>";
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    gcis:description "<%= $image->description %>"^^xsd:string;
    dcterms:identifier :<%= $image->identifier %>;
