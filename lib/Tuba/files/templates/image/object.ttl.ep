@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
+   a prov:Entity, gcis:Image, bibo:Image, gcis:Publication, dcmitype:Image;
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
