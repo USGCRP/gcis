@@ -24,8 +24,9 @@
    geo:long "<%= $dataset->lon_min %>";   
    dcterms:nativeid "<%= $dataset->native_id %>";
    dwc:year "<%= $dataset->publication_year %>"^^xsd:gYear;
-   gcis:spatialExtents "<%= $dataset->spatial_extent %>";
-   %# gcis:projection "<%= $dataset->spatial_ref_sys %>";
+   gcis:spatialExtents "<%= $dataset->spatial_extent %>"; 
+   dcterms:spatial "<%= $dataset->spatial_extent %>";
+ %#gcis:projection "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
    ext:StartTime "<%= $dataset->start_time %>"^^xsd:time;
    ext:EndTime "<%= $dataset->end_time %>"^^xsd:time;
