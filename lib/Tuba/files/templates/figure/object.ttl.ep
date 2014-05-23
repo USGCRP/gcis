@@ -15,7 +15,7 @@
    dcterms:description "<%= $figure->caption %>"^^xsd:string;
    dcterms:identifier "<%= $figure->chapter_identifier %>";      
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
-   dcterms:identifier "<%= $figure->identifier %>";                           
+   dcterms:identifier ":<%= $figure->identifier %>";                           
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
    dwc:decimalLatitude "<%= $figure->lat_max %>";
    geo:lat "<%= $figure->lat_max %>";
@@ -29,7 +29,7 @@
    dwc:decimalLongitude "<%= $figure->lon_min %>";
    geo:long "<%= $figure->lon_min %>";
    rdf:rest "<%= $figure->ordinal %>";
-   dcterms:identifier "<:%= $figure->report_identifier %>"; 
+   dcterms:identifier ":<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;     
    dcterms:date "<%= $figure->submission_dt %>"^^xsd:date;
