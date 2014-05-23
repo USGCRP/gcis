@@ -129,7 +129,7 @@
         prov:agent <%= $ctr->person->name %>;
 
         prov:hadRole :scientist;
-        prov:hadPlan :<<%= obj_uri_for($image)->to_abs %>>;
+   %#     prov:hadPlan :<<%= obj_uri_for($image)->to_abs %>>;
 
 ];
 .
