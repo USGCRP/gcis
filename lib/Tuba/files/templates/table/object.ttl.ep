@@ -1,5 +1,5 @@
 % layout 'default';
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Entity; a gcis:Table;
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
    dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
