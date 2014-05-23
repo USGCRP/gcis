@@ -8,7 +8,7 @@
     % }
 % for my $subpub ($reference->subpubrefs) {
        %    my $chapter = $subpub->publication->to_object;
-            gcis:inPublication   <<%= uri($chapter) %>>;
+            gcis:inPublication <<%= uri($chapter) %>>;
     % }
 % if (my $pub = $reference->child_publication) {
        %    my $article = $pub->to_object;
