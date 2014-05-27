@@ -1,7 +1,7 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, dcmitype:Dataset, dcat:Dataset, gcis:Dataset;
-   datacite:AlternateResourceIdentifier "<%= $dataset->native_id;
+   datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
    dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
    dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
