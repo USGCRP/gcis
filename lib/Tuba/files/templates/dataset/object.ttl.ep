@@ -6,8 +6,6 @@
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
    datacite:doi "<%= $dataset->doi %>";
-   dcterms:identifier ":<%= $dataset->identifier %>";
-   datacite:AlternateResourceIdentifier "<%= $dataset->native-id %>";
    datacite:identifier ":<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
    prov:label "<%= $dataset->name %>"^^xsd:string;
@@ -35,7 +33,7 @@
    gcis:hasURL "<%= $dataset->url %>"^^xsd:anyURI.
 % for my $keyword ($dataset->keywords) {
    gcis:attributes "<%== $keyword->stringify %>"^^xsd:string;
-   skos:concept "<%== $keyword->stringify %>"^^xsd:string;
+   skos:concept "<%== $keyword->stringify %>"^^xsd:string.
 % }
 %= include 'prov';
 %= include 'contributors'; 
