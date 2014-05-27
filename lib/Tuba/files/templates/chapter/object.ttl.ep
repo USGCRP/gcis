@@ -53,6 +53,6 @@
         % }   
     % }
 % }
-%= include 'prov';
-%= include 'contributors';
+%# %= include 'prov';
+%# %= include 'contributors';
 %# use gcis:wasWrittenBy (see ontology v. 1.2) to denote authors
