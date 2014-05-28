@@ -1,6 +1,6 @@
 % layout "default";
 <<%= current_resource %>>
-   a gcis:Organiztion; a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;
+   a gcis:Organization, org:Organization, prov:Organization, foaf:Organization, gcis:Agent;
 % if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
