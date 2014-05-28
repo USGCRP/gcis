@@ -10,7 +10,7 @@ my $ua = Mojo::UserAgent->new;
 
 my $report = "nca3"
 
-my $images = $ua->get('http://data.globalchange.gov/report/nca3/image.json')->res->json;
+my $images = $ua->get('http://data.globalchange.gov/report/$report/image.json')->res->json;
 
 for my $image (@$images) {
     my $id = $image->{identifier};
