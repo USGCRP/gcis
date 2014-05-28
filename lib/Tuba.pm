@@ -36,6 +36,9 @@ Tuba provides a RESTful API to GCIS data.
 
     read_only : 0
     hide_login_link : 0
+    google_analytics :
+        id : UA-12345678-9
+        domain : example.gov
 
     auth :
         secret : this_should_be_replaced_with_a_server_secret

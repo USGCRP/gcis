@@ -6,23 +6,24 @@
 <head>
 %= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
 %= stylesheet "/css/gcis.css";
+%= stylesheet "/css/jquery.sidr.light.css";
 %= javascript "//cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js";
 %= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
 %= javascript "//cdn.jsdelivr.net/jquery.form/3.45/jquery.form.min.js";
 %= javascript "/js/gcis.js";
 %= javascript "/js/jquery.sidr.min.js";
 %= javascript "/js/jquery.touchwipe.min.js";
-%= stylesheet "/css/jquery.sidr.light.css";
+% if (my $ga = config('google_analytics')) {
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-51407101-1', 'globalchange.gov');
+  ga('create', '<%= $ga->{id} %>', '<%= $ga->{domain} %>');
   ga('send', 'pageview');
-
 </script>
+% }
 % if (my $desc = (stash 'description')) {
 <meta name="Description" content="<%= $desc %>">
 % }
