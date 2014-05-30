@@ -33,8 +33,7 @@
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
    gcis:hasURL "<%= $dataset->url %>"^^xsd:anyURI.
 % for my $keyword ($dataset->keywords) {
-   gcis:attributes "<%== $keyword->stringify %>"^^xsd:string;
-   skos:concept "<%== $keyword->stringify %>"^^xsd:string.
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
 %# %= include 'prov';
 %# %= include 'contributors'; 
