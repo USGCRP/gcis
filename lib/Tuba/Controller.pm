@@ -231,8 +231,19 @@ sub select {
         $c->stash($table => $loaded);
         return 1;
     }
-    $c->render_not_found;
     return 0;
+}
+
+=head2 render_not_found_or_redirect
+
+Override this if before rendering a not found,
+you want to possibly redirect (to an old identifier)
+
+=cut
+
+sub render_not_found_or_redirect {
+    my $c = shift;
+    return $c->render_not_found;
 }
 
 sub _guess_object_class {

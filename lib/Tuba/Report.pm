@@ -30,12 +30,28 @@ sub _user_can_edit {
     return 0;
 }
 
+sub render_not_found_or_redirect {
+    my $c = shift;
+    my $identifier = $c->stash('report_identifier');
+    my $sth = $c->db->dbh->prepare(<<'SQL', { pg_placeholder_dollaronly => 1 });
+select changed_fields->'identifier'
+ from audit.logged_actions where table_name='report' and changed_fields?'identifier'
+ and row_data->'identifier' = $1
+order by transaction_id limit 1
+SQL
+    my $got = $sth->execute($identifier);
+    my $rows = $sth->fetchall_arrayref;
+    return $c->render_not_found unless $rows && @$rows;
+    my $replacement = $rows->[0][0];
+    return $c->redirect_to("/report/$replacement");
+}
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
     my $object = Report->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/chapters/] )
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     return $c->render(status => 403, text => '403 Forbidden') unless $c->_user_can_view($object);
     $c->stash(object => $object);
     $c->stash(sorters => {
