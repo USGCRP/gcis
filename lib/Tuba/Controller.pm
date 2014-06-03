@@ -234,13 +234,6 @@ sub select {
     return 0;
 }
 
-=head2 render_not_found_or_redirect
-
-Override this if before rendering a not found,
-you want to possibly redirect (to an old identifier)
-
-=cut
-
 sub _pk_to_stashval {
     # Map a primary key column name to a value in the stash
     my $c = shift;
@@ -251,6 +244,19 @@ sub _pk_to_stashval {
     $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
     return $c->stash($stash_name);
 }
+
+=head2 render_not_found_or_redirect
+
+Before rendering a 404, check the history, and possibly redirect.
+
+Note that this only checks the 'identifier'; e.g. in the case where
+multiple changes have been made (/report/oldreport/figure/oldgigure),
+there will be two redirects.  The first one will go to /report/newreport/figure/oldfigure,
+and the second one will go to /report/newreport/figure/newfigure.
+
+Also adding 'noredirect' as an audit note will prevent redirects.
+
+=cut
 
 sub render_not_found_or_redirect {
     my $c = shift;
@@ -273,7 +279,8 @@ sub render_not_found_or_redirect {
 select changed_fields->'identifier'
  from audit.logged_actions where table_name='$table_name' and changed_fields?'identifier'
  and $sql
-order by transaction_id limit 1
+ and audit_note not like '%noredirect%'
+ order by transaction_id limit 1
 SQL
     my $got = $sth->execute(@bind);
     my $rows = $sth->fetchall_arrayref;
