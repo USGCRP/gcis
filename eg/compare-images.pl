@@ -48,13 +48,14 @@ for my $figure (@$figures) {
     my $id = $figure->{identifier};
     my $title = $figure->{title};
     
-    my $index = $index_id{$id};
-    # print "id $id  index $index\n";
-    if(exists($index)) {
+    if(exists($index_id{$id})) {
         print "  gcis id not found in file: $id\n";
         next;
     }
+
+    my $index = $index_id{$id};
     $is_found[$index] = 1;
+
     if($titles[$index] != $title) {
         print "  titles do not match for id $id\n";
         print "    file: $titles[$index]\n";
