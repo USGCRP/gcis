@@ -51,7 +51,7 @@ for my $figure (@$figures) {
     my $index = $index_id{$id};
     # print "id $id  index $index\n";
     if(!$index) {
-        print "  id $id (from gcis) not found (in file)\n";
+        print "  gcis id not found in file: $id\n";
         next;
     }
     $is_found[$index] = 1;
@@ -70,7 +70,7 @@ if ($n != $n_gcis) {
 
 foreach my $index (0..$#ids) {
     if (!$is_found[$index]) {
-        print "  id $ids[$index] (from file) not found (in gics)\n";
+        print "  file id not found in gics: $ids[$index]\n";
     }
 }
 
