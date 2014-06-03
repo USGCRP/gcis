@@ -40,13 +40,17 @@ my $ua = Mojo::UserAgent->new;
 my $figures = $ua->get($url)->res->json;
 # print Dumper $figures;
 
-if ($n !=- @figures) {
+if ($n !=- $n_gcis) {
     print "  number of figures do not match\n";
     print "    file: $n\n";
     print "    gcis: @figures\n";
 }
 
+my @n_gcis = 0;
+
 for my $figure (@$figures) {
+    $n_gcis++;
+
     my $id = $figure->{identifier};
     my $title = $figure->{title};
     
@@ -62,6 +66,12 @@ for my $figure (@$figures) {
         print "    file: $titles[$index]\n";
         print "    gcis: $title\n";
     }
+}
+
+if ($n !=- $n_gcis) {
+    print "  number of figures do not match\n";
+    print "    file: $n\n";
+    print "    gcis: @figures\n";
 }
 
 foreach my $index (0..$#ids) {
