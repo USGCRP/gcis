@@ -66,7 +66,7 @@ sub show {
         )->load(speculative => 1, with => [qw/chapter images/]);
         return $c->redirect_to($object->uri_with_format($c)) if $object;
     };
-    return $c->render_not_found unless $object;
+    return $c->render_not_found_or_redirect unless $object;
 
     if (!$c->stash('chapter_identifier') && $object->chapter_identifier) {
         $c->stash(chapter_identifier => $object->chapter_identifier);

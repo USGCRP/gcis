@@ -241,9 +241,47 @@ you want to possibly redirect (to an old identifier)
 
 =cut
 
+sub _pk_to_stashval {
+    # Map a primary key column name to the stash key name.
+    my $c = shift;
+    my $meta = shift;
+    my $name = shift;
+    my $stash_name = $name;
+    $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
+    $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
+    return $c->stash($stash_name);
+}
+
 sub render_not_found_or_redirect {
     my $c = shift;
-    return $c->render_not_found;
+    my $object_class = $c->_guess_object_class;
+    my $meta = $object_class->meta;
+    my $sql;
+    my @bind;
+    my $table_name = $meta->table;
+    my $identifier;
+    for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
+        my $val = $c->_pk_to_stashval($meta,$name) or next;
+        $identifier = $val if $name eq 'identifier';
+        push @bind, $val;
+        $sql .= " and " if $sql;
+        $sql .= " row_data->'$name' = \$".@bind;
+    }
+    return $c->render_not_found unless $identifier;
+
+    my $sth = $c->db->dbh->prepare(<<SQL, { pg_placeholder_dollaronly => 1 });
+select changed_fields->'identifier'
+ from audit.logged_actions where table_name='$table_name' and changed_fields?'identifier'
+ and $sql
+order by transaction_id limit 1
+SQL
+    my $got = $sth->execute(@bind);
+    my $rows = $sth->fetchall_arrayref;
+    return $c->render_not_found unless $rows && @$rows;
+    my $replacement = $rows->[0][0];
+    my $url = $c->req->url;
+    $url =~ s{/$table_name/$identifier(?=/|$)}{/$table_name/$replacement};
+    return $c->redirect_to($url);
 }
 
 sub _guess_object_class {
@@ -412,12 +450,7 @@ sub _this_object {
     my $meta = $object_class->meta;
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
-        my $stash_name = $name;
-        $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
-        $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
-        my $val = $c->stash($stash_name) or do {
-            next;
-        };
+        my $val = $c->_pk_to_stashval($meta,$name) or next;
         $pk{$name} = $val;
     }
 
