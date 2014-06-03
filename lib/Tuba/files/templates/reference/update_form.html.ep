@@ -28,7 +28,10 @@
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 <div class="form-actions">
+    <div class='input-prepend'>
     <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
+    </div>
 </div>
 %= end
 

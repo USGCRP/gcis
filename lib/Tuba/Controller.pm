@@ -254,7 +254,7 @@ multiple changes have been made (/report/oldreport/figure/oldgigure),
 there will be two redirects.  The first one will go to /report/newreport/figure/oldfigure,
 and the second one will go to /report/newreport/figure/newfigure.
 
-Also adding 'noredirect' as an audit note will prevent redirects.
+Also adding 'no redirect' to the audit note will prevent redirects.
 
 =cut
 
@@ -266,9 +266,13 @@ sub render_not_found_or_redirect {
     my @bind;
     my $table_name = $meta->table;
     my $identifier;
+    my $identifier_column;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
         my $val = $c->_pk_to_stashval($meta,$name) or next;
-        $identifier = $val if $name eq 'identifier';
+        if ($name =~ /^id(entifier)?$/) {
+            $identifier = $val;
+            $identifier_column = $name;
+        }
         push @bind, $val;
         $sql .= " and " if $sql;
         $sql .= " row_data->'$name' = \$".@bind;
@@ -276,10 +280,10 @@ sub render_not_found_or_redirect {
     return $c->render_not_found unless $identifier;
 
     my $sth = $c->db->dbh->prepare(<<SQL, { pg_placeholder_dollaronly => 1 });
-select changed_fields->'identifier'
- from audit.logged_actions where table_name='$table_name' and changed_fields?'identifier'
+select changed_fields->'$identifier_column'
+ from audit.logged_actions where table_name='$table_name' and changed_fields?'$identifier_column'
  and $sql
- and audit_note not like '%noredirect%'
+ and audit_note not like '%no redirect%'
  order by transaction_id limit 1
 SQL
     my $got = $sth->execute(@bind);
@@ -1062,6 +1066,42 @@ sub normalize_form_parameter {
     return $value;
 }
 
+=head2 set_replacement
+
+After deleting an object, indicate that another object takes precedence.
+
+(Not implemented for composite primary keys.)
+
+=cut
+
+sub set_replacement {
+    my $c = shift;
+    my $table_name = shift;
+    my $old_identifier = shift;
+    my $new_identifier = shift;
+    my $dbh = $c->dbs->dbh;
+    $dbh->do(<<SQL, {}, "identifier=>$new_identifier", $old_identifier) and return 1;
+        update audit.logged_actions set changed_fields = ?::hstore
+         where action='D' and table_name='$table_name' and row_data->'identifier' = ?
+SQL
+    $c->stash(error => $dbh->errstr);
+    return 0;
+}
+
+=head2 can_set_replacement
+
+See above.
+
+=cut
+
+sub can_set_replacement {
+    my $c = shift;
+    my $meta = $c->_guess_object_class->meta;
+    my @cols = $meta->primary_key_column_names;
+    return 0 if @cols > 1;
+    return 1;
+}
+
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
@@ -1083,7 +1123,13 @@ sub update {
     }
 
     if ($c->param('delete')) {
+        my $table_name = $object->meta->table;
         if ($object->delete) {
+            my $identifier = $object->pk_values;
+            my $new = $c->param('replacement_identifier');
+            if ($identifier && $new) {
+                $c->set_replacement($table_name, $identifier => $new);
+            }
             $c->flash(message => "Deleted $table");
             return $c->redirect_to('list_'.$table);
         }

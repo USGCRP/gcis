@@ -48,7 +48,7 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('reference_identifier');
     my $reference = Reference->new(identifier => $identifier);
-    $reference->load(speculative => 1) or return $c->render_not_found;
+    $reference->load(speculative => 1) or return $c->render_not_found_or_redirect;
     $c->stash( object => $reference);
     $c->SUPER::show(@_);
 }

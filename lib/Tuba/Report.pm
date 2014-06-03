@@ -251,8 +251,8 @@ update_contributors
 update_keywords
 update_regions
 update_rel
-update 
 remove
+update 
 history
 ]) {
 eval <<DONE;

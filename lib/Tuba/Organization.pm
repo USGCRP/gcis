@@ -14,7 +14,7 @@ sub show {
     my $meta = Organization->meta;
     my $identifier = $c->stash('organization_identifier');
     my $object = Organization->new( identifier => $identifier )->load( speculative => 1 )
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     return $c->SUPER::show(@_);
 }

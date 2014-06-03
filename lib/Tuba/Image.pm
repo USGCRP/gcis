@@ -28,7 +28,7 @@ sub show {
     my $meta = Image->meta;
     my $object = Image->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/figures/] )
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->SUPER::show(@_);

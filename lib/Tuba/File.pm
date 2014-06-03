@@ -21,7 +21,7 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('file_identifier');
     my $meta = File->meta;
-    my $object = File->new(identifier => $identifier)->load(speculative => 1 ) or return $c->render_not_found;
+    my $object = File->new(identifier => $identifier)->load(speculative => 1 ) or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }

@@ -26,7 +26,7 @@ sub show {
     my $person =
       Person->new( id => $identifier )
       ->load( speculative => 1, with => [qw/contributors/] )
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
 
     $c->stash(object => $person);
     $c->stash(meta => Person->meta);
@@ -141,6 +141,36 @@ sub update_rel {
     }
 
     $c->redirect_to($next);
+}
+
+=head2 set_replacement
+
+Override to use id instead of identifier.
+
+=cut
+
+sub set_replacement {
+    my $c = shift;
+    my $table_name = shift;
+    my $old_identifier = shift;
+    my $new_identifier = shift;
+    my $dbh = $c->dbs->dbh;
+    $dbh->do(<<SQL, {}, "id=>$new_identifier", $old_identifier) and return 1;
+        update audit.logged_actions set changed_fields = ?::hstore
+         where action='D' and table_name='$table_name' and row_data->'id' = ?
+SQL
+    $c->stash(error => $dbh->errstr);
+    return 0;
+}
+
+sub _pk_to_stashval {
+    # Map a primary key column name to a value in the stash
+    my $c = shift;
+    my $meta = shift;
+    my $name = shift;
+    my $stash_name = $name;
+    $stash_name = "person_identifier" if $name eq 'id';
+    return $c->stash($stash_name);
 }
 
 1;
