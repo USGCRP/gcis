@@ -48,7 +48,7 @@ for my $figure (@$figures) {
     my $id = $figure->{identifier};
     my $title = $figure->{title};
     
-    if(exists($index_id{$id})) {
+    if(!exists($index_id{$id})) {
         print "  gcis id not found in file: $id\n";
         next;
     }
