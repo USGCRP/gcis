@@ -43,7 +43,9 @@ SQL
     my $rows = $sth->fetchall_arrayref;
     return $c->render_not_found unless $rows && @$rows;
     my $replacement = $rows->[0][0];
-    return $c->redirect_to("/report/$replacement");
+    my $url = $c->req->url;
+    $url =~ s{/report/$identifier(?=/|$)}{/report/$replacement};
+    return $c->redirect_to($url);
 }
 
 sub show {
@@ -142,7 +144,7 @@ sub list {
 sub select {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
-    my $report = $c->_this_object or do { $c->render_not_found; return 0; };
+    my $report = $c->_this_object or do { $c->render_not_found_or_redirect; return 0; };
     $c->_user_can_view($report) or do { $c->render(status => 403, text => "Forbidden"); return 0; };
     $c->stash(report => $report);
     return 1;
