@@ -50,7 +50,7 @@ for my $figure (@$figures) {
     
     my $index = $index_id{$id};
     # print "id $id  index $index\n";
-    if(!$index) {
+    if(undef $index) {
         print "  gcis id not found in file: $id\n";
         next;
     }
