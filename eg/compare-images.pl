@@ -62,7 +62,7 @@ for my $figure (@$figures) {
     }
 }
 
-if ($n !=- $n_gcis) {
+if ($n != $n_gcis) {
     print "  number of figures do not match\n";
     print "    file: $n\n";
     print "    gcis: $n_gcis\n";
