@@ -242,7 +242,7 @@ you want to possibly redirect (to an old identifier)
 =cut
 
 sub _pk_to_stashval {
-    # Map a primary key column name to the stash key name.
+    # Map a primary key column name to a value in the stash
     my $c = shift;
     my $meta = shift;
     my $name = shift;
