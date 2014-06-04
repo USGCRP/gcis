@@ -24,7 +24,9 @@ foreach $line (<STDIN>) {
     push @ids, $id;
     push @titles, $title;
 }
-print "checking $#ids figures\n";
+my $n = @ids;
+print "checking $n figures\n";
+my @is_found = (0) x $n;
 
 my %index_id = map {$ids[$_] => $_} 0..$#ids;
 # print Dumper %index_id;
@@ -38,20 +40,39 @@ my $ua = Mojo::UserAgent->new;
 my $figures = $ua->get($url)->res->json;
 # print Dumper $figures;
 
+my $n_gcis = 0;
+
 for my $figure (@$figures) {
+    $n_gcis++;
+
     my $id = $figure->{identifier};
     my $title = $figure->{title};
     
-    my $index = $index_id{$id};
-    # print "id $id  index $index\n";
-    if(!$index) {
-        print "  id $id not found\n";
+    if(!exists($index_id{$id})) {
+        print "  gcis id not found in file: $id\n";
         next;
     }
+
+    my $index = $index_id{$id};
+    $is_found[$index] = 1;
+
     if($titles[$index] != $title) {
         print "  titles do not match for id $id\n";
-        print "    1: $titles[$index]\n";
-        print "    2: $title\n";
+        print "    file: $titles[$index]\n";
+        print "    gcis: $title\n";
     }
 }
+
+if ($n != $n_gcis) {
+    print "  number of figures do not match\n";
+    print "    file: $n\n";
+    print "    gcis: $n_gcis\n";
+}
+
+foreach my $index (0..$#ids) {
+    if (!$is_found[$index]) {
+        print "  file id not found in gics: $ids[$index]\n";
+    }
+}
+
 print "done\n";
