@@ -27,7 +27,8 @@ sub list {
 
 sub show {
     my $c = shift;
-    $c->stash('object', $c->_this_object);
+    my $book = $c->_this_object or return $c->render_not_found_or_redirect;
+    $c->stash('object', $book);
     $c->SUPER::show(@_);
 }
 

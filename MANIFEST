@@ -302,14 +302,12 @@ db/patches/1080_activity.sql
 db/patches/1090_chapter_sortkey.sql
 db/patches/1100_chapter_doi.sql
 db/patches/1110_pubfile.sql
-eg/atrac_upload.html
-eg/cleanup.sql
+db/patches/1120_schema_doc.sql
+eg/compare-images.pl
 eg/compare.pl
-eg/image-meta.pl
 eg/import_countries.pl
 eg/import_gcmd_keywords
 eg/import_keywords
-eg/journal_images.pl
 eg/login.pl
 eg/nginx.conf
 eg/report_thumbnails.pl

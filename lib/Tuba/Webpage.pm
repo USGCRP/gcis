@@ -15,7 +15,8 @@ sub list {
 
 sub show {
     my $c = shift;
-    $c->stash('object', $c->_this_object);
+    my $webpage = $c->_this_object or return $c->render_not_found_or_redirect;
+    $c->stash(object => $webpage);
     $c->SUPER::show(@_);
 }
 

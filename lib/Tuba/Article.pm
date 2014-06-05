@@ -16,7 +16,7 @@ sub show {
     my $identifier = $c->stash('article_identifier');
     my $object =
       Article->new( identifier => $identifier )->load( speculative => 1, with_objects => [qw/journal/])
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }
