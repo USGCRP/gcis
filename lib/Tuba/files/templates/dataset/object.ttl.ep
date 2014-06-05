@@ -11,7 +11,7 @@
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
    prov:label "<%= $dataset->name %>"^^xsd:string;
    rdfs:label "<%= $dataset->name %>"^^xsd:string;
-   gcis:northBoundLatitude "<%= $dataset->lat_max %>";
+   gcis:northBoundLatitude "<%= $dataset->lat_max %>"^^xsd:float;;
    gcis:southBoundLatitude "<%= $dataset->lat_min %>"^^xsd:float;
    gcis:westBoundLongitude "<%= $dataset->lon_max %>"^^xsd:float;
    gcis:eastBoundLongitude "<%= $dataset->lon_min %>"^^xsd:float;
