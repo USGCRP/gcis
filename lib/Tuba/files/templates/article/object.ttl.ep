@@ -1,16 +1,13 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, bibo:Article;   
-   dcterms:isPartOf <<%= uri($article->journal) %>>;
-   gcis:inPublication <<%= uri($article->journal) %>>;
+   dcterms:identifier "<%= $article->identifier %>";
    bibo:doi "<%= $article->doi %>";
+   dcterms:title "<%= $article->title %>"^^xsd:string;
    gcis:inPublication <<%= uri($article->journal) %>>;
+   bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
    bibo:volume "<%= $article->journal_vol %>";
-   dcterms:title "<%= $article->title %>";
-   rdfs:label "<%= $article->title %>"^^xsd:string;
-   prov:label "<%= $article->title %>"^^xsd:string;
-   gcis:hasURL "<%= $article->url %>"^^xsd:string;
-   bibo:uri "<%= $article->uri($self) %>"^^xsd:anyURI;
-   dwc:year "<%= $article->year %>"^^xsd:gYear.
+   dwc:year "<%= $article->year %>"^^xsd:gYear;
+   gcis:hasURL "<%= $article->url %>"^^xsd:anyURI.
 %= include 'prov';
