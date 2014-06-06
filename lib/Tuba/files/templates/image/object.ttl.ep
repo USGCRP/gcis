@@ -3,17 +3,13 @@
    a prov:Entity, gcis:Image, fabio:Image, bibo:Image, gcis:Publication, dcmitype:Image;
   % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
- % }
-% for my $keyword ($image->keywords) {
+  % }
+  % for my $keyword ($image->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string;
-% }
-   gcis:atLocation "<%= $image->position %>";
-   prov:atLocation "<%= $image->position %>";
+  % }
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    gcis:description "<%= $image->description %>"^^xsd:string;
-   dcterms:identifier :<%= $image->identifier %>;
+   dcterms:identifier "<%= $image->identifier %>";
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $image->lat_min %>^^"xsd:float;
    gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float;
@@ -22,8 +18,6 @@
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    dcterms:title "<%= $image->title %>"^^xsd:string;      
-   rdf:label "<%= $image->title %>"^^xsd:string;
-   prov:label "<%= $image->title %>"^^xsd:string;
    dcterms:subject "<%= $image->attributes %>"^^xsd:string.
 %= include 'prov';
 %= include 'contributors';
