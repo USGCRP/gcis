@@ -29,9 +29,12 @@
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
 <title><%= title %> - GCIS</title>
+<style>
+    .hideme { display:none; }
+</style>
 </head>
     <body>
-<div id="sidr">
+ <div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
         <li><span>Search</span>
@@ -142,6 +145,7 @@
 <script>
   $(document).ready(function() {
       $('#simple-menu').sidr();
+      $("#sidr").removeclass('hideme');
   });
   $(window).touchwipe({
     wipeLeft: function() {
