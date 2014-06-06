@@ -1,34 +1,22 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, gcis:Finding;
-% if (my $chapter = $finding->chapter) {
-   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
-% }
-% if (my $chapter = stash 'chapter') {
-   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($chapter)->to_abs %>>;
-% }
-   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>;
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
+   dcterms:identifier "<%= $finding->identifier %>";
+   dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
+   gcis:FindingNumber "<%= $finding->ordinal %>";
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-% if (my $chapter = stash 'chapter') { 
-   dcterms:identifier "<%= $chapter->identifier %>";
-% }
-% if (my $chapter = $finding->chapter) {
-   gcis:isBasedOn "<%= $chapter->identifier %>";
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-% }
-   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
    gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
    gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
    dcterms:identifier "<%= $finding->identifier %>";
-   rdf:rest "<%= $finding->ordinal %>";
    gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
-   rdfs:label "<%= $finding->statement %>"^^xsd:string;
-   dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
    gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
-%= include 'prov';
+% if (my $chapter = stash 'chapter') {
+   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
+% }
+% if (my $chapter = $finding->chapter) {
+   gcis:isBasedOn "<%= $chapter->identifier %>";
+   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>.
+% }
+  %= include 'prov';
 
 
