@@ -27,6 +27,7 @@
 @prefix schema: <http://schema.org/> .
 @prefix : <http://data.globalchange.gov/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@base <http://data.globalchange.gov/>
 % }
 
 %= content
