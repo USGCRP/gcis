@@ -1,27 +1,25 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, fabio:Figure, gcis:Figure;
+   dcterms:identifier ":<%= $figure->identifier %>";
+   dcterms:title "<%= $figure->title %>"^^xsd:string;
+   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
-% }
+% }   
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
-   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;                  
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
-   dcterms:identifier ":<%= $figure->identifier %>";                           
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float;
    gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
    gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
-   dcterms:identifier "<%= $figure->report_identifier %>"; 
    cito:cites "<%= $figure->source_citation %>";
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;     
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;     
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;            
-   dcterms:title "<%= $figure->title %>"^^xsd:string;                
 % for my $keyword ($figure->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
