@@ -1,16 +1,12 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, bibo:Webpage;
-   dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
-   prov:label "<%= $webpage->title %>"^^xsd:string;
-   rdfs:label "<%= $webpage->title %>"^^xsd:string;
-   bibo:uri "<%= $webpage->url %>"^^xsd:anyURI;
+   dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
 % for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"xsd:string;
-   dcterms:subject "<%== $keyword->stringify %>"^^xsd:string.
- % }
+   gcis:subject "<%== $keyword->stringify %>"xsd:string.
+% }
 %= include 'prov';
 
