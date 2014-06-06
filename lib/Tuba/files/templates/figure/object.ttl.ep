@@ -6,9 +6,7 @@
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;                  
