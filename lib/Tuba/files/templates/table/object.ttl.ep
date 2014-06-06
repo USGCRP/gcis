@@ -1,24 +1,18 @@
 % layout 'default';
 <<%= current_resource %>>
    a prov:Entity, gcis:Table;
+   dcterms:identifier "<%= $table->identifier %>";
+   dcterms:title "<%= $table->title %>"^^xsd:string;
+   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
 % }
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($array)->to_abs %>>;
 % }
 % for my $keyword ($table->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-   dcterms:subject "<%== $keyword->stringify %>"^^xsd:strong;
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }
-   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
-   dcterms:description "<%= $table->caption %>"^^xsd:string;
-   dcterms:identifier "<%= $table->identifier %>";
-   dcterms:title "<%= $table->title %>"^^xsd:string;
-   rdfs:label "<%= $table->title %>"^^xsd:string;
-   prov:label "<%= $table->title %>"^^xsd:string.
 %= include 'prov';
 
