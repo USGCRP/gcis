@@ -15,9 +15,6 @@
    prov:actedOnBehalfOf <<%= uri($org) %>>;
    gcis:worksAt <<%= uri($org) %>>;
    gcis:hasOrganization <<%= uri($org) %>>;
-  :$org
-   a gcis:Organiztion; a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;
-   foaf:name "<%= $organization->name %>";
 
  % my $ctr = $object->contributors;
  % for my $ctr (@{ $object->contributors }) {
