@@ -1,5 +1,5 @@
 
-Global Change Information System [![Build Status](https://secure.travis-ci.org/bduggan/gcis.png)](http://travis-ci.org/bduggan/gcis)
+Global Change Information System [![Build Status](https://secure.travis-ci.org/USGCRP/gcis.png)](http://travis-ci.org/USGCRP/gcis)
 ================================
 
 This is the HTML front end and API for the [Global Change Information System](http://data.globalchange.gov) (GCIS).
