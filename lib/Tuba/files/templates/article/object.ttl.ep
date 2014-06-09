@@ -7,7 +7,6 @@
    gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
-   bibo:volume "<%= $article->journal_vol %>";
    dwc:year "<%= $article->year %>"^^xsd:gYear;
    gcis:hasURL "<%= $article->url %>"^^xsd:anyURI.
 %= include 'prov';
