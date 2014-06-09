@@ -17,8 +17,8 @@
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
 % }
 % for my $keyword ($chapter->keywords) {
-   gcis:subject "<%== $keyword->stringify %>^^xsd:string;
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
-% %= include 'prov';
-% %= include 'contributors';
+%= include 'prov';
+%# %= include 'contributors';
 
