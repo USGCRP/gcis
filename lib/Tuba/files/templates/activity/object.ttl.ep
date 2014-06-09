@@ -3,12 +3,8 @@
    a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
-   ext:StartTime "<%= $activity->start_time %>"^^xsd:dateTime;
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
-   ext:EndTime "<%= $activity->end_time %>"^^xsd:dateTime;
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
    fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
-   prov:generated "<%= tl($activity->output_artifacts) %>";
-   dcmitype:software "<%= tl($activity->computing_environment) %>"^^xsd:string;
    gcis:Software "<%= tl($activity->computing_environment) %>"^^xsd:string;
    meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string.
