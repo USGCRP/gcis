@@ -12,3 +12,4 @@
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:worksAt <<%= uri($org) %>>.
+% }
