@@ -8,14 +8,12 @@ use Data::Dumper;
 __PACKAGE__->meta->column('attrs')->add_trigger(
     inflate => sub {
         my ($o,$v) = @_;
-        my $h = Pg::hstore::decode($v);
-        return $h;
+        return Pg::hstore::decode($v);
     });
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
-        do { $_ = encode('UTF8',$_) } for values %$v;
         return Pg::hstore::encode($v);
     });
 

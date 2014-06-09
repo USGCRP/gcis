@@ -8,15 +8,12 @@ use strict;
 __PACKAGE__->meta->column('attrs')->add_trigger(
     inflate => sub {
         my ($o,$v) = @_;
-        my $h = Pg::hstore::decode($v);
-        do { $_ = decode('UTF8',$_) } for values %$h;
-        return $h;
+        return Pg::hstore::decode($v);
     });
 
 __PACKAGE__->meta->column('attrs')->add_trigger(
     deflate => sub {
         my ($o,$v) = @_;
-        do { utf8::downgrade($_) if defined($_) } for values %$v;
         return Pg::hstore::encode($v);
     });
 
