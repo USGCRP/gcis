@@ -6,7 +6,7 @@
    dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
 % for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"xsd:string.
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }
 %= include 'prov';
 
