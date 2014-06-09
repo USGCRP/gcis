@@ -7,7 +7,7 @@
    dcterms:type "<%= $report->report_type_identifier %>";
    dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
    dcterms:description "<%= $report->summary %>"^^xsd:string;
-   bibo:doi "<%= $report->doi %>"^^;
+   bibo:doi "<%= $report->doi %>;
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
 % for my $chapter ($report->chapters) {
@@ -22,5 +22,5 @@
 % for my $finding ($report->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
 % }
-%= include 'prov';
+%# = include 'prov';
 
