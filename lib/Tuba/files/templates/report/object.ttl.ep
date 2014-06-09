@@ -1,15 +1,15 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity, gcis:Report, bibo:Report, gcis:Publication;
-   dcterms:identifier "<%= $report->identifier %>";
-   dcterms:title "<%= $report->title %>"^^xsd:string;
-   dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
-   dcterms:type "<%= $report->report_type_identifier %>";
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
-   dcterms:description "<%= $report->summary %>"^^xsd:string;
-   bibo:doi "<%= $report->doi %>;
-   gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
-   dcterms:subject "<%= $report->topic %>"^^xsd:string;
+    a prov:Entity, gcis:Report, bibo:Report, gcis:Publication;
+    dcterms:identifier "<%= $report->identifier %>";
+    dcterms:title "<%= $report->title %>"^^xsd:string;
+    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
+    dcterms:type "<%= $report->report_type_identifier %>";
+    dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
+    dcterms:description "<%= $report->summary %>"^^xsd:string;
+    bibo:doi "<%= $report->doi %>";
+    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
+    dcterms:subject "<%= $report->topic %>"^^xsd:string;
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
