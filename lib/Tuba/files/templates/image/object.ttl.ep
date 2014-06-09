@@ -21,4 +21,4 @@
      gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
   % }
 %= include 'prov';
-%= include 'contributors';
+%# %= include 'contributors';
