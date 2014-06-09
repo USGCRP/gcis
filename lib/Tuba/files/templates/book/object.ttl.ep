@@ -6,7 +6,7 @@
    bibo:isbn "<%= $book->isbn %>";
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
-   gcis:hasPublisher "<%= $book->publisher %>^^xsd:string;
+   gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
 % for my $keyword ($book->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
