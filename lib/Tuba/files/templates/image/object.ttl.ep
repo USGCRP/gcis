@@ -15,10 +15,10 @@
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
   % for my $figure ($image->figures) {
-   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+     gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
   % }
   % for my $keyword ($image->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+     gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
   % }
 %= include 'prov';
 %= include 'contributors';
