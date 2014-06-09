@@ -8,7 +8,6 @@
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
 % for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 % for my $finding ($chapter->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
