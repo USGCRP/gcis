@@ -1,5 +1,5 @@
 % layout "default";
-:<<%= current_resource %>>
+<<%= current_resource %>>
    a prov:Activity;
    dcterms:identifier :<%= $activity->identifier %>;
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
