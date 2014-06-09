@@ -4,10 +4,7 @@
    dcterms:identifier "<%= $person->id %>";
    vivo:orcidId "<%= $person->orcid %>";
    foaf:firstName "<%= $person->first_name %>";
-   foaf:givenName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
-   foaf:familyName "<%= $person->last_name %>";
-   gcis:hasURL "<%= $person->url %>"^^xsd:anyURI;
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
