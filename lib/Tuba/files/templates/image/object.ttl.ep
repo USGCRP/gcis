@@ -1,61 +1,24 @@
 % layout 'default';
-<<%= current_resource %>>  
-   a prov:Entity; a gcis:Image; a bibo:Image; a gcis:Publication; a dcmitype:Image;
-%# The following only returns figure title without "2.1", so holding off and commented out
-  % for my $figure ($image->figures) {
-   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($figure)->to_abs %>>;
- % }
-% for my $keyword ($image->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
-% }
-   prov:generatedAtTime "<%= $image->create_dt %>";
-   gcis:description "<%= $image->description %>";
+<<%= current_resource %>>
+   a prov:Entity, gcis:Image, fabio:Image, bibo:Image, gcis:Publication, dcmitype:Image;
+   dcterms:title "<%= $image->title %>"^^xsd:string;  
    dcterms:identifier "<%= $image->identifier %>";
-   gcis:northBoundLatitude "<%= $image->lat_max %>";
-   dwc:decimalLatitude "<%= $image->lat_max %>";
-   geo:lat "<%= $image->lat_max %>";
-   gcis:southBoundLatitude "<%= $image->lat_min %>";
-   dwc:decimalLatitude "<%= $image->lat_min %>";
-   geo:lat "<%= $image->lat_min %>";
-   gcis:westBoundLongitude "<%= $image->lon_max %>";
-   dwc:decimalLongitude "<%= $image->lon_max %>";
-   geo:long "<%= $image->lon_max %>";
-   gcis:eastBoundLongitude "<%= $image->lon_min %>";
-   dwc:decimalLongitude "<%= $image->lon_min %>";
-   geo:long "<%= $image->lon_min %>";
-   dcterms:dateSubmitted "<%= $image->submission_dt %>";
-   dcterms:date "<%= $image->submission_dt %>";
-   gcis:endedAt "<%= $image->time_end %>";
-   gcis:startedAt "<%= $image->time_start %>";
-   dcterms:title "<%= $image->title %>";      
-   rdf:label "<%= $image->title %>";
-   prov:label "<%= $image->title %>".
+   gcis:description "<%= $image->description %>"^^xsd:string;
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
+   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
+   gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
+   gcis:southBoundLatitude "<%= $image->lat_min %>^^"xsd:float;
+   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float;
+   gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
+   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
+   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
+   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
+  % for my $figure ($image->figures) {
+     gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+  % }
+  % for my $keyword ($image->keywords) {
+     gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+  % }
 %= include 'prov';
-%#  gcis:spatial_scale "<%= $image->scale %>";
-%#  gcis:spatial_ref_sys "<%= $image->projection %>";
-%# gcis:ishostedby "<%= $image->hosting_agency %>";                    
-%# dcterms:available "<%= $image->release_date %>";                 
-%# % for my $right ($image->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>";                      
- %# }
-%# dcterms:license "<%= $image->license %>";                           
-%# dcterms:rights  "<%= $image->license %>";
-
-%# dcterms:format "<%= $image->format %>";                            
-%# gcis:hasURL "<%= $image->URL %>";                    
- 
- %# % for my $person ($image->persons) {                    
- %#   gcis:PointOfContact "<%= $person->point_of_contact %>";  
-%# % }   
-    
-%# % for my $person ($image->persons) {
-%#    gcis:wasCreatedBy "<%= $person->author %>"; 
-%# }
-
-
-%# dwc:geodeticDatum "<%= $image->image_datum %>";
-
-%# dwc:year "<%= $image->year %>";
-%# xsd:gYear "<%= $image->year %>"; 
+%# %= include 'contributors';

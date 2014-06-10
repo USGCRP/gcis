@@ -1,39 +1,22 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Finding;
-% if (my $chapter = $finding->chapter) {
-   gcis:inPublication <<%= obj_uri_for($chapter)->to_abs %>>;
-% }
+   a prov:Entity, gcis:Finding;
+   dcterms:identifier "<%= $finding->identifier %>";
+   dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
+   gcis:FindingNumber "<%= $finding->ordinal %>";
+   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
+   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
+   dcterms:identifier "<%= $finding->identifier %>";
+   gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
+   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
 % if (my $chapter = stash 'chapter') {
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($chapter)->to_abs %>>;
-% }
-   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>;
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-% if (my $chapter = stash 'chapter') { 
-   dcterms:identifier "<%= $chapter->identifier %>";
 % }
 % if (my $chapter = $finding->chapter) {
    gcis:isBasedOn "<%= $chapter->identifier %>";
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
+   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>.
 % }
-   gcis:isBasedOn <<%= obj_uri_for($report)->to_abs %>>; 
-   prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:confidence "<%= tl($finding->confidence) %>";
-   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>";
-   dcterms:identifier "<%= $finding->identifier %>";
-   rdf:rest "<%= $finding->ordinal %>";
-   gcis:findingProcess "<%= tl($finding->process) %>";
-   gcis:inPublication "<%= $report->identifier %>";
-   rdfs:label "<%= $finding->statement %>";
-   dcterms:description "<%= tl($finding->statement) %>";
-   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>";
-%= include 'prov';
-%# gcis:hasTraceableAccount "<%= $finding->Traceable_Account->identifier>".
-%# % for my $keyword ($finding->keywords) {
-%#   gcis:subject "<%== $keyword->stringify %>";
-%#   dcterms:subject "<%== $keyword->stringify %>";
-%# % }
+  %= include 'prov';
+
 

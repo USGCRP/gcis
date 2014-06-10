@@ -1,17 +1,13 @@
 % layout "default";
 <<%= current_resource %>>
-   a prov:Entity; a bibo:Journal;
- % for my $article ($journal->articles) {
+   a prov:Entity, bibo:Journal;
+   dcterms:title "<%= $journal->title %>"^^xsd:string;
+   bibo:eissn "<%= $journal->online_issn %>";
+   bibo:issn "<%= $journal->print_issn %>";
+   gcis:hasPublisher "<%= $journal->publisher %>"; 
+% for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
    dwc:Countrycode "<%= $journal->country %>";
-   dcterms:identifier "<%= $journal->identifier %>";
-   bibo:eissn "<%= $journal->online_issn %>";
-   bibo:issn "<%= $journal->print_issn %>";
-   gcis:hasPublisher "<%= $journal->publisher %>";
-   prov:wasAttributedTo "<%= $journal->publisher %>";
-   dcterms:title "<%= $journal->title %>";
-   rdfs:label "<%= $journal->title %>";
-   prov:label "<%= $journal->title %>";
-   gcis:hasURL "<%= $journal->url %>".
+   gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI.
 %= include 'prov'; 

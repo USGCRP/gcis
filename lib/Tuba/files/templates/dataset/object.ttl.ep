@@ -1,44 +1,32 @@
-% layout "default";
+% layout 'default';
 <<%= current_resource %>>
-   a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
-   dcterms:date "<%= $dataset->access_dt %>";
-   dcterms:date "<%= $dataset->release_dt %>";
+   a prov:Entity, dcmitype:Dataset, dcat:Dataset, gcis:Dataset;
+   datacite:identifier "<%= $dataset->identifier %>";
+if { datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>"; }
+   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
+   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
-   dcterms:description "<%= tl($dataset->description) %>";
-   datacite:doi "<%= $dataset->doi %>";
-   dcterms:identifier "<%= $dataset->identifier %>";
-   dcterms:title "<%= $dataset->name %>";
-   prov:label "<%= $dataset->name %>";
-   rdfs:label "<%= $dataset->name %>";
-   gcis:northBoundLatitude "<%= $dataset->lat_max %>";
-   dwc:decimalLatitude "<%= $dataset->lat_max %>";
-   geo:lat "<%= $dataset->lat_max %>";
-   gcis:southBoundLatitude "<%= $dataset->lat_min %>";
-   dwc:decimalLatitude "<%= $dataset->lat_min %>";
-   geo:lat "<%= $dataset->lat_min %>";
-   gcis:westBoundLongitude "<%= $dataset->lon_max %>";
-   dwc:decimalLongitude "<%= $dataset->lon_max %>";
-   geo:long "<%= $dataset->lon_max %>";
-   gcis:eastBoundLongitude "<%= $dataset->lon_min %>";
-   dwc:decimalLongitude "<%= $dataset->lon_min %>";
-   geo:long "<%= $dataset->lon_min %>";   
-   dcterms:nativeid "<%= $dataset->native_id %>";
-   xsd:gYear "<%= $dataset->publication_year %>";
-   dwc:year "<%= $dataset->publication_year %>";
-   gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
-   gcis:projection "<%= $dataset->spatial_ref_sys %>";
-   gcis:spatialResolution "<%= $dataset->spatial_res %>";
-   ext:StartTime "<%= $dataset->start_time %>";
-   ext:EndTime "<%= $dataset->end_time %>";
-   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
-   gcis:accessURL "<%= $dataset->url %>";
-   gcis:hasURL "<%= $dataset->url %>";
+   dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
+if { datacite:doi "<%= $dataset->doi %>"; }
+   dcterms:title "<%= $dataset->name %>"^^xsd:string;
+   gcis:northBoundLatitude "<%= $dataset->lat_max %>"^^xsd:float;;
+   gcis:southBoundLatitude "<%= $dataset->lat_min %>"^^xsd:float;
+   gcis:westBoundLongitude "<%= $dataset->lon_max %>"^^xsd:float;
+   gcis:eastBoundLongitude "<%= $dataset->lon_min %>"^^xsd:float;
+   dcterms:issued "<%= $dataset->publication_year %>"^^xsd:gYear;
+   gcis:spatialExtents "<%= $dataset->spatial_extent %>"; 
+   dwc:gedeticDatum "<%= $dataset->spatial_ref_sys %>";
+   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+if { gcis:startedAt "<%= $dataset->start_time %>"^^xsd:time; }
+   gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time;
+   gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
    dcterms:hasVersion "<%= $dataset->version %>";
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
+if { dcterms:verticalExtents "<%= $dataset->vertical_extent %>"; }
+   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string;
+   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
 % for my $keyword ($dataset->keywords) {
-<<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
-<<%= current_resource %>> dcterms:subject "<%== $keyword->stringify %>" .
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
-%= include 'prov';
-%= include 'contributors'; 
+   %= include 'prov';
+%# %= include 'contributors'; 
 

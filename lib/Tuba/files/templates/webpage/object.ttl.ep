@@ -1,26 +1,12 @@
 % layout 'default';
 <<%= current_resource %>>
-   a bibo:Webpage;
-   dcterms:date "<%= $webpage->access_date %>";
+   a prov:Entity, bibo:Webpage;
    dcterms:identifier "<%= $webpage->identifier %>";
-   dcterms:title "<%= $webpage->title %>";
-   prov:label "<%= $webpage->title %>";
-   rdfs:label "<%= $webpage->title %>";
-   bibo:uri "<%= $webpage->url %>";
-   gcis:hasURL "<%= $webpage->url %>";
-%= include 'prov';
-   
- %#  gcis:Location "<%= $webpage->pub_location %>";
-%#   gcis:hasPublisher "<%= $webpage->hasPublisher %>";
-%#     dwc:year "<%= $webpage->year %>";
-%#   xsd:gYear "<%= $webpage->year %>";
-%#   gcis:Organization "<%= $webpage->organization %>';
-
-%# % for my $webpage ($webpage->persons) {
-%#   gcis:hasAuthor  "<%= $webpage->author %>";
-%#   prov:wasAttributedTo  "<%= $webpage->author %>".
+   dcterms:title "<%= $webpage->title %>"^^xsd:string;
+   dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
+   gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
 % for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>".
- % }
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+% }
+%= include 'prov';
 

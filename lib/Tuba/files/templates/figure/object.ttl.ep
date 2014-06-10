@@ -1,58 +1,28 @@
 % layout 'default';
-
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Figure;
+   a prov:Entity, fabio:Figure, gcis:Figure;
+   dcterms:identifier ":<%= $figure->identifier %>";
+   dcterms:title "<%= $figure->title %>"^^xsd:string;
+   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   gcis:inPublication <<%= uri($chapter) %>>;
+   gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
-% }
-%# % for my $ref ($article->get_references) {
-%#   biro:isReferencedBy <<%= uri($ref); %>>
-%# % }
-%# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:figureNumber "<%= $figure->numeric %>";
-   gcis:hasCaption "<%= $figure->caption %>";                              
-   dcterms:description "<%= $figure->caption %>";
-   dcterms:identifier "<%= $figure->chapter_identifier %>";      
-   prov:generatedAtTime "<%= $figure->create_dt %>";      
-   dcterms:identifier "<%= $figure->identifier %>";                           
-   gcis:northBoundLatitude "<%= $figure->lat_max %>";
-   dwc:decimalLatitude "<%= $figure->lat_max %>";
-   geo:lat "<%= $figure->lat_max %>";
-   gcis:southBoundLatitude "<%= $figure->lat_min %>";
-   dwc:decimalLatitude "<%= $figure->lat_min %>";
-   geo:lat "<%= $figure->lat_min %>";
-   gcis:westBoundLongitude "<%= $figure->lon_max %>";
-   dwc:decimalLongitude "<%= $figure->lon_max %>";
-   geo:long "<%= $figure->lon_max %>";
-   gcis:eastBoundLongitude "<%= $figure->lon_min %>";
-   dwc:decimalLongitude "<%= $figure->lon_min %>";
-   geo:long "<%= $figure->lon_min %>";
-   rdf:rest "<%= $figure->ordinal %>";
-   dcterms:identifier "<%= $figure->report_identifier %>"; 
+% }   
+   rdf:value "<%= $figure->numeric %>"^^xsd:integer;
+   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
+   gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
+   gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float;
+   gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
+   gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
    cito:cites "<%= $figure->source_citation %>";
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>";     
-   dcterms:date "<%= $figure->submission_dt %>";
-   gcis:startedAt "<%= $figure->time_start %>";                          
-   gcis:endedAt "<%= $figure->time_end %>";                           
-   dcterms:title "<%= $figure->title %>";                                   
-   rdfs:label "<%= $figure->title %>";
-   prov:label "<%= $figure->title %>".
+   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;     
+   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;            
 % for my $keyword ($figure->keywords) {
-   gcis:attributes "<%== $keyword->stringify %>";
-   skos:concept "<%== $keyword->stringify %>";
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
-
 %= include 'prov';
-%# % for my $right ($figure->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>".                     
-%# % }
-
-%# uuid
 
 

@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a biro:BibliographicRecord; a co:Set; a frbr:Work; a dcterms:bibliographicCitation;  
+   a biro:BibliographicRecord, co:Set, frbr:Work, dcterms:bibliographicCitation;  
    dcterms:identifier "<%= $reference->identifier %>";
 % if (my $pub = $reference->publication) {
        %    my $report = $pub->to_object;
@@ -8,7 +8,7 @@
     % }
 % for my $subpub ($reference->subpubrefs) {
        %    my $chapter = $subpub->publication->to_object;
-            gcis:inPublication   <<%= uri($chapter) %>>;
+            gcis:inPublication <<%= uri($chapter) %>>;
     % }
 % if (my $pub = $reference->child_publication) {
        %    my $article = $pub->to_object;
