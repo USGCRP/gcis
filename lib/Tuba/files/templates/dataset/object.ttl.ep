@@ -3,27 +3,27 @@
    a prov:Entity, dcmitype:Dataset, dcat:Dataset, gcis:Dataset;
    datacite:identifier "<%= $dataset->identifier %>";
 if { datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>"; }
-   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
-   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
+if {   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date; }
+if {   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date; }
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
 if { datacite:doi "<%= $dataset->doi %>"; }
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
-   gcis:northBoundLatitude "<%= $dataset->lat_max %>"^^xsd:float;;
-   gcis:southBoundLatitude "<%= $dataset->lat_min %>"^^xsd:float;
-   gcis:westBoundLongitude "<%= $dataset->lon_max %>"^^xsd:float;
-   gcis:eastBoundLongitude "<%= $dataset->lon_min %>"^^xsd:float;
-   dcterms:issued "<%= $dataset->publication_year %>"^^xsd:gYear;
-   gcis:spatialExtents "<%= $dataset->spatial_extent %>"; 
-   dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
-   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+if {   gcis:northBoundLatitude "<%= $dataset->lat_max %>"^^xsd:float; }
+if {   gcis:southBoundLatitude "<%= $dataset->lat_min %>"^^xsd:float; }
+if {   gcis:westBoundLongitude "<%= $dataset->lon_max %>"^^xsd:float; }
+if {   gcis:eastBoundLongitude "<%= $dataset->lon_min %>"^^xsd:float; }
+if {   dcterms:issued "<%= $dataset->publication_year %>"^^xsd:gYear; }
+if {   gcis:spatialExtents "<%= $dataset->spatial_extent %>"; }
+if {   dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>"; }
+if {   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string; }
 if { gcis:startedAt "<%= $dataset->start_time %>"^^xsd:time; }
-   gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time;
-   gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
-   dcterms:hasVersion "<%= $dataset->version %>";
+if {   gcis:endedAt "<%= $dataset->end_time %>"^^xsd:time; }
+if {   gcis:TemporalExtents "<%= $dataset->temporal_extent %>"; }
+if {   dcterms:hasVersion "<%= $dataset->version %>"; }
 if { dcterms:verticalExtents "<%= $dataset->vertical_extent %>"; }
-   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string;
-   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
+if {   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string; }
+if {   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI; }
 % for my $keyword ($dataset->keywords) {
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
