@@ -1,6 +1,5 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
 <<%= current_resource %>>
-    a prov:Entity, gcis:Report, bibo:Report, gcis:Publication;
     dcterms:identifier "<%= $report->identifier %>";
     dcterms:title "<%= $report->title %>"^^xsd:string;
     dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
@@ -22,5 +21,6 @@
 % for my $finding ($report->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
 % }
-%# = include 'prov';
+    a gcis:Report .
+%= include 'prov';
 
