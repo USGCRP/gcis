@@ -4,32 +4,40 @@
     dcterms:identifier "<%= $report->identifier %>";
     dcterms:title "<%= $report->title %>"^^xsd:string;
     dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
-   % if ($report->report_type_identifier) {
+% if ($report->report_type_identifier) {
     dcterms:type "<%= $report->report_type_identifier %>";
 % }
-   % if ($report->frequency) {
+% if ($report->frequency) {
     dcterms:frequency "<%= $report->frequency %>"^^xsd:string;    
 % }
-   % if ($report->summary) {
+% if ($report->summary) {
    dcterms:description "<%= $report->summary %>"^^xsd:string;   
 % }
-   % if ($report->doi) {
+% if ($report->doi) {
    bibo:doi "<%= $report->doi %>";
 % }   
-    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
-    % if ($report->topic) {
+   gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
+% if ($report->topic) {
     dcterms:subject "<%= $report->topic %>"^^xsd:string;
 % }
-% for my $chapter ($report->chapters) {
+% if ($report->chapters) {
+   % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
+   % }
 % }
-% for my $figure ($report->figures) {
+% if ($report->figures) {
+   % for my $figure ($report->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   % }
 % }
-% for my $table ($report->tables) {
+% if ($report->tables) {
+   % for my $table ($report->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   % }
 % }
-% for my $finding ($report->findings) {
+% if ($report->findings) {
+   % for my $finding ($report->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
+   % }
 % }
 %= include 'prov';
