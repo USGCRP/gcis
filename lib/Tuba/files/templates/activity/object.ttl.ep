@@ -2,8 +2,12 @@
 <<%= current_resource %>>
    a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
+% if ($activity->start_time) {
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
+% }
+% if ($activity->end_time) {
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
+% }
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
    fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
    gcis:Software "<%= tl($activity->computing_environment) %>"^^xsd:string;
