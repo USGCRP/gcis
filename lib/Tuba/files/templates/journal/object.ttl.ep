@@ -1,6 +1,7 @@
 % layout "default";
 <<%= current_resource %>>
    a prov:Entity, bibo:Journal;
+   dcterms:identifier "<%= $journal->identifier %>";
    dcterms:title "<%= $journal->title %>"^^xsd:string;
    bibo:eissn "<%= $journal->online_issn %>";
    bibo:issn "<%= $journal->print_issn %>";
