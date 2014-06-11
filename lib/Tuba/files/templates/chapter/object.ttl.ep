@@ -6,17 +6,25 @@
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
-% for my $figure ($chapter->figures) {
+% if ($chapter->figures) {
+   % for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   % }
 % }
-% for my $finding ($chapter->findings) {
+% if ($chapter->findings) {
+   % for my $finding ($chapter->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+   % }
 % }
- % for my $table ($chapter->tables) {
+% if ($chapter->tables) {
+   % for my $table ($chapter->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   % } 
 % }
-% for my $keyword ($chapter->keywords) {
+% if ($chapter->keywords) {
+   % for my $keyword ($chapter->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+   % }
 % }
 %= include 'prov';
 %# %= include 'contributors';
