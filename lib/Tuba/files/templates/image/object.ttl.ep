@@ -3,21 +3,43 @@
    a prov:Entity, gcis:Image, fabio:Image, bibo:Image, gcis:Publication, dcmitype:Image;
    dcterms:title "<%= $image->title %>"^^xsd:string;  
    dcterms:identifier "<%= $image->identifier %>";
-if {   gcis:description "<%= $image->description %>"^^xsd:string; }
-if {   dcterms:subject "<%= $image->attributes %>"^^xsd:string; }
-if {   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime; }
-if {   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; }
-if {   gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float; }
-if {   gcis:southBoundLatitude "<%= $image->lat_min %>^^"xsd:float; }
-if {   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float; }
-if {   gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float; {
-if {   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime; }
-if {   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; }
-  % for my $figure ($image->figures) {
-     gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-  % }
-  % for my $keyword ($image->keywords) {
-     gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
-  % }
+   % if ($image->description) {
+    dcterms:description "<%= $image->description %>"^^xsd:string;
+% }
+   % if ($image->attributes) {
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string; 
+% }   
+   % if ($image->create_dt) {
+   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime; 
+% }
+   % if ($image->submission_dt) {
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
+% }   
+   % if ($image->lat_max) {
+   gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
+% } 
+   % if ($image->lat_min) {
+   gcis:southBoundLatitude "<%= $image->lat_min %>^^"xsd:float; 
+% }   
+   % if ($image->lon_max) {
+   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float; 
+% }   
+   % if ($image->lon_min) {
+   gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
+% } 
+   % if ($image->time_start) {
+   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
+% } 
+   % if ($image->time_end) {
+   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; 
+% }  
+   % for my $figure ($image->figures) {
+   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+% } 
+   % if ($image->time_end) {   
+    % for my $keyword ($image->keywords) {
+  gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+     % }
+% }
 %= include 'prov';
-%# %= include 'contributors';
+%# %= include 'ctt';
