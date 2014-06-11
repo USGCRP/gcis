@@ -3,7 +3,9 @@
    a prov:Entity, bibo:Webpage;
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
+% if ($webpage->access_date) {
    dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
+% }
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
 % for my $keyword ($webpage->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
