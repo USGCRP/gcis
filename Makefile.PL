@@ -7,7 +7,7 @@ WriteMakefile
   'PREREQ_PM' => {
                    'Algorithm::Permute' => 0,
                    'Crypt::OpenSSL::RSA' => 0,
-                   'DBD::Pg' => '3.0',
+                   'DBD::Pg' => '3.003000',
                    'DBIx::Connector' => 0,
                    'DBIx::Custom' => 0,
                    'DBIx::Simple' => 0,

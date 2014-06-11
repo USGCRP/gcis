@@ -63,7 +63,7 @@ use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 use strict;
 
-our $VERSION = '1.03';
+our $VERSION = '1.04';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
