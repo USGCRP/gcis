@@ -7,6 +7,11 @@ use RDF::Trine qw( statement iri literal );
 use RDF::Trine::Parser;
 use RDF::Query;
 
+#
+# Create a report, then pull the turtle into an in-memory triple store
+# then run some SPARQL queries to ensure that the turtle makes sense.
+#
+
 use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
@@ -21,16 +26,24 @@ $t->post_ok("/report" => form => { identifier => "trees", title => "Tree Report"
 
 my $server_base = $t->ua->server->url;
 
+#
+# Make a new report
+#
 my $url = $server_base. 'report/trees.ttl';
-
 $t->get_ok("/report/trees.ttl");
 
+#
+# Get it, parse it into the model
+#
+#
 my $ttl = $t->tx->res->body;
-
 # diag $ttl;
-
 $parser->parse_into_model("http://test.data.globalchange.gov", $ttl, $model);
 
+#
+# Run a SPARQL query and check that the turtle for the report indicates
+# that the identifier for the report is "/report/trees".
+#
 my $query = RDF::Query->new(<<'SPARQL') or die RDF::Query::error();
 PREFIX gcis: <http://data.globalchange.gov/gcis.owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
