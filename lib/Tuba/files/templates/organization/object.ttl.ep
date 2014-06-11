@@ -3,14 +3,20 @@
    a gcis:Organization, org:Organization, prov:Organization, foaf:Organization, gcis:Agent;
    dcterms:identifier "<%= $organization->identifier %>";
    skos:prefLabel "<%= $organization->name %>"^^xsd:string;
+% if ($organization->url) {
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
+% }
 % if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
-% for my $report ($organization->reports) {
+% if ($organization->reports) {
+   % for my $report ($organization->reports) {
    prov:wasAssociatedWith "<%= $report->identifier %>";
+   % }
 % }
-% if (my $country = $organization->country) {
+% if ($organization->country) {
+   % if (my $country = $organization->country) {
    dwc:countryCode "<%= $country->code %>.
+   % }
 % }
 %= include 'prov';
