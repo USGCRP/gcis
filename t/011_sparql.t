@@ -35,7 +35,6 @@ $t->get_ok("/report/trees.ttl");
 #
 # Get it, parse it into the model
 #
-#
 my $ttl = $t->tx->res->body;
 # diag $ttl;
 $parser->parse_into_model("http://test.data.globalchange.gov", $ttl, $model);
