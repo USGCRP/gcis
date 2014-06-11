@@ -12,11 +12,13 @@
 % if ($dataset->release_dt) {
    dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
 % }
+% if ($dataset->cite_metadata) {
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
+% }
 % if ($dataset->description) {
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
 % }
-% if ($datacite->doi) {
+% if ($dataset->doi) {
    datacite:doi "<%= $dataset->doi %>"; 
 % }
 % if ($dataset->lat_max) {   
@@ -64,8 +66,10 @@
 % if ($dataset->url) { 
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI; 
 % }
-% for my $keyword ($dataset->keywords) {
+% if ($dataset->keywords) {
+   % for my $keyword ($dataset->keywords) {
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string.
+   % }
 % }
    %= include 'prov';
 %# %= include 'contributors'; 
