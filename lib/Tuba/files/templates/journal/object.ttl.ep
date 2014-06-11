@@ -3,12 +3,22 @@
    a prov:Entity, bibo:Journal;
    dcterms:identifier "<%= $journal->identifier %>";
    dcterms:title "<%= $journal->title %>"^^xsd:string;
+% if ($journal->online_issn) {
    bibo:eissn "<%= $journal->online_issn %>";
+% }
+% if ($journal->print_issn) {   
    bibo:issn "<%= $journal->print_issn %>";
+% }
+% if ($journal->publisher) {   
    gcis:hasPublisher "<%= $journal->publisher %>"^^xsd:string; 
+% }
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
+% if ($journal->country) {
    dwc:Countrycode "<%= $journal->country %>";
+% }
+% if ($journal->url) {
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI.
+% }
 %= include 'prov'; 
