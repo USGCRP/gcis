@@ -14,12 +14,12 @@
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 if {   gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float; }
-{   gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float; }
-{   gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float; }
-{   gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float; }
+if {   gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float; }
+if {   gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float; }
+if {   gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float; }
    cito:cites "<%= $figure->source_citation %>";
-{   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime; }     
-{   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime; }            
+if {   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime; }     
+if {   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime; }            
 % for my $keyword ($figure->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
