@@ -6,11 +6,11 @@
 % if ($dataset->native_id) { 
    datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>"; 
  % }
-% if ($dataset->date) {
+% if ($dataset->access_dt) {
    dcterms:date "<%= $dataset->access_dt %>"^^xsd:date; 
 % }
 % if ($dataset->release_dt) {
-   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date; }
+   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
 % }
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
 % if ($dataset->description) {
@@ -65,8 +65,7 @@
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI; 
 % }
 % for my $keyword ($dataset->keywords) {
-   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string.
 % }
    %= include 'prov';
 %# %= include 'contributors'; 
-
