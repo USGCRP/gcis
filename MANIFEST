@@ -539,6 +539,7 @@ lib/Tuba/files/templates/reference/objects.html.ep
 lib/Tuba/files/templates/reference/report/updates.html.ep
 lib/Tuba/files/templates/reference/update_form.html.ep
 lib/Tuba/files/templates/reference/update_rel_form.html.ep
+lib/Tuba/files/templates/region/object.ttl.ep
 lib/Tuba/files/templates/regions.html.ep
 lib/Tuba/files/templates/relationships.html.ep
 lib/Tuba/files/templates/report/long/object.html.ep
