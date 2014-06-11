@@ -16,7 +16,9 @@
 % if ($report->doi) {
    bibo:doi "<%= $report->doi %>";
 % }   
+% if ($report->doi) {
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
+% }
 % if ($report->topic) {
     dcterms:subject "<%= $report->topic %>"^^xsd:string;
 % }
