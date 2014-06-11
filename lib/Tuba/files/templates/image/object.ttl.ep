@@ -36,7 +36,7 @@
    % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 % } 
-   % if ($image->time_end) {   
+   % if ($image->keywords) {   
     % for my $keyword ($image->keywords) {
   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
      % }
