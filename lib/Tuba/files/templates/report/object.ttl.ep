@@ -22,5 +22,4 @@
 % for my $finding ($report->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
 % }
-%# = include 'prov';
-
+%= include 'prov';
