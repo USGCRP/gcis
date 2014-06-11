@@ -3,45 +3,46 @@
    a prov:Entity, fabio:Figure, gcis:Figure;
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
-   % if ($figure->caption) {
+% if ($figure->caption) {
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
 % }
-   % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
+% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
 % }   
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
-   % if ($figure->create_dt) {
+% if ($figure->create_dt) {
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
 % }
-   % if ($figure->submission_dt) { 
+% if ($figure->submission_dt) { 
   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 % }
-   % if ($figure->lat_max) {
+% if ($figure->lat_max) {
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
 % }
-   % if ($figure->lat_min) {
+% if ($figure->lat_min) {
    gcis:southBoundLatitude "<%= $figure->lat_min %>^^"xsd:float;
 % }
-   % if ($figure->lon_max) {
+% if ($figure->lon_max) {
    gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
 % }
-   % if ($figure->lon_min) {
+% if ($figure->lon_min) {
    gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
 % }
-   % if ($image->time_start) {
+% if ($image->time_start) {
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
 % }
-   % if ($image->time_end) {
+% if ($image->time_end) {
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
 % }
    cito:cites "<%= $figure->source_citation %>";
-   % if ($figure->keywords) {
+% if ($figure->keywords) {
    % for my $keyword ($figure->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
-% }  % }
+% }  
+% }
 %= include 'prov';
 
 
