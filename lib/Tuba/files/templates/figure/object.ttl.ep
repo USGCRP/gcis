@@ -31,11 +31,11 @@
 % if ($figure->lon_min) {
    gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
 % }
-% if ($image->time_start) {
-   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
+% if ($figure->time_start) {
+   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
 % }
-% if ($image->time_end) {
-   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
+% if ($figure->time_end) {
+   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 % }
    cito:cites "<%= $figure->source_citation %>";
 % if ($figure->keywords) {
