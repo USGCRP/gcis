@@ -1,6 +1,5 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity, gcis:Chapter, bibo:Chapter, gcis:Publication;
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
@@ -26,6 +25,7 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
    % }
 % }
+   a gcis:Chapter .
 %= include 'prov';
 %# %= include 'contributors';
 

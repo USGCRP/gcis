@@ -1,6 +1,5 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
 <<%= current_resource %>>
-   a prov:Entity, fabio:Figure, gcis:Figure;
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 % if ($figure->caption) {
@@ -43,6 +42,7 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }  
 % }
+   a gcis:Figure .
 %= include 'prov';
 
 
