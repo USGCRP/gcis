@@ -1,11 +1,15 @@
-use 5.010;
-use strict;
+#!perl
+
+use FindBin;
+use lib $FindBin::Bin;
+use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
 use RDF::Trine qw( statement iri literal );
 use RDF::Trine::Parser;
 use RDF::Query;
+use strict;
 
 #
 # Create a report, then pull the turtle into an in-memory triple store
