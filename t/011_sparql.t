@@ -30,26 +30,45 @@ $t->post_ok("/report" => form => { identifier => "trees", title => "Tree Report"
 
 my $server_base = $t->ua->server->url;
 
-#
 # Make a new report
-#
 my $url = $server_base. 'report/trees.ttl';
 $t->get_ok("/report/trees.ttl");
 
-#
 # Get it, parse it into the model
-#
 my $ttl = $t->tx->res->body;
 # diag $ttl;
 $parser->parse_into_model("http://test.data.globalchange.gov", $ttl, $model);
 
-#
-# Run a SPARQL query and check that the turtle for the report indicates
-# that the identifier for the report is "/report/trees".
-#
-my $query = RDF::Query->new(<<'SPARQL') or die RDF::Query::error();
+sub uri {
+    my $path = shift;
+    my $uri = $server_base->clone;
+    $uri->path($path);
+    return $uri;
+}
+
+sub _do_sparql {
+    my $model = shift;
+    my $sparql = shift;
+    
+    my $defaults = <<DONE;
 PREFIX gcis: <http://data.globalchange.gov/gcis.owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+DONE
+
+    my $query = RDF::Query->new("$defaults\n$sparql");
+    ok $query, "parsed query" or diag RDF::Query::error();
+
+    my $results = $query->execute($model);
+    my @all;
+
+    while (my $row = $results->next) {
+        push @all, $row;
+    };
+    return @all;
+}
+
+# Check that the turtle for the report indicates that the identifier for the report is "/report/trees".
+my @rows = _do_sparql($model, <<'SPARQL');
 SELECT $x
 FROM <http://test.data.globalchange.gov>
 WHERE {
@@ -57,15 +76,16 @@ WHERE {
 }
 SPARQL
 
-my $results = $query->execute($model);
-my @all;
+is $rows[0]->{x}->value, uri("/report/trees"), "got identifier for report";
 
-while (my $row = $results->next) {
-    push @all, $row;
-};
 
-ok @all==1, "got 1 result";
-is $all[0]->{x}->value, "$server_base". "report/trees";
+# List figures and datasets from which they were derived.
+#select ?figure,?dataset FROM <http://data.globalchange.gov>
+#where {
+# ?figure gcis:hasImage ?img .
+# ?img prov:wasDerivedFrom ?dataset
+#}
 
+$t->delete_ok("/report/trees" => { Accept => "application/json" })->status_is(200);
 done_testing();
 
