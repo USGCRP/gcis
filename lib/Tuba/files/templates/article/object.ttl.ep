@@ -2,7 +2,9 @@
 <<%= current_resource %>>
    a prov:Entity, bibo:Article;   
    dcterms:identifier "<%= $article->identifier %>";
+   % if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
+% }
    dcterms:title "<%= $article->title %>"^^xsd:string;
    gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:volume "<%= $article->journal_vol %>";

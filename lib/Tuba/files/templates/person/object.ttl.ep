@@ -2,10 +2,14 @@
 <<%= current_resource %>>
    a prov:Person, foaf:Person, gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
+% if ($person->orcid) {
    vivo:orcidId "<%= $person->orcid %>";
+% }
    foaf:firstName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
+% if ($person->url) {
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
+% }
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:worksAt <<%= uri($org) %>>.

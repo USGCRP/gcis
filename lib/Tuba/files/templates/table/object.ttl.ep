@@ -3,7 +3,9 @@
    a prov:Entity, gcis:Table;
    dcterms:identifier "<%= $table->identifier %>";
    dcterms:title "<%= $table->title %>"^^xsd:string;
+   % if ($table->caption) {
    gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
+% }
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
