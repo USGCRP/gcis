@@ -1,6 +1,5 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity, dcmitype:Dataset, dcat:Dataset, gcis:Dataset;
    datacite:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
 % if ($dataset->native_id) { 
@@ -71,5 +70,6 @@
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string.
    % }
 % }
+   a gcis:Dataset .
    %= include 'prov';
 %# %= include 'contributors'; 
