@@ -21,6 +21,7 @@
 % }
 % if ($report->topic) {
     dcterms:subject "<%= $report->topic %>"^^xsd:string;
+% }
 
 ## Chapters
 % for my $chapter ($report->chapters) {
@@ -30,19 +31,16 @@
 ## Figures
 % for my $figure ($report->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
-   % }
 % }
 
 ## Tables
 % for my $table ($report->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
-   % }
 % }
 
 ## Findings
 % for my $finding ($report->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
-   % }
 % }
     a gcis:Report .
 
