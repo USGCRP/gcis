@@ -1,0 +1,21 @@
+% my $pub = $object->get_publication;
+% my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
+
+% if (@$cons) {
+    % my $last;
+    % for my $con (@$cons) {
+            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier) {
+                <prov:Role="<%= $role_count->{$con->role_type_identifier} %>"> <%= $con->role_type->label %>
+            % }
+            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier || ($last->person_id || 0) != ($con->person_id || 0)) {
+                <gcis:person"<%= $person_count->{$con->role_type_identifier}{$con->person_id // ''} %>"><%= obj_link($con->person, long => 1) %>
+            % }
+            <%= obj_link($con->organization) %>
+            <% for my $ref (@{ $con->publication_contributor_maps }) { %>
+            % next unless $ref->publication_id == $pub->id;
+            %# TODO: optimize
+            <%= obj_link($ref->reference, short => 1) %>
+            <% } %>
+    % $last = $con;
+    % }
+   % }
