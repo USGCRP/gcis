@@ -27,17 +27,22 @@ limit 10",
           code => <<'SPARQL',
 PREFIX dcterms: <http://purl.org/dc/terms/>
 
-select $chapterNumber $findingNumber $finding FROM <http://data.globalchange.gov>
-where {
+SELECT
+ fn:concat($chapterNumber,'.',$findingNumber) as $number
+ $statement
+ $finding as $url
+FROM <http://data.globalchange.gov>
+WHERE {
     $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
     $report a gcis:Report .
     $report gcis:hasChapter $chapter .
     $finding gcis:isFindingOf $chapter .
+    $finding dcterms:description $statement .
     $finding gcis:FindingNumber $findingNumber .
     $finding a gcis:Finding .
     $chapter gcis:chapterNumber $chapterNumber .
 }
-ORDER by $chapterNumber $findingNumber
+ORDER BY $chapterNumber $findingNumber
 SPARQL
         },
         {
