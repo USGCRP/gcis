@@ -1,5 +1,5 @@
 % layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
-<<%= current_resource %>>
+<<figure/%= $figure->identifier %>>>
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 % if ($figure->caption) {
