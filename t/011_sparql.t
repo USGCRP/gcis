@@ -43,7 +43,6 @@ sub uri {
 }
 
 sub do_sparql {
-    my $model = shift;
     my $sparql = shift;
     
     my $defaults = <<DONE;
@@ -66,7 +65,7 @@ DONE
 
 sub sparql_ok {
     my ($sparql, $results, $test_name) = @_;
-    my @rows = do_sparql($model, $sparql);
+    my @rows = do_sparql($sparql);
     ok @rows == 1, "got one row";
     for my $k (keys %$results) {
         ok defined($rows[0]->{$k}), "got value for '$k'" or do {
@@ -78,7 +77,6 @@ sub sparql_ok {
 }
 
 sub add_to_model {
-    my $model = shift;
     my $path = shift;
     $t->get_ok("$path.ttl")->status_is(200);
     my $ttl = $t->tx->res->body;
@@ -145,11 +143,11 @@ $t->post_ok(
 #
 # Parse them into the model
 #
-add_to_model($model, '/report/trees');
-add_to_model($model, '/report/trees/chapter/the-larch');
-add_to_model($model, '/report/trees/chapter/the-larch/figure/tall-green-larch-tree');
-add_to_model($model, "/image/$image_identifier");
-add_to_model($model, "/dataset/$dataset_identifier");
+add_to_model('/report/trees');
+add_to_model('/report/trees/chapter/the-larch');
+add_to_model('/report/trees/chapter/the-larch/figure/tall-green-larch-tree');
+add_to_model("/image/$image_identifier");
+add_to_model("/dataset/$dataset_identifier");
 
 #
 # Okay, now let's do some sparql.
