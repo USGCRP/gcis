@@ -1,6 +1,6 @@
 % layout 'default';
 <<%= current_resource %>>
-   a prov:Entity, gcis:Finding;
+   a gcis:Finding;
    dcterms:identifier "<%= $finding->identifier %>";
    dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
    gcis:FindingNumber "<%= $finding->ordinal %>";
@@ -9,14 +9,19 @@
    gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
    dcterms:identifier "<%= $finding->identifier %>";
    gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
-   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
+   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string .
+
 % if (my $chapter = stash 'chapter') {
-   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>;
+<<%= current_resource %>>
+   gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>.
 % }
+
 % if (my $chapter = $finding->chapter) {
+<<%= current_resource %>>
    gcis:isBasedOn "<%= $chapter->identifier %>";
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>.
 % }
-  %= include 'prov';
+
+%= include 'prov';
 
 

@@ -40,7 +40,7 @@
 
 ## Findings
 % for my $finding ($report->findings) {
-   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>.
+   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>> ;
 % }
     a gcis:Report .
 

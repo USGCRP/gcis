@@ -66,7 +66,7 @@ DONE
 sub sparql_ok {
     my ($sparql, $results, $test_name) = @_;
     my @rows = do_sparql($sparql);
-    ok @rows == 1, "got one row";
+    ok @rows == 1, "got one row" or diag $sparql;
     for my $k (keys %$results) {
         ok defined($rows[0]->{$k}), "got value for '$k'" or do {
             ok 0, "missing '$k'";
@@ -87,7 +87,7 @@ sub add_to_model {
 }
 
 #
-# Add a report, chapter and figure, using the API
+# Add a report, chapter, figure, and finding using the API.
 #
 $t->post_ok(
   "/report" => form => {
@@ -108,6 +108,15 @@ $t->post_ok(
     chapter_identifier => "the-larch",
     identifier         => "tall-green-larch-tree",
     title              => "This is a larch tree.",
+    ordinal            => 1,
+  })->status_is(200);
+
+$t->post_ok(
+  "/report/trees/chapter/the-larch/finding" => json => {
+    report_identifier  => "trees",
+    chapter_identifier => "the-larch",
+    identifier         => "larch-trees-are-tall",
+    statement          => "Larch trees are tall.",
     ordinal            => 1,
   })->status_is(200);
 
@@ -146,6 +155,7 @@ $t->post_ok(
 add_to_model('/report/trees');
 add_to_model('/report/trees/chapter/the-larch');
 add_to_model('/report/trees/chapter/the-larch/figure/tall-green-larch-tree');
+add_to_model('/report/trees/chapter/the-larch/finding/larch-trees-are-tall');
 add_to_model("/image/$image_identifier");
 add_to_model("/dataset/$dataset_identifier");
 
@@ -246,6 +256,23 @@ SPARQL
     figure => uri("/report/trees/chapter/the-larch/figure/tall-green-larch-tree"),
     dataset => uri("/dataset/$dataset_identifier"),
 }, "Found dataset for figure.");
+
+# Find a chapter finding.
+sparql_ok(<<'SPARQL', 
+select $finding $report FROM <http://test.data.globalchange.gov>
+where {
+    $report a gcis:Report .
+    $report gcis:hasChapter $chapter .
+    $finding gcis:isFindingOf $report .
+    $finding gcis:isFindingOf $chapter .
+    $finding a gcis:Finding .
+}
+SPARQL
+{
+    report => uri("/report/trees"),
+    finding => uri("/report/trees/chapter/the-larch/finding/larch-trees-are-tall"),
+}, "Found chapter finding in report.");
+
 
 #
 # Cleanup.
