@@ -1,5 +1,6 @@
 % layout 'default';
-<<%= current_resource %>>
+
+<<image/<%= $image->identifier %>%>>
    dcterms:title "<%= $image->title %>"^^xsd:string;  
    dcterms:identifier "<%= $image->identifier %>";
 % if ($image->description) {
