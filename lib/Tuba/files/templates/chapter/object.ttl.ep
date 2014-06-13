@@ -1,5 +1,6 @@
 % layout 'default';
-  <>
+  
+<chapter/<%= $chapter->identifier %>>
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
