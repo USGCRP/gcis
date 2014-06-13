@@ -24,12 +24,21 @@ where { ?s a gcis:Figure }
 limit 10",
         },
         { desc => "List all of the findings from the Third National Climate Assessment.",
-          code => 
-"select * FROM <http://data.globalchange.gov>
+          code => <<'SPARQL',
+PREFIX dcterms: <http://purl.org/dc/terms/>
+
+select $chapterNumber $findingNumber $finding FROM <http://data.globalchange.gov>
 where {
- ?s a gcis:Finding
- }
-",
+    $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
+    $report a gcis:Report .
+    $report gcis:hasChapter $chapter .
+    $finding gcis:isFindingOf $chapter .
+    $finding gcis:FindingNumber $findingNumber .
+    $finding a gcis:Finding .
+    $chapter gcis:chapterNumber $chapterNumber .
+}
+ORDER by $chapterNumber $findingNumber
+SPARQL
         },
         {
           desc => "List 10 figures and datasets from which they were derived.",
