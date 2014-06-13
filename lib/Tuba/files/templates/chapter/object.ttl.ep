@@ -1,5 +1,5 @@
 % layout 'default';
-<<%= current_resource %>>
+  <>
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
@@ -27,5 +27,5 @@
 % }
    a gcis:Chapter .
 %= include 'prov';
-%# %= include 'contributors';
+ %= include 'contributors';
 
