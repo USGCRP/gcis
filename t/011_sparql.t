@@ -64,6 +64,19 @@ DONE
     return @all;
 }
 
+sub sparql_ok {
+    my ($sparql, $results, $test_name) = @_;
+    my @rows = do_sparql($model, $sparql);
+    ok @rows == 1, "got one row";
+    for my $k (keys %$results) {
+        ok defined($rows[0]->{$k}), "got value for '$k'" or do {
+            ok 0, "missing '$k'";
+            next;
+        };
+        is $rows[0]->{$k}->value,$results->{$k}, $test_name;
+    }
+}
+
 sub add_to_model {
     my $model = shift;
     my $path = shift;
@@ -143,18 +156,22 @@ add_to_model($model, "/dataset/$dataset_identifier");
 #
 
 # A report has an identifier.
-my @rows;
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(
+  <<'SPARQL',
 SELECT $x
 FROM <http://test.data.globalchange.gov>
 WHERE {
     $x rdf:type gcis:Report .
 }
 SPARQL
-is $rows[0]->{x}->value, uri("/report/trees"), "got identifier for report";
+  {
+      x => uri("/report/trees")
+  }, "report identifier"
+);
 
 # A chapter isChapterOf a report.
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(
+  <<'SPARQL',
 SELECT $chapter
 FROM <http://test.data.globalchange.gov>
 WHERE {
@@ -163,11 +180,13 @@ WHERE {
     $chapter gcis:isChapterOf $report .
 }
 SPARQL
-ok @rows==1, 'got one row';
-is $rows[0]->{chapter}->value, uri("/report/trees/chapter/the-larch"), "A chapter isChapterOf a report";
+  {chapter => uri("/report/trees/chapter/the-larch")},
+  "A chapter isChapterOf a report"
+);
 
 # A figure isFigureOf a chapter.
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(
+  <<'SPARQL',
 SELECT $figure
 FROM <http://test.data.globalchange.gov>
 WHERE {
@@ -177,11 +196,15 @@ WHERE {
     $figure gcis:isFigureOf $chapter
 }
 SPARQL
-ok @rows==1, 'got one row';
-is $rows[0]->{figure}->value, uri("/report/trees/chapter/the-larch/figure/tall-green-larch-tree"), "A figure isFigureOf a chapter";
+  {
+    figure => uri("/report/trees/chapter/the-larch/figure/tall-green-larch-tree")
+  },
+  "A figure isFigureOf a chapter"
+);
 
 # A figure hasImage an image
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(
+  <<'SPARQL',
 SELECT $image
 FROM <http://test.data.globalchange.gov>
 WHERE {
@@ -192,12 +215,12 @@ WHERE {
     $figure gcis:hasImage $image .
 }
 SPARQL
-ok @rows==1, 'got one row';
-is $rows[0]->{image}->value, uri("/image/$image_identifier"), "A figure hasImage an image";
+  { image => uri("/image/$image_identifier") }, "A figure hasImage an image"
+);
 
 # The image prov:wasDerivedFrom a dataset
-# A figure hasImage an image
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(
+  <<'SPARQL',
 SELECT $dataset
 FROM <http://test.data.globalchange.gov>
 WHERE {
@@ -209,20 +232,22 @@ WHERE {
     $image prov:wasDerivedFrom $dataset .
 }
 SPARQL
-ok @rows==1, 'got one row';
-is @rows && $rows[0]->{dataset}->value, uri("/dataset/$dataset_identifier"), "An image prov:wasDerivedFrom a dataset";
+  { dataset => uri("/dataset/$dataset_identifier") },
+  "An image prov:wasDerivedFrom a dataset"
+);
 
 # Find a figure which was derived from a dataset
-@rows = do_sparql($model, <<'SPARQL');
+sparql_ok(<<'SPARQL', 
 select $figure $dataset FROM <http://test.data.globalchange.gov>
 where {
  $figure gcis:hasImage $img .
  $img prov:wasDerivedFrom $dataset .
 }
 SPARQL
-ok @rows==1, 'got one dataset for an image + figure';
-is @rows && $rows[0]->{figure}->value, uri("/report/trees/chapter/the-larch/figure/tall-green-larch-tree"), "Found figure for dataset.";
-is @rows && $rows[0]->{dataset}->value, uri("/dataset/$dataset_identifier"), "Found dataset for figure.";
+{
+    figure => uri("/report/trees/chapter/the-larch/figure/tall-green-larch-tree"),
+    dataset => uri("/dataset/$dataset_identifier"),
+}, "Found dataset for figure.");
 
 #
 # Cleanup.
@@ -230,7 +255,6 @@ is @rows && $rows[0]->{dataset}->value, uri("/dataset/$dataset_identifier"), "Fo
 $t->delete_ok("/report/trees" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/dataset/$dataset_identifier" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/image/$image_identifier" => { Accept => "application/json" })->status_is(200);
+
 done_testing();
-
-
 
