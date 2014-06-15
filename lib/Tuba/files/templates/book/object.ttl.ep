@@ -1,4 +1,4 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
 <<%= current_resource %>>
    a prov:Entity, bibo:Book;
    dcterms:identifier "<%= $book->identifier %>";
