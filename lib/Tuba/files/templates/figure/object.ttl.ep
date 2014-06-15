@@ -69,8 +69,6 @@
 
    a gcis:Figure .
 
-   ## The figure was derived from the following dataset(s):
 %= include 'prov';
-   ## Description of the contributors to the figure
 %= include 'contributors';
 
