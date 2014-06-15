@@ -1,25 +1,24 @@
+   % my $pub = $object->get_publication;
+ <<%= obj_uri_for ($pub)->to_abs %>>
+  % if ($pub) {
+    % my $nest = $pub->contributors_nested;
+    % for my $row (@$nest) {
+        % for my $con (@{ $row->{people} }) {
+            prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
 
-% my $pub = $object->get_publication;
-% my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
+               prov:qualifiedAttribution [
+                 a prov:Attribution;
+                 ## Person and his/her role in the creation of the image
+                 prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
+                 prov:hadRole "<%= ($row->{role}->label) %>";
+            % my $first;
+            % for my $org (@{ $con->{orgs} }) {
+            <%= ($first++) ? "," : ""  =%>
+                 ## Person acted on behalf of an organization
+                 prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
+                 ] ;
 
-% if (@$cons) {
-    % my $last;
-    % for my $con (@$cons) {
-        <tr>
-            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier) {
-                <td rowspan="<%= $role_count->{$con->role_type_identifier} %>"> <%= $con->role_type->label %></td>
             % }
-            % if (!$last || $last->role_type_identifier ne $con->role_type_identifier || ($last->person_id || 0) != ($con->person_id || 0)) {
-                <td rowspan="<%= $person_count->{$con->role_type_identifier}{$con->person_id // ''} %>"><%= obj_uri_for($con->person) %>
-            % }
-            <%= obj_uri_for($con->organization) %>
-            <% for my $ref (@{ $con->publication_contributor_maps }) { %>
-            % next unless $ref->publication_id == $pub->id;
-            %# TODO: optimize
-            <%= obj_uri_for($ref->reference) %>
-            <% } %>
-    % $last = $con;
+        % }
     % }
-    </table>
 % }
-
