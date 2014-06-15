@@ -21,7 +21,7 @@
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
 % }   
 % if ($image->lat_max) {
-   ## geographical coverage of the image
+   ## Geographical extent of the area covered by the image
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
 % } 
 % if ($image->lat_min) {
@@ -34,7 +34,7 @@
    gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
 % } 
 % if ($image->time_start) {
-   ## temporal coverage of the image
+   ## Temporal coverage of the image
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
 % } 
 % if ($image->time_end) {
