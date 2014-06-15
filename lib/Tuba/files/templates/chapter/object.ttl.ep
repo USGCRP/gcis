@@ -1,28 +1,34 @@
 % layout 'default';
   
 <chapter/<%= $chapter->identifier %>>
+   ## Chapter identifier, number, and name
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
+   ## The chapter is part of the NCA3, and has a URL
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
 % if ($chapter->figures) {
    % for my $figure ($chapter->figures) {
+   ## Figures contained within the chapter
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
    % }
 % }
 % if ($chapter->findings) {
    % for my $finding ($chapter->findings) {
+   ## Findings associated with the chapter
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
    % }
 % }
 % if ($chapter->tables) {
    % for my $table ($chapter->tables) {
+   ## Tables, if any, associated with the table
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
    % } 
 % }
 % if ($chapter->keywords) {
    % for my $keyword ($chapter->keywords) {
+   ## Keywords associated with the chapter
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
    % }
 % }
