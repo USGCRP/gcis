@@ -1,5 +1,5 @@
-% layout 'default', namespaces => [qw/gcis prov bibo dcterms dwc xsd];
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis prov bibo dcterms dwc xsd cito];
+
 <<%= current_resource %>>
    a prov:Entity, bibo:Article;   
    dcterms:identifier "<%= $article->identifier %>";
