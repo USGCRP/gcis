@@ -1,3 +1,4 @@
+   ## Contributors
    % my $pub = $object->get_publication;
  <<%= obj_uri_for ($pub)->to_abs %>>
   % if ($pub) {
