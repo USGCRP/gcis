@@ -58,7 +58,5 @@
    
    a gcis:Image .
 
-   ## The image was derived from the following dataset(s):
 %= include 'prov';
-   ## Description of the contributors to the image
- %= include 'contributors';
+%= include 'contributors';
