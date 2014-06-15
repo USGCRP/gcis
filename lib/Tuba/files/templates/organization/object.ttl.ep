@@ -1,4 +1,4 @@
-% layout "default";
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo prov skos org cito/];
 <<%= current_resource %>>
    a gcis:Organization, org:Organization, prov:Organization, foaf:Organization, gcis:Agent;
    dcterms:identifier "<%= $organization->identifier %>";
