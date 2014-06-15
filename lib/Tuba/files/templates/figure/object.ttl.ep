@@ -1,29 +1,39 @@
 % layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
+
 <<figure/%= $figure->identifier %>>>
+
 ## Identifier and title of the figure
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
+
 % if ($figure->caption) {
    ## Figure Caption
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
 % }
+
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    ## The figure is part of a chapter
    gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
+
 % for my $image ($figure->images) {
    ## The figure contains one or more images
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
+
 % }   
    ## Ordinal value of the figure number within the chapter
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
+
 % if ($figure->create_dt) {
-   ## Creation and submission dates of the figure
+   ## The figure was created on the following date
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
 % }
+
 % if ($figure->submission_dt) { 
+   ## The image was submitted on the following date
   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 % }
+
 % if ($figure->lat_max) {
    ## Geographical extent of the area covered by the figure
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
@@ -44,14 +54,23 @@
 % if ($figure->time_end) {
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 % }
+
+% if ($figure->source_citation) {
+   ## Figure source
    cito:cites "<%= $figure->source_citation %>";
+% }
+
 % if ($figure->keywords) {
    ## Keywords associated with the figure
    % for my $keyword ($figure->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }  
 % }
+
    a gcis:Figure .
+
+   ## The figure was derived from the following dataset(s):
 %= include 'prov';
+   ## Description of the contributors to the figure
 %= include 'contributors';
 
