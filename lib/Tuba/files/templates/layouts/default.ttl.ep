@@ -1,4 +1,5 @@
 % if (param('no_header')) {
+   @base <<%= current_resource %> .
 %= content
 % } else {
     <% my %namespaces = (
@@ -7,6 +8,7 @@
         dcterms =>  '<http://purl.org/dc/terms/>',
         dcmitype =>  '<http://purl.org/dc/dcmitype/>',
         foaf =>  '<http://xmlns.com/foaf/0.1/>',
+        figure => '<http://data.globalchange.gov/report/nca3/chapter>' ,
         gcis =>  '<http://data.globalchange.gov/gcis.owl#>',
         org =>  '<http://www.w3.org/ns/org#>',
         prov =>  '<http://www.w3.org/ns/prov#>',
@@ -29,7 +31,6 @@
         fabio =>  '<http://purl.org/spar/fabio/>',
         schema =>  '<http://schema.org/>',
         skos =>  '<http://www.w3.org/2004/02/skos/core#>',
-        base =>  '<<%= current_resource %>' .
     ); %>
     % my $which = stash 'namespaces';
     % for my $k ($which ? @$which : keys %namespaces) {
