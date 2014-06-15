@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [dcterms foaf qw/gcis xsd/];
+% layout 'default', namespaces => [dcterms foaf gcis prov vivo xsd/];
 <<%= current_resource %>>
    a prov:Person, foaf:Person, gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
