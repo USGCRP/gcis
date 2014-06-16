@@ -285,7 +285,7 @@ sub startup {
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding', no_list => 1 });
     $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure', no_list => 1 });
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table', no_list => 1 });
-
+    $r->get("/figure")->to("figure#list")->name("list_figures_across_reports");
 
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
