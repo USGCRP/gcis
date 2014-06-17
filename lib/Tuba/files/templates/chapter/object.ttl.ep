@@ -1,4 +1,5 @@
-% layout 'default', namespaces => [qw/gcis dcterms prov xsd/];  
+% layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
+  
 <report/nca3/chapter/<%= $chapter->identifier %>>
 
    ## Chapter identifier, number, and title
@@ -25,15 +26,15 @@
 % }
 
 % if ($chapter->tables) {
-   % for my $table ($chapter->tables) {
    ## The chapter is associated with the following table(s):
+   % for my $table ($chapter->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
    % } 
 % }
 
 % if ($chapter->keywords) {
-   % for my $keyword ($chapter->keywords) {
    ## Keywords associated with the chapter
+   % for my $keyword ($chapter->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
    % }
 % }
