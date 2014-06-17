@@ -15,6 +15,8 @@ $t->app->db->dbh->do(q[delete from publication_type]);
 $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('figure','figure')]);
 
 $t->ua->max_redirects(1);
+my $server_url = $t->ua->server->url;
+$server_url =~ s/\/$//;
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
 $t->post_ok("/report" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
@@ -117,6 +119,32 @@ $t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")-
    'title' => 'Orange Carrots!',
    'usage_limits' => undef
  }) or diag explain($t->tx->res->json);
+
+# List figures across reports
+$t->get_ok("/figure.json")->json_is(
+[
+ {
+   'attributes' => undef,
+   'caption' => undef,
+   'chapter_identifier' => 'carrots',
+   'create_dt' => undef,
+   'identifier' => 'orange',
+   'lat_max' => undef,
+   'lat_min' => undef,
+   'lon_max' => undef,
+   'lon_min' => undef,
+   'ordinal' => undef,
+   'report_identifier' => 'vegetables',
+   'source_citation' => undef,
+   'submission_dt' => undef,
+   'time_end' => undef,
+   'time_start' => undef,
+   'title' => 'Orange Carrots!',
+   'usage_limits' => undef,
+   'href' => "$server_url/report/vegetables/chapter/carrots/figure/orange.json",
+   'uri' => "/report/vegetables/chapter/carrots/figure/orange",
+ }
+]) or diag explain($t->tx->res->json);
 
 # Create a keyword.
 $t->post_ok(
