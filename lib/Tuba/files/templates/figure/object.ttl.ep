@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms figure rdf cito prov xsd/];
 
-<<figure/%= $figure->identifier %>>>
-
+<<figure/<<%= $figure->identifier %>>>";
 ## Identifier and title of the figure
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
