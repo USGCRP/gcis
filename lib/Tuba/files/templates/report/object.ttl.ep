@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito prov/];
 
 <<%= current_resource %>>
    ## Report identifier, title, and year of publication
@@ -6,6 +6,7 @@
     dcterms:identifier "<%= $report->identifier %>";
     dcterms:title "<%= $report->title %>"^^xsd:string;
     dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
+
 % if ($report->report_type_identifier) {
    ## A report can either be a report, assessment, or NCA3 technical input
     dcterms:type "<%= $report->report_type_identifier %>";
@@ -42,9 +43,8 @@
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
 
-## Figures
+## This report contains multiple figures.
 % for my $figure ($report->figures) {
-   ## The report contains multiple figures.
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 
