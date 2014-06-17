@@ -1,6 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
 
-<<image/<%= $image->identifier %>%>>
+<<% current_resource %>>
 ## Image GCIS-Identifier and Title
    dcterms:identifier "<%= $image->identifier %>";
    dcterms:title "<%= $image->title %>"^^xsd:string;  
