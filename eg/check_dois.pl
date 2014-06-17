@@ -16,16 +16,19 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 
 my $i = 0;
 for my $article (@$articles) {
-    last if $i > 5;
+    
+    last if $i > 0;
     $i++;
     print " i $i\n";
 
-    my $url = $article->{url};
-    my $doi = $article->{doi};
-    next unless $doi && $url;
-    next if $url =~ /dx.doi.org/;
-    my $doi_redirect = $ua->get("http://dx.doi.org/$doi")->res->headers->location;
-    next if $url eq $doi_redirect;
-    print "Different urls for $doi : $url $doi_redirect\n";
+    print Dumper $article;
 
+    my $doi = $article->{doi};
+    if (!$doi) {
+        my $uri = $article->{uri};
+        print " no doi for $uri\n";
+        next;
+    }
+    my $doi_redirect = $ua->get("http://dx.doi.org/$doi")->res->headers->location;
+    print " doi redirect $doi_redirect\n";
 }
