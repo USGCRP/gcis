@@ -4,7 +4,6 @@
 % } else {
     <% my %namespaces = (
         bibo =>  '<http://purl.org/ontology/bibo/>',
-        chapter => '<<%= $url_for($figure->chapter) %>' ,
         dc =>  '<http://purl.org/dc/elements/1.1/>',
         dcterms =>  '<http://purl.org/dc/terms/>',
         dcmitype =>  '<http://purl.org/dc/dcmitype/>',
