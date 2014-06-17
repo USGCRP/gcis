@@ -5,4 +5,3 @@
    dcterms:identifer "<%= $region->identifier %>";
    dcterms:description "<%= $region->description %>"^^xsd:string;
    dcterms:title "<%= $region->label %>"^^xsd:string.
-
