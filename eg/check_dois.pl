@@ -17,11 +17,11 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 my $i = 0;
 for my $article (@$articles) {
     
-    last if $i > 2;
+    last if $i > 1;
     $i++;
     print " i $i\n";
 
-    print Dumper $article;
+    # print Dumper $article;
 
     my $doi = $article->{doi};
     my $uri = $article->{uri};
