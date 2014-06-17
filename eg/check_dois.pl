@@ -32,9 +32,9 @@ for my $article (@$articles) {
         print " doi $doi for uri $uri\n";
     }
     
-    my $doi_stuff = $ua->get("http://dx.doi.org/$doi")->res;
-    # print Dumper $doi_stuff;
+    my $doi_headers = $ua->get("http://dx.doi.org/$doi")->res->headers;
+    print Dumper $doi_headers;
     
-    my $doi_redirect = $doi_stuff->headers->{location};
+    my $doi_redirect = $doi_headers->{location};
     print " doi redirect $doi_redirect\n";
 }
