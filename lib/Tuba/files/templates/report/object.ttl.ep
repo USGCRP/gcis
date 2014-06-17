@@ -2,7 +2,6 @@
 
 <<%= current_resource %>>
    ## Report identifier, title, and year of publication
-
     dcterms:identifier "<%= $report->identifier %>";
     dcterms:title "<%= $report->title %>"^^xsd:string;
     dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
