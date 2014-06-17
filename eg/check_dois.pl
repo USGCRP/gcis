@@ -24,11 +24,15 @@ for my $article (@$articles) {
     print Dumper $article;
 
     my $doi = $article->{doi};
+    my $uri = $article->{uri};
     if (!$doi) {
-        my $uri = $article->{uri};
         print " no doi for $uri\n";
         next;
+    } else {
+        print " doi $doi for uri $uri\n";
     }
-    my $doi_redirect = $ua->get("http://dx.doi.org/$doi")->res->headers->location;
+    
+    my $doi_stuff = $ua->get("http://dx.doi.org/$doi")->res;
+    my $doi_redirect = $doi_stuff->headers->{location};
     print " doi redirect $doi_redirect\n";
 }
