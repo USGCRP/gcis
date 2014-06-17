@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [biro cito co dcterms frbr xsd cito/];
+% layout 'default', namespaces => [biro cito co dcterms frbr xsd/];
 <<%= current_resource %>>
    a biro:BibliographicRecord, co:Set, frbr:Work, dcterms:bibliographicCitation;  
    dcterms:identifier "<%= $reference->identifier %>";
