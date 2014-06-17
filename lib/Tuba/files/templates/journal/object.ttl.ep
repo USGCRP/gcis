@@ -1,24 +1,36 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
+
 <<%= current_resource %>>
    a prov:Entity, bibo:Journal;
    dcterms:identifier "<%= $journal->identifier %>";
    dcterms:title "<%= $journal->title %>"^^xsd:string;
+
 % if ($journal->online_issn) {
+## Journal eissn
    bibo:eissn "<%= $journal->online_issn %>";
 % }
-% if ($journal->print_issn) {   
+% if ($journal->print_issn) {
+## Journal ISSN   
    bibo:issn "<%= $journal->print_issn %>";
 % }
+
 % if ($journal->publisher) {   
+## Journal publisher
    gcis:hasPublisher "<%= $journal->publisher %>"^^xsd:string; 
 % }
+
+## This journal contains the following articles, cited by the NCA3
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
+
 % if ($journal->country) {
+## Country of journal's publication
    dwc:Countrycode "<%= $journal->country %>";
 % }
+
 % if ($journal->url) {
+# URL for journal
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI.
 % }
-%= include 'prov'; 
+
