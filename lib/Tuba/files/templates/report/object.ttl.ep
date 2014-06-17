@@ -37,9 +37,8 @@
     dcterms:subject "<%= $report->topic %>"^^xsd:string;
 % }
 
-## Chapters
+## The report contains multiple chapters.
 % for my $chapter ($report->chapters) {
-   ## The report contains multiple chapters.
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
 
@@ -48,15 +47,14 @@
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 
-## Tables
+## The report contains tables.
 % for my $table ($report->tables) {
    ## The report contains one or more tables.
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
 % }
 
-## Findings
+## The report contains findings
 % for my $finding ($report->findings) {
-   ## The report contains one or more findings
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>> ;
 % }
 
