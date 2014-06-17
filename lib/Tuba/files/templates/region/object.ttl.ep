@@ -1,4 +1,4 @@
-% layout 'default';
+% layout 'default', namespaces => [prov dcterms xsd/];
 %# <<%= current_resource %>>
 %#    a prov:Entity;
 %#   dcterms:identifer "<%= $region->identifier %>";
