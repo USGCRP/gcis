@@ -19,7 +19,7 @@
    gcis:hasPublisher "<%= $journal->publisher %>"^^xsd:string; 
 % }
 
-## This journal contains the following articles, cited by the NCA3
+## The following articles, cited by the NCA3, appear in this journal
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
  % }
