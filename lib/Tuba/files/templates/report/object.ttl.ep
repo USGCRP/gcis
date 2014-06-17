@@ -59,6 +59,5 @@
 
     a gcis:Report .
 
-
 %= include 'prov';
 %= include 'contributors';
