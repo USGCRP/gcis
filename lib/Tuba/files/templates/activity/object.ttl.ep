@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [prov dcterms xsd fabio meth/];
+% layout 'default', namespaces => [qw/gcis prov dcterms xsd fabio meth/];
 
 <<%= current_resource %>>
    a prov:Activity;
@@ -17,6 +17,9 @@
 
 ## Output datafiles   
    fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
+
+## Software utilized
+   gcis:Software "<%= $activity->software %>"^^xsd:string;
 
 ## Computing environment
    dcterms:InteractiveResource "<%= tl($activity->computing_environment) %>"^^xsd:string;
