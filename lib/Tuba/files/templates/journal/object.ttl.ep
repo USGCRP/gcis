@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd prov dwc bibo cito/];
 
 <<%= current_resource %>>
    a prov:Entity, bibo:Journal;
