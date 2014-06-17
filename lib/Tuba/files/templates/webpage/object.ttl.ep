@@ -1,14 +1,20 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd bibo cito/];
+% layout 'default', namespaces => [qw/gcis dcterms prov xsd bibo cito/];
+
 <<%= current_resource %>>
    a prov:Entity, bibo:Webpage;
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
+   gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
+
 % if ($webpage->access_date) {
+## Date the webpage was accessed
    dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
 % }
-   gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
+
 % for my $keyword ($webpage->keywords) {
+## Keywords
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }
+
 %= include 'prov';
 
