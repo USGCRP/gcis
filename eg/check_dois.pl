@@ -16,6 +16,10 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 
 my $i = 0;
 for my $article (@$articles) {
+    last if $i > 10;
+    $i++;
+    print " i $i\n";
+
     my $url = $article->{url};
     my $doi = $article->{doi};
     next unless $doi && $url;
@@ -24,6 +28,4 @@ for my $article (@$articles) {
     next if $url eq $doi_redirect;
     print "Different urls for $doi : $url $doi_redirect\n";
 
-    last if $i > 10;
-    $i++;
 }
