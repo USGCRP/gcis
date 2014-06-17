@@ -16,7 +16,7 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 
 my $i = 0;
 for my $article (@$articles) {
-    last if $i > 10;
+    last if $i > 5;
     $i++;
     print " i $i\n";
 
