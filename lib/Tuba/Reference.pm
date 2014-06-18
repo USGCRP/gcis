@@ -9,6 +9,7 @@ use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/:all/;
 use Tuba::Log qw/logger/;;
+use Data::UUID::LibUUID;
 
 sub list {
     my $c = shift;
@@ -53,6 +54,23 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub normalize_form_parameter {
+    my $c = shift;
+    my %args = @_;
+    my ($column, $value) = @args{qw/column value/};
+    my $obj;
+    for ($column) {
+        /^publication_id$/ and $obj = $c->str_to_obj($value);
+        /^child_publication_id$/ and $obj = $c->str_to_obj($value);
+    }
+    if ($obj) {
+        my $pub = $obj->get_publication(autocreate => 1);
+        $pub->save(audit_user => $c->user) unless $pub->id;
+        return $pub->id;
+    }
+    return $value;
+}
+
 sub create {
     my $c = shift;
     if (my $json = $c->req->json) {
@@ -68,6 +86,7 @@ sub create {
     }
     $c->SUPER::create(@_);
 }
+
 sub post_create {
   my $c         = shift;
   my $reference = shift;
@@ -327,6 +346,13 @@ sub set_title {
     }
     return $c->SUPER::set_title(%args);
 }
+
+sub create_form {
+    my $c = shift;
+    $c->param(identifier => new_uuid_string(4));
+    return $c->SUPER::create_form(@_);
+}
+
 
 1;
 

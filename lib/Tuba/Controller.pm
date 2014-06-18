@@ -484,8 +484,14 @@ sub _rptlist {
 sub _default_controls {
     my $c = shift;
     return (
+        publication_id => sub {
+            { template => 'autocomplete', params => { object_type => 'all' } }
+        },
+        child_publication_id => sub {
+            { template => 'autocomplete', params => { object_type => 'all' } }
+        },
+
         organization_identifier => sub {
-            my $c = shift;
             { template => 'autocomplete', params => { object_type => 'organization' } }
         },
         chapter_identifier => sub { my $c = shift;
