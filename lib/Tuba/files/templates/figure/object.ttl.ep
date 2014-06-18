@@ -6,35 +6,35 @@
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
 % if ($figure->caption) {
-   ## Figure Caption
+## Figure Caption
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
 % }
 
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   ## The figure is part of a chapter
+## The figure is part of a chapter
    gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
 
 % for my $image ($figure->images) {
-   ## The figure contains one or more images
+## The figure contains one or more images
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
 
 % }   
-   ## Ordinal value of the figure number within the chapter
+## Ordinal value of the figure number within the chapter
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
 
 % if ($figure->create_dt) {
-   ## The figure was created on the following date
+## The figure was created on the following date
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
 % }
 
 % if ($figure->submission_dt) { 
-   ## The image was submitted on the following date
+## The image was submitted on the following date
   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 % }
 
 % if ($figure->lat_max) {
-   ## Geographical extent of the area covered by the figure
+## Geographical extent of the area covered by the figure
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
 % }
 % if ($figure->lat_min) {
@@ -47,7 +47,7 @@
    gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
 % }
 % if ($figure->time_start) {
-   ## Temporal extent of the area covered by the figure
+## Temporal extent of the figure content
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
 % }
 % if ($figure->time_end) {
@@ -55,12 +55,12 @@
 % }
 
 % if ($figure->source_citation) {
-   ## Figure source
+## Figure source
    cito:cites "<%= $figure->source_citation %>";
 % }
 
 % if ($figure->keywords) {
-   ## Keywords associated with the figure
+## Keywords associated with the figure
    % for my $keyword ($figure->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
 % }  
