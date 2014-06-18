@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd cito prov/];
 
 <<%= current_resource %>>
-   a gcis:Finding;
    dcterms:identifier "<%= $finding->identifier %>";
    dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
    gcis:FindingNumber "<%= $finding->ordinal %>"^^xsd:integer;
@@ -26,6 +25,7 @@
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>.
 % }
 
+   a gcis:Finding .
 %= include 'prov';
 
 
