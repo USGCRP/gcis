@@ -8,7 +8,7 @@
    gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
 % }
 
-## The report chapter and title of the report in which the table appears  table appears.
+## The report chapter and title of the report in which the table appears:
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
