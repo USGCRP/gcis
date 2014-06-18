@@ -6,7 +6,7 @@
    gcis:FindingNumber "<%= $finding->ordinal %>"^^xsd:integer;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
 
-   ## In-depth information about the findings
+## In-depth information about the finding
    gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
    gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
    dcterms:identifier "<%= $finding->identifier %>";
@@ -15,13 +15,13 @@
 
 % if (my $chapter = stash 'chapter') {
 <<%= current_resource %>>
-   ## The finding pertains to a specific chapter.
+## The finding pertains to a specific chapter.
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>.
 % }
 
 % if (my $chapter = $finding->chapter) {
 <<%= current_resource %>>
-   ## The finding was derived from a report.
+## The finding was derived from a report.
    prov:wasDerivedFrom  <<%= obj_uri_for($report)->to_abs %>>.
 % }
 
