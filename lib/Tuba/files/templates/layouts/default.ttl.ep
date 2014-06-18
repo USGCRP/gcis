@@ -1,5 +1,4 @@
 % if (param('no_header')) {
-   @base <<%= current_resource %> .
 %= content
 % } else {
     <% my %namespaces = (
