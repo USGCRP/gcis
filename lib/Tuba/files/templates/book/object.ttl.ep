@@ -25,7 +25,7 @@
 
 % for my $keyword ($book->keywords) {
 ## Keywords for book
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
  % }
 
    a bibo:Book;
