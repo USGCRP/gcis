@@ -1,0 +1,50 @@
+% layout 'default';
+
+%# Optionally pass a hash from column name to template and parameters, e.g.
+%# chapter => { template => 'select', parameters => { values => [1,2,3] }
+%# This template should be in the controls subdirectory.
+% my $controls = stash 'controls';
+
+<div class="row-fluid">
+
+%= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well', id => 'create_form', enctype => 'multipart/form-data' => begin
+
+<legend>New <%= $meta->table %></legend>
+
+%= include 'messages';
+
+% my $cols = stash 'cols';
+% for my $column_name (qw/identifier publication_id child_publication_id/) {
+% my $column = $meta->column($column_name);
+% my $name = $column->name;
+% my $required = $column->not_null ? ' required' : "";
+    <div class="control-group" style='margin-bottom:2px;'>
+        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+        <div class="controls">
+            % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
+                %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
+            % } elsif (my $entry = $controls->{$name}) {
+                % $entry = $self->$entry if ref($entry) eq 'CODE';
+                %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
+            % } else {
+                %= text_field $name, placeholder => $column->type, id => $name, class => 'span8';
+            % }
+
+            <span class="help-inline">
+            %= $column->remarks || ""
+            </span>
+        </div>
+    </div>
+% }
+<div class='required_note'>required</div>
+
+<div class="form-actions">
+    <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
+</div>
+
+%= hidden_field 'no_header' => +(param 'no_header');
+
+%= end
+
+</div>
+
