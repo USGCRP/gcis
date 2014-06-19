@@ -1,4 +1,3 @@
-## Provenance of entity
 % my $pub = $object->get_publication;
 % if ($pub) {
     % my @parents = $pub->get_parents;
