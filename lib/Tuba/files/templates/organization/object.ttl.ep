@@ -1,6 +1,6 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo prov skos org cito/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc prov skos org/];
+
 <<%= current_resource %>>
-   a gcis:Organization, org:Organization, prov:Organization, foaf:Organization, gcis:Agent;
    dcterms:identifier "<%= $organization->identifier %>";
    skos:prefLabel "<%= $organization->name %>"^^xsd:string;
 % if ($organization->url) {
@@ -16,7 +16,9 @@
 % }
 % if ($organization->country) {
    % if (my $country = $organization->country) {
-   dwc:countryCode "<%= $country->code %>.
+   dwc:countryCode "<%= $country->code %>;
    % }
 % }
+   
+   a gcis:Organization.
 %= include 'prov';
