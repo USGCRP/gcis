@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms prov xsd dwc bibo cito/];
 
 <<%= current_resource %>>
-   a prov:Entity, bibo:Book;
    dcterms:identifier "<%= $book->identifier %>";
    dcterms:title "<%= $book->title %>"^^xsd:string;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
@@ -29,4 +28,5 @@
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
  % }
 
+   a bibo:Book;
 %= include 'prov';
