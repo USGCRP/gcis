@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd prov dwc bibo cito/];
 
 <<%= current_resource %>>
-   a prov:Entity, bibo:Journal;
    dcterms:identifier "<%= $journal->identifier %>";
    dcterms:title "<%= $journal->title %>"^^xsd:string;
 
@@ -31,6 +30,7 @@
 
 % if ($journal->url) {
 # URL for journal
-   gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI.
+   gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;
 % }
 
+   a bibo:Journal.
