@@ -27,3 +27,4 @@
    meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string;
 
    a prov:Activity.
+
