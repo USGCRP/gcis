@@ -41,5 +41,5 @@
 
    a gcis:Chapter .
 %= include 'prov';
- %= include 'contributors';
+%# %= include 'contributors';
 
