@@ -1,7 +1,6 @@
-% layout 'default', namespaces => [qw/gcis prov bibo dcterms prov dwc xsd cito/];
+% layout 'default', namespaces => [qw/gcis bibo dcterms dwc xsd cito/];
 
-<<%= current_resource %>>
-   a prov:Entity, bibo:Article;   
+<<%= current_resource %>>   
    dcterms:identifier "<%= $article->identifier %>";
    % if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
@@ -11,5 +10,6 @@
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
    dwc:year "<%= $article->year %>"^^xsd:gYear;
-   gcis:hasURL "<%= $article->url %>"^^xsd:anyURI.
+   gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
+   a bibo:Article.
 %# %= include 'prov';
