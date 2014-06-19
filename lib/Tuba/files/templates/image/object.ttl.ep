@@ -59,4 +59,4 @@
    a gcis:Image .
 
 %= include 'prov';
-%= include 'contributors';
+%# %= include 'contributors';
