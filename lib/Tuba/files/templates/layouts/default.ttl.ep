@@ -34,5 +34,7 @@
     % for my $k ($which ? @$which : keys %namespaces) {
 @prefix <%= $k %>: <%== $namespaces{$k} %> .
     % }
+@prefix : <http://data.globalchange.gov> .
+@base <http://data.globalchange.gov/> .
 %= content
 % }
