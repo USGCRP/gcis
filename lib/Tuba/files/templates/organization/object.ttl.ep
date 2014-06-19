@@ -6,15 +6,14 @@
 % if ($organization->url) {
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
 % }
+
 % if (my $type = $organization->organization_type) {
+## Organization Type
    org:purpose "<%= $type->identifier %>";
 % }
-% if ($organization->reports) {
-   % for my $report ($organization->reports) {
-   prov:wasAssociatedWith "<%= $report->identifier %>";
-   % }
-% }
+
 % if ($organization->country) {
+## Country in which organization is situated
    % if (my $country = $organization->country) {
    dwc:countryCode "<%= $country->code %>;
    % }
