@@ -69,5 +69,5 @@
    a gcis:Figure .
 
 %= include 'prov';
-%= include 'contributors';
+%# %= include 'contributors';
 
