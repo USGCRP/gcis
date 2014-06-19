@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis prov dcterms xsd fabio meth/];
 
 <<%= current_resource %>>
-   a prov:Activity;
    dcterms:identifier "<%= $activity->identifier %>";
 
 % if ($activity->start_time) {
@@ -25,4 +24,6 @@
    dcterms:InteractiveResource "<%= tl($activity->computing_environment) %>"^^xsd:string;
 
 ## Methodology employed
-   meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string.
+   meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string;
+
+   a prov:Activity.
