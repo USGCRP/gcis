@@ -26,6 +26,7 @@
   % }
 
    a gcis:Organization.
+
 %= include 'prov';
 
 
