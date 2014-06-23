@@ -1,7 +1,7 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd/];
 
 <<%= current_resource %>>
-## Table identifier, title, and caption:
+## Identifier, title, and caption for the table
    dcterms:identifier "<%= $table->identifier %>";
    dcterms:title "<%= $table->title %>"^^xsd:string;
 %  if ($table->caption) {
