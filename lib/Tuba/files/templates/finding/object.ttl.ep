@@ -20,7 +20,7 @@
 % if (my $chapter = $finding->chapter) {
 <<%= current_resource %>>
 ## The finding was derived from a report.
-   prov:wasDerivedFrom <<%= obj_uri_for($report)->to_abs %>>.
+   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>.
 % }
 
    a gcis:Finding .
