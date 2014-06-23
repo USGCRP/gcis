@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd cito/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd/];
 
 <<%= current_resource %>>
 ## Table identifier, title, and caption:
