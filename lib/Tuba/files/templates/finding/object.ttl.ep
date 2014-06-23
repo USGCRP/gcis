@@ -9,7 +9,6 @@
 ## In-depth information about the finding
    gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
    gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
-   dcterms:identifier "<%= $finding->identifier %>";
    gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
    gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string .
 
