@@ -20,11 +20,10 @@
 % }
 
 % for my $map ($organization->organization_maps) {
-        prov:Relation "<%= $map->organization_relationship->label %>"             
-%#        org:linkedto "<%= $map->stringify %>";    
-org:linkedto <<%= obj_uri_for($map)->to_abs %>;  
+## Relationship between department and others
+   prov:Relation "<%= $map->organization_relationship->label %>";             
+   org:linkedto <<%= uri($map->other_organization) %>>;  
   % }
- 
 
    a gcis:Organization.
 %= include 'prov';
