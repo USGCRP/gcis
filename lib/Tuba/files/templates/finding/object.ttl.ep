@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd cito prov/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
