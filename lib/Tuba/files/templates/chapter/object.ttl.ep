@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
   
 <<%= current_resource %>>
-
    ## Chapter identifier, number, and title
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
