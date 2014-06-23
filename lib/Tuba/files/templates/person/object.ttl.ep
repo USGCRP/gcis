@@ -14,4 +14,4 @@
 % my $org = $c->organization or next;
    gcis:worksAt <<%= uri($org) %>>;
 % }
-   a prov:Person, foaf:Person, gcis:Agent.
+   a prov:Person, foaf:Person, gcis:Person.
