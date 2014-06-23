@@ -4,7 +4,6 @@
    dcterms:identifier "<%= $finding->identifier %>";
    dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
    gcis:FindingNumber "<%= $finding->ordinal %>"^^xsd:integer;
-   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
 
 ## In-depth information about the finding
    gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
