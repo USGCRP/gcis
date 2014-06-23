@@ -23,7 +23,7 @@
 % }
 
 % if ($dataset->url) {
-## URL to the page where the dataset can be accessed
+## URL for the page where the dataset can be accessed
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
 % }
 
