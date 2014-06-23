@@ -23,13 +23,6 @@
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>.
 % }
 
-% if (my $chapter = $finding->keyword) {
-  ## keywords
-   % for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-   % }
-% }
-
    a gcis:Finding .
 
 %= include 'prov';
