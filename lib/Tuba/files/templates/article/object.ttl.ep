@@ -2,14 +2,15 @@
 
 <<%= current_resource %>>   
    dcterms:identifier "<%= $article->identifier %>";
-   % if ($article->doi) {
+% if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
+% } else {
+   gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
 % }
    dcterms:title "<%= $article->title %>"^^xsd:string;
    gcis:inPublication <<%= uri($article->journal) %>>;
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
    dwc:year "<%= $article->year %>"^^xsd:gYear;
-   gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
    a bibo:Article.
 %# %= include 'prov';
