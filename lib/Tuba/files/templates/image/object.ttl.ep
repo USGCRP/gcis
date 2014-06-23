@@ -1,7 +1,7 @@
 % layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
 
 <<%= current_resource %>>
-## Image GCIS-Identifier and Title
+## Identifier and Title for the Image
    dcterms:identifier "<%= $image->identifier %>";
    dcterms:title "<%= $image->title %>"^^xsd:string;  
 
@@ -45,7 +45,7 @@
 % }  
 
 % for my $figure ($image->figures) {
-   ## The image is part of a figure
+   ## The image is part of a figure.
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 % } 
 
