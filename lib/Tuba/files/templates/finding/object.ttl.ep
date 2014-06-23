@@ -5,11 +5,11 @@
    dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
    gcis:FindingNumber "<%= $finding->ordinal %>"^^xsd:integer;
 
-## In-depth information about the finding
-   gcis:confidence "<%= tl($finding->confidence) %>"^^xsd:string;
-   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
+## Properties of the finding
    gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
-   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string .
+   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
+   gcis:assessmentOfConfidenceBasedOnEvidence "<%= tl($finding->confidence) %>"^^xsd:string;
+   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
 
 % if (my $chapter = stash 'chapter') {
 <<%= current_resource %>>
