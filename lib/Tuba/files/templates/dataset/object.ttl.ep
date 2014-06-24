@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis prov dcterms prov dwc xsd cito datacite dcat/];
+% layout 'default', namespaces => [qw/gcis prov dcterms dwc xsd cito datacite dcat/];
 
 <<%= current_resource %>>
    datacite:identifier "<%= $dataset->identifier %>";
