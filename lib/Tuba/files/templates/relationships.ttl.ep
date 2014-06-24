@@ -1,0 +1,11 @@
+% if (my @rels = default_html_relationships($object)) {
+    % for my $method (@rels) {
+    gcis:isCitedBy "<%= $method %>";
+    % }
+
+    % if (my $pub = $object->get_publication) {
+       % include 'keywords', pub => $pub;
+       % include 'regions', pub => $pub;
+    % }
+% }
+

@@ -16,3 +16,38 @@
 % }
    a gcis:Person.
 
+%# %= include 'contributors-person';
+
+ %# <<%= current_resource %>>
+%# % my $pub = $object->get_publication;
+%# % if ($pub) {
+%# % my $nest = $pub->contributors_nested;
+%#   % for my $row (@$nest) {
+%# % for my $con (@{ $row->{organization} }) {
+%#  prov:qualifiedAttribution [
+%#  a prov:Attribution;
+%#   gcis:worksAt <<%= obj_uri_for($con->{org}->to_abs %>>;
+%#   prov:hadRole "<%= ($row->{role}->label) %>";
+ %#  gcis:hadPublication <<%= obj_uri_for($pub) %>>;
+ %# ]
+ %# % }
+ %# % }
+ %# % }
+ %# .
+
+%# ## Contributors
+%#   % my $pub = $object->get_publication;
+%# <<%= obj_uri_for($person)->to_abs %>>
+%#  % if ($pub) {
+%#    % my $nest = $pub->contributors_nested;
+ %#   % for my $row (@$nest) {
+   %#     % for my $con (@{ $row->{organization} }) {
+     %#       prov:qualifiedAttribution [
+       %#          a prov:Attribution;
+        %#         ## Person and his/her role in the creation of the entity
+         %#        prov:hadRole "<%= ($row->{role}->label) %>";
+          %#       gcis:workedAt <<%= obj_uro_for($con->{org}->to_abs %>>            
+%# % }
+%#    % }
+%# % }
+

@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd bibo cito/];
 
 <<%= current_resource %>>
-
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
