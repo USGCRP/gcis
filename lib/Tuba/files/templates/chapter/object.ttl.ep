@@ -39,6 +39,7 @@
 % }
 
    a gcis:Chapter .
+
 %= include 'prov';
 %= include 'contributors';
 
