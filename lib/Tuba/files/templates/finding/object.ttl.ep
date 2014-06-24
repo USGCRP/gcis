@@ -11,15 +11,15 @@
    gcis:assessmentOfConfidenceBasedOnEvidence "<%= tl($finding->confidence) %>"^^xsd:string;
    gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
 
+## The finding pertains to a specific chapter.
 % if (my $chapter = stash 'chapter') {
 <<%= current_resource %>>
-## The finding pertains to a specific chapter.
    gcis:isFindingOf <<%= obj_uri_for($chapter)->to_abs %>>.
 % }
 
+## The finding was derived from a report.
 % if (my $chapter = $finding->chapter) {
 <<%= current_resource %>>
-## The finding was derived from a report.
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>.
 % }
 
