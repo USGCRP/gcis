@@ -26,6 +26,6 @@
 ## Methodology employed
    meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string;
 
-   a prov:Activity;
+   a prov:Activity.
 
 %=include 'prov';
