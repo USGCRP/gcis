@@ -35,7 +35,6 @@ for my $article (@$articles) {
     my $doi_html = $ua->get("http://dx.doi.org/$doi");
     print Dumper $doi_html;
     
-    my $doi_head = $doi_html->res->dom->at('head');
-    print " *** head ***\n";
-    print Dumper $doi_head;
+    my $doi_title = $doi_html->res->dom->at('head > title')->text;
+    print " title $doi_title\n";
 }
