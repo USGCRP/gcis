@@ -17,7 +17,7 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 my $i = 0;
 for my $article (@$articles) {
     
-    last if $i > 1;
+    last if $i > 0;
     $i++;
     print " i $i\n";
 
@@ -35,6 +35,7 @@ for my $article (@$articles) {
     my $doi_html = $ua->get("http://dx.doi.org/$doi");
     print Dumper $doi_html;
     
-    my $doi_date = $doi_html->res->dom->at('head > date')->text;
-    print " doi date $doi_date\n";
+    my $doi_head = $doi_html->res->dom->at('head');
+    print " *** head ***\n";
+    print Dumper $doi_head;
 }
