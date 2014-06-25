@@ -35,6 +35,6 @@ for my $article (@$articles) {
     my $doi_html = $ua->get("http://dx.doi.org/$doi");
     print Dumper $doi_html;
     
-    my $doi_date = $doi_headers->res->dom->at('head > date')->text;
+    my $doi_date = $doi_html->res->dom->at('head > date')->text;
     print " doi date $doi_date\n";
 }
