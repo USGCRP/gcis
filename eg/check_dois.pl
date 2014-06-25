@@ -35,6 +35,6 @@ for my $article (@$articles) {
     my $doi_headers = $ua->get("http://dx.doi.org/$doi")->res->headers;
     print Dumper $doi_headers;
     
-    my $doi_redirect = $doi_headers->{date};
+    my $doi_redirect = $doi_headers->headers->{date};
     print " doi redirect $doi_redirect\n";
 }
