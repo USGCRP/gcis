@@ -32,9 +32,9 @@ for my $article (@$articles) {
         print " doi $doi for uri $uri\n";
     }
     
-    my $doi_headers = $ua->get("http://dx.doi.org/$doi")->res->headers;
-    print Dumper $doi_headers;
+    my $doi_html = $ua->get("http://dx.doi.org/$doi");
+    print Dumper $doi_html;
     
-    my $doi_redirect = $doi_headers->headers->{date};
-    print " doi redirect $doi_redirect\n";
+    my $doi_date = $doi_headers->res->dom->at('head > date')->text;
+    print " doi date $doi_date\n";
 }
