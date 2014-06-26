@@ -53,7 +53,7 @@ for my $article (@$articles) {
     }
     print "   url $url\n";
     
-    if ($url != $doi_url) {
+    if ($url ne $doi_url) {
         print "   error - urls do not match\n"; next;
     }
 
