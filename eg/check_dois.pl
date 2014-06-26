@@ -10,10 +10,10 @@ $| = 1;
 
 
 my $ua = Mojo::UserAgent->new;
-my $all_flag = "?all=1";
+my $param = "?all=1";
 
 
-my $articles = $ua->get('http://data.globalchange.gov/article.json$all_flag')->res->json;
+my $articles = $ua->get("http://data.globalchange.gov/article.json$param")->res->json;
 
 my $i = 0;
 for my $article (@$articles) {
