@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms figure rdf cito prov xsd/];
+% layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
 
 <<%= current_resource %>>
 ## Identifier and title of the figure
