@@ -17,7 +17,7 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 my $i = 0;
 for my $article (@$articles) {
     
-    last if $i > 0;
+    last if $i > 5;
     $i++;
     print " $i:\n";
 
@@ -35,7 +35,7 @@ for my $article (@$articles) {
     }
     
     my $doi_ref = $ua->get("http://dx.doi.org/$doi")->res->dom;
-    print "   doi_ref $doi_ref\n";
+    # print "   doi_ref $doi_ref\n";
     
     my $redirect = $doi_ref->find('head > title')->text;
     print " redirect $redirect\n";
