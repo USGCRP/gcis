@@ -17,7 +17,7 @@ my $articles = $ua->get('http://data.globalchange.gov/article.json')->res->json;
 my $i = 0;
 for my $article (@$articles) {
     
-    last if $i >= 5;
+    # last if $i >= 5;
     $i++;
     print " $i:\n";
 
@@ -45,7 +45,7 @@ for my $article (@$articles) {
     if (!$doi_url) {
         print "   error - no doi url\n"; next;
     }
-    print "   doi url $doi_url\n";
+    print "   doi_url $doi_url\n";
     
     my $url = $article->{url};
     if (!$url) {
