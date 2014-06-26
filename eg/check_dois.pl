@@ -38,7 +38,7 @@ for my $article (@$articles) {
     my $redirect = $doi_ref->find('head > title')->text;
     # print "   doi redirect $redirect\n";
     if ($redirect ne "Handle Redirect") {
-        print "   error - no redirect\n ($redirect)"; next;
+        print "   error - no redirect ($redirect)\n"; next;
     }
     
     my $doi_url = $doi_ref->find('body > a[href]')->text;
@@ -46,4 +46,15 @@ for my $article (@$articles) {
         print "   error - no doi url\n"; next;
     }
     print "   doi url $doi_url\n";
+    
+    my $url = $article->{url};
+    if (!$url) {
+        print "   error - no url\n"; next;
+    }
+    print "   url $url\n";
+    
+    if ($url != $doi_url) {
+        print "   error - urls do not match\n"; next;
+    }
+
 }
