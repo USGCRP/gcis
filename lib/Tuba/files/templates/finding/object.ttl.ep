@@ -19,9 +19,9 @@
 
 ## The finding was derived from a report.
 % if (my $chapter = $finding->chapter) {
-<<%= current_resource %>>
-   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>.
-% }
+ <<%= current_resource %>>
+    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
+ % }
 
    a gcis:Finding .
 
