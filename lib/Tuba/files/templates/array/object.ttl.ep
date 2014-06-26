@@ -1,6 +1,6 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/dcterms/];
 <<%= current_resource %>>
-   a prov:Entity, gcis:Array;
+   a gcis:Array;
    dcterms:identifier "<%= $array->identifier %>"; 
 % for my $table ($array->tables) {
    gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.

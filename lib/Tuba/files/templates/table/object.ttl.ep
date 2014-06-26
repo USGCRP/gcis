@@ -1,20 +1,29 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd/];
+
 <<%= current_resource %>>
-   a prov:Entity, gcis:Table;
+## Identifier and title
    dcterms:identifier "<%= $table->identifier %>";
    dcterms:title "<%= $table->title %>"^^xsd:string;
-   % if ($table->caption) {
+
+%  if ($table->caption) {
+   ## Table caption
    gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
 % }
+
+## The report chapter and title of the report in which the table appears:
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
 % }
+
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
 % }
 % for my $keyword ($table->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+## Keywords associated with table   
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
+   a gcis:Table .
+
 %= include 'prov';
 

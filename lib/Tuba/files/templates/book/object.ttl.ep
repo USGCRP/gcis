@@ -1,21 +1,33 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
+
 <<%= current_resource %>>
-   a prov:Entity, bibo:Book;
    dcterms:identifier "<%= $book->identifier %>";
    dcterms:title "<%= $book->title %>"^^xsd:string;
+   dwc:year "<%= $book->year %>"^^xsd:gYear;
+   
 % if ($book->isbn) {
+## Book ISBN
    bibo:isbn "<%= $book->isbn %>";
 % }
+
+## Number of pages in book
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
-   dwc:year "<%= $book->year %>"^^xsd:gYear;
+
 % if ($book->publisher) {
+## Book's publisher
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
 % }
+
 % if ($book->url) {
+## URL for book
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
 % }
-% for my $keyword ($book->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
- % }
-%= include 'prov';
 
+% for my $keyword ($book->keywords) {
+## Keywords for book
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+ % }
+
+   a bibo:Book.
+
+%= include 'prov';

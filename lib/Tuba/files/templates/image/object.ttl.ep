@@ -1,20 +1,29 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
+
 <<%= current_resource %>>
-   dcterms:title "<%= $image->title %>"^^xsd:string;  
+## Identifier and Title for the Image
    dcterms:identifier "<%= $image->identifier %>";
+   dcterms:title "<%= $image->title %>"^^xsd:string;  
+
+## Image Description and attributes
 % if ($image->description) {
     dcterms:description "<%= $image->description %>"^^xsd:string;
 % }
 % if ($image->attributes) {
    dcterms:subject "<%= $image->attributes %>"^^xsd:string; 
 % }   
+
 % if ($image->create_dt) {
+   ## Creation date of the image
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime; 
 % }
 % if ($image->submission_dt) {
+   ## Submission date for the image
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
 % }   
+
 % if ($image->lat_max) {
+   ## Geographical extent of the area covered by the image
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
 % } 
 % if ($image->lat_min) {
@@ -26,20 +35,28 @@
 % if ($image->lon_min) {
    gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
 % } 
+
 % if ($image->time_start) {
+   ## Temporal coverage of the image
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
 % } 
 % if ($image->time_end) {
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; 
 % }  
+
 % for my $figure ($image->figures) {
+   ## The image is part of a figure.
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 % } 
+
 % if ($image->keywords) {   
     % for my $keyword ($image->keywords) {
-  gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+   ## Keywords associated with the image
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
      % }
 % }
+   
    a gcis:Image .
+
 %= include 'prov';
-%# %= include 'ctt';
+%# %= include 'contributors';
