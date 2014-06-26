@@ -35,11 +35,11 @@ for my $article (@$articles) {
     }
     
     my $doi_ref = $ua->get("http://dx.doi.org/$doi")->res->dom;
-    print Dumper $doi_dom;
+    print Dumper $doi_ref;
     
     my $redirect = $doi_ref->find('head > title')->text;
     print " redirect $redirect\n";
-    if 9$redirect != "Handle Redirect") {
+    if ($redirect != "Handle Redirect") {
         print "   error - no redirect\n";
     }
 }
