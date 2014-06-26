@@ -35,7 +35,7 @@ for my $article (@$articles) {
     }
     
     my $doi_ref = $ua->get("http://dx.doi.org/$doi")->res->dom;
-    print Dumper $doi_ref;
+    print "   doi_ref $doi_ref\n";
     
     my $redirect = $doi_ref->find('head > title')->text;
     print " redirect $redirect\n";
