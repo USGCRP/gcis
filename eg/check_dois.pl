@@ -19,22 +19,27 @@ for my $article (@$articles) {
     
     last if $i > 0;
     $i++;
-    print " i $i\n";
+    print " $i:\n";
 
     # print Dumper $article;
 
-    my $doi = $article->{doi};
     my $uri = $article->{uri};
+    print "   uri $uri\n";
+
+    my $doi = $article->{doi};
     if (!$doi) {
-        print " no doi for $uri\n";
+        print "   error - no doi\n";
         next;
     } else {
-        print " doi $doi for uri $uri\n";
+        print "   doi $doi\n";
     }
     
-    my $doi_html = $ua->get("http://dx.doi.org/$doi");
-    print Dumper $doi_html;
+    my $doi_ref = $ua->get("http://dx.doi.org/$doi")->res->dom;
+    print Dumper $doi_dom;
     
-    my $doi_title = $doi_html->res->dom->at('head > title')->text;
-    print " title $doi_title\n";
+    my $redirect = $doi_ref->find('head > title')->text;
+    print " redirect $redirect\n";
+    if 9$redirect != "Handle Redirect") {
+        print "   error - no redirect\n";
+    }
 }
