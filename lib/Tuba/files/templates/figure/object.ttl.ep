@@ -30,7 +30,7 @@
 
 % if ($figure->submission_dt) { 
 ## The image was submitted on the following date
-  dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 % }
 
 % if ($figure->lat_max) {
