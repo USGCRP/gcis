@@ -11,8 +11,10 @@
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
 % }
 
+% if ($activity->duration) {
 ## Duration of the activity
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
+% }
 
 ## Output datafiles   
    fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
