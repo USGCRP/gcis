@@ -1,44 +1,87 @@
-% layout "default";
-<<%= current_resource %>>
-   a prov:Entity; a dcmitype:Dataset; a dcat:Dataset;
-   dcterms:date "<%= $dataset->access_dt %>";
-   dcterms:date "<%= $dataset->release_dt %>";
-   cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
-   dcterms:description "<%= tl($dataset->description) %>";
-   datacite:doi "<%= $dataset->doi %>";
-   dcterms:identifier "<%= $dataset->identifier %>";
-   dcterms:title "<%= $dataset->name %>";
-   prov:label "<%= $dataset->name %>";
-   rdfs:label "<%= $dataset->name %>";
-   gcis:northBoundLatitude "<%= $dataset->lat_max %>";
-   dwc:decimalLatitude "<%= $dataset->lat_max %>";
-   geo:lat "<%= $dataset->lat_max %>";
-   gcis:southBoundLatitude "<%= $dataset->lat_min %>";
-   dwc:decimalLatitude "<%= $dataset->lat_min %>";
-   geo:lat "<%= $dataset->lat_min %>";
-   gcis:westBoundLongitude "<%= $dataset->lon_max %>";
-   dwc:decimalLongitude "<%= $dataset->lon_max %>";
-   geo:long "<%= $dataset->lon_max %>";
-   gcis:eastBoundLongitude "<%= $dataset->lon_min %>";
-   dwc:decimalLongitude "<%= $dataset->lon_min %>";
-   geo:long "<%= $dataset->lon_min %>";   
-   dcterms:nativeid "<%= $dataset->native_id %>";
-   xsd:gYear "<%= $dataset->publication_year %>";
-   dwc:year "<%= $dataset->publication_year %>";
-   gcis:hasSpatialExtent "<%= $dataset->spatial_extent %>";
-   gcis:projection "<%= $dataset->spatial_ref_sys %>";
-   gcis:spatialResolution "<%= $dataset->spatial_res %>";
-   ext:StartTime "<%= $dataset->start_time %>";
-   ext:EndTime "<%= $dataset->end_time %>";
-   gcis:hasTemporalExtents "<%= $dataset->temporal_extent %>" ;
-   gcis:accessURL "<%= $dataset->url %>";
-   gcis:hasURL "<%= $dataset->url %>";
-   dcterms:hasVersion "<%= $dataset->version %>";
-   dcterms:verticalExtents "<%= $dataset->vertical_extent %>" .
-% for my $keyword ($dataset->keywords) {
-<<%= current_resource %>> gcis:subject "<%== $keyword->stringify %>" .
-<<%= current_resource %>> dcterms:subject "<%== $keyword->stringify %>" .
-% }
-%= include 'prov';
-%= include 'contributors'; 
+% layout 'default', namespaces => [qw/gcis prov dcterms dwc xsd cito datacite dcat/];
 
+<<%= current_resource %>>
+   datacite:identifier "<%= $dataset->identifier %>";
+   dcterms:title "<%= $dataset->name %>"^^xsd:string;
+
+% if ($dataset->version)  {
+   dcterms:hasVersion "<%= $dataset->version %>";
+% }
+
+% if ($dataset->publication_year) {
+   dcterms:issued "<%= $dataset->publication_year %>"^^xsd:gYear;
+% }
+
+% if ($dataset->description) {
+## The formal description of the dataset
+   dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
+% }
+
+% if ($dataset->doi) {
+## The digital object identifier for the dataset
+   datacite:doi "<%= $dataset->doi %>";
+% }
+
+% if ($dataset->url) {
+## URL for the page where the dataset can be accessed
+   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
+% }
+
+% if ($dataset->native_id) { 
+## Identifier for dataset provided by dataset creators
+   datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>"; 
+ % }
+
+% if ($dataset->access_dt) {
+## The date the dataset was accessed
+   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date; 
+% }
+
+% if ($dataset->release_dt) {
+## The date the dataset was released
+   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
+% }
+
+% if ($dataset->cite_metadata) {
+## The Metadata document cited by the dataset
+   cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
+% }
+
+% if ($dataset->spatial_extent) {
+## The spatial extent of the dataset
+   gcis:spatialExtents "<%= $dataset->spatial_extent %>"; 
+% }
+
+% if ($dataset->spatial_ref_sys) {
+## The projection of the dataset
+   dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
+% }
+
+% if ($dataset->spatial_res) {
+## The spatial resolution of the dataset
+  gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+% }
+
+% if ($dataset->temporal_extent)  {
+## Temporal domain of the dataset
+   gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
+% }
+
+% if ($dataset->vertical_extent) {
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
+% }
+% if ($dataset->attributes) {
+## Attributes of the dataset
+   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string; 
+% }
+
+% if ($dataset->keywords) {
+   % for my $keyword ($dataset->keywords) {
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string.
+   % }
+% }
+
+   a gcis:Dataset .
+
+   %= include 'prov';
+%# %= include 'contributors'; 

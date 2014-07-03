@@ -30,12 +30,30 @@ sub _user_can_edit {
     return 0;
 }
 
+sub render_not_found_or_redirect {
+    my $c = shift;
+    my $identifier = $c->stash('report_identifier');
+    my $sth = $c->db->dbh->prepare(<<'SQL', { pg_placeholder_dollaronly => 1 });
+select changed_fields->'identifier'
+ from audit.logged_actions where table_name='report' and changed_fields?'identifier'
+ and row_data->'identifier' = $1
+order by transaction_id limit 1
+SQL
+    my $got = $sth->execute($identifier);
+    my $rows = $sth->fetchall_arrayref;
+    return $c->render_not_found unless $rows && @$rows;
+    my $replacement = $rows->[0][0];
+    my $url = $c->req->url;
+    $url =~ s{/report/$identifier(?=/|$)}{/report/$replacement};
+    return $c->redirect_to($url);
+}
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
     my $object = Report->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/chapters/] )
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     return $c->render(status => 403, text => '403 Forbidden') unless $c->_user_can_view($object);
     $c->stash(object => $object);
     $c->stash(sorters => {
@@ -126,7 +144,7 @@ sub list {
 sub select {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');
-    my $report = $c->_this_object or do { $c->render_not_found; return 0; };
+    my $report = $c->_this_object or do { $c->render_not_found_or_redirect; return 0; };
     $c->_user_can_view($report) or do { $c->render(status => 403, text => "Forbidden"); return 0; };
     $c->stash(report => $report);
     return 1;
@@ -167,7 +185,7 @@ sub watch {
             $other = hstore_decode($other);
             %$vals = ( %$vals, %$other);
         }
-        $row->{changed_fields} = decode('UTF-8',$row->{changed_fields}) if defined($row->{changed_fields});
+        $row->{changed_fields} = $row->{changed_fields} if defined($row->{changed_fields});
         $row->{obj} = eval { $class->new(%$vals); };
 
         #$row->{obj}->load(speculative => 1);
@@ -178,6 +196,7 @@ sub watch {
 
 sub update_rel_form {
     my $c = shift;
+    return $c->render(code => 403) unless $c->_user_can_edit($c->_this_object, $c->user);
     $c->stash(relationships => [ map Report->meta->relationship($_), qw/chapters figures findings tables/ ]);
     $c->stash(controls => {
             chapters  => { template => 'one_to_many' },
@@ -221,6 +240,29 @@ sub make_tree_for_show {
         }, $report->chapters
       ],
     };
+}
+
+for my $method (qw[
+update_files_form
+update_contributors_form
+update_files
+put_files
+update_contributors
+update_keywords
+update_regions
+update_rel
+remove
+update 
+history
+]) {
+eval <<DONE;
+sub $method {
+    my \$c = shift;
+    return \$c->render(text => "unauthorized", status => 403) unless \$c->_user_can_edit(\$c->_this_object, \$c->user);
+    return \$c->SUPER::$method(\@_);
+}
+DONE
+die $@ if $@;
 }
 
 1;

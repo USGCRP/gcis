@@ -1,29 +1,32 @@
-% layout "default";
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc prov skos org/];
+
 <<%= current_resource %>>
-   a org:Organization; a prov:Organization; a foaf:Organization; a gcis:Agent;
+   dcterms:identifier "<%= $organization->identifier %>";
+   skos:prefLabel "<%= $organization->name %>"^^xsd:string;
+% if ($organization->url) {
+   gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
+% }
+
 % if (my $type = $organization->organization_type) {
+## Organization Type
    org:purpose "<%= $type->identifier %>";
 % }
-% for my $report ($organization->reports) {
-   prov:wasAssociatedWith "<%= $report->identifier %>";
+
+% if ($organization->country) {
+## Country in which organization is situated
+   % if (my $country = $organization->country) {
+   dwc:countryCode "<%= $country->code %>;
+   % }
 % }
-% if (my $country = $organization->country) {
-   dwc:countryCode "<%= $country->code %>";
-% }
-   dcterms:identifier "<%= $organization->identifier %>";
-   foaf:name "<%= $organization->name %>";
-   rdfs:label "<%= $organization->name %>";
-   prov:label "<%= $organization->name %>";
-   gcis:hasURL "<%= $organization->url %>".
+
+% for my $map ($organization->organization_maps) {
+## Relationship between department and others
+   prov:Relation "<%= $map->organization_relationship->label %>";             
+   org:linkedto <<%= uri($map->other_organization) %>>;  
+  % }
+
+   a gcis:Organization.
+
 %= include 'prov';
-%# parent organization(s) - to be added later               
-%#  % for my $suborg ($organization->suborgs) {
-%#      org:subOrganizationOf "<%= $suborg->parent_org %>";           
-%#        prov:actedOnBehalfOf "<%= $suborg->parent_org %>";
- %# % }
-%# % for my $contributor ($organization->contributor) {
-%# gcis:contributor "<%= $contributor->identifier %>";
-%# % }
-%# for my $dataset ($organization->datasets) {
-%#   gcis:dataset "<%= $dataset->identifier %>";
-%# }
+
+

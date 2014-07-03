@@ -16,7 +16,7 @@ sub show {
     $identifier =~ s/\s+$//;
     my $object =
       Dataset->new( identifier => $identifier )->load(speculative => 1)
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }

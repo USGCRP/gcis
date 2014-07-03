@@ -73,7 +73,18 @@ $t->get_ok("/report/test-report/finding/" => { Accept => "application/json" } )-
 $t->get_ok("/report/test-report/chapter/" => { Accept => "application/json" } )->status_is(200);
 $t->get_ok("/image" => { Accept => "application/json" } )->status_is(200);
 
-$t->delete_ok("/report/test-report" => { Accept => "application/json" })->status_is(200);
+# Change the identifier
+$t->ua->max_redirects(0);
+$t->post_ok("/report/test-report" => { Accept => "application/json" } => json =>
+    {
+        identifier => "test-report-changed",
+        title => "changed",
+    })->status_is(200);
+$t->get_ok("/report/test-report")->status_is(302);
+
+$t->ua->max_redirects(1);
+
+$t->delete_ok("/report/test-report-changed" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/report/test-report2" => { Accept => "application/json" })->status_is(200);
 
 $t->get_ok("/report/test-report" => { Accept => "application/json" } )->status_is(404);

@@ -43,7 +43,7 @@ sub show {
         return $c->redirect_to( $c->current_route, { chapter_identifier => $chapter->identifier } );
       }
     }
-    return $c->render_not_found unless $chapter;
+    return $c->render_not_found_or_redirect unless $chapter;
 
     $c->stash(object => $chapter);
     $c->stash(meta => Chapter->meta);

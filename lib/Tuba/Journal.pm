@@ -14,7 +14,7 @@ sub show {
     my $identifier = $c->stash('journal_identifier');
     my $object =
       Journal->new( identifier => $identifier )->load( speculative => 1)
-      or return $c->render_not_found;
+      or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     $c->SUPER::show(@_);
 }

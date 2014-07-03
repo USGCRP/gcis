@@ -49,12 +49,13 @@
 % my @internal;
 % my $attrs = $object->attrs;
 % my @ordered = sort keys %$attrs;
-% @ordered = ( 'reftype', 'reftype_id', grep { $_ !~ /reftype/ } @ordered );
+% @ordered = ( (grep { /reftype/i } @ordered), (grep { $_ !~ /reftype/ } @ordered) );
 % for my $dot (grep /^[._]/, @ordered) {
 %   @ordered = grep { $_ ne $dot } @ordered;
 %   push @internal, $dot;
 % }
 
+% if (@ordered) {
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Bibliographic fields</caption>
 % for my $k (@ordered) {
@@ -87,7 +88,9 @@
     </tr>
 % }
 </table>
+% }
 
+% if (@internal) {
 <table class='table table-condensed table-bordered table-striped'>
 <caption>Bibliographic identifiers</caption>
 % for my $k (@internal) {
@@ -98,6 +101,6 @@
     </tr>
 % }
 </table>
-
+% }
 
 

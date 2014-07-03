@@ -1,17 +1,18 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/dcterms biro/];
+
 <<%= current_resource %>>
-   a biro:BibliographicRecord; a co:Set; a frbr:Work; a dcterms:bibliographicCitation;  
    dcterms:identifier "<%= $reference->identifier %>";
 % if (my $pub = $reference->publication) {
-       %    my $report = $pub->to_object;
-            gcis:inPublication   <<%= uri($report) %>>;
-    % }
+ % my $report = $pub->to_object;
+   biro:isReferencedBy <<%= uri($report) %>>;
+ % }
 % for my $subpub ($reference->subpubrefs) {
-       %    my $chapter = $subpub->publication->to_object;
-            gcis:inPublication   <<%= uri($chapter) %>>;
-    % }
+ % my $chapter = $subpub->publication->to_object;
+   biro:isReferencedBy <<%= uri($chapter) %>>;
+ % }
 % if (my $pub = $reference->child_publication) {
-       %    my $article = $pub->to_object;
-            biro:references <<%= uri($article) %>>.
+ % my $article = $pub->to_object;
+   biro:references <<%= uri($article) %>>;
     % }
+   a biro:BibliographicRecord, dcterms:bibliographicCitation.
            

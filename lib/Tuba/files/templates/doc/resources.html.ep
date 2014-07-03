@@ -10,7 +10,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     <dd>A <i>report</i>, such as the <%= link_to 'show_report', { report_identifier => "nca3" } => begin %>nca3<%= end %>,
     or the <%= link_to 'show_report', { report_identifier => 'nca2' } => begin %>nca2<%= end %>,
     may have <i>chapters</i>, <i>figures</i>, <i>tables</i>, <i>findings</i>, and <i>references</i> associated with it.</dd>
-    <dt><i>chapter</i></dt>
+    <dt>Chapter</dt>
     <dd>A <i>chapter</i> of a <i>report</i>, such as 
     %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-climate" } => begin
     our-changing-climate<%= end %>,

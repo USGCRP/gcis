@@ -1,21 +1,8 @@
-% layout 'default';
-
+% layout 'default', namespaces => [qw/dcterms/];
 <<%= current_resource %>>
-   a prov:Entity;
    a gcis:Array;
-
- % for my $table ($array->tables) {
-   gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($table)->to_abs %>>; 
-% }   
-   dcterms:identifier "<%= $array->identifier %>".
-
-%# %  for my $row ($array->rows) {
-%#   scsv:row "<%= $row->rows %>":
-%# % }
-
-%# % for my $row ($array->rows) {
-%#   scsv:row  <%= dumper($row) %>;
-%# % }
-
+   dcterms:identifier "<%= $array->identifier %>"; 
+% for my $table ($array->tables) {
+   gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.
+   % }   
 

@@ -36,6 +36,9 @@ Tuba provides a RESTful API to GCIS data.
 
     read_only : 0
     hide_login_link : 0
+    google_analytics :
+        id : UA-12345678-9
+        domain : example.gov
 
     auth :
         secret : this_should_be_replaced_with_a_server_secret
@@ -60,7 +63,7 @@ use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 use strict;
 
-our $VERSION = '1.02';
+our $VERSION = '1.04';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
@@ -193,8 +196,9 @@ sub startup {
 
       my $authed = $r->bridge("/$path_base")->to(cb => sub {
               my $c = shift;
-              $c->auth && $c->authz(role => 'update') }
-      )->name("authed_select_$name");
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          })->name("authed_select_$name");
       $authed->post->to("$cname#create")->name("create_$name");
       $authed->get('/form/create')->to("$cname#create_form")->name("create_form_$name");
 
@@ -246,7 +250,7 @@ sub startup {
         my $c = shift;
         my $count = $c->param('count') || 1;
         $count = 1 unless $count =~ /^[0-9]+$/;
-        return $c->render( text => "sorry, max is 1.02 at once" ) if $count > 1000;
+        return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
         $c->res->headers->content_type('text/plain');
         $c->respond_to(
           text => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
@@ -281,7 +285,7 @@ sub startup {
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding', no_list => 1 });
     $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure', no_list => 1 });
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table', no_list => 1 });
-
+    $r->get("/figure")->to("figure#list")->name("list_figures_across_reports");
 
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
@@ -341,7 +345,8 @@ sub startup {
     $r->bridge('/reference/match')
       ->to(cb => sub {
               my $c = shift;
-              $c->auth && $c->authz(role => 'update')
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
         })
       ->post('/:reference_identifier')
       ->to('reference#smartmatch');
@@ -389,7 +394,13 @@ sub startup {
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {
-        my $authed = $r->bridge->to(cb => sub { my $c = shift; $c->auth && $c->authz(role => 'update')});
+        my $authed = $r->bridge->to(
+          cb => sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          }
+        );
         $authed->get('/admin')->to(cb => sub { shift->render })->name('admin');
         $authed->get('/watch')->to('report#watch')->name('_watch');
         $r->get('/login')->to('auth#login')->name('login');

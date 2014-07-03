@@ -1,0 +1,7 @@
+% layout 'default', namespaces => [qw/prov dcterms xsd/];
+
+ <<%= current_resource %>>
+   a prov:Entity;
+   dcterms:identifer "<%= $region->identifier %>";
+   dcterms:description "<%= $region->description %>"^^xsd:string;
+   dcterms:title "<%= $region->label %>"^^xsd:string.

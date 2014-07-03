@@ -33,6 +33,7 @@ our %RouteDoc = (
   list_chapter => { _list_defaults('chapter'), brief => "List chapters in a report", description => "Get a list of chapters in a report." },
   list_finding => { _list_defaults('finding'), brief => "List findings in a chapter", description => "Get a list of findings in a chapter." },
   list_figure  => { _list_defaults('figure'), brief => "List figures in a chapter", description => "Get a list of figures in a chapter." },
+  list_figures_across_reports => { _list_defaults('figure'), brief => "List all figures", description => "List all the figures in GCIS." },
   list_table   => { _list_defaults('table'), brief => "List tables in a chapter", description => "Get a list of tables in a chapter." },
   list_chapter_references => { _list_defaults('reference'), brief => "List references in a chapter", description => "Get a list of references in a chapter." },
   list_all_findings => { _list_defaults('finding', add => "in a report") },

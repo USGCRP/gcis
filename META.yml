@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 1.02
+    version: 1.04
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -169,7 +169,7 @@ provides:
 requires:
   Algorithm::Permute: 0
   Crypt::OpenSSL::RSA: 0
-  DBD::Pg: 3.0
+  DBD::Pg: 3.003000
   DBIx::Connector: 0
   DBIx::Custom: 0
   DBIx::Simple: 0
@@ -196,4 +196,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 1.02
+version: 1.04

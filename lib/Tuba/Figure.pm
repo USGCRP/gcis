@@ -13,10 +13,10 @@ sub list {
     my $c = shift;
     $c->param(thumbs => 1) unless defined($c->param('thumbs')) && length($c->param('thumbs'));
     my $figures;
-    my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');
     my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
     if (my $ch = $c->stash('chapter')) {
+        my $report_identifier = $c->stash('report_identifier');
         $figures = Figures->get_objects(
             query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             @page,
@@ -25,7 +25,7 @@ sub list {
         $c->set_pages(Figures->get_objects_count(
             query => [chapter_identifier => $ch->identifier, report_identifier => $report_identifier], with_objects => ['chapter'],
             )) unless $all;
-    } else {
+    } elsif (my $report_identifier = $c->stash('report_identifier')) {
         $figures = Figures->get_objects(
            with_objects => ['chapter'], sort_by => "number, ordinal, t1.identifier",
            query => [ report_identifier => $report_identifier ],
@@ -34,8 +34,13 @@ sub list {
        $c->set_pages(Figures->get_objects_count(
            query => [ report_identifier => $report_identifier ])
        ) unless $all;
+    } else {
+        $figures = Figures->get_objects(
+           with_objects => ['report', 'chapter'], sort_by => "number, ordinal, t1.identifier",
+           @page,
+       );
+       $c->set_pages(Figures->get_objects_count()) unless $all;
     }
-    
     $c->stash(objects => $figures);
     $c->SUPER::list(@_);
 }
@@ -44,8 +49,10 @@ sub set_title {
     my $c = shift;
     if (my $ch = $c->stash('chapter')) {
         $c->stash(title => sprintf("Figures in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
-    } else {
+    } elsif (my $report = $c->stash('report')) {
         $c->stash(title => sprintf("Figures in %s",$c->stash('report')->title));
+    } else {
+        $c->stash(title => "All figures");
     }
 }
 
@@ -66,7 +73,7 @@ sub show {
         )->load(speculative => 1, with => [qw/chapter images/]);
         return $c->redirect_to($object->uri_with_format($c)) if $object;
     };
-    return $c->render_not_found unless $object;
+    return $c->render_not_found_or_redirect unless $object;
 
     if (!$c->stash('chapter_identifier') && $object->chapter_identifier) {
         $c->stash(chapter_identifier => $object->chapter_identifier);

@@ -1,26 +1,17 @@
-% layout "default";
+% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd/];
+
 <<%= current_resource %>>
-   a prov:Person; a foaf:Person; a gcis:Agent;
    dcterms:identifier "<%= $person->id %>";
+% if ($person->orcid) {
    vivo:orcidId "<%= $person->orcid %>";
+% }
    foaf:firstName "<%= $person->first_name %>";
-   foaf:givenName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
-   foaf:familyName "<%= $person->last_name %>";
-   gcis:hasURL "<%= $person->url %>" ;
+% if ($person->url) {
+   foaf:page "<%= $person->url %>"^^xsd:anyURI;
+% }
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
-   gcis:isMemberOf <<%= uri($org) %>>;
-   prov:actedOnBehalfOf  <<%= uri($org) %>>;
    gcis:worksAt <<%= uri($org) %>>;
-   gcis:hasOrganization <<%= uri($org) %>>;
 % }
- % my $ctr = $object->contributors;
- % for my $ctr (@{ $object->contributors }) {
-   gcis:ConveningLeadAuthor "<%= $ctr->role_type->label %>";
-   prov:Role "<%= $ctr->role_type->label %>";
-<% for my $pub ($ctr->publications) { %>
-   gcis:hasPublication <<%= uri($pub->to_object) %>>;
-  <% } %>
-        % }
-                  
+   a gcis:Person .

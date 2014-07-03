@@ -1,47 +1,29 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd/];
+
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Table;
-   gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
-   gcis:inPublication <<%= uri($chapter) %>>;
+## Identifier and title
+   dcterms:identifier "<%= $table->identifier %>";
+   dcterms:title "<%= $table->title %>"^^xsd:string;
+
+%  if ($table->caption) {
+   ## Table caption
+   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
 % }
+
+## The report chapter and title of the report in which the table appears:
+   gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
+% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
+   gcis:isTableOf <<%= uri($chapter) %>>;
+% }
+
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($array)->to_abs %>>;
 % }
 % for my $keyword ($table->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
+## Keywords associated with table   
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
-   gcis:hasCaption "<%= $table->caption %>";
-   dcterms:description "<%= $table->caption %>";
-   dcterms:identifier "<%= $table->chapter_identifier %>";
-   dcterms:identifier "<%= $table->identifier %>";
-   rdf:rest "<%= $table->ordinal %>";
-   dcterms:identifier "<%= $table->report_identifier %>";
-   dcterms:title "<%= $table->title %>";
-   rdfs:label "<%= $table->title %>";
-   prov:label "<%= $table->title %>".
+   a gcis:Table .
+
 %= include 'prov';
-%#   cito:cites "<%= $table->source_citation %>";
-%#   dcterms:dateSubmitted "<%= $table->submission_dt %>";
-%#   dcterms:date "<%= $image->submission_dt %>";
-%#   gcis:startedAt "<%= $table->time_start %>";
-%#   gcis:endedAt "<%= $table->time_end %>";
-%# gcis:description "<%= $table->description %>";
-%# for my $keyword ($table->keywords) {
-%#    gcis:attributes "<%= $keyword->attributes %>"
-%# % }
-   %# for my $keyword ($table->keywords) {
-%#    skos:concept "<%= $keyword->attributes %>"
-%# % }
-%# % for my $right ($table->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>".
-%# % }
-%# % for my $ref ($article->get_references) {
-%# dcterms:isReferencedBy <<%= uri($ref); %>>;
-%# % }
-%# uuid
-%# gcis:tableNumber "<%= $table->numeric %>";
 

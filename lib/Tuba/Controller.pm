@@ -231,8 +231,68 @@ sub select {
         $c->stash($table => $loaded);
         return 1;
     }
-    $c->render_not_found;
     return 0;
+}
+
+sub _pk_to_stashval {
+    # Map a primary key column name to a value in the stash
+    my $c = shift;
+    my $meta = shift;
+    my $name = shift;
+    my $stash_name = $name;
+    $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
+    $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
+    return $c->stash($stash_name);
+}
+
+=head2 render_not_found_or_redirect
+
+Before rendering a 404, check the history, and possibly redirect.
+
+Note that this only checks the 'identifier'; e.g. in the case where
+multiple changes have been made (/report/oldreport/figure/oldgigure),
+there will be two redirects.  The first one will go to /report/newreport/figure/oldfigure,
+and the second one will go to /report/newreport/figure/newfigure.
+
+Also adding 'no redirect' to the audit note will prevent redirects.
+
+=cut
+
+sub render_not_found_or_redirect {
+    my $c = shift;
+    my $object_class = $c->_guess_object_class;
+    my $meta = $object_class->meta;
+    my $sql;
+    my @bind;
+    my $table_name = $meta->table;
+    my $identifier;
+    my $identifier_column;
+    for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
+        my $val = $c->_pk_to_stashval($meta,$name) or next;
+        if ($name =~ /^id(entifier)?$/) {
+            $identifier = $val;
+            $identifier_column = $name;
+        }
+        push @bind, $val;
+        $sql .= " and " if $sql;
+        $sql .= " row_data->'$name' = \$".@bind;
+    }
+    return $c->render_not_found unless $identifier;
+
+    my $sth = $c->db->dbh->prepare(<<SQL, { pg_placeholder_dollaronly => 1 });
+select changed_fields->'$identifier_column'
+ from audit.logged_actions where table_name='$table_name' and changed_fields?'$identifier_column'
+ and $sql
+ and audit_note not like '%no redirect%'
+ order by transaction_id limit 1
+SQL
+    my $got = $sth->execute(@bind);
+    my $rows = $sth->fetchall_arrayref;
+    return $c->render_not_found unless $rows && @$rows;
+    my $replacement = $rows->[0][0];
+    my $url = $c->req->url;
+    $url =~ s{/$table_name/$identifier(?=/|$)}{/$table_name/$replacement};
+    return $c->redirect_to($url);
 }
 
 sub _guess_object_class {
@@ -401,12 +461,7 @@ sub _this_object {
     my $meta = $object_class->meta;
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
-        my $stash_name = $name;
-        $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
-        $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
-        my $val = $c->stash($stash_name) or do {
-            next;
-        };
+        my $val = $c->_pk_to_stashval($meta,$name) or next;
         $pk{$name} = $val;
     }
 
@@ -429,8 +484,14 @@ sub _rptlist {
 sub _default_controls {
     my $c = shift;
     return (
+        publication_id => sub {
+            { template => 'autocomplete', params => { object_type => 'all' } }
+        },
+        child_publication_id => sub {
+            { template => 'autocomplete', params => { object_type => 'all' } }
+        },
+
         organization_identifier => sub {
-            my $c = shift;
             { template => 'autocomplete', params => { object_type => 'organization' } }
         },
         chapter_identifier => sub { my $c = shift;
@@ -1011,6 +1072,42 @@ sub normalize_form_parameter {
     return $value;
 }
 
+=head2 set_replacement
+
+After deleting an object, indicate that another object takes precedence.
+
+(Not implemented for composite primary keys.)
+
+=cut
+
+sub set_replacement {
+    my $c = shift;
+    my $table_name = shift;
+    my $old_identifier = shift;
+    my $new_identifier = shift;
+    my $dbh = $c->dbs->dbh;
+    $dbh->do(<<SQL, {}, "identifier=>$new_identifier", $old_identifier) and return 1;
+        update audit.logged_actions set changed_fields = ?::hstore
+         where action='D' and table_name='$table_name' and row_data->'identifier' = ?
+SQL
+    $c->stash(error => $dbh->errstr);
+    return 0;
+}
+
+=head2 can_set_replacement
+
+See above.
+
+=cut
+
+sub can_set_replacement {
+    my $c = shift;
+    my $meta = $c->_guess_object_class->meta;
+    my @cols = $meta->primary_key_column_names;
+    return 0 if @cols > 1;
+    return 1;
+}
+
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->render_not_found;
@@ -1032,7 +1129,13 @@ sub update {
     }
 
     if ($c->param('delete')) {
+        my $table_name = $object->meta->table;
         if ($object->delete) {
+            my $identifier = $object->pk_values;
+            my $new = $c->param('replacement_identifier');
+            if ($identifier && $new) {
+                $c->set_replacement($table_name, $identifier => $new);
+            }
             $c->flash(message => "Deleted $table");
             return $c->redirect_to('list_'.$table);
         }

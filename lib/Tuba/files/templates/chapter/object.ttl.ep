@@ -1,58 +1,45 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
+  
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Chapter; a bibo:Chapter; a gcis:Publication;
-% for my $figure ($chapter->figures) {
-   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($figure)->to_abs %>>;
-% }
-% for my $finding ($chapter->findings) {
-   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($finding)->to_abs %>>;
-% }
- % for my $table ($chapter->tables) {
-   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($table)->to_abs %>>;
-% }
-% for my $keyword ($chapter->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>";
-% }
-   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
+## Chapter identifier, number, and title
    dcterms:identifier "<%= $chapter->identifier %>";
-   gcis:chapterNumber "<%= $chapter->number %>";
-   gcis:inPublication "<%= $chapter->report_identifier %>";
-   dcterms:title "<%= $chapter->title %>";
-   prov:label "<%= $chapter->title %>";
-   rdfs:label "<%= $chapter->title %>";
-   gcis:hasURL "<%= $chapter->url %>".
-% my $max_children = 10;
-% my $pub = $object->get_publication;
-% my @parents;
-% my @parents_with_references;
-% my @children_with_references;
-% my @children;
-% my $references_url;
-% if ($pub) {
-    % @parents = $pub->get_parents;
-    % @children = $pub->children;
-    % @parents_with_references = $pub->get_parents_with_references;
-    % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
-    % $references_url = $pub->references_url($self);
+   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
+   dcterms:title "<%= $chapter->title %>"^^xsd:string;
+
+## The chapter is part of the NCA3, and has a URL
+   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
+
+% if ($chapter->figures) {
+## Figures contained within the chapter
+   % for my $figure ($chapter->figures) {
+   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   % }
 % }
 
-% if (@parents || @parents_with_references || @children) {
-
-    % for my $child (@children_with_references) {
-        % my $child_pub = $child->{child};
-        <%= link_to ontology_url('cito:cites') => target => "_blank" => begin %>cito:cites<%= end %>
-            (ref:<%= obj_link($child->{reference}, short => 1) %>)
-            % if ($child_pub) {
-            <%= link_to 'show_publication' => { publication_identifier => $child_pub->id } => begin %><%= $child_pub->stringify %><%= end %>
-            % } else {
-            no publication entry
-        % }   
-    % }
+% if ($chapter->findings) {
+## Findings which emerged from the chapter
+   % for my $finding ($chapter->findings) {
+   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+   % }
 % }
+
+% if ($chapter->tables) {
+## The chapter is associated with the following table(s):
+% for my $table ($chapter->tables) {
+   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   % } 
+% }
+
+% if ($chapter->keywords) {
+## Keywords associated with the chapter
+   % for my $keyword ($chapter->keywords) {
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+   % }
+% }
+
+   a gcis:Chapter .
+
 %= include 'prov';
-%# use gcis:wasWrittenBy (see ontology v. 1.2) to denote authors
+%# %= include 'contributors';
+

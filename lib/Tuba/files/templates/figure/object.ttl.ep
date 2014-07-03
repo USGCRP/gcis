@@ -1,58 +1,73 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
 
 <<%= current_resource %>>
-   a prov:Entity; a gcis:Figure;
+## Identifier and title of the figure
+   dcterms:identifier "<%= $figure->identifier %>";
+   dcterms:title "<%= $figure->title %>"^^xsd:string;
+
+% if ($figure->caption) {
+## Figure Caption
+   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
+% }
+
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   gcis:inPublication <<%= uri($chapter) %>>;
+## The figure is part of a chapter
+   gcis:isFigureOf <<%= uri($chapter) %>>;
 % }
+
 % for my $image ($figure->images) {
+## The figure contains one or more images
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-   dcterms:hasPart <<%= obj_uri_for($image)->to_abs %>>;
+
+% }   
+## Ordinal value of the figure number within the chapter
+   rdf:value "<%= $figure->numeric %>"^^xsd:integer;
+
+% if ($figure->create_dt) {
+## The figure was created on the following date
+   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
 % }
-%# % for my $ref ($article->get_references) {
-%#   biro:isReferencedBy <<%= uri($ref); %>>
-%# % }
-%# gcis:inPublication <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
-   dcterms:isPartOf <<%= obj_uri_for($report)->to_abs %>>;
-   gcis:figureNumber "<%= $figure->numeric %>";
-   gcis:hasCaption "<%= $figure->caption %>";                              
-   dcterms:description "<%= $figure->caption %>";
-   dcterms:identifier "<%= $figure->chapter_identifier %>";      
-   prov:generatedAtTime "<%= $figure->create_dt %>";      
-   dcterms:identifier "<%= $figure->identifier %>";                           
-   gcis:northBoundLatitude "<%= $figure->lat_max %>";
-   dwc:decimalLatitude "<%= $figure->lat_max %>";
-   geo:lat "<%= $figure->lat_max %>";
-   gcis:southBoundLatitude "<%= $figure->lat_min %>";
-   dwc:decimalLatitude "<%= $figure->lat_min %>";
-   geo:lat "<%= $figure->lat_min %>";
-   gcis:westBoundLongitude "<%= $figure->lon_max %>";
-   dwc:decimalLongitude "<%= $figure->lon_max %>";
-   geo:long "<%= $figure->lon_max %>";
-   gcis:eastBoundLongitude "<%= $figure->lon_min %>";
-   dwc:decimalLongitude "<%= $figure->lon_min %>";
-   geo:long "<%= $figure->lon_min %>";
-   rdf:rest "<%= $figure->ordinal %>";
-   dcterms:identifier "<%= $figure->report_identifier %>"; 
+
+% if ($figure->submission_dt) { 
+## The image was submitted on the following date
+   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
+% }
+
+% if ($figure->lat_max) {
+## Geographical extent of the area covered by the figure
+   gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
+% }
+% if ($figure->lat_min) {
+   gcis:southBoundLatitude "<%= $figure->lat_min %>^^"xsd:float;
+% }
+% if ($figure->lon_max) {
+   gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
+% }
+% if ($figure->lon_min) {
+   gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
+% }
+% if ($figure->time_start) {
+## Temporal extent of the figure content
+   gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
+% }
+% if ($figure->time_end) {
+   gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
+% }
+
+% if ($figure->source_citation) {
+## Figure source
    cito:cites "<%= $figure->source_citation %>";
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>";     
-   dcterms:date "<%= $figure->submission_dt %>";
-   gcis:startedAt "<%= $figure->time_start %>";                          
-   gcis:endedAt "<%= $figure->time_end %>";                           
-   dcterms:title "<%= $figure->title %>";                                   
-   rdfs:label "<%= $figure->title %>";
-   prov:label "<%= $figure->title %>".
-% for my $keyword ($figure->keywords) {
-   gcis:attributes "<%== $keyword->stringify %>";
-   skos:concept "<%== $keyword->stringify %>";
 % }
+
+% if ($figure->keywords) {
+## Keywords associated with the figure
+   % for my $keyword ($figure->keywords) {
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+% }  
+% }
+
+   a gcis:Figure .
 
 %= include 'prov';
-%# % for my $right ($figure->rights) {
- %#   dcterms:rights "<%= $right->usage_limits %>".                     
-%# % }
-
-%# uuid
-
+%# %= include 'contributors';
 

@@ -101,6 +101,6 @@
 
     </div>
 </div>
- 
 
+<%= include 'h/other_formats'; =%>
 

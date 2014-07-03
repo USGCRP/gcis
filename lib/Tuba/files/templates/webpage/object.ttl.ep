@@ -1,26 +1,21 @@
-% layout 'default';
-<<%= current_resource %>>
-   a bibo:Webpage;
-   dcterms:date "<%= $webpage->access_date %>";
-   dcterms:identifier "<%= $webpage->identifier %>";
-   dcterms:title "<%= $webpage->title %>";
-   prov:label "<%= $webpage->title %>";
-   rdfs:label "<%= $webpage->title %>";
-   bibo:uri "<%= $webpage->url %>";
-   gcis:hasURL "<%= $webpage->url %>";
-%= include 'prov';
-   
- %#  gcis:Location "<%= $webpage->pub_location %>";
-%#   gcis:hasPublisher "<%= $webpage->hasPublisher %>";
-%#     dwc:year "<%= $webpage->year %>";
-%#   xsd:gYear "<%= $webpage->year %>";
-%#   gcis:Organization "<%= $webpage->organization %>';
+% layout 'default', namespaces => [qw/gcis dcterms xsd bibo cito/];
 
-%# % for my $webpage ($webpage->persons) {
-%#   gcis:hasAuthor  "<%= $webpage->author %>";
-%#   prov:wasAttributedTo  "<%= $webpage->author %>".
+<<%= current_resource %>>
+   dcterms:identifier "<%= $webpage->identifier %>";
+   dcterms:title "<%= $webpage->title %>"^^xsd:string;
+   gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
+
+% if ($webpage->access_date) {
+## Date the webpage was accessed
+   dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
+% }
+
 % for my $keyword ($webpage->keywords) {
-   gcis:subject "<%== $keyword->stringify %>";
-   dcterms:subject "<%== $keyword->stringify %>".
- % }
+## Keywords
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+% }
+
+   a bibo:Webpage.
+
+%= include 'prov';
 

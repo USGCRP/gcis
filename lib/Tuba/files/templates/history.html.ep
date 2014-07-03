@@ -1,4 +1,3 @@
-% use Encode;
 % layout 'default';
 <style>
     .removed {
@@ -34,7 +33,7 @@ Change history for
 <td>
 % if ($row->{action} eq 'I') {
 <div style='white-space:pre-line'>
-%= decode('UTF-8',$row->{row_data});
+%= $row->{row_data};
 </div>
 % } elsif ($row->{action} eq 'D') {
 
@@ -46,10 +45,10 @@ Change history for
 </ul>
 <div class='tab-content' style='white-space:pre-line;'>
     <div class='tab-pane active' id='added<%= $id %>'>
-    %== decode('UTF-8',$row->{added});
+    %= $row->{added};
     </div>
     <div class='tab-pane' id='removed<%= $id %>'>
-    %== decode('UTF-8',$row->{removed});
+    %= $row->{removed};
     </div>
 </div>
 % }

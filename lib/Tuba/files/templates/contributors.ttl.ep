@@ -1,30 +1,30 @@
-% my $pub = $object->get_publication;
-% my @con = $pub ? $pub->contributors : ();
-% @con = sort { $a->role_type cmp $b->role_type } @con;
-% for my $ctr (@con) {
- % if ($ctr->role_type->identifier eq "data_producer") {
-   gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
-   prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
-   prov:role "<%= $ctr->role_type->label %>";
-    % if (my $person=$ctr->person) {
-      gcis:wasProducedBy <<%= uri($person) %>>;
-      prov:wasGeneratedBy <<%= uri($person) %>>;   
-      foaf:name "<%= $person->label %>";   
+## Contributors
+   % my $pub = $object->get_publication;
+ <<%= obj_uri_for ($pub)->to_abs %>>
+  % if ($pub) {
+    % my $nest = $pub->contributors_nested;
+    % for my $row (@$nest) {
+        % for my $con (@{ $row->{people} }) {
+            prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
+               prov:qualifiedAttribution [
+                 a prov:Attribution;
+                 ## Person and his/her role in the creation of the entity
+                 prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
+                 prov:hadRole "<%= ($row->{role}->label) %>";
+            % my $first;
+            % for my $org (@{ $con->{orgs} }) {
+            <%= ($first++) ? "," : ""  =%>
+                 ## Person acted on behalf of an organization
+                 prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
+                 ] ;
+
+            % }
+        % }
     % }
- % } elsif ($ctr->role_type->identifier eq "data_archive") {
-      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
-      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
-       % if ($ctr->person)   {
-          foaf:name "<%= $ctr->person->label %>";    
-      % }   
-% } elsif ($ctr->role_type->identifier eq "author") {
-      gcis:wasProducedBy <<%= uri($ctr->organization) %>>;
-      prov:wasGeneratedBy <<%= uri($ctr->organization) %>>;
-       % if ($ctr->person)   {
-      foaf:name "<%= $ctr->person->name %>";
- % }
 % }
-% }
+.
+
+
 
 
 
