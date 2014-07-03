@@ -20,7 +20,7 @@ if ($filter ne "d"   &&
     print "                o - all okay, m - urls do not match\n";
     exit;
 }
-print " filter $filter";
+print " filter $filter\n";
 
 my $ua = Mojo::UserAgent->new;
 # my $param = "?all=1";
