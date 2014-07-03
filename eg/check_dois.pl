@@ -7,7 +7,17 @@ use strict;
 
 
 $| = 1;
-my $filter = $arg[0];
+my $filter = $argv[0];
+if ($filter ne "d"   &&  
+    $filter ne "u"   &&  
+    $filter ne "r"   &&
+    $filter ne "du"  &&
+    $filter ne "m"   &&
+    $filter ne "") {
+    print " error - invalid filter option\n";
+    print "   options are: d - no doi, u - no url, r - no redirect, du - no doi url, m - urls do not match\n";
+    exit;
+}
 print " filter $filter";
 
 my $ua = Mojo::UserAgent->new;
