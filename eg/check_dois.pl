@@ -7,7 +7,7 @@ use strict;
 
 
 $| = 1;
-my $filter = $argv[0];
+my $filter = $ARGV[0];
 if ($filter ne "d"   &&  
     $filter ne "u"   &&  
     $filter ne "r"   &&
