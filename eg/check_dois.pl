@@ -81,7 +81,7 @@ for my $article (@$articles) {
 
     my $url = $article->{url};
     if (!$url) {
-        if ($filter eq "du"  ||
+        if ($filter eq "u"  ||
             $filter eq "") {
             print " $i:\n";
             print "   uri $uri\n";
