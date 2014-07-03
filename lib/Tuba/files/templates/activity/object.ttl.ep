@@ -28,6 +28,4 @@
 
    a prov:Activity.
 
-%# <<%= obj_uri_for($image)->to_abs %>> prov:wasDerivedFrom <<%= obj_uri_for($dataset)->to_abs %>>.
-
 %=include 'prov';
