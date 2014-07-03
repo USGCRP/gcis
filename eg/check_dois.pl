@@ -16,7 +16,7 @@ if ($filter ne "d"   &&
     $filter ne "o"   &&
     $filter ne "") {
     print " error - invalid filter option\n";
-    print "   options are: d - no doi, u - no url, r - no redirect, du - no doi url, \n"
+    print "   options are: d - no doi, u - no url, r - no redirect, du - no doi url, \n";
     print "                o - all okay, m - urls do not match\n";
     exit;
 }
