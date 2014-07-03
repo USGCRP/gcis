@@ -23,8 +23,8 @@ if ($filter ne "d"   &&
 print " filter $filter\n";
 
 my $ua = Mojo::UserAgent->new;
-# my $param = "?all=1";
-my $param = "";
+my $param = "?all=1";
+# my $param = "";
 
 my $articles = $ua->get("http://data.globalchange.gov/article.json$param")->res->json;
 
