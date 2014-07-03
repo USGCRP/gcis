@@ -106,7 +106,7 @@ for my $article (@$articles) {
     }
 
     if ($filter eq "o"  ||
-        $filter eq "") {'
+        $filter eq "") {
         print " $i:\n";
         print "   uri $uri\n";
         print "   doi $doi\n";
