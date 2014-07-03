@@ -7,7 +7,8 @@ use strict;
 
 
 $| = 1;
-
+my $filter = $arg[0];
+print " filter $filter";
 
 my $ua = Mojo::UserAgent->new;
 my $param = "?all=1";
