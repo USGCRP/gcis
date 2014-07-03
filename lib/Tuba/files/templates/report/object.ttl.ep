@@ -1,57 +1,57 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito prov/];
 
-<<%= current_resource %>>
+<<%= current_resource =%>>
 ## Report identifier, title, and year of publication
-   dcterms:identifier "<%= $report->identifier %>";
-   dcterms:title "<%= $report->title %>"^^xsd:string;
-   dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
+   dcterms:identifier "<%= $report->identifier =%>";
+   dcterms:title "<%= $report->title =%>"^^xsd:string;
+   dwc:year "<%= $report->publication_year =%>"^^xsd:gYear;
 
 % if ($report->doi) {
 ## DOI of report
-   bibo:doi "<%= $report->doi %>";
+   bibo:doi "<%== $report->doi =%>";
 % } else {
 ## URL for report
-   gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
+   gcis:hasURL "<%== $report->url =%>"^^xsd:anyURI;
 % }
 
 % if ($report->report_type_identifier) {
 ## A report can either be a report, assessment, or NCA3 technical input
-   dcterms:type "<%= $report->report_type_identifier %>";
+   dcterms:type "<%== $report->report_type_identifier =%>";
 % }
 
 % if ($report->frequency) {
 ## Frequency of report release
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;    
+   dcterms:frequency "<%== $report->frequency =%>"^^xsd:string;    
 % }
 
 % if ($report->summary) {
 ## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;   
+   dcterms:description "<%== $report->summary =%>"^^xsd:string;   
 % }
 
 % if ($report->topic) {
 ## Report topics
-   dcterms:subject "<%= $report->topic %>"^^xsd:string;
+   dcterms:subject "<%== $report->topic =%>"^^xsd:string;
 % }
 
 ## The report contains multiple chapters:
 % for my $chapter ($report->chapters) {
-   gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
+   gcis:hasChapter <<%== obj_uri_for($chapter)->to_abs =%>>;	
 % }
 
 ## This report contains multiple figures:
 % for my $figure ($report->figures) {
-   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   gcis:hasFigure <<%== obj_uri_for($figure)->to_abs =%>>;
 % }
 
 ## This report contains multiple tables:
 % for my $table ($report->tables) {
-   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   gcis:hasTable <<%== obj_uri_for($table)->to_abs =%>>;
 % }
 
 ## The report contains findings:
 % for my $finding ($report->findings) {
-   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+   gcis:hasFinding <<%== obj_uri_for($finding)->to_abs =%>>;
 % }
 
    a gcis:Report .
