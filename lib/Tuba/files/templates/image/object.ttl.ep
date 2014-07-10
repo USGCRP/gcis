@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd prov/];
 
 <<%= current_resource %>>
 ## Identifier and Title for the Image
@@ -7,7 +7,7 @@
 
 % if ($image->description) {
 ## Image Description
-    dcterms:description "<%= $image->description %>"^^xsd:string;
+   dcterms:description "<%= $image->description %>"^^xsd:string;
 % }
 
 % if ($image->attributes) {
