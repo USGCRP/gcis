@@ -13,6 +13,6 @@
 % if (my $pub = $reference->child_publication) {
  % my $article = $pub->to_object;
    biro:references <<%= uri($article) %>>;
-    % }
+ % }
    a biro:BibliographicRecord, dcterms:bibliographicCitation.
            
