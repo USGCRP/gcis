@@ -6,7 +6,7 @@
    dcterms:title "<%= $table->title %>"^^xsd:string;
 
 %  if ($table->caption) {
-   ## Table caption
+## Table caption
    gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
 % }
 
