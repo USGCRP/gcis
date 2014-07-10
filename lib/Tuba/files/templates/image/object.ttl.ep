@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd/];
 
 <<%= current_resource %>>
 ## Identifier and Title for the Image
