@@ -12,7 +12,7 @@
 
 % for my $keyword ($webpage->keywords) {
 ## Keywords
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
 
    a bibo:Webpage.
