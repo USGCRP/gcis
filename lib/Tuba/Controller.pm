@@ -212,6 +212,7 @@ sub show {
               $c->req->headers->content_type('text/plain');
               $c->render(text => $object->as_text); },
         svg   => sub { my $c = shift;
+            $c->set_title(object => $c->_this_object);
             $c->res->headers->content_type('image/svg+xml');
             $c->render_partial_ttl_as($table,'svg'); },
     );
