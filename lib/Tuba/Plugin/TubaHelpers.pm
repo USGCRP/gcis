@@ -192,7 +192,7 @@ sub register {
                     ttl  => $ttl,
                     base => $c->req->url->base->to_abs
                 );
-            $c->render( data => $conv->output( format => $format ));
+            $c->render( data => $conv->output( format => $format, title => $c->stash('title') ));
         });
     $app->helper(render_partial_ttl_as => sub {
             my $c = shift;

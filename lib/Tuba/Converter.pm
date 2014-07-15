@@ -32,6 +32,7 @@ package Tuba::Converter;
 use Mojo::Base qw/-base/;
 use Text::Format;
 use Tuba::Log;
+use Mojo::Util qw/xml_escape/;
 use Encode qw/encode decode/;
 
 has 'ttl';  # Turtle
@@ -49,6 +50,8 @@ sub output {
     my $s = shift;
     my %a = @_;
     my $fmt = $a{format} or die 'no format given';
+    my $title = $a{title};
+
     if ($fmt eq 'svg') {
         my $dot = $s->output(format => 'dot');
         my $width = 40;
@@ -77,6 +80,10 @@ sub output {
             return "error converting to svg";
         };
         $got = decode('UTF-8',$got);
+        if ($title) {
+            $title = xml_escape($title);
+            $got =~ s/<title>(\S+)<\/title>/<title>svg : $title<\/title>/
+        }
         return $got;
     }
     my $base = $s->base or die "no base";
