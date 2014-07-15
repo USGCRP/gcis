@@ -77,11 +77,10 @@
 
 % if ($dataset->keywords) {
    % for my $keyword ($dataset->keywords) {
-   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string.
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
    % }
 % }
 
    a gcis:Dataset .
 
-   %= include 'prov';
-%# %= include 'contributors'; 
+   %# %= include 'contributors'; 
