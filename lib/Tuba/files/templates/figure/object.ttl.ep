@@ -29,7 +29,7 @@
 % }
 
 % if ($figure->submission_dt) { 
-## The image was submitted on the following date.
+## The image was submitted on the following date:
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 % }
 
@@ -62,7 +62,7 @@
 
 % for my $keyword ($figure->keywords) {
 ## Keywords associated with the figure
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string.
+   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }  
 
    a gcis:Figure .
