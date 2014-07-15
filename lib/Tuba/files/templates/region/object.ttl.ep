@@ -7,5 +7,4 @@
    dcterms:description "<%= $region->description %>"^^xsd:string;
 % }
    dcterms:title "<%= $region->label %>"^^xsd:string.
-%= include 'prov';
 
