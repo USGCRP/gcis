@@ -20,7 +20,7 @@
 % }
 
 % for my $map ($organization->organization_maps) {
-## Relationship between department and others
+## Relationship to other organizations
    prov:Relation "<%= $map->organization_relationship->label %>";             
    org:linkedto <<%= uri($map->other_organization) %>>;  
   % }
