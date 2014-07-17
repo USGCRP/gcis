@@ -7,8 +7,11 @@
 
 ## Properties of the finding
    gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
+   
    gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
+   
    gcis:assessmentOfConfidenceBasedOnEvidence "<%= tl($finding->confidence) %>"^^xsd:string;
+   
    gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
 
 ## The finding pertains to a specific chapter.

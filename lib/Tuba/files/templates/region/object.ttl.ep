@@ -3,5 +3,8 @@
  <<%= current_resource %>>
    a prov:Entity;
    dcterms:identifer "<%= $region->identifier %>";
+% if ($region->description) {
    dcterms:description "<%= $region->description %>"^^xsd:string;
+% }
    dcterms:title "<%= $region->label %>"^^xsd:string.
+
