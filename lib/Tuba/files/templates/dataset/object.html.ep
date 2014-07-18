@@ -91,6 +91,12 @@
         % if ($dataset->attributes) {
         <p>Attributes : <%= $dataset->attributes %></p>
         % }
+        % if (my $doi = $dataset->doi) {
+        DOI :
+            %= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin
+            <%= $doi %>
+            %= end
+        % }
 
     </div>
 </div>
