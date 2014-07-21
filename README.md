@@ -15,7 +15,7 @@ Prerequisites :
 
 On Ubuntu, the latter two can be installed with
 
-   - sudo apt-get install libuuid1 uuid-dev raptor2-utils
+    - sudo apt-get install libuuid1 uuid-dev raptor2-utils
 
 Install of Perl prerequisites :
 
