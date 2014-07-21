@@ -96,9 +96,9 @@ sub list {
             $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]) },
         html => sub {
              my $c = shift;
-             $c->render_maybe(template => "$table/$template", meta => $meta, objects => $objects )
+             $c->render_maybe("$table/$template", meta => $meta, objects => $objects )
                  or
-             $c->render(template => $template, meta => $meta, objects => $objects )
+             $c->render($template, meta => $meta, objects => $objects );
          }
     );
 };
@@ -184,15 +184,15 @@ sub show {
 
     $c->respond_to(
         yaml => sub { my $c = shift;
-          $c->render_maybe(template => "$table/object") or $c->render_yaml($c->make_tree_for_show($object)); },
+          $c->render_maybe("$table/object") or $c->render_yaml($c->make_tree_for_show($object)); },
         json => sub { my $c = shift;
-          $c->render_maybe(template => "$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
+          $c->render_maybe("$table/object") or $c->render(json => $c->make_tree_for_show($object)); },
         ttl   => sub { my $c = shift;
             $c->res->headers->content_type("application/x-turtle");
-            $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
+            $c->render_maybe("$table/object") or $c->render("object") },
         html  => sub { my $c = shift;
-            $c->param('long') and $c->render_maybe(template => "$table/long/object") and return;
-            $c->render_maybe(template => "$table/object") or $c->render(template => "object") },
+            $c->param('long') and $c->render_maybe("$table/long/object") and return;
+            $c->render_maybe("$table/object") or $c->render("object") },
         nt    => sub { my $c = shift;
             $c->res->headers->content_type("text/plain");
             $c->render_partial_ttl_as($table,'ntriples'); },
@@ -332,8 +332,7 @@ sub create_form {
   $c->stash(object_class => $object_class);
   $c->stash(meta         => $object_class->meta);
   $c->stash(cols => $c->_order_columns(meta => $object_class->meta));
-  $c->render_maybe(template => "$table/create_form")
-    or $c->render(template => "create_form");
+  $c->render_maybe("$table/create_form") or $c->render("create_form");
 }
 
 sub _default_order {
@@ -572,8 +571,8 @@ sub update_form {
         },
         html => sub {
             my $c = shift;
-            $c->render_maybe(template => "$table/update_form")
-                or $c->render(template => "update_form");
+            $c->render_maybe("$table/update_form")
+                or $c->render("update_form");
         }
     );
 }
@@ -596,7 +595,7 @@ sub update_prov_form {
         $parents = [ $pub->get_parents ];
     }
     $c->stash( parents => $parents );
-    $c->render(template => "update_prov_form");
+    $c->render("update_prov_form");
 }
 
 sub _text_to_object {
@@ -712,8 +711,8 @@ sub update_rel_form {
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     my $table = $meta->table;
-    $c->render_maybe(template => "$table/update_rel_form")
-        or $c->render(template => "update_rel_form");
+    $c->render_maybe("$table/update_rel_form")
+        or $c->render("update_rel_form");
 }
 
 =head2 update_files_form
@@ -727,7 +726,7 @@ sub update_files_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
-    $c->render(template => "update_files_form");
+    $c->render("update_files_form");
 }
 
 =head2 update_contributors_form
@@ -741,7 +740,7 @@ sub update_contributors_form {
     my $object = $c->_this_object or return $c->render_not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
-    $c->render(template => "update_contributors_form");
+    $c->render("update_contributors_form");
 }
 
 
@@ -1247,7 +1246,7 @@ sub index {
             limit => 1,
         ) } for (1..6);
     $c->stash(demo_pubs => [ shuffle @$demo_pubs ]);
-    $c->render(template => 'index');
+    $c->render('index');
 }
 
 =item history
@@ -1296,18 +1295,7 @@ sub history {
         my $new = { %$old, %$changes };
         ($row->{removed},$row->{added}) = show_diffs(Dump($old),Dump($new));
     }
-    $c->render(template => 'history', change_log => $change_log, object => $object, pk => $pk)
-}
-
-sub render {
-    my $c = shift;
-    my %args = @_;
-    my $obj = $c->stash('object') || $args{object} or return $c->SUPER::render(@_);
-    my $moniker = $obj->moniker;
-    if (!defined($c->stash($moniker))) {
-        $c->stash($moniker => $obj);
-    }
-    return $c->SUPER::render(@_);
+    $c->render('history', change_log => $change_log, object => $object, pk => $pk)
 }
 
 sub page {

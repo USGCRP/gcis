@@ -111,6 +111,17 @@ sub startup {
            my $c = shift;
             $c->res->headers->content_disposition('attachment;') if $c->param('download');
         });
+    $app->hook(before_render => sub {
+            # If there is an object, set the stash value corresponding to its moniker.
+            my $c = shift;
+            return if $c->stash('tuba.moniker_set');
+            my $obj = $c->stash('object') or return;
+            my $moniker = $obj->moniker;
+            if (!defined($c->stash($moniker))) {
+                $c->stash($moniker => $obj);
+            }
+            $c->stash('tuba.moniker_set' => 1);
+        });
 
     # Shortcuts (see Mojolicious::Guides::Routing)
     # For a given resource we create several routes.  As an
@@ -182,7 +193,7 @@ sub startup {
                            )
                          ]x;
         for my $format (@supported_formats) {
-                $resource->get("*$identifier.$format" => \@restrict => { format => $format } )
+                $resource->get("(*$identifier).$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
         }

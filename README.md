@@ -11,6 +11,11 @@ Prerequisites :
     - PostgreSQL
     - Perl 5.10 or later
     - uuid-dev package
+    - A recent raptor (<http://librdf.org/raptor>)
+
+On Ubuntu, the latter two can be installed with
+
+  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
 
 Install of Perl prerequisites :
 

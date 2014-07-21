@@ -34,6 +34,7 @@ use Text::Format;
 use Tuba::Log;
 use Mojo::Util qw/xml_escape/;
 use Encode qw/encode decode/;
+use Path::Class qw/file/;
 
 has 'ttl';  # Turtle
 has 'base'; # uri_base
@@ -99,6 +100,7 @@ sub output {
     if (!$got || $@) {
         logger->error("Errors running $cmd :\n ".join '',<$errs>);
         logger->info("errors $@") if $@;
+        logger->info("Input ($fp) : ".file($fp)->slurp);
         return "error converting to $fmt";
     }
     return $got;

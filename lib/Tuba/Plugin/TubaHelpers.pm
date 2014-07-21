@@ -25,32 +25,15 @@ use Tuba::DocManager;
 #
 # Usage :
 #   include_first [ 'foo/bar', 'bar' ] => ...
-# Copy/pasted from _include
 #
 sub _include_first {
-  my $self     = shift;
-  my $template = @_ % 2 ? shift : [];
-  my $args     = {@_};
-
-  my @templates = @$template;
-
-  for my $template (@templates) {
-
-      $args->{template} = $template if defined $template;
-
-      # "layout" and "extends" can't be localized
-      my $layout  = delete $args->{layout};
-      my $extends = delete $args->{extends};
-
-      # Localize arguments
-      my @keys = keys %$args;
-      local @{$self->stash}{@keys} = @{$args}{@keys};
-
-      my $done = $self->render_maybe(partial => 1, layout => $layout, extend => $extends);
-      return $done if $done;
-    }
-
-    return;
+  my $c    = shift;
+  my $list = shift;
+  for (@$list) {
+    my $got = $c->render_to_string(@_);
+    return $got if $got;
+  }
+  return "";
 }
 
 #
@@ -181,8 +164,8 @@ sub register {
     $app->helper(render_partial_ttl => sub {
             my $c = shift;
             my $table = shift || die "need table";
-            return $c->render_maybe(partial => 1, format => 'ttl', template => "$table/object")
-                || $c->render(partial => 1, format => 'ttl', template => "object");
+            return $c->render_to_string("$table/object", format => 'ttl')
+                || $c->render_to_string("object", format => 'ttl');
         });
     $app->helper(render_ttl_as => sub {
             my $c = shift;
