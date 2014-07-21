@@ -6,7 +6,7 @@
 </h2>
 </center>
 
-%= include 'list_formats', format => "html", renderer => "ep";
+%= include 'list_formats';
 
 <table class='table table-condensed table-bordered table-striped'>
 <caption>
