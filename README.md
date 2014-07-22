@@ -13,9 +13,12 @@ Prerequisites :
     - uuid-dev package
     - A recent raptor (<http://librdf.org/raptor>)
 
-On Ubuntu, the latter two can be installed with
+On Ubuntu 14.04, they can be installed with:
 
-    - sudo apt-get install libuuid1 uuid-dev raptor2-utils
+    - sudo apt-get install postgresql-contrib-9.3 libpg-hstore-perl \
+      postgresql libuuid1 uuid-dev make openssl libssl-dev libpq-dev \
+      graphviz libxml2 raptor2-utils curl cpanminus
+
 
 Install of Perl prerequisites :
 
