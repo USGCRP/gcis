@@ -9,10 +9,11 @@ $| = 1;
 my $dbase = $ARGV[0];
 if ($dbase eq "") { $base = ""; }
 if ($dbase ne "s"  &&
+    $dbase ne "t"  &&
     $dbase ne "p"  &&
     $dbase ne "") {
     print " error - invalid database option\n";
-    print "   options are: s or <null> - stage, p - production\n";
+    print "   options are: s or <null> - stage; t - test; or p - production\n";
     exit;
 }
 
@@ -43,7 +44,9 @@ my %index_id = map {$ids[$_] => $_} 0..$#ids;
 
 if ($dbase eq "s") {
   my $base = "http://data-stage.globalchange.gov";
-} else {
+} else if ($dbase eq "t") {
+  my $base = "http://data-test.globalchange.gov";
+} else
   my $base = "http://data.globalchange.gov";
 }
 
