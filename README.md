@@ -17,14 +17,23 @@ On Ubuntu 14.04, they can be installed with:
 
     - sudo apt-get install postgresql-contrib-9.3 libpg-hstore-perl \
       postgresql libuuid1 uuid-dev make openssl libssl-dev libpq-dev \
-      graphviz libxml2 raptor2-utils curl cpanminus
+      graphviz libxml2 raptor2-utils curl perlbrew
 
+Instantiate Perlbrew environment:
+    perlbrew init
+    perlbrew install perl-5.20.0
+    perlbrew install-cpanm
+    perlbrew switch perl-5.20.0
 
 Install of Perl prerequisites :
 
-    curl -L http://cpanmin.us > cpanm
-    chmod +x cpanm
-    ./cpanm --installdeps .
+    cd gcis
+    cpanm --installdeps .
+
+Customize install_base :
+    echo $(dirname $(dirname $(which perl)))
+    vi Build.PL
+    # replace install_base value of '/usr/local/gcis' with output of command above
 
 Software installation :
 
