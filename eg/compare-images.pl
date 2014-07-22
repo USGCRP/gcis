@@ -42,11 +42,10 @@ my @is_found = (0) x $n;
 my %index_id = map {$ids[$_] => $_} 0..$#ids;
 # print Dumper %index_id;
 
-if ($dbase eq "s") {
-  my $base = "http://data-stage.globalchange.gov";
-} else if ($dbase eq "t") {
+my $base = "http://data-stage.globalchange.gov";
+if ($dbase eq "t") {
   my $base = "http://data-test.globalchange.gov";
-} else
+} else if ($dbase eq "p") {
   my $base = "http://data.globalchange.gov";
 }
 
