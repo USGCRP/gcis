@@ -292,7 +292,7 @@ SQL
     return $c->render_not_found unless $rows && @$rows;
     my $replacement = $rows->[0][0];
     my $url = $c->req->url;
-    $url =~ s{/$table_name/$identifier(?=/|$)}{/$table_name/$replacement};
+    $url =~ s{/$table_name/$identifier(?=/|$|\.)}{/$table_name/$replacement} or return $c->render_not_found;
     return $c->redirect_to($url);
 }
 
