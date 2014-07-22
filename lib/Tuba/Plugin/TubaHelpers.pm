@@ -271,7 +271,7 @@ sub register {
 
          # TODO clever generic way of doing this.
          my $obj;
-         given ($uri) {
+         for ($uri) {
              m[^/report/([^/]+)$]                 and $obj = Tuba::DB::Object::Report->new(identifier => $1);
              m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $3);
