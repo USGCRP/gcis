@@ -31,6 +31,7 @@ Install of Perl prerequisites :
     cpanm --installdeps .
 
 Customize install_base :
+
     echo $(dirname $(dirname $(which perl)))
     vi Build.PL
     # replace install_base value of '/usr/local/gcis' with output of command above
@@ -44,13 +45,17 @@ Software installation :
 
 Database installation :
 
+    sudo su - postgres -c "createuser -P -s -e $(whoami)"
     ./Build dbinstall
 
 Configuration :
 
     cp eg/Tuba.conf.sample Tuba.conf
+    sudo mkdir /var/local/projects
+    sudo chown $(whoami):$(whoami) /var/local/projects
 
 Starting :
 
+    cd bin
     hypnotoad tuba
 
