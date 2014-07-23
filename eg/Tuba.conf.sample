@@ -12,6 +12,7 @@ hypnotoad :
     listen :
        - http://*:8080
 data_dir : /var/local/projects/tuba/data
+image_upload_dir : /var/local/www/assets
 database :
     dbname   : gcis
     schema   : gcis_metadata
