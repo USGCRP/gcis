@@ -24,6 +24,7 @@ Instantiate Perlbrew environment:
     perlbrew init
     perlbrew install perl-5.20.0
     perlbrew install-cpanm
+    perlbrew install-patchperl
     perlbrew switch perl-5.20.0
 
 Install of Perl prerequisites :
