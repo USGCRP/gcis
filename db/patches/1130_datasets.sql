@@ -17,7 +17,7 @@ create table instrument (
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
 
-comment on table instrument is 'An instrument is a class of devices that may be affixed to platforms.';
+comment on table instrument is 'An instrument is a class of devices that may perform measurements, and may have sensors';
 
 /* Affixing an instrument to a platform creates an instrument instance. */
 create table instrument_instance (
@@ -39,7 +39,7 @@ create table instrument_measurement (
       primary key (platform_identifier, instrument_identifier, dataset_identifier)
 );
 
-comment on table instrument_measurement is 'A dataset may be associated with an instrument measurement.';
+comment on table instrument_measurement is 'A dataset may be associated with an instrument instance via an instrument measurement.';
 
 /* TODO: audit triggers, sensor, sensor_measurement */
 
