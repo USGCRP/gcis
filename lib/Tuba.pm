@@ -170,7 +170,7 @@ sub startup {
               warn "loading $controller failed ---------- $@\n";
               die $@;
           }
-          # $app->log->debug("did not load $controller");
+          $app->log->debug("did not load $controller : $@");
       }
       my $cname = $controller;
       $cname =~ s/Tuba:://;
