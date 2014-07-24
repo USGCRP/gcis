@@ -329,10 +329,10 @@ sub startup {
 
     # platform (globally unique)
     $r->resource('platform');
-
-    # Metadata processing routes.
-    #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
-    #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+    $r->resource('instrument');
+    $r->lookup('select_platform')->resource('instrument_instance', {
+            path_base => "instrument"
+        });
 
     # Person.
     $r->resource(person => { restrict_identifier => qr/\d+/ } );

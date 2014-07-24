@@ -27,15 +27,27 @@ sub show {
     $c->SUPER::show(@_);
 }
 
-=head1 list
+=head1 update_rel
 
-Show platforms for selected report.
+Update relationships for this platform.
 
 =cut
 
-sub list {
+sub update_rel {
     my $c = shift;
-    $c->SUPER::list(@_);
+    my $platform = $c->_this_object;
+    $c->stash(tab => "update_rel_form");
+
+    if (my $json = $c->req->json) {
+        if (my $add = $json->{add}) {
+            $add->{platform_identifier} = $platform->identifier;
+            my $obj = InstrumentInstance->new( %$add );
+            $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
+        }
+    }
+    # TODO : handle form submission too
+
+    return $c->redirect_without_error("update_rel_form");
 }
 
 1;

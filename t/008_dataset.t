@@ -15,6 +15,7 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 $t->ua->max_redirects(1);
 
 my $base = $t->ua->server->url;
+$base =~ s[/$][];
 
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
@@ -53,10 +54,73 @@ my $dataset = {
 
 $t->post_ok( "/dataset" => json => $dataset )->status_is(200);
 
-$dataset->{href} = "${base}dataset/my-temps.json";
+$dataset->{href} = "$base/dataset/my-temps.json";
 $dataset->{uri} = "/dataset/my-temps";
+$dataset->{instrument_measurements} = [];
 
 $t->get_ok( "/dataset/my-temps.json" )->status_is(200)->json_is($dataset);
+
+# A platform.
+my $platform = {
+  identifier  => "house",
+  name        => "house with thermometers on the side",
+  description => "our house, in the middle of our street",
+  url         => undef,
+};
+$t->post_ok( "/platform" => json => $platform )->status_is(200);
+$platform->{uri} = "/platform/house";
+$platform->{href} = "$base/platform/house.json";
+$t->get_ok( "/platform/house.json" )->status_is(200)->json_is($platform);
+
+# An instrument.
+my $instrument = {
+  identifier => "mercury-in-glass-thermometer",
+  name       => "Mercury in glass thermometer",
+  description => "This type of thermometer was invented in 1714 by Daniel Fahrenheit.",
+};
+$t->post_ok( "/instrument" => json => $instrument )->status_is(200);
+$instrument->{uri} = "/instrument/mercury-in-glass-thermometer";
+$instrument->{href} = "$base/instrument/mercury-in-glass-thermometer.json";
+$t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->json_is($instrument);
+
+# One of these instruments is on the house.
+$t->post_ok( "/platform/rel/house", json => {
+        add => { instrument_identifier => "mercury-in-glass-thermometer",
+                 location => "on the north side, next to the window" }
+        }
+);
+
+# Get the "instrument instance".
+$t->get_ok( "/platform/house/instrument/mercury-in-glass-thermometer.json" )->status_is(200)
+    ->json_is( { instrument_identifier => "mercury-in-glass-thermometer",
+                 platform_identifier => "house",
+                 location => "on the north side, next to the window",
+                 uri => "/platform/house/instrument/mercury-in-glass-thermometer",
+                 href => "$base/platform/house/instrument/mercury-in-glass-thermometer.json",
+
+             } );
+
+# Reading the thermometer on the house generates the dataset.
+$t->post_ok("/dataset/rel/my-temps", json => {
+        add_instrument_measurement => {
+            platform_identifier => "house",
+            instrument_identifier => "mercury-in-glass-thermometer",
+        }
+    });
+
+$dataset->{instrument_measurements} = [
+     {
+       'dataset_identifier' => 'my-temps',
+       'instrument_identifier' => 'mercury-in-glass-thermometer',
+       'platform_identifier' => 'house'
+     }
+   ];
+$t->get_ok("/dataset/my-temps.json")->json_is($dataset);
+
+# clean up
+$t->delete_ok('/instrument/mercury-in-glass-thermometer');
+$t->delete_ok('/dataset/my-temps');
+$t->delete_ok('/platform/house');
 
 done_testing();
 
