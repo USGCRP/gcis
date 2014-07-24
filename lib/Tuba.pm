@@ -174,7 +174,7 @@ sub startup {
       }
       my $cname = $controller;
       $cname =~ s/Tuba:://;
-      $cname = lc $cname;
+      $cname = b($cname)->decamelize;
 
       # Build bridges and routes.
       my $resource = $r->route("$path_base")->to("$cname#");

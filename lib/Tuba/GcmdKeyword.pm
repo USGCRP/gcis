@@ -4,7 +4,7 @@ Tuba::GcmdKeyword : Controller class for gcmd keywords.
 
 =cut
 
-package Tuba::Gcmdkeyword;
+package Tuba::GcmdKeyword;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
