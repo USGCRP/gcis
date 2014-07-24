@@ -58,6 +58,7 @@ my $builder = Module::Build::Database->new(
         'Rose::DB' => '0.772',
         'Rose::DB::Object' => 0,
         'DBD::Pg' => '3.3.0',
+        'Digest::SHA1' => 0,
         'DBIx::Simple' => 0,
         'DBIx::Custom' => 0,
         'DBIx::Connector' => 0,
