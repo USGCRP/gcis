@@ -99,7 +99,10 @@ sub init {
         my $mixin = $made;
         $mixin =~ s/Tuba::DB/Tuba::DB::Mixin/;
         eval " require $mixin";
-        if ($@ and $@ !~ /can't locate/i) {
+        my $path = $mixin;
+        $path =~ s[::][/]g;
+        if ($@ and $@ !~ m[Can't locate $path.pm]) {
+            warn "#$@";
             die $@;
         }
         $made->add_extra if $made->can('add_extra');
