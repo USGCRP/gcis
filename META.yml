@@ -176,15 +176,18 @@ requires:
   Data::UUID::LibUUID: 0
   Date::Parse: 0
   DateTime::Format::Human::Duration: 0
+  Digest::SHA1: 0
   File::ShareDir: 1.00
   JSON::WebToken: 0
   JSON::XS: 0
-  Mojolicious: 4.84
+  Mojolicious: 5.16
   Mojolicious::Plugin::InstallablePaths: 0
   Mojolicious::Plugin::YamlConfig: 0
   Number::Bytes::Human: 0
   Number::Format: 0
   Pg::hstore: 0
+  RDF::Query: 0
+  RDF::Trine: 0
   Rose::DB: 0.772
   Rose::DB::Object: 0
   SQL::Abstract: 0
