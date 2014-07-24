@@ -58,6 +58,9 @@ Configuration :
 
 Starting :
 
-    cd bin
-    hypnotoad tuba
+    hypnotoad bin/tuba
+
+Starting in dev mode :
+
+    morbo -l http://0.0.0.0:3000 bin/tuba    
 
