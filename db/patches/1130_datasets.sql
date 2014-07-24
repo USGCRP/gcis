@@ -17,6 +17,8 @@ create table instrument (
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
 
+comment on table instrument is 'An instrument is a class of devices that may be affixed to platforms.';
+
 /* Affixing an instrument to a platform creates an instrument instance. */
 create table instrument_instance (
     platform_identifier varchar not null references platform(identifier) on update cascade on delete cascade,
@@ -24,6 +26,8 @@ create table instrument_instance (
     location varchar,
     primary key (platform_identifier, instrument_identifier)
 );
+
+comment on table instrument_instance is 'An instrument instance is an instrument on a platform.';
 
 /* An instrument instance may be associated with a dataset. */
 create table instrument_measurement (
@@ -35,9 +39,8 @@ create table instrument_measurement (
       primary key (platform_identifier, instrument_identifier, dataset_identifier)
 );
 
-/* XXX audit */
-/* 
-also sensor, sensor_measurement
-*/
+comment on table instrument_measurement is 'A dataset may be associated with an instrument measurement.';
+
+/* TODO: audit triggers, sensor, sensor_measurement */
 
 
