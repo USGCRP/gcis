@@ -327,6 +327,9 @@ sub startup {
     # activity (globally unique)
     $r->resource('activity');
 
+    # platform (globally unique)
+    $r->resource('platform');
+
     # Metadata processing routes.
     #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
     #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
