@@ -67,7 +67,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.04"
+         "version" : "1.05"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -225,8 +225,8 @@
       "Tuba::Finding" : {
          "file" : "lib/Tuba/Finding.pm"
       },
-      "Tuba::Gcmdkeyword" : {
-         "file" : "lib/Tuba/Gcmdkeyword.pm"
+      "Tuba::GcmdKeyword" : {
+         "file" : "lib/Tuba/GcmdKeyword.pm"
       },
       "Tuba::Generic" : {
          "file" : "lib/Tuba/Generic.pm"
@@ -287,5 +287,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.04"
+   "version" : "1.05"
 }
