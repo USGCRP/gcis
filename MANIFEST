@@ -303,6 +303,7 @@ db/patches/1090_chapter_sortkey.sql
 db/patches/1100_chapter_doi.sql
 db/patches/1110_pubfile.sql
 db/patches/1120_schema_doc.sql
+eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
 eg/import_countries.pl
@@ -533,6 +534,7 @@ lib/Tuba/files/templates/person/update_rel_form.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.ep
 lib/Tuba/files/templates/pub_thumbnails.html.ep
+lib/Tuba/files/templates/reference/create_form.html.ep
 lib/Tuba/files/templates/reference/object.html.ep
 lib/Tuba/files/templates/reference/object.ttl.ep
 lib/Tuba/files/templates/reference/objects.html.ep
@@ -564,7 +566,7 @@ lib/Tuba/files/templates/watch.html.ep
 lib/Tuba/files/templates/webpage/object.html.ep
 lib/Tuba/files/templates/webpage/object.ttl.ep
 lib/Tuba/Finding.pm
-lib/Tuba/Gcmdkeyword.pm
+lib/Tuba/GcmdKeyword.pm
 lib/Tuba/Generic.pm
 lib/Tuba/Image.pm
 lib/Tuba/Journal.pm
@@ -603,6 +605,7 @@ t/007_prov.t
 t/008_dataset.t
 t/009_article.t
 t/010_stringify.t
+t/011_sparql.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm
