@@ -464,7 +464,7 @@ sub register {
             my $c = shift;
             return qr[""                 # empty quotes
                         (?:\^\^xsd:
-                           (?:float|dateTime) # optional type
+                           (?:[a-zA-Z]+) # optional type
                         )?
                         ;$                    # end of line
                       ]x;
