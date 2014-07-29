@@ -4,7 +4,7 @@ perl:
 install :
   - cpanm  --quiet -notest Devel::Cover::Report::Coveralls
 script :
-  - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove -lrsv t
+  - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine perl Build.PL && ./Build && ./Build test
   - cover
 after_success :
   - cover -report coveralls
