@@ -30,6 +30,15 @@ Software installation :
     ./Build test
     ./Build install
 
+Database configuration :
+
+You may need to add these directives to postgresql.conf, under "CUSTOMIZED
+OPTIONS" for some versions of postgreSQL :
+
+    custom_variable_classes = 'audit'   # list of custom variable class names
+    audit.username = 'unknown'
+    audit.note = ''
+
 Database installation :
 
     ./Build dbinstall
