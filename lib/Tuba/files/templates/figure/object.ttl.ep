@@ -1,19 +1,16 @@
 % layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
 ## Identifier and title of the figure
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
-% if ($figure->caption) {
 ## Figure Caption
    gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
-% }
 
-% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
 ## The figure is part of a chapter.
-   gcis:isFigureOf <<%= uri($chapter) %>>;
-% }
+   gcis:isFigureOf <<%= uri($figure->chapter) %>>;
 
 ## The figure contains one or more images.
 % for my $image ($figure->images) {
@@ -23,42 +20,24 @@
 ## Ordinal value of the figure number within the chapter
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
 
-% if ($figure->create_dt) {
 ## The figure was created on the following date.
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
-% }
 
-% if ($figure->submission_dt) { 
 ## The image was submitted on the following date:
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
-% }
 
-% if ($figure->lat_max) {
 ## Geographical extent of the area covered by the figure
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
-% }
-% if ($figure->lat_min) {
-   gcis:southBoundLatitude "<%= $figure->lat_min %>^^"xsd:float;
-% }
-% if ($figure->lon_max) {
+   gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float;
    gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
-% }
-% if ($figure->lon_min) {
    gcis:eastBoundLongitude "<%= $figure->lon_min %>"^^xsd:float;
-% }
 
-% if ($figure->time_start) {
 ## Temporal extent of the figure content
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
-% }
-% if ($figure->time_end) {
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
-% }
 
-% if ($figure->source_citation) {
 ## Figure source
    cito:cites "<%= $figure->source_citation %>";
-% }
 
 % for my $keyword ($figure->keywords) {
 ## Keywords associated with the figure
@@ -67,6 +46,7 @@
 
    a gcis:Figure .
 
+% end
 %= include 'prov';
 %# %= include 'contributors';
 

@@ -450,6 +450,25 @@ sub register {
             return unless $to =~ m[^(http|ftp)://];
             return $to;
         });
+    $app->helper( filter_lines_with => sub {
+            # Remove lines containing a string or matching a regexp.
+            my $c = shift;
+            my $what = shift;
+            my $block = shift;
+            my $regex = ref($what) eq 'Regexp' ? $what : qr/\Q$what\E/;
+            no warnings 'uninitialized';
+            my @lines = grep { $_ !~ /$regex/ } split /\n/, $block->();
+            return b(join "\n", @lines);
+        });
+    $app->helper( empty_predicate => sub {
+            my $c = shift;
+            return qr[""                 # empty quotes
+                        (?:\^\^xsd:
+                           (?:[a-zA-Z]+) # optional type
+                        )?
+                        ;$                    # end of line
+                      ]x;
+        });
 }
 
 1;
