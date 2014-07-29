@@ -2,12 +2,11 @@ language: perl
 perl:
   - "5.16"
 before_install :
+  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
   - cpanm --quiet -notest Devel::Cover Devel::Cover::Report::Coveralls
 script :
   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine perl Build.PL && ./Build && ./Build test
   - cover
 after_success :
   - cover -report coveralls
-before_install :
-  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
 
