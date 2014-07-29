@@ -1,7 +1,6 @@
 
 Global Change Information System 
-[![Build Status](https://secure.travis-ci.org/USGCRP/gcis.png)](http://travis-ci.org/USGCRP/gcis)
-[![Coverage Status](https://img.shields.io/coveralls/USGCRP/gcis.svg)](https://coveralls.io/r/USGCRP/gcis)
+[![Build Status](https://secure.travis-ci.org/USGCRP/gcis.png)](http://travis-ci.org/USGCRP/gcis) [![Coverage Status](https://img.shields.io/coveralls/USGCRP/gcis.svg)](https://coveralls.io/r/USGCRP/gcis)
 ================================
 
 This is the HTML front end and API for the [Global Change Information System](http://data.globalchange.gov) (GCIS).
