@@ -4,7 +4,7 @@
 <label>Search for </label>
 %= text_field 'q'
 <label> in</label>
-%= select_field 'type' => [ 'all', db_identifiers('publication_type')];
+%= select_field 'type' => [ 'all', sort ('organization','person', db_identifiers('publication_type'))];
 and show
 %= select_field 'format' => [ 'detailed', 'brief'];
 match results.
