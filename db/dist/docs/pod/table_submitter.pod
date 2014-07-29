@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 submitter
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  id (serial) - 
  person_id (integer) - 
@@ -16,16 +16,16 @@ submitter
  contributor_id (integer) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                                    Table "gcis_metadata.submitter"
-      Column     |       Type        |                       Modifiers                        | Storage  | Stats target | Description 
- ----------------+-------------------+--------------------------------------------------------+----------+--------------+-------------
-  id             | integer           | not null default nextval('submitter_id_seq'::regclass) | plain    |              | 
-  person_id      | integer           |                                                        | plain    |              | 
-  table          | character varying |                                                        | extended |              | 
-  fk             | integer           |                                                        | plain    |              | 
-  contributor_id | integer           |                                                        | plain    |              | 
+                                            Table "gcis_metadata.submitter"
+      Column     |       Type        |                       Modifiers                        | Storage  | Description 
+ ----------------+-------------------+--------------------------------------------------------+----------+-------------
+  id             | integer           | not null default nextval('submitter_id_seq'::regclass) | plain    | 
+  person_id      | integer           |                                                        | plain    | 
+  table          | character varying |                                                        | extended | 
+  fk             | integer           |                                                        | plain    | 
+  contributor_id | integer           |                                                        | plain    | 
  Indexes:
      "submitter_pkey" PRIMARY KEY, btree (id)
  Foreign-key constraints:
@@ -36,6 +36,6 @@ submitter
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

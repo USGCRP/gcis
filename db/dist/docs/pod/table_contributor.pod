@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 contributor
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  id (serial) - 
  person_id (integer) - 
@@ -15,15 +15,15 @@ contributor
  organization_identifier (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                                        Table "gcis_metadata.contributor"
-          Column          |       Type        |                        Modifiers                         | Storage  | Stats target | Description 
- -------------------------+-------------------+----------------------------------------------------------+----------+--------------+-------------
-  id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    |              | 
-  person_id               | integer           |                                                          | plain    |              | 
-  role_type_identifier    | character varying | not null                                                 | extended |              | 
-  organization_identifier | character varying | not null                                                 | extended |              | 
+                                                 Table "gcis_metadata.contributor"
+          Column          |       Type        |                        Modifiers                         | Storage  | Description 
+ -------------------------+-------------------+----------------------------------------------------------+----------+-------------
+  id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    | 
+  person_id               | integer           |                                                          | plain    | 
+  role_type_identifier    | character varying | not null                                                 | extended | 
+  organization_identifier | character varying | not null                                                 | extended | 
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
      "contributor_person_id_role_type_organization_identifier_key" UNIQUE CONSTRAINT, btree (person_id, role_type_identifier, organization_identifier)
@@ -42,6 +42,6 @@ contributor
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

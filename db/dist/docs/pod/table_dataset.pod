@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 dataset
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  name (character varying) - 
@@ -40,40 +40,40 @@ dataset
  lon_max (numeric) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                      Table "gcis_metadata.dataset"
-       Column      |              Type              | Modifiers | Storage  | Stats target | Description 
- ------------------+--------------------------------+-----------+----------+--------------+-------------
-  identifier       | character varying              | not null  | extended |              | 
-  name             | character varying              |           | extended |              | 
-  type             | character varying              |           | extended |              | 
-  version          | character varying              |           | extended |              | 
-  description      | character varying              |           | extended |              | 
-  native_id        | character varying              |           | extended |              | 
-  access_dt        | timestamp(3) without time zone |           | plain    |              | 
-  url              | character varying              |           | extended |              | 
-  data_qualifier   | character varying              |           | extended |              | 
-  scale            | character varying              |           | extended |              | 
-  spatial_ref_sys  | character varying              |           | extended |              | 
-  cite_metadata    | character varying              |           | extended |              | 
-  scope            | character varying              |           | extended |              | 
-  spatial_extent   | character varying              |           | extended |              | 
-  temporal_extent  | character varying              |           | extended |              | 
-  vertical_extent  | character varying              |           | extended |              | 
-  processing_level | character varying              |           | extended |              | 
-  spatial_res      | character varying              |           | extended |              | 
-  doi              | character varying              |           | extended |              | 
-  release_dt       | timestamp without time zone    |           | plain    |              | 
-  publication_year | integer                        |           | plain    |              | 
-  attributes       | character varying              |           | extended |              | 
-  variables        | character varying              |           | extended |              | 
-  start_time       | timestamp without time zone    |           | plain    |              | 
-  end_time         | timestamp without time zone    |           | plain    |              | 
-  lat_min          | numeric                        |           | main     |              | 
-  lat_max          | numeric                        |           | main     |              | 
-  lon_min          | numeric                        |           | main     |              | 
-  lon_max          | numeric                        |           | main     |              | 
+                              Table "gcis_metadata.dataset"
+       Column      |              Type              | Modifiers | Storage  | Description 
+ ------------------+--------------------------------+-----------+----------+-------------
+  identifier       | character varying              | not null  | extended | 
+  name             | character varying              |           | extended | 
+  type             | character varying              |           | extended | 
+  version          | character varying              |           | extended | 
+  description      | character varying              |           | extended | 
+  native_id        | character varying              |           | extended | 
+  access_dt        | timestamp(3) without time zone |           | plain    | 
+  url              | character varying              |           | extended | 
+  data_qualifier   | character varying              |           | extended | 
+  scale            | character varying              |           | extended | 
+  spatial_ref_sys  | character varying              |           | extended | 
+  cite_metadata    | character varying              |           | extended | 
+  scope            | character varying              |           | extended | 
+  spatial_extent   | character varying              |           | extended | 
+  temporal_extent  | character varying              |           | extended | 
+  vertical_extent  | character varying              |           | extended | 
+  processing_level | character varying              |           | extended | 
+  spatial_res      | character varying              |           | extended | 
+  doi              | character varying              |           | extended | 
+  release_dt       | timestamp without time zone    |           | plain    | 
+  publication_year | integer                        |           | plain    | 
+  attributes       | character varying              |           | extended | 
+  variables        | character varying              |           | extended | 
+  start_time       | timestamp without time zone    |           | plain    | 
+  end_time         | timestamp without time zone    |           | plain    | 
+  lat_min          | numeric                        |           | main     | 
+  lat_max          | numeric                        |           | main     | 
+  lon_min          | numeric                        |           | main     | 
+  lon_max          | numeric                        |           | main     | 
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -87,6 +87,6 @@ dataset
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

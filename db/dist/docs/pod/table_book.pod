@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 book
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  title (character varying) - 
@@ -16,20 +16,24 @@ book
  publisher (character varying) - 
  number_of_pages (numeric) - 
  url (character varying) - 
+ in_library (boolean) - 
+ topic (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                Table "gcis_metadata.book"
-      Column      |       Type        | Modifiers | Storage  | Stats target | Description 
- -----------------+-------------------+-----------+----------+--------------+-------------
-  identifier      | character varying | not null  | extended |              | 
-  title           | character varying | not null  | extended |              | 
-  isbn            | character varying |           | extended |              | 
-  year            | numeric           |           | main     |              | 
-  publisher       | character varying |           | extended |              | 
-  number_of_pages | numeric           |           | main     |              | 
-  url             | character varying |           | extended |              | 
+                         Table "gcis_metadata.book"
+      Column      |       Type        | Modifiers | Storage  | Description 
+ -----------------+-------------------+-----------+----------+-------------
+  identifier      | character varying | not null  | extended | 
+  title           | character varying | not null  | extended | 
+  isbn            | character varying |           | extended | 
+  year            | numeric           |           | main     | 
+  publisher       | character varying |           | extended | 
+  number_of_pages | numeric           |           | main     | 
+  url             | character varying |           | extended | 
+  in_library      | boolean           |           | plain    | 
+  topic           | character varying |           | extended | 
  Indexes:
      "book_pkey" PRIMARY KEY, btree (identifier)
      "book_isbn_key" UNIQUE CONSTRAINT, btree (isbn)
@@ -43,6 +47,6 @@ book
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

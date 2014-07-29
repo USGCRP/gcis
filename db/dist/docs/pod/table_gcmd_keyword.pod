@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 gcmd_keyword
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  parent_identifier (character varying) - 
@@ -15,15 +15,15 @@ gcmd_keyword
  definition (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                             Table "gcis_metadata.gcmd_keyword"
-       Column       |       Type        | Modifiers | Storage  | Stats target | Description 
- -------------------+-------------------+-----------+----------+--------------+-------------
-  identifier        | character varying | not null  | extended |              | 
-  parent_identifier | character varying |           | extended |              | 
-  label             | character varying |           | extended |              | 
-  definition        | character varying |           | extended |              | 
+                      Table "gcis_metadata.gcmd_keyword"
+       Column       |       Type        | Modifiers | Storage  | Description 
+ -------------------+-------------------+-----------+----------+-------------
+  identifier        | character varying | not null  | extended | 
+  parent_identifier | character varying |           | extended | 
+  label             | character varying |           | extended | 
+  definition        | character varying |           | extended | 
  Indexes:
      "gcmd_keyword_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
@@ -34,6 +34,6 @@ gcmd_keyword
  Has OIDs: no
  
 
-=cut
+\=cut
 
 
