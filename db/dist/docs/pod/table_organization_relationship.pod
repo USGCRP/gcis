@@ -1,25 +1,25 @@
 
-=head1 NAME
+\=head1 NAME
 
 organization_relationship
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  label (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                   Table "gcis_metadata.organization_relationship"
-    Column   |       Type        | Modifiers | Storage  | Stats target | Description 
- ------------+-------------------+-----------+----------+--------------+-------------
-  identifier | character varying | not null  | extended |              | 
-  label      | character varying | not null  | extended |              | 
+            Table "gcis_metadata.organization_relationship"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+  label      | character varying | not null  | extended | 
  Indexes:
      "organization_relationship_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
@@ -30,6 +30,6 @@ organization_relationship
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

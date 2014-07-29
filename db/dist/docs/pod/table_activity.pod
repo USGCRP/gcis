@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 activity
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  data_usage (character varying) - 
@@ -17,21 +17,27 @@ activity
  duration (interval) - 
  computing_environment (character varying) - 
  output_artifacts (character varying) - 
+ software (character varying) - 
+ visualization_software (character varying) - 
+ notes (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                      Table "gcis_metadata.activity"
-         Column         |            Type             | Modifiers | Storage  | Stats target | Description 
- -----------------------+-----------------------------+-----------+----------+--------------+-------------
-  identifier            | character varying           | not null  | extended |              | 
-  data_usage            | character varying           |           | extended |              | 
-  methodology           | character varying           |           | extended |              | 
-  start_time            | timestamp without time zone |           | plain    |              | 
-  end_time              | timestamp without time zone |           | plain    |              | 
-  duration              | interval                    |           | plain    |              | 
-  computing_environment | character varying           |           | extended |              | 
-  output_artifacts      | character varying           |           | extended |              | 
+                               Table "gcis_metadata.activity"
+          Column         |            Type             | Modifiers | Storage  | Description 
+ ------------------------+-----------------------------+-----------+----------+-------------
+  identifier             | character varying           | not null  | extended | 
+  data_usage             | character varying           |           | extended | 
+  methodology            | character varying           |           | extended | 
+  start_time             | timestamp without time zone |           | plain    | 
+  end_time               | timestamp without time zone |           | plain    | 
+  duration               | interval                    |           | plain    | 
+  computing_environment  | character varying           |           | extended | 
+  output_artifacts       | character varying           |           | extended | 
+  software               | character varying           |           | extended | 
+  visualization_software | character varying           |           | extended | 
+  notes                  | character varying           |           | extended | 
  Indexes:
      "activity_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -46,6 +52,6 @@ activity
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

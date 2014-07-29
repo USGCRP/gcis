@@ -1,27 +1,27 @@
 
-=head1 NAME
+\=head1 NAME
 
 array
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  rows_in_header (integer) - 
  rows (character varying[]) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                Table "gcis_metadata.array"
-      Column     |        Type         | Modifiers | Storage  | Stats target | Description 
- ----------------+---------------------+-----------+----------+--------------+-------------
-  identifier     | character varying   | not null  | extended |              | 
-  rows_in_header | integer             | default 0 | plain    |              | 
-  rows           | character varying[] |           | extended |              | 
+                         Table "gcis_metadata.array"
+      Column     |        Type         | Modifiers | Storage  | Description 
+ ----------------+---------------------+-----------+----------+-------------
+  identifier     | character varying   | not null  | extended | 
+  rows_in_header | integer             | default 0 | plain    | 
+  rows           | character varying[] |           | extended | 
  Indexes:
      "array_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -36,6 +36,6 @@ array
  Has OIDs: no
  
 
-=cut
+\=cut
 
 
