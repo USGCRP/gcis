@@ -15,7 +15,7 @@
 % if ($organization->country) {
 ## Country in which organization is situated
    % if (my $country = $organization->country) {
-   dwc:countryCode "<%= $country->code %>;
+   dwc:countryCode "<%= $country->code %>";
    % }
 % }
 
