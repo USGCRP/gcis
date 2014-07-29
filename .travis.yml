@@ -2,7 +2,7 @@ language: perl
 perl:
   - "5.16"
 before_install :
-  - cpanm --quiet -notest Devel::Cover::Report::Coveralls
+  - cpanm --quiet -notest Devel::Cover Devel::Cover::Report::Coveralls
 script :
   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine perl Build.PL && ./Build && ./Build test
   - cover
