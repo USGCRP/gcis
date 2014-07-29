@@ -1,8 +1,8 @@
 language: perl
 perl:
   - "5.16"
-install :
-  - cpanm --quiet -notest Devel::Cover::Report::Coveralls Module::Build::Database
+before_install :
+  - cpanm --quiet -notest Devel::Cover::Report::Coveralls
 script :
   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine perl Build.PL && ./Build && ./Build test
   - cover
