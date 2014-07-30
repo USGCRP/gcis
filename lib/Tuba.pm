@@ -371,6 +371,18 @@ sub startup {
     # Generic publication.
     $r->resource('generic');
 
+    # mappings to external identifiers.
+    my $require_update = sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          };
+
+    $r->get('/lexicon/:argot/:term_class/*term')->to('lexicon#find');
+    my $lexicon_authed = $r->bridge('/lexicon/:argot')->to(cb => $require_update);
+    $lexicon_authed->post()->to('lexicon#create');
+    $lexicon_authed->delete('/:term_class/*term')->to('lexicon#remove');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
