@@ -15,7 +15,6 @@
    % if (my $country = $organization->country) {
    dwc:countryCode "<%= $country->code %>";
    % }
-% }
 
 % for my $map ($organization->organization_maps) {
 ## Relationship to other organizations
