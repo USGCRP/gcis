@@ -1,20 +1,15 @@
 % layout 'default', namespaces => [qw/gcis prov dcterms xsd fabio meth/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $activity->identifier %>";
 
-% if ($activity->start_time) {
 ## The activity began and ended at the following times
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
-% }
-% if ($activity->end_time) {
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
-% }
 
-% if ($activity->duration) {
 ## Duration of the activity
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
-% }
 
 ## Output datafiles   
    fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
@@ -30,4 +25,4 @@
 
    a prov:Activity.
 
-%=include 'prov';
+% end
