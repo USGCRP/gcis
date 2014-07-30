@@ -48,3 +48,7 @@ create table instrument_measurement (
 
 comment on table instrument_measurement is 'A dataset may be associated with an instrument instance via an instrument measurement.';
 
+select audit.audit_table('platform');
+select audit.audit_table('instrument');
+select audit.audit_table('instrument_instance');
+select audit.audit_table('instrument_measurement');
