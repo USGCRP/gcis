@@ -2,7 +2,8 @@
 
 <<%= current_resource %>>
    a gcis:Array;
-   dcterms:identifier "<%= $array->identifier %>"; 
+   dcterms:identifier "<%= $array->identifier %>";
+
 % for my $table ($array->tables) {
    gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.
 % }   
