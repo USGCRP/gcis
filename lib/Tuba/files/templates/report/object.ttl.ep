@@ -19,10 +19,10 @@
    dcterms:type "<%= $report->report_type_identifier %>";
 
 ## Frequency of report release
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;    
+   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
 
 ## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;   
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
