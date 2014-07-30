@@ -26,7 +26,7 @@
 ## The image was submitted on the following date:
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 
-## Geographical extent of the area covered by the figure
+## Geographical extent of the figure content
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float;
    gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
