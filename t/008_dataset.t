@@ -65,6 +65,7 @@ my $platform = {
   identifier  => "house",
   name        => "house with thermometers on the side",
   description => "our house, in the middle of our street",
+  platform_type_identifier => undef,
   url         => undef,
 };
 $t->post_ok( "/platform" => json => $platform )->status_is(200);

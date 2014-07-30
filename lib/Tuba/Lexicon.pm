@@ -28,21 +28,21 @@ sub create {
         # TODO handle a form too
         return $c->update_error("not implemented");
     }
-    my $extern = Lexicon->new(%entry);
-    $extern->save(audit_user => $c->user) or return $c->update_error($extern->error);
-    $c->stash(_this_object => $extern);
+    my $term = Lexicon->new(%entry);
+    $term->save(audit_user => $c->user) or return $c->update_error($term->error);
+    $c->stash(_this_object => $term);
     return $c->redirect_without_error('create_form');
 }
 
 sub find {
     my $c = shift;
-    my $extern = Lexicon->new(
+    my $term = Lexicon->new(
           argot       => $c->stash('argot'),
           term_class  => $c->stash('term_class'),
           term        => $c->stash('term'),
     );
-    $extern->load(speculative => 1) or return $c->render_not_found;
-    my $gcid = $extern->gcid;
+    $term->load(speculative => 1) or return $c->render_not_found;
+    my $gcid = $term->gcid;
     $c->res->headers->location($gcid);
     $c->res->body(qq[See <a href="$gcid">$gcid</a>.]);
     $c->rendered(303);
@@ -50,13 +50,13 @@ sub find {
 
 sub remove {
     my $c = shift;
-    my $extern = Lexicon->new(
+    my $term = Lexicon->new(
           argot       => $c->stash('argot'),
           term_class  => $c->stash('term_class'),
           term        => $c->stash('term'),
     );
-    $extern->load(speculative => 1) or return $c->render_not_found;
-    $extern->delete or return $c->render_exception($extern->error);
+    $term->load(speculative => 1) or return $c->render_not_found;
+    $term->delete or return $c->render_exception($term->error);
     return $c->render(text => 'ok');
 }
 
