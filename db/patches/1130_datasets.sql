@@ -1,10 +1,17 @@
-/* platform, instrument, sensor, and how they relate to datasets. */
+create table platform_type (
+    identifier varchar not null primary key
+);
 
+insert into platform_type values ('spacecraft');
+insert into platform_type values ('aircraft');
+
+drop table if exists platform cascade;
 create table platform (
     identifier varchar not null primary key,
     name varchar not null,
     description varchar,
     url varchar,
+    platform_type_identifier varchar references platform_type (identifier),
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
 
@@ -40,7 +47,4 @@ create table instrument_measurement (
 );
 
 comment on table instrument_measurement is 'A dataset may be associated with an instrument instance via an instrument measurement.';
-
-/* TODO: audit triggers, sensor, sensor_measurement */
-
 
