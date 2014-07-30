@@ -1,25 +1,25 @@
 
-=head1 NAME
+\=head1 NAME
 
 _report_viewer
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  report (character varying) - 
  username (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                        Table "gcis_metadata._report_viewer"
-   Column  |       Type        | Modifiers | Storage  | Stats target | Description 
- ----------+-------------------+-----------+----------+--------------+-------------
-  report   | character varying | not null  | extended |              | 
-  username | character varying | not null  | extended |              | 
+                Table "gcis_metadata._report_viewer"
+   Column  |       Type        | Modifiers | Storage  | Description 
+ ----------+-------------------+-----------+----------+-------------
+  report   | character varying | not null  | extended | 
+  username | character varying | not null  | extended | 
  Indexes:
      "_report_viewer_pkey" PRIMARY KEY, btree (report, username)
  Foreign-key constraints:
@@ -27,6 +27,6 @@ _report_viewer
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  child (integer) - 
  relationship (character varying) - 
@@ -16,16 +16,16 @@ publication_map
  activity_identifier (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                             Table "gcis_metadata.publication_map"
-        Column        |       Type        | Modifiers | Storage  | Stats target | Description 
- ---------------------+-------------------+-----------+----------+--------------+-------------
-  child               | integer           | not null  | plain    |              | 
-  relationship        | character varying | not null  | extended |              | 
-  parent              | integer           | not null  | plain    |              | 
-  note                | character varying |           | extended |              | 
-  activity_identifier | character varying |           | extended |              | 
+                     Table "gcis_metadata.publication_map"
+        Column        |       Type        | Modifiers | Storage  | Description 
+ ---------------------+-------------------+-----------+----------+-------------
+  child               | integer           | not null  | plain    | 
+  relationship        | character varying | not null  | extended | 
+  parent              | integer           | not null  | plain    | 
+  note                | character varying |           | extended | 
+  activity_identifier | character varying |           | extended | 
  Indexes:
      "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
  Foreign-key constraints:
@@ -38,6 +38,6 @@ publication_map
  Has OIDs: no
  
 
-=cut
+\=cut
 
 
