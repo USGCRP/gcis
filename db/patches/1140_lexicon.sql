@@ -1,13 +1,14 @@
-create table lexicon (
-    argot      varchar not null,   /* echo, ceos, podaac */
-    term_class varchar not null,   /* category of term : Agency, Collection, Platform */
-    term       varchar not null,   /* the identifier */
-    gcid       varchar not null,
-    primary key (argot, term_class, term),
-    CHECK (argot similar to '[a-z0-9_-]+')
+
+create table exterm (
+    term     varchar not null,   /* the identifier */
+    context  varchar not null,   /* category of term : Agency, Collection, Platform */
+    lexicon  varchar not null,   /* echo, ceos, podaac */
+    gcid     varchar not null,
+    primary key (lexicon, context, term),
+    CHECK (lexicon similar to '[a-z0-9_-]+')
 );
 
-comment on table lexicon is 'The lexicon table has terms that map to GCIDs.';
+comment on table exterm is 'Map terms in external lexicons to GCIDS.';
 
-select audit.audit_table('lexicon');
+select audit.audit_table('exterm');
 

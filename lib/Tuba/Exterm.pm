@@ -1,34 +1,34 @@
 =head1 NAME
 
-Tuba::Lexicon - Controller for lexicons.
+Tuba::Exterm - Controller for external terms.
 
 =head1 DESCRIPTION
 
-This controller manages the mapping between external identifiers and GCIDs.
+This controller manages the mapping between external terms and GCIDs.
 
 =cut
 
-package Tuba::Lexicon;
+package Tuba::Exterm;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
 sub create {
     my $c = shift;
     $c->stash(tab => 'create_form');
-    my $argot = $c->stash('argot');
+    my $lexicon = $c->stash('lexicon');
     my %entry;
     if (my $json = $c->req->json) {
         %entry = (
-          argot      => $argot,
-          term_class => $json->{term_class},
-          term       => $json->{term},
-          gcid       => $json->{gcid},
+          term    => $json->{term},
+          context => $json->{context},
+          lexicon => $lexicon,
+          gcid    => $json->{gcid},
         );
     } else {
         # TODO handle a form too
         return $c->update_error("not implemented");
     }
-    my $term = Lexicon->new(%entry);
+    my $term = Exterm->new(%entry);
     $term->save(audit_user => $c->user) or return $c->update_error($term->error);
     $c->stash(_this_object => $term);
     return $c->redirect_without_error('create_form');
@@ -36,10 +36,10 @@ sub create {
 
 sub find {
     my $c = shift;
-    my $term = Lexicon->new(
-          argot       => $c->stash('argot'),
-          term_class  => $c->stash('term_class'),
-          term        => $c->stash('term'),
+    my $term = Exterm->new(
+          lexicon  => $c->stash('lexicon'),
+          context  => $c->stash('context'),
+          term     => $c->stash('term'),
     );
     $term->load(speculative => 1) or return $c->render_not_found;
     my $gcid = $term->gcid;
@@ -50,10 +50,10 @@ sub find {
 
 sub remove {
     my $c = shift;
-    my $term = Lexicon->new(
-          argot       => $c->stash('argot'),
-          term_class  => $c->stash('term_class'),
-          term        => $c->stash('term'),
+    my $term = Exterm->new(
+          lexicon  => $c->stash('lexicon'),
+          context  => $c->stash('context'),
+          term     => $c->stash('term'),
     );
     $term->load(speculative => 1) or return $c->render_not_found;
     $term->delete or return $c->render_exception($term->error);

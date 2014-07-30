@@ -15,9 +15,9 @@ $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })
 
 my $gcid = "/organization/european-space-agency";
 
-#  Send lexicon, argot, term and term_class to map to a GCID.
+#  Send lexicon, term and context to map to a GCID.
 $t->post_ok("/lexicon/ceos" => {Accept => "application/json"} => json =>
-    {argot => 'ceos', term => 'ESA', term_class => "Agency", gcid => $gcid})
+    {term => 'ESA', context => "Agency", gcid => $gcid})
   ->status_is(200)
   ->json_is({status => 'ok'});
 

@@ -378,10 +378,10 @@ sub startup {
               return 1;
           };
 
-    $r->get('/lexicon/:argot/:term_class/*term')->to('lexicon#find');
-    my $lexicon_authed = $r->bridge('/lexicon/:argot')->to(cb => $require_update);
-    $lexicon_authed->post()->to('lexicon#create');
-    $lexicon_authed->delete('/:term_class/*term')->to('lexicon#remove');
+    $r->get('/lexicon/:lexicon/:context/*term')->to('exterm#find');
+    my $lexicon_authed = $r->bridge('/lexicon/:lexicon')->to(cb => $require_update);
+    $lexicon_authed->post()->to('exterm#create');
+    $lexicon_authed->delete('/:context/*term')->to('exterm#remove');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
