@@ -21,13 +21,13 @@
 ## Submission date for the image
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
 
-## Geographical extent of the area covered by the image
+## Geographical extent of the image content
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float; 
    gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float; 
    gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
 
-## Temporal coverage of the image
+## Temporal coverage of the image content
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; 
   
