@@ -1,11 +1,12 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
+## Identifier, title, and publication year
    dcterms:identifier "<%= $book->identifier %>";
    dcterms:title "<%= $book->title %>"^^xsd:string;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
    
-% if ($book->isbn) {
 ## Book ISBN
    bibo:isbn "<%= $book->isbn %>";
 % }
@@ -13,15 +14,11 @@
 ## Number of pages in book
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
 
-% if ($book->publisher) {
-## Book's publisher
+## Book publisher
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
-% }
 
-% if ($book->url) {
 ## URL for book
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
-% }
 
 % for my $keyword ($book->keywords) {
 ## Keywords for book
@@ -30,5 +27,6 @@
 
    a bibo:Book.
 
+% end
 ## This book is cited by the following entities in GCIS:
 %= include 'prov';
