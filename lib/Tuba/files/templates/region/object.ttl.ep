@@ -1,10 +1,9 @@
 % layout 'default', namespaces => [qw/prov dcterms xsd/];
+%= filter_lines_with empty_predicate() => begin
 
  <<%= current_resource %>>
    a prov:Entity;
    dcterms:identifer "<%= $region->identifier %>";
-% if ($region->description) {
-   dcterms:description "<%= $region->description %>"^^xsd:string;
-% }
-   dcterms:title "<%= $region->label %>"^^xsd:string.
-
+   dcterms:title "<%= $region->title %>";
+   dcterms:description "<%= $region->description %>"^^xsd:string.
+% end
