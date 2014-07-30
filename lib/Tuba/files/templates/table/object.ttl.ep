@@ -18,6 +18,7 @@
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
 % }
+
 % for my $keyword ($table->keywords) {
 ## Keywords associated with table   
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
