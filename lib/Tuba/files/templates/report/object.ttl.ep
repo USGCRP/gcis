@@ -27,7 +27,7 @@
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
 
-## The report contains multiple chapters:
+## This report contains multiple chapters:
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
