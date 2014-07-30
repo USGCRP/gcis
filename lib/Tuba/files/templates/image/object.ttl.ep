@@ -4,7 +4,7 @@
 <<%= current_resource %>>
 ## Identifier and Title for the Image
    dcterms:identifier "<%= $image->identifier %>";
-   dcterms:title "<%= $image->title %>"^^xsd:string;  
+   dcterms:title "<%= $image->title %>"^^xsd:string;
 
 ## Image Description
    dcterms:description "<%= $image->description %>"^^xsd:string;
@@ -13,23 +13,23 @@
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 
 ## Image Attributes
-   dcterms:subject "<%= $image->attributes %>"^^xsd:string; 
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
 
 ## Creation date of the image
-   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime; 
+   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
 
 ## Submission date for the image
-   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
 
 ## Geographical extent of the image content
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
-   gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float; 
-   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float; 
+   gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float;
+   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float;
    gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
 
 ## Temporal coverage of the image content
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
-   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; 
+   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
   
 ## Keywords associated with the image
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
