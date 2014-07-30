@@ -8,7 +8,7 @@ create table exterm (
     CHECK (lexicon similar to '[a-z0-9_-]+')
 );
 
-comment on table exterm is 'Map terms in external lexicons to GCIDS.';
+comment on table exterm is 'Map terms in external lexicons to GCIDs.';
 
 select audit.audit_table('exterm');
 
