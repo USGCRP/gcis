@@ -21,7 +21,7 @@
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
 
 ## The figure was created on the following date.
-   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
+   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
 
 ## The image was submitted on the following date:
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
