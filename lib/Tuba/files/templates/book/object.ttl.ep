@@ -9,7 +9,6 @@
    
 ## Book ISBN
    bibo:isbn "<%= $book->isbn %>";
-% }
 
 ## Number of pages in book
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
