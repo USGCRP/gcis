@@ -378,11 +378,13 @@ sub startup {
               return 1;
           };
 
-    $r->get('/lexicon/:lexicon/:context/*term')->to('exterm#find');
-    my $lexicon_authed = $r->bridge('/lexicon/:lexicon')->to(cb => $require_update);
-    $lexicon_authed->post()->to('exterm#create');
-    $lexicon_authed->delete('/:context/*term')->to('exterm#remove');
-    $lexicon_authed->get('/manage')->to('exterm#manage');
+    $r->resource('lexicon');
+    my $lex = $r->lookup('select_lexicon');
+    $lex->get('/find/:context/*term')->to('exterm#find');
+    my $lex_authed = $r->lookup('authed_select_lexicon');
+    $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
+    $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
+    $lex_authed->get('/:lexicon_identifier/manage')->to('exterm#manage');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');

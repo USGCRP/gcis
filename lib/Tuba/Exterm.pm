@@ -15,7 +15,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub create {
     my $c = shift;
     $c->stash(tab => 'create_form');
-    my $lexicon = $c->stash('lexicon');
+    my $lexicon = $c->stash('lexicon_identifier');
     my %entry;
     if (my $json = $c->req->json) {
         %entry = (
@@ -37,7 +37,7 @@ sub create {
 sub find {
     my $c = shift;
     my $term = Exterm->new(
-          lexicon_identifier  => $c->stash('lexicon'),
+          lexicon_identifier  => $c->stash('lexicon_identifier'),
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );
@@ -51,7 +51,7 @@ sub find {
 sub remove {
     my $c = shift;
     my $term = Exterm->new(
-          lexicon_identifier  => $c->stash('lexicon'),
+          lexicon_identifier  => $c->stash('lexicon_identifier'),
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );
@@ -59,6 +59,7 @@ sub remove {
     $term->delete or return $c->render_exception($term->error);
     return $c->render(text => 'ok');
 }
+
 
 1;
 
