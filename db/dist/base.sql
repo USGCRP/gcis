@@ -222,6 +222,19 @@ ALTER SEQUENCE dataset_lineage_id_seq OWNED BY dataset_lineage.id;
 
 
 
+CREATE TABLE exterm (
+    term character varying NOT NULL,
+    context character varying NOT NULL,
+    lexicon_identifier character varying NOT NULL,
+    gcid character varying NOT NULL
+);
+
+
+
+COMMENT ON TABLE exterm IS 'Map terms in lexicons to GCIDs.';
+
+
+
 CREATE TABLE figure (
     identifier character varying NOT NULL,
     chapter_identifier character varying,
@@ -355,6 +368,43 @@ CREATE TABLE image_figure_map (
 
 
 
+CREATE TABLE instrument (
+    identifier character varying NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    CONSTRAINT instrument_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+);
+
+
+
+COMMENT ON TABLE instrument IS 'An instrument is a class of devices that may perform measurements, and may have sensors';
+
+
+
+CREATE TABLE instrument_instance (
+    platform_identifier character varying NOT NULL,
+    instrument_identifier character varying NOT NULL,
+    location character varying
+);
+
+
+
+COMMENT ON TABLE instrument_instance IS 'An instrument instance is an instrument on a platform.';
+
+
+
+CREATE TABLE instrument_measurement (
+    platform_identifier character varying NOT NULL,
+    instrument_identifier character varying NOT NULL,
+    dataset_identifier character varying NOT NULL
+);
+
+
+
+COMMENT ON TABLE instrument_measurement IS 'A dataset may be associated with an instrument instance via an instrument measurement.';
+
+
+
 CREATE TABLE journal (
     identifier character varying NOT NULL,
     title character varying,
@@ -366,6 +416,19 @@ CREATE TABLE journal (
     notes character varying,
     CONSTRAINT ck_journal_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
+
+
+
+CREATE TABLE lexicon (
+    identifier character varying NOT NULL,
+    description character varying,
+    url character varying,
+    CONSTRAINT lexicon_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+);
+
+
+
+COMMENT ON TABLE lexicon IS 'Lexicons are lists of terms external to GCIS which map to GCIDs.';
 
 
 
@@ -430,6 +493,27 @@ CREATE SEQUENCE person_id_seq
 
 
 ALTER SEQUENCE person_id_seq OWNED BY person.id;
+
+
+
+CREATE TABLE platform (
+    identifier character varying NOT NULL,
+    name character varying NOT NULL,
+    description character varying,
+    url character varying,
+    platform_type_identifier character varying,
+    CONSTRAINT platform_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+);
+
+
+
+COMMENT ON TABLE platform IS 'A platform is an entity to which instruments may be attached.';
+
+
+
+CREATE TABLE platform_type (
+    identifier character varying NOT NULL
+);
 
 
 
@@ -731,6 +815,11 @@ ALTER TABLE ONLY dataset
 
 
 
+ALTER TABLE ONLY exterm
+    ADD CONSTRAINT exterm_pkey PRIMARY KEY (lexicon_identifier, context, term);
+
+
+
 ALTER TABLE ONLY figure
     ADD CONSTRAINT figure_pkey PRIMARY KEY (identifier, report_identifier);
 
@@ -781,8 +870,28 @@ ALTER TABLE ONLY image
 
 
 
+ALTER TABLE ONLY instrument_instance
+    ADD CONSTRAINT instrument_instance_pkey PRIMARY KEY (platform_identifier, instrument_identifier);
+
+
+
+ALTER TABLE ONLY instrument_measurement
+    ADD CONSTRAINT instrument_measurement_pkey PRIMARY KEY (platform_identifier, instrument_identifier, dataset_identifier);
+
+
+
+ALTER TABLE ONLY instrument
+    ADD CONSTRAINT instrument_pkey PRIMARY KEY (identifier);
+
+
+
 ALTER TABLE ONLY journal
     ADD CONSTRAINT journal_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY lexicon
+    ADD CONSTRAINT lexicon_pkey PRIMARY KEY (identifier);
 
 
 
@@ -823,6 +932,16 @@ ALTER TABLE ONLY person
 
 ALTER TABLE ONLY person
     ADD CONSTRAINT person_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY platform
+    ADD CONSTRAINT platform_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY platform_type
+    ADD CONSTRAINT platform_type_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1104,6 +1223,30 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON platform FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_measurement FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON exterm FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON lexicon FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -1245,6 +1388,30 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_region_map FOR EA
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_file_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON platform FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON instrument FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON instrument_instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON instrument_measurement FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON exterm FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON lexicon FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -1392,6 +1559,11 @@ ALTER TABLE ONLY contributor
 
 
 
+ALTER TABLE ONLY exterm
+    ADD CONSTRAINT exterm_lexicon_identifier_fkey FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
 ALTER TABLE ONLY figure
     ADD CONSTRAINT figure_chapter_report FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -1437,6 +1609,36 @@ ALTER TABLE ONLY image_figure_map
 
 
 
+ALTER TABLE ONLY instrument_instance
+    ADD CONSTRAINT instrument_instance_instrument_identifier_fkey FOREIGN KEY (instrument_identifier) REFERENCES instrument(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_instance
+    ADD CONSTRAINT instrument_instance_platform_identifier_fkey FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_measurement
+    ADD CONSTRAINT instrument_measurement_dataset_identifier_fkey FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_measurement
+    ADD CONSTRAINT instrument_measurement_instrument_identifier_fkey FOREIGN KEY (instrument_identifier) REFERENCES instrument(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_measurement
+    ADD CONSTRAINT instrument_measurement_instrument_identifier_fkey1 FOREIGN KEY (instrument_identifier, platform_identifier) REFERENCES instrument_instance(instrument_identifier, platform_identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_measurement
+    ADD CONSTRAINT instrument_measurement_platform_identifier_fkey FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
 ALTER TABLE ONLY methodology
     ADD CONSTRAINT methodology_activity_identifier_fkey FOREIGN KEY (activity_identifier) REFERENCES activity(identifier);
 
@@ -1464,6 +1666,11 @@ ALTER TABLE ONLY organization_map
 
 ALTER TABLE ONLY organization
     ADD CONSTRAINT organization_organization_type_identifier_fkey FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier);
+
+
+
+ALTER TABLE ONLY platform
+    ADD CONSTRAINT platform_platform_type_identifier_fkey FOREIGN KEY (platform_type_identifier) REFERENCES platform_type(identifier);
 
 
 

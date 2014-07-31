@@ -184,6 +184,26 @@ SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
 
 
 --
+-- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY lexicon (identifier, description, url) FROM stdin;
+ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
+podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
+echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
+gcmd	Global Change Master Directory	http://gcmd.nasa.gov
+\.
+
+
+--
+-- Data for Name: exterm; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY exterm (term, context, lexicon_identifier, gcid) FROM stdin;
+\.
+
+
+--
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -243,6 +263,48 @@ COPY image (identifier, "position", title, description, attributes, time_start, 
 --
 
 COPY image_figure_map (image_identifier, figure_identifier, report_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: instrument; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY instrument (identifier, name, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: platform_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY platform_type (identifier) FROM stdin;
+spacecraft
+aircraft
+\.
+
+
+--
+-- Data for Name: platform; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY platform (identifier, name, description, url, platform_type_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: instrument_instance; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY instrument_instance (platform_identifier, instrument_identifier, location) FROM stdin;
+\.
+
+
+--
+-- Data for Name: instrument_measurement; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY instrument_measurement (platform_identifier, instrument_identifier, dataset_identifier) FROM stdin;
 \.
 
 
