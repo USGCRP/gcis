@@ -36,16 +36,16 @@ $t->get_ok("/lexicon/ceos/find/Agency/ESA")
 my $gcid = "/platform/aqua";
 
 $t->post_ok("/lexicon/ceos/term/new" => {Accept => "application/json"} => json =>
-    {term => 'Aqua', context => "Mission", gcid => $gcid})
+    {term => 'Aqua (with stuff here)', context => "Mission", gcid => $gcid})
   ->status_is(200)
   ->json_is({status => 'ok'});
 
-$t->get_ok("/lexicon/ceos/find/Mission/Aqua")
+$t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)")
   ->status_is(303)                  # 303 == "See Other"
   ->header_is(Location => $gcid)
   ->content_like(qr/\Q$gcid\E/);    # The content SHOULD have a link, says RFC 2616
 
-$t->delete_ok("/lexicon/ceos/Mission/Aqua")
+$t->delete_ok("/lexicon/ceos/Mission/Aqua (with stuff here)")
   ->status_is(200);
 
 $t->get_ok("/lexicon/ceos/find/Mission/Aqua")
