@@ -21,7 +21,7 @@ sub create {
         %entry = (
           term    => $json->{term},
           context => $json->{context},
-          lexicon => $lexicon,
+          lexicon_identifier => $lexicon,
           gcid    => $json->{gcid},
         );
     } else {
@@ -37,7 +37,7 @@ sub create {
 sub find {
     my $c = shift;
     my $term = Exterm->new(
-          lexicon  => $c->stash('lexicon'),
+          lexicon_identifier  => $c->stash('lexicon'),
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );
@@ -51,7 +51,7 @@ sub find {
 sub remove {
     my $c = shift;
     my $term = Exterm->new(
-          lexicon  => $c->stash('lexicon'),
+          lexicon_identifier  => $c->stash('lexicon'),
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );

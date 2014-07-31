@@ -382,6 +382,7 @@ sub startup {
     my $lexicon_authed = $r->bridge('/lexicon/:lexicon')->to(cb => $require_update);
     $lexicon_authed->post()->to('exterm#create');
     $lexicon_authed->delete('/:context/*term')->to('exterm#remove');
+    $lexicon_authed->get('/manage')->to('exterm#manage');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
