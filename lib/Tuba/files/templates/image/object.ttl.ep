@@ -38,4 +38,4 @@
 
 % end
 %= include 'prov';
-%# %= include 'contributors';
+%= include 'contributors';
