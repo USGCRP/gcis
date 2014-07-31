@@ -384,7 +384,6 @@ sub startup {
     my $lex_authed = $r->lookup('authed_select_lexicon');
     $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
     $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
-    $lex_authed->get('/:lexicon_identifier/manage')->to('exterm#manage');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
