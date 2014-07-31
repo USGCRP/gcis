@@ -13,9 +13,10 @@
 % } else {
    gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
 % }
-   a bibo:Article.
+   a bibo:Article .
 
 % end
+
 
 ## This article is cited by the following entities in GCIS:
 %= include 'prov';
