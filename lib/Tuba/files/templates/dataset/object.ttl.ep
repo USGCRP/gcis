@@ -13,8 +13,10 @@
 ## The formal description of the dataset
    dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
 
+% if ($dataset->doi) {
 ## The digital object identifier for the dataset
    datacite:doi "<%= $dataset->doi %>";
+% }
 
 ## Identifier for dataset provided by dataset creators
    datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
