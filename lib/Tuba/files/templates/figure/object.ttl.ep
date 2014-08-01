@@ -7,7 +7,7 @@
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
 ## Figure Caption
-   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
+   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
 
 ## The figure is part of a chapter.
    gcis:isFigureOf <<%= uri($figure->chapter) %>>;
