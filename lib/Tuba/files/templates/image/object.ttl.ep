@@ -44,4 +44,4 @@
 
 
 %= include 'prov';
-%# %= include 'contributors';
+ %= include 'contributors';
