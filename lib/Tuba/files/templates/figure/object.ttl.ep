@@ -37,7 +37,7 @@
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 
 ## Figure source
-   cito:cites "<%= $figure->source_citation %>";
+   cito:cites "<%= no_tbibs($figure->source_citation) %>";
 
 % for my $keyword ($figure->keywords) {
 ## Keywords associated with the figure
