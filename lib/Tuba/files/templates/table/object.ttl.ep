@@ -4,10 +4,10 @@
 <<%= current_resource %>>
 ## Identifier and title
    dcterms:identifier "<%= $table->identifier %>";
-   dcterms:title "<%= $table->title %>"^^xsd:string;
+   dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
 
 ## Table caption
-   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
+   gcis:hasCaption "<%= no_tbibs($table->caption) %>"^^xsd:string;
 
 ## The report chapter and title of the report in which the table appears:
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
