@@ -9,7 +9,7 @@
 ## Image Description
    dcterms:description "<%= $image->description %>"^^xsd:string;
 
-## The image is part of a figure.
+## The image is part of the following figure:
 % for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 % }
