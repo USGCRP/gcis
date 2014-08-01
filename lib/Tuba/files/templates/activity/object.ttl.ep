@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $activity->identifier %>";
 
-   dcterms:description "<%= no_tbibs(tl($activity->data_usage))^^xsd:string %>";
+   dcterms:description "<%= no_tbibs(tl($activity->data_usage)) %>"^^xsd:string;
 
 ## The activity began and ended at the following times
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
