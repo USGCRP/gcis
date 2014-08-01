@@ -10,7 +10,9 @@
    dcterms:description "<%= $image->description %>"^^xsd:string;
 
 ## The image is part of a figure.
+% for my $figure ($image->figures) {
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+% }
 
 ## Image Attributes
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
@@ -32,10 +34,14 @@
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
   
 ## Keywords associated with the image
+% for my $keyword ($image->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-   
+% }
+
    a gcis:Image .
 
 % end
+
+
 %= include 'prov';
 %= include 'contributors';
