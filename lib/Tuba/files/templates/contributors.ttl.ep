@@ -32,8 +32,9 @@
                     a prov:Attribution;
                     prov:agent <<%= obj_uri_for($org)->to_abs %>>;
                     prov:hadRole "<%= ($row->{role}->label) %>";
-                % }
-                ] ;
+               ] ;
+.
+              % }
             % }
         % }
     % }
