@@ -1,4 +1,5 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd cito/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
@@ -6,13 +7,13 @@
    gcis:FindingNumber "<%= $finding->ordinal %>"^^xsd:integer;
 
 ## Properties of the finding
-   gcis:findingProcess "<%= tl($finding->process) %>"^^xsd:string;
+   gcis:findingProcess "<%= no_tbibs(tl($finding->process)) %>"^^xsd:string;   
+
+   gcis:descriptionOfEvidenceBase "<%= no_tbibs(tl($finding->evidence)) %>"^^xsd:string;   
+
+   gcis:assessmentOfConfidenceBasedOnEvidence "<%= no_tbibs(tl($finding->confidence)) %>"^^xsd:string;
    
-   gcis:descriptionOfEvidenceBase "<%= tl($finding->evidence) %>"^^xsd:string;
-   
-   gcis:assessmentOfConfidenceBasedOnEvidence "<%= tl($finding->confidence) %>"^^xsd:string;
-   
-   gcis:newInformationAndRemainingUncertainties "<%= tl($finding->uncertainties) %>"^^xsd:string.
+   gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string.
 
 ## The finding pertains to a specific chapter.
 % if (my $chapter = stash 'chapter') {
@@ -28,4 +29,5 @@
 
    a gcis:Finding .
 
+% end
 %= include 'prov';

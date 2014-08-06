@@ -1,62 +1,47 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd prov/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
 ## Identifier and Title for the Image
    dcterms:identifier "<%= $image->identifier %>";
-   dcterms:title "<%= $image->title %>"^^xsd:string;  
+   dcterms:title "<%= $image->title %>"^^xsd:string;
 
-% if ($image->description) {
 ## Image Description
    dcterms:description "<%= $image->description %>"^^xsd:string;
-% }
 
-% if ($image->attributes) {
-## Image Attributes
-   dcterms:subject "<%= $image->attributes %>"^^xsd:string; 
-% }   
-
-% if ($image->create_dt) {
-## Creation date of the image
-   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime; 
-% }
-% if ($image->submission_dt) {
-## Submission date for the image
-   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date; 
-% }   
-
-% if ($image->lat_max) {
-## Geographical extent of the area covered by the image
-   gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
-% } 
-% if ($image->lat_min) {
-   gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float; 
-% }   
-% if ($image->lon_max) {
-   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float; 
-% }   
-% if ($image->lon_min) {
-   gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
-% } 
-
-% if ($image->time_start) {
-## Temporal coverage of the image
-   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
-% } 
-% if ($image->time_end) {
-   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime; 
-% }  
-
+## The image is part of the following figure(s):
 % for my $figure ($image->figures) {
-## The image is part of a figure.
    gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-% } 
+% }
 
-% for my $keyword ($image->keywords) {
+## Image Attributes
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
+
+## Creation date of the image
+   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
+
+## Submission date for the image
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
+
+## Geographical extent of the image content
+   gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
+   gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float;
+   gcis:westBoundLongitude "<%= $image->lon_max %>"^^xsd:float;
+   gcis:eastBoundLongitude "<%= $image->lon_min %>"^^xsd:float;
+
+## Temporal coverage of the image content
+   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
+   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
+  
 ## Keywords associated with the image
+% for my $keyword ($image->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
-   
+
    a gcis:Image .
+
+% end
+
 
 %= include 'prov';
 %# %= include 'contributors';
