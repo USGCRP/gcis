@@ -14,7 +14,7 @@
                 prov:qualifiedAttribution [
                     a prov:Attribution;
                     prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
-                    prov:hadRole "<%= ($row->{role}->label) %>;
+                    prov:hadRole "<%= ($row->{role}->label) %>";
                 % for my $org (@{ $con->{orgs} }) {
                     prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
                 % }
