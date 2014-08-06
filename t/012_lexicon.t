@@ -33,7 +33,7 @@ $t->get_ok("/lexicon/ceos/find/Agency/ESA")
   ->status_is(404);
 
 # Platform
-my $gcid = "/platform/aqua";
+$gcid = "/platform/aqua";
 
 $t->post_ok("/lexicon/ceos/term/new" => {Accept => "application/json"} => json =>
     {term => 'Aqua (with stuff here)', context => "Mission", gcid => $gcid})
