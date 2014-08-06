@@ -63,7 +63,7 @@ use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 use strict;
 
-our $VERSION = '1.05';
+our $VERSION = '1.06';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
 
 sub startup {
@@ -327,9 +327,12 @@ sub startup {
     # activity (globally unique)
     $r->resource('activity');
 
-    # Metadata processing routes.
-    #$r->lookup('select_image')->post( '/setmet' )->to('#setmet')->name('image_setmet');
-    #$r->lookup('select_image')->get( '/checkmet')->to('#checkmet')->name('image_checkmet');
+    # platform (globally unique)
+    $r->resource('platform');
+    $r->resource('instrument');
+    $r->lookup('select_platform')->resource('instrument_instance', {
+            path_base => "instrument"
+        });
 
     # Person.
     $r->resource(person => { restrict_identifier => qr/\d+/ } );
@@ -367,6 +370,14 @@ sub startup {
 
     # Generic publication.
     $r->resource('generic');
+
+    # Lexicons
+    $r->resource('lexicon');
+    my $lex = $r->lookup('select_lexicon');
+    $lex->get('/find/:context/*term')->to('exterm#find');
+    my $lex_authed = $r->lookup('authed_select_lexicon');
+    $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
+    $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');

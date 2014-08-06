@@ -303,6 +303,8 @@ db/patches/1090_chapter_sortkey.sql
 db/patches/1100_chapter_doi.sql
 db/patches/1110_pubfile.sql
 db/patches/1120_schema_doc.sql
+db/patches/1130_datasets.sql
+db/patches/1140_lexicon.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -364,6 +366,7 @@ lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
 lib/Tuba/DocManager.pm
+lib/Tuba/Exterm.pm
 lib/Tuba/Figure.pm
 lib/Tuba/File.pm
 lib/Tuba/files/public/apple-touch-icon-114x114.png
@@ -507,6 +510,7 @@ lib/Tuba/files/templates/journal/objects.html.ep
 lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.ep
+lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
@@ -531,6 +535,7 @@ lib/Tuba/files/templates/person/object.ttl.ep
 lib/Tuba/files/templates/person/objects.html.ep
 lib/Tuba/files/templates/person/redirect_by_name.html.ep
 lib/Tuba/files/templates/person/update_rel_form.html.ep
+lib/Tuba/files/templates/platform/object.ttl.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.ep
 lib/Tuba/files/templates/pub_thumbnails.html.ep
@@ -569,11 +574,15 @@ lib/Tuba/Finding.pm
 lib/Tuba/GcmdKeyword.pm
 lib/Tuba/Generic.pm
 lib/Tuba/Image.pm
+lib/Tuba/Instrument.pm
+lib/Tuba/InstrumentInstance.pm
 lib/Tuba/Journal.pm
+lib/Tuba/Lexicon.pm
 lib/Tuba/Log.pm
 lib/Tuba/Methodology.pm
 lib/Tuba/Organization.pm
 lib/Tuba/Person.pm
+lib/Tuba/Platform.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
 lib/Tuba/Plugin/TubaHelpers.pm
@@ -606,6 +615,7 @@ t/008_dataset.t
 t/009_article.t
 t/010_stringify.t
 t/011_sparql.t
+t/012_lexicon.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm

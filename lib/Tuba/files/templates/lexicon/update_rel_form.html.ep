@@ -1,0 +1,12 @@
+% layout 'default';
+
+<center>
+<h2>
+    lexicon : <%= $lexicon->identifier %>
+</h2>
+</center>
+
+%= include 'update_tabs', active => 'rel';
+
+not implemented
+
