@@ -14,7 +14,5 @@
 % }
    
    a gcis:Person .
-
-
 % end
-
+%#= include 'contributorsperson';
