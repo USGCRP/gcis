@@ -1,14 +1,13 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
 ## Identifier and title
    dcterms:identifier "<%= $table->identifier %>";
-   dcterms:title "<%= $table->title %>"^^xsd:string;
+   dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
 
-%  if ($table->caption) {
 ## Table caption
-   gcis:hasCaption "<%= $table->caption %>"^^xsd:string;
-% }
+   gcis:hasCaption "<%= no_tbibs($table->caption) %>"^^xsd:string;
 
 ## The report chapter and title of the report in which the table appears:
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
@@ -19,9 +18,12 @@
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
 % }
+
 % for my $keyword ($table->keywords) {
 ## Keywords associated with table   
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 % }
    a gcis:Table .
 
+% end
+%= include 'prov';

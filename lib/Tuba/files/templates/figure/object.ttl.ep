@@ -7,7 +7,7 @@
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
 ## Figure Caption
-   gcis:hasCaption "<%= $figure->caption %>"^^xsd:string;
+   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
 
 ## The figure is part of a chapter.
    gcis:isFigureOf <<%= uri($figure->chapter) %>>;
@@ -21,12 +21,12 @@
    rdf:value "<%= $figure->numeric %>"^^xsd:integer;
 
 ## The figure was created on the following date.
-   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;      
+   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
 
 ## The image was submitted on the following date:
    dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 
-## Geographical extent of the area covered by the figure
+## Geographical extent of the figure content
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $figure->lat_min %>"^^xsd:float;
    gcis:westBoundLongitude "<%= $figure->lon_max %>"^^xsd:float;
@@ -37,7 +37,7 @@
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 
 ## Figure source
-   cito:cites "<%= $figure->source_citation %>";
+   cito:cites "<%= no_tbibs($figure->source_citation) %>";
 
 % for my $keyword ($figure->keywords) {
 ## Keywords associated with the figure
@@ -46,7 +46,10 @@
 
    a gcis:Figure .
 
+
 % end
+
+
 %= include 'prov';
-%# %= include 'contributors';
+%= include 'contributors';
 

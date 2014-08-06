@@ -1,17 +1,22 @@
 % layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-   dcterms:identifier "<%= $person->id %>";
-% if ($person->orcid) {
+   dcterms:identifier "<%= $person->id %>"; 
    vivo:orcidId "<%= $person->orcid %>";
-% }
    foaf:firstName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
-% if ($person->url) {
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
-% }
+
 % for my $c ($person->contributors) {
 % my $org = $c->organization or next;
    gcis:worksAt <<%= uri($org) %>>;
 % }
+   
    a gcis:Person .
+
+
+% end
+
+
+
