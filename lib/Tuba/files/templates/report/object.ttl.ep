@@ -49,8 +49,13 @@
 
    a gcis:Report .
 
+
+
+
+
 % end
 
-## This report is cited by the following entities in GCIS:
+
+## This report is cited by the following entities in GCIS, if any:
 %= include 'prov';
 %= include 'contributors';
