@@ -18,3 +18,5 @@
 
 % end
 
+
+%= include 'contributors';
