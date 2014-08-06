@@ -11,7 +11,7 @@ create table exterm (
     term                varchar not null,   /* the identifier */
     context             varchar not null,   /* category of term : Agency, Collection, Platform */
     lexicon_identifier  varchar not null references lexicon(identifier) on delete cascade on update cascade,
-    gcid                varchar not null,
+    gcid                varchar not null,  /* URI in GCIS */
     primary key (lexicon_identifier, context, term)
 );
 

@@ -371,13 +371,7 @@ sub startup {
     # Generic publication.
     $r->resource('generic');
 
-    # mappings to external identifiers.
-    my $require_update = sub {
-              my $c = shift;
-              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
-              return 1;
-          };
-
+    # Lexicons
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find');
