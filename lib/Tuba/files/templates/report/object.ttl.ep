@@ -50,6 +50,7 @@
    a gcis:Report .
 
 % end
+
 ## This report is cited by the following entities in GCIS:
 %= include 'prov';
-%# %= include 'contributors';
+%= include 'contributors';
