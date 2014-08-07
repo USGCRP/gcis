@@ -14,16 +14,15 @@
 
 # The following publications are related to this person as follows:
    % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
-        <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
-             % my $obj = $map->publication->to_object;
+    % for my $map (@{ $ctr->publication_contributor_maps }) {
+     % my $obj = $map->publication->to_object;
  <<%= obj_uri_for($obj)->to_abs %>>
     a gcis:<%= $obj->meta->table %>;
-    prov:wasAttributedTo <<%= current_resource %>>;
     prov:qualifiedAttribution [
        a prov:Attribution;
-       prov:agent <<%= current_resource %>>;
+       <<%= current_resource %>>
        prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
        prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
        ] .
-    <% } %
-  % }
+    % }
+  % } 
