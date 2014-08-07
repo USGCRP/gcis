@@ -10,6 +10,7 @@
             
    ## Person and his/her role in the creation of the entity:
     <<%= obj_uri_for($pub)->to_abs %>>
+                a gcis:<%= $pub->meta->table %>;
                 prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
                 prov:qualifiedAttribution [
                     a prov:Attribution;
@@ -25,6 +26,7 @@
                 % for my $org (@{ $con->{orgs} }) {
    ## This entity was produced by an organization:     
     <<%= obj_uri_for($pub)->to_abs %>>    
+                a gcis:<%= $pub->meta->table %>;
                 prov:qualifiedAttribution [
                     a prov:Attribution;
                     prov:agent <<%= obj_uri_for($org)->to_abs %>>;
