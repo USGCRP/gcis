@@ -1,4 +1,17 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/gcis dcterms xsd prov/];
+%= filter_lines_with empty_predicate() => begin
+
 <<%= current_resource %>>
-    a prov:Entity;
+   a gcis:Platform;
+   dcterms:identifier "<%= $platform->identifier %>";
+   dcterms:description "<%= $platform->description %>"^^xsd:string;
+   dcterms:name "<%= $platform->name %>"^^xsd:string;
+   dcterms:type "<%= $platform->platform_type %>"^^xsd:string.
+
+% end
+
+
+
+
+
 
