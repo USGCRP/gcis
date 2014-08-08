@@ -1,3 +1,4 @@
+%# Is associated with lib/Tuba/files/templates/organizations/object.ttl.ep
 ## People and Publications:
     % my $ctr = $object->contributors;
        <% for my $ctr (sort {
