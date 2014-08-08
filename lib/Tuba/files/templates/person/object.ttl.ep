@@ -24,7 +24,7 @@
       <<%= current_resource %>>
       prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
-      ] .
+   ] 
+.
     % }
-
   % } 
