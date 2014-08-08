@@ -9,30 +9,30 @@
             % if ($person_id ne "") {
             
    ## Person and his/her role in the creation of the entity:
-    <<%= obj_uri_for($pub)->to_abs %>>
-                a gcis:<%= $pub->meta->table %>;
-                prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
-                prov:qualifiedAttribution [
-                    a prov:Attribution;
-                    prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
-                    prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
+   <<%= obj_uri_for($pub)->to_abs %>>
+      a gcis:<%= $pub->meta->table %>;
+      prov:qualifiedAttribution [
+         a prov:Attribution;
+         prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
+         prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
                 % for my $org (@{ $con->{orgs} }) {
-                    prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
+         prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
                 % }
-               ] ;
-.
+         ]
+   .
             % } else {
                 % my $first;
                 % for my $org (@{ $con->{orgs} }) {
    ## This entity was produced by an organization:     
-    <<%= obj_uri_for($pub)->to_abs %>>    
-                a gcis:<%= $pub->meta->table %>;
-                prov:qualifiedAttribution [
-                    a prov:Attribution;
-                    prov:agent <<%= obj_uri_for($org)->to_abs %>>;
-                    prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
-                ] ;
-.
+   <<%= obj_uri_for($pub)->to_abs %>>    
+      a gcis:<%= $pub->meta->table %>;
+      prov:qualifiedAttribution [
+         a prov:Attribution;
+         prov:agent <<%= obj_uri_for($org)->to_abs %>>;
+         prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
+         ]
+  .
+
               % }
             % }
         % }
