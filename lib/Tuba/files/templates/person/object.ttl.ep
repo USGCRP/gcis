@@ -12,17 +12,19 @@
 % end
 
 
-# The following publications are related to this person as follows:
+# Publications in GCIS are related to this person as follows:
+
    % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
     % for my $map (@{ $ctr->publication_contributor_maps }) {
      % my $obj = $map->publication->to_object;
- <<%= obj_uri_for($obj)->to_abs %>>
-    a gcis:<%= $obj->meta->table %>;
-    prov:qualifiedAttribution [
-       a prov:Attribution;
-       <<%= current_resource %>>
-       prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
-       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
-       ] .
+<<%= obj_uri_for($obj)->to_abs %>>
+   a gcis:<%= $obj->meta->table %>;
+   prov:qualifiedAttribution [
+      a prov:Attribution;
+      <<%= current_resource %>>
+      prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
+      prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
+      ] .
     % }
+
   % } 
