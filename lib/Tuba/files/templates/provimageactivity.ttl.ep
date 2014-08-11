@@ -1,5 +1,4 @@
-## Provenance
-
+## Provenance of Image 
 % my $pub = $image->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
@@ -11,9 +10,10 @@
 <<%= current_resource %>>
    a gcis:Image;
    prov:wasDerivedFrom <<%= obj_uri_for($parent_pub)->to_abs=> { publication_identifier => $parent_pub->id } => begin %>><<%= obj_uri_for($parent_pub->stringify)->to_abs %>><<%= end %>>;
-   <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity}) %>><% } %>.
+   <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
    <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
-       % }
+
+       % }  
 
     % my %by_type_rel = ();
     % for my $child (@children) {
@@ -30,5 +30,7 @@
             <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
             
     %   }
+
     % }
+
 % }
