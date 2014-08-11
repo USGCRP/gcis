@@ -1,4 +1,4 @@
-#The following images were derived from this dataset:
+#The following image(s) was/were derived from this dataset:
 % my $pub = $dataset->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
