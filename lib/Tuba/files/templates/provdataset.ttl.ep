@@ -10,7 +10,7 @@
     %       my $rel = $child->relationship;
     %       $by_type_rel{$type}{$rel} //= [];
     %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
-<<%= obj_uri_for($child->{publication})->to_abs %>>;
+<<%= obj_uri_for($child->{publication})->to_abs %>>
    a gcis:Image;
    prov:wasDerivedFrom <<%= current_resource %>>.
 
