@@ -43,5 +43,7 @@
 % end
 
 
-%= include 'prov';
+
+
+%= include 'provimageactivity';
 %= include 'contributors';
