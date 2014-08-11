@@ -28,3 +28,21 @@
    a prov:Activity .
 
 % end
+
+
+
+% if (my @maps = $activity->publication_maps) {
+## This activity resulted in the following 
+   % for my $map (@maps) {
+<<%= current_resource %>>
+   a prov:Activity;
+   prov:qualifiedInfluence [
+      <<%= obj_uri_for ($map->child_publication)->to_abs => 'show'  => begin %><%= $map->child_publication->stringify %><%= end %>>
+      a gcis:Image;
+      prov:wasDerivedFrom <<%= obj_uri_for($map->parent_publication)->to_abs => 'show' => begin %><%= $map->parent_publication->stringify %><%= end %>>
+      a gcis:Dataset;
+   a prov:Influence;
+   ] ;
+.
+   % }
+% }
