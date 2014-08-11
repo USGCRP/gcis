@@ -11,7 +11,7 @@
    dcterms:hasVersion "<%= $dataset->version %>";
 
 ## The formal description of the dataset
-   dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
+   dcterms:description "<%= no_tbibs(tl($dataset->description)) %>"^^xsd:string;
 
 % if ($dataset->doi) {
 ## The digital object identifier for the dataset
@@ -56,7 +56,23 @@
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
 
+
+%# % for my $image ($dataset->images) {
+%#   prov:hadDerivation <<%= obj_uri_for($image)->to_abs %>>;
+%# % }
+
+%# % for my $image ($dataset->images) {
+%#  <<% obj_uri_for($image)->to_abs %>>
+%#   prov:wasDerivedFrom "<%= $dataset->to_abs %>";
+%# % }
+
    a gcis:Dataset .
 
 % end
-%# %= include 'contributors'; 
+
+
+%= include 'provdataset';
+
+%# %= include 'contributors';
+
+
