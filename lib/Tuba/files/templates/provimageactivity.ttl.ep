@@ -1,0 +1,34 @@
+## Provenance
+
+% my $pub = $image->get_publication;
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) {
+
+    % for my $parent (@parents) {
+        % my $parent_pub = $parent->{publication};
+<<%= current_resource %>>
+   a gcis:Image;
+   prov:wasDerivedFrom <<%= obj_uri_for($parent_pub)->to_abs=> { publication_identifier => $parent_pub->id } => begin %>><<%= obj_uri_for($parent_pub->stringify)->to_abs %>><<%= end %>>;
+   <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity}) %>><% } %>.
+   <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
+       % }
+
+    % my %by_type_rel = ();
+    % for my $child (@children) {
+    %       my $type = $child->publication->publication_type_identifier;
+    %       my $rel = $child->relationship;
+    %       $by_type_rel{$type}{$rel} //= [];
+    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
+    % }
+
+    % for my $type (keys %by_type_rel) {
+    %   for my $rel (keys %{ $by_type_rel{$type} } ) {
+            %   my $count = @{ $by_type_rel{$type}{$rel} };
+            <%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
+            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
+            
+    %   }
+    % }
+% }
