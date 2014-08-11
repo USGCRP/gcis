@@ -56,16 +56,6 @@
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
 
-
-%# % for my $image ($dataset->images) {
-%#   prov:hadDerivation <<%= obj_uri_for($image)->to_abs %>>;
-%# % }
-
-%# % for my $image ($dataset->images) {
-%#  <<% obj_uri_for($image)->to_abs %>>
-%#   prov:wasDerivedFrom "<%= $dataset->to_abs %>";
-%# % }
-
    a gcis:Dataset .
 
 % end
