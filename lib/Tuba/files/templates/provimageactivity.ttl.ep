@@ -2,17 +2,16 @@
 % my $pub = $image->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
-
 % if (@parents || @children) {
 
     % for my $parent (@parents) {
         % my $parent_pub = $parent->{publication};
 <<%= current_resource %>>
    a gcis:Image;
-   prov:wasDerivedFrom <<%= obj_uri_for($parent_pub)->to_abs=> { publication_identifier => $parent_pub->id } => begin %>><<%= obj_uri_for($parent_pub->stringify)->to_abs %>><<%= end %>>;
+   prov:wasDerivedFrom <<%= obj_uri_for($parent_pub)->to_abs => { publication_identifier => $parent_pub->id } %>>;
    <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
-   <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
 
+   <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
        % }  
 
     % my %by_type_rel = ();
