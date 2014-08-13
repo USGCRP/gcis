@@ -18,7 +18,7 @@
 % }   
 
 ## Ordinal value of the figure number within the chapter
-   rdf:value "<%= $figure->numeric %>"^^xsd:integer;
+   rdf:value "<%= $figure->numeric(short =>1) %>"^^xsd:float;
 
 ## The figure was created on the following date.
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
@@ -52,4 +52,5 @@
 
 %= include 'prov';
 %= include 'contributors';
+
 
