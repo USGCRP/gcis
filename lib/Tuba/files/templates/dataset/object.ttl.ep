@@ -40,7 +40,7 @@
    dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
 
 ## The spatial resolution of the dataset
-  gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
 
 ## Temporal domain of the dataset
    gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
