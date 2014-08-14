@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $person->id %>"; 
    vivo:orcidId "<%= $person->orcid %>";
-   foaf:firstName "<%= $person->first_name %>";
+   foaf:givenName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
    
