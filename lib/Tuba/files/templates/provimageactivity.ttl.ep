@@ -1,18 +1,16 @@
 ## Provenance of Image 
-% my $pub = $image->get_publication;
+% my $pub = $object->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
+
 % if (@parents || @children) {
-
-    % for my $parent (@parents) {
-        % my $parent_pub = $parent->{publication};
-<<%= current_resource %>>
-   a gcis:Image;
-   prov:wasDerivedFrom <<%= obj_uri_for($parent_pub)->to_abs => { publication_identifier => $parent_pub->id } %>>;
+ 
+ % for my $parent (@parents) {
+   % my $parent_pub = $parent->{publication};
+ <<%= current_resource %>>
+   a gcis:<%= $object->meta->table %>;
+   <% if ($parent->{publication}) { %>prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication})->to_abs %>><% } %>;
    <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
-
-   <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
-       % }  
 
     % my %by_type_rel = ();
     % for my $child (@children) {
@@ -28,8 +26,8 @@
             <%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
             <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
             
-    %   }
+          %   }
 
     % }
-
+% }
 % }
