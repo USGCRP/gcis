@@ -18,7 +18,7 @@
    gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:float;
 % }
 
-## Properties of the finding
+## Properties of the finding:
    gcis:findingProcess "<%= no_tbibs(tl($finding->process)) %>"^^xsd:string;   
 
    gcis:descriptionOfEvidenceBase "<%= no_tbibs(tl($finding->evidence)) %>"^^xsd:string;   
