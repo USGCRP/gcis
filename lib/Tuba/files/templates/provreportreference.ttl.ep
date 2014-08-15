@@ -36,9 +36,11 @@
             % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
-   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>;
-   cito:isCitedBy "<%= $parent_pub->stringify %>"^^xsd:string;
-        % }
+   cito:isCitedBy "<%= $parent_pub->stringify %>"^^xsd:string;   
+   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
+  
+            % } 
+
 % }
 
   % if (!(stash 'no_refs') && @children_with_references) {		
@@ -46,10 +48,13 @@
      % my $child_pub = $child->{child};
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
-   biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>;
-   cito:cites "<%= $child_pub->stringify %>"^^xsd:string.
- 
+    % if ($child_pub) {
+   cito:cites "<%= $child_pub->stringify %>"^^xsd:string;
+           % }
+   biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
+
  % }
+
   % }
 
 %# % if (@children_with_references == $max_children && !param('show_all')) {
