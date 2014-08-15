@@ -17,10 +17,10 @@
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
 % }   
 
-## Ordinal value of the figure number within the chapter
-   rdf:value "<%= $figure->numeric(short =>1) %>"^^xsd:float;
+## Sequential number of the figure within this chapter:
+   rdf:value "<%= $figure->ordinal %>"^^xsd:integer;
 
-## The figure was created on the following date.
+## The figure was created on the following date:
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
 
 ## The image was submitted on the following date:
@@ -36,7 +36,7 @@
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 
-## Figure source
+## Figure source:
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
 
 % for my $keyword ($figure->keywords) {
