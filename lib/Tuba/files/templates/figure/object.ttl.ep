@@ -6,14 +6,14 @@
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
-## The number of the Chapter, the URI for the chapter, and the URI for the report in which the table appears:
+## The number of the Chapter, the URI for the chapter, and the URI for the report in which the figure appears:
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    gcis:isFigureOf <<%= uri($chapter) %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
 
-## This table is the #th table in that particular chapter, and as such has designation Table # :
+## This figure is the #th table in that particular chapter, and as such has designation Figure # :
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    rdf:value "<%= $figure->ordinal %>"^^xsd:integer;
    gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:float;
