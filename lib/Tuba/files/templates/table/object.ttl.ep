@@ -6,7 +6,10 @@
    dcterms:identifier "<%= $table->identifier %>";
    dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
 
-## Table caption
+## Sequential number of the table within this chapter:
+   rdf:value "<%= $table->ordinal %>"^^xsd:integer;	
+
+## Table caption:
    gcis:hasCaption "<%= no_tbibs($table->caption) %>"^^xsd:string;
 
 ## The report chapter and title of the report in which the table appears:
