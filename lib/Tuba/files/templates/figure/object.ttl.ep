@@ -6,7 +6,7 @@
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
-## The number of the Chapter, URI for the chapter, and report in which the table appears:
+## The number of the Chapter, the URI for the chapter, and the URI for the report in which the table appears:
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    gcis:isFigureOf <<%= uri($chapter) %>>;
