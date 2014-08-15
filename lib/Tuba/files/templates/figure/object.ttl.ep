@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms rdf cito prov xsd/];
+% layout 'default', namespaces => [qw/dcterms gcis cito rdf prov xsd/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -6,19 +6,26 @@
    dcterms:identifier "<%= $figure->identifier %>";
    dcterms:title "<%= $figure->title %>"^^xsd:string;
 
+## The number of the Chapter, URI for the chapter, and report in which the table appears:
+% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
+   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
+   gcis:isFigureOf <<%= uri($chapter) %>>;
+   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
+% }
+
+## This table is the #th table in that particular chapter, and as such has designation Table # :
+% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
+   rdf:value "<%= $figure->ordinal %>"^^xsd:integer;
+   gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:float;
+% }
+
 ## Figure Caption
    gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
-
-## The figure is part of a chapter.
-   gcis:isFigureOf <<%= uri($figure->chapter) %>>;
 
 ## The figure contains one or more images.
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
 % }   
-
-## Sequential number of the figure within this chapter:
-   rdf:value "<%= $figure->ordinal %>"^^xsd:integer;
 
 ## The figure was created on the following date:
    dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
