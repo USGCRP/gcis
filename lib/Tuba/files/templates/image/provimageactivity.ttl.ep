@@ -1,0 +1,34 @@
+## Provenance of Image 
+% my $pub = $object->get_publication;
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) {
+ 
+ % for my $parent (@parents) {
+   % my $parent_pub = $parent->{publication};
+ <<%= current_resource %>>
+   a gcis:<%= $object->meta->table %>;
+   <% if ($parent->{publication}) { %>prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>><% } %>;
+   <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
+
+    % my %by_type_rel = ();
+    % for my $child (@children) {
+    %       my $type = $child->publication->publication_type_identifier;
+    %       my $rel = $child->relationship;
+    %       $by_type_rel{$type}{$rel} //= [];
+    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
+    % }
+
+    % for my $type (keys %by_type_rel) {
+    %   for my $rel (keys %{ $by_type_rel{$type} } ) {
+            %   my $count = @{ $by_type_rel{$type}{$rel} };
+            <%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
+            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
+            
+          %   }
+
+    % }
+% }
+% }
+
