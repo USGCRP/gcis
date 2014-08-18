@@ -37,7 +37,7 @@
 
 
 
-%= include 'chapter/prov';
+%= include 'prov';
 %= include 'contributors';
 
 
