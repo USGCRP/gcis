@@ -37,7 +37,7 @@
 
 
 
-%= include 'provreportreference';
+%= include 'chapter/prov';
 %= include 'contributors';
 
 
