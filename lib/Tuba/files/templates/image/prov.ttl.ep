@@ -1,4 +1,4 @@
-## Provenance of Image 
+## Provenance of Image: This image was derived from a dataset using a particular activity
 % my $pub = $object->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
