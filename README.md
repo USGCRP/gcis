@@ -1,6 +1,6 @@
-
-Global Change Information System [![Build Status](https://secure.travis-ci.org/USGCRP/gcis.png)](http://travis-ci.org/USGCRP/gcis)
+Global Change Information System
 ================================
+[![Build Status](https://secure.travis-ci.org/USGCRP/gcis.png)](http://travis-ci.org/USGCRP/gcis) [![Coverage Status](https://img.shields.io/coveralls/USGCRP/gcis.svg)](https://coveralls.io/r/USGCRP/gcis)
 
 This is the HTML front end and API for the [Global Change Information System](http://data.globalchange.gov) (GCIS).
 
@@ -44,6 +44,15 @@ Software installation :
     ./Build
     ./Build test
     ./Build install
+
+Database configuration :
+
+You may need to add these directives to postgresql.conf, under "CUSTOMIZED
+OPTIONS" for some versions of postgreSQL :
+
+    custom_variable_classes = 'audit'   # list of custom variable class names
+    audit.username = 'unknown'
+    audit.note = ''
 
 Database installation :
 

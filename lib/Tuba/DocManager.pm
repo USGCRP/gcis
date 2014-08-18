@@ -28,7 +28,12 @@ our %RouteDoc = (
       brief  => "Get a list of reports.",
       description => "List the reports, 20 per page.",
       note   => _common_list_note(),
-      params => [ _common_list_params('reports') ],
+      params => [ _common_list_params('reports'),
+          { name => 'report_type',
+            description => 'The type of report.  Currently : report, assessment, technical_input, or indicator.',
+            type => 'string.',
+          }
+          ],
   },
   list_chapter => { _list_defaults('chapter'), brief => "List chapters in a report", description => "Get a list of chapters in a report." },
   list_finding => { _list_defaults('finding'), brief => "List findings in a chapter", description => "Get a list of findings in a chapter." },

@@ -1,23 +1,20 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc prov skos org/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $organization->identifier %>";
    skos:prefLabel "<%= $organization->name %>"^^xsd:string;
-% if ($organization->url) {
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
-% }
 
 % if (my $type = $organization->organization_type) {
 ## Organization Type
    org:purpose "<%= $type->identifier %>";
 % }
 
-% if ($organization->country) {
 ## Country in which organization is situated
    % if (my $country = $organization->country) {
-   dwc:countryCode "<%= $country->code %>;
+   dwc:countryCode "<%= $country->code %>";
    % }
-% }
 
 % for my $map ($organization->organization_maps) {
 ## Relationship to other organizations
@@ -27,5 +24,6 @@
 
    a gcis:Organization.
 
+% end
 %= include 'prov';
 %# %= include 'contributors';

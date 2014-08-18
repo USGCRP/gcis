@@ -1,7 +1,8 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito prov/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-## Report identifier, title, and year of publication
+## Report identifier, title, and publication year
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
@@ -14,27 +15,19 @@
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
 % }
 
-% if ($report->report_type_identifier) {
 ## A report can either be a report, assessment, or NCA3 technical input
    dcterms:type "<%= $report->report_type_identifier %>";
-% }
 
-% if ($report->frequency) {
 ## Frequency of report release
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;    
-% }
+   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
 
-% if ($report->summary) {
 ## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;   
-% }
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
-% if ($report->topic) {
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
-% }
 
-## The report contains multiple chapters:
+## This report contains multiple chapters:
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
 % }
@@ -56,6 +49,14 @@
 
    a gcis:Report .
 
-## This report is cited by the following entities in GCIS:
+
+
+
+
+% end
+
+
+
+## This report is cited by the following entities in GCIS, if any:
 %= include 'prov';
-%# %= include 'contributors';
+%= include 'contributors';

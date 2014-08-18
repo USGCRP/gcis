@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 person
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  id (serial) - 
  url (character varying) - 
@@ -17,17 +17,17 @@ person
  middle_name (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                                  Table "gcis_metadata.person"
-    Column    |       Type        |                      Modifiers                      | Storage  | Stats target | Description 
- -------------+-------------------+-----------------------------------------------------+----------+--------------+-------------
-  id          | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | 
-  url         | character varying |                                                     | extended |              | 
-  orcid       | character varying |                                                     | extended |              | 
-  first_name  | character varying | not null                                            | extended |              | 
-  last_name   | character varying | not null                                            | extended |              | 
-  middle_name | character varying |                                                     | extended |              | 
+                                           Table "gcis_metadata.person"
+    Column    |       Type        |                      Modifiers                      | Storage  | Description 
+ -------------+-------------------+-----------------------------------------------------+----------+-------------
+  id          | integer           | not null default nextval('person_id_seq'::regclass) | plain    | 
+  url         | character varying |                                                     | extended | 
+  orcid       | character varying |                                                     | extended | 
+  first_name  | character varying | not null                                            | extended | 
+  last_name   | character varying | not null                                            | extended | 
+  middle_name | character varying |                                                     | extended | 
  Indexes:
      "person_pkey" PRIMARY KEY, btree (id)
      "person_orcid_key" UNIQUE CONSTRAINT, btree (orcid)
@@ -42,6 +42,6 @@ person
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

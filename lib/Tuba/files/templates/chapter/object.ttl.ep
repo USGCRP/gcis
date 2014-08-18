@@ -1,4 +1,5 @@
 % layout 'default', namespaces => [qw/gcis dcterms prov xsd/];
+%= filter_lines_with empty_predicate() => begin
   
 <<%= current_resource %>>
 ## Chapter identifier, number, and title
@@ -10,38 +11,31 @@
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
 
-% if ($chapter->figures) {
 ## Figures contained within the chapter
-   % for my $figure ($chapter->figures) {
+% for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
-   % }
 % }
 
-% if ($chapter->findings) {
 ## Findings which emerged from the chapter
-   % for my $finding ($chapter->findings) {
+% for my $finding ($chapter->findings) {
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
-   % }
 % }
 
-% if ($chapter->tables) {
 ## The chapter is associated with the following table(s):
 % for my $table ($chapter->tables) {
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
-   % } 
-% }
+% } 
 
-% if ($chapter->keywords) {
 ## Keywords associated with the chapter
-   % for my $keyword ($chapter->keywords) {
+% for my $keyword ($chapter->keywords) {
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-   % }
 % }
 
    a gcis:Chapter .
 
+% end
 %= include 'prov';
-%# %= include 'contributors';
+%= include 'contributors';
 
 
 

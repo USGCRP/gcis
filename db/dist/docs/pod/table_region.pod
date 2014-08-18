@@ -1,27 +1,27 @@
 
-=head1 NAME
+\=head1 NAME
 
 region
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - 
  label (character varying) - 
  description (character varying) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                             Table "gcis_metadata.region"
-    Column    |       Type        | Modifiers | Storage  | Stats target | Description 
- -------------+-------------------+-----------+----------+--------------+-------------
-  identifier  | character varying | not null  | extended |              | 
-  label       | character varying | not null  | extended |              | 
-  description | character varying |           | extended |              | 
+                      Table "gcis_metadata.region"
+    Column    |       Type        | Modifiers | Storage  | Description 
+ -------------+-------------------+-----------+----------+-------------
+  identifier  | character varying | not null  | extended | 
+  label       | character varying | not null  | extended | 
+  description | character varying |           | extended | 
  Indexes:
      "region_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -34,6 +34,6 @@ region
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

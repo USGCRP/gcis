@@ -1,31 +1,39 @@
 ## Contributors
-   % my $pub = $object->get_publication;
- <<%= obj_uri_for ($pub)->to_abs %>>
-  % if ($pub) {
+% my $pub = $object->get_publication;
+% if ($pub) {
+
     % my $nest = $pub->contributors_nested;
     % for my $row (@$nest) {
         % for my $con (@{ $row->{people} }) {
-            prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
-               prov:qualifiedAttribution [
-                 a prov:Attribution;
-                 ## Person and his/her role in the creation of the entity
-                 prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
-                 prov:hadRole "<%= ($row->{role}->label) %>";
-            % my $first;
-            % for my $org (@{ $con->{orgs} }) {
-            <%= ($first++) ? "," : ""  =%>
-                 ## Person acted on behalf of an organization
-                 prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
-                 ] ;
-
+            % my $person_id = obj_uri_for ($con->{person});
+            % if ($person_id ne "") {
+            
+   ## Person and his/her role in the creation of the entity:
+    <<%= obj_uri_for($pub)->to_abs %>>
+                prov:wasAttributedTo <<%= obj_uri_for($con->{person})->to_abs %>>;
+                prov:qualifiedAttribution [
+                    a prov:Attribution;
+                    prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
+                    prov:hadRole "<%= ($row->{role}->label) %>";
+                % for my $org (@{ $con->{orgs} }) {
+                    prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
+                % }
+               ] ;
+.
+            % } else {
+                % my $first;
+                % for my $org (@{ $con->{orgs} }) {
+   ## This entity was produced by an organization:     
+    <<%= obj_uri_for($pub)->to_abs %>>    
+                prov:qualifiedAttribution [
+                    a prov:Attribution;
+                    prov:agent <<%= obj_uri_for($org)->to_abs %>>;
+                    prov:hadRole "<%= ($row->{role}->label) %>";
+                ] ;
+.
+              % }
             % }
         % }
     % }
 % }
-.
-
-
-
-
-
 

@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_contributor_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  publication_id (integer) - 
  contributor_id (integer) - 
@@ -15,15 +15,15 @@ publication_contributor_map
  sort_key (integer) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                       Table "gcis_metadata.publication_contributor_map"
-         Column        |       Type        | Modifiers | Storage  | Stats target | Description 
- ----------------------+-------------------+-----------+----------+--------------+-------------
-  publication_id       | integer           | not null  | plain    |              | 
-  contributor_id       | integer           | not null  | plain    |              | 
-  reference_identifier | character varying |           | extended |              | 
-  sort_key             | integer           |           | plain    |              | 
+                Table "gcis_metadata.publication_contributor_map"
+         Column        |       Type        | Modifiers | Storage  | Description 
+ ----------------------+-------------------+-----------+----------+-------------
+  publication_id       | integer           | not null  | plain    | 
+  contributor_id       | integer           | not null  | plain    | 
+  reference_identifier | character varying |           | extended | 
+  sort_key             | integer           |           | plain    | 
  Indexes:
      "publication_contributor_map_pkey" PRIMARY KEY, btree (publication_id, contributor_id)
  Foreign-key constraints:
@@ -36,6 +36,6 @@ publication_contributor_map
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,35 +1,31 @@
 % layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
+## Identifier and journal title
    dcterms:identifier "<%= $journal->identifier %>";
    dcterms:title "<%= $journal->title %>"^^xsd:string;
 
-% if ($journal->online_issn) {
 ## Journal eISSN
    bibo:eissn "<%= $journal->online_issn %>";
-% }
-% if ($journal->print_issn) {
+
 ## Journal print ISSN   
    bibo:issn "<%= $journal->print_issn %>";
-% }
-% if ($journal->publisher) {   
+
 ## Journal publisher
    gcis:hasPublisher "<%= $journal->publisher %>"^^xsd:string; 
-% }
 
 ## The following article(s), cited by the NCA3, appear in this journal:
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
- % }
+% }
 
-% if ($journal->country) {
 ## Country of journal's publication
    dwc:Countrycode "<%= $journal->country %>";
-% }
 
-% if ($journal->url) {
 # URL for journal webpage
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;
-% }
 
    a bibo:Journal .
+
+% end

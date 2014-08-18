@@ -67,7 +67,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.04"
+         "version" : "1.06"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -216,6 +216,9 @@
       "Tuba::DocManager" : {
          "file" : "lib/Tuba/DocManager.pm"
       },
+      "Tuba::Exterm" : {
+         "file" : "lib/Tuba/Exterm.pm"
+      },
       "Tuba::Figure" : {
          "file" : "lib/Tuba/Figure.pm"
       },
@@ -225,8 +228,8 @@
       "Tuba::Finding" : {
          "file" : "lib/Tuba/Finding.pm"
       },
-      "Tuba::Gcmdkeyword" : {
-         "file" : "lib/Tuba/Gcmdkeyword.pm"
+      "Tuba::GcmdKeyword" : {
+         "file" : "lib/Tuba/GcmdKeyword.pm"
       },
       "Tuba::Generic" : {
          "file" : "lib/Tuba/Generic.pm"
@@ -234,8 +237,17 @@
       "Tuba::Image" : {
          "file" : "lib/Tuba/Image.pm"
       },
+      "Tuba::Instrument" : {
+         "file" : "lib/Tuba/Instrument.pm"
+      },
+      "Tuba::InstrumentInstance" : {
+         "file" : "lib/Tuba/InstrumentInstance.pm"
+      },
       "Tuba::Journal" : {
          "file" : "lib/Tuba/Journal.pm"
+      },
+      "Tuba::Lexicon" : {
+         "file" : "lib/Tuba/Lexicon.pm"
       },
       "Tuba::Log" : {
          "file" : "lib/Tuba/Log.pm"
@@ -245,6 +257,9 @@
       },
       "Tuba::Person" : {
          "file" : "lib/Tuba/Person.pm"
+      },
+      "Tuba::Platform" : {
+         "file" : "lib/Tuba/Platform.pm"
       },
       "Tuba::Plugin::Auth" : {
          "file" : "lib/Tuba/Plugin/Auth.pm"
@@ -287,5 +302,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.04"
+   "version" : "1.06"
 }

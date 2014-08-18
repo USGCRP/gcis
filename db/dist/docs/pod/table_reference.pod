@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 reference
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier for this bibliographic record
  attrs (hstore) - Attributes of this bibliographic record
@@ -15,15 +15,15 @@ reference
  child_publication_id (integer) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                                        Table "gcis_metadata.reference"
-         Column        |       Type        | Modifiers | Storage  | Stats target |                        Description                         
- ----------------------+-------------------+-----------+----------+--------------+------------------------------------------------------------
-  identifier           | character varying | not null  | extended |              | A globally unique identifier for this bibliographic record
-  attrs                | hstore            |           | extended |              | Attributes of this bibliographic record
-  publication_id       | integer           | not null  | plain    |              | Primary publication whose bibliography contains this entry
-  child_publication_id | integer           |           | plain    |              | 
+                                                Table "gcis_metadata.reference"
+         Column        |       Type        | Modifiers | Storage  |                        Description                         
+ ----------------------+-------------------+-----------+----------+------------------------------------------------------------
+  identifier           | character varying | not null  | extended | A globally unique identifier for this bibliographic record
+  attrs                | hstore            |           | extended | Attributes of this bibliographic record
+  publication_id       | integer           | not null  | plain    | Primary publication whose bibliography contains this entry
+  child_publication_id | integer           |           | plain    | 
  Indexes:
      "reference_pkey" PRIMARY KEY, btree (identifier)
      "reference_identifier_child_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, child_publication_id)
@@ -42,6 +42,6 @@ reference
  Has OIDs: no
  
 
-=cut
+\=cut
 
 
