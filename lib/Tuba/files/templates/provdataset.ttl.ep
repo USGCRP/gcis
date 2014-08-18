@@ -1,0 +1,18 @@
+#The following image(s) was/were derived from this dataset:
+% my $pub = $object->get_publication;
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) {
+   % my %by_type_rel = ();
+    % for my $child (@children) {
+    %       my $type = $child->publication->publication_type_identifier;
+    %       my $rel = $child->relationship;
+    %       $by_type_rel{$type}{$rel} //= [];
+    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
+<<%= obj_uri_for($child->publication)->to_abs %>>
+   a gcis:Image;
+   prov:wasDerivedFrom <<%= current_resource %>>.
+
+    % }
+% }
