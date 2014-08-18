@@ -629,7 +629,7 @@ CREATE TABLE report (
     url character varying,
     doi character varying,
     _public boolean DEFAULT true,
-    report_type_identifier character varying,
+    report_type_identifier character varying DEFAULT 'report'::character varying NOT NULL,
     summary character varying,
     frequency interval,
     publication_year integer,
@@ -1636,6 +1636,11 @@ ALTER TABLE ONLY instrument_measurement
 
 ALTER TABLE ONLY instrument_measurement
     ADD CONSTRAINT instrument_measurement_platform_identifier_fkey FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY instrument_instance
+    ADD CONSTRAINT instrument_platform_map_platform FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

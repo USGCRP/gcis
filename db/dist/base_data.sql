@@ -14,6 +14,7 @@ SET client_min_messages = warning;
 --
 
 COPY report_type (identifier) FROM stdin;
+report
 \.
 
 
