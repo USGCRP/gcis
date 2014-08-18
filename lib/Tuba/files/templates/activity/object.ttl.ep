@@ -32,10 +32,12 @@
 
 
 % if (my @maps = $activity->publication_maps) {
-## This activity resulted in the following:
+## This following image was derived from a dataset using this activity,
+## syntax per Example 4 on PROV-O primer:
    % for my $map (@maps) {
    <<%= obj_uri_for ($map->child_publication)->to_abs %>>;
       a gcis:Image;
+      prov:wasGeneratedBy <<%= current_resource %>>;
       prov:wasDerivedFrom <<%= obj_uri_for($map->parent_publication)->to_abs %>> .
          
    <<%= obj_uri_for($map->parent_publication)->to_abs %>> a gcis:Dataset .
