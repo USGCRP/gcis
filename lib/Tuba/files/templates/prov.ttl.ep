@@ -18,7 +18,7 @@
             % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
-   cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>""^^;   
+   cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;   
    biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
               % } 
 
@@ -30,7 +30,7 @@
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
     % if ($child_pub) {
-   cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>""^^;
+   cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
               % }
    biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
      % }
