@@ -33,4 +33,4 @@
    a gcis:Table .
 
 % end
-%= include 'table/prov';
+%= include 'prov';
