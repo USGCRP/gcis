@@ -33,6 +33,6 @@
    cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
               % }
    biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
+	
      % }
-
 % }
