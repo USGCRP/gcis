@@ -34,7 +34,7 @@ $t->get_ok("/report/test-report.json")->json_is(
       files => [],
       chapters => [],
       href => "${base}report/test-report.json",
-      report_type_identifier => undef,
+      report_type_identifier => 'report',
   }
 );
 
