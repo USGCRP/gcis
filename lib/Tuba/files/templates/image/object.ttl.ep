@@ -45,5 +45,5 @@
 
 
 
-%= include 'prov';
+%= include 'image/prov';
 %= include 'contributors';
