@@ -30,7 +30,6 @@
 % end
 
 
-
 % if (my @maps = $activity->publication_maps) {
 ## This following image was derived from a dataset using this activity,
 ## syntax per Example 4 on PROV-O primer:
