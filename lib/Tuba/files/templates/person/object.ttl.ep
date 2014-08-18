@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd/];
+% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
