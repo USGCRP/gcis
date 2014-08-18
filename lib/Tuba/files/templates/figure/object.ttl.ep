@@ -57,7 +57,7 @@
 % end
 
 
-%= include 'provreportreference';
+%= include 'figure/prov';
 %= include 'contributors';
 
 
