@@ -29,8 +29,8 @@ use Tuba::DocManager;
 sub _include_first {
   my $c    = shift;
   my $list = shift;
-  for (@$list) {
-    my $got = $c->render_to_string(@_);
+  for my $item (@$list) {
+    my $got = $c->render_to_string($item, @_);
     return $got if $got;
   }
   return "";
