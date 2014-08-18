@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo cito prov biro cito/];
+% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo prov biro cito/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -53,7 +53,7 @@
 
 
 
-## The relationship between this report and other GCIS entities:
+## Here is a subset of references cited in this report:
 %= include 'report/prov';
 
 %= include 'contributors';
