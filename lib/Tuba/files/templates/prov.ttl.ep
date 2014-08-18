@@ -20,8 +20,8 @@
    a gcis:<%= $object->meta->table %>;
    cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;   
    biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
-              % } 
 
+              % } 
 % }
 
   % if (!(stash 'no_refs') && @children_with_references) {		
