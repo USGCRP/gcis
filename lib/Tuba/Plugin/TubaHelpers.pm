@@ -469,6 +469,12 @@ sub register {
                         ;$                    # end of line
                       ]x;
         });
+    $app->helper(external_link => sub {
+            my $c = shift;
+            my $url = shift or return "";
+            return $url unless $url =~ /^(http|ftp)/;
+            return $c->link_to($url, $url, target => "_blank");
+        });
 }
 
 1;

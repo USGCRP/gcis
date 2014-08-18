@@ -1,0 +1,35 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>identifier</th>
+    <th>name</th>
+    <th>type</th>
+    <th>url</th>
+</th>
+% for my $platform (@$objects) {
+    <tr>
+       <td><%= obj_link_to $platform, 'show' => begin %><%= $platform->identifier %><%= end %></td>
+       <td><%= obj_link_to $platform, 'show' => begin %><%= $platform->name %><%= end %></td>
+       <td><%= $platform->platform_type_identifier %></td>
+       <td><%= external_link($platform->url) %></td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+
