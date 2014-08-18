@@ -36,9 +36,8 @@
    % for my $map (@maps) {
    <<%= obj_uri_for ($map->child_publication)->to_abs %>>;
       a gcis:Image;
-      prov:wasGeneratedBy <<%= current_resource %>>;
       prov:wasDerivedFrom <<%= obj_uri_for($map->parent_publication)->to_abs %>> .
-         
+      prov:wasGeneratedBy <<%= current_resource %>>;         
    <<%= obj_uri_for($map->parent_publication)->to_abs %>> a gcis:Dataset .
    % }
 % }
