@@ -403,7 +403,7 @@ sub create {
     if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
         $obj{report_identifier} = $c->stash('report_identifier');
     }
-    my %valid = map { $_ => 1 } @{ $object_class->meta->columns };
+    my %valid = ( audit_note => 1, map { $_ => 1 } @{ $object_class->meta->columns } );
     my @invalid = grep !$valid{$_}, keys %obj;
     my $error;
     if (@invalid) {
@@ -1121,7 +1121,7 @@ sub update {
 
     my $error;
     if ($json) {
-        my %valid = map { $_ => 1 } @{ $object->meta->columns };
+        my %valid = ( audit_note => 1, map { $_ => 1 } @{ $object->meta->columns } );
         my @invalid = grep !$valid{$_}, keys %$json;
         if (@invalid) {
             $error = join "\n", map "$_ is not a valid field.", @invalid;
