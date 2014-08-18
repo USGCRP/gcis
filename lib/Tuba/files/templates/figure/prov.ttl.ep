@@ -18,7 +18,7 @@
             % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
-   cito:isCitedBy "<%= $parent_pub->to_object->uri($self)""^^xsd:string;   
+   cito:isCitedBy "<%= $parent_pub->to_object->uri($self)->to_abs %>""^^xsd:anyURI;   
    biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
   
             % } 
@@ -31,7 +31,7 @@
 <<%= current_resource %>>
    a gcis:<%= $object->meta->table %>;
     % if ($child_pub) {
-   cito:cites "<%= $parent_pub->to_object->uri($self)""^^xsd:string;
+   cito:cites "<%= $child_pub->to_object->uri($self)->to_abs %>""^^xsd:anyURI;
            % }
    biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
 
