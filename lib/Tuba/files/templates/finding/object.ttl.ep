@@ -25,7 +25,7 @@
 
    gcis:assessmentOfConfidenceBasedOnEvidence "<%= no_tbibs(tl($finding->confidence)) %>"^^xsd:string;
    
-   gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string.
+   gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string;
 
    
    a gcis:Finding .
