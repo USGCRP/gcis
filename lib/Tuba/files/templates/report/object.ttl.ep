@@ -54,6 +54,6 @@
 
 
 ## The relationship between this report and other GCIS entities:
-%= include 'prov';
+%= include 'report/prov';
 
 %= include 'contributors';
