@@ -32,4 +32,4 @@
 
 
 % end
-%= include 'finding/prov';
+%= include 'prov';
