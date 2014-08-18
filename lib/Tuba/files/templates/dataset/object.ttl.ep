@@ -61,7 +61,8 @@
 % end
 
 
+
 %= include 'dataset/prov';
 
-%# %= include 'contributors';
+%= include 'contributors';
 
