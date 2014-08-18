@@ -54,9 +54,12 @@
    a gcis:Figure .
 
 
+
 % end
 
 
+
+## This figure cites the following resource(s):
 %= include 'prov';
 %= include 'contributors';
 
