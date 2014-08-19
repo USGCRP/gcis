@@ -54,6 +54,6 @@
 
 
 ## Here is a subset of references cited in this report:
-%= include 'report/prov';
+%= include 'prov';
 
 %= include 'contributors';
