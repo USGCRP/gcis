@@ -1,22 +1,30 @@
-% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd/];
+% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $person->id %>"; 
    vivo:orcidId "<%= $person->orcid %>";
-   foaf:firstName "<%= $person->first_name %>";
+   foaf:givenName "<%= $person->first_name %>";
    foaf:lastName "<%= $person->last_name %>";
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
-
-% for my $c ($person->contributors) {
-% my $org = $c->organization or next;
-   gcis:worksAt <<%= uri($org) %>>;
-% }
    
    a gcis:Person .
-
-
 % end
 
 
+# Publications in GCIS are related to this person as follows:
 
+   % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
+    % for my $map (@{ $ctr->publication_contributor_maps }) {
+     % my $obj = $map->publication->to_object;
+<<%= obj_uri_for($obj)->to_abs %>>
+   a gcis:<%= $obj->meta->table %>;
+   prov:qualifiedAttribution [
+      a prov:Attribution;
+      <<%= current_resource %>>
+      prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
+      prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
+   ] 
+.
+    % }
+  % } 

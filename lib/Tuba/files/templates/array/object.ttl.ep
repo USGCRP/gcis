@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis/];
+% layout 'default', namespaces => [qw/gcis dcterms/];
 
 <<%= current_resource %>>
    a gcis:Array;

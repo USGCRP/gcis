@@ -1,0 +1,15 @@
+% layout 'default', namespaces => [qw/dcterms fabio/];
+
+## Filename
+   dcterms:title "<%= $file->stringify %>";
+
+% if ($file->location) {
+   gcis:Location "<%= url_host($file->location) %>";
+% }
+
+## The SHA-1 hash pertaining to the file
+% if ($file->sha1) {
+   dcterms:identifier "<%= $file->sha1 %>";
+% }
+
+   a fabio:ComputerFile .

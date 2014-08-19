@@ -11,7 +11,7 @@
    dcterms:hasVersion "<%= $dataset->version %>";
 
 ## The formal description of the dataset
-   dcterms:description "<%= tl($dataset->description) %>"^^xsd:string;
+   dcterms:description "<%= no_tbibs(tl($dataset->description)) %>"^^xsd:string;
 
 % if ($dataset->doi) {
 ## The digital object identifier for the dataset
@@ -40,7 +40,7 @@
    dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
 
 ## The spatial resolution of the dataset
-  gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
 
 ## Temporal domain of the dataset
    gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
@@ -59,4 +59,10 @@
    a gcis:Dataset .
 
 % end
-%# %= include 'contributors'; 
+
+
+
+%= include 'dataset/prov';
+
+%= include 'contributors';
+

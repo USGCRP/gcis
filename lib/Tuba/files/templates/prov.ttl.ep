@@ -1,20 +1,38 @@
+% my $max_children = 20;
+% my @parents;
+% my @parents_with_references;
+% my @children_with_references;
+% my @children;
+% my $references_url;
 % my $pub = $object->get_publication;
 % if ($pub) {
-    % my @parents = $pub->get_parents;
-    % my @parents_with_references = $pub->get_parents_with_references;
-    % if (@parents) {
-<<%= current_resource %>> 
-    % }
-    % for (0..$#parents) {
-    %   my $p = $parents[$_];
-        <%= $p->{relationship} %> <<%= uri($p->{publication}->to_object) %>> <%= $_ == $#parents ? '.' : ';' %>
-    % }
-    % if (@parents_with_references) {
-<<%= current_resource %>> 
-    % }
-    % for (0..$#parents_with_references) {
-    %   my $p = $parents_with_references[$_];
-        cito:isCitedBy <<%= uri($p->{parent}->to_object) %>> <%= $_ == $#parents_with_references ? '.' : ';' %>
-    % }
+    % @parents = $pub->get_parents;
+    % @children = $pub->children;
+    % @parents_with_references = $pub->get_parents_with_references;
+    % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
+    % $references_url = $pub->references_url($self);
+% }
 
+% if (@parents || @parents_with_references || @children) {   
+    % for my $parent (@parents_with_references) {
+            % my $parent_pub = $parent->{parent};
+<<%= current_resource %>>
+   a gcis:<%= $object->meta->table %>;
+   cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;   
+   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
+
+              % } 
+% }
+
+  % if (!(stash 'no_refs') && @children_with_references) {		
+     % for my $child (@children_with_references) {   
+     % my $child_pub = $child->{child};
+<<%= current_resource %>>
+   a gcis:<%= $object->meta->table %>;
+    % if ($child_pub) {
+   cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
+              % }
+   biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
+	
+     % }
 % }
