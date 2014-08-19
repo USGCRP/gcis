@@ -11,6 +11,7 @@
         <%= link_to 'show_publication' => { publication_identifier => $parent_pub->id } => begin %><%= $parent_pub->stringify %><%= end %>
         <% if ($parent->{activity}) { %>using the activity <%= obj_link($parent->{activity}) %><% } %>.
         <% if ($parent->{note}) { =%>(<%= $parent->{note} || "" =%>)<% } =%>
+        <br>
     % }
 
     % my %by_type_rel = ();

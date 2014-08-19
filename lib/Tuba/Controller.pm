@@ -774,7 +774,7 @@ sub update_files {
         $ua->max_redirects(3);
         my $tx = $ua->get($file_url);
         my $res = $tx->success or
-            return $c->update_error( "Error getting $file_url : ".$tx->error);
+            return $c->update_error( "Error getting $file_url : ".$tx->error->{message});
         $c->app->log->info("Got $file_url, code is ".$res->code);
         my $content = $res->body;
 
