@@ -4,8 +4,8 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $person->id %>"; 
    vivo:orcidId "<%= $person->orcid %>";
-   foaf:givenName "<%= $person->first_name %>";
-   foaf:lastName "<%= $person->last_name %>";
+   foaf:givenName "<%= $person->first_name %>"^^xsd:string;
+   foaf:lastName "<%= $person->last_name %>"^^xsd:string;
    foaf:page "<%= $person->url %>"^^xsd:anyURI;
    
    a gcis:Person .
