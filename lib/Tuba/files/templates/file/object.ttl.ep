@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms fabio/];
+% layout 'default', namespaces => [qw/dcterms gcis fabio/];
 
 ## Filename
    dcterms:title "<%= $file->stringify %>";
@@ -8,7 +8,7 @@
 % }
 
 ## The SHA-1 hash pertaining to the file
-% if ($file->sha1) {
+% if ($file->identifier) {
    dcterms:identifier "<%= $file->sha1 %>";
 % }
 
