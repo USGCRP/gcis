@@ -8,7 +8,7 @@
 % }
 
 ## The SHA-1 hash pertaining to the file
-% if ($file->sha1) {
+% if ($file->identifier) {
    dcterms:identifier "<%= $file->sha1 %>";
 % }
 
