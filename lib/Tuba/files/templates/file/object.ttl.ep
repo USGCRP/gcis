@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms fabio/];
+% layout 'default', namespaces => [qw/dcterms gcis fabio/];
 
 ## Filename
    dcterms:title "<%= $file->stringify %>";
