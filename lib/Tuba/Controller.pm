@@ -1336,7 +1336,12 @@ sub redirect_with_error {
     my $c     = shift;
     my $tab   = shift;
     my $error = nice_db_error(shift);
-    my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    my $uri;
+    if (my $obj = $c->_this_object) {
+        $uri = $c->_this_object->uri($c, {tab => $tab});
+    } else {
+        $uri = $c->req->url;
+    }
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {

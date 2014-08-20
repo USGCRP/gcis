@@ -44,7 +44,11 @@ sub find {
     $term->load(speculative => 1) or return $c->render_not_found;
     my $gcid = $term->gcid;
     $c->res->headers->location($gcid);
-    $c->res->body(qq[See <a href="$gcid">$gcid</a>.]);
+    $c->respond_to(
+        html => { code => 303, text => qq[See <a href="$gcid">$gcid</a>.]},
+        json => { code => 303, json => { gcid => $gcid } }
+    );
+
     $c->rendered(303);
 }
 
