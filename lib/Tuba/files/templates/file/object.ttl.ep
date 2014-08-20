@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis fabio/];
+% layout 'default', namespaces => [qw/dcterms gcis dbpedia-owl dbpedia fabio/];
 
 ## Filename
    dcterms:title "<%= $file->stringify %>";
@@ -12,4 +12,15 @@
    dcterms:identifier "<%= $file->sha1 %>";
 % }
 
-   a fabio:ComputerFile .
+## The size of the file, in Bytes:
+   dbpedia-owl:fileSize "<%= ($file->size) %>";
+
+## The MIME Type
+   dbpedia:MIME "<%= ($file->mime_type) %>";
+
+%# ## This file is associated with the following publication(s), if any:
+%# % if (my @pubs = $file->publications) {
+%#        This file is associated with <%= include 'commify', objs => \@pubs %>.
+%#        % }     
+
+a fabio:ComputerFile .
