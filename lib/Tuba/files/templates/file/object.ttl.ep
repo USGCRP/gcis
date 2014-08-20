@@ -1,6 +1,7 @@
 % layout 'default', namespaces => [qw/dcterms gcis dbpedia-owl dbpedia fabio/];
 
 ## Filename
+   dcterms:identifier "<%= $file->identifier %>";
    dcterms:title "<%= $file->stringify %>";
 
 % if ($file->location) {
@@ -9,7 +10,7 @@
 
 ## The SHA-1 hash pertaining to the file
 % if ($file->identifier) {
-   dcterms:identifier "<%= $file->sha1 %>";
+   dbpedia:SHA-1 "<%= $file->sha1 %>";
 % }
 
 ## The size of the file, in Bytes:
