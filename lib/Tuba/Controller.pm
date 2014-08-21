@@ -686,7 +686,7 @@ sub update_prov {
         note         => $note,
         activity_identifier => $activity_identifier,
     );
-
+    $map->load(speculative => 1);
     $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
     return $c->redirect_without_error('update_prov_form');
