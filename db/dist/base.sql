@@ -1639,11 +1639,6 @@ ALTER TABLE ONLY instrument_measurement
 
 
 
-ALTER TABLE ONLY instrument_instance
-    ADD CONSTRAINT instrument_platform_map_platform FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
-
 ALTER TABLE ONLY methodology
     ADD CONSTRAINT methodology_activity_identifier_fkey FOREIGN KEY (activity_identifier) REFERENCES activity(identifier);
 
