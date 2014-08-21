@@ -42,6 +42,7 @@ sub update_rel {
         if (my $add = $json->{add}) {
             $add->{platform_identifier} = $platform->identifier;
             my $obj = InstrumentInstance->new( %$add );
+            $obj->load(speculative => 1);
             $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
         }
     }

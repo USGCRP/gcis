@@ -232,6 +232,7 @@ sub select {
         $c->stash($table => $loaded);
         return 1;
     }
+    $c->render_not_found_or_redirect;
     return 0;
 }
 
@@ -685,7 +686,7 @@ sub update_prov {
         note         => $note,
         activity_identifier => $activity_identifier,
     );
-
+    $map->load(speculative => 1);
     $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
     return $c->redirect_without_error('update_prov_form');
@@ -1336,7 +1337,12 @@ sub redirect_with_error {
     my $c     = shift;
     my $tab   = shift;
     my $error = nice_db_error(shift);
-    my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    my $uri;
+    if (my $obj = $c->_this_object) {
+        $uri = $c->_this_object->uri($c, {tab => $tab});
+    } else {
+        $uri = $c->req->url;
+    }
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {
