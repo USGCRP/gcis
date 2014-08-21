@@ -38,6 +38,7 @@ sub update_rel {
         if (my $add = $json->{add_instrument_measurement}) {
             $add->{dataset_identifier} = $dataset->identifier;
             my $obj = InstrumentMeasurement->new( %$add );
+            $obj->load(speculative => 1);
             $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
         } else {
             warn "no json";

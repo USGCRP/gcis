@@ -232,6 +232,7 @@ sub select {
         $c->stash($table => $loaded);
         return 1;
     }
+    $c->render_not_found_or_redirect;
     return 0;
 }
 
