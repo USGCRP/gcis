@@ -20,9 +20,9 @@
    dbpedia:MIME "<%= $file->mime_type %>";
 
 %# ## This file is associated with the following publication(s), if any:
- % if (my @pubs = $file->publications) {
-  <%= $file-> @pubs %>;
-  % }     
+%# % if (my @pubs = $file->publications) {
+%#  <%= $file-> @pubs %>;
+%#  % }     
 
 % if (my @pubs = $file->publications) {
    prov:isAssociatedWith <<%= $file->@pubs %>>.
