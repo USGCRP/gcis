@@ -8,8 +8,8 @@
         dcterms =>  '<http://purl.org/dc/terms/>',
         dcmitype =>  '<http://purl.org/dc/dcmitype/>',
         foaf =>  '<http://xmlns.com/foaf/0.1/>',
-        dbpedia => '<http://dbpedia.org/resource>'
-        dbpedia-owl => '<http://dbpedia.org/ontology/>'
+        dbpedia =>  '<http://dbpedia.org/resource/>',
+        dbpedia_owl =>  '<http://dbpedia.org/ontology/>',
         gcis =>  '<http://data.globalchange.gov/gcis.owl#>',
         org =>  '<http://www.w3.org/ns/org#>',
         prov =>  '<http://www.w3.org/ns/prov#>',
