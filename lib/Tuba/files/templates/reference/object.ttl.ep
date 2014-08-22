@@ -7,8 +7,8 @@
    biro:isReferencedBy <<%= uri($report) %>>;
  % }
 % if (my $pub = $reference->child_publication) {
- % my $article = $pub->to_object;
-   biro:references <<%= uri($article) %>>;
+ % my $publication = $pub->to_object;
+   biro:references <<%= uri($publication) %>>;
  % }
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
@@ -22,14 +22,12 @@
 % }
 
 % if (my $pub = $reference->child_publication) {
- % my $article = $pub->to_object;
-<<%= uri($article) %>> a bibo:Article .
+ % my $publication = $pub->to_object;
+<<%= uri($publication) %>> a gcis:Publication .
 % }
 
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
 <<%= uri($chapter) %>> a gcis:Chapter .
  % }
-
-
 
