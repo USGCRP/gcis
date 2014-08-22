@@ -19,16 +19,16 @@
    biro:isReferencedBy <<%= uri($report) %>>;
 % }
 
-   a biro:BibliographicRecord, dcterms:bibliographicCitation.
+   a biro:BibliographicRecord, dcterms:bibliographicCitation .
 
 % if (my $pub = $reference->publication) {
  % my $report = $pub->to_object;
-<<%= uri($report) %>> a gcis:<%= $report->meta->table %>.
+<<%= uri($report) %>> a gcis:<%= $report->meta->table %> .
 % }
 
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
-<<%= uri($chapter) %>> a gcis:<%= $chapter->meta->table %>.
+<<%= uri($chapter) %>> a gcis:<%= $chapter->meta->table %> .
  % }
 
 
@@ -36,5 +36,5 @@
 
 % if (my $pub = $reference->child_publication) {
  % my $publication = $pub->to_object;
-<<%= uri($publication) %>> a gcis:<%= $publication->meta->table %>.
+<<%= uri($publication) %>> a gcis:<%= $publication->meta->table %> .
 % }
