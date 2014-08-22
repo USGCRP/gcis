@@ -1,5 +1,6 @@
-% layout 'default', namespaces => [qw/dcterms gcis xsd/];
+% layout 'default', namespaces => [qw/dcterms gcis xsd prov/];
 
+<<%= current_resource %>>
    dcterms:identifier "<%= $instrument_instance->identifier %>";
    gcis:Instrument "<%= $instrument_instance->instrument_identifier %>";
    gcis:Platform "<%= $instrument_instance->platform_identifier %>";
@@ -13,6 +14,8 @@
 <% for my $platform ($instrument_instance->instruments) { %>
    gcis:Instrument <<%= obj_uri_for($instrument)->to_abs %>>; 
 <% } %
+
+   a prov:Entity .
 
 <% for my $platform ($instrument_instance->datasets) { %>
    gcis:Dataset <<%= obj_uri_for($dataset)->to_abs %>> a gcis:Platform .
