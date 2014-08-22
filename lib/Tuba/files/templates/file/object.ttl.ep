@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis dbpedia dbpedia_owl fabio/];
+% layout 'default', namespaces => [qw/dcterms gcis dbpedia dbpedia_owl schema fabio/];
 
 ## Filename
    dcterms:identifier "<%= $file->identifier %>";
@@ -13,7 +13,7 @@
    dbpedia:SHA-1 "<%= $file->sha1 %>";
 % }
 
-## The size of the file, in Bytes:
+## File Size, in bytes:
    dbpedia_owl:fileSize "<%= $file->size %>";
 
 ## The MIME Type
@@ -21,8 +21,8 @@
 
 ## This file is associated with the following publication:
 % if (my @pubs = $file->publications) {
-  %  for my $file (@pubs) {
-   dcterms:Relation <<%= obj_uri_for($file->to_object)->to_abs %>>;
+  % for my $file (@pubs) {
+   schema:isRelatedTo <<%= obj_uri_for($file->to_object)->to_abs %>>;
   % }
 % }
 
