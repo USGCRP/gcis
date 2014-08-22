@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis prov dcterms xsd fabio meth/];
+% layout 'default', namespaces => [qw/dcterms prov fabio gcis dbpedia meth/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -20,7 +20,7 @@
    gcis:Software "<%= $activity->software %>"^^xsd:string;
 
 ## Computing environment
-   dcterms:InteractiveResource "<%= tl($activity->computing_environment) %>"^^xsd:string;
+   dbpedia:Desktop_environment "<%= tl($activity->computing_environment) %>"^^xsd:string;
 
 ## Methodology employed
    meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string;
@@ -42,4 +42,3 @@
    <<%= obj_uri_for($map->parent_publication->to_object)->to_abs %>> a gcis:Dataset .
    % }
 % }
-
