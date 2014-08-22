@@ -59,9 +59,10 @@
 % end
 
 % for my $measurement ($dataset->instrument_measurements) {
-## This dataset uses an instance of the following instrument and plaform:   
+## This dataset uses data from an instance of the following platform and instrument; the URI for this instance is:   
    prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument)->to_abs %>>;
    prov:wasDerivedFrom <<%= obj_uri_for($measurement->platform)->to_abs %>>;
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument_instance)->to_abs %>>;
    % }
 
    a gcis:Dataset .
@@ -70,6 +71,7 @@
 ## This instrument and platform are of class gcis:Instrument and gcis:Platform, respectively:
    <<%= obj_uri_for($measurement->instrument)->to_abs %>> a gcis:Instrument .
    <<%= obj_uri_for($measurement->platform)->to_abs %>> a gcis:Platform .
+   <<%= obj_uri_for($measurement->instrument_instance)->to_abs %>> a gcis:Platform .
 % }
 
 %= include 'dataset/prov';
