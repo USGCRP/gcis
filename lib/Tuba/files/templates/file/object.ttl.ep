@@ -20,10 +20,10 @@
    dbpedia:MIME "<%= $file->mime_type %>";
 
 ## This file is associated with the following publication:
- % if (my @pubs = $file->publications) {
- %  for my $file (@pubs) {
+% if (my @pubs = $file->publications) {
+  %  for my $file (@pubs) {
    dcterms::Relation <<%= obj_uri_for($file->to_object)->to_abs %>>;
-        % }
+  % }
 % }
 
    a fabio:ComputerFile .
