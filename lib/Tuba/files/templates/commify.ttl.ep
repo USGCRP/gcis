@@ -1,4 +1,0 @@
-% my $objs ||= [];
-% my $count = @$objs;
-<% for my $i (0..$count - 1) { %>
-<<%= obj_uri_for($objs->[$i], tiny => (stash 'tiny'), short => (stash 'short')) %><%= ($i < $count - 1) ? ',' : '' %><%= ($i == $count-2 and (stash 'and')) ? 'and' : "" =%><% } =%>>
