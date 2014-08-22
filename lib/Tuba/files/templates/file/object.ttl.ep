@@ -19,8 +19,11 @@
 ## The MIME Type
    dbpedia:MIME "<%= $file->mime_type %>";
 
-%# % if (my @pubs = $file->publications) {
-%#   prov:isAssociatedWith <<%= $file->@pubs %>>.
-%#        % }
+## This file is associated with the following publication:
+ % if (my @pubs = $file->publications) {
+ %  for my $file (@pubs) {
+   dcterms::Relation <<%= obj_uri_for($file->to_object)->to_abs %>>;
+        % }
+% }
 
    a fabio:ComputerFile .
