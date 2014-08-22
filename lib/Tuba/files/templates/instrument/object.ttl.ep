@@ -1,11 +1,14 @@
 % layout 'default', namespaces => [qw/dcterms gcis xsd/];
 
+<<%= current_resource %>>
    dcterms:identifier "<%= $instrument->platform_type_identifier %>":
    dcterms:title "<%= $instrument->name %>"^^xsd:string;
    dcterms:description "<%= $instrument->description %>"^^xsd:string;
 <% for my $platform ($instrument->platforms) { %>
-   gcis:inPlatform <<%= obj_uri_for($platform)->to_abs %>>.
+   gcis:inPlatform <<%= obj_uri_for($platform)->to_abs %>>;
    <% } %>
+
+   a gcis:Instrument .
 
 <% for my $platform ($instrument->platforms) { %>
    <<%= obj_uri_for($platform)->to_abs %>> a gcis:Platform .
