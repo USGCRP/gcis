@@ -2,32 +2,39 @@
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $reference->identifier %>";
-% if (my $pub = $reference->publication) {
- % my $report = $pub->to_object;
-   biro:isReferencedBy <<%= uri($report) %>>;
- % }
+
+## This reference refers to the following child publication(s):
 % if (my $pub = $reference->child_publication) {
  % my $publication = $pub->to_object;
    biro:references <<%= uri($publication) %>>;
- % }
+% }
+
+## This reference appears in Chapter # of the following report:
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
    biro:isReferencedBy <<%= uri($chapter) %>>;
- % }
+% }
+% if (my $pub = $reference->publication) {
+ % my $report = $pub->to_object;
+   biro:isReferencedBy <<%= uri($report) %>>;
+% }
+
    a biro:BibliographicRecord, dcterms:bibliographicCitation.
 
 % if (my $pub = $reference->publication) {
  % my $report = $pub->to_object;
-<<%= uri($report) %>> a gcis:Report .
-% }
-
-% if (my $pub = $reference->child_publication) {
- % my $publication = $pub->to_object;
-<<%= uri($publication) %>> a gcis:Publication .
+<<%= uri($report) %>> a gcis:<%= $report->meta->table %>.
 % }
 
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
-<<%= uri($chapter) %>> a gcis:Chapter .
+<<%= uri($chapter) %>> a gcis:<%= $chapter->meta->table %>.
  % }
 
+
+## This citation describes the following entity of type :
+
+% if (my $pub = $reference->child_publication) {
+ % my $publication = $pub->to_object;
+<<%= uri($publication) %>> a gcis:<%= $publication->meta->table %>.
+% }
