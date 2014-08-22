@@ -56,11 +56,21 @@
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
 
-   a gcis:Dataset .
-
 % end
 
+% for my $measurement ($dataset->instrument_measurements) {
+## This dataset uses an instance of the following instrument and plaform:   
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument)->to_abs %>>;
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->platform)->to_abs %>>;
+   % }
 
+   a gcis:Dataset .
+
+% for my $measurement ($dataset->instrument_measurements) {
+## This instrument and platform are of class gcis:Instrument and gcis:Platform, respectively:
+   <<%= obj_uri_for($measurement->instrument)->to_abs %>> a gcis:Instrument .
+   <<%= obj_uri_for($measurement->platform)->to_abs %>> a gcis:Platform .
+% }
 
 %= include 'dataset/prov';
 
