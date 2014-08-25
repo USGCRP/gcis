@@ -31,8 +31,13 @@
    a gcis:Finding .
 
 
-% end
+## The aforementioned chapter and report are of class gcis:Chapter and gcis:Report, respectively:
+% if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
+<<%= uri($chapter) %>> a gcis:Chapter .
+<<%= obj_uri_for($report)->to_abs %>> a gcis:Report .
+% }
 
+% end
 
 
 
