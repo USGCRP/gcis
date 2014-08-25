@@ -1,11 +1,11 @@
-% layout 'default', namespaces => [qw/gcis prov dcterms dwc xsd cito datacite dcat/];
+% layout 'default', namespaces => [qw/datacite dcterms xsd gcis cito dwc dcat prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
 ## Identifier, title, and publication year
    datacite:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
-   dcterms:issued "<%= $dataset->publication_year %>"^^xsd:gYear;
+   dwc:year "<%= $dataset->publication_year %>"^^xsd:gYear;
 
 ## Dataset version
    dcterms:hasVersion "<%= $dataset->version %>";
@@ -28,7 +28,7 @@
    dcterms:date "<%= $dataset->access_dt %>"^^xsd:date; 
 
 ## The date the dataset was released
-   dcterms:date "<%= $dataset->release_dt %>"^^xsd:date;
+   dcterms:issued "<%= $dataset->release_dt %>"^^xsd:date;
 
 ## The Metadata document cited by the dataset
    cito:citesAsMetadataDocument "<%= tl($dataset->cite_metadata) %>";
