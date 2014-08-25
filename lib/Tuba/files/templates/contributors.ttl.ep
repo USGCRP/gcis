@@ -1,4 +1,3 @@
-## Contributors:
 % my $pub = $object->get_publication;
 % if ($pub) {
 
@@ -8,7 +7,7 @@
             % my $person_id = obj_uri_for ($con->{person});
             % if ($person_id ne "") {
             
-## Person and his/her role in the creation of the entity:
+## Person and his/her role in the creation of the entity (see http://www.w3.org/ns/prov#qualifiedAttribution):
 <<%= obj_uri_for($object)->to_abs %>>
    a gcis:<%= $object->meta->table %>;
    prov:qualifiedAttribution [
@@ -17,13 +16,19 @@
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
                 % for my $org (@{ $con->{orgs} }) {
       prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
-             % }
+                % }
       ] ;
 .
+
+<<%= obj_uri_for($con->{person})->to_abs %>> a gcis:Person .
+                % for my $org (@{ $con->{orgs} }) {
+<<%= obj_uri_for($org)->to_abs =%>> a gcis:Organization .
+                % }
+
          % } else {
              % my $first;
              % for my $org (@{ $con->{orgs} }) {
-## This entity was produced by an organization:     
+## This entity was produced by an organization (see http://www.w3.org/ns/prov#qualifiedAttribution):
 <<%= obj_uri_for($object)->to_abs %>>    
    a gcis:<%= $object->meta->table %>;
    prov:qualifiedAttribution [
@@ -32,7 +37,10 @@
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .
-            % }
+
+<<%= obj_uri_for($org)->to_abs %>> a gcis:Organization .
+
+             % }
          % }
      % }
 % }
