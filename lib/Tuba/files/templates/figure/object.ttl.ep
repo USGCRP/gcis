@@ -62,5 +62,3 @@
 ## This figure cites the following resource(s):
 %= include 'prov';
 %= include 'contributors';
-
-
