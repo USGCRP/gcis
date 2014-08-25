@@ -12,9 +12,9 @@
 % }
 
 ## Country in which organization is situated
-   % if (my $country = $organization->country) {
+% if (my $country = $organization->country) {
    dwc:countryCode "<%= $country->code %>";
-   % }
+% }
 
    a gcis:Organization .
 
@@ -33,6 +33,9 @@
       org:linkedto <<%= obj_uri_for($map->other_organization)->to_abs %>>;
    ] ;
 . 
+
+<<%= obj_uri_for($map->other_organization)->to_abs %>> a gcis:Organization .
+
     % }
 % }
 
