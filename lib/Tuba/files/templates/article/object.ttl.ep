@@ -18,5 +18,9 @@
 % end
 
 
+
+<<%= uri($article->journal) %>> a bibo:Journal .
+
+
 ## This article is cited by the following entities in GCIS:
 %= include 'prov';
