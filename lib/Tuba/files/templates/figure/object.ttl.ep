@@ -53,6 +53,7 @@
 
    a gcis:Figure .
 
+
 ## The aforementioned chapter, report, and image(s) are of class gcis:Chapter, gcis:Report, and gcis:Image, respectively
 
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
