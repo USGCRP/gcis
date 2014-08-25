@@ -42,8 +42,11 @@
 
 % end
 
-
-
-
 %= include 'image/prov';
 %= include 'contributors';
+
+## The aforementioned figures are of class gcis:Figure.
+% for my $figure ($image->figures) {
+<<%= obj_uri_for($figure)->to_abs %>> a gcis:Figure .
+% }
+
