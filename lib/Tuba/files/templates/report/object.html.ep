@@ -45,7 +45,7 @@
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
         %= include 'h/contributors_short', object => $report, role_regex => '(editor|author|distributor)';
-        <p itemprop="description"><%= $report->summary %></p>
+        <p itemprop="description" class='linebreaks'><%= $report->summary %></p>
         % my ($chp, $fig, $fin,$tab, $ref) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {
    <p>This report has
