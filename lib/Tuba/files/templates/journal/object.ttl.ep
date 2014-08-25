@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis dwc/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -27,5 +27,9 @@
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;
 
    a bibo:Journal .
+
+% for my $article ($journal->articles) {
+<<%= obj_uri_for($article)->to_abs %>> a bibo:Article .
+% }
 
 % end
