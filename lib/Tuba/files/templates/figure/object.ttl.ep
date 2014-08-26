@@ -46,6 +46,9 @@
 ## Figure source:
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
 
+## Usage limits:
+   dcterms:rights "<%= $figure->usage_limits %>"^^xsd:string;
+
 % for my $keyword ($figure->keywords) {
 ## Keywords associated with the figure
    gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
