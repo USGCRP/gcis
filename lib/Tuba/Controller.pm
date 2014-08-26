@@ -777,6 +777,7 @@ sub update_files {
         my $res = $tx->success or
             return $c->update_error( "Error getting $file_url : ".$tx->error->{message});
         $c->app->log->info("Got $file_url, code is ".$res->code);
+        my $content_type = $res->headers->content_type;
         my $content = $res->body;
 
         my $remote_url = Mojo::URL->new($file_url);
@@ -784,7 +785,8 @@ sub update_files {
         my $up = Mojo::Upload->new;
         $up->filename($filename);
         $up->asset(Mojo::Asset::File->new->add_chunk($content));
-        my $new_file = $pub->upload_file(c => $c, upload => $up) or return $c->update_error( $pub->error);
+        my $new_file = $pub->upload_file(c => $c, upload => $up, type => $content_type)
+            or return $c->update_error( $pub->error);
         if ($json->{use_remote_location} || $c->param('use_remote_location')) {
             # generate thumbnail first then remove it.
             $new_file->generate_thumbnail;

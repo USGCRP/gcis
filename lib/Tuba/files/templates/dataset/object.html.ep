@@ -91,7 +91,7 @@
         <br>
         % }
 
-        %= include 'h/prov', pub => $dataset->get_publication;
+        %= include 'h/prov', pub => $dataset->get_publication, thumbnails => 1;
         %= include 'h/cited_by', pub => $dataset->get_publication;
         %= include 'h/cites', pub => $dataset->get_publication;
 

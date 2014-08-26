@@ -174,13 +174,15 @@ SQL
 
 Add a Mojo::Upload object to this publication.
 Returns the new Tuba::DB::Object::File on success or false on failure.  
+$type is an optional content type (file suffix takes precedence).
+, in case the file has no suffix indica.
 
 =cut
 
 sub upload_file {
     my $pub = shift;
     my %args = @_;
-    my ($c,$upload) = @args{qw/c upload/};
+    my ($c,$upload,$type) = @args{qw/c upload type/};
     my $file = $upload;
     unless ($file && $file->size) {
         $pub->error("Missing or empty file.");
@@ -193,6 +195,11 @@ sub upload_file {
     my $md5 = b($file->slurp)->md5_sum;
     my $md5_dir = join '/', substr($md5,0,2), substr($md5,2,2), substr($md5,4);
 
+    if ($type) {
+        if ($type =~ m[image/jpeg]) {
+            $file->filename( $file->filename.'.jpg') unless $file->filename =~ /\.jpe?g$/i;
+        }
+    }
     my $filename = $file->filename;
     $filename =~ s/ /_/g;
     $filename =~ tr[a-zA-Z0-9_.-][]dc;
@@ -205,7 +212,7 @@ sub upload_file {
         $pub->error("Could compute sha1");
         return;
     };
-    $tfile->checkfix_mime_type or do {
+    $tfile->checkfix_mime_type($type) or do {
         $pub->error("Could not determine mime type from filename $filename.  Supported suffixes are : ".join ',', $tfile->supported_suffixes);
         return;
     };
