@@ -1,9 +1,9 @@
 
-% layout 'default';
-% my $table = $object->meta->table;
+% layout 'default', title => $platform->identifier.' - '.$platform->name,
+%   description => $platform->description;
 
 <center>
-<h2><%= $table %> : <%= $object->stringify %></h2>
+<h2>Platform : <%= $object->stringify %></h2>
 </center>
 
 % unless (param 'no_header') {
@@ -17,20 +17,26 @@
         </span>
     % }
 
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
-
 % }
 
-%= include 'fields';
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $platform->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $platform->name %></h2>
+        <%= $platform->description %>
+        <br>
+        <%= external_link($platform->url) %>
 
-%= include_first [ "$table/relationships", "relationships" ], object => $object, meta => $meta;
+        <br>
+        Instruments :
+% for my $i ($platform->instruments) {
+%= obj_link($i);
+% }
+
+    </div>
+</div>
 
 %= include 'prov';
 
-<div class='row collapse-wrapper'>
-%= include 'collapsible', row_content => begin
-%= include 'contributors';
-%= end
-</div>
-
-%= include 'files';
+%= include 'h/other_formats';

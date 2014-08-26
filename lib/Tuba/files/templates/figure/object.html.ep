@@ -46,6 +46,9 @@
         % if ($figure->source_citation){
         <p>When citing this figure, please reference <%= tbibs_to_links($figure->source_citation) %>.</p>
         % }
+        % if ($figure->usage_limits) {
+        <p><%= $figure->usage_limits %></p>
+        % }
         % if (my @figs = $figure->kindred_figures) {
         <p>Other figures containing images in this figure : <%= include 'commify', objs => \@figs %></p>
         % }
