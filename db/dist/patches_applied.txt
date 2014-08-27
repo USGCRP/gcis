@@ -124,3 +124,4 @@
 1150_report_type.sql	7ca4d425805d1a980907df5e9c6e5cad
 1160_instrument.sql	80f418b8fe179ef873869bd5acfc15ae
 1170_extra_fk.sql	14b2148868d7da7a93ee58177c4a7652
+1180_publication_types.sql	5f9ec85a0d8d89991005bf51f433c9b4
