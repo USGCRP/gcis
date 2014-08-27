@@ -1,8 +1,8 @@
-% layout 'default', namespaces => [qw/dcterms gcis dbpedia dbpedia_owl schema fabio/];
+% layout 'default', namespaces => [qw/dcterms dbpedia gcis dbpedia_owl schema fabio/];
 
 ## Filename
    dcterms:identifier "<%= $file->identifier %>";
-   dcterms:title "<%= $file->file %>";
+   dbpedia:Path_(computing) "<%= $file->file %>";
 
 % if ($file->location) {
    gcis:Location "<%= url_host($file->location) %>";
