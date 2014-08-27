@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis bibo dcterms dwc xsd cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>   
@@ -17,7 +17,7 @@
 
    a bibo:Article .
 
-## The publication in which the article appears is of class: journal.
+## The publication in which the article appears is of class:journal.
 <<%= uri($article->journal) %>> a bibo:Journal .
 % end
 
