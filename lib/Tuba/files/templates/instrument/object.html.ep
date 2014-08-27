@@ -1,0 +1,42 @@
+
+% layout 'default', title => $instrument->identifier.' - '.$instrument->name,
+%   description => $instrument->description;
+
+<center>
+<h2>Instrument : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $instrument->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $instrument->name %></h2>
+        <p class='linebreaks'>
+        <%= $instrument->description %>
+        </p>
+
+        <br>
+        Platforms :
+% for my $i ($instrument->platforms) {
+%= obj_link($i);
+% }
+
+    </div>
+</div>
+
+%= include 'prov';
+
+%= include 'h/other_formats';
