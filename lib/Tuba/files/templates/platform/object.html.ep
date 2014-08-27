@@ -24,19 +24,27 @@
         % my $pub = $platform->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <h2><%= $platform->name %></h2>
+        %= include commify => objs => scalar $platform->all_orgs
+        <br>
         <%= $platform->description %>
         <br>
         <%= external_link($platform->url) %>
 
         <br>
         Instruments :
+        <ul>
 % for my $i ($platform->instruments) {
-%= obj_link($i);
+<li><%= obj_link($i);%>
+%= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
+(instance)
+%= end
+</li>
 % }
+</ul>
 
     </div>
 </div>
 
-%= include 'prov';
+%= include 'prov'
 
 %= include 'h/other_formats';
