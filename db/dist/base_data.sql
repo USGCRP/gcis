@@ -314,6 +314,8 @@ COPY instrument_measurement (platform_identifier, instrument_identifier, dataset
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+platform	platform
+instrument	instrument
 \.
 
 
