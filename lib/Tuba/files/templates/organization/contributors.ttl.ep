@@ -21,8 +21,10 @@
       prov:actedOnBehalfOf <<%= current_resource %>>;
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] ;
-
 .
+
+<<%= obj_uri_for($ctr->person)->to_abs %>> a gcis:Person .
+
 % # The following portion only works if a pub is associated with an org but with no author
 % } else {
 % my $pub = $object->get_publication;
@@ -34,6 +36,8 @@
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] ;
 .
+
+
 % }
 % }
 % }
