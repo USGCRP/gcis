@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc prov skos org/];
+% layout 'default', namespaces => [qw/dcterms skos xsd gcis org dwc prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -18,7 +18,7 @@
 
    a gcis:Organization .
 
-%# Through the end of this script, we explore relationships between organizations:
+%# We now explore relationships between organizations:
    % if (my @maps = $organization->organization_maps) {
      % my $first = 1;
      % for my $map (@maps) {
@@ -53,6 +53,9 @@
       org:linkedto <<%= current_resource %>>;
    ] ;
 .
+
+<<%= obj_uri_for($map->organization)->to_abs %>> a gcis:Organization .
+
 
    % }
    % }
