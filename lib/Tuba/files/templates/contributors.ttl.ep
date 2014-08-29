@@ -23,8 +23,7 @@
 <<%= obj_uri_for($con->{person})->to_abs %>> a gcis:Person .
                 % for my $org (@{ $con->{orgs} }) {
 <<%= obj_uri_for($org)->to_abs =%>> a gcis:Organization .
-                % }
-
+                % }         
          % } else {
              % my $first;
              % for my $org (@{ $con->{orgs} }) {
@@ -39,7 +38,6 @@
 .
 
 <<%= obj_uri_for($org)->to_abs %>> a gcis:Organization .
-
              % }
          % }
      % }
