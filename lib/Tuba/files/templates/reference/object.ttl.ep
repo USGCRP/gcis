@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms biro gcis bibo/];
+% layout 'default', namespaces => [qw/dcterms biro gcis/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $reference->identifier %>";
