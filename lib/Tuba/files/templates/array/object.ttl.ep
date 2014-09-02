@@ -1,12 +1,13 @@
-% layout 'default', namespaces => [qw/gcis dcterms/];
+% layout 'default', namespaces => [qw/dcterms gcis/];
 
 <<%= current_resource %>>
-   a gcis:Array;
    dcterms:identifier "<%= $array->identifier %>";
 
 % for my $table ($array->tables) {
    gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.
-% }   
+% }
+
+   a gcis:Array.   
 
 % for my $table ($array->tables) {
 <<%= obj_uri_for($table)->to_abs %>> a gcis:Table .
