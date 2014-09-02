@@ -13,7 +13,7 @@
 
 ## Country in which organization is situated
 % if (my $country = $organization->country) {
-   places:Country "<%= $country->name %>"^^xsd:string'
+   places:Country "<%= $country->name %>"^^xsd:string;
 % }
 
    a gcis:Organization .
