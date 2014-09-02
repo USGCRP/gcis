@@ -7,7 +7,6 @@
  
 ## The number of the Chapter, the URI for the chapter, and the URI for the report in which the finding appears:
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
-   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    gcis:isFindingOf <<%= uri($chapter) %>>;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
