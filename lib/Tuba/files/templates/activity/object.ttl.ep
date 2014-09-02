@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms prov fabio gcis meth/];
+% layout 'default', namespaces => [qw/dcterms xsd prov dbpedia_owl gcis meth/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -14,7 +14,7 @@
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
 
 ## Output datafiles   
-   fabio:ComputerFile "<%= tl($activity->output_artifacts) %>";
+   dbpedia_owl filename "<%= tl($activity->output_artifacts) %>"^^xsd:string;
 
 ## Software utilized
    gcis:Software "<%= $activity->software %>"^^xsd:string;
