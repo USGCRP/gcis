@@ -33,7 +33,6 @@
       org:linkedto <<%= obj_uri_for($map->other_organization)->to_abs %>>;
    ] ;
 . 
-
 <<%= obj_uri_for($map->other_organization)->to_abs %>> a gcis:Organization .
 
     % }
@@ -53,7 +52,6 @@
       org:linkedto <<%= current_resource %>>;
    ] ;
 .
-
 <<%= obj_uri_for($map->organization)->to_abs %>> a gcis:Organization .
 
 
