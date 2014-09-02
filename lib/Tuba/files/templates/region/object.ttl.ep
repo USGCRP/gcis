@@ -3,7 +3,7 @@
 
 <<%= current_resource %>>
    dcterms:identifer "<%= $region->identifier %>";
-   dcterms:title "<%= $region->label %>";
+   dcterms:title "<%= $region->label %>"^^xsd:string;
    dcterms:description "<%= $region->description %>"^^xsd:string;
 
 ## The following publications pertain to this region:

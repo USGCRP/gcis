@@ -1,7 +1,0 @@
-
-% layout 'default';
-% my $table = $object->meta->table;
-
-%= include_first [ "$table/relationships", "relationships" ], object => $object, meta => $meta;
-
-%= include 'files';
