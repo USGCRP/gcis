@@ -32,7 +32,7 @@
         fabio =>  '<http://purl.org/spar/fabio/>',
         schema =>  '<http://schema.org/>',
         skos =>  '<http://www.w3.org/2004/02/skos/core#>',
-        places => '<http://purl.org/ontology/places#>,
+        places =>  '<http://purl.org/ontology/places#>',
     ); %>
     % my $which = stash 'namespaces';
     % for my $k ($which ? @$which : keys %namespaces) {
