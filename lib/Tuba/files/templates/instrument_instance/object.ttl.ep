@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis xsd prov/];
+% layout 'default', namespaces => [qw/dcterms gcis prov/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument_instance->identifier %>";
