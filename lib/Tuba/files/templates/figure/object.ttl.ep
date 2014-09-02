@@ -8,7 +8,6 @@
 
 ## The number of the Chapter, the URI for the chapter, and the URI for the report in which the figure appears:
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    gcis:isFigureOf <<%= uri($chapter) %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
