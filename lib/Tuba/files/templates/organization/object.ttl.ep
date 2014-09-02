@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms skos xsd gcis org dwc prov/];
+% layout 'default', namespaces => [qw/dcterms skos xsd gcis org places prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -13,7 +13,7 @@
 
 ## Country in which organization is situated
 % if (my $country = $organization->country) {
-   dwc:countryCode "<%= $country->code %>";
+   places:Country "<%= $country->name %>"^^xsd:string'
 % }
 
    a gcis:Organization .
