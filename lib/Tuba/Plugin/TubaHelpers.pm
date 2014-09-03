@@ -18,6 +18,7 @@ use Number::Format;
 use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
+use URI::Find;
 
 use Tuba::Log;
 use Tuba::DocManager;
