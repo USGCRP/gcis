@@ -430,6 +430,7 @@ sub register {
             my $c = shift;
             my $str = shift or return "";
             $str =~ s[<tbib>([^<]+)</tbib>][]g;
+            $str =~ s[<sup>([^<]+)</sup>][]g;  # sometimes accompany tbibs
             return $str;
         });
     $app->helper(tl => sub {
