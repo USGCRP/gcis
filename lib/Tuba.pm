@@ -64,7 +64,7 @@ use Data::UUID::LibUUID;
 use strict;
 
 our $VERSION = '1.08';
-our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
+our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
     my $app = shift;

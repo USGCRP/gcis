@@ -1,0 +1,5 @@
+% layout 'default', format => 'html';
+%= include 'h/other_formats', format => 'thtml';
+<pre><code>
+%== uris_to_hrefs( (stash 'turtle'), 'thtml');
+</code></pre>

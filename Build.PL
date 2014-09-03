@@ -75,6 +75,7 @@ my $builder = Module::Build::Database->new(
         'Text::CSV_XS' => 0,
         'Text::Format' => 0,
         'Time::Duration' => 0,
+        'URI::Find' => 0,
         'YAML::XS' => 0,
         'String::Diff' => 0,
         'DateTime::Format::Human::Duration' => 0,

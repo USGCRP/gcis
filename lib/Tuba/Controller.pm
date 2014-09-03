@@ -190,6 +190,13 @@ sub show {
         ttl   => sub { my $c = shift;
             $c->res->headers->content_type("application/x-turtle");
             $c->render_maybe("$table/object") or $c->render("object") },
+        thtml => sub { my $c = shift;
+            $c->res->headers->content_type("text/html");
+            $c->stash->{format} = 'ttl';
+            $c->stash('turtle' => $c->render_partial_ttl($table));
+            $c->stash->{format} = 'thtml';
+            $c->render_maybe("$table/object") || $c->render("object");
+        },
         html  => sub { my $c = shift;
             $c->param('long') and $c->render_maybe("$table/long/object") and return;
             $c->render_maybe("$table/object") or $c->render("object") },

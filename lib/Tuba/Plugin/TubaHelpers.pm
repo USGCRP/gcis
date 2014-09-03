@@ -17,7 +17,8 @@ use DateTime::Format::Human::Duration;
 use Number::Format;
 use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
-use Mojo::Util qw/decamelize/;
+use Mojo::Util qw/decamelize xml_escape/;
+use URI::Find;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -173,9 +174,22 @@ sub register {
             my $format = shift;
             my $conv = Tuba::Converter->new(
                     ttl  => $ttl,
-                    base => $c->req->url->base->to_abs
+                    base => $c->req->url->base->to_abs,
+                    url  => $c->req->url,
                 );
             $c->render( data => $conv->output( format => $format, title => $c->stash('title') ));
+        });
+    $app->helper(uris_to_hrefs => sub {
+            my $c = shift;
+            my $output = shift;
+            my $suffix = shift; # Suffix to append
+            my $base = $c->req->url->base;
+            URI::Find->new(sub {
+                    my ($uri, $orig) = @_;
+                    $uri .= ".$suffix" if $suffix && $orig =~ /^\Q$base\E/;
+                    return qq[<a href="$uri">$orig</a>];
+                })->find(\$output, \&xml_escape );
+            return $output;
         });
     $app->helper(render_partial_ttl_as => sub {
             my $c = shift;
@@ -430,6 +444,7 @@ sub register {
             my $c = shift;
             my $str = shift or return "";
             $str =~ s[<tbib>([^<]+)</tbib>][]g;
+            $str =~ s[<sup>([^<]+)</sup>][]g;  # sometimes accompany tbibs
             return $str;
         });
     $app->helper(tl => sub {
