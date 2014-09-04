@@ -191,6 +191,22 @@ sub register {
                 })->find(\$output, \&xml_escape );
             return $output;
         });
+    $app->helper( expand_turtle_prefixes => sub {
+            my $c = shift;
+            my $str = shift;
+            my %pre = $c->turtle_namespaces;
+            my $re = join '|', keys %pre;
+            $str =~ s[ ($re):(\S+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
+            return $str;
+        });
+    $app->helper( expand_turtle_prefixes => sub {
+            my $c = shift;
+            my $str = shift;
+            my %pre = $c->turtle_namespaces;
+            my $re = join '|', keys %pre;
+            $str =~ s[ ($re):(\S+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
+            return $str;
+        });
     $app->helper(render_partial_ttl_as => sub {
             my $c = shift;
             my $table = shift;
@@ -490,7 +506,41 @@ sub register {
             return $url unless $url =~ /^(http|ftp)/;
             return $c->link_to($url, $url, target => "_blank");
         });
+    $app->helper(turtle_namespaces => sub {
+     return (
+return (
+        bibo       => 'http://purl.org/ontology/bibo/',
+          dc       => 'http://purl.org/dc/elements/1.1/',
+          dcterms  => 'http://purl.org/dc/terms/',
+          dcmitype => 'http://purl.org/dc/dcmitype/',
+          foaf     => 'http://xmlns.com/foaf/0.1/',
+          gcis     => 'http://data.globalchange.gov/gcis.owl#',
+          org      => 'http://www.w3.org/ns/org#',
+          prov     => 'http://www.w3.org/ns/prov#',
+          rdf      => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+          rdfs     => 'http://www.w3.org/2000/01/rdf-schema#',
+          xml      => 'http://www.w3.org/XML/1998/namespace',
+          xsd      => 'http://www.w3.org/2001/XMLSchema#',
+          dwc      => 'http://rs.tdwg.org/dwc/terms/',
+          doco     => 'http://purl.org/spar/doco',
+          cito     => 'http://purl.org/spar/cito/',
+          biro     => 'http://purl.org/spar/biro/',
+          datacite => 'http://purl.org/spar/datacite/',
+          co       => 'http://purl.org/co/',
+          frbr     => 'http://purl.org/vocab/frbr/core#',
+          dcat     => 'http://www.w3.org/ns/dcat#',
+          vivo     => 'http://vivoweb.org/ontology/core#',
+          ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#',
+          meth   => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#',
+          geo    => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+          fabio  => 'http://purl.org/spar/fabio/',
+          schema => 'http://schema.org/',
+          skos   => 'http://www.w3.org/2004/02/skos/core#',
+          places =>  '<http://purl.org/ontology/places#>',
+ )
+    });
 }
+
 
 1;
 
