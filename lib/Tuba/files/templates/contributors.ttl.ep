@@ -36,10 +36,11 @@
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .
-
 <<%= obj_uri_for($org)->to_abs %>> a gcis:Organization .
+
              % }
          % }
      % }
 % }
+
 % }
