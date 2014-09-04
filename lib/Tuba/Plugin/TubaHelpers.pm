@@ -480,12 +480,15 @@ sub register {
             my $block = shift;
             my $regex = ref($what) eq 'Regexp' ? $what : qr/\Q$what\E/;
             no warnings 'uninitialized';
-            my @lines = grep { $_ !~ /$regex/ } split /\n/, $block->();
+            my $before = $block->();
+            my @lines = grep { $_ !~ /$regex/ } split /\n/, $before;
             return b(join "\n", @lines);
         });
     $app->helper( empty_predicate => sub {
             my $c = shift;
-            return qr[""                 # empty quotes
+            return qr[
+                       \                 # a space
+                       ""                # empty quotes
                         (?:\^\^xsd:
                            (?:[a-zA-Z]+) # optional type
                         )?

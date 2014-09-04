@@ -93,6 +93,15 @@ sub startup {
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
 
+    $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
+            my $str = shift;
+            return "" unless defined($str) && length($str);
+            $str =~ s/"/\\"/g;
+            $str =~ s/\n/\\n/g;
+            $str =~ s/\r/\\r/g;
+            return $str;
+        }}});
+
     # Hooks
     $app->hook(after_dispatch => sub {
         my $c = shift;
