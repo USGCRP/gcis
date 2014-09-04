@@ -1,5 +1,5 @@
 % layout 'default', format => 'html';
 %= include 'h/other_formats', format => 'thtml';
 <pre style='line-height:16px;'>
-%== uris_to_hrefs( (stash 'turtle'), 'thtml');
+%== expand_turtle_prefixes( uris_to_hrefs( (stash 'turtle'), 'thtml') );
 </pre>
