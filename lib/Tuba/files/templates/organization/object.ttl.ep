@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms skos xsd gcis org places prov/];
+% layout 'default', namespaces => [qw/dcterms skos xsd gcis org place prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -13,7 +13,7 @@
 
 ## Country in which organization is situated
 % if (my $country = $organization->country) {
-   places:Country "<%= $country->name %>"^^xsd:string;
+   place:Country "<%= $country->name %>"^^xsd:string;
 % }
 
    a gcis:Organization .
@@ -33,7 +33,6 @@
       org:linkedto <<%= obj_uri_for($map->other_organization)->to_abs %>>;
    ] ;
 . 
-<<%= obj_uri_for($map->other_organization)->to_abs %>> a gcis:Organization .
 
     % }
 % }
@@ -52,8 +51,6 @@
       org:linkedto <<%= current_resource %>>;
    ] ;
 .
-<<%= obj_uri_for($map->organization)->to_abs %>> a gcis:Organization .
-
 
    % }
    % }
