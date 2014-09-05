@@ -1,5 +1,6 @@
 % layout 'default', namespaces => [qw/dcterms dbpedia gcis dbpedia_owl schema fabio/];
 
+<<%= current_resource %>>
 ## Filename
    dcterms:identifier "<%= $file->identifier %>";
    dbpedia:Path_(computing) "<%= $file->file %>";
