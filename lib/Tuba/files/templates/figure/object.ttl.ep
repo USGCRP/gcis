@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis rdf prov xsd cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis rdf prov cito biro/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -54,19 +54,6 @@
 % }  
 
    a gcis:Figure .
-
-
-## The aforementioned chapter, report, and image(s) are of class gcis:Chapter, gcis:Report, and gcis:Image, respectively
-
-% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-<<%= uri($chapter) %>> a gcis:Chapter .
-<<%= obj_uri_for($report)->to_abs %>> a gcis:Report .
-% }
-% for my $image ($figure->images) {
-<<%= obj_uri_for($image)->to_abs %>> a gcis:Image .
-% }
-
-% end
 
 
 
