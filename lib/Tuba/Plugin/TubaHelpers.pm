@@ -199,14 +199,6 @@ sub register {
             $str =~ s[ ($re):(\S+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
             return $str;
         });
-    $app->helper( expand_turtle_prefixes => sub {
-            my $c = shift;
-            my $str = shift;
-            my %pre = $c->turtle_namespaces;
-            my $re = join '|', keys %pre;
-            $str =~ s[ ($re):(\S+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
-            return $str;
-        });
     $app->helper(render_partial_ttl_as => sub {
             my $c = shift;
             my $table = shift;
@@ -508,7 +500,6 @@ sub register {
         });
     $app->helper(turtle_namespaces => sub {
      return (
-return (
         bibo       => 'http://purl.org/ontology/bibo/',
           dc       => 'http://purl.org/dc/elements/1.1/',
           dcterms  => 'http://purl.org/dc/terms/',
@@ -536,11 +527,9 @@ return (
           fabio  => 'http://purl.org/spar/fabio/',
           schema => 'http://schema.org/',
           skos   => 'http://www.w3.org/2004/02/skos/core#',
-          places =>  '<http://purl.org/ontology/places#>',
- )
+        )
     });
 }
 
 
 1;
-
