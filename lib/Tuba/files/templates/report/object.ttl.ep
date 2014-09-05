@@ -49,23 +49,6 @@
 
    a gcis:Report .
 
-## The report's chapters, figures, tables, and findings are of the classes gcis:Chapter, gcis:Figure, gcis:Table, and gcis_Finding, respectively:
-% for my $chapter ($report->chapters) {
-<<%= obj_uri_for($chapter)->to_abs %>> a gcis:Chapter .
-% }
-
-% for my $figure ($report->figures) {
-<<%= obj_uri_for($figure)->to_abs %>> a gcis:Figure .
-% }
-
-% for my $table ($report->tables) {
-<<%= obj_uri_for($table)->to_abs %>> a gcis:Table .
-% }
-
-% for my $finding ($report->findings) {
-<<%= obj_uri_for($finding)->to_abs %>> a gcis:Finding .
-% }
-
 % end
 
 
