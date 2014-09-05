@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd rdf biro cito/];
+% layout 'default', namespaces => [qw/dcterms gcis xsd rdf cito biro/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -7,7 +7,6 @@
  
 ## The number of the Chapter, the URI for the chapter, and the URI for the report in which the finding appears:
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
-   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    gcis:isFindingOf <<%= uri($chapter) %>>;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
@@ -31,8 +30,13 @@
    a gcis:Finding .
 
 
-% end
+## The aforementioned chapter and report are of class gcis:Chapter and gcis:Report, respectively:
+% if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
+<<%= uri($chapter) %>> a gcis:Chapter .
+<<%= obj_uri_for($report)->to_abs %>> a gcis:Report .
+% }
 
+% end
 
 
 

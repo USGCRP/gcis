@@ -527,10 +527,12 @@ sub register {
           fabio  => 'http://purl.org/spar/fabio/',
           schema => 'http://schema.org/',
           skos   => 'http://www.w3.org/2004/02/skos/core#',
-        )
+          place => 'http://purl.org/ontology/places#', 
+       )
     });
 }
 
 
 1;
 
+1;

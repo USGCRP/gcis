@@ -1,0 +1,42 @@
+% if (param('no_header')) {
+   @base <<%= current_resource %> .
+%= content
+% } else {
+    <% my %namespaces = (
+        bibo =>  '<http://purl.org/ontology/bibo/>',
+        dc =>  '<http://purl.org/dc/elements/1.1/>',
+        dcterms =>  '<http://purl.org/dc/terms/>',
+        dcmitype =>  '<http://purl.org/dc/dcmitype/>',
+        foaf =>  '<http://xmlns.com/foaf/0.1/>',
+        dbpedia =>  '<http://dbpedia.org/resource/>',
+        dbpedia_owl =>  '<http://dbpedia.org/ontology/>',
+        gcis =>  '<http://data.globalchange.gov/gcis.owl#>',
+        org =>  '<http://www.w3.org/ns/org#>',
+        prov =>  '<http://www.w3.org/ns/prov#>',
+        rdf =>  '<http://www.w3.org/1999/02/22-rdf-syntax-ns#>',
+        rdfs =>  '<http://www.w3.org/2000/01/rdf-schema#>',
+        xml =>  '<http://www.w3.org/XML/1998/namespace>',
+        xsd =>  '<http://www.w3.org/2001/XMLSchema#>',
+        dwc =>  '<http://rs.tdwg.org/dwc/terms/>',
+        doco =>  '<http://purl.org/spar/doco>',
+        cito =>  '<http://purl.org/spar/cito/>',
+        biro =>  '<http://purl.org/spar/biro/>',
+        datacite =>  '<http://purl.org/spar/datacite/>',
+        co =>  '<http://purl.org/co/>',
+        frbr =>  '<http://purl.org/vocab/frbr/core#>',
+        dcat =>  '<http://www.w3.org/ns/dcat#>',
+        vivo =>  '<http://vivoweb.org/ontology/core#>',
+        ext =>  '<http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#>',
+        meth =>  '<http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#>',
+        geo =>  '<http://www.w3.org/2003/01/geo/wgs84_pos#>',
+        fabio =>  '<http://purl.org/spar/fabio/>',
+        schema =>  '<http://schema.org/>',
+        skos =>  '<http://www.w3.org/2004/02/skos/core#>',
+        places =>  '<http://purl.org/ontology/places#>',
+    ); %>
+    % my $which = stash 'namespaces';
+    % for my $k ($which ? @$which : keys %namespaces) {
+@prefix <%= $k %>: <<%== $namespaces{$k} %>> .
+    % }
+%= content
+% }

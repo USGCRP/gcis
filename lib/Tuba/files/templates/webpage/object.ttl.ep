@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd bibo cito biro/];
+% layout 'default', namespaces => [qw/dcterms csd gcis bibo cito biro/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -20,6 +20,8 @@
 % end
 
 
+
 ## This article is cited by the following entities in GCIS:
 %= include 'prov';
 
+%= include 'contributors';
