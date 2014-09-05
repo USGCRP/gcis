@@ -30,8 +30,4 @@
 
    a bibo:Journal .
 
-% for my $article ($journal->articles) {
-<<%= obj_uri_for($article)->to_abs %>> a bibo:Article .
-% }
-
 % end
