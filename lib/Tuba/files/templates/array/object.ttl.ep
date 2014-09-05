@@ -7,8 +7,4 @@
    gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.
 % }
 
-   a gcis:Array.   
-
-% for my $table ($array->tables) {
-<<%= obj_uri_for($table)->to_abs %>> a gcis:Table .
-% }
+   a gcis:Array.
