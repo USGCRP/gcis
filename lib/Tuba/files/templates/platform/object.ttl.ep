@@ -11,8 +11,3 @@
    <% } %>
 
    a gcis:Platform .
-
-<% for my $instrument ($platform-instruments) { %>
-   <<%= obj_uri_for($instrument)->to_abs %>> a gcis:Instrument .
-   <% } %>
-
