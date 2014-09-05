@@ -8,12 +8,8 @@
  % for my $parent (@parents) {
    % my $parent_pub = $parent->{publication};
 <<%= current_resource %>>
-   a gcis:<%= $object->meta->table %>;
    <% if ($parent->{publication}) { %>prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>><% } %>;
    <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
-
-<<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>> a gcis:Dataset .
-<<%= uri($parent->{activity}) %>> a prov:Activity .
 
 
    % }
