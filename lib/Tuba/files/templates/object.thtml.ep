@@ -1,5 +1,8 @@
 % layout 'default', format => 'html';
 %= include 'h/other_formats', format => 'thtml';
+% my $base = $self->req->url;
+% $base =~ s/.thtml$//;
+<%= link_to "$base.ttl" => class => 'btn pull-right blackbutton' => begin %>Raw<%= end %> \
 <pre style='line-height:16px;'>
 %== expand_turtle_prefixes( uris_to_hrefs( (stash 'turtle'), 'thtml') );
 </pre>
