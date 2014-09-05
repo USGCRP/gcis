@@ -17,10 +17,6 @@
 
    a bibo:Article .
 
-## The publication in which the article appears is of class:journal.
-<<%= uri($article->journal) %>> a bibo:Journal .
-% end
-
 
 
 ## This article is cited by the following entities in GCIS:
