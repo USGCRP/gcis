@@ -7,9 +7,18 @@
             % if (stash 'no_link') {
             %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
             % } else {
-                %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                % my $dest = $file->landing_page || url_for('show_file', { file_identifier => $file->identifier });
+                %= link_to $dest => class => 'thumbnail' => begin
                 %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
                 %= end
+                % if ($file->landing_page) {
+                <center><div class='caption'>
+                        %= link_to $file->landing_page => begin
+                        <%= url_host($file->landing_page) %>
+                        %= end
+                </div></center>
+                % }
+
             % }
         % }
     % } else {

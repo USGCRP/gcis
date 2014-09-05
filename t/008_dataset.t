@@ -67,6 +67,7 @@ my $platform = {
   description => "our house, in the middle of our street",
   platform_type_identifier => undef,
   url         => undef,
+  description_attribution => undef,
 };
 $t->post_ok( "/platform" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";

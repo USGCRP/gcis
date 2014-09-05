@@ -807,6 +807,10 @@ sub update_files {
             $new_file->save(audit_user => $c->user);
             logger->info("saving remote asset ".$remote_url);
         }
+        if (my $landing_page = ($json->{landing_page} || $c->param('landing_page')) ) {
+            $new_file->landing_page($landing_page);
+            $new_file->save(audit_user => $c->user);
+        }
     }
 
     my $image_dir = $c->config('image_upload_dir') or do { logger->error("no image_upload_dir configured"); die "configuration error"; };
