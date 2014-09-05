@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis xsd prov cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov cito biro/];
 %= filter_lines_with empty_predicate() => begin
   
 <<%= current_resource %>>
@@ -32,20 +32,6 @@
 % }
 
    a gcis:Chapter .
-
-
-## The aforementioned report, figures, findings, and tables (where applicable) are of class gcis:Report, gcis:Figure, gcis:Finding, and gcis:Table, respectively:
-
-<<%= obj_uri_for($report)->to_abs %>> a gcis:Report .
-% for my $figure ($chapter->figures) {
-<<%= obj_uri_for($figure)->to_abs %>> a gcis:Figure .
-% }
-% for my $finding ($chapter->findings) {
-<<%= obj_uri_for($finding)->to_abs %>> a gcis:Finding .
-% }
-% for my $table ($chapter->tables) {
-<<%= obj_uri_for($table)->to_abs %>> a gcis:Table .
-% }
 
 % end
 
