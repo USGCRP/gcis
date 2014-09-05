@@ -28,11 +28,4 @@
 .
 
     % }
-  % } 
-
-   % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
-    % for my $map (@{ $ctr->publication_contributor_maps }) {
-     % my $obj = $map->publication->to_object;
-<<%= obj_uri_for($ctr->organization)->to_abs %>> a gcis:Organization .
-    % }
-% } 
+  % }
