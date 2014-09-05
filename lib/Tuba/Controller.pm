@@ -116,7 +116,7 @@ sub _stringify {
 sub render_yaml {
     my $c = shift;
     my $thing = shift;
-    $c->res->headers->content_type('text/x-yaml; charset=utf-8');
+    $c->res->headers->content_type('text/plain; charset=utf-8');
     my $stringified = _stringify($thing);
     $c->res->body(encode('UTF-8',Dump($stringified)));
     $c->res->code(200);

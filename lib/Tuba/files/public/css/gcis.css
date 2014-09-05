@@ -104,3 +104,7 @@ p.linebreaks {
 a.ontology {
     color:green;
 }
+a.blackbutton {
+    color:black;
+    font-weight:bold;
+}
