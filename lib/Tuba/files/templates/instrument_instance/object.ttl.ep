@@ -20,20 +20,3 @@
 <% } %
 
    a prov:Entity .
-
-## These platforms, instruments, and datasets are of type gcis:Platform, Instrument, and Dataset, respectively:
-<% for my $platform ($instrument_instance->platforms) { %>
-   <<%= obj_uri_for($platform)->to_abs %>> a gcis:Platform .
-<% } %
-
-<% for my $platform ($instrument_instance->instruments) { %>
-   <<%= obj_uri_for($platform)->to_abs %>> a gcis:Instrument .
-<% } %
-
-<% for my $platform ($instrument_instance->datasets) { %>
-   <<%= obj_uri_for($dataset)->to_abs %>> a gcis:Dataset .
-<% } %
-
-
-
-
