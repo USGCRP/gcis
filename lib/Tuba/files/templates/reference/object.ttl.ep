@@ -21,20 +21,4 @@
 
    a biro:BibliographicRecord, dcterms:bibliographicCitation .
 
-% if (my $pub = $reference->publication) {
- % my $report = $pub->to_object;
-<<%= uri($report) %>> a gcis:<%= $report->meta->table %> .
-% }
 
-% for my $subpub ($reference->subpubrefs) {
- % my $chapter = $subpub->publication->to_object;
-<<%= uri($chapter) %>> a gcis:<%= $chapter->meta->table %> .
- % }
-
-
-## This citation describes the following entity of type :
-
-% if (my $pub = $reference->child_publication) {
- % my $publication = $pub->to_object;
-<<%= uri($publication) %>> a gcis:<%= $publication->meta->table %> .
-% }
