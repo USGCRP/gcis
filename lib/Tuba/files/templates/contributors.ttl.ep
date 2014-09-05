@@ -9,7 +9,6 @@
             
 ## Person and his/her role in the creation of the entity (see http://www.w3.org/ns/prov#qualifiedAttribution):
 <<%= obj_uri_for($object)->to_abs %>>
-   a gcis:<%= $object->meta->table %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
@@ -29,15 +28,12 @@
              % for my $org (@{ $con->{orgs} }) {
 ## This entity was produced by an organization (see http://www.w3.org/ns/prov#qualifiedAttribution):
 <<%= obj_uri_for($object)->to_abs %>>    
-   a gcis:<%= $object->meta->table %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= obj_uri_for($org)->to_abs %>>;
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .
-<<%= obj_uri_for($org)->to_abs %>> a gcis:Organization .
-
              % }
          % }
      % }
