@@ -500,8 +500,8 @@ sub register {
         });
     $app->helper(turtle_namespaces => sub {
      return (
-        bibo       => 'http://purl.org/ontology/bibo/',
-          dbpedia  =>  'http://dbpedia.org/resource/',
+          bibo     => 'http://purl.org/ontology/bibo/',
+          dbpedia  => 'http://dbpedia.org/resource/',
           dbpedia_owl => 'http://dbpedia.org/ontology/', 
           dc       => 'http://purl.org/dc/elements/1.1/',
           dcterms  => 'http://purl.org/dc/terms/',
