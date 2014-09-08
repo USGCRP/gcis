@@ -24,15 +24,24 @@
         % my $pub = $instrument->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <h2><%= $instrument->name %></h2>
-        <p class='linebreaks'>
-        <%= $instrument->description %>
-        </p>
+        %= include commify => objs => scalar $instrument->all_orgs
+        % if (my $url = $instrument->description_attribution) {
+        <blockquote><p class='linebreaks'><%= $instrument->description %></p>
+            <small>
+                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <p class='linebreaks'><%= $instrument->description %></p>
+        % }
 
-        <br>
-        Platforms :
-% for my $i ($instrument->platforms) {
-%= obj_link($i);
-% }
+        % if (my @platforms = $instrument->platforms) {
+            <br>
+            Platforms :
+            % for my $i (@platforms) {
+                %= obj_link($i);
+            % }
+        % }
 
     </div>
 </div>

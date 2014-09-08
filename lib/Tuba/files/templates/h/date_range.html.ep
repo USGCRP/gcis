@@ -1,0 +1,8 @@
+% if ($start && $end) {
+<%= $start->strftime("%B, %Y") %> to <%= $end->strftime("%B, %Y") %>
+% } elsif ($start) {
+%= $start->ymd
+% } elsif ($end) {
+until <%= $end->ymd %>
+% }
+
