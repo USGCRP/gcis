@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd dwc bibo gcis cito biro prov/];
+% layout 'default', namespaces => [qw/dcterms gcis xsd dwc bibo prov biro cito/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -22,7 +22,7 @@
    dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
 
 ## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;
+   dcterms:description "<%= tl($report->summary) %>"^^xsd:string;
 
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
