@@ -27,14 +27,7 @@
    gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string;
 
    
-   a gcis:Finding .
-
-
-## The aforementioned chapter and report are of class gcis:Chapter and gcis:Report, respectively:
-% if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
-<<%= uri($chapter) %>> a gcis:Chapter .
-<<%= obj_uri_for($report)->to_abs %>> a gcis:Report .
-% }
+   a gcis:Finding.
 
 % end
 
