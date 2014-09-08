@@ -16,7 +16,7 @@
    a gcis:<%= $obj->meta->table %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
-      <<%= obj_uri_for($ctr->person)->to_abs %>>;
+      prov:agent <<%= obj_uri_for($ctr->person)->to_abs %>>;
       prov:actedOnBehalfOf <<%= current_resource %>>;
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] ;
