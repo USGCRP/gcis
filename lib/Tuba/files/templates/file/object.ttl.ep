@@ -15,7 +15,7 @@
 % }
 
 ## File Size, in bytes:
-   dbpedia_owl:fileSize "<%= $file->size %>";
+   dbpedia_owl:fileSize "<%= $file->size %>"^^xsd:double;
 
 ## The MIME Type
    dbpedia:MIME "<%= $file->mime_type %>";
