@@ -886,7 +886,7 @@ sub update_contributors {
         $c->flash(info => "Saved changes.");
     }
     if ($json && keys %$json) {
-        # TODO
+        # TODO JSON interface for updating sort keys
     } else {
         for my $con ($pub->contributors) {
             my $sort_key = $c->param('sort_key_'.$con->id);
@@ -915,7 +915,7 @@ sub update_contributors {
         }
         if (my $id = $organization) {
             $organization = Organization->new(identifier => $id)->load(speculative => 1)
-                or return $c->update_error("invalid organization $organization");
+                or return $c->update_error("invalid organization $id");
         }
     } else {
         $person = $c->param('person');
