@@ -19,6 +19,8 @@ use YAML qw/Dump/;
 use Encode qw/encode decode/;
 use Tuba::Util qw/human_duration/;
 use Mojo::Util qw/camelize decamelize/;
+use LWP::UserAgent;
+use HTTP::Request;
 use Data::Dumper;
 
 =head2 list
@@ -780,12 +782,21 @@ sub update_files {
         $c->app->log->info("Getting $file_url for ".$object->meta->table."  ".(join '/',$object->pk_values));
         my $ua = $c->app->ua;
         $ua->max_redirects(3);
-        my $tx = $ua->get($file_url);
-        my $res = $tx->success or
-            return $c->update_error( "Error getting $file_url : ".$tx->error->{message});
-        $c->app->log->info("Got $file_url, code is ".$res->code);
-        my $content_type = $res->headers->content_type;
-        my $content = $res->body;
+
+        my ($content, $content_type);
+        if ($file_url =~ /^ftp/) {
+            my $lwp = LWP::UserAgent->new();
+            my $req = HTTP::Request->new(GET => $file_url);
+            my $res = $lwp->request($req);
+            $content = $res->content;
+        } else {
+            my $tx = $ua->get($file_url);
+            my $res = $tx->success or
+                return $c->update_error( "Error getting $file_url : ".$tx->error->{message});
+            $c->app->log->info("Got $file_url, code is ".$res->code);
+            $content_type = $res->headers->content_type;
+            $content = $res->body;
+        }
 
         my $remote_url = Mojo::URL->new($file_url);
         my $filename = $remote_url->path->parts->[-1];

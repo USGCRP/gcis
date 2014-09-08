@@ -47,6 +47,7 @@ my $builder = Module::Build::Database->new(
         'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     requires => {
+        'LWP::UserAgent' => 0,
         'Number::Bytes::Human' => 0,
         'Mojolicious::Plugin::YamlConfig' => 0,
         'Mojolicious' => '5.16',
