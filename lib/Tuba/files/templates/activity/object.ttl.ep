@@ -14,7 +14,7 @@
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
 
 ## Output datafiles   
-   dbpedia_owl filename "<%= tl($activity->output_artifacts) %>"^^xsd:string;
+   dbpedia_owl:filename "<%= tl($activity->output_artifacts) %>"^^xsd:string;
 
 ## Software utilized
    gcis:Software "<%= $activity->software %>"^^xsd:string;
