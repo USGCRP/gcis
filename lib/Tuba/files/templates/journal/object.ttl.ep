@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo gcis place/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -18,11 +18,6 @@
 ## The following article(s), cited by the NCA3, appear in this journal:
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
-% }
-
-% if (my $country = $journal->country) {
-## Country of journal's publication
-   place:Country "<%= $country->name %>"^^xsd:string;
 % }
 
 # URL for journal webpage
