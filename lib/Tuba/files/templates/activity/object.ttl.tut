@@ -8,10 +8,10 @@
 
 ## The activity began and ended at the following times
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
-   prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;   
+   prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;
 
 ## Duration of the activity
-   dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;   
+   dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;
 
 ## Output datafiles   
    dbpedia_owl:filename "<%= tl($activity->output_artifacts) %>"^^xsd:string;

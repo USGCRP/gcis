@@ -25,7 +25,7 @@
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
  
 ## The date the dataset was accessed
-   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date; 
+   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
 
 ## The date the dataset was released
    dcterms:issued "<%= $dataset->release_dt %>"^^xsd:date;
