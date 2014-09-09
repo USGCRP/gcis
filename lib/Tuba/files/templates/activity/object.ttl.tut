@@ -33,6 +33,7 @@
 % if (my @maps = $activity->publication_maps) {
 ## The following image was derived from a dataset using this activity,
 ## syntax per Example 4 on PROV-O primer:
+
    % for my $map (@maps) {
    <<%= obj_uri_for ($map->child_publication->to_object)->to_abs %>>
       a gcis:Image;

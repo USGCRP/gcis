@@ -2,7 +2,7 @@
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-   dcterms:identifier "<%= $person->id %>"; 
+   dcterms:identifier "<%= $person->id %>";
    vivo:orcidId "<%= $person->orcid %>";
    foaf:givenName "<%= $person->first_name %>"^^xsd:string;
    foaf:lastName "<%= $person->last_name %>"^^xsd:string;
