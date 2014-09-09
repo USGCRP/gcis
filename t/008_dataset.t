@@ -69,6 +69,8 @@ my $platform = {
   platform_type_identifier => undef,
   url         => undef,
   description_attribution => undef,
+  start_date => undef,
+  end_date => undef,
 };
 $t->post_ok( "/platform" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";
