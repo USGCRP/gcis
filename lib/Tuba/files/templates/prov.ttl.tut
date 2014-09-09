@@ -17,8 +17,8 @@
     % for my $parent (@parents_with_references) {
             % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
-   cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;   
-   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>. 
+   cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;
+   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>.
 
               % } 
 % }
