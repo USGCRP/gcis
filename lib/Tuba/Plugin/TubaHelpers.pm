@@ -461,9 +461,7 @@ sub register {
             my $c = shift;
             my $str = shift;
             return "" unless defined($str) && length($str);
-            $str =~ s/"/\\"/g;
-            $str =~ s/\n/\\n/g;
-            $str =~ s/\r/\\r/g;
+            # Deprecated since .tut templates escape turtle (see Tuba.pm).
             return $str;
         });
     $app->helper( fix_url => sub {
