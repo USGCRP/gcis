@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms foaf gcis vivo xsd prov/];
+% layout 'default', namespaces => [qw/dcterms vivo foaf xsd gcis prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -6,13 +6,13 @@
    vivo:orcidId "<%= $person->orcid %>";
    foaf:givenName "<%= $person->first_name %>"^^xsd:string;
    foaf:lastName "<%= $person->last_name %>"^^xsd:string;
-   foaf:page "<%= $person->url %>"^^xsd:anyURI;
+   gcis:hasURL "<%= $person->url %>"^^xsd:anyURI;
    
    a gcis:Person .
 % end
 
 
-# Publications in GCIS are related to this person as follows:
+# Publications in GCIS are related to this person as follows (Per entry #63 of PROV-O primer, accessed 28 August 2014):
 
    % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
     % for my $map (@{ $ctr->publication_contributor_maps }) {
@@ -21,17 +21,11 @@
    a gcis:<%= $obj->meta->table %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
-      <<%= current_resource %>>
+      prov:agent <<%= current_resource %>>;
       prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] 
 .
-    % }
-  % } 
 
-   % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
-    % for my $map (@{ $ctr->publication_contributor_maps }) {
-     % my $obj = $map->publication->to_object;
-<<%= obj_uri_for($ctr->organization)->to_abs %>> a gcis:Organization .
     % }
-% } 
+  % }

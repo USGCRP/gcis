@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/gcis dcterms xsd dwc bibo/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -19,9 +19,6 @@
 % for my $article ($journal->articles) {
    dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
 % }
-
-## Country of journal's publication
-   dwc:Countrycode "<%= $journal->country %>";
 
 # URL for journal webpage
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;

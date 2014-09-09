@@ -7,31 +7,10 @@
  
  % for my $parent (@parents) {
    % my $parent_pub = $parent->{publication};
- <<%= current_resource %>>
-   a gcis:<%= $object->meta->table %>;
+<<%= current_resource %>>
    <% if ($parent->{publication}) { %>prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>><% } %>;
    <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
 
-<<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>> a gcis:Dataset .
-<<%= uri($parent->{activity}) %>> a gcis:Activity .
 
-    % my %by_type_rel = ();
-    % for my $child (@children) {
-    %       my $type = $child->publication->publication_type_identifier;
-    %       my $rel = $child->relationship;
-    %       $by_type_rel{$type}{$rel} //= [];
-    %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
-    % }
-
-    % for my $type (keys %by_type_rel) {
-    %   for my $rel (keys %{ $by_type_rel{$type} } ) {
-            %   my $count = @{ $by_type_rel{$type}{$rel} };
-            <%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> from this <%= $pub->publication_type_identifier %> :
-            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
-            
-          %   }
-
-    % }
+   % }
 % }
-% }
-

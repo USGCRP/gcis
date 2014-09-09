@@ -1,0 +1,8 @@
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
+
+<<%= current_resource %>>
+   dcterms:identifier "<%= $lexicon->identifier %>";
+   dcterms:description "<%= $lexicon->description %>"^^xsd:string;
+   gcis:hasURL "<%= $lexicon->url %>"^^xsd:anyURI;
+
+   a prov:Entity.
