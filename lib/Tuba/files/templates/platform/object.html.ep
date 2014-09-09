@@ -30,7 +30,7 @@
         %= include 'h/date_range', start => $platform->start_date, end => $platform->end_date;
         <br>
         % if (my $url = $platform->description_attribution) {
-        <blockquote><p><%= $platform->description %></p>
+        <blockquote><p class="linebreaks"><%= $platform->description %></p>
             <small>
                 <%= link_to $url => begin %><%= url_host($url) %><%= end %>
             </small>

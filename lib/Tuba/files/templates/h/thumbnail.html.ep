@@ -1,5 +1,5 @@
 <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
-% my $pub = $object->get_publication;
+% my $pub = ( (stash 'pub') || $object->get_publication);
 % if ($pub) {
     % my @files = $pub->files;
     % if (@files <= 1) {

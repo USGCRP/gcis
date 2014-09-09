@@ -16,16 +16,7 @@
 
 <div class='row-fluid' itemscope itemtype="http://schema.org/Dataset">
     <div class='span10 offset1 well'>
-        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
-        % my $pub = $dataset->get_publication;
-        % if ($pub) {
-            % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
-                %= end
-            % }
-        % }
-        </div>
+        %= include 'h/thumbnail', pub => $dataset->get_publication;
         <h2><%= $dataset->identifier %></h2>
         <h3 itemprop="name"><%= $dataset->name // '' %></h3>
         % if ($dataset->publication_year) {
@@ -39,7 +30,16 @@
         </i>
         <br>
         %= include commify => objs => scalar $dataset->all_people
-        <p itemprop="description"><%= $dataset->description // ''%></p>
+
+        % if (my $url = $dataset->description_attribution) {
+        <blockquote><p class="linebreak" itemprop="description"><%= $dataset->description %></p>
+            <small>
+                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <p class="linebreaks" itemprop="description"><%= $dataset->description // ''%></p>
+        % }
 
         % if ($dataset->url) {
         <p>
