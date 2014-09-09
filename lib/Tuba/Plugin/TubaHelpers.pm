@@ -196,7 +196,7 @@ sub register {
             my $str = shift;
             my %pre = $c->turtle_namespaces;
             my $re = join '|', keys %pre;
-            $str =~ s[ ($re):(\S+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
+            $str =~ s[ ($re):(\S+)(?=\s)][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
             return $str;
         });
     $app->helper(render_partial_ttl_as => sub {
