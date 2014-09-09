@@ -4,7 +4,7 @@
    dcterms:identifier "<%= $array->identifier %>";
 
 % for my $table ($array->tables) {
-   gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>.
+   gcis:isArrayOf <<%= obj_uri_for($table)->to_abs %>>;
 % }
 
    a gcis:Array.
