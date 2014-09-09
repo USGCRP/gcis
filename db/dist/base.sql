@@ -195,9 +195,14 @@ CREATE TABLE dataset (
     lat_max numeric,
     lon_min numeric,
     lon_max numeric,
+    description_attribution character varying,
     CONSTRAINT ck_dataset_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999)))
 );
+
+
+
+COMMENT ON COLUMN dataset.description_attribution IS 'A URL containing the source text of the description field.';
 
 
 
@@ -274,8 +279,13 @@ CREATE TABLE file (
     sha1 character varying,
     size integer,
     location character varying,
+    landing_page character varying,
     CONSTRAINT ck_file_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
+
+
+
+COMMENT ON COLUMN file.landing_page IS 'An optional URL associated with this file';
 
 
 
@@ -372,12 +382,17 @@ CREATE TABLE instrument (
     identifier character varying NOT NULL,
     name character varying NOT NULL,
     description character varying,
+    description_attribution character varying,
     CONSTRAINT instrument_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
 
 COMMENT ON TABLE instrument IS 'An instrument is a class of devices that may perform measurements, and may have sensors';
+
+
+
+COMMENT ON COLUMN instrument.description_attribution IS 'A URL containing the source text of the description field.';
 
 
 
@@ -502,12 +517,19 @@ CREATE TABLE platform (
     description character varying,
     url character varying,
     platform_type_identifier character varying,
+    description_attribution character varying,
+    start_date timestamp without time zone,
+    end_date timestamp without time zone,
     CONSTRAINT platform_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
 
 COMMENT ON TABLE platform IS 'A platform is an entity to which instruments may be attached.';
+
+
+
+COMMENT ON COLUMN platform.description_attribution IS 'A URL containing the source text of the description field.';
 
 
 

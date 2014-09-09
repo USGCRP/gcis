@@ -309,6 +309,12 @@ db/patches/1150_report_type.sql
 db/patches/1160_instrument.sql
 db/patches/1170_extra_fk.sql
 db/patches/1180_publication_types.sql
+db/patches/1190_file_landing_page.sql
+db/patches/1200_description_attribution.sql
+db/patches/1210_instrument_description_attribution.sql
+db/patches/1220_roles.sql
+db/patches/1230_platform_start_end.sql
+db/patches/1240_dataset_description_attribution.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -498,6 +504,7 @@ lib/Tuba/files/templates/h/cited_by.html.ep
 lib/Tuba/files/templates/h/cites.html.ep
 lib/Tuba/files/templates/h/contributors.html.ep
 lib/Tuba/files/templates/h/contributors_short.html.ep
+lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
 lib/Tuba/files/templates/h/prov.html.ep
@@ -514,9 +521,11 @@ lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
 lib/Tuba/files/templates/instrument/object.html.ep
+lib/Tuba/files/templates/instrument/object.ttl.tut
 lib/Tuba/files/templates/instrument/objects.html.ep
 lib/Tuba/files/templates/instrument/relationships.html.ep
 lib/Tuba/files/templates/instrument_instance/object.html.ep
+lib/Tuba/files/templates/instrument_instance/object.ttl.tut
 lib/Tuba/files/templates/instrument_instance/relationships.html.ep
 lib/Tuba/files/templates/journal/object.html.ep
 lib/Tuba/files/templates/journal/object.ttl.tut
@@ -524,6 +533,7 @@ lib/Tuba/files/templates/journal/objects.html.ep
 lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.tut
+lib/Tuba/files/templates/lexicon/object.ttl.tut
 lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/messages.html.ep

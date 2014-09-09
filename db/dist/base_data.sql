@@ -143,6 +143,8 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label, sort_key) FROM stdin;
+engineer	Engineer	190
+manager	Manager	200
 \.
 
 
@@ -165,7 +167,7 @@ SELECT pg_catalog.setval('contributor_id_seq', 1, false);
 -- Data for Name: dataset; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max) FROM stdin;
+COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max, description_attribution) FROM stdin;
 \.
 
 
@@ -216,7 +218,7 @@ COPY figure (identifier, chapter_identifier, title, caption, attributes, time_st
 -- Data for Name: file; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY file (file, identifier, thumbnail, mime_type, sha1, size, location) FROM stdin;
+COPY file (file, identifier, thumbnail, mime_type, sha1, size, location, landing_page) FROM stdin;
 \.
 
 
@@ -271,7 +273,7 @@ COPY image_figure_map (image_identifier, figure_identifier, report_identifier) F
 -- Data for Name: instrument; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY instrument (identifier, name, description) FROM stdin;
+COPY instrument (identifier, name, description, description_attribution) FROM stdin;
 \.
 
 
@@ -289,7 +291,7 @@ aircraft
 -- Data for Name: platform; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY platform (identifier, name, description, url, platform_type_identifier) FROM stdin;
+COPY platform (identifier, name, description, url, platform_type_identifier, description_attribution, start_date, end_date) FROM stdin;
 \.
 
 
