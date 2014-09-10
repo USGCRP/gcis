@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis/];
+% layout 'default', namespaces => [qw/dcterms xsd dbpprop gcis/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $platform->platform_type_identifier %>";
@@ -6,6 +6,8 @@
    dcterms:description "<%= $platform->description %>"^^xsd:string;
    gcis:hasURL "<%= $platform->url %>"^^xsd:anyURI;
    dcterms:type "<%= $platform->type %>";
+   dbpprop:launchDate "<%= $platform->start__date %>"^^xsd:date;
+   dbpprop:deactivated "<%= $platform->end_date %>"^^xsd:date;
 <% for my $instrument ($platform-instruments) { %>
    gcis:hasInstrument <<%= obj_uri_for($instrument)->to_abs %>>;
    <% } %>

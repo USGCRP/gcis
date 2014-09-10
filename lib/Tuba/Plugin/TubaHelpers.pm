@@ -503,6 +503,7 @@ sub register {
      return (
           bibo     => 'http://purl.org/ontology/bibo/',
           dbpedia  => 'http://dbpedia.org/resource/',
+          dbpprop => 'http://dbpedia.org/property/',
           dbpedia_owl => 'http://dbpedia.org/ontology/', 
           dc       => 'http://purl.org/dc/elements/1.1/',
           dcterms  => 'http://purl.org/dc/terms/',
@@ -530,8 +531,8 @@ sub register {
           fabio  => 'http://purl.org/spar/fabio/',
           schema => 'http://schema.org/',
           skos   => 'http://www.w3.org/2004/02/skos/core#',
-          place => 'http://purl.org/ontology/places#', 
-       )
+          place => 'http://purl.org/ontology/places#',   
+     )
     });
 }
 
