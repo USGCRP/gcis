@@ -17,8 +17,8 @@
 <div class='row-fluid' itemscope itemtype="http://schema.org/Dataset">
     <div class='span10 offset1 well'>
         %= include 'h/thumbnail', pub => $dataset->get_publication;
-        <h2><%= $dataset->identifier %></h2>
-        <h3 itemprop="name"><%= $dataset->name // '' %></h3>
+        <h4><%= $dataset->identifier %></h4>
+        <h5 itemprop="name"><%= $dataset->name // '' %></h5>
         % if ($dataset->publication_year) {
         Published in <%= $dataset->publication_year %>.
         % }

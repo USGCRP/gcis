@@ -38,9 +38,7 @@
         % if (my @platforms = $instrument->platforms) {
             <br>
             Platforms :
-            % for my $i (@platforms) {
-                %= obj_link($i);
-            % }
+            %= include obj_thumbnails => objs => \@platforms, no_table => 1;
         % }
 
     </div>
