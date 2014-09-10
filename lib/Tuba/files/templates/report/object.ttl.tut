@@ -22,7 +22,7 @@
    dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
 
 ## Report summary
-   dcterms:description "<%= tl($report->summary) %>"^^xsd:string;
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
