@@ -18,6 +18,7 @@ WriteMakefile
                    'File::ShareDir' => '1.00',
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
+                   'LWP::UserAgent' => 0,
                    'Module::Build::Mojolicious' => 0,
                    'Mojolicious' => '5.16',
                    'Mojolicious::Plugin::InstallablePaths' => 0,
@@ -36,6 +37,7 @@ WriteMakefile
                    'Text::CSV_XS' => 0,
                    'Text::Format' => 0,
                    'Time::Duration' => 0,
+                   'URI::Find' => 0,
                    'YAML' => 0,
                    'YAML::Syck' => 0,
                    'YAML::XS' => 0
