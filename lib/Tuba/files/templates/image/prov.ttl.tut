@@ -3,8 +3,7 @@
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
 
-% if (@parents || @children) {
- 
+% if (@parents || @children) { 
  % for my $parent (@parents) {
    % my $parent_pub = $parent->{publication};
 <<%= current_resource %>>
