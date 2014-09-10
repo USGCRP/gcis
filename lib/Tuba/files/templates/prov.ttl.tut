@@ -20,17 +20,17 @@
    cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;
    biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>.
 
-              % } 
+            % } 
 % }
 
   % if (!(stash 'no_refs') && @children_with_references) {		
-     % for my $child (@children_with_references) {   
-     % my $child_pub = $child->{child};
+    % for my $child (@children_with_references) {   
+            % my $child_pub = $child->{child};
 <<%= current_resource %>>
     % if ($child_pub) {
    cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
-              % }
+            % }
    biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
 	
-     % }
+    % }
 % }
