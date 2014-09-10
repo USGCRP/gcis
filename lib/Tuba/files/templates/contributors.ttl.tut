@@ -30,6 +30,7 @@
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .
+
             % }
          % }
      % }
