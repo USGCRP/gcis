@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $activity->identifier %>";
 
-   dcterms:description "<%= no_tbibs(tl($activity->data_usage)) %>"^^xsd:string;
+   dcterms:description "<%= no_tbibs($activity->data_usage) %>"^^xsd:string;
 
 ## The activity began and ended at the following times
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
@@ -14,16 +14,16 @@
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;
 
 ## Output datafiles   
-   dbpedia_owl:filename "<%= tl($activity->output_artifacts) %>"^^xsd:string;
+   dbpedia_owl:filename "<%= $activity->output_artifacts %>"^^xsd:string;
 
 ## Software utilized
    gcis:Software "<%= $activity->software %>"^^xsd:string;
 
 ## Computing environment
-   dcterms:InteractiveResource "<%= tl($activity->computing_environment) %>"^^xsd:string;
+   dcterms:InteractiveResource "<%= $activity->computing_environment %>"^^xsd:string;
 
 ## Methodology employed
-   meth:Methodology "<%= tl($activity->methodology) %>"^^xsd:string;
+   meth:Methodology "<%= $activity->methodology %>"^^xsd:string;
 
    a prov:Activity .
 
