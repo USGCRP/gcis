@@ -9,7 +9,15 @@ sub native_url {
             dataset => sub { "http://podaac.jpl.nasa.gov/dataset/$_[0]"; },
             datasetId => sub { "http://podaac.jpl.nasa.gov/ws/search/dataset?datasetId=$_[0]" },
             Platform => sub { "http://podaac.jpl.nasa.gov/datasetlist?ids=Platform&values=$_[0]" },
-        }
+        },
+        ceos => {
+            Mission => sub { "http://database.eohandbook.com/database/missionindex.aspx#".(uc substr($_[0],0,1)) },
+            Instrument => sub { "http://database.eohandbook.com/database/instrumentindex.aspx#".(uc substr($_[0],0,1)) },
+        },
+        gcmd => {
+            platform => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
+            instrument => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;

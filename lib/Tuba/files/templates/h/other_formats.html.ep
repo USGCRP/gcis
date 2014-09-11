@@ -1,4 +1,4 @@
-% my $base = $self->req->url;
+% my $base = $self->req->url->path;
 % $base =~ s/.html$//;
 <center>
 You are viewing <b>

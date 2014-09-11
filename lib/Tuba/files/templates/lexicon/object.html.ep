@@ -22,7 +22,10 @@
 % }
 
 <div class='row-fluid'>
-    <div class='span10 offset1 well'>
+<div class='span1'>
+<%= link_to 'list_lexicon' => begin %>&larr;lexicons<%= end %>
+</div>
+    <div class='span10 well'>
 
         <h5><%= $lexicon->identifier %> : <%= $lexicon->description %>
         (<%= external_link($lexicon->url) %>)</h5>
