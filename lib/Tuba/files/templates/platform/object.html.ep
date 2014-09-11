@@ -56,9 +56,10 @@
             %= include obj_thumbnails => objs => \@instruments, no_table => 1;
         % }
 
+     %= include 'h/prov', pub => $platform->get_publication;
+     %= include 'h/other_identifiers', gcid => $platform->uri($self);
+
     </div>
 </div>
-
-%= include 'prov'
 
 %= include 'h/other_formats';

@@ -108,6 +108,8 @@
             %= end
         % }
 
+         %= include 'h/other_identifiers', gcid => $dataset->uri($self);
+
     </div>
 </div>
 
