@@ -2,7 +2,6 @@
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-## Report identifier, title, and publication year
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;

@@ -1,13 +1,10 @@
-## Contributors:
 % my $pub = $object->get_publication;
 % if ($pub) {
-
     % my $nest = $pub->contributors_nested;
     % for my $row (@$nest) {
         % for my $con (@{ $row->{people} }) {
             % my $person_id = obj_uri_for ($con->{person});
-            % if ($person_id ne "") {
-            
+            % if ($person_id) {            
 ## Person and his/her role in the creation of the entity:
 <<%= obj_uri_for($object)->to_abs %>>
    prov:qualifiedAttribution [
@@ -30,6 +27,7 @@
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .
+
             % }
          % }
      % }

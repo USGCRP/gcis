@@ -13,7 +13,7 @@
 
 <<%= obj_uri_for($child->{publication}->to_object)->to_abs %>>
     % for my $r ($child->publication->to_object) {
-   a gcis:<%= $r->meta->table %>;
+   a gcis:<%= ucfirst($r->meta->table) %>;
     % }
    prov:wasDerivedFrom <<%= current_resource %>>.
 
