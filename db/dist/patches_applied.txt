@@ -131,3 +131,4 @@
 1220_roles.sql	6c2ccafaeb1e0eec8c20bcaa4c45fc5f
 1230_platform_start_end.sql	1a7761987c6c0a73e8e42a40952f6681
 1240_dataset_description_attribution.sql	842de4300819f80c8783cbf3d8fd806b
+1250_gcid_index.sql	8ca6adec432e7a4ba754e813ca9b33fc
