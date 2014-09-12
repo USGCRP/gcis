@@ -1097,6 +1097,10 @@ ALTER TABLE ONLY webpage
 
 
 
+CREATE INDEX exterm_gcid ON exterm USING btree (gcid);
+
+
+
 CREATE UNIQUE INDEX uk_first_last_orcid ON person USING btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)));
 
 
