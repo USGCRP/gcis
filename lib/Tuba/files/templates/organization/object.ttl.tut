@@ -7,11 +7,9 @@
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
 
 % if (my $type = $organization->organization_type) {
-## Organization Type
    org:purpose "<%= $type->identifier %>";
 % }
 
-## Country in which organization is situated
 % if (my $country = $organization->country) {
    place:Country "<%= $country->name %>"^^xsd:string;
 % }
