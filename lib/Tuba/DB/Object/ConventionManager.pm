@@ -13,4 +13,11 @@ sub tables_are_singular {
     1;
 }
 
+sub is_map_class {
+    my $s = shift;
+    my $class = shift;
+    return 1 if $class =~ /InstrumentInstance/;
+    return $s->SUPER::is_map_class($class);
+}
+
 1;

@@ -1,0 +1,11 @@
+% if (param('no_header')) {
+   @base <<%= current_resource %> .
+%= content
+% } else {
+    % my %namespaces = turtle_namespaces;
+    % my $which = stash 'namespaces';
+    % for my $k ($which ? @$which : keys %namespaces) {
+@prefix <%= $k %>: <<%== $namespaces{$k} %>> .
+    % }
+%= content
+% }

@@ -1,0 +1,18 @@
+% layout 'default', namespaces => [qw/dcterms xsd prov/];
+%= filter_lines_with empty_predicate() => begin
+
+<<%= current_resource %>>
+   dcterms:identifer "<%= $region->identifier %>";
+   dcterms:title "<%= $region->label %>"^^xsd:string;
+   dcterms:description "<%= $region->description %>"^^xsd:string;
+
+## The following publications pertain to this region:
+% if (my @pubs = $region->publications) {
+  %  for my $region (@pubs) {
+   dcterms:Relation <<%= obj_uri_for($region->to_object)->to_abs %>>;
+  % }
+% }
+
+   a prov:Entity .
+
+% end

@@ -1,0 +1,50 @@
+
+% layout 'default', title => $instrument->identifier.' - '.$instrument->name,
+%   description => $instrument->description;
+
+<center>
+<h2>Instrument : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $instrument->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $instrument->name %></h2>
+        %= include commify => objs => scalar $instrument->all_orgs
+        % if (my $url = $instrument->description_attribution) {
+        <blockquote><p class='linebreaks'><%= $instrument->description %></p>
+            <small>
+                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <p class='linebreaks'><%= $instrument->description %></p>
+        % }
+
+        % if (my @platforms = $instrument->platforms) {
+            <br>
+            Platforms :
+            %= include obj_thumbnails => objs => \@platforms, no_table => 1;
+        % }
+
+         %= include 'h/prov', pub => $instrument->get_publication;
+         %= include 'h/other_identifiers', gcid => $instrument->uri($self);
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

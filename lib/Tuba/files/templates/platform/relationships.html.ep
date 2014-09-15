@@ -1,0 +1,21 @@
+<table class='table table-condensed table-bordered table-striped'>
+<caption>Relationships</caption>
+
+% for my $method ('instruments') {
+<tr>
+<td><%= $method %></td>
+<td class='row-fluid'>
+    <div class='row-fluid' style='position:relative;'>
+            %= include 'collapsible', row_content => begin
+            %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
+            %= end
+    </div>
+</td>
+</tr>
+% }
+% if (my $pub = $object->get_publication) {
+% include 'keywords', pub => $pub;
+% include 'regions', pub => $pub;
+% }
+
+</table>

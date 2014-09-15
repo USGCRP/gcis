@@ -47,6 +47,7 @@ my $builder = Module::Build::Database->new(
         'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     requires => {
+        'LWP::UserAgent' => 0,
         'Number::Bytes::Human' => 0,
         'Mojolicious::Plugin::YamlConfig' => 0,
         'Mojolicious' => '5.16',
@@ -75,6 +76,7 @@ my $builder = Module::Build::Database->new(
         'Text::CSV_XS' => 0,
         'Text::Format' => 0,
         'Time::Duration' => 0,
+        'URI::Find' => 0,
         'YAML::XS' => 0,
         'String::Diff' => 0,
         'DateTime::Format::Human::Duration' => 0,

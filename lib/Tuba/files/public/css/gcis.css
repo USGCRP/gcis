@@ -101,3 +101,10 @@ p.linebreaks {
   background-color: #777;
   border-radius: 3px;
 }
+a.ontology {
+    color:green;
+}
+a.blackbutton {
+    color:black;
+    font-weight:bold;
+}

@@ -19,6 +19,8 @@ use YAML qw/Dump/;
 use Encode qw/encode decode/;
 use Tuba::Util qw/human_duration/;
 use Mojo::Util qw/camelize decamelize/;
+use LWP::UserAgent;
+use HTTP::Request;
 use Data::Dumper;
 
 =head2 list
@@ -116,7 +118,7 @@ sub _stringify {
 sub render_yaml {
     my $c = shift;
     my $thing = shift;
-    $c->res->headers->content_type('text/x-yaml; charset=utf-8');
+    $c->res->headers->content_type('text/plain; charset=utf-8');
     my $stringified = _stringify($thing);
     $c->res->body(encode('UTF-8',Dump($stringified)));
     $c->res->code(200);
@@ -190,6 +192,13 @@ sub show {
         ttl   => sub { my $c = shift;
             $c->res->headers->content_type("application/x-turtle");
             $c->render_maybe("$table/object") or $c->render("object") },
+        thtml => sub { my $c = shift;
+            $c->res->headers->content_type("text/html");
+            $c->stash->{format} = 'ttl';
+            $c->stash('turtle' => $c->render_partial_ttl($table));
+            $c->stash->{format} = 'thtml';
+            $c->render_maybe("$table/object") || $c->render("object");
+        },
         html  => sub { my $c = shift;
             $c->param('long') and $c->render_maybe("$table/long/object") and return;
             $c->render_maybe("$table/object") or $c->render("object") },
@@ -232,6 +241,7 @@ sub select {
         $c->stash($table => $loaded);
         return 1;
     }
+    $c->render_not_found_or_redirect;
     return 0;
 }
 
@@ -403,7 +413,7 @@ sub create {
     if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
         $obj{report_identifier} = $c->stash('report_identifier');
     }
-    my %valid = map { $_ => 1 } @{ $object_class->meta->columns };
+    my %valid = ( audit_note => 1, map { $_ => 1 } @{ $object_class->meta->columns } );
     my @invalid = grep !$valid{$_}, keys %obj;
     my $error;
     if (@invalid) {
@@ -685,7 +695,7 @@ sub update_prov {
         note         => $note,
         activity_identifier => $activity_identifier,
     );
-
+    $map->load(speculative => 1);
     $map->save(audit_user => $c->user) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
     return $c->redirect_without_error('update_prov_form');
@@ -772,18 +782,29 @@ sub update_files {
         $c->app->log->info("Getting $file_url for ".$object->meta->table."  ".(join '/',$object->pk_values));
         my $ua = $c->app->ua;
         $ua->max_redirects(3);
-        my $tx = $ua->get($file_url);
-        my $res = $tx->success or
-            return $c->update_error( "Error getting $file_url : ".$tx->error);
-        $c->app->log->info("Got $file_url, code is ".$res->code);
-        my $content = $res->body;
+
+        my ($content, $content_type);
+        if ($file_url =~ /^ftp/) {
+            my $lwp = LWP::UserAgent->new();
+            my $req = HTTP::Request->new(GET => $file_url);
+            my $res = $lwp->request($req);
+            $content = $res->content;
+        } else {
+            my $tx = $ua->get($file_url);
+            my $res = $tx->success or
+                return $c->update_error( "Error getting $file_url : ".$tx->error->{message});
+            $c->app->log->info("Got $file_url, code is ".$res->code);
+            $content_type = $res->headers->content_type;
+            $content = $res->body;
+        }
 
         my $remote_url = Mojo::URL->new($file_url);
         my $filename = $remote_url->path->parts->[-1];
         my $up = Mojo::Upload->new;
         $up->filename($filename);
         $up->asset(Mojo::Asset::File->new->add_chunk($content));
-        my $new_file = $pub->upload_file(c => $c, upload => $up) or return $c->update_error( $pub->error);
+        my $new_file = $pub->upload_file(c => $c, upload => $up, type => $content_type)
+            or return $c->update_error( $pub->error);
         if ($json->{use_remote_location} || $c->param('use_remote_location')) {
             # generate thumbnail first then remove it.
             $new_file->generate_thumbnail;
@@ -796,6 +817,10 @@ sub update_files {
             $new_file->file($remote_url->path);
             $new_file->save(audit_user => $c->user);
             logger->info("saving remote asset ".$remote_url);
+        }
+        if (my $landing_page = ($json->{landing_page} || $c->param('landing_page')) ) {
+            $new_file->landing_page($landing_page);
+            $new_file->save(audit_user => $c->user);
         }
     }
 
@@ -872,7 +897,7 @@ sub update_contributors {
         $c->flash(info => "Saved changes.");
     }
     if ($json && keys %$json) {
-        # TODO
+        # TODO JSON interface for updating sort keys
     } else {
         for my $con ($pub->contributors) {
             my $sort_key = $c->param('sort_key_'.$con->id);
@@ -901,7 +926,7 @@ sub update_contributors {
         }
         if (my $id = $organization) {
             $organization = Organization->new(identifier => $id)->load(speculative => 1)
-                or return $c->update_error("invalid organization $organization");
+                or return $c->update_error("invalid organization $id");
         }
     } else {
         $person = $c->param('person');
@@ -1121,7 +1146,7 @@ sub update {
 
     my $error;
     if ($json) {
-        my %valid = map { $_ => 1 } @{ $object->meta->columns };
+        my %valid = ( audit_note => 1, map { $_ => 1 } @{ $object->meta->columns } );
         my @invalid = grep !$valid{$_}, keys %$json;
         if (@invalid) {
             $error = join "\n", map "$_ is not a valid field.", @invalid;
@@ -1336,7 +1361,12 @@ sub redirect_with_error {
     my $c     = shift;
     my $tab   = shift;
     my $error = nice_db_error(shift);
-    my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    my $uri;
+    if (my $obj = $c->_this_object) {
+        $uri = $c->_this_object->uri($c, {tab => $tab});
+    } else {
+        $uri = $c->req->url;
+    }
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {

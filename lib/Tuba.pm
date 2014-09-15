@@ -63,8 +63,8 @@ use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 use strict;
 
-our $VERSION = '1.06';
-our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt/;
+our $VERSION = '1.09';
+our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
     my $app = shift;
@@ -92,6 +92,15 @@ sub startup {
     }
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
+
+    $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
+            my $str = shift;
+            return "" unless defined($str) && length($str);
+            $str =~ s/"/\\"/g;
+            $str =~ s/\n/\\n/g;
+            $str =~ s/\r/\\r/g;
+            return $str;
+        }}});
 
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -375,9 +384,10 @@ sub startup {
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find');
-    my $lex_authed = $r->lookup('authed_select_lexicon');
-    $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
-    $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
+    if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
+        $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
+        $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
+    }
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');

@@ -1,0 +1,41 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>identifier</th>
+    <th>name</th>
+    <th>url</th>
+    <th>contexts</th>
+</th>
+% for my $lexicon (@$objects) {
+    <tr>
+       <td><%= obj_link_to $lexicon, 'show' => begin %><%= $lexicon->identifier %><%= end %></td>
+       <td><%= $lexicon->description %></td>
+       <td><%= external_link($lexicon->url) %></td>
+       <td><% for my $i ($lexicon->contexts) { %>
+           <%= link_to url_for('show_lexicon', { lexicon_identifier => $lexicon->identifier })->query(context => $i)
+           => class => "badge" => begin %>
+           <%= $i %>
+           %= end
+           <% } %>
+       </td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

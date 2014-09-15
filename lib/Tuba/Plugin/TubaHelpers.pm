@@ -17,7 +17,8 @@ use DateTime::Format::Human::Duration;
 use Number::Format;
 use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
-use Mojo::Util qw/decamelize/;
+use Mojo::Util qw/decamelize xml_escape/;
+use URI::Find;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -29,8 +30,8 @@ use Tuba::DocManager;
 sub _include_first {
   my $c    = shift;
   my $list = shift;
-  for (@$list) {
-    my $got = $c->render_to_string(@_);
+  for my $item (@$list) {
+    my $got = $c->render_to_string($item, @_);
     return $got if $got;
   }
   return "";
@@ -173,9 +174,30 @@ sub register {
             my $format = shift;
             my $conv = Tuba::Converter->new(
                     ttl  => $ttl,
-                    base => $c->req->url->base->to_abs
+                    base => $c->req->url->base->to_abs,
+                    url  => $c->req->url,
                 );
             $c->render( data => $conv->output( format => $format, title => $c->stash('title') ));
+        });
+    $app->helper(uris_to_hrefs => sub {
+            my $c = shift;
+            my $output = shift;
+            my $suffix = shift; # Suffix to append
+            my $base = $c->req->url->base;
+            URI::Find->new(sub {
+                    my ($uri, $orig) = @_;
+                    $uri .= ".$suffix" if $suffix && $orig =~ /^\Q$base\E/;
+                    return qq[<a href="$uri">$orig</a>];
+                })->find(\$output, \&xml_escape );
+            return $output;
+        });
+    $app->helper( expand_turtle_prefixes => sub {
+            my $c = shift;
+            my $str = shift;
+            my %pre = $c->turtle_namespaces;
+            my $re = join '|', keys %pre;
+            $str =~ s[ ($re):(\S+)(?=\s)][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
+            return $str;
         });
     $app->helper(render_partial_ttl_as => sub {
             my $c = shift;
@@ -430,6 +452,7 @@ sub register {
             my $c = shift;
             my $str = shift or return "";
             $str =~ s[<tbib>([^<]+)</tbib>][]g;
+            $str =~ s[<sup>([^<]+)</sup>][]g;  # sometimes accompany tbibs
             return $str;
         });
     $app->helper(tl => sub {
@@ -438,9 +461,7 @@ sub register {
             my $c = shift;
             my $str = shift;
             return "" unless defined($str) && length($str);
-            $str =~ s/"/\\"/g;
-            $str =~ s/\n/\\n/g;
-            $str =~ s/\r/\\r/g;
+            # Deprecated since .tut templates escape turtle (see Tuba.pm).
             return $str;
         });
     $app->helper( fix_url => sub {
@@ -457,19 +478,65 @@ sub register {
             my $block = shift;
             my $regex = ref($what) eq 'Regexp' ? $what : qr/\Q$what\E/;
             no warnings 'uninitialized';
-            my @lines = grep { $_ !~ /$regex/ } split /\n/, $block->();
+            my $before = $block->();
+            my @lines = grep { $_ !~ /$regex/ } split /\n/, $before;
             return b(join "\n", @lines);
         });
     $app->helper( empty_predicate => sub {
             my $c = shift;
-            return qr[""                 # empty quotes
+            return qr[
+                       \                 # a space
+                       ""                # empty quotes
                         (?:\^\^xsd:
                            (?:[a-zA-Z]+) # optional type
                         )?
                         ;$                    # end of line
                       ]x;
         });
+    $app->helper(external_link => sub {
+            my $c = shift;
+            my $url = shift or return "";
+            return $url unless $url =~ /^(http|ftp)/;
+            return $c->link_to($url, $url, target => "_blank");
+        });
+    $app->helper(turtle_namespaces => sub {
+     return (
+          bibo     => 'http://purl.org/ontology/bibo/',
+          dbpedia  => 'http://dbpedia.org/resource/',
+          dbpprop => 'http://dbpedia.org/property/',
+          dbpedia_owl => 'http://dbpedia.org/ontology/',
+          dc       => 'http://purl.org/dc/elements/1.1/',
+          dcterms  => 'http://purl.org/dc/terms/',
+          dcmitype => 'http://purl.org/dc/dcmitype/',
+          foaf     => 'http://xmlns.com/foaf/0.1/',
+          gcis     => 'http://data.globalchange.gov/gcis.owl#',
+          org      => 'http://www.w3.org/ns/org#',
+          prov     => 'http://www.w3.org/ns/prov#',
+          rdf      => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+          rdfs     => 'http://www.w3.org/2000/01/rdf-schema#',
+          xml      => 'http://www.w3.org/XML/1998/namespace',
+          xsd      => 'http://www.w3.org/2001/XMLSchema#',
+          dwc      => 'http://rs.tdwg.org/dwc/terms/',
+          doco     => 'http://purl.org/spar/doco',
+          cito     => 'http://purl.org/spar/cito/',
+          biro     => 'http://purl.org/spar/biro/',
+          datacite => 'http://purl.org/spar/datacite/',
+          co       => 'http://purl.org/co/',
+          frbr     => 'http://purl.org/vocab/frbr/core#',
+          dcat     => 'http://www.w3.org/ns/dcat#',
+          vivo     => 'http://vivoweb.org/ontology/core#',
+          ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#',
+          meth   => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#',
+          geo    => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
+          fabio  => 'http://purl.org/spar/fabio/',
+          schema => 'http://schema.org/',
+          skos   => 'http://www.w3.org/2004/02/skos/core#',
+          place => 'http://purl.org/ontology/places#',
+     )
+    });
 }
+
 
 1;
 
+1;

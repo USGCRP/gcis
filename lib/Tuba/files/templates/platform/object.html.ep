@@ -1,0 +1,65 @@
+
+% use Mojo::URL;
+% layout 'default', title => $platform->identifier.' - '.$platform->name,
+%   description => $platform->description;
+
+<center>
+<h2>Platform : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $platform->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $platform->name %></h2>
+        %= include commify => objs => scalar $platform->all_orgs
+        <br>
+        %= include 'h/date_range', start => $platform->start_date, end => $platform->end_date;
+        <br>
+        % if (my $url = $platform->description_attribution) {
+        <blockquote><p class="linebreaks"><%= $platform->description %></p>
+            <small>
+                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <%= $platform->description %>
+        % }
+        <br>
+        <%= external_link($platform->url) %>
+
+        % if (my @instruments = $platform->instruments) {
+            <br>
+            Instruments on <%= $platform->name %>:
+            <ul>
+                % for my $i (@instruments) {
+                <li>
+                %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
+                <%= $i->name %>
+                %= end
+                </li>
+                % }
+            </ul>
+            %= include obj_thumbnails => objs => \@instruments, no_table => 1;
+        % }
+
+     %= include 'h/prov', pub => $platform->get_publication;
+     %= include 'h/other_identifiers', gcid => $platform->uri($self);
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

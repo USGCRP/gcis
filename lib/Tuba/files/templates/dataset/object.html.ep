@@ -16,18 +16,9 @@
 
 <div class='row-fluid' itemscope itemtype="http://schema.org/Dataset">
     <div class='span10 offset1 well'>
-        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
-        % my $pub = $dataset->get_publication;
-        % if ($pub) {
-            % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
-                %= end
-            % }
-        % }
-        </div>
-        <h2><%= $dataset->identifier %></h2>
-        <h3 itemprop="name"><%= $dataset->name // '' %></h3>
+        %= include 'h/thumbnail', pub => $dataset->get_publication;
+        <h4><%= $dataset->identifier %></h4>
+        <h5 itemprop="name"><%= $dataset->name // '' %></h5>
         % if ($dataset->publication_year) {
         Published in <%= $dataset->publication_year %>.
         % }
@@ -39,7 +30,16 @@
         </i>
         <br>
         %= include commify => objs => scalar $dataset->all_people
-        <p itemprop="description"><%= $dataset->description // ''%></p>
+
+        % if (my $url = $dataset->description_attribution) {
+        <blockquote><p class="linebreak" itemprop="description"><%= $dataset->description %></p>
+            <small>
+                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <p class="linebreaks" itemprop="description"><%= $dataset->description // ''%></p>
+        % }
 
         % if ($dataset->url) {
         <p>
@@ -76,12 +76,22 @@
 
         % if ($dataset->lat_min || $dataset->lat_max || $dataset->lon_min || $dataset->lon_max) { 
         <p>
-        The spatial range for this image is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,
+        The spatial range for this dataset is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,
         and <%= $dataset->lon_min // 'unknown' %>° to <%= $dataset->lon_max // 'unknown' %>° longitude.
         </p>
         % }
 
-        %= include 'h/prov', pub => $dataset->get_publication;
+        % for my $measurement ($dataset->instrument_measurements) {
+        This dataset uses data from
+        %= link_to 'show_instrument_instance' => {instrument_instance_identifier => $measurement->instrument->identifier, platform_identifier => $measurement->platform->identifier } => begin
+        an instance of
+        %= end
+        the <%= obj_link($measurement->instrument) %> instrument on the 
+        <%= obj_link($measurement->platform) %> platform.
+        <br>
+        % }
+
+        %= include 'h/prov', pub => $dataset->get_publication, thumbnails => 1;
         %= include 'h/cited_by', pub => $dataset->get_publication;
         %= include 'h/cites', pub => $dataset->get_publication;
 
@@ -97,6 +107,8 @@
             <%= $doi %>
             %= end
         % }
+
+         %= include 'h/other_identifiers', gcid => $dataset->uri($self);
 
     </div>
 </div>

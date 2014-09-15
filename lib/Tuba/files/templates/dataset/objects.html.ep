@@ -1,0 +1,40 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>identifier</th>
+    <th>name</th>
+    <th>url</th>
+    <th>platform/instrument</th>
+</th>
+% for my $dataset (@$objects) {
+    <tr>
+       <td><%= obj_link_to $dataset, 'show' => begin %><%= $dataset->identifier %><%= end %></td>
+       <td><%= obj_link_to $dataset, 'show' => begin %><%= $dataset->name %><%= end %></td>
+       <td><%= external_link($dataset->url) %></td>
+       <td><% for my $i ($dataset->instrument_measurements) { %>
+           %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->instrument->identifier, platform_identifier => $i->platform->identifier } => class => "badge" => begin
+           <%= $i->platform->identifier %>/<%= $i->instrument->identifier %>
+           %= end
+           % }
+       </td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

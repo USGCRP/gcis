@@ -1,0 +1,49 @@
+% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov/];
+%= filter_lines_with empty_predicate() => begin
+
+<<%= current_resource %>>
+   datacite:identifier "<%= $dataset->identifier %>";
+   dcterms:title "<%= $dataset->name %>"^^xsd:string;
+   dwc:year "<%= $dataset->publication_year %>"^^xsd:gYear;
+   dcterms:hasVersion "<%= $dataset->version %>";
+   datacite:doi "<%= $dataset->doi %>";
+   datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
+   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
+   cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
+
+## The formal description of the dataset
+   dcterms:description "<%= no_tbibs($dataset->description) %>"^^xsd:string;
+ 
+## Dates of dataset release and access
+   dcterms:issued "<%= $dataset->release_dt %>"^^xsd:date;
+   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
+
+## Projection and resolution:
+   gcis:spatialExtents "<%= $dataset->spatial_extent %>";
+   dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
+   gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
+   gcis:TemporalExtents "<%= $dataset->temporal_extent %>";
+   dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
+
+## Attributes and keywords
+   dcterms:subject "<%= $dataset->attributes %>"^^xsd:string;
+% for my $keyword ($dataset->keywords) {
+   dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
+% }
+
+% for my $measurement ($dataset->instrument_measurements) {
+## Instrument, Platform, and Instrument Instance
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument)->to_abs %>>;
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->platform)->to_abs %>>;
+   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument_instance)->to_abs %>>;
+% }
+
+   a gcis:Dataset .
+
+% end
+
+
+
+%= include 'dataset/prov';
+
+%= include 'contributors';

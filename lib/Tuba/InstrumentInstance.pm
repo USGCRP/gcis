@@ -30,5 +30,29 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    my @page = $c->param('all') ? () : (page => $c->page, per_page => $c->per_page);
+    my $objs;
+    if (my $platform_identifier = $c->stash('platform_identifier')) {
+      $objs = InstrumentInstances->get_objects(
+        query => [platform_identifier => $platform_identifier],
+        @page, sort_by => "instrument_identifier"
+      );
+      $c->set_pages(
+        InstrumentInstances->get_objects_count(
+          query => [platform_identifier => $platform_identifier],
+        )
+      );
+    } else {
+      $objs = InstrumentInstances->get_objects(
+          @page, sort_by => "platform_identifier,instrument_identifier"
+      );
+      $c->set_pages(InstrumentInstances->get_objects_count());
+    }
+    $c->stash(objects => $objs);
+    $c->SUPER::list(@_);
+}
+
 1;
 

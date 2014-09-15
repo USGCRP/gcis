@@ -1,0 +1,20 @@
+% my $base = $self->req->url;
+% $base =~ s/.thtml$//;
+<center>
+You are viewing <b>
+<%= $base %>
+</b>
+in
+<%= link_to "$base.thtml" => class => 'label label-info' => begin %>Turtle<%= end %><br>
+Alternatives :
+<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %> \
+<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
+<%= link_to "$base.txt" => class => 'label label-info' => begin %>text<%= end %> \
+<%= link_to "$base.nt" => class => 'label label-info' => begin %>N-Triples<%= end %> \
+<%= link_to "$base.jsontriples" => class => 'label label-info' => begin %>JSON Triples<%= end %> \
+<%= link_to "$base.rdfxml" => class => 'label label-info' => begin %>RDF+XML<%= end %> \
+<%= link_to "$base.rdfjson" => class => 'label label-info' => begin %>RDF+JSON<%= end %> \
+<%= link_to "$base.dot" => class => 'label label-info' => begin %>Graphviz<%= end %> \
+<%= link_to "$base.svg" => class => 'label label-info' => begin %>SVG<%= end %>
+</center>

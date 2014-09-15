@@ -1,0 +1,53 @@
+
+
+% use Mojo::URL;
+% layout 'default', title => $lexicon->identifier.' - '.$lexicon->identifier,
+%   description => $lexicon->description;
+
+<center>
+<h2>Lexicon : <%= $lexicon->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+<div class='row-fluid'>
+<div class='span1'>
+<%= link_to 'list_lexicon' => begin %>&larr;lexicons<%= end %>
+</div>
+    <div class='span10 well'>
+
+        <h5><%= $lexicon->identifier %> : <%= $lexicon->description %>
+        (<%= external_link($lexicon->url) %>)</h5>
+        % my @contexts = $lexicon->contexts;
+        % for my $context (sort @contexts) {
+            <b><%= $context %></b>/<br>
+            % my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context], sort_by => 'term' );
+            <ul>
+            % for my $term (@$terms) {
+                <li>
+                % if (my $target = $term->native_url) {
+                <a target="_blank" href="<%= $term->native_url %>"><%= $term->term %></a>
+                % } else  {
+                %= $term->term;
+                % }
+                <span class='pull-right'><a href="<%= $term->gcid %>"><%= $term->gcid %></a></span>
+                </li>
+            % }
+        </ul>
+        % }
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

@@ -1,0 +1,60 @@
+% layout 'default', namespaces => [qw/dcterms skos xsd gcis org place prov/];
+%= filter_lines_with empty_predicate() => begin
+
+<<%= current_resource %>>
+   dcterms:identifier "<%= $organization->identifier %>";
+   skos:prefLabel "<%= $organization->name %>"^^xsd:string;
+   gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
+
+% if (my $type = $organization->organization_type) {
+## Organization Type
+   org:purpose "<%= $type->identifier %>";
+% }
+
+## Country in which organization is situated
+% if (my $country = $organization->country) {
+   place:Country "<%= $country->name %>"^^xsd:string;
+% }
+
+   a gcis:Organization .
+
+%# We now explore relationships between organizations:
+   % if (my @maps = $organization->organization_maps) {
+     % my $first = 1;
+     % for my $map (@maps) {
+         % if ($first) {
+            % $first = 0;
+## This organization is related to one or more others as follows:
+         % }
+<<%= current_resource %>>
+   prov:qualifiedAssociation [
+      a prov:Association;   
+      prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;
+      org:linkedto <<%= obj_uri_for($map->other_organization)->to_abs %>>;
+   ] ;
+. 
+
+    % }
+% }
+
+   % if (my @maps = $organization->organization_maps_objs) {
+    % my $first = 1;
+      % for my $map (@maps) {
+          % if ($first) {
+             % $first = 0;
+## Other organizations are related to this one as follows: 
+         % }
+<<%= obj_uri_for($map->organization)->to_abs %>>
+   prov:qualifiedAssociation [
+      a prov:Association;
+      prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;
+      org:linkedto <<%= current_resource %>>;
+   ] ;
+.
+
+   % }
+   % }
+ 
+% end
+
+%= include 'organization/contributors';

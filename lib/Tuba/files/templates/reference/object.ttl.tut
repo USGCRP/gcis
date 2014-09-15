@@ -1,0 +1,22 @@
+% layout 'default', namespaces => [qw/dcterms biro gcis/];
+
+<<%= current_resource %>>
+   dcterms:identifier "<%= $reference->identifier %>";
+
+## This reference refers to the following child publication(s):
+% if (my $pub = $reference->child_publication) {
+ % my $publication = $pub->to_object;
+   biro:references <<%= uri($publication) %>>;
+% }
+
+## This reference appears in Chapter # of the following report:
+% for my $subpub ($reference->subpubrefs) {
+ % my $chapter = $subpub->publication->to_object;
+   biro:isReferencedBy <<%= uri($chapter) %>>;
+% }
+% if (my $pub = $reference->publication) {
+ % my $report = $pub->to_object;
+   biro:isReferencedBy <<%= uri($report) %>>;
+% }
+
+   a biro:BibliographicRecord, dcterms:bibliographicCitation .

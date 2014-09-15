@@ -25,6 +25,7 @@ my $dataset = {
     type       => "observational",
     version    => 12,
     description => "These are some readings from the thermometer outside my house",
+    description_attribution => "http://my.house/thermo",
     native_id        => "my-12345",
     publication_year => "2014",
     access_dt        => "2013-01-24T00:00:00",
@@ -67,6 +68,9 @@ my $platform = {
   description => "our house, in the middle of our street",
   platform_type_identifier => undef,
   url         => undef,
+  description_attribution => undef,
+  start_date => undef,
+  end_date => undef,
 };
 $t->post_ok( "/platform" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";
@@ -78,6 +82,7 @@ my $instrument = {
   identifier => "mercury-in-glass-thermometer",
   name       => "Mercury in glass thermometer",
   description => "This type of thermometer was invented in 1714 by Daniel Fahrenheit.",
+  description_attribution => "http://wikipedia.com",
 };
 $t->post_ok( "/instrument" => json => $instrument )->status_is(200);
 $instrument->{uri} = "/instrument/mercury-in-glass-thermometer";

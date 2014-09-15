@@ -45,6 +45,10 @@ $t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)")
   ->header_is(Location => $gcid)
   ->content_like(qr/\Q$gcid\E/);    # The content SHOULD have a link, says RFC 2616
 
+$t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)" => {Accept => "application/json"})
+  ->status_is(303)                  # 303 == "See Other"
+  ->json_is({gcid => $gcid});
+
 $t->delete_ok("/lexicon/ceos/Mission/Aqua (with stuff here)")
   ->status_is(200);
 

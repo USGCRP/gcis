@@ -12,23 +12,26 @@ package Tuba::Exterm;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 
+# create allows updates too; it just assigns lexicon/context/term to a GCID.
 sub create {
     my $c = shift;
     $c->stash(tab => 'create_form');
     my $lexicon = $c->stash('lexicon_identifier');
     my %entry;
+    my $term;
     if (my $json = $c->req->json) {
         %entry = (
           term    => $json->{term},
           context => $json->{context},
           lexicon_identifier => $lexicon,
-          gcid    => $json->{gcid},
         );
+        $term = Exterm->new(%entry);
+        $term->load(speculative => 1);
+        $term->gcid($json->{gcid});
     } else {
         # TODO handle a form too
         return $c->update_error("not implemented");
     }
-    my $term = Exterm->new(%entry);
     $term->save(audit_user => $c->user) or return $c->update_error($term->error);
     $c->stash(_this_object => $term);
     return $c->redirect_without_error('create_form');
@@ -44,7 +47,11 @@ sub find {
     $term->load(speculative => 1) or return $c->render_not_found;
     my $gcid = $term->gcid;
     $c->res->headers->location($gcid);
-    $c->res->body(qq[See <a href="$gcid">$gcid</a>.]);
+    $c->respond_to(
+        html => { code => 303, text => qq[See <a href="$gcid">$gcid</a>.]},
+        json => { code => 303, json => { gcid => $gcid } }
+    );
+
     $c->rendered(303);
 }
 

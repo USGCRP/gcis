@@ -23,6 +23,7 @@ my %r = (
     identifier => "test-report",
     title      => "Test Report",
     url        => 'http://example.com/foo',
+    summary    => 'this is a report',
     doi        => '10.123/45',
     publication_year => '2000',
     report_type_identifier => undef,

@@ -1,4 +1,0 @@
-% layout 'default';
-<<%= current_resource %>>
-    a prov:Entity;
-

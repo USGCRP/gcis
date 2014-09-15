@@ -1,0 +1,14 @@
+## Provenance of Image: This image was derived from a dataset using a particular activity:
+% my $pub = $object->get_publication;
+% my @parents = $pub ? $pub->get_parents : ();
+% my @children = $pub ? $pub->children : ();
+
+% if (@parents || @children) { 
+ % for my $parent (@parents) {
+   % my $parent_pub = $parent->{publication};
+<<%= current_resource %>>
+   <% if ($parent->{publication}) { %>prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>><% } %>;
+   <% if ($parent->{activity}) { %>prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>><% } %>.
+
+ % }
+% }
