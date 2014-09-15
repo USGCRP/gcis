@@ -2,26 +2,14 @@
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-## Identifier and Title for the Image
    dcterms:identifier "<%= $image->identifier %>";
    dcterms:title "<%= $image->title %>"^^xsd:string;
-
-## Image Description
    dcterms:description "<%= $image->description %>"^^xsd:string;
-
-## The image is part of the following figure(s):
-% for my $figure ($image->figures) {
-   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-% }
+   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
+   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
 
 ## Image Attributes
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
-
-## Creation date of the image
-   dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
-
-## Submission date for the image
-   dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
 
 ## Geographical extent of the image content
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
@@ -32,10 +20,13 @@
 ## Temporal coverage of the image content
    gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
-  
-## Keywords associated with the image
-% for my $keyword ($image->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+
+## Tags:
+   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
+
+## The image is part of the following figure(s):
+% for my $figure ($image->figures) {
+   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
 % }
 
    a gcis:Image .
@@ -46,3 +37,8 @@
 
 %= include 'image/prov';
 %= include 'contributors';
+
+%# % for my $keyword ($image->keywords) {
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }
+
