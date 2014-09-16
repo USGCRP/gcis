@@ -1,10 +1,10 @@
-% layout 'default', namespaces => [qw/dcterms gcis xsd rdf cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis rdf cito biro/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
-   dcterms:description "<%= tl($finding->statement) %>"^^xsd:string;
- 
+   dcterms:description "<%= $finding->statement %>"^^xsd:string;
+
 ## The number of the Chapter, the URI for the chapter, and the URI for the report in which the finding appears:
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    gcis:isFindingOf <<%= uri($chapter) %>>;
@@ -18,16 +18,15 @@
 % }
 
 ## Properties of the finding:
-   gcis:findingProcess "<%= no_tbibs(tl($finding->process)) %>"^^xsd:string;   
-
-   gcis:descriptionOfEvidenceBase "<%= no_tbibs(tl($finding->evidence)) %>"^^xsd:string;   
-
-   gcis:assessmentOfConfidenceBasedOnEvidence "<%= no_tbibs(tl($finding->confidence)) %>"^^xsd:string;
+   gcis:findingProcess """<%= no_tbibs(tl($finding->process)) %>"""^^xsd:string;
    
-   gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string;
-
+   gcis:descriptionOfEvidenceBase """<%= no_tbibs(tl($finding->evidence)) %>"""^^xsd:string;
    
-   a gcis:Finding.
+   gcis:assessmentOfConfidenceBasedOnEvidence """<%= no_tbibs(tl($finding->confidence)) %>"""^^xsd:string;
+   
+   gcis:newInformationAndRemainingUncertainties """<%= no_tbibs(tl($finding->uncertainties)) %>"""^^xsd:string;
+
+   a gcis:Finding .
 
 % end
 
