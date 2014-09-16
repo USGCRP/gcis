@@ -667,6 +667,38 @@ COMMENT ON COLUMN report.identifier IS 'A unique identifier for the report.';
 
 
 
+COMMENT ON COLUMN report.title IS 'The title for this report';
+
+
+
+COMMENT ON COLUMN report.url IS 'A URL for a landing page for the report.';
+
+
+
+COMMENT ON COLUMN report.doi IS 'A DOI for this report.';
+
+
+
+COMMENT ON COLUMN report._public IS 'Whether or not this report is publically visible.';
+
+
+
+COMMENT ON COLUMN report.frequency IS 'How often this report is published.';
+
+
+
+COMMENT ON COLUMN report.publication_year IS 'The year in which this report was published.';
+
+
+
+COMMENT ON COLUMN report.topic IS 'A comma-separated list of topics covered in this report.';
+
+
+
+COMMENT ON COLUMN report.in_library IS 'Whether or not this report is in the USGCRP resource library.';
+
+
+
 CREATE TABLE report_type (
     identifier character varying NOT NULL
 );
