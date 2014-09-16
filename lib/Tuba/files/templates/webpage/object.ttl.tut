@@ -5,7 +5,7 @@
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
-   dcterms:date "<%= $webpage->access_date %>"^^xsd:date;
+   dcterms:date "<%= $webpage->access_date %>"^^xsd:dateTime;
 
    a bibo:Webpage.
 

@@ -8,9 +8,6 @@
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
 
-## Image Attributes
-   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
-
 ## Geographical extent of the image content
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
    gcis:southBoundLatitude "<%= $image->lat_min %>"^^xsd:float;
@@ -41,4 +38,3 @@
 %# % for my $keyword ($image->keywords) {
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
-
