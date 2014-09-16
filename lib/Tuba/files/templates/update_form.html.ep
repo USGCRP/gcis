@@ -31,9 +31,7 @@
 % for my $column (@$cols) {
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
-% my $label = labelize($column->name);
-% $label .= " : ".$column->remarks if $column->remarks;
-<label class="control-label<%= $required %>" for="<%= $column->name %>" data-content="<%= $label %>"><nobr><%= labelize($column->name) %></nobr></label>
+<label class="control-label<%= $required %>" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><nobr><%= labelize($column->name) %></nobr></label>
         <div class="row-fluid">
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;

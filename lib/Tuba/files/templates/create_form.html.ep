@@ -19,11 +19,9 @@
 % for my $column (@$cols) {
 % $column = $meta->column($column) unless ref $column;
 % my $name = $column->name;
-% my $label = labelize($column->name);
-% $label .= " : ".$column->remarks if $column->remarks;
 % my $required = $column->not_null ? ' required' : "";
     <div class="control-group" style='margin-bottom:2px;'>
-        <label class="control-label<%= $required %>" data-content="<%= $label %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+        <label class="control-label<%= $required %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // ""%>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
         <div class="controls">
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
                 %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
