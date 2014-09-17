@@ -1,29 +1,18 @@
 % layout 'default', namespaces => [qw/dcterms dbpedia dbpedia_owl xsd schema fabio/];
+%= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $file->identifier %>";
-%#   dbpedia:Path_(computing) "<%= tl($file->file) %>";
-
-% if ($file->location) {
+%#    dbpedia:Path_(computing) "<%= tl($file->file) %>";
    dbpedia:Domain_Name "<%= url_host($file->location) %>";
-% }
-
-## The SHA-1 hash pertaining to the file
-% if ($file->identifier) {
    dbpedia:SHA-1 "<%= $file->sha1 %>";
-% }
-
-## File Size (bytes):
+   dbpedia:MIME "<%= $file->mime_type %>";
    dbpedia_owl:fileSize "<%= $file->size %>"^^xsd:double;
-
-## MIME Type
-   dbpedia:MIME "<%= tl($file->mime_type) %>";
-
-## This file is associated with the following publication:
 % if (my @pubs = $file->publications) {
    % for my $file (@pubs) {
    schema:isRelatedTo <<%= obj_uri_for($file->to_object)->to_abs %>>;
-  % }
+   % }
 % }
-
    a fabio:ComputerFile .
+
+% end

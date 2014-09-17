@@ -2,9 +2,8 @@
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
-## Identifier, title, and publication year
    dcterms:identifier "<%= $book->identifier %>";
-   dcterms:title "<%= $book->title %>"^^xsd:string;
+   dcterms:title """<%= $book->title %>"""^^xsd:string;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
    bibo:isbn "<%= $book->isbn %>";
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
