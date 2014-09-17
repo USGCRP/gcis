@@ -6,11 +6,9 @@
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
-
-## The chapter is part of the NCA3, and has a URL
-   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
-
+   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
+ 
 ## Figures contained within the chapter
 % for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;

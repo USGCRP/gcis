@@ -6,17 +6,9 @@
    dcterms:identifier "<%= $book->identifier %>";
    dcterms:title "<%= $book->title %>"^^xsd:string;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
-   
-## Book ISBN
    bibo:isbn "<%= $book->isbn %>";
-
-## Number of pages in book
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
-
-## Book publisher
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
-
-## URL for book
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
 
 % for my $keyword ($book->keywords) {

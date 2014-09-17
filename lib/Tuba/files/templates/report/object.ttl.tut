@@ -5,23 +5,20 @@
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
-
 % if ($report->doi) {
-## DOI of report
    bibo:doi "<%= $report->doi %>";
 % } else {
-## URL for report
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
 % }
 
 ## A report can either be a report, assessment, or NCA3 technical input
    dcterms:type "<%= $report->report_type_identifier %>";
 
-## Frequency of report release
+## Frequency of report release:
    dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
 
 ## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;
+   dcterms:description """<%= $report->summary %>"""^^xsd:string;
 
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;

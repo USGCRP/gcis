@@ -1,11 +1,11 @@
-% layout 'default', namespaces => [qw/dcterms dbpedia gcis dbpedia_owl schema fabio/];
+% layout 'default', namespaces => [qw/dcterms dbpedia dbpedia_owl xsd schema fabio/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $file->identifier %>";
-   dbpedia:Path_(computing) "<%= $file->file %>";
+%#   dbpedia:Path_(computing) "<%= tl($file->file) %>";
 
 % if ($file->location) {
-   gcis:Location "<%= url_host($file->location) %>";
+   dbpedia:Domain_Name "<%= url_host($file->location) %>";
 % }
 
 ## The SHA-1 hash pertaining to the file
@@ -13,15 +13,15 @@
    dbpedia:SHA-1 "<%= $file->sha1 %>";
 % }
 
-## File Size, in bytes:
+## File Size (bytes):
    dbpedia_owl:fileSize "<%= $file->size %>"^^xsd:double;
 
-## The MIME Type
-   dbpedia:MIME "<%= $file->mime_type %>";
+## MIME Type
+   dbpedia:MIME "<%= tl($file->mime_type) %>";
 
 ## This file is associated with the following publication:
 % if (my @pubs = $file->publications) {
-  % for my $file (@pubs) {
+   % for my $file (@pubs) {
    schema:isRelatedTo <<%= obj_uri_for($file->to_object)->to_abs %>>;
   % }
 % }
