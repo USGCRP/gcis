@@ -12,8 +12,8 @@
     %       push @{ $by_type_rel{$type}{$rel}}, $child->publication;
 
 <<%= obj_uri_for($child->{publication}->to_object)->to_abs %>>
-    % for my $r ($child->publication->to_object) {
-   a gcis:<%= ucfirst($r->meta->table) %>;
+    % for my $foo ($child->publication->to_object) {
+   a gcis:<%= ucfirst($foo->meta->table) %>;
     % }
    prov:wasDerivedFrom <<%= current_resource %>>.
 
