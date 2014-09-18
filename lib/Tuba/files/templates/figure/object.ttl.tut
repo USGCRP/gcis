@@ -31,11 +31,6 @@
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 
-% for my $keyword ($figure->keywords) {
-## Keywords associated with the figure
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-% }  
-
    a gcis:Figure .
 % end
 
@@ -44,3 +39,8 @@
 ## This figure cites the following resource(s):
 %= include 'prov';
 %= include 'contributors';
+
+%# % for my $keyword ($figure->keywords) {
+%# ## Keywords associated with the figure
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }

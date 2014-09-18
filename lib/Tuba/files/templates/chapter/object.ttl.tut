@@ -24,11 +24,6 @@
    gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
 % } 
 
-## Keywords associated with the chapter
-% for my $keyword ($chapter->keywords) {
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-% }
-
    a gcis:Chapter .
 
 % end
@@ -39,5 +34,7 @@
 %= include 'prov';
 %= include 'contributors';
 
-
+%# % for my $keyword ($chapter->keywords) {
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }
 

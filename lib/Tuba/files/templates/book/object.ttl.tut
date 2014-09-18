@@ -10,11 +10,6 @@
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
 
-% for my $keyword ($book->keywords) {
-## Keywords for book
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-% }
-
    a bibo:Book.
 
 % end
@@ -23,3 +18,9 @@
 
 ## This book is cited by the following entities in GCIS:
 %= include 'prov';
+
+%# % for my $keyword ($book->keywords) {
+%# ## Keywords for book
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }
+
