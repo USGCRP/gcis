@@ -7,19 +7,17 @@
    gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:float;
 % }
    dcterms:title "<%= $figure->title %>"^^xsd:string;
-   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
-
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
    dcterms:RightsStatement "<%= $figure->usage_limits %>"^^xsd:string;
+   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
 
+% for my $image ($figure->images) {
+   gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
+% }
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
    gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
-
-% for my $image ($figure->images) {
-   gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-% }   
 
 ## Geographical extent of the figure content
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
