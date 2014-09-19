@@ -27,6 +27,5 @@
 % end
 
 
-
 ## This finding cites the following entities:
 %= include 'prov';

@@ -1,4 +1,4 @@
-% my $max_children = 20;
+% my $max_children = 25;
 % my @parents;
 % my @parents_with_references;
 % my @children_with_references;
@@ -12,9 +12,10 @@
     % @children_with_references = $pub->get_children_with_references((param 'show_all') ? () : (limit => $max_children));
     % $references_url = $pub->references_url($self);
 % }
-% if (@parents || @parents_with_references || @children) {   
+
+% if (@parents || @parents_with_references || @children) {
     % for my $parent (@parents_with_references) {
-    % my $parent_pub = $parent->{parent};
+       % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
    cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;
    biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>.
@@ -22,14 +23,42 @@
     % } 
 % }
 
-  % if (!(stash 'no_refs') && @children_with_references) {		
+% if (!(stash 'no_refs') && @children_with_references) {		
     % for my $child (@children_with_references) {   
-    % my $child_pub = $child->{child};
+       % my $child_pub = $child->{child};
 <<%= current_resource %>>
-      % if ($child_pub) {
+          % if ($child_pub) {
    cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
-      % }
+          % }
    biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
-	
+
+    % }
+
+% }
+
+%# % if (@parents || @children) {
+%#    % for my $parent (@parents) {
+%#     % my $parent_pub = $parent->{publication};
+%# <<%= current_resource %>>
+%#      % if ($parent->{publication}) {
+%#   prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>>;
+%#        % }
+%#      % if ($parent->{activity}) {
+%# prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>>.
+%#       % }
+%#   % }
+%#
+% my %by_type_rel = ();
+    % for my $child (@children) {
+       % my $type = $child->publication->publication_type_identifier;
+       % my $rel = $child->relationship;
+       % $by_type_rel{$type}{$rel} //= [];
+       % push @{ $by_type_rel{$type}{$rel}}, $child->publication;
+<<%= obj_uri_for($child->publication->to_object)->to_abs %>>
+          % for my $foo ($child->publication->to_object) {
+   a gcis:<%= ucfirst($foo->meta->table) %>;
+          % }
+   prov:wasDerivedFrom <<%= current_resource %>>.
+
     % }
 % }
