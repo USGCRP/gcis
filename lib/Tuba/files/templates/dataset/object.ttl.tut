@@ -39,9 +39,8 @@
 % }
 
    a gcis:Dataset .
-
 % end
 
 
-%= include 'dataset/prov';
+%= include 'prov';
 %= include 'contributors';
