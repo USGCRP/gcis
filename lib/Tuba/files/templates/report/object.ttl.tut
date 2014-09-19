@@ -21,7 +21,7 @@
    dcterms:description """<%= $report->summary %>"""^^xsd:string;
 
 ## Report topics
-   dcterms:subject "<%= $report->topic %>"^^xsd:string;
+   dcterms:subject """<%= $report->topic %>"""^^xsd:string;
 
 ## This report contains multiple chapters:
 % for my $chapter ($report->chapters) {
