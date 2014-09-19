@@ -26,8 +26,6 @@
 
    a gcis:Image .
 % end
-
-
 %= include 'prov';
 %= include 'contributors';
 %# % for my $keyword ($image->keywords) {

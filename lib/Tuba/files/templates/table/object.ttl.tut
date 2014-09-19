@@ -23,7 +23,6 @@
 % end
 
 
-
 ## This table cites the following entities:
 %= include 'prov';
 
