@@ -487,6 +487,7 @@ sub register {
             return qr[
                        \                 # a space
                        ""                # empty quotes
+                       (?:"""")?         # four more empty quotes (for literals with newlines)
                         (?:\^\^xsd:
                            (?:[a-zA-Z]+) # optional type
                         )?
