@@ -3,8 +3,7 @@
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $activity->identifier %>";
-
-   dcterms:description "<%= no_tbibs($activity->data_usage) %>"^^xsd:string;
+   dcterms:description """<%= no_tbibs($activity->data_usage) %>"""^^xsd:string;
 
 ## The activity began and ended at the following times
    prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
@@ -14,16 +13,16 @@
    dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;
 
 ## Output datafiles   
-   dbpedia_owl:filename "<%= $activity->output_artifacts %>"^^xsd:string;
+   dbpedia_owl:filename """<%= $activity->output_artifacts %>"""^^xsd:string;
 
 ## Software utilized
    gcis:Software "<%= $activity->software %>"^^xsd:string;
 
 ## Computing environment
-   dcterms:InteractiveResource "<%= $activity->computing_environment %>"^^xsd:string;
+   dcterms:InteractiveResource """<%= $activity->computing_environment %>"""^^xsd:string;
 
 ## Methodology employed
-   meth:Methodology "<%= $activity->methodology %>"^^xsd:string;
+   meth:Methodology """<%= $activity->methodology %>"""^^xsd:string;
 
    a prov:Activity .
 
@@ -31,12 +30,13 @@
 
 
 % if (my @maps = $activity->publication_maps) {
-## The following image was derived from a dataset using this activity,
+## The following entity was  derived from a dataset using this activity,
 ## syntax per Example 4 on PROV-O primer:
-
    % for my $map (@maps) {
    <<%= obj_uri_for ($map->child_publication->to_object)->to_abs %>>
-      a gcis:Image;
+     % for my $foo ($map->child_publication->to_object) {
+      a gcis:<%= ucfirst($foo->meta->table) %>;
+     % }
       prov:wasDerivedFrom <<%= obj_uri_for($map->parent_publication->to_object)->to_abs %>>;
       prov:wasGeneratedBy <<%= current_resource %>>.
 
