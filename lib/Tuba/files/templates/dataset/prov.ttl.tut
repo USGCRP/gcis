@@ -1,8 +1,8 @@
-##The following entity/entities was/were derived from this dataset:
 % my $pub = $object->get_publication;
 % my @parents = $pub ? $pub->get_parents : ();
 % my @children = $pub ? $pub->children : ();
 
+##The following entity/entities was/were derived from this dataset:
 % if (@parents || @children) {
    % my %by_type_rel = ();
     % for my $child (@children) {
@@ -16,6 +16,5 @@
    a gcis:<%= ucfirst($foo->meta->table) %>;
     % }
    prov:wasDerivedFrom <<%= current_resource %>>.
-
     % }
 % }

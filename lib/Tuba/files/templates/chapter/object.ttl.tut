@@ -9,9 +9,14 @@
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
    gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
  
-## Figures contained within the chapter
+## Figure(s) contained within the chapter
 % for my $figure ($chapter->figures) {
    gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+% }
+
+## Table(s) contained within the chapter
+% for my $table ($chapter->tables) {
+   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
 % }
 
 ## Findings which emerged from the chapter
@@ -19,15 +24,9 @@
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
 % }
 
-## The chapter is associated with the following table(s):
-% for my $table ($chapter->tables) {
-   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
-% } 
-
    a gcis:Chapter .
 
 % end
-
 
 
 ## Here is a subset of references contained in this chapter:
@@ -37,4 +36,3 @@
 %# % for my $keyword ($chapter->keywords) {
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
-

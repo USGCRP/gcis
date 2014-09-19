@@ -7,6 +7,9 @@
    dcterms:description "<%= $image->description %>"^^xsd:string;
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
+% for my $figure ($image->figures) {
+   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+% }
 
 ## Geographical extent of the image content
    gcis:northBoundLatitude "<%= $image->lat_max %>"^^xsd:float;
@@ -20,11 +23,6 @@
 
 ## Tags:
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
-
-## The image is part of the following figure(s):
-% for my $figure ($image->figures) {
-   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
-% }
 
    a gcis:Image .
 
