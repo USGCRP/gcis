@@ -25,14 +25,11 @@
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
 
    a gcis:Image .
-
 % end
 
 
-
-%= include 'image/prov';
+%= include 'prov';
 %= include 'contributors';
-
 %# % for my $keyword ($image->keywords) {
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
