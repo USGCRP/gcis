@@ -146,7 +146,7 @@
 <script>
   $(document).ready(function() {
       $('#simple-menu').sidr();
-      $("#sidr").removeclass('hideme');
+      $("#sidr").removeClass('hideme');
   });
   $(window).touchwipe({
     wipeLeft: function() {
