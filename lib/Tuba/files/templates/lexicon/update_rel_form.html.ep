@@ -11,7 +11,7 @@
 
 % my $selected_context = param 'context';
 % my @contexts = $lexicon->contexts;
-<div class='row'>
+<div class='row-fluid'>
     <div class='span2'>
     <ul class='nav nav-list well'>
         <li class='nav-header'>Contexts</li>
@@ -43,7 +43,7 @@
         <span style='position:absolute;right:0px;'><%= check_box 'delete_term' => $exterm->term %></span></dd>
         % }
         <dt>
-        <%= text_field 'new_term', class => "span2", placeholder => "New term" %>
+        <%= text_field 'new_term', class => "input input-small", placeholder => "New term" %>
         </dt>
         <dd>
         <%= text_field 'new_gcid', class => "span10", autocomplete => "off", id => 'gcid_lookup', placeholder => "GCID" %>
