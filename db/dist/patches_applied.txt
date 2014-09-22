@@ -133,3 +133,4 @@
 1240_dataset_description_attribution.sql	842de4300819f80c8783cbf3d8fd806b
 1250_gcid_index.sql	8ca6adec432e7a4ba754e813ca9b33fc
 1260_report_comments.sql	6cfc4c1d460c599ad23a741349d2d38b
+1270_not_empty.sql	2572b20b0904f4dcf7d1afc306ffc79c

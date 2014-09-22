@@ -231,7 +231,8 @@ CREATE TABLE exterm (
     term character varying NOT NULL,
     context character varying NOT NULL,
     lexicon_identifier character varying NOT NULL,
-    gcid character varying NOT NULL
+    gcid character varying NOT NULL,
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
 );
 
 
