@@ -46,8 +46,13 @@ sub update_rel {
         $exterm->load(speculative => 1);
         $exterm->gcid($gcid);
         $exterm->save(audit_user => $c->user) or return $c->update_error($exterm->error);
-    } else {
-        return $c->update_error("Something's missing (term, gcid, context)");
+    }
+    if (my @delete = $c->param('delete_term')) {
+        for my $term (@delete) {
+            my $ex = Exterm->new(lexicon => $lexicon, term => $term, context => $context);
+            $ex->load(speculative => 1) or next;
+            $ex->delete or return $c->update_error($ex->error);
+        }
     }
     return $c->redirect_without_error('update_rel_form');
 }

@@ -33,9 +33,14 @@
         %= form_for obj_uri_for($object,'update_rel'), method => 'POST', begin
         %= hidden_field 'context' => $selected_context;
         <dl class='dl-horizontal'>
+        <dt>
+        <dt>External term</dt>
+        <dd style='position:relative;'>GCID<span style='position:absolute;right:0px;'>delete?</span></dd>
+
         % for my $exterm (@$terms) {
         <dt><a target="_blank" href="<%= $exterm->native_url %>"><%= $exterm->term %></a></dt>
-        <dd><a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a></dd>
+        <dd style='position:relative;'><a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
+        <span style='position:absolute;right:0px;'><%= check_box 'delete_term' => $exterm->term %></span></dd>
         % }
         <dt>
         <%= text_field 'new_term', class => "span2", placeholder => "New term" %>
@@ -45,7 +50,7 @@
         </dd>
         </dl>
         <center>
-            <%= submit_button 'Add new term', class => "btn btn-primary" %>
+            <%= submit_button 'Add or delete terms', class => "btn btn-primary" %>
         </center>
         %= end
 
