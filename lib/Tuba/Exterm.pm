@@ -29,8 +29,8 @@ sub create {
         $term->load(speculative => 1);
         $term->gcid($json->{gcid});
     } else {
-        # TODO handle a form too
-        return $c->update_error("not implemented");
+        # NB: forms are handled through lexicon/rel
+        return $c->update_error("missing JSON to add exterm");
     }
     $term->save(audit_user => $c->user) or return $c->update_error($term->error);
     $c->stash(_this_object => $term);

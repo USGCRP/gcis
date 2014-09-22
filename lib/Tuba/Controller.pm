@@ -1367,6 +1367,10 @@ sub redirect_with_error {
     } else {
         $uri = $c->req->url;
     }
+    if (my $params = $c->stash('redirect_params')) {
+        $uri = Mojo::URL->new($uri) unless ref($uri);
+        $uri->query(@$params);
+    }
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {
@@ -1384,6 +1388,11 @@ sub redirect_without_error {
     my $c     = shift;
     my $tab   = shift;
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    if (my $params = $c->stash('redirect_params')) {
+        $uri = Mojo::URL->new($uri) unless ref($uri);
+        $uri->query(@$params);
+    }
+
     $c->respond_to(
         html => sub { shift->redirect_to($uri) },
         json => sub { shift->render(json => { status => 'ok' }) },
