@@ -18,7 +18,7 @@ changes since
 
 <table class='table table-condensed table-bordered'>
     <tr>
-    <th>User</th>
+    <td>user&darr; <span style='float:right;'>table&rarr;</span></td>
     % for my $table (@$all_tables) {
     <th><a href="/watch?view=details&t=<%= $table %>" alt="<%= $table %>" title="<%= $table %>"><%= substr($table,0,4) %></a></th>
     % }
