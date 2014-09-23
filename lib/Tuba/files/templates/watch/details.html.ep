@@ -1,5 +1,15 @@
 % layout 'default';
 
+<ul class="nav nav-tabs">
+    <li class="active">
+    <%= link_to $self->req->url->clone->query(view => 'details') => begin %>details<%= end %>
+    </li>
+    <li>
+    <%= link_to $self->req->url->clone->query(view => 'summary') => begin %>summary<%= end %>
+    </li>
+</ul>
+
+
 %= form_for current_route() => begin
 last <%= select_field 'limit' => [50,100,500,1000], onChange => '{this.form.submit();}', class => 'span2'; %>
 <%= select_field 'type' => ['changes',[ 'updates' => 'U' ],['inserts' => 'I'],['deletes' => 'D']], onChange => '{this.form.submit();}', class => 'span2'; %>

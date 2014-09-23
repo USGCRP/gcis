@@ -1,0 +1,38 @@
+% layout 'default';
+
+<ul class="nav nav-tabs">
+    <li>
+    <%= link_to $self->req->url->clone->query(view => 'details') => begin %>details<%= end %>
+    </li>
+    <li class="active">
+    <%= link_to $self->req->url->clone->query(view => 'summary') => begin %>summary<%= end %>
+    </li>
+</ul>
+
+%= form_for current_route() => class => 'form form-inline' => begin
+changes since
+<%= text_field 'cutoff', class => 'span2'; %> ago
+%= submit_button 'show', class => 'btn btn-default';
+%= hidden_field 'view' => 'summary';
+%= end
+
+<table class='table table-condensed table-bordered'>
+    <tr>
+    <th>User</th>
+    % for my $table (@$all_tables) {
+    <th><a href="/watch?view=details&t=<%= $table %>" alt="<%= $table %>" title="<%= $table %>"><%= substr($table,0,4) %></a></th>
+    % }
+    </tr>
+    % for my $user (@$all_users) {
+    <tr>
+        <th><%= $user %></th>
+        % for my $table (@$all_tables) {
+        <td>
+            <a href="/watch?view=details&t=<%= $table %>&user=<%= $user %>"><%= $grid->{$user}{$table} %></a>
+        </td>
+        % }
+    </tr>
+    % }
+
+</table>
+
