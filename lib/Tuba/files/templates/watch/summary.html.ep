@@ -25,7 +25,9 @@ changes since
     </tr>
     % for my $user (@$all_users) {
     <tr>
-        <th><%= $user %></th>
+        <th>
+            <a href="/watch?view=details&user=<%= $user %>"><%= $user %></a>
+        </th>
         % for my $table (@$all_tables) {
         <td>
             <a href="/watch?view=details&t=<%= $table %>&user=<%= $user %>"><%= $grid->{$user}{$table} %></a>
