@@ -315,6 +315,9 @@ db/patches/1210_instrument_description_attribution.sql
 db/patches/1220_roles.sql
 db/patches/1230_platform_start_end.sql
 db/patches/1240_dataset_description_attribution.sql
+db/patches/1250_gcid_index.sql
+db/patches/1260_report_comments.sql
+db/patches/1270_not_empty.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -346,6 +349,7 @@ lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
 lib/Tuba/DB/Mixin/Object/Contributor.pm
 lib/Tuba/DB/Mixin/Object/Country.pm
+lib/Tuba/DB/Mixin/Object/Exterm.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
 lib/Tuba/DB/Mixin/Object/Figure/Manager.pm
 lib/Tuba/DB/Mixin/Object/File.pm
@@ -356,6 +360,7 @@ lib/Tuba/DB/Mixin/Object/Generic.pm
 lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
 lib/Tuba/DB/Mixin/Object/Journal.pm
+lib/Tuba/DB/Mixin/Object/Lexicon.pm
 lib/Tuba/DB/Mixin/Object/Methodology.pm
 lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
@@ -476,7 +481,6 @@ lib/Tuba/files/templates/create_link.html.ep
 lib/Tuba/files/templates/dataset/object.html.ep
 lib/Tuba/files/templates/dataset/object.ttl.tut
 lib/Tuba/files/templates/dataset/objects.html.ep
-lib/Tuba/files/templates/dataset/prov.ttl.tut
 lib/Tuba/files/templates/db_meta.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/doc/about.html.ep
@@ -507,6 +511,7 @@ lib/Tuba/files/templates/h/contributors_short.html.ep
 lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
+lib/Tuba/files/templates/h/other_identifiers.html.ep
 lib/Tuba/files/templates/h/prov.html.ep
 lib/Tuba/files/templates/h/tbibjs.html.ep
 lib/Tuba/files/templates/h/thumbnail.html.ep
@@ -516,7 +521,6 @@ lib/Tuba/files/templates/history_modal.html.ep
 lib/Tuba/files/templates/image/object.html.ep
 lib/Tuba/files/templates/image/object.ttl.tut
 lib/Tuba/files/templates/image/objects.html.ep
-lib/Tuba/files/templates/image/prov.ttl.tut
 lib/Tuba/files/templates/importer/form.html.ep
 lib/Tuba/files/templates/importer/status.html.ep
 lib/Tuba/files/templates/index.html.ep
@@ -533,7 +537,9 @@ lib/Tuba/files/templates/journal/objects.html.ep
 lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.tut
+lib/Tuba/files/templates/lexicon/object.html.ep
 lib/Tuba/files/templates/lexicon/object.ttl.tut
+lib/Tuba/files/templates/lexicon/objects.html.ep
 lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/messages.html.ep
@@ -589,6 +595,7 @@ lib/Tuba/files/templates/table/object.html.ep
 lib/Tuba/files/templates/table/object.ttl.tut
 lib/Tuba/files/templates/table/objects.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
+lib/Tuba/files/templates/unauthorized.html.ep
 lib/Tuba/files/templates/update_contributors_form.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
@@ -596,7 +603,8 @@ lib/Tuba/files/templates/update_prov_form.html.ep
 lib/Tuba/files/templates/update_rel_form.html.ep
 lib/Tuba/files/templates/update_tabs.html.ep
 lib/Tuba/files/templates/view_array.html.ep
-lib/Tuba/files/templates/watch.html.ep
+lib/Tuba/files/templates/watch/details.html.ep
+lib/Tuba/files/templates/watch/summary.html.ep
 lib/Tuba/files/templates/webpage/object.html.ep
 lib/Tuba/files/templates/webpage/object.ttl.tut
 lib/Tuba/Finding.pm
