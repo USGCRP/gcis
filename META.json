@@ -69,7 +69,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.09"
+         "version" : "1.10"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -131,6 +131,9 @@
       "Tuba::DB::Object::Country" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Country.pm"
       },
+      "Tuba::DB::Object::Exterm" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Exterm.pm"
+      },
       "Tuba::DB::Object::Figure" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Figure.pm"
       },
@@ -160,6 +163,9 @@
       },
       "Tuba::DB::Object::Journal" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Journal.pm"
+      },
+      "Tuba::DB::Object::Lexicon" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Lexicon.pm"
       },
       "Tuba::DB::Object::Manager" : {
          "file" : "lib/Tuba/DB/Object/Manager.pm"
@@ -304,5 +310,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.09"
+   "version" : "1.10"
 }
