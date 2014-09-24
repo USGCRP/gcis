@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis rdf prov cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis rdf cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -9,7 +9,7 @@
    dcterms:title "<%= $figure->title %>"^^xsd:string;
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
    dcterms:RightsStatement "<%= $figure->usage_limits %>"^^xsd:string;
-   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
+   gcis:hasCaption """<%= no_tbibs($figure->caption) %>"""^^xsd:string;
 
 % for my $image ($figure->images) {
    gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;

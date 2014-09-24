@@ -3,7 +3,7 @@
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $file->identifier %>";
-%#    dbpedia:Path_(computing) "<%= tl($file->file) %>";
+%#   dbpedia:Path_(computing) "<%= tl($file->file) %>";
    dbpedia:Domain_Name "<%= url_host($file->location) %>";
    dbpedia:SHA-1 "<%= $file->sha1 %>";
    dbpedia:MIME "<%= $file->mime_type %>";
