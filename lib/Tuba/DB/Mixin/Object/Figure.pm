@@ -5,7 +5,8 @@ use strict;
 sub numeric {
     my $c = shift;
     my $chapter = $c->chapter or return "";
-    return join '.', $chapter->number // '', $c->ordinal // '';
+    return $c->ordinal unless defined($chapter->number);
+    return join '.', $chapter->number, $c->ordinal // '';
 }
 
 sub stringify {
