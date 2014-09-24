@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
-   gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:float;
+   gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:string;
 % }
    dcterms:description "<%= $finding->statement %>"^^xsd:string;
 

@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $figure->identifier %>";
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:float;
+   gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:string;
 % }
    dcterms:title "<%= $figure->title %>"^^xsd:string;
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
