@@ -11,6 +11,7 @@ sub dbgrep {
     my $query_string = $a{query_string} or return;
     my $limit = $a{limit} || 10;
     my $user = $a{user};
+    my $restrict = $a{restrict};
 
     my @query = $self->_make_query($query_string);
 
@@ -23,10 +24,17 @@ sub dbgrep {
         @viewable = ( _public => 't' );
     }
 
+    my @restrict;
+    if ($restrict) {
+        my ($report) = $restrict =~ /^report_identifier:(.*)$/;
+        @restrict = ( and => [ report_identifier => $report ] );
+    }
+
     my $found = $self->get_objects(
         query => [
              or => \@query,
-             or => \@viewable
+             or => \@viewable,
+             @restrict,
         ],
         with_objects => \@with,
         limit => $limit );

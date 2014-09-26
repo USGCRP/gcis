@@ -49,9 +49,10 @@ sub autocomplete {
     my $want = $c->param('type');
     my $elide = $c->param('elide') || 80;
     my $gcids = $c->param('gcids');
+    my $restrict = $c->param('restrict');
 
     my @tables;
-    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
+    if ($want && $want=~/^(finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
        @tables = ( $want );
     } elsif ($want && ($want ne 'all')) {
         return $c->render(json => { error => "undefined type" } );
@@ -63,7 +64,7 @@ sub autocomplete {
         next if $want && $want ne 'all' && $table ne $want;
         logger->info('looking in '.$table);
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
-        my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
+        my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user, restrict => $restrict);
         for (@got) {
             if ($gcids) {
                 push @results, $_->as_gcid_str($c,$elide,$table);
