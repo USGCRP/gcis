@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument->identifier %>";
@@ -9,3 +9,5 @@
 % }
 
    a gcis:Instrument .
+
+%= include 'contributors';
