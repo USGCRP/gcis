@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd dbpprop gcis/];
+% layout 'default', namespaces => [qw/dcterms xsd dbpprop gcis prov/];
 %= filter_lines_with empty_predicate() => begin
 
 <<%= current_resource %>>
@@ -15,3 +15,6 @@
 
    a gcis:Platform .
 % end
+
+
+%= include 'contributors';
