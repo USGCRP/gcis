@@ -3,7 +3,7 @@
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $report->identifier %>";
-   dcterms:title "<%= $report->title %>"^^xsd:string;
+   dcterms:title """<%= $report->title %>"""^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
 % if ($report->doi) {
    bibo:doi "<%= $report->doi %>";
