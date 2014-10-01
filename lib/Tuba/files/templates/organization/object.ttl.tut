@@ -1,15 +1,15 @@
 % layout 'default', namespaces => [qw/dcterms skos xsd gcis org place prov/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $organization->identifier %>";
    skos:prefLabel "<%= $organization->name %>"^^xsd:string;
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
-
+%#
 % if (my $type = $organization->organization_type) {
    org:purpose "<%= $type->identifier %>";
 % }
-
+%#
 % if (my $country = $organization->country) {
    place:Country "<%= $country->name %>"^^xsd:string;
 % }
@@ -34,7 +34,7 @@
 
     % }
 % }
-
+%#
    % if (my @maps = $organization->organization_maps_objs) {
     % my $first = 1;
       % for my $map (@maps) {

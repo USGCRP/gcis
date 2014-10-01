@@ -1,6 +1,6 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $image->identifier %>";
    dcterms:title "<%= $image->title %>"^^xsd:string;
