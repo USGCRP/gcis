@@ -21,7 +21,7 @@
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] ;
 .
-% # The following portion only works if a pub is associated with an org but with no author
+%# The following portion only works if a pub is associated with an org but with no author
 % } else {
 % my $pub = $object->get_publication;
 <<%= obj_uri_for($obj)->to_abs %>>;

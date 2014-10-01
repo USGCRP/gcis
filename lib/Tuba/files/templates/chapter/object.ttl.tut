@@ -1,8 +1,7 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis prov cito biro/];
 %= filter_lines_with empty_predicate() => begin
-  
+%#  
 <<%= current_resource %>>
-## Chapter identifier, number, and title
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
@@ -32,7 +31,7 @@
 ## Here is a subset of references contained in this chapter:
 %= include 'prov';
 %= include 'contributors';
-
+%#
 %# % for my $keyword ($chapter->keywords) {
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }

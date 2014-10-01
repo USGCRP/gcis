@@ -1,13 +1,13 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis rdf cito biro/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:string;
 % }
    dcterms:description "<%= $finding->statement %>"^^xsd:string;
-
+%#
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    gcis:isFindingOf <<%= uri($chapter) %>>;
    gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
@@ -25,7 +25,6 @@
    a gcis:Finding .
 
 % end
-
 
 
 ## This finding cites the following entities:
