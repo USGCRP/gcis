@@ -1,6 +1,6 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis rdf cito biro/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $table->identifier %>";
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
@@ -8,12 +8,12 @@
 % }
    dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
    gcis:hasCaption """<%= no_tbibs($table->caption) %>"""^^xsd:string;
-
+%#
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
    gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
 % }
-
+%#
 % for my $array ($table->arrays) {
    gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
 % }
@@ -23,12 +23,10 @@
 % end
 
 
-
 ## This table cites the following entities:
 %= include 'prov';
-
+%#
 %# % for my $keyword ($table->keywords) {
 %# ## Keywords associated with table
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
-
