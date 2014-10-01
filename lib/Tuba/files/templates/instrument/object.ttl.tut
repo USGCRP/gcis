@@ -1,13 +1,12 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument->identifier %>";
    dcterms:title "<%= $instrument->name %>"^^xsd:string;
-   dcterms:description "<%= $instrument->description %>"^^xsd:string;
 % for my $platform ($instrument->platforms) {
    gcis:inPlatform <<%= uri($platform) %>>;
 % }
-
+   dcterms:description """<%= $instrument->description %>"""^^xsd:string;
    a gcis:Instrument .
 
 %= include 'contributors';
