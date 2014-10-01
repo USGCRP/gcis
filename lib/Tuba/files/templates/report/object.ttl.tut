@@ -11,7 +11,7 @@
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
 % }
 
-## A report can either be a report, assessment, or NCA3 technical input
+## A report can either be a report, assessment, or technical input
    dcterms:type "<%= $report->report_type_identifier %>";
 
 ## Frequency of report release:
@@ -48,6 +48,5 @@
 % end
 
 
-## Here is a subset of references cited in this report:
 %= include 'prov';
 %= include 'contributors';
