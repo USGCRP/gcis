@@ -1,22 +1,17 @@
 % layout 'default', namespaces => [qw/dcterms gcis prov/];
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument_instance->identifier %>";
-   gcis:Instrument "<%= $instrument_instance->instrument_identifier %>";
-   gcis:Platform "<%= $instrument_instance->platform_identifier %>";
-   gcis:location "<%= $instrument_instance->location %>";
-
-## This instrument instance is associated with the following platforms, instruments, and datasets in GCIS:
-<% for my $platform ($instrument_instance->platforms) { %>
-   gcis:Platform <<%= obj_uri_for($platform)->to_abs %>>;
-<% } %
-
-<% for my $platform ($instrument_instance->instruments) { %>
-   gcis:Instrument <<%= obj_uri_for($instrument)->to_abs %>>;
-<% } %
-
-<% for my $platform ($instrument_instance->datasets) { %>
-   gcis:Dataset <<%= obj_uri_for($dataset)->to_abs %>>;
-<% } %
+% for my $platform ($instrument_instance->platforms) %>
+   gcis:Platform <<%= uri($platform) %>>;
+} %
+%#
+% for my $platform ($instrument_instance->instruments) %>
+   gcis:Instrument <<%= uri($instrument) %>>;
+} %
+%#
+% for my $platform ($instrument_instance->datasets) %>
+   gcis:Dataset <<%= uri($dataset) %>>;
+} %
 
    a prov:Entity .
