@@ -31,7 +31,7 @@
          "requires" : {
             "Algorithm::Permute" : "0",
             "Crypt::OpenSSL::RSA" : "0",
-            "DBD::Pg" : "3.003000",
+            "DBD::Pg" : "3.003",
             "DBIx::Connector" : "0",
             "DBIx::Custom" : "0",
             "DBIx::Simple" : "0",
@@ -69,7 +69,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.10"
+         "version" : "1.11"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -310,5 +310,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.10"
+   "version" : "1.11"
 }
