@@ -3,7 +3,7 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $report->identifier %>";
-   dcterms:title """<%= $report->title %>"""^^xsd:string;
+   dcterms:title "<%= $report->title %>"^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
 % if ($report->doi) {
    bibo:doi "<%= $report->doi %>";
@@ -15,13 +15,13 @@
    dcterms:type "<%= $report->report_type_identifier %>";
 
 ## Frequency of report release:
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
+   dcterms:frequency "<%= human_duration($report->frequency) %>"^^xsd:string;
 
 ## Report summary
-   dcterms:description """<%= $report->summary %>"""^^xsd:string;
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
 ## Report topics
-   dcterms:subject """<%= $report->topic %>"""^^xsd:string;
+   dcterms:subject "<%= $report->topic %>"^^xsd:string;
 
 ## This report contains multiple chapters:
 % for my $chapter ($report->chapters) {
