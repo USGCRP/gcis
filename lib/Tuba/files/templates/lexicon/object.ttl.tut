@@ -1,5 +1,5 @@
 % layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $lexicon->identifier %>";
    dcterms:title "<%= $lexicon->description %>"^^xsd:string;

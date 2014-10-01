@@ -1,9 +1,9 @@
 % layout 'default', namespaces => [qw/dcterms xsd dwc bibo gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $book->identifier %>";
-   dcterms:title """<%= $book->title %>"""^^xsd:string;
+   dcterms:title "<%= $book->title %>"^^xsd:string;
    dwc:year "<%= $book->year %>"^^xsd:gYear;
    bibo:isbn "<%= $book->isbn %>";
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
@@ -13,7 +13,6 @@
    a bibo:Book.
 
 % end
-
 
 
 ## This book is cited by the following entities in GCIS:

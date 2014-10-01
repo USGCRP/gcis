@@ -1,19 +1,21 @@
 % layout 'default', namespaces => [qw/dcterms dbpedia dbpedia_owl xsd schema fabio/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $file->identifier %>";
    dbpedia:Domain_Name "<%= url_host($file->location) %>";
    dbpedia:SHA-1 "<%= $file->sha1 %>";
    dbpedia:MIME "<%= $file->mime_type %>";
-## File size in bytes:
-   dbpedia_owl:fileSize "<%= $file->size %>"^^xsd:double;
-
 % if (my @pubs = $file->publications) {
    % for my $file (@pubs) {
    schema:isRelatedTo <<%= obj_uri_for($file->to_object)->to_abs %>>;
    % }
 % }
+
+## File size (bytes):
+   dbpedia_owl:fileSize "<%= $file->size %>"^^xsd:double;
+%#
+
    a fabio:ComputerFile .
 
 % end
