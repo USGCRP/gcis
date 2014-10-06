@@ -6,7 +6,7 @@
 % for my $platform ($instrument->platforms) {
    gcis:inPlatform <<%= uri($platform) %>>;
 % }
-   dcterms:description """<%= $instrument->description %>"""^^xsd:string;
+   dcterms:description "<%= $instrument->description %>"^^xsd:string;
    a gcis:Instrument .
 
 %= include 'contributors';
