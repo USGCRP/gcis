@@ -14,13 +14,13 @@
 % }
 
 ## Properties of the finding:
-   gcis:findingProcess """<%= no_tbibs(tl($finding->process)) %>"""^^xsd:string;
+   gcis:findingProcess "<%= no_tbibs(tl($finding->process)) %>"^^xsd:string;
    
-   gcis:descriptionOfEvidenceBase """<%= no_tbibs(tl($finding->evidence)) %>"""^^xsd:string;
+   gcis:descriptionOfEvidenceBase "<%= no_tbibs(tl($finding->evidence)) %>"^^xsd:string;
    
-   gcis:assessmentOfConfidenceBasedOnEvidence """<%= no_tbibs(tl($finding->confidence)) %>"""^^xsd:string;
+   gcis:assessmentOfConfidenceBasedOnEvidence "<%= no_tbibs(tl($finding->confidence)) %>"^^xsd:string;
    
-   gcis:newInformationAndRemainingUncertainties """<%= no_tbibs(tl($finding->uncertainties)) %>"""^^xsd:string;
+   gcis:newInformationAndRemainingUncertainties "<%= no_tbibs(tl($finding->uncertainties)) %>"^^xsd:string;
 
    a gcis:Finding .
 
