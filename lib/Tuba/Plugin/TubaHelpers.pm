@@ -533,6 +533,7 @@ sub register {
           schema => 'http://schema.org/',
           skos   => 'http://www.w3.org/2004/02/skos/core#',
           place => 'http://purl.org/ontology/places#',
+          lemon => 'http://lemon-model.net/lemon#',
      )
     });
 }
