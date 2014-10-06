@@ -35,7 +35,7 @@
 
 %= include 'prov';
 %= include 'contributors';
-
+%#
 %# % for my $keyword ($figure->keywords) {
 %# ## Keywords associated with the figure
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
