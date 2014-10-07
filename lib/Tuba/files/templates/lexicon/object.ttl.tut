@@ -5,6 +5,7 @@
    dcterms:title "<%= $lexicon->description %>"^^xsd:string;
    gcis:hasURL "<%= $lexicon->url %>"^^xsd:anyURI;
 
+% if (0) { ## FIXME
 % my @contexts = $lexicon->contexts;
 % for my $context (sort @contexts) {
   % my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context], sort_by => 'term' );
@@ -15,5 +16,6 @@
 
       % }
 
+% }
 % }
    a prov:Entity.
