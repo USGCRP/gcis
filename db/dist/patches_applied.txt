@@ -134,3 +134,4 @@
 1250_gcid_index.sql	8ca6adec432e7a4ba754e813ca9b33fc
 1260_report_comments.sql	6cfc4c1d460c599ad23a741349d2d38b
 1270_not_empty.sql	2572b20b0904f4dcf7d1afc306ffc79c
+1280_exterm_gcid_constraint.sql	70b2552e348269f5e2bb3fb0c95f6da4

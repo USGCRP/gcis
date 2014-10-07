@@ -232,7 +232,8 @@ CREATE TABLE exterm (
     context character varying NOT NULL,
     lexicon_identifier character varying NOT NULL,
     gcid character varying NOT NULL,
-    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0)),
+    CONSTRAINT exterm_gcid_check CHECK (((gcid)::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text)))
 );
 
 
