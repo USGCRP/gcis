@@ -1,0 +1,11 @@
+% my @contexts = $lexicon->contexts;
+% for my $context (sort @contexts) {
+% my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context]);
+      % for my $term (@$terms) {
+<<%= $term->gcid %>>
+   a lemon:representation;
+   prov:wasDerivedFrom "<%= $term->term %>".
+
+      % }
+
+% }
