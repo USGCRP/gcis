@@ -49,11 +49,15 @@ $t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)" => {Accept => "ap
   ->status_is(303)                  # 303 == "See Other"
   ->json_is({gcid => $gcid});
 
+$t->get_ok("/lexicon/ceos.nt")->content_unlike(qr/error converting to ntriples/)
+  ->status_is(200, "No errors making ntriples");
+
 $t->delete_ok("/lexicon/ceos/Mission/Aqua (with stuff here)")
   ->status_is(200);
 
 $t->get_ok("/lexicon/ceos/find/Mission/Aqua")
   ->status_is(404);
+
 
 done_testing();
 
