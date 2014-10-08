@@ -10,8 +10,6 @@
    datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
-%#
-## The formal description of the dataset
    dcterms:description "<%= no_tbibs($dataset->description) %>"^^xsd:string;
  
 ## Dates of dataset release and access

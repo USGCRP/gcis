@@ -10,15 +10,13 @@
 % } else {
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
 % }
+   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
 ## A report can either be a report, assessment, or technical input
    dcterms:type "<%= $report->report_type_identifier %>";
 
 ## Frequency of report release:
    dcterms:frequency "<%= human_duration($report->frequency) %>"^^xsd:string;
-
-## Report summary
-   dcterms:description "<%= $report->summary %>"^^xsd:string;
 
 ## Report topics
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
@@ -46,7 +44,6 @@
    a gcis:Report .
 
 % end
-
 
 %= include 'prov';
 %= include 'contributors';

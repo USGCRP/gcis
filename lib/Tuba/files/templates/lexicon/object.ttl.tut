@@ -1,21 +1,10 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis prov lemon/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov lemon dbpedia/];
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $lexicon->identifier %>";
    dcterms:title "<%= $lexicon->description %>"^^xsd:string;
    gcis:hasURL "<%= $lexicon->url %>"^^xsd:anyURI;
 
-% if (0) { ## FIXME
-% my @contexts = $lexicon->contexts;
-% for my $context (sort @contexts) {
-  % my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context], sort_by => 'term' );
-      % for my $term (@$terms) {
-<<%= $term->gcid %>>
-   a lemon:representation;
-   prov:wasDerivedFrom "<%= $term->term %>";
+   a dbpedia:Lexicon .
 
-      % }
-
-% }
-% }
-   a prov:Entity.
+%= include 'representation';
