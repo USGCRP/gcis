@@ -1,0 +1,15 @@
+% my $matches = orm->{'exterm'}{mng}->get_objects(
+%   query => [ gcid => "$gcid" ],
+%   sort_by => "lexicon_identifier, term"
+% );
+
+% if (@$matches) {
+<<%= current_resource %>>
+    % for my $exterm (@$matches) {
+       % if (my $url = $exterm->native_url) {
+            "<%= $url %>";
+         datacite:AlternateResourceIdentifier <<%= $exterm->term %>>;
+       % }
+         dbpedia:Lexicon <<%= $exterm->lexicon %>>.
+    % }
+% }
