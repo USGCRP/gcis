@@ -25,12 +25,15 @@ limit 10",
         },
         { desc => "List all of the findings from the Third National Climate Assessment.",
           code => <<'SPARQL',
+
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
 
 SELECT
- fn:concat($chapterNumber,'.',$findingNumber) as $number
- $statement
+ str($findingNumber) as $number
+ str($statement) as $statement 
  $finding as $url
+ 
 FROM <http://data.globalchange.gov>
 WHERE {
     $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
@@ -38,11 +41,12 @@ WHERE {
     $report gcis:hasChapter $chapter .
     $finding gcis:isFindingOf $chapter .
     $finding dcterms:description $statement .
-    $finding gcis:FindingNumber $findingNumber .
+    $finding dbpedia:Natural_number $ordinal .
+    $finding gcis:findingNumber $findingNumber .
     $finding a gcis:Finding .
     $chapter gcis:chapterNumber $chapterNumber .
 }
-ORDER BY $chapterNumber $findingNumber
+ORDER BY $chapterNumber $ordinal $findingNumber
 SPARQL
         },
         {

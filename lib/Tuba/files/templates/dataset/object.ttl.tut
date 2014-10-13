@@ -42,3 +42,4 @@
 
 %= include 'prov';
 %= include 'contributors';
+%= include 'other_identifiers', gcid=>$dataset->uri($self);
