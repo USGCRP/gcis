@@ -67,6 +67,7 @@ limit 10"
     }
     $c->stash(sparql_url => $sparql_url);
     $c->stash(sparql => $sparql);
+    return $c->render(json => $sparql) if $c->accepts('json');
 }
 
 1;
