@@ -4,16 +4,18 @@
 % );
 
 % if (@$matches) {
-Also known as :
+<br>
+    Also known as :
     <ul>
     % for my $exterm (@$matches) {
         <li>
-            <%= obj_link($exterm->lexicon) %> :
+            <%= $exterm->context %>
             % if (my $url = $exterm->native_url) {
                 <a href="<%= $url %>" target=_blank><%= $exterm->term; %></a>
             % } else {
                 <%= $exterm->term; %>
             % }
+            (<%= obj_link($exterm->lexicon) %> lexicon)
         </li>
     % }
     </ul>

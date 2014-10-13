@@ -52,7 +52,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 DONE
 
     my $query = RDF::Query->new("$defaults\n$sparql");
-    ok $query, "parsed query" or diag RDF::Query::error();
+    ok $query, "parsed query" or diag "error parsing\n$defaults\n$sparql\n\n".RDF::Query::error();
 
     my $results = $query->execute($model);
     my @all;
@@ -273,6 +273,18 @@ SPARQL
     finding => uri("/report/trees/chapter/the-larch/finding/larch-trees-are-tall"),
 }, "Found chapter finding in report.");
 
+#
+# Ensure that the examples return valid triples
+#
+$t->get_ok('/examples');
+my $examples = $t->tx->res->json;
+for my $example (@$examples) {
+    my @rows = do_sparql( $example->{code} );
+    TODO : {
+        local $TODO = "Make tests for examples";
+        ok @rows, $example->{desc} or diag "no rows for \n".$example->{code};
+    }
+}
 
 #
 # Cleanup.

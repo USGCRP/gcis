@@ -28,11 +28,12 @@ limit 10",
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
- str($findingNumber) as $number
- str($statement) as $statement 
- $finding as $url
+ $findingNumber 
+ $statement 
+ $finding 
  
 FROM <http://data.globalchange.gov>
 WHERE {
@@ -52,7 +53,7 @@ SPARQL
         {
           desc => "List 10 figures and datasets from which they were derived.",
           code =>
-"select ?figure,?dataset FROM <http://data.globalchange.gov>
+"select ?figure ?dataset FROM <http://data.globalchange.gov>
 where {
  ?figure gcis:hasImage ?img .
  ?img prov:wasDerivedFrom ?dataset
@@ -67,6 +68,7 @@ limit 10"
     }
     $c->stash(sparql_url => $sparql_url);
     $c->stash(sparql => $sparql);
+    return $c->render(json => $sparql) if $c->accepts('json');
 }
 
 1;
