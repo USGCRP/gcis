@@ -12,7 +12,9 @@ sub native_url {
         },
         ceos => {
             Mission => sub { "http://database.eohandbook.com/database/missionindex.aspx#".(uc substr($_[0],0,1)) },
+            missionID => sub { "http://database.eohandbook.com/database/missionsummary.aspx?missionID=".$_[0] },
             Instrument => sub { "http://database.eohandbook.com/database/instrumentindex.aspx#".(uc substr($_[0],0,1)) },
+            instrumentID => sub { "http://database.eohandbook.com/database/instrumentsummary.aspx?instrumentID=$_[0]" },
         },
         gcmd => {
             platform => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
