@@ -1558,6 +1558,10 @@ CREATE TRIGGER update_exterms BEFORE UPDATE ON dataset FOR EACH ROW WHEN (((new.
 
 
 
+CREATE TRIGGER update_exterms BEFORE UPDATE ON organization FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_exterms('/organization/');
+
+
+
 CREATE TRIGGER updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 

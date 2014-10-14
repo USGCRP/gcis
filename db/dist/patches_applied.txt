@@ -137,3 +137,4 @@
 1280_exterm_gcid_constraint.sql	70b2552e348269f5e2bb3fb0c95f6da4
 1290_pub_triggers.sql	5bd62895c7dc71c772a91914b53f0757
 1300_exterm_trigger.sql	f570c6d1a931ac73bc182166d8676193
+1310_more_exterm_triggers.sql	fa0ca98c83cbd44fbc3e43663ef5d884
