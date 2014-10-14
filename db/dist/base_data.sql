@@ -14,6 +14,7 @@ SET client_min_messages = warning;
 --
 
 COPY report_type (identifier) FROM stdin;
+report
 \.
 
 
@@ -142,6 +143,8 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 --
 
 COPY role_type (identifier, label, sort_key) FROM stdin;
+engineer	Engineer	190
+manager	Manager	200
 \.
 
 
@@ -188,6 +191,10 @@ SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
 --
 
 COPY lexicon (identifier, description, url) FROM stdin;
+ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
+podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
+echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
+gcmd	Global Change Master Directory	http://gcmd.nasa.gov
 \.
 
 
@@ -275,6 +282,8 @@ COPY instrument (identifier, name, description, description_attribution) FROM st
 --
 
 COPY platform_type (identifier) FROM stdin;
+spacecraft
+aircraft
 \.
 
 
@@ -307,6 +316,8 @@ COPY instrument_measurement (platform_identifier, instrument_identifier, dataset
 --
 
 COPY publication_type (identifier, "table") FROM stdin;
+platform	platform
+instrument	instrument
 \.
 
 
