@@ -115,13 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.file">file</a>
+            <a name="gcis-metadata.table.lexicon">lexicon</a>
         </h2>
+        
+         <p>Lexicons are lists of terms external to GCIS which map to GCIDs.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>file Structure</caption>
+                <caption>lexicon Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -130,30 +132,6 @@
                 </tr>
             
             <tr class="tr0">
-                <td>
-                
-                  
-                
-                </td>
-                <td>file</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE
-                    
-                
-
-                NOT NULL
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
                 <td>
                 
                   
@@ -170,22 +148,6 @@
                 
 
                 
-                DEFAULT nextval(&#39;file_id_seq&#39;::regclass)
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>thumbnail</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
                 
                 </i>
                 
@@ -196,40 +158,8 @@
                 <td>
                 
                 </td>
-                <td>mime_type</td>
+                <td>description</td>
                 <td>character varying</td>
-                <td><i>
-                
-
-                NOT NULL
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>sha1</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>size</td>
-                <td>integer</td>
                 <td><i>
                 
 
@@ -244,7 +174,7 @@
                 <td>
                 
                 </td>
-                <td>location</td>
+                <td>url</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -253,22 +183,6 @@
                 
                 </i>
                 
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>landing_page</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>An optional URL associated with this file
                 </td>
              </tr>
             
@@ -281,14 +195,14 @@
         
         <p>&nbsp;</p>
         <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>file Constraints</caption>
+            <caption>lexicon Constraints</caption>
             <tr>
                 <th>Name</th>
                 <th>Constraint</th>
             </tr>
             
             <tr class="tr0">
-                <td>ck_file_identifier</td>
+                <td>lexicon_identifier_check</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
             </tr>
             
@@ -299,7 +213,7 @@
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
+                <a href="table_gcis_metadata.exterm.html">exterm</a><br>
         
         
 

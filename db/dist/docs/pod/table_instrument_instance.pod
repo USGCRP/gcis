@@ -1,0 +1,40 @@
+
+\=head1 NAME
+
+instrument_instance
+
+\=head1 DESCRIPTION
+
+An instrument instance is an instrument on a platform.
+
+\=head1 FIELDS
+
+ platform_identifier (character varying) - 
+ instrument_identifier (character varying) - 
+ location (character varying) - 
+
+
+\=head1 SCHEMA
+
+                    Table "gcis_metadata.instrument_instance"
+         Column         |       Type        | Modifiers | Storage  | Description 
+ -----------------------+-------------------+-----------+----------+-------------
+  platform_identifier   | character varying | not null  | extended | 
+  instrument_identifier | character varying | not null  | extended | 
+  location              | character varying |           | extended | 
+ Indexes:
+     "instrument_instance_pkey" PRIMARY KEY, btree (platform_identifier, instrument_identifier)
+ Foreign-key constraints:
+     "instrument_instance_instrument_identifier_fkey" FOREIGN KEY (instrument_identifier) REFERENCES instrument(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "instrument_instance_platform_identifier_fkey" FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Referenced by:
+     TABLE "instrument_measurement" CONSTRAINT "instrument_measurement_instrument_identifier_fkey1" FOREIGN KEY (instrument_identifier, platform_identifier) REFERENCES instrument_instance(instrument_identifier, platform_identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON instrument_instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+\=cut
+
+

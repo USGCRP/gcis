@@ -1,0 +1,43 @@
+
+\=head1 NAME
+
+exterm
+
+\=head1 DESCRIPTION
+
+Map terms in lexicons to GCIDs.
+
+\=head1 FIELDS
+
+ term (character varying) - 
+ context (character varying) - 
+ lexicon_identifier (character varying) - 
+ gcid (character varying) - 
+
+
+\=head1 SCHEMA
+
+                         Table "gcis_metadata.exterm"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  term               | character varying | not null  | extended | 
+  context            | character varying | not null  | extended | 
+  lexicon_identifier | character varying | not null  | extended | 
+  gcid               | character varying | not null  | extended | 
+ Indexes:
+     "exterm_pkey" PRIMARY KEY, btree (lexicon_identifier, context, term)
+     "exterm_gcid" btree (gcid)
+ Check constraints:
+     "ck_gcid" CHECK (length(gcid::text) > 0)
+     "exterm_gcid_check" CHECK (gcid::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text))
+ Foreign-key constraints:
+     "exterm_lexicon_identifier_fkey" FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON exterm FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON exterm FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+\=cut
+
+

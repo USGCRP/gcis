@@ -10,34 +10,34 @@ report
 \=head1 FIELDS
 
  identifier (character varying) - A unique identifier for the report.
- title (character varying) - 
- url (character varying) - 
- doi (character varying) - 
- _public (boolean) - 
+ title (character varying) - The title for this report
+ url (character varying) - A URL for a landing page for the report.
+ doi (character varying) - A DOI for this report.
+ _public (boolean) - Whether or not this report is publically visible.
  report_type_identifier (character varying) - 
  summary (character varying) - 
- frequency (interval) - 
- publication_year (integer) - 
- topic (character varying) - 
- in_library (boolean) - 
+ frequency (interval) - How often this report is published.
+ publication_year (integer) - The year in which this report was published.
+ topic (character varying) - A comma-separated list of topics covered in this report.
+ in_library (boolean) - Whether or not this report is in the USGCRP resource library.
 
 
 \=head1 SCHEMA
 
-                                         Table "gcis_metadata.report"
-          Column         |       Type        |  Modifiers   | Storage  |             Description             
- ------------------------+-------------------+--------------+----------+-------------------------------------
-  identifier             | character varying | not null     | extended | A unique identifier for the report.
-  title                  | character varying | not null     | extended | 
-  url                    | character varying |              | extended | 
-  doi                    | character varying |              | extended | 
-  _public                | boolean           | default true | plain    | 
-  report_type_identifier | character varying |              | extended | 
-  summary                | character varying |              | extended | 
-  frequency              | interval          |              | plain    | 
-  publication_year       | integer           |              | plain    | 
-  topic                  | character varying |              | extended | 
-  in_library             | boolean           |              | plain    | 
+                                                                      Table "gcis_metadata.report"
+          Column         |       Type        |                  Modifiers                   | Storage  |                          Description                          
+ ------------------------+-------------------+----------------------------------------------+----------+---------------------------------------------------------------
+  identifier             | character varying | not null                                     | extended | A unique identifier for the report.
+  title                  | character varying | not null                                     | extended | The title for this report
+  url                    | character varying |                                              | extended | A URL for a landing page for the report.
+  doi                    | character varying |                                              | extended | A DOI for this report.
+  _public                | boolean           | default true                                 | plain    | Whether or not this report is publically visible.
+  report_type_identifier | character varying | not null default 'report'::character varying | extended | 
+  summary                | character varying |                                              | extended | 
+  frequency              | interval          |                                              | plain    | How often this report is published.
+  publication_year       | integer           |                                              | plain    | The year in which this report was published.
+  topic                  | character varying |                                              | extended | A comma-separated list of topics covered in this report.
+  in_library             | boolean           |                                              | plain    | Whether or not this report is in the USGCRP resource library.
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
      "report_url_key" UNIQUE CONSTRAINT, btree (url)

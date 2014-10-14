@@ -1,0 +1,55 @@
+
+\=head1 NAME
+
+platform
+
+\=head1 DESCRIPTION
+
+A platform is an entity to which instruments may be attached.
+
+\=head1 FIELDS
+
+ identifier (character varying) - 
+ name (character varying) - 
+ description (character varying) - 
+ url (character varying) - 
+ platform_type_identifier (character varying) - 
+ description_attribution (character varying) - A URL containing the source text of the description field.
+ start_date (timestamp without time zone) - 
+ end_date (timestamp without time zone) - 
+
+
+\=head1 SCHEMA
+
+                                                        Table "gcis_metadata.platform"
+           Column          |            Type             | Modifiers | Storage  |                        Description                         
+ --------------------------+-----------------------------+-----------+----------+------------------------------------------------------------
+  identifier               | character varying           | not null  | extended | 
+  name                     | character varying           | not null  | extended | 
+  description              | character varying           |           | extended | 
+  url                      | character varying           |           | extended | 
+  platform_type_identifier | character varying           |           | extended | 
+  description_attribution  | character varying           |           | extended | A URL containing the source text of the description field.
+  start_date               | timestamp without time zone |           | plain    | 
+  end_date                 | timestamp without time zone |           | plain    | 
+ Indexes:
+     "platform_pkey" PRIMARY KEY, btree (identifier)
+ Check constraints:
+     "platform_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+ Foreign-key constraints:
+     "platform_platform_type_identifier_fkey" FOREIGN KEY (platform_type_identifier) REFERENCES platform_type(identifier)
+ Referenced by:
+     TABLE "instrument_instance" CONSTRAINT "instrument_instance_platform_identifier_fkey" FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "instrument_measurement" CONSTRAINT "instrument_measurement_platform_identifier_fkey" FOREIGN KEY (platform_identifier) REFERENCES platform(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON platform FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON platform FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON platform FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     update_exterms BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/platform/')
+     updatepub BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+\=cut
+
+
