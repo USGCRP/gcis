@@ -14,12 +14,10 @@
 
 % end
 
-
-## This book is cited by the following entities in GCIS:
 %= include 'prov';
-
+%= include 'contributors';
+%#
 %# % for my $keyword ($book->keywords) {
 %# ## Keywords for book
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
-

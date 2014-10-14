@@ -41,6 +41,11 @@
    gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
 % }
 
+## Region(s):
+% if (my $pub = $report->get_publication) {
+   dcterms:Relation <<%= obj_uri_for($pub->regions)->to_abs %>>;
+% }
+
    a gcis:Report .
 
 % end
