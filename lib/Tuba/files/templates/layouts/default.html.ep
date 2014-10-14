@@ -41,7 +41,10 @@
         <ul>
             <li><%= link_to 'gcid_lookup' => begin %>GCID lookup<%= end %></li>
             <li><%= link_to 'search' => begin %>Advanced search<%= end %></li>
-            <li><%= link_to '/sparql' => target => "_sparql" => begin %>SPARQL query<%= end %></li>
+            % if (my $f = config('faceted_search')) {
+            <li><%= link_to $f->{url} => target => "_blank" => begin %>GCIS Facet Search<%= end %></li>
+            % }
+            <li><%= link_to '/sparql' => target => "_blank" => begin %>SPARQL query<%= end %></li>
         </ul>
         </li>
         <li>

@@ -13,6 +13,8 @@ hypnotoad :
        - http://*:8080
 data_dir : /var/local/projects/tuba/data
 image_upload_dir : /var/local/www/assets
+faceted_search :
+    url : http://gcis-search.jpl.net/search
 database :
     dbname   : gcis
     schema   : gcis_metadata
