@@ -31,8 +31,8 @@ PREFIX dbpedia: <http://dbpedia.org/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
- $findingNumber 
- $statement 
+ str($findingNumber) as $findingNumber 
+ str($statement) as $statement 
  $finding 
  
 FROM <http://data.globalchange.gov>
