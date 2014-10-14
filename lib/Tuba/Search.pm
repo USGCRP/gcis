@@ -54,14 +54,17 @@ sub autocomplete {
     my @tables;
     if ($want && $want=~/^(finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument)$/) {
        @tables = ( $want );
-    } elsif ($want && ($want ne 'all')) {
+    } elsif ($want && ($want !~ /^(all|full)$/)) {
         return $c->render(json => { error => "undefined type" } );
-    } else {
+    } elsif ($want eq 'all') {
        @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+    } elsif ($want eq 'full') {
+       @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+       push @tables, ('organization', 'person');
     }
     my @results;
     for my $table (@tables) {
-        next if $want && $want ne 'all' && $table ne $want;
+        next if $want && $want !~ /^(all|full)$/ && $table ne $want;
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
         my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user, restrict => $restrict);
         for (@got) {
