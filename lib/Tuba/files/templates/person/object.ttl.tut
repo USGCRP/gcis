@@ -12,10 +12,10 @@
 % end
 
 
-# Publications in GCIS are related to this person as follows 
+## Publications in GCIS are related to this person as follows 
 %# (Per entry #63 of PROV-O primer, accessed 28 August 2014):
    % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
-    % for my $map (@{ $ctr->publication_contributor_maps }) {
+     % for my $map (@{ $ctr->publication_contributor_maps }) {
      % my $obj = $map->publication->to_object;
 <<%= obj_uri_for($obj)->to_abs %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
@@ -27,5 +27,5 @@
    ] 
 .
 
-    % }
-  % }
+   % }
+     % }
