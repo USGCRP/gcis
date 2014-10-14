@@ -38,7 +38,11 @@
         <dd style='position:relative;'>GCID<span style='position:absolute;right:0px;'>delete?</span></dd>
 
         % for my $exterm (@$terms) {
-        <dt><a target="_blank" href="<%= $exterm->native_url %>"><%= $exterm->term %></a></dt>
+        % if (my $url = $exterm->native_url) {
+            <dt><a target="_blank" href="<%= $exterm->native_url %>"><%= $exterm->term %></a></dt>
+        % } else {
+            <dt><%= $exterm->term %></dt>
+        % }
         <dd style='position:relative;'><a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
         <span style='position:absolute;right:0px;'><%= check_box 'delete_term' => $exterm->term %></span></dd>
         % }
@@ -76,7 +80,7 @@ $('#gcid_lookup').typeahead({
         $('#gcid_lookup').attr('value',pieces[0]);
     },
     source : function(query,process) {
-    return $.get('/autocomplete', { q : query, items : 15, type : 'all', 'gcids' : 1 }, function(data) {
+    return $.get('/autocomplete', { q : query, items : 15, type : 'full', 'gcids' : 1 }, function(data) {
                  return process(data);
             });
         }

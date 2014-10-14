@@ -18,7 +18,7 @@ $('#lookup').typeahead({
         window.location.href = pieces[0];
     },
     source : function(query,process) {
-    return $.get('/autocomplete', { q : query, items : 15, type : 'all', 'gcids' : 1 }, function(data) {
+    return $.get('/autocomplete', { q : query, items : 15, type : 'full', 'gcids' : 1 }, function(data) {
                  return process(data);
             });
         }
