@@ -153,7 +153,7 @@ sub make_tree_for_show {
                 context => $_->context,
                 term => $_->term,
                 lexicon => $_->lexicon_identifier,
-            }, @$others ];
+            }, @$others ] if $others && @$others;
     }
     $ret;
 }
