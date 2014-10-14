@@ -142,7 +142,20 @@ sub make_tree_for_show {
     $params{with_gcmd} = 1 if $c->param('with_gcmd');
     $params{with_regions} = 1 if $c->param('with_regions');
     $params{bonsai} = 1 if $c->param('brief');
-    return $obj->as_tree(c => $c, %params);
+    my $ret = $obj->as_tree(c => $c, %params);
+    if (my $gcid = $ret->{uri}) {
+        my $others = $c->orm->{'exterm'}{mng}->get_objects(
+           query => [ gcid => "$gcid" ],
+           sort_by => "lexicon_identifier, term"
+        );
+        $ret->{aliases} = [ map +{
+                url => scalar $_->native_url,
+                context => $_->context,
+                term => $_->term,
+                lexicon => $_->lexicon_identifier,
+            }, @$others ];
+    }
+    $ret;
 }
 
 sub maybe_include_generic_pub_rels {

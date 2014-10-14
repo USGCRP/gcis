@@ -115,13 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.file">file</a>
+            <a name="gcis-metadata.table.exterm">exterm</a>
         </h2>
+        
+         <p>Map terms in lexicons to GCIDs.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>file Structure</caption>
+                <caption>exterm Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,18 +137,17 @@
                   
                 
                 </td>
-                <td>file</td>
+                <td>term</td>
                 <td>character varying</td>
                 <td><i>
                 
+                    PRIMARY KEY
                     
 
-                    
-                       UNIQUE
                     
                 
 
-                NOT NULL
+                
                 
                 </i>
                 
@@ -159,7 +160,7 @@
                   
                 
                 </td>
-                <td>identifier</td>
+                <td>context</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -170,7 +171,7 @@
                 
 
                 
-                DEFAULT nextval(&#39;file_id_seq&#39;::regclass)
+                
                 </i>
                 
                 </td>
@@ -179,10 +180,25 @@
             <tr class="tr0">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.lexicon.html#gcis-metadata.table.lexicon">lexicon.identifier</a>
+                  
+                
+                  
+                
                 </td>
-                <td>thumbnail</td>
+                <td>lexicon_identifier</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
                 
 
                 
@@ -196,7 +212,7 @@
                 <td>
                 
                 </td>
-                <td>mime_type</td>
+                <td>gcid</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -205,70 +221,6 @@
                 
                 </i>
                 
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>sha1</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>size</td>
-                <td>integer</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>location</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>landing_page</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>An optional URL associated with this file
                 </td>
              </tr>
             
@@ -281,15 +233,20 @@
         
         <p>&nbsp;</p>
         <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>file Constraints</caption>
+            <caption>exterm Constraints</caption>
             <tr>
                 <th>Name</th>
                 <th>Constraint</th>
             </tr>
             
             <tr class="tr0">
-                <td>ck_file_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+                <td>ck_gcid</td>
+                <td>CHECK ((length((gcid)::text) &gt; 0))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>exterm_gcid_check</td>
+                <td>CHECK (((gcid)::text ~ similar_escape(&#39;[a-z0-9_/-]+&#39;::text, NULL::text)))</td>
             </tr>
             
         </table>
@@ -297,13 +254,10 @@
 
         <!-- Foreign Key Discovery -->
         
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
-        
-        
 
     <!-- Indexes -->
+    
+       exterm_gcid gcid
     
 
     <!-- View Definition -->

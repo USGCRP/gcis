@@ -22,6 +22,17 @@ END; $$;
 
 
 
+CREATE FUNCTION update_exterms() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    /* params are old, new */
+    update exterm set gcid = TG_ARGV[0] || NEW.identifier where gcid = TG_ARGV[0] ||  OLD.identifier;
+    RETURN NEW;
+END; $$;
+
+
+
 CREATE FUNCTION update_publication() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -1527,6 +1538,26 @@ CREATE TRIGGER delpub BEFORE DELETE ON book FOR EACH ROW EXECUTE PROCEDURE delet
 
 
 
+CREATE TRIGGER delpub BEFORE DELETE ON platform FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER delpub BEFORE DELETE ON instrument FOR EACH ROW EXECUTE PROCEDURE delete_publication();
+
+
+
+CREATE TRIGGER update_exterms BEFORE UPDATE ON platform FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_exterms('/platform/');
+
+
+
+CREATE TRIGGER update_exterms BEFORE UPDATE ON instrument FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_exterms('/instrument/');
+
+
+
+CREATE TRIGGER update_exterms BEFORE UPDATE ON dataset FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_exterms('/dataset/');
+
+
+
 CREATE TRIGGER updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
@@ -1576,6 +1607,14 @@ CREATE TRIGGER updatepub BEFORE UPDATE ON webpage FOR EACH ROW WHEN (((new.ident
 
 
 CREATE TRIGGER updatepub BEFORE UPDATE ON book FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON platform FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
+
+
+
+CREATE TRIGGER updatepub BEFORE UPDATE ON instrument FOR EACH ROW WHEN (((new.identifier)::text <> (old.identifier)::text)) EXECUTE PROCEDURE update_publication();
 
 
 

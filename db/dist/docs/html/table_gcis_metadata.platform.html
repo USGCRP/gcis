@@ -115,13 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.report">report</a>
+            <a name="gcis-metadata.table.platform">platform</a>
         </h2>
+        
+         <p>A platform is an entity to which instruments may be attached.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>report Structure</caption>
+                <caption>platform Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -148,7 +150,7 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
+                
                 </td>
              </tr>
             
@@ -156,7 +158,7 @@
                 <td>
                 
                 </td>
-                <td>title</td>
+                <td>name</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -164,75 +166,51 @@
                 NOT NULL
                 
                 </i>
-                <br><br>The title for this report
+                
                 </td>
              </tr>
             
             <tr class="tr0">
                 <td>
                 
-                  
+                </td>
+                <td>description</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
                 
                 </td>
                 <td>url</td>
                 <td>character varying</td>
                 <td><i>
                 
-                    
-
-                    
-                       UNIQUE
-                    
-                
 
                 
                 
                 </i>
-                <br><br>A URL for a landing page for the report.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
                 
-                </td>
-                <td>doi</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>A DOI for this report.
                 </td>
              </tr>
             
             <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>_public</td>
-                <td>boolean</td>
-                <td><i>
-                
-
-                
-                DEFAULT true
-                </i>
-                <br><br>Whether or not this report is publically visible.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
                 <td>
                 
                   
-                  <a href="table_gcis_metadata.report_type.html#gcis-metadata.table.report-type">report_type.identifier</a>
+                  <a href="table_gcis_metadata.platform_type.html#gcis-metadata.table.platform-type">platform_type.identifier</a>
                   
                 
                 </td>
-                <td>report_type_identifier</td>
+                <td>platform_type_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -241,10 +219,26 @@
                     
                 
 
-                NOT NULL
-                DEFAULT &#39;report&#39;::character varying
+                
+                
                 </i>
                 
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>description_attribution</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A URL containing the source text of the description field.
                 </td>
              </tr>
             
@@ -252,8 +246,8 @@
                 <td>
                 
                 </td>
-                <td>summary</td>
-                <td>character varying</td>
+                <td>start_date</td>
+                <td>timestamp without time zone</td>
                 <td><i>
                 
 
@@ -268,63 +262,15 @@
                 <td>
                 
                 </td>
-                <td>frequency</td>
-                <td>interval</td>
+                <td>end_date</td>
+                <td>timestamp without time zone</td>
                 <td><i>
                 
 
                 
                 
                 </i>
-                <br><br>How often this report is published.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
                 
-                </td>
-                <td>publication_year</td>
-                <td>integer</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>The year in which this report was published.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>topic</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>A comma-separated list of topics covered in this report.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>in_library</td>
-                <td>boolean</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>Whether or not this report is in the USGCRP resource library.
                 </td>
              </tr>
             
@@ -337,20 +283,15 @@
         
         <p>&nbsp;</p>
         <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>report Constraints</caption>
+            <caption>platform Constraints</caption>
             <tr>
                 <th>Name</th>
                 <th>Constraint</th>
             </tr>
             
             <tr class="tr0">
-                <td>ck_report_identifier</td>
+                <td>platform_identifier_check</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-            <tr class="tr1">
-                <td>ck_report_pubyear</td>
-                <td>CHECK (((publication_year &gt; 0) AND (publication_year &lt; 9999)))</td>
             </tr>
             
         </table>
@@ -360,17 +301,9 @@
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata._report_editor.html">_report_editor</a><br>
+                <a href="table_gcis_metadata.instrument_instance.html">instrument_instance</a><br>
         
-                <a href="table_gcis_metadata._report_viewer.html">_report_viewer</a><br>
-        
-                <a href="table_gcis_metadata.chapter.html">chapter</a><br>
-        
-                <a href="table_gcis_metadata.figure.html">figure</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
-                <a href="table_gcis_metadata.table.html">table</a><br>
+                <a href="table_gcis_metadata.instrument_measurement.html">instrument_measurement</a><br>
         
         
 

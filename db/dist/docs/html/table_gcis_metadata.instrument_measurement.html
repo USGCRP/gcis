@@ -115,13 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.file">file</a>
+            <a name="gcis-metadata.table.instrument-measurement">instrument_measurement</a>
         </h2>
+        
+         <p>A dataset may be associated with an instrument instance via an instrument measurement.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>file Structure</caption>
+                <caption>instrument_measurement Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -133,20 +135,35 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.instrument_instance.html#gcis-metadata.table.instrument-instance">instrument_instance.platform_identifier#1</a>
+                  
+                
+                  
+                
+                  
+                  <a href="table_gcis_metadata.platform.html#gcis-metadata.table.platform">platform.identifier</a>
+                  
                 
                 </td>
-                <td>file</td>
+                <td>platform_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
                     
 
                     
-                       UNIQUE
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+                    
+
                     
                 
 
-                NOT NULL
+                
                 
                 </i>
                 
@@ -157,11 +174,27 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.instrument.html#gcis-metadata.table.instrument">instrument.identifier</a>
+                  
+                
+                  
+                  <a href="table_gcis_metadata.instrument_instance.html#gcis-metadata.table.instrument-instance">instrument_instance.instrument_identifier#1</a>
+                  
+                
+                  
                 
                 </td>
-                <td>identifier</td>
+                <td>instrument_identifier</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                
+                    
+
+                    
                 
                     PRIMARY KEY
                     
@@ -170,38 +203,6 @@
                 
 
                 
-                DEFAULT nextval(&#39;file_id_seq&#39;::regclass)
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>thumbnail</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>mime_type</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                NOT NULL
                 
                 </i>
                 
@@ -211,64 +212,31 @@
             <tr class="tr0">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.dataset.html#gcis-metadata.table.dataset">dataset.identifier</a>
+                  
+                
+                  
+                
                 </td>
-                <td>sha1</td>
+                <td>dataset_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
+                    
 
+                    
                 
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>size</td>
-                <td>integer</td>
-                <td><i>
+                    PRIMARY KEY
+                    
+
+                    
                 
 
                 
                 
                 </i>
                 
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>location</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>landing_page</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>An optional URL associated with this file
                 </td>
              </tr>
             
@@ -279,28 +247,8 @@
 
         <!-- Constraint List -->
         
-        <p>&nbsp;</p>
-        <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>file Constraints</caption>
-            <tr>
-                <th>Name</th>
-                <th>Constraint</th>
-            </tr>
-            
-            <tr class="tr0">
-                <td>ck_file_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-        </table>
-        
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
-        
         
 
     <!-- Indexes -->

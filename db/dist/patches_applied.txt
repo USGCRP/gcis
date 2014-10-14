@@ -135,3 +135,5 @@
 1260_report_comments.sql	6cfc4c1d460c599ad23a741349d2d38b
 1270_not_empty.sql	2572b20b0904f4dcf7d1afc306ffc79c
 1280_exterm_gcid_constraint.sql	70b2552e348269f5e2bb3fb0c95f6da4
+1290_pub_triggers.sql	5bd62895c7dc71c772a91914b53f0757
+1300_exterm_trigger.sql	f570c6d1a931ac73bc182166d8676193

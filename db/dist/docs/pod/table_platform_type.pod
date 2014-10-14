@@ -1,0 +1,30 @@
+
+\=head1 NAME
+
+platform_type
+
+\=head1 DESCRIPTION
+
+
+
+\=head1 FIELDS
+
+ identifier (character varying) - 
+
+
+\=head1 SCHEMA
+
+                  Table "gcis_metadata.platform_type"
+    Column   |       Type        | Modifiers | Storage  | Description 
+ ------------+-------------------+-----------+----------+-------------
+  identifier | character varying | not null  | extended | 
+ Indexes:
+     "platform_type_pkey" PRIMARY KEY, btree (identifier)
+ Referenced by:
+     TABLE "platform" CONSTRAINT "platform_platform_type_identifier_fkey" FOREIGN KEY (platform_type_identifier) REFERENCES platform_type(identifier)
+ Has OIDs: no
+ 
+
+\=cut
+
+
