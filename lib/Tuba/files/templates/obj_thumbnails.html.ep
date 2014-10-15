@@ -28,7 +28,7 @@
                 <div class="caption" style='overflow:hidden;' title='<%= $val %>'>
 
                 % if ($uri) {
-                    %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin
+                    %= link_to $obj->uri($self) => class => "squeezevert btn squoze" => alt => $val => title => $val => begin
                     <%= $short %>
                     %= end
                 % } else {

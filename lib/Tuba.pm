@@ -349,10 +349,12 @@ sub startup {
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
 
-    $r->resource('organization');
+    # Organization
+    my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
     $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
+    $organization->get('/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributors');
 
     $r->resource('gcmd_keyword');
     $r->resource('region');

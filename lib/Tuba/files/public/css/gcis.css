@@ -108,3 +108,12 @@ a.blackbutton {
     color:black;
     font-weight:bold;
 }
+.squoze {
+    /* font-size:75%; */
+    font-family:verdana;
+    /* line-height:1; */
+    word-break:break-all;
+    -ms-word-break: break-all;
+    word-break:break-word;
+    /* padding:0px;*/
+}

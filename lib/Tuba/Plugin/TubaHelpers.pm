@@ -19,6 +19,7 @@ use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
 use URI::Find;
+use Lingua::EN::Inflect qw/A PL/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -544,6 +545,17 @@ sub register {
             my $obj = $c->uri_to_obj($gcid) and return 1;
             return 0;
         });
+    $app->helper(A => sub {
+            my $c = shift;
+            my $word = shift;
+            return A($word);
+        });
+    $app->helper(PL => sub {
+            my $c = shift;
+            my ($word,$count) = @_;
+            return PL($word,$count);
+        });
+
 
 }
 

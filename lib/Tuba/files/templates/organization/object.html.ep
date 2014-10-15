@@ -70,8 +70,8 @@
     % my $ctr = $object->contributors;
     <div class='row collapse-wrapper'>
     <table class='table table-condensed table-bordered table-striped'>
-        <caption>People and publications</caption>
-        <tr><th>Person</th><th>Role</th><th>Publications</th>
+        <caption>Contributions</caption>
+        <tr><th>Who</th><th>Role</th><th>Publications</th>
         </tr>
         <% for my $ctr (
             map $_->[1],
@@ -83,18 +83,28 @@
                     $_->person ? ( lc $_->person->last_name, lc $_->person->first_name) : ("","") ), $_ ],
              @{ $object->contributors }) {
         %>
+        % my @maps = @{ $ctr->publication_contributor_maps } or next;
         <tr>
-            <td><%= obj_link($ctr->person) %></td>
+            <td>
+                % if ($ctr->person) {
+                <%= obj_link($ctr->person) %>
+                % } else {
+                <i>this organization</i>
+                % }
+            </td>
             <td><%= $ctr->role_type->label %></td>
             <td>
                 <% for my $map (
                     map $_->[1],
                     sort { $a->[0] cmp $b->[0] }
                     map [ $_->publication->to_object->stringify(short => 1), $_ ],
-                    @{ $ctr->publication_contributor_maps }) {
+                    @maps) {
                 %>
                     % my $obj = $map->publication->to_object;
-                    <%= $obj->meta->table %> : <%= obj_link($obj, short => 1) %>
+                    %= link_to 'organization_contributors', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
+                    <%= $obj->meta->table %>
+                    %= end
+                    : <%= obj_link($obj, short => 1) %>
                     % if (my $ref = $map->reference) {
                     <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
                     % }
