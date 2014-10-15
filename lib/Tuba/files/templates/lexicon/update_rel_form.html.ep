@@ -43,8 +43,16 @@
         % } else {
             <dt><%= $exterm->term %></dt>
         % }
-        <dd style='position:relative;'><a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
-        <span style='position:absolute;right:0px;'><%= check_box 'delete_term' => $exterm->term %></span></dd>
+        <dd style='position:relative;'>
+        % if (valid_gcid($exterm->gcid)) { # if error
+        <a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
+        % } else {
+        <a class='text-error' href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
+        % }
+        <span style='position:absolute;right:5px;top:0px;'>
+            <%= check_box 'delete_term' => $exterm->term => style=>'margin:0px;' => onchange => "\$(this).parents('dd').toggleClass('alert-danger')" %></span>
+        </dd>
+        </dd>
         % }
         <dt>
         <%= text_field 'new_term', class => "input input-small", placeholder => "New term" %>

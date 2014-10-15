@@ -291,16 +291,18 @@ sub register {
          my $c = shift;
          my $uri = shift;
 
-         # TODO clever generic way of doing this.
          my $obj;
          for ($uri) {
-             m[^/report/([^/]+)$]                 and $obj = Tuba::DB::Object::Report->new(identifier => $1);
-             m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $3);
-             m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $3);
-             m[^/report/([^/]+)/finding/([^/]+)$]  and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/table/([^/]+)$]   and $obj = Tuba::DB::Object::Table->new(report_identifier => $1, identifier => $3);
+             m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
+             m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
+             m[^/report/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
+             m[^/organization/([^/]+)$]  and $obj = Tuba::DB::Object::Organization->new(identifier => $1);
+             m[^/instrument/([^/]+)$]    and $obj = Tuba::DB::Object::Instrument->new(identifier => $1);
+             m[^/platform/([^/]+)$] and $obj = Tuba::DB::Object::Platform->new(identifier => $1);
+             m[^/person/([^/]+)$]   and $obj = Tuba::DB::Object::Person->new(id => $1);
              m[^/article/(.*)$]     and $obj = Tuba::DB::Object::Article->new(identifier => $1);
              m[^/activity/([^/]+)$] and $obj = Tuba::DB::Object::Activity->new(identifier => $1);
              m[^/journal/([^/]+)$]  and $obj = Tuba::DB::Object::Journal->new(identifier => $1);
@@ -310,11 +312,11 @@ sub register {
              m[^/array/([^/]+)$]    and $obj = Tuba::DB::Object::Array->new(identifier => $1);
              m[^/webpage/([^/]+)$]  and $obj = Tuba::DB::Object::Webpage->new(identifier => $1);
              m[^/generic/([^/]+)$]  and $obj = Tuba::DB::Object::Generic->new(identifier => $1);
+             m[^/report/([^/]+)$]   and $obj = Tuba::DB::Object::Report->new(identifier => $1);
          }
          if ($obj && $obj->load(speculative => 1)) {
              return $obj;
          }
-         $c->app->logger->warn("Could not identify $uri");
          return;
     });
     $app->helper(uri_to_pub => sub {
@@ -536,6 +538,13 @@ sub register {
           lemon => 'http://lemon-model.net/lemon#',
      )
     });
+    $app->helper(valid_gcid => sub {
+            my $c = shift;
+            my $gcid = shift;
+            my $obj = $c->uri_to_obj($gcid) and return 1;
+            return 0;
+        });
+
 }
 
 

@@ -7,6 +7,7 @@ Tuba::Lexicon - Controller for lexcons.
 package Tuba::Lexicon;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use Tuba::Log qw/logger/;
 
 sub show {
     my $c = shift;
@@ -34,6 +35,7 @@ sub update_rel {
     my $term = $c->param('new_term');
     my $gcid = $c->param('new_gcid');
     my $context = $c->param('context');
+    my $t = $c->param('delete_term');
     $c->stash(tab => "update_rel_form");
     $c->stash(redirect_params => [ context => $context ]);
     if ($term && $context) {
@@ -49,6 +51,7 @@ sub update_rel {
     }
     if (my @delete = $c->param('delete_term')) {
         for my $term (@delete) {
+            logger->info("deleting $lexicon $context $term");
             my $ex = Exterm->new(lexicon => $lexicon, term => $term, context => $context);
             $ex->load(speculative => 1) or next;
             $ex->delete or return $c->update_error($ex->error);

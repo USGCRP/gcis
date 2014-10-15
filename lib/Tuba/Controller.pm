@@ -938,6 +938,7 @@ sub update_contributors {
                 or return $c->update_error("invalid person $person");
         }
         if (my $id = $organization) {
+            $id =~ s[^/organization/][]; # Allow GCID or identifier
             $organization = Organization->new(identifier => $id)->load(speculative => 1)
                 or return $c->update_error("invalid organization $id");
         }
