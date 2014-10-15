@@ -73,19 +73,26 @@
         <caption>People and publications</caption>
         <tr><th>Person</th><th>Role</th><th>Publications</th>
         </tr>
-        <% for my $ctr (sort {
-               ($a->role_type->sort_key <=> $b->role_type->sort_key ) 
-            || ($a->role_type_identifier cmp $b->role_type_identifier ) 
-            || ($a->person && $b->person
-                 ?  ($a->person->last_name cmp $b->person->last_name) || ($a->person->first_name cmp $b->person->first_name)
-                 : 0 )
-             } @{ $object->contributors }) {
+        <% for my $ctr (
+            map $_->[1],
+            sort { $a->[0] cmp $b->[0] }
+            map [
+                sprintf('%010d%-100s%-100s%-100s',
+                    $_->role_type->sort_key,
+                    $_->role_type_identifier,
+                    $_->person ? ( lc $_->person->last_name, lc $_->person->first_name) : ("","") ), $_ ],
+             @{ $object->contributors }) {
         %>
         <tr>
             <td><%= obj_link($ctr->person) %></td>
             <td><%= $ctr->role_type->label %></td>
             <td>
-                <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
+                <% for my $map (
+                    map $_->[1],
+                    sort { $a->[0] cmp $b->[0] }
+                    map [ $_->publication->to_object->stringify(short => 1), $_ ],
+                    @{ $ctr->publication_contributor_maps }) {
+                %>
                     % my $obj = $map->publication->to_object;
                     <%= $obj->meta->table %> : <%= obj_link($obj, short => 1) %>
                     % if (my $ref = $map->reference) {
