@@ -27,6 +27,21 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $platform = shift;
+    my $obj = $c->SUPER::make_tree_for_show($platform, @_);
+    $obj->{instruments} = [
+        map +{
+            uri => "/platform/".$_->identifier,
+            identifier => $_->identifier,
+            name => $_->name,
+            description => $_->description
+        }, $platform->instruments
+    ];
+    return $obj;
+}
+
 =head1 update_rel
 
 Update relationships for this platform.
