@@ -9,9 +9,9 @@
               : 0 )
      } @{ $object->contributors }) {
      %>
-                                    <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
-                                     % my $obj = $map->publication->to_object;
-                                        % if (obj_uri_for($ctr->person) ne "") {
+        <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
+         % my $obj = $map->publication->to_object;
+               % if (obj_uri_for($ctr->person) ne "") {
 <<%= obj_uri_for($obj)->to_abs %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
@@ -22,8 +22,8 @@
    ] ;
 .
 %# The following portion only works if a pub is associated with an org but with no author
-                                                                             % } else {
-                                                                             % my $pub = $object->get_publication;
+               % } else {
+               % my $pub = $object->get_publication;
 <<%= obj_uri_for($obj)->to_abs %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
@@ -32,6 +32,6 @@
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] ;
 .
-                                                                             % }
-                                     % }
-                                   % }
+                                                    % }
+         % }
+     % }
