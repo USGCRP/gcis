@@ -33,10 +33,11 @@ sub make_tree_for_show {
     my $obj = $c->SUPER::make_tree_for_show($platform, @_);
     $obj->{instruments} = [
         map +{
-            uri => "/platform/".$_->identifier,
+            uri => "/instrument/".$_->identifier,
             identifier => $_->identifier,
             name => $_->name,
-            description => $_->description
+            description => $_->description,
+            description_attribution => $_->description,
         }, $platform->instruments
     ];
     return $obj;

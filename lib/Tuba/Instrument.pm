@@ -27,5 +27,21 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $instrument = shift;
+    my $obj = $c->SUPER::make_tree_for_show($instrument, @_);
+    $obj->{platforms} = [
+        map +{
+            uri => "/platform/".$_->identifier,
+            identifier => $_->identifier,
+            name => $_->name,
+            description => $_->description,
+            description_attribution => $_->description,
+        }, $instrument->platforms
+    ];
+    return $obj;
+}
+
 1;
 
