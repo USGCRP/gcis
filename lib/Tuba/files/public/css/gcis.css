@@ -117,3 +117,7 @@ a.blackbutton {
     word-break:break-word;
     /* padding:0px;*/
 }
+
+.nav-tabs > .active > a, .nav-tabs > .active > a:hover {
+  outline:none;
+}

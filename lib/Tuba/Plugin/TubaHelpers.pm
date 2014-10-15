@@ -555,6 +555,11 @@ sub register {
             my ($word,$count) = @_;
             return PL($word,$count);
         });
+    $app->helper(gen_id => sub {
+            my $c = shift;
+            my $word = shift;
+            return b($word)->md5_sum;
+        });
 
 
 }
