@@ -11,7 +11,7 @@
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;
 
 % for my $article ($journal->articles) {
-   dcterms:hasPart <<%= obj_uri_for($article)->to_abs %>>;
+   dcterms:hasPart <<%= uri($article) %>>;
 % }
 
    a bibo:Journal .

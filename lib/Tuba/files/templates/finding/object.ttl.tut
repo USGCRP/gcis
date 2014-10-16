@@ -11,7 +11,7 @@
 %#
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    gcis:isFindingOf <<%= uri($chapter) %>>;
-   gcis:isFindingOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isFindingOf <<%= uri($report) %>>;
 % }
 
 ## Properties of the finding:

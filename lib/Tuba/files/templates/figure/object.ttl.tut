@@ -12,11 +12,11 @@
    dcterms:RightsStatement "<%= $figure->usage_limits %>"^^xsd:string;
 %#
 % for my $image ($figure->images) {
-   gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
+   gcis:hasImage <<%= uri($image) %>>;
 % }
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
-   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isFigureOf <<%= uri($report) %>>;
 % }
 
 ## Geographical extent of the figure content

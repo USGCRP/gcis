@@ -181,7 +181,8 @@ sub contributions {
     my $maps = $c->orm->{publication_contributor_map}->{mng}->get_objects(
         query => [
                 organization_identifier => $organization->identifier,
-                role_type_identifier => $role_identifier
+                role_type_identifier => $role_identifier,
+                person_id => undef,
         ],
         with_objects => [qw/contributor/],
     );

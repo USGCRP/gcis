@@ -63,7 +63,7 @@ use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
 use strict;
 
-our $VERSION = '1.11';
+our $VERSION = '1.12';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -344,17 +344,18 @@ sub startup {
         });
 
     # Person.
-    $r->resource(person => { restrict_identifier => qr/\d+/ } );
+    my $person = $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{4})])
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
+    $person->get('/contributions/:role_type_identifier/:resource')->to('person#contributions')->name('person_contributions');
 
     # Organization
     my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
     $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
-    $organization->get('/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributors');
+    $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 
     $r->resource('gcmd_keyword');
     $r->resource('region');

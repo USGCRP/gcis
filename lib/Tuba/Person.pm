@@ -173,5 +173,36 @@ sub _pk_to_stashval {
     return $c->stash($stash_name);
 }
 
+sub contributions {
+    my $c = shift;
+    my $person = $c->_this_object;
+    my $role_identifier = $c->stash('role_type_identifier');
+    my $resource = $c->stash('resource');
+    my $maps = $c->orm->{publication_contributor_map}->{mng}->get_objects(
+        query => [
+                role_type_identifier => $role_identifier,
+                person_id => $person->id,
+        ],
+        with_objects => [qw/contributor/],
+    );
+    my @pubs = map $_->publication, @$maps;
+    my %id;
+    @pubs = grep { !$id{$_->id}++} @pubs; 
+    my @objs = map $_->to_object, @pubs;
+    @objs = map $_->[1],
+            sort { $a->[0] cmp $b->[0] }
+            map [ $_->stringify(short => 1), $_ ], @objs;
+    $c->stash(objs => \@objs);
+
+    my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->render_not_found;
+    $c->stash(role => $roletype );
+    $c->respond_to(
+        json => { json => [ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ] },
+        yaml => sub { shift->render_yaml([ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ]) },
+        any => sub {
+            shift->render,
+        }
+    );
+}
 1;
 

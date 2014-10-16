@@ -8,7 +8,7 @@
    dcterms:created "<%= $image->create_dt %>"^^xsd:dateTime;
    dcterms:dateSubmitted "<%= $image->submission_dt %>"^^xsd:date;
 % for my $figure ($image->figures) {
-   gcis:isImageOf <<%= obj_uri_for($figure)->to_abs %>>;
+   gcis:isImageOf <<%= uri($figure) %>>;
 % }
 
 ## Geographical extent of image content

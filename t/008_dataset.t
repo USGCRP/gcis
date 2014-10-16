@@ -70,12 +70,12 @@ my $platform = {
   url         => undef,
   description_attribution => undef,
   start_date => undef,
-  end_date => undef,
+  end_date => undef
 };
 $t->post_ok( "/platform" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";
 $platform->{href} = "$base/platform/house.json";
-$t->get_ok( "/platform/house.json" )->status_is(200)->json_is($platform);
+$t->get_ok( "/platform/house.json" )->status_is(200)->json_is({ %$platform, instruments => [] });
 $t->get_ok( "/platform/house.ttl" )->status_is(200)->content_like(qr/house/);
 $t->get_ok( "/platform/house.nt" )->status_is(200)->content_like(qr/house/);
 
@@ -89,7 +89,7 @@ my $instrument = {
 $t->post_ok( "/instrument" => json => $instrument )->status_is(200);
 $instrument->{uri} = "/instrument/mercury-in-glass-thermometer";
 $instrument->{href} = "$base/instrument/mercury-in-glass-thermometer.json";
-$t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->json_is($instrument);
+$t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->json_is({%$instrument, platforms => []});
 $t->get_ok("/instrument/mercury-in-glass-thermometer.ttl")->status_is(200)->content_like(qr/thermo/);
 $t->get_ok("/instrument/mercury-in-glass-thermometer.nt")->status_is(200)->content_like(qr/thermo/);
 

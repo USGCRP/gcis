@@ -18,7 +18,7 @@
        % my $parent_pub = $parent->{parent};
 <<%= current_resource %>>
    cito:isCitedBy <<%= $parent_pub->to_object->uri($self)->to_abs %>>;
-   biro:isReferencedBy <<%= obj_uri_for($parent->{reference})->to_abs %>>.
+   biro:isReferencedBy <<%= uri($parent->{reference}) %>>.
 
     % } 
 % }
@@ -30,7 +30,7 @@
           % if ($child_pub) {
    cito:cites <<%= $child_pub->to_object->uri($self)->to_abs %>>;
           % }
-   biro:references <<%= obj_uri_for($child->{reference})->to_abs %>>.
+   biro:references <<%= uri($child->{reference}) %>>.
 
     % }
 
@@ -41,10 +41,10 @@
        % my $parent_pub = $parent->{publication};
 <<%= current_resource %>>
           % if ($parent->{activity}) {
-   prov:wasGeneratedBy <<%= obj_uri_for($parent->{activity})->to_abs %>>;
+   prov:wasGeneratedBy <<%= uri($parent->{activity}) %>>;
           % }
           % if ($parent->{publication}) {
-   prov:wasDerivedFrom <<%= obj_uri_for($parent->{publication}->to_object)->to_abs %>>.
+   prov:wasDerivedFrom <<%= uri($parent->{publication}->to_object) %>>.
           % }
 
     % }

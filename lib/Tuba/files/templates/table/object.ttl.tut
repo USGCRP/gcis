@@ -11,11 +11,11 @@
 %#
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
-   gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isTableOf <<%= uri($report) %>>;
 % }
 %#
 % for my $array ($table->arrays) {
-   gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
+   gcis:hasArray <<%= uri($array) %>>;
 % }
 
    a gcis:Table .
