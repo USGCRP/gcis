@@ -62,6 +62,7 @@ db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.slice_array(gcis_metadata.hstore, text[]).html'
 db/dist/docs/html/func_gcis_metadata.svals(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.tconvert(text, text).html'
+db/dist/docs/html/func_gcis_metadata.update_exterms().html
 db/dist/docs/html/func_gcis_metadata.update_publication().html
 db/dist/docs/html/index.html
 db/dist/docs/html/table_gcis_metadata._report_editor.html
@@ -79,6 +80,7 @@ db/dist/docs/html/table_gcis_metadata.dataset.html
 db/dist/docs/html/table_gcis_metadata.dataset_lineage.html
 db/dist/docs/html/table_gcis_metadata.dataset_organization.html
 db/dist/docs/html/table_gcis_metadata.dataset_organization_map.html
+db/dist/docs/html/table_gcis_metadata.exterm.html
 db/dist/docs/html/table_gcis_metadata.figure.html
 db/dist/docs/html/table_gcis_metadata.file.html
 db/dist/docs/html/table_gcis_metadata.finding.html
@@ -87,8 +89,12 @@ db/dist/docs/html/table_gcis_metadata.gcmd_keyword.html
 db/dist/docs/html/table_gcis_metadata.generic.html
 db/dist/docs/html/table_gcis_metadata.image.html
 db/dist/docs/html/table_gcis_metadata.image_figure_map.html
+db/dist/docs/html/table_gcis_metadata.instrument.html
+db/dist/docs/html/table_gcis_metadata.instrument_instance.html
+db/dist/docs/html/table_gcis_metadata.instrument_measurement.html
 db/dist/docs/html/table_gcis_metadata.journal.html
 db/dist/docs/html/table_gcis_metadata.keyword.html
+db/dist/docs/html/table_gcis_metadata.lexicon.html
 db/dist/docs/html/table_gcis_metadata.methodology.html
 db/dist/docs/html/table_gcis_metadata.org_academic.html
 db/dist/docs/html/table_gcis_metadata.org_commercial.html
@@ -102,6 +108,8 @@ db/dist/docs/html/table_gcis_metadata.organization_relationship.html
 db/dist/docs/html/table_gcis_metadata.organization_type.html
 db/dist/docs/html/table_gcis_metadata.organization_type_map.html
 db/dist/docs/html/table_gcis_metadata.person.html
+db/dist/docs/html/table_gcis_metadata.platform.html
+db/dist/docs/html/table_gcis_metadata.platform_type.html
 db/dist/docs/html/table_gcis_metadata.publication.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor.html
 db/dist/docs/html/table_gcis_metadata.publication_contributor_map.html
@@ -137,6 +145,7 @@ db/dist/docs/pod/table_dataset.pod
 db/dist/docs/pod/table_dataset_lineage.pod
 db/dist/docs/pod/table_dataset_organization.pod
 db/dist/docs/pod/table_dataset_organization_map.pod
+db/dist/docs/pod/table_exterm.pod
 db/dist/docs/pod/table_figure.pod
 db/dist/docs/pod/table_file.pod
 db/dist/docs/pod/table_finding.pod
@@ -145,8 +154,12 @@ db/dist/docs/pod/table_gcmd_keyword.pod
 db/dist/docs/pod/table_generic.pod
 db/dist/docs/pod/table_image.pod
 db/dist/docs/pod/table_image_figure_map.pod
+db/dist/docs/pod/table_instrument.pod
+db/dist/docs/pod/table_instrument_instance.pod
+db/dist/docs/pod/table_instrument_measurement.pod
 db/dist/docs/pod/table_journal.pod
 db/dist/docs/pod/table_keyword.pod
+db/dist/docs/pod/table_lexicon.pod
 db/dist/docs/pod/table_methodology.pod
 db/dist/docs/pod/table_org_academic.pod
 db/dist/docs/pod/table_org_commercial.pod
@@ -160,6 +173,8 @@ db/dist/docs/pod/table_organization_relationship.pod
 db/dist/docs/pod/table_organization_type.pod
 db/dist/docs/pod/table_organization_type_map.pod
 db/dist/docs/pod/table_person.pod
+db/dist/docs/pod/table_platform.pod
+db/dist/docs/pod/table_platform_type.pod
 db/dist/docs/pod/table_publication.pod
 db/dist/docs/pod/table_publication_contributor.pod
 db/dist/docs/pod/table_publication_contributor_map.pod
@@ -318,6 +333,10 @@ db/patches/1240_dataset_description_attribution.sql
 db/patches/1250_gcid_index.sql
 db/patches/1260_report_comments.sql
 db/patches/1270_not_empty.sql
+db/patches/1280_exterm_gcid_constraint.sql
+db/patches/1290_pub_triggers.sql
+db/patches/1300_exterm_trigger.sql
+db/patches/1310_more_exterm_triggers.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -552,6 +571,7 @@ lib/Tuba/files/templates/object.thtml.ep
 lib/Tuba/files/templates/object.ttl.tut
 lib/Tuba/files/templates/objects.html.ep
 lib/Tuba/files/templates/opensearch.xml.ep
+lib/Tuba/files/templates/organization/contributions.html.ep
 lib/Tuba/files/templates/organization/contributors.ttl.tut
 lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.tut
@@ -560,6 +580,7 @@ lib/Tuba/files/templates/organization/relationships.html.ep
 lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
+lib/Tuba/files/templates/other_identifiers.ttl.tut
 lib/Tuba/files/templates/pager.html.ep
 lib/Tuba/files/templates/pair.html.ep
 lib/Tuba/files/templates/person/object.html.ep
@@ -589,6 +610,7 @@ lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.tut
 lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
+lib/Tuba/files/templates/representation.ttl.tut
 lib/Tuba/files/templates/search/gcid.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/table/object.html.ep

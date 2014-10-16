@@ -19,6 +19,7 @@ WriteMakefile
                    'JSON::WebToken' => 0,
                    'JSON::XS' => 0,
                    'LWP::UserAgent' => 0,
+                   'Lingua::EN::Inflect' => 0,
                    'Module::Build::Mojolicious' => 0,
                    'Mojolicious' => '5.16',
                    'Mojolicious::Plugin::InstallablePaths' => 0,
