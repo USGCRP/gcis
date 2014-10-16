@@ -14,45 +14,47 @@
    place:Country "<%= $country->name %>"^^xsd:string;
 % }
 
-   a gcis:Organization .
+% end
+
+
 
 %# We now explore relationships between organizations:
    % if (my @maps = $organization->organization_maps) {
-     % my $first = 1;
-     % for my $map (@maps) {
+   % my $first = 1;
+      % for my $map (@maps) {
          % if ($first) {
-            % $first = 0;
+         % $first = 0;
 ## This organization is related to one or more others as follows:
          % }
+   org:linkedto <<%= uri($map->other_organization) %>>;
+      % }
 <<%= current_resource %>>
-   prov:qualifiedAssociation [
-      a prov:Association;   
-      prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;
-      org:linkedto <<%= uri($map->other_organization) %>>;
+   org:linkedto <<%= uri($map->other_organization) %>>;
    ] ;
-. 
-
+.
     % }
 % }
 %#
    % if (my @maps = $organization->organization_maps_objs) {
-    % my $first = 1;
+   % my $first = 1;
       % for my $map (@maps) {
-          % if ($first) {
-             % $first = 0;
-## Other organizations are related to this one as follows: 
+         % if ($first) {
+         % $first = 0;
+## Other organizations are related to this one as follows:
          % }
+   org:linkedto <<%= uri($map->other_organization) %>>;
+      % }
+% }
 <<%= uri($map->organization) %>>
-   prov:qualifiedAssociation [
-      a prov:Association;
-      prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;
-      org:linkedto <<%= current_resource %>>;
+   org:linkedto <<%= current_resource %>>;
    ] ;
 .
 
    % }
    % }
- 
+
 % end
 
+   a gcis:Organization .
+%#
 %= include 'organization/contributors';
