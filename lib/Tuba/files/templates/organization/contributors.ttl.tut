@@ -24,7 +24,7 @@
 <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
  % my $obj = $map->publication->to_object;
 % if (obj_uri_for($ctr->person) ne "") {
-<<%= uri($obj) %>>;
+<<%= uri($obj) %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
@@ -39,7 +39,7 @@
 <<%= obj_uri_for($obj)->to_abs %>>
 % } else {
 % my $pub = $object->get_publication;
-<<%= uri($obj) %>>;
+<<%= uri($obj) %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
