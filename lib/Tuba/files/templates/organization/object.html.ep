@@ -101,9 +101,13 @@
                     @maps) {
                 %>
                     % my $obj = $map->publication->to_object;
+                    % if ($ctr->person) {
+                    <%= $obj->meta->table %>
+                    % } else {
                     %= link_to 'organization_contributors', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
                     <%= $obj->meta->table %>
                     %= end
+                    % }
                     : <%= obj_link($obj, short => 1) %>
                     % if (my $ref = $map->reference) {
                     <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
