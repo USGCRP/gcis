@@ -11,7 +11,7 @@
 } %
 %#
 % for my $dataset ($instrument_instance->datasets) %>
-   gcis:Dataset <<%= obj_uri_for($dataset)->to_abs %>>;
+   gcis:Dataset <<%= uri($dataset) %>>;
 } %
 
    a prov:Entity .

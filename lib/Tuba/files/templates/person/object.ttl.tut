@@ -17,12 +17,12 @@
    % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
      % for my $map (@{ $ctr->publication_contributor_maps }) {
      % my $obj = $map->publication->to_object;
-<<%= obj_uri_for($obj)->to_abs %>>
+<<%= uri($obj) %>>
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
-      prov:actedOnBehalfOf <<%= obj_uri_for($ctr->organization)->to_abs %>>;
+      prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
       prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
    ] 
 .

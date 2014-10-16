@@ -8,7 +8,7 @@
    dbpedia:MIME "<%= $file->mime_type %>";
 % if (my @pubs = $file->publications) {
    % for my $file (@pubs) {
-   schema:isRelatedTo <<%= obj_uri_for($file->to_object)->to_abs %>>;
+   schema:isRelatedTo <<%= uri($file->to_object) %>>;
    % }
 % }
 

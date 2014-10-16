@@ -31,9 +31,9 @@
 
 ## Instrument, Platform, and Instrument Instance
 % for my $measurement ($dataset->instrument_measurements) {
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument)->to_abs %>>;
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->platform)->to_abs %>>;
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument_instance)->to_abs %>>;
+   prov:wasDerivedFrom <<%= uri($measurement->instrument) %>>;
+   prov:wasDerivedFrom <<%= uri($measurement->platform) %>>;
+   prov:wasDerivedFrom <<%= uri($measurement->instrument_instance) %>>;
 % }
 
    a gcis:Dataset .

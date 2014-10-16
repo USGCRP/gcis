@@ -9,7 +9,7 @@
 ## The following publication(s) pertain(s) to this region:
 % if (my @pubs = $region->publications) {
   % for my $region (@pubs) {
-   dcterms:Relation <<%= obj_uri_for($region->to_object)->to_abs %>>;
+   dcterms:Relation <<%= uri($region->to_object) %>>;
   % }
 % }
 

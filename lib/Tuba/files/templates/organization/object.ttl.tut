@@ -28,7 +28,7 @@
    prov:qualifiedAssociation [
       a prov:Association;   
       prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;
-      org:linkedto <<%= obj_uri_for($map->other_organization)->to_abs %>>;
+      org:linkedto <<%= uri($map->other_organization) %>>;
    ] ;
 . 
 
@@ -42,7 +42,7 @@
              % $first = 0;
 ## Other organizations are related to this one as follows: 
          % }
-<<%= obj_uri_for($map->organization)->to_abs %>>
+<<%= uri($map->organization) %>>
    prov:qualifiedAssociation [
       a prov:Association;
       prov:Relation "<%= $map->organization_relationship->label %>"^^xsd:string;

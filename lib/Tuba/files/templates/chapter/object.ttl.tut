@@ -6,21 +6,21 @@
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
-   gcis:isChapterOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isChapterOf <<%= uri($report) %>>;
  
 ## Figure(s) contained within the chapter
 % for my $figure ($chapter->figures) {
-   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   gcis:hasFigure <<%= uri($figure) %>>;
 % }
 
 ## Table(s) contained within the chapter
 % for my $table ($chapter->tables) {
-   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   gcis:hasTable <<%= uri($table) %>>;
 % }
 
 ## Findings which emerged from the chapter
 % for my $finding ($chapter->findings) {
-   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+   gcis:hasFinding <<%= uri($finding) %>>;
 % }
 
    a gcis:Chapter .
