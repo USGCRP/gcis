@@ -1,3 +1,4 @@
+
 ## People and Publications:
     % my $ctr = $object->contributors;
        <% for my $ctr (sort {
