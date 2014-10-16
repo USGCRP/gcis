@@ -354,7 +354,7 @@ sub startup {
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
     $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
-    $organization->get('/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributors');
+    $organization->get('/contributors/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributors');
 
     $r->resource('gcmd_keyword');
     $r->resource('region');
