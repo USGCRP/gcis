@@ -47,7 +47,10 @@
                 <td>
                     <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
                         % my $obj = $map->publication->to_object;
-                        <%= $obj->meta->table %> : <%= obj_link($obj) %>
+                        %= link_to 'person_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
+                        <%= $obj->meta->table %>
+                        %= end
+                        : <%= obj_link($obj) %>
                         % if (my $ref = $map->reference) {
                         <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
                         % }

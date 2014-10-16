@@ -102,9 +102,11 @@
                 %>
                     % my $obj = $map->publication->to_object;
                     % if ($ctr->person) {
+                    %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
                     <%= $obj->meta->table %>
+                    %= end
                     % } else {
-                    %= link_to 'organization_contributors', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
+                    %= link_to 'organization_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
                     <%= $obj->meta->table %>
                     %= end
                     % }

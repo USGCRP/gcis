@@ -1,0 +1,24 @@
+% layout 'default';
+
+<center>
+<h2><%= $person->name %></h2>
+</center>
+
+% my $base = $self->req->url->clone;
+<pre>
+<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
+<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %>
+</pre>
+
+<p>
+<%= obj_link($person)%>
+has served as <b><%= A(lc $role->label) %></b> for
+the following <b><%= 0+@$objs %> <%= PL((stash 'resource'),0+@$objs) %></b> :</p>
+
+% while (my @next = splice @$objs, 0, 6) {
+<div class='row-fluid'>
+    %= include 'obj_thumbnails', objs => \@next, no_table => 1;
+</div>
+% }
+
