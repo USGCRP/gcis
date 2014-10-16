@@ -16,19 +16,20 @@
 
 % end
 
+
 %# We now explore relationships between organizations:
  % if (my @maps = $organization->organization_maps) {
      % for my $map (@maps) {
-## This organization is related to one or more others as follows:
+# This organization is related to one or more others as follows:
    org:linkedto <<%= uri($map->other_organization) %>>;
-  % }
-% }
+     % }
+ % }
 %#
  % if (my @maps = $organization->organization_maps_objs) {
      % for my $map (@maps) {
 ## Other organizations are related to this one as follows:
    org:linkedto <<%= uri($map->other_organization) %>>;
-  % }
+     % }
  % }
 
    a gcis:Organization .
