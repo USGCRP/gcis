@@ -18,7 +18,6 @@
     <th>name</th>
     <th>description</th>
     <th>platforms</th>
-    <th>Instances</th>
 </th>
 % for my $instrument (@$objects) {
     <tr>
@@ -26,16 +25,11 @@
        <td><%= $instrument->name %></td>
        <td><%= $instrument->description %></td>
        <td><% for my $platform ($instrument->platforms) { %>
-           <%= obj_link($platform) %>
+           %= obj_link_to $platform, 'show' => class => 'label' => begin
+           %= $platform->identifier
+           %= end
            <% } %>
        </td>
-
-       <td><% for my $platform ($instrument->platforms) { %>
-           <%= link_to 'show_instrument_instance', { instrument_instance_identifier => $instrument->identifier, platform_identifier => $platform->identifier } => begin %>
-           %= $platform->identifier
-           <%= end %>
-           <% } %>
-        </td>
 
     </tr>
 % }
