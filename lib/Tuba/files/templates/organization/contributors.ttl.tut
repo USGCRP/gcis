@@ -1,4 +1,4 @@
-
+%# Is associated with lib/Tuba/files/templates/organizations/object.ttl.ep
 ## People and Publications:
     % my $ctr = $object->contributors;
        <% for my $ctr (sort {
@@ -12,7 +12,7 @@
 <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
  % my $obj = $map->publication->to_object;
 % if (obj_uri_for($ctr->person) ne "") {
-<<%= uri($obj) %>>
+<<%= uri($obj) %>>;
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
@@ -24,7 +24,7 @@
 %# The following portion only works if a pub is associated with an org but with no author
 % } else {
 % my $pub = $object->get_publication;
-<<%= uri($obj) %>>
+<<%= uri($obj) %>>;
    a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
