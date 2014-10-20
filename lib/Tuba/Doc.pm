@@ -47,7 +47,7 @@ WHERE {
     $finding a gcis:Finding .
     $chapter gcis:chapterNumber $chapterNumber .
 }
-ORDER BY $chapterNumber $ordinal $findingNumber
+ORDER BY $chapterNumber $ordinal
 SPARQL
         },
         {
