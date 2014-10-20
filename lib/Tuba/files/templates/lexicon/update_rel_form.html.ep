@@ -68,7 +68,7 @@
 
 
         % } else {
-        <p>Please select or create a context for CEOS (<%= external_link($lexicon->url) %>).</p>
+        <p>Please select or create a context for <%= $lexicon->identifier %> (<%= external_link($lexicon->url) %>).</p>
         %= form_for obj_uri_for($object,'update_rel_form'), method => 'GET' => class => 'form form-inline' => begin
         %= text_field 'context', class => "input", placeholder => "New Context";
         %= submit_button 'Add', class =>"btn btn-primary";
