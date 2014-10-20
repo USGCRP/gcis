@@ -42,19 +42,28 @@
         <%= external_link($platform->url) %>
 
         % if (my @instruments = $platform->instruments) {
-            <br>
-            Instruments on <%= $platform->name %>:
-            <ul>
+        <table class='table table-condensed table-bordered'>
+        <tr>
+            <th>Instrument</th>
+            <th>Datasets</th>
+        </tr>
                 % for my $i (@instruments) {
-                <li>
-                %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
-                <%= $i->name %>
-                %= end
-                </li>
+                <tr>
+                    <td>
+                    %= link_to 'show_instrument', { instrument_identifier => $i->identifier } => begin
+                    <%= $i->name %>
+                    %= end
+                    </td>
+
+                    <td>
+                    %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
+                    <%= $i->count_datasets(platform => $platform) %>
+                    %= end
+                    </td>
                 % }
-            </ul>
-            %= include obj_thumbnails => objs => \@instruments, no_table => 1;
+                </tr>
         % }
+        </table>
 
      %= include 'h/prov', pub => $platform->get_publication;
      %= include 'h/other_identifiers', gcid => $platform->uri($self);
