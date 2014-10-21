@@ -4,7 +4,11 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $table->identifier %>";
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
-   gcis:tableNumber "<%= $chapter->number %>.<%= $table->ordinal %>"^^xsd:string;
+   % if ($chapter->number eq "") {
+   gcis:tableNumber "<%= $table->ordinal %>"^^xsd:string;
+   % } else {
+        gcis:tableNumber "<%= $chapter->number %>.<%= $table->ordinal %>"^^xsd:string;
+   % }
 % }
    dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
    gcis:hasCaption "<%= no_tbibs($table->caption) %>"^^xsd:string;
