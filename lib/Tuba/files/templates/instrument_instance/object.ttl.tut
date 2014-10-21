@@ -2,11 +2,11 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument_instance->identifier %>";
-% for my $platform ($instrument_instance->platforms) %>
+% for my $platform ($instrument_instance->platform_identifier) %>
    gcis:Platform <<%= uri($platform) %>>;
 } %
 %#
-% for my $instrument ($instrument_instance->instruments) %>
+% for my $instrument ($instrument_instance->instrument_identifier) %>
    gcis:Instrument <<%= uri($instrument) %>>;
 } %
 %#
