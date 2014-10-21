@@ -1,4 +1,5 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov skos/];
+%= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument->identifier %>";
@@ -9,4 +10,7 @@
    dcterms:description "<%= $instrument->description %>"^^xsd:string;
    a gcis:Instrument .
 
+% end
+
 %= include 'contributors';
+%= include 'other_identifiers';
