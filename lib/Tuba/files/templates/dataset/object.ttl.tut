@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov dbpedia/];
+% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov dbpedia skos/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>

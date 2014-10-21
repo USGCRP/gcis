@@ -1,10 +1,10 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis prov lemon dbpedia/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis skos/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $lexicon->identifier %>";
    dcterms:title "<%= $lexicon->description %>"^^xsd:string;
    gcis:hasURL "<%= $lexicon->url %>"^^xsd:anyURI;
 
-   a dbpedia:Lexicon .
+   a skos:Concept .
 
 %= include 'representation';
