@@ -38,7 +38,9 @@
         % if (my @platforms = $instrument->platforms) {
             <br>
             Platforms :
-            %= include obj_thumbnails => objs => \@platforms, no_table => 1;
+            <p>
+            %= include obj_thumbnails => objs => \@platforms, no_table => 1, per_row => 4;
+            </p>
         % }
 
          %= include 'h/prov', pub => $instrument->get_publication;
