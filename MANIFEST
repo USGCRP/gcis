@@ -378,6 +378,7 @@ lib/Tuba/DB/Mixin/Object/GcmdKeyword.pm
 lib/Tuba/DB/Mixin/Object/Generic.pm
 lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
 lib/Tuba/DB/Mixin/Object/Image.pm
+lib/Tuba/DB/Mixin/Object/Instrument.pm
 lib/Tuba/DB/Mixin/Object/Journal.pm
 lib/Tuba/DB/Mixin/Object/Lexicon.pm
 lib/Tuba/DB/Mixin/Object/Methodology.pm
@@ -549,6 +550,7 @@ lib/Tuba/files/templates/instrument/objects.html.ep
 lib/Tuba/files/templates/instrument/relationships.html.ep
 lib/Tuba/files/templates/instrument_instance/object.html.ep
 lib/Tuba/files/templates/instrument_instance/object.ttl.tut
+lib/Tuba/files/templates/instrument_instance/objects.html.ep
 lib/Tuba/files/templates/instrument_instance/relationships.html.ep
 lib/Tuba/files/templates/journal/object.html.ep
 lib/Tuba/files/templates/journal/object.ttl.tut
@@ -582,6 +584,7 @@ lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
 lib/Tuba/files/templates/pager.html.ep
 lib/Tuba/files/templates/pair.html.ep
+lib/Tuba/files/templates/person/contributions.html.ep
 lib/Tuba/files/templates/person/object.html.ep
 lib/Tuba/files/templates/person/object.ttl.tut
 lib/Tuba/files/templates/person/objects.html.ep

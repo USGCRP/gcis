@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: 1.12
+    version: 1.13
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -82,6 +82,8 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/Generic/Manager.pm
   Tuba::DB::Object::Image:
     file: lib/Tuba/DB/Mixin/Object/Image.pm
+  Tuba::DB::Object::Instrument:
+    file: lib/Tuba/DB/Mixin/Object/Instrument.pm
   Tuba::DB::Object::Journal:
     file: lib/Tuba/DB/Mixin/Object/Journal.pm
   Tuba::DB::Object::Lexicon:
@@ -216,4 +218,4 @@ requires:
   YAML: 0
   YAML::Syck: 0
   YAML::XS: 0
-version: 1.12
+version: 1.13
