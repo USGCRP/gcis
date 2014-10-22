@@ -21,8 +21,13 @@
 <div class='row-fluid'>
     <div class='span10 offset1 well'>
         <%= include 'obj_thumbnails', objs => [ $object->platform, $object->instrument] %>
-        <p>Measurements by the <%= obj_link($object->instrument) %> instrument on the <%= obj_link($object->platform) %> platform.</p>
-        <%= include 'obj_thumbnails', objs => [map $_->dataset, $object->instrument_measurements ] %>
+        <p>Measurements by the <%= obj_link($object->instrument) %> instrument on the <%= obj_link($object->platform) %> platform :</p>
+        % if (my @measurements = $object->instrument_measurements) {
+            <%= include 'obj_thumbnails', objs => [map $_->dataset, @measurements ] %>
+        % } else {
+        <i>(none)</i>
+        % }
+
     </div>
 </div>
 

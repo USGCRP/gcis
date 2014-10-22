@@ -1,0 +1,37 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>platform</th>
+    <th>instrument</th>
+    <th>datasets</th>
+</th>
+% for my $obj (@$objects) {
+    <tr>
+       <td><%= obj_link_to $obj->platform, 'show' => begin %><%= $obj->platform_identifier %><%= end %></td>
+       <td><%= obj_link_to $obj->instrument, 'show' => begin %><%= $obj->instrument_identifier %><%= end %></td>
+       <td>
+       %= link_to 'show_instrument_instance', { instrument_instance_identifier => $obj->instrument_identifier, platform_identifier => $platform->identifier } => begin
+       <%= $obj->instrument->count_datasets(platform => $platform) %>
+       %= end
+       </td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+
