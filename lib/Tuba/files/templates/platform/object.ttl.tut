@@ -18,3 +18,4 @@
 
 
 %= include 'contributors';
+%= include 'other_identifiers', gcid => $platform->uri($self);
