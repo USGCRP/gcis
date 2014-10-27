@@ -107,7 +107,7 @@ $t->get_ok( "/platform/house/instrument/mercury-in-glass-thermometer.json" )->st
                  location => "on the north side, next to the window",
                  uri => "/platform/house/instrument/mercury-in-glass-thermometer",
                  href => "$base/platform/house/instrument/mercury-in-glass-thermometer.json",
-
+                 datasets => []
              } );
 
 # Reading the thermometer on the house generates the dataset.
