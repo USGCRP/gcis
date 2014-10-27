@@ -2,16 +2,16 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $instrument_instance->identifier %>";
-% for my $platform ($instrument_instance->platform_identifier) %>
+% for my $platform ($instrument_instance->platform_identifier) {
    gcis:Platform <<%= uri($platform) %>>;
-} %
+% }
 %#
-% for my $instrument ($instrument_instance->instrument_identifier) %>
+% for my $instrument ($instrument_instance->instrument_identifier) {
    gcis:Instrument <<%= uri($instrument) %>>;
-} %
+% }
 %#
-% for my $dataset ($instrument_instance->datasets) %>
+% for my $dataset ($instrument_instance->datasets) {
    gcis:Dataset <<%= uri($dataset) %>>;
-} %
+% }
 
    a prov:Entity .
