@@ -83,6 +83,7 @@ my $builder = Module::Build::Database->new(
         'Mojolicious::Plugin::InstallablePaths' => 0,
         'RDF::Trine' => 0,
         'RDF::Query' => 0,
+        'IO::Socket::SSL' => 2,
         'Lingua::EN::Inflect' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
