@@ -54,5 +54,20 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+sub make_tree_for_list {
+    my $c = shift;
+    my $obj = shift;
+    my $uri = join '/', '/platform', $obj->platform_identifier, 'instrument', $obj->instrument_identifier;
+    my $href = $c->req->url->clone->path($uri)->to_abs;
+    $href .= ".".$c->stash('format') if $c->stash('format');
+    return {
+        platform_identifier => $obj->platform_identifier,
+        instrument_identifier => $obj->instrument_identifier,
+        uri =>  $uri,
+        href => $href
+    }
+}
+
+
 1;
 
