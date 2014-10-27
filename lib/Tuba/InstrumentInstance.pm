@@ -68,6 +68,16 @@ sub make_tree_for_list {
     }
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $got = $c->SUPER::make_tree_for_show(@_);
+    my $obj = shift;
+    $got->{datasets} = [
+        map $_->dataset->as_tree(c => $c, bonsai => 1), $obj->instrument_measurements
+    ];
+    return $got;
+}
+
 
 1;
 
