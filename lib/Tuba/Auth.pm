@@ -26,6 +26,7 @@ use JSON::WebToken qw/decode_jwt/;
 use JSON::XS;
 use Time::Duration qw/ago/;
 use Tuba::Log;
+use Data::Dumper;
 
 my $key_expiration = 60 * 60 * 24 * 30;
 
@@ -204,11 +205,11 @@ sub oauth2callback {
         }
     );
     my $res = $tx->success or do {
-        my ($err,$code) = $tx->error;
+        my $err = $tx->error;
         $c->app->log->error("error with google auth ($token_url) : ".$tx->res->to_string);
         $c->app->log->error("request : ".$tx->req->to_string);
-        return $c->render(code => 401, text => "$code response : $err") if $code;
-        return $c->render(code => 401, text => "Connection error : $err");
+        return $c->render(code => 401, text => "$err->{code} response : $err->{message}") if $code;
+        return $c->render(code => 401, text => "Connection error : $err->{message}");
     };
     my $credentials = $res->json;
     # has access_token, id_token, expires_in, token_type="Bearer"
@@ -216,7 +217,8 @@ sub oauth2callback {
     # has exp, iss, email_verified='true', email, sub, azp, lat, at_hash, aud
     return $c->render(code => 401, text => "Invalid aud in JWT") unless $info->{aud} eq $s->{client_id};
     return $c->render(code => 401, text => "Invalid iss in JWT") unless $info->{iss} eq 'accounts.google.com';
-    return $c->render(code => 401, text => "email address has not been verified") unless $info->{email_verified} eq 'true';
+    return $c->render(code => 401, text => "email address has not been verified") unless $info->{email_verified};
+    # $c->app->log->info("google info : ".Dumper($info));
     # See https://developers.google.com/accounts/docs/OAuth2Login#authenticationuriparameters
     my $user = $info->{email};
     $c->session(google_access_token => b($info->{access_token}));
