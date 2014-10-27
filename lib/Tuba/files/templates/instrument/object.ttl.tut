@@ -12,4 +12,6 @@
 
 % end
 
+
 %= include 'contributors';
+%= include 'other_identifiers', gcid => $instrument->uri($self);
