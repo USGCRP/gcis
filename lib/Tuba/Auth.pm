@@ -24,6 +24,7 @@ use Mojo::ByteStream qw/b/;
 use Path::Class qw/file/;
 use JSON::WebToken qw/decode_jwt/;
 use JSON::XS;
+use Mojo::JSON;
 use Time::Duration qw/ago/;
 use Tuba::Log;
 use Data::Dumper;
@@ -60,8 +61,7 @@ sub _validate_api_key {
         logger->warn("Key for $user expired ".ago(time - $create_time));
         return 0;
     }
-    my $j = Mojo::JSON->new();
-    my $verify = b($j->encode([$user,$secret,$create_time]))->hmac_sha1_sum;
+    my $verify = b(Mojo::JSON::encode_json([$user,$secret,$create_time]))->hmac_sha1_sum;
     if ($verify eq $hash) {
         logger->debug("Valid api key for $user, created ".ago(time - $create_time));
         $c->session(user => $user);
@@ -230,8 +230,7 @@ sub make_api_key {
     my $time = time;
     my $secret = $c->config('auth')->{secret};
     my $user = $c->user;
-    my $j = Mojo::JSON->new;
-    my $hash = b($j->encode([$user,$secret,$time]))->hmac_sha1_sum;
+    my $hash = b(Mojo::JSON::encode_json([$user,$secret,$time]))->hmac_sha1_sum;
     my $api_pw = sprintf('%s%x',$hash,$time);
     my $api_key = b(sprintf('%s:%s',$user,$api_pw))->b64_encode->to_string;
     $api_key =~ s/\n//g;
