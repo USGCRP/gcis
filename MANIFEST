@@ -582,6 +582,7 @@ lib/Tuba/files/templates/organization/relationships.html.ep
 lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
+lib/Tuba/files/templates/other_identifiers.ttl.tut
 lib/Tuba/files/templates/pager.html.ep
 lib/Tuba/files/templates/pair.html.ep
 lib/Tuba/files/templates/person/contributions.html.ep

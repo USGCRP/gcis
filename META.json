@@ -1,8 +1,10 @@
 {
    "abstract" : "The Useful Backend API",
-   "author" : [],
+   "author" : [
+      "unknown"
+   ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4203",
+   "generated_by" : "Module::Build version 0.421",
    "license" : [
       "agpl_3"
    ],
@@ -40,6 +42,7 @@
             "DateTime::Format::Human::Duration" : "0",
             "Digest::SHA1" : "0",
             "File::ShareDir" : "1.00",
+            "IO::Socket::SSL" : "2",
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
             "LWP::UserAgent" : "0",
@@ -70,7 +73,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.13"
+         "version" : "1.14"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -314,5 +317,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.13"
+   "version" : "1.14"
 }
