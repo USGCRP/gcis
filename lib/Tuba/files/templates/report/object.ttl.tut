@@ -18,25 +18,25 @@
 ## Frequency of report release:
    dcterms:frequency "<%= human_duration($report->frequency) %>"^^xsd:string;
 
-## Report topics
+## Report topic(s):
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
 
-## This report contains multiple chapters:
+## Report chapter(s):
 % for my $chapter ($report->chapters) {
    gcis:hasChapter <<%= uri($chapter) %>>;	
 % }
 
-## This report contains multiple figures:
+## Report figure(s):
 % for my $figure ($report->figures) {
    gcis:hasFigure <<%= uri($figure) %>>;
 % }
 
-## This report contains multiple tables:
+## Report table(s):
 % for my $table ($report->tables) {
    gcis:hasTable <<%= uri($table) %>>;
 % }
 
-## The report contains findings:
+## Report finding(s):
 % for my $finding ($report->findings) {
    gcis:hasFinding <<%= uri($finding) %>>;
 % }
