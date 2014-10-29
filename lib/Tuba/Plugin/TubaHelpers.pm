@@ -495,7 +495,6 @@ sub register {
                            (?:[a-zA-Z]+) # optional type
                         )?
                         ;$                    # end of line
-                        <<>>                 # URIs
                       ]x;
         });
     $app->helper(external_link => sub {
