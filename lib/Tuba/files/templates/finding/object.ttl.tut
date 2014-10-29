@@ -5,7 +5,11 @@
    dcterms:identifier "<%= $finding->identifier %>";
    dbpedia:Natural_number "<%= $finding->ordinal %>"^^xsd:integer;
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
+   % if (! $chapter->number) {
+   gcis:findingNumber "<%= $finding->ordinal %>"^^xsd:string;
+   % } else {
    gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:string;
+   % }
 % }
    dcterms:description "<%= $finding->statement %>"^^xsd:string;
 %#

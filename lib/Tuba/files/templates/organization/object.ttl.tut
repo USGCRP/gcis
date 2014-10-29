@@ -48,3 +48,4 @@
 % end
 
 %= include 'organization/contributors';
+%= include 'other_identifiers', gcid => $organization->uri($self);
