@@ -11,7 +11,7 @@
    skos:altLabel "<%= $exterm->term %>";
    gcis:hasURL "<%= $url %>";
       % } else {
-   skos:altLabel <%= $exterm->term %>;
+   skos:altLabel "<%= $exterm->term %>";
       % }
    skos:Concept <<%= uri($exterm->lexicon) %>>.
     % }
