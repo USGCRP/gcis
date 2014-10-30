@@ -1,24 +1,30 @@
                                              /* Sample values (comma separated) */
+
+/* An experiment (sometimes called a project) */
 create table experiment (
     identifier varchar not null primary key, /* cmip3, cmip4, cmip5 */
     name varchar,                            /* Coupled Model Intercomparison Project Phase 5 */
     description varchar                      /* a paragraph from <http://cmip-pcmdi.llnl.gov/cmip5/> */
 );
 
+/* An experiment has many models */
 create table model (
-    identifier varchar not null primary key,  /* ncar-community-climate-system-model */
+    identifier varchar not null primary key,  /* ncar-community-climate-system-model-4 */
     experiment_identifier varchar not null references experiment(identifier), /* cmip5 */
     name varchar,                             /* NCAR Community Climate System Model */
     native_id varchar not null,               /* NCCSM, CCSM3, CGCM3.1 (T47), CNRM-CM3, CSIRO-Mk3.0.... */
     version varchar not null,                 /* 4 */
-    unique (native_id, version)
+    unique (native_id, version),
+    unique (identifier, experiment_identifier)
 );
 
+/* A type of scenario */
 create table scenario_type (
     identifier varchar not null primary key,  /* forcing */
     description varchar                       /* http://cmip-pcmdi.llnl.gov/cmip5/forcing.html */
 );
 
+/* A scenario, e.g. forcing data */
 create table scenario (
     identifier varchar not null primary key,   /* cmip5-representative-concentration-pathways-8.5 */
     native_id varchar not null,                /* RCP8.5, SRES A2 */
@@ -27,6 +33,7 @@ create table scenario (
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
 
+/* A model run uses a scenario (forcing data) and a model. */
 create table model_run (
     identifier varchar not null,               /* use a UUID */
     doi varchar,                               /* wishful thinking? */
@@ -38,6 +45,8 @@ create table model_run (
     scenario_identifier varchar references scenario(identifier) not null, /* RCP8.5,... */
     sequence integer not null default 1,     /* 1, 2, 3 */
     sequence_description varchar,            /* "start one year earlier" */
+    constraint fk_model_run_model_experiment foreign key
+     (model_identifier, experiment_identifier) references model (identifier, experiment_identifier),
     unique (doi),
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
