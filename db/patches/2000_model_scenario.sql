@@ -64,7 +64,7 @@ insert into publication_type (identifier, "table") values ('model','model');
  *                    CMIP5 is a "project", RCP8.5 is an "experiment", not a scenario
  *
  *   http://cmip-pcmdi.llnl.gov/cmip5/index.html
- *                     CMIP5 is an "experiment",
+ *                     CMIP5 is a "collection of experiments",
  *
  *   http://cmip-pcmdi.llnl.gov/cmip5/forcing.html
  *                      RCP is "forcing data"
