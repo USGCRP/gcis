@@ -120,6 +120,7 @@
         </tr>    
         % }
     </table>
+    %= include 'h/other_identifiers', gcid => $organization->uri($self);
     </div>
 % }
 
