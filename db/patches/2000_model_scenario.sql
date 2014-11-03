@@ -37,7 +37,6 @@ create table model_run (
     range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
     spatial_resolution varchar not null,      /* 1 degree, ... */
     time_resolution interval,                 /* 1 day, 1 month, 6 hours */
-    variable varchar,                        /* "Surface Temperature", "Precipitation Flux" */
     sequence integer not null default 1,     /* 1, 2, 3 */
     sequence_description varchar,            /* "start one year earlier" */
     constraint fk_model_run_model_experiment foreign key
