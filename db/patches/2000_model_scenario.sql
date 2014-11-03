@@ -33,8 +33,8 @@ create table model_run (
     project_identifier varchar references project(identifier), /* cmip5 */
     model_identifier varchar references model(identifier) not null, /*  CCSM2 (as a GCID) */
     experiment_identifier varchar references experiment(identifier) not null, /* RCP8.5,... */
-    range_start integer not null,             /* 1950-01-01, 1970-01-01 */
-    range_end integer not null,               /* 2010-01-01, 1977-01-01 */
+    range_start timestamp without time zone not null,    /* 1950-01-01, 1970-01-01 */
+    range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
     spatial_resolution varchar not null,      /* 1 degree, ... */
     time_resolution interval,                 /* 1 day, 1 month, 6 hours */
     variable varchar,                        /* "Surface Temperature", "Precipitation Flux" */
