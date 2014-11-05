@@ -67,6 +67,31 @@ sub remove {
     return $c->render(text => 'ok');
 }
 
+sub list_context {
+    my $c = shift;
+    my $lexicon_identifier = $c->stash('lexicon_identifier');
+    my $context = $c->stash('context');
+    my $terms = Exterms->get_objects(
+        query => [ lexicon_identifier => $lexicon_identifier, context => $context ],
+        sort_by => 'term',
+    );
+    $c->respond_to(
+       json => sub {
+                    my $c = shift;
+                    $c->render(json => [ map +{ term => $_->term, gcid => $_->gcid }, @$terms ])
+                   },
+       yaml  => sub {
+                    my $c = shift;
+                    $c->render_yaml([ map +{ term => $_->term, gcid => $_->gcid }, @$terms ])
+                   },
+       html => sub {
+                   my $c = shift;
+                   $c->res->headers->content_type('text/plain');
+                   $c->render(text => join "\n",
+                        map sprintf("%40s : %s",$_->term, $_->gcid), @$terms)
+                   },
+    );
+}
 
 1;
 

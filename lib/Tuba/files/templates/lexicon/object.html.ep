@@ -42,6 +42,18 @@
         % for my $context (sort @contexts) {
             % my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context], sort_by => 'term' );
             <div class="tab-pane<%== !$index++ ? " active" : ""%>" id="<%= gen_id($context) %>">
+                <span class='pull-right'>
+                <%= link_to
+                url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.json'
+                => class => 'label label-info'
+                => begin %>json<%= end %>
+
+                <%= link_to
+                url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.yaml'
+                => class => 'label label-info'
+                => begin %>yaml<%= end %>
+            </span>
+
             % for my $term (@$terms) {
                 <li>
                 <span style='display:inline-block;min-width:150pt;'>
