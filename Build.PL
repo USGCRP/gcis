@@ -85,6 +85,7 @@ my $builder = Module::Build::Database->new(
         'RDF::Query' => 0,
         'IO::Socket::SSL' => 2,
         'Lingua::EN::Inflect' => 0,
+        'Path::Class' => 0,
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
