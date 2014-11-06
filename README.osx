@@ -2,6 +2,10 @@
 Here's a quick guide to installing and running GCIS on OS/X
 starting from the basics.
 
+0. Install Xcode :
+
+     https://developer.apple.com/xcode/downloads/
+
 1. Install homebrew by following the instructions (one line)
    here :
 
