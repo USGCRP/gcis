@@ -1,0 +1,94 @@
+
+Here's a quick guide to installing and running GCIS on OS/X
+starting from the basics.
+
+1. Install homebrew by following the instructions (one line)
+   here :
+
+    http://brew.sh
+
+2. Install a few prerequistes :
+
+    brew install git
+    brew install ossp-uuid
+    brew install postgresql
+
+3. Configure and start postgres :
+
+    echo "audit.username = 'unknown'" >> /usr/local/var/postgres/postgresql.conf
+    echo "audit.note = ''" >> /usr/local/var/postgres/postgresql.conf
+
+    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+4. (recommended) add git to your command prompt :
+
+    Edit ~/.bashrc, and add these lines :
+
+    . /usr/local/etc/bash_completion.d/git-completion.bash
+    . /usr/local/etc/bash_completion.d/git-prompt.sh
+    export PS1='[\u@\h`__git_ps1` \W]\$ '
+
+5. install perlbrew, by following the (one line) instructions
+   here :
+
+    <http://perlbrew.pl/>
+
+    Then
+        perlbrew init
+
+    And add this line to ~/.bash_profile :
+
+        source ~/perl5/perlbrew/etc/bashrc
+
+    Close your terminal and open it again.
+
+6. Install perl-5.20.1 and cpanm
+
+    perlbrew install-cpanm
+    perlbrew install perl-5.20.1
+    # (this takes a while)
+
+    perlbrew switch perl-5.20.1
+    perlbrew lib create gcis
+    perlbrew switch perl-5.20.1@gcis
+
+    Verify you are using perl 5.20 by typing :
+
+        perl -v
+
+7. Download GCIS
+
+    git clone -o github https://github.com/usgcrp/gcis
+    cd gcis
+
+8. Install a few dependencies individually :
+
+    cpanm File::Find::Rule
+    cpanm -f Data::UUID::LibUUID
+
+9. Install the rest :
+
+    cpanm --installdeps .
+
+10. Configure Tuba :
+
+    cp eg/Tuba.conf.basic Tuba.conf
+
+    Then modify Tuba.conf as follows :
+
+        replace 'brian' with your name
+        replace 'easy_pass' with an easy password
+        replace random_stuff with a string of random characters
+
+11. Start tuba
+
+    morbo ./bin/tuba
+
+12. Open a web browser to http://localhost:3000
+
+Done!
+
+
+
+
