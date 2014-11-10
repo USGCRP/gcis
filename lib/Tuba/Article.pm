@@ -52,5 +52,23 @@ sub update_form {
     $c->SUPER::update_form(@_);
 }
 
+sub create_form {
+    my $c = shift;
+    $c->stash(
+        controls => {
+            journal_identifier => sub {
+                my $c   = shift;
+                my $obj = shift;
+                +{
+                    template => 'select',
+                    params   => { values => $c->_journal_list }
+                };
+              }
+        }
+    );
+    $c->SUPER::create_form(@_);
+}
+
+
 1;
 
