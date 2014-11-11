@@ -10,7 +10,6 @@ create table project (
 /* Models are associated with projects. */
 create table model (
     identifier varchar not null primary key,  /* ncar-community-climate-system-model-4 */
-    project_identifier varchar not null references project(identifier), /* cmip5 */
     name varchar,                             /* NCAR Community Climate System Model */
     native_id varchar not null,               /* NCCSM, CCSM3, CGCM3.1 (T47), CNRM-CM3, CSIRO-Mk3.0.... */
     version varchar not null,                 /* 4 */
