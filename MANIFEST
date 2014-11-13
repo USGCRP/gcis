@@ -621,6 +621,7 @@ lib/Tuba/files/templates/table/object.ttl.tut
 lib/Tuba/files/templates/table/objects.html.ep
 lib/Tuba/files/templates/thumbs.html.ep
 lib/Tuba/files/templates/unauthorized.html.ep
+lib/Tuba/files/templates/unauthorized.json.ep
 lib/Tuba/files/templates/update_contributors_form.html.ep
 lib/Tuba/files/templates/update_files_form.html.ep
 lib/Tuba/files/templates/update_form.html.ep
@@ -664,6 +665,7 @@ MANIFEST			This list of files
 META.json
 META.yml
 README.md
+README.osx
 t/001_start_db.t
 t/002_basic.t
 t/002_objects.t

@@ -52,6 +52,7 @@
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
             "Number::Format" : "0",
+            "Path::Class" : "0",
             "Pg::hstore" : "0",
             "RDF::Query" : "0",
             "RDF::Trine" : "0",
@@ -73,7 +74,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.14"
+         "version" : "1.15"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -317,5 +318,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.14"
+   "version" : "1.15"
 }
