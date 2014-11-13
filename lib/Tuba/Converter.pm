@@ -101,6 +101,14 @@ sub output {
         logger->error("Errors running $cmd :\n ".join '',<$errs>);
         logger->info("errors $@") if $@;
         logger->info("Input ($fp) : ".file($fp)->slurp);
+        if ($ENV{HARNESS_ACTIVE}) {
+            print STDERR "# diagnostics --start---:\n";
+            print STDERR "# Errors running $cmd :\n ".join '',<$errs>;
+            print STDERR "# errors $@" if $@;
+            print STDERR "# Input ($fp) : ".file($fp)->slurp;
+            print STDERR "rapper version : ".`rapper --version`;
+            print STDERR "# diagnostics -- end ---:\n";
+        }
         return "error converting to $fmt";
     }
     return $got;
