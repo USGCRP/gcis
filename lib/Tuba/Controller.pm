@@ -206,7 +206,7 @@ sub show {
             $c->res->headers->content_type("application/x-turtle");
             $c->render_maybe("$table/object") or $c->render("object") },
         thtml => sub { my $c = shift;
-            $c->res->headers->content_type("text/html");
+            $c->res->headers->content_type("text/html;charset=UTF-8");
             $c->stash->{format} = 'ttl';
             $c->stash('turtle' => $c->render_partial_ttl($table));
             $c->stash->{format} = 'thtml';
