@@ -27,7 +27,7 @@ starting from the basics.
 
 4. (recommended) add git to your command prompt :
 
-    Edit ~/.bashrc, and add these lines :
+    Edit ~/.bash_profile, and add these lines :
 
     . /usr/local/etc/bash_completion.d/git-completion.bash
     . /usr/local/etc/bash_completion.d/git-prompt.sh
