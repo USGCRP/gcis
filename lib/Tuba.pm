@@ -96,6 +96,7 @@ sub startup {
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
             my $str = shift;
             return "" unless defined($str) && length($str);
+            return $str if ref($str) eq 'Mojo::ByteStream';
             $str =~ s/"/\\"/g;
             $str =~ s/\n/\\n/g;
             $str =~ s/\r/\\r/g;
