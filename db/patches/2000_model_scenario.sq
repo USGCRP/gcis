@@ -1,6 +1,3 @@
-
-
-
                                              /* Sample values (comma separated) */
 
 /* A project is a collection of experiments. */
@@ -19,11 +16,7 @@ create table model (
     identifier varchar not null primary key,  /* ncar-community-climate-system-model-4 */
     name varchar,                             /* NCAR Community Climate System Model */
     native_id varchar not null,               /* NCCSM, CCSM3, CGCM3.1 (T47), CNRM-CM3, CSIRO-Mk3.0.... */
-    version varchar,                          /* 4 */
-    reference_url varchar not null,           /* URL with references about the model */
-    website varchar,                          /* Model website */
-    description varchar,
-    description_attribution varchar,
+    version varchar not null,                 /* 4 */
     unique (native_id, version)
 );
 
