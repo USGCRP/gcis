@@ -34,9 +34,9 @@ drop table if exists model_run cascade;
 create table model_run (
     identifier varchar not null,               /* use a UUID */
     doi varchar,                               /* wishful thinking? */
-    project_identifier varchar references project(identifier), /* cmip5 */
-    model_identifier varchar references model(identifier) not null, /*  CCSM2 (as a GCID) */
-    experiment_identifier varchar references experiment(identifier) not null, /* RCP8.5,... */
+    project_identifier varchar references project(identifier) on update cascade on delete cascade, /* cmip5 */
+    model_identifier varchar references model(identifier) not null on update cascade on delete cascade, /*  CCSM2 (as a GCID) */
+    scenario_identifier varchar references experiment(identifier) not null on update cascade on delete cascade, /* RCP8.5,... */
     range_start timestamp without time zone not null,    /* 1950-01-01, 1970-01-01 */
     range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
     spatial_resolution varchar not null,      /* 1 degree, ... */
