@@ -1,6 +1,3 @@
-
-
-
                                              /* Sample values (comma separated) */
 
 /* A project is a collection of experiments. */
@@ -27,12 +24,13 @@ create table model (
     unique (native_id, version)
 );
 
-/* An experiment, which may be a scenario, aka "forcing data". */
-drop table if exists experiment cascade;
-create table experiment (
-    identifier varchar not null primary key,   /* cmip5-representative-concentration-pathways-8.5 */
-    native_id varchar not null,                /* RCP8.5, SRES A2 */
-    description varchar,                       /*  "Representative Concentration Pathways" */
+/* A scenario */
+drop table if exists scenario cascade;
+create table scenario (
+    identifier varchar not null primary key,   /* rcp8.5, sres_a2 */
+    name varchar,                              /* Special Report on Emissions Scenarios Family A2 */
+    description varchar,                       /*  ... */
+    description_attribution varchar,           /* URL for description */
     CHECK (identifier similar to '[a-z0-9_-]+')
 );
 
@@ -41,9 +39,10 @@ drop table if exists model_run cascade;
 create table model_run (
     identifier varchar not null,               /* use a UUID */
     doi varchar,                               /* wishful thinking? */
+    activity_identifier varchar references activity(identifier),
     project_identifier varchar references project(identifier), /* cmip5 */
     model_identifier varchar references model(identifier) not null, /*  CCSM2 (as a GCID) */
-    experiment_identifier varchar references experiment(identifier) not null, /* RCP8.5,... */
+    scenario_identifier varchar references scenario(identifier) not null, /* RCP8.5,... */
     range_start timestamp without time zone not null,    /* 1950-01-01, 1970-01-01 */
     range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
     spatial_resolution varchar not null,      /* 1 degree, ... */
@@ -55,34 +54,5 @@ create table model_run (
 );
 
 insert into publication_type (identifier, "table") values ('model','model');
-
-/*
- * Notes and references :
- *
- * Organizations :
- *      http://cmip-pcmdi.llnl.gov/cmip5/availability.html
- * Search interface :
- *      http://pcmdi9.llnl.gov/esgf-web-fe/live#
- *
- * Contributors (organizations + roles) will be handled through the publication table.
- *
- * project vs experiment vs scenario
- *
- *   http://pcmdi9.llnl.gov/esgf-web-fe/live#
- *                    CMIP5 is a "project", RCP8.5 is an "experiment", not a scenario
- *
- *   http://cmip-pcmdi.llnl.gov/cmip5/index.html
- *                     CMIP5 is a "collection of experiments",
- *
- *   http://cmip-pcmdi.llnl.gov/cmip5/forcing.html
- *                      RCP is "forcing data"
- * 
- *
- *  native_id : are native_id's well defined and consistent globally unique identifiers?
- *      (or should we use lexicons?)
- *  Is "forcing data" a type of "scenario"?  Are there other "types" of scenarios?
- *  Might a scenario type be relative to an experiment?  (i.e. "cmip5 forcing vs cmip4 forcing")
- *  Should opaque identifers (e.g. UUIDs) be used for any of these?
- *  
- */
+insert into publication_type (identifier, "table") values ('scenario','scenario');
 

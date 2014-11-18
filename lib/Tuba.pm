@@ -384,11 +384,11 @@ sub startup {
     # Generic publication.
     $r->resource('generic');
 
-    # Projects, models, model runs, experiments
+    # Projects, models, model runs, scenarios
     $r->resource('project');
     $r->resource('model');
     $r->resource('model_run');
-    $r->resource('experiment');
+    $r->resource('scenario');
 
     # Lexicons
     $r->resource('lexicon');
