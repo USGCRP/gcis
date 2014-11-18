@@ -60,11 +60,34 @@ $t->get_ok("/scenario/sres_a2.json")->status_is(200)
     uri       => "/scenario/sres_a2",
     href => "$base/scenario/sres_a2.json" });
 
+# Model run
+my %run = (
+    identifier => '012345',
+    activity_identifier => undef,
+    project_identifier => 'cmip12',
+    model_identifier => 'ccsm3',
+    scenario_identifier => 'sres_a2',
+    range_start => '2000-01-01T00:00:00',
+    range_end => '2020-01-01T00:00:00',
+    spatial_resolution => '1 mile',
+    time_resolution => "10 minutes",
+    doi => undef,
+    sequence => 1,
+    sequence_description => undef,
+);
+$t->post_ok("/model_run" => json => \%run )->status_is(200);
+$t->get_ok("/model_run/012345.json")->status_is(200)
+    ->json_is( { %run,
+        uri => "/model_run/012345",
+        href => "$base/model_run/012345.json",
+        sequence => 1,
+    });
+
+$t->delete_ok("/model_run/012345")->status_is(200);
 $t->delete_ok("/scenario/sres_a2")->status_is(200);
 $t->delete_ok("/model/ccsm3")->status_is(200);
 $t->delete_ok("/project/cmip12")->status_is(200);
 $t->get_ok("/project/cmip12.json")->status_is(404);
 
 done_testing();
-
 

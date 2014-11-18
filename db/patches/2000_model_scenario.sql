@@ -13,16 +13,15 @@ create table project (
 /* Models are associated with projects. */
 drop table if exists model cascade;
 create table model (
-    identifier varchar not null primary key,  /* ncar-community-climate-system-model-4 */
+    identifier varchar not null primary key,  /* nccsm-4 */
     name varchar,                             /* NCAR Community Climate System Model */
-    native_id varchar not null,               /* NCCSM, CCSM3, CGCM3.1 (T47), CNRM-CM3, CSIRO-Mk3.0.... */
     version varchar,                          /* 4 */
     reference_url varchar not null,           /* URL with references about the model */
     website varchar,                          /* Model website */
     description varchar,
-    description_attribution varchar,
-    unique (native_id, version)
+    description_attribution varchar
 );
+/* lexicons contain native ids : NCCSM, CCSM3, CGCM3.1 (T47), CNRM-CM3, CSIRO-Mk3.0.... */
 
 /* A scenario */
 drop table if exists scenario cascade;
@@ -37,16 +36,16 @@ create table scenario (
 /* A model run uses an experiment and a model. */
 drop table if exists model_run cascade;
 create table model_run (
-    identifier varchar not null,               /* use a UUID */
+    identifier varchar not null primary key,   /* use a UUID */
     doi varchar,                               /* wishful thinking? */
-    activity_identifier varchar references activity(identifier),
-    project_identifier varchar references project(identifier), /* cmip5 */
-    model_identifier varchar references model(identifier) not null, /*  CCSM2 (as a GCID) */
-    scenario_identifier varchar references scenario(identifier) not null, /* RCP8.5,... */
+    activity_identifier varchar references activity(identifier) on update cascade on delete cascade,
+    project_identifier varchar references project(identifier) on update cascade on delete cascade, /* cmip5 */
+    model_identifier varchar references model(identifier) on update cascade on delete cascade not null, /*  CCSM2 (as a GCID) */
+    scenario_identifier varchar references scenario(identifier) on update cascade on delete cascade not null, /* RCP8.5,... */
     range_start timestamp without time zone not null,    /* 1950-01-01, 1970-01-01 */
     range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
-    spatial_resolution varchar not null,      /* 1 degree, ... */
-    time_resolution interval,                 /* 1 day, 1 month, 6 hours */
+    spatial_resolution varchar,              /* 1 degree, ... */
+    time_resolution interval,                /* 1 day, 1 month, 6 hours */
     sequence integer not null default 1,     /* 1, 2, 3 */
     sequence_description varchar,            /* "start one year earlier" */
     unique (doi),
