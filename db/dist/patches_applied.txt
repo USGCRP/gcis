@@ -139,3 +139,4 @@
 1300_exterm_trigger.sql	f570c6d1a931ac73bc182166d8676193
 1310_more_exterm_triggers.sql	fa0ca98c83cbd44fbc3e43663ef5d884
 2000_model_scenario.sql	33ffc0ec9ced45ae7efbb681e83040f5
+2010_model_audit.sql	2338e82cb86842272c44e77bf7781522
