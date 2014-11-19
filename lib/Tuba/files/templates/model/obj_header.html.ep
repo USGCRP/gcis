@@ -1,0 +1,14 @@
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+

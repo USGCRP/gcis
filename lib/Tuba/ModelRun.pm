@@ -27,18 +27,32 @@ sub show {
 
 sub list {
     my $c = shift;
-    my $model = $c->stash('model_identifier') or return $c->SUPER::list(@_);
-    my $objects = ModelRuns->get_objects(
-            sort_by => "identifier",
-            page => $c->page,
-            per_page => $c->per_page,
-            query => [ model_identifier => $model ]
+    if (my $model = $c->stash('model_identifier')) {
+        my $objects = ModelRuns->get_objects(
+                sort_by => "identifier",
+                page => $c->page,
+                per_page => $c->per_page,
+                query => [ model_identifier => $model ]
+            );
+        my $object_count = ModelRuns->get_objects_count(
+                query => [ model_identifier => $model ]
         );
-    my $object_count = ModelRuns->get_objects_count(
-            query => [ model_identifier => $model ]
-    );
-    $c->set_pages($object_count);
-    $c->stash(objects => $objects);
+        $c->set_pages($object_count);
+        $c->stash(objects => $objects);
+    }
+    if (my $scenario = $c->stash('scenario_identifier')) {
+        my $objects = ModelRuns->get_objects(
+                sort_by => "identifier",
+                page => $c->page,
+                per_page => $c->per_page,
+                query => [ scenario_identifier => $scenario ]
+            );
+        my $object_count = ModelRuns->get_objects_count(
+                query => [ scenario_identifier => $scenario ]
+        );
+        $c->set_pages($object_count);
+        $c->stash(objects => $objects);
+    }
     return $c->SUPER::list(@_);
 }
 

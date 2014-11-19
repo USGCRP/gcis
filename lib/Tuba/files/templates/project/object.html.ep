@@ -1,0 +1,33 @@
+% layout 'default', title => $project->identifier.' - '.$project->name,
+%   description => $project->description;
+
+<center>
+<h2>project : <%= $object->stringify %></h2>
+</center>
+
+%= include 'obj_header', object => $project
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        %= include 'h/thumbnail', pub => $project->get_publication;
+        <h2><%= $project->name %></h2>
+        %= include commify => objs => scalar $project->all_orgs
+        %= include 'h/desc', obj => $project
+        % if ($project->website) {
+        <p>Website : <%= external_link($project->website) %></p>
+        % }
+     %= include 'h/other_identifiers', gcid => $project->uri($self);
+     <table class='table table-condensed table-bordered'>
+         <caption>Models</caption>
+     % for my $model ($project->models) {
+     <tr>
+         <td><%= obj_link($model); %></td>
+         <td><%= $model->name %></td>
+     </tr>
+     % }
+     </table>
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

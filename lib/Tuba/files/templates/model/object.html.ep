@@ -1,0 +1,38 @@
+% layout 'default', title => $model->identifier.' - '.$model->name,
+%   description => $model->description;
+
+<center>
+<h2>model : <%= $object->stringify %></h2>
+</center>
+
+%= include 'obj_header', object => $model
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $model->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $model->name %></h2>
+        %= include commify => objs => scalar $model->all_orgs
+        %= include 'h/desc', obj => $model
+        % if ($model->website) {
+        <p>Website : <%= external_link($model->website) %></p>
+        % }
+        % if ($model->reference_url) {
+        <p>Reference : <%= external_link($model->reference_url) %></p>
+        % }
+        % if ($model->project) {
+        <p>Project : <%= obj_link($model->project) %></p>
+        % }
+
+        <p>Model runs : 
+        %= link_to 'list_model_runs_for_model', { model_identifier => $model->identifier } => begin
+        <%= scalar @{ $model->model_runs } %>
+        %= end
+        </p>
+
+     %= include 'h/other_identifiers', gcid => $model->uri($self);
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

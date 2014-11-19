@@ -1,8 +1,8 @@
-% layout 'default';
+% layout 'default', title => "Model runs";
 
 <center>
 <h2>
-    %= (stash 'title');
+    Model runs
 </h2>
 </center>
 

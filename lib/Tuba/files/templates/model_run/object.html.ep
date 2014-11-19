@@ -1,0 +1,30 @@
+% layout 'default', title => $model_run->identifier;
+
+<center>
+<h2>model run : <%= $object->stringify %></h2>
+</center>
+
+%= include 'obj_header', object => $model_run
+
+<div class='row-fluid'>
+    <div class='span12 offset1 well'>
+        <h3>
+            Time Range : <%= $model_run->range_start->ymd %> to <%= $model_run->range_end->ymd %><br>
+            Spatial resolution : <%= $model_run->spatial_resolution %><br>
+            Sequence : <%= $model_run->sequence  %><br>
+            Time resolution : <%= $model_run->time_resolution %></br>
+            Scenario : <%= obj_link($model_run->scenario) %>
+        </h3>
+        % if ($model_run->project) {
+        <p>This model run is associated with project : <%= obj_link($model_run->project) %></p>
+        % }
+        % if (my $activity = $model_run->activity) {
+        <p>This model run is associated with the activity : <%= obj_link($model_run->activity) %></p>
+        % }
+
+     %= include 'h/other_identifiers', gcid => $model_run->uri($self);
+    </div>
+</div>
+
+%= include 'h/other_formats';
+
