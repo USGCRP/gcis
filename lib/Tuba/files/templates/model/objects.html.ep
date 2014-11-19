@@ -33,7 +33,9 @@
             % }
        </td>
        <td>
+           %= link_to 'list_model_runs_for_model', { model_identifier => $model->identifier } => begin
            <%= scalar @{ $model->model_runs } %>
+           %= end
        </td>
     </tr>
 % }
