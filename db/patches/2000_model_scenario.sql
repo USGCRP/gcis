@@ -1,3 +1,4 @@
+
                                              /* Sample values (comma separated) */
 
 /* A project is a collection of experiments. */
@@ -10,10 +11,11 @@ create table project (
     website varchar                          /* official project website */
 );
 
-/* Models are associated with projects. */
+/* Models may be associated with projects. */
 drop table if exists model cascade;
 create table model (
     identifier varchar not null primary key,  /* nccsm-4 */
+    project_identifier varchar references project(identifier), /* cmip3 */
     name varchar,                             /* NCAR Community Climate System Model */
     version varchar,                          /* 4 */
     reference_url varchar not null,           /* URL with references about the model */

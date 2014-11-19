@@ -1,4 +1,4 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/prov cito biro/];
 <<%= current_resource %>>
     a prov:Entity;
 
