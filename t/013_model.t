@@ -29,6 +29,7 @@ $t->get_ok("/project/cmip12.json")->status_is(200)
   ->json_is( { %project,
     uri       => "/project/cmip12",
     href => "$base/project/cmip12.json" });
+$t->get_ok("/project")->status_is(200)->content_like(qr/cmip12/);
 
 # Model
 my %model = (
@@ -45,6 +46,7 @@ $t->get_ok("/model/ccsm3.json")->status_is(200)
   ->json_is( { %model,
     uri       => "/model/ccsm3",
     href => "$base/model/ccsm3.json" });
+$t->get_ok("/model")->status_is(200)->content_like(qr/ccsm3/);
 
 # Scenario
 my %scenario = (
@@ -58,6 +60,7 @@ $t->get_ok("/scenario/sres_a2.json")->status_is(200)
   ->json_is( { %scenario,
     uri       => "/scenario/sres_a2",
     href => "$base/scenario/sres_a2.json" });
+$t->get_ok("/scenario")->status_is(200)->content_like(qr[sres_a2]);
 
 # Model run
 my %run = (
@@ -81,6 +84,10 @@ $t->get_ok("/model_run/012345.json")->status_is(200)
         href => "$base/model_run/012345.json",
         sequence => 1,
     });
+$t->get_ok("/model_run")->status_is(200)->content_like(qr[012345]);
+$t->get_ok("/model/ccsm3/run")->status_is(200)->content_like(qr[012345]);
+$t->get_ok("/model_run/ccsm3/sres_a2/2000-01-01/2020-01-01/1 mile/1.json")
+  ->status_is(200)->content_like(qr/012345/);
 
 $t->delete_ok("/model_run/012345")->status_is(200);
 $t->delete_ok("/scenario/sres_a2")->status_is(200);

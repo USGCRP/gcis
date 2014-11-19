@@ -66,6 +66,7 @@ sub register {
             my $c = shift;
             my $obj = shift;
             return "" unless defined($obj);
+            return "$obj" if ref($obj) eq 'DateTime';
             my $val = $obj->stringify(@_) || '[missing '.$obj->moniker.']';
             my $uri = $obj->uri($c);
             return $val unless $uri;

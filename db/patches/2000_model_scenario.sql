@@ -38,16 +38,17 @@ drop table if exists model_run cascade;
 create table model_run (
     identifier varchar not null primary key,   /* use a UUID */
     doi varchar,                               /* wishful thinking? */
-    activity_identifier varchar references activity(identifier) on update cascade on delete cascade,
-    project_identifier varchar references project(identifier) on update cascade on delete cascade, /* cmip5 */
     model_identifier varchar references model(identifier) on update cascade on delete cascade not null, /*  CCSM2 (as a GCID) */
     scenario_identifier varchar references scenario(identifier) on update cascade on delete cascade not null, /* RCP8.5,... */
-    range_start timestamp without time zone not null,    /* 1950-01-01, 1970-01-01 */
-    range_end timestamp without time zone not null,      /* 2010-01-01, 1977-01-01 */
-    spatial_resolution varchar,              /* 1 degree, ... */
-    time_resolution interval,                /* 1 day, 1 month, 6 hours */
-    sequence integer not null default 1,     /* 1, 2, 3 */
-    sequence_description varchar,            /* "start one year earlier" */
+    spatial_resolution varchar not null,                 /* 1 degree, ... */
+    range_start date  not null,                          /* 1950-01-01, 1970-01-01 */
+    range_end date not null,                             /* 2010-01-01, 1977-01-01 */
+    sequence integer not null default 1,                 /* 1, 2, 3 */
+    sequence_description varchar,                        /* "start one year earlier" */
+    activity_identifier varchar references activity(identifier) on update cascade on delete cascade,
+    project_identifier varchar references project(identifier) on update cascade on delete cascade, /* cmip5 */
+    time_resolution interval,                            /* 1 day, 1 month, 6 hours */
+    unique (model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence),
     unique (doi),
     CHECK (identifier similar to '[a-z0-9_-]+')
 );

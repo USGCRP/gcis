@@ -15,14 +15,13 @@
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
     <th>identifier</th>
-    <th>native_id</th>
     <th>name</th>
     <th>organizations</th>
+    <th>runs</th>
 </th>
 % for my $model (@$objects) {
     <tr>
        <td><%= obj_link_to $model, 'show' => begin %><%= $model->identifier %><%= end %></td>
-       <td><%= $model->native_id %></td>
        <td><%= $model->name %></td>
        <td>
             % if (my $pub = $model->get_publication) {
@@ -33,7 +32,9 @@
                <% } %>
             % }
        </td>
-
+       <td>
+           <%= scalar @{ $model->model_runs } %>
+       </td>
     </tr>
 % }
 </table>
