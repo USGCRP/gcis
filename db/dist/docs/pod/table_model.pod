@@ -1,0 +1,46 @@
+
+\=head1 NAME
+
+model
+
+\=head1 DESCRIPTION
+
+
+
+\=head1 FIELDS
+
+ identifier (character varying) - 
+ project_identifier (character varying) - 
+ name (character varying) - 
+ version (character varying) - 
+ reference_url (character varying) - 
+ website (character varying) - 
+ description (character varying) - 
+ description_attribution (character varying) - 
+
+
+\=head1 SCHEMA
+
+                            Table "gcis_metadata.model"
+          Column          |       Type        | Modifiers | Storage  | Description 
+ -------------------------+-------------------+-----------+----------+-------------
+  identifier              | character varying | not null  | extended | 
+  project_identifier      | character varying |           | extended | 
+  name                    | character varying |           | extended | 
+  version                 | character varying |           | extended | 
+  reference_url           | character varying | not null  | extended | 
+  website                 | character varying |           | extended | 
+  description             | character varying |           | extended | 
+  description_attribution | character varying |           | extended | 
+ Indexes:
+     "model_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "model_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier)
+ Referenced by:
+     TABLE "model_run" CONSTRAINT "model_run_model_identifier_fkey" FOREIGN KEY (model_identifier) REFERENCES model(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+\=cut
+
+

@@ -1,0 +1,59 @@
+
+\=head1 NAME
+
+model_run
+
+\=head1 DESCRIPTION
+
+
+
+\=head1 FIELDS
+
+ identifier (character varying) - 
+ doi (character varying) - 
+ model_identifier (character varying) - 
+ scenario_identifier (character varying) - 
+ spatial_resolution (character varying) - 
+ range_start (date) - 
+ range_end (date) - 
+ sequence (integer) - 
+ sequence_description (character varying) - 
+ activity_identifier (character varying) - 
+ project_identifier (character varying) - 
+ time_resolution (interval) - 
+
+
+\=head1 SCHEMA
+
+                             Table "gcis_metadata.model_run"
+         Column        |       Type        |     Modifiers      | Storage  | Description 
+ ----------------------+-------------------+--------------------+----------+-------------
+  identifier           | character varying | not null           | extended | 
+  doi                  | character varying |                    | extended | 
+  model_identifier     | character varying | not null           | extended | 
+  scenario_identifier  | character varying | not null           | extended | 
+  spatial_resolution   | character varying | not null           | extended | 
+  range_start          | date              | not null           | plain    | 
+  range_end            | date              | not null           | plain    | 
+  sequence             | integer           | not null default 1 | plain    | 
+  sequence_description | character varying |                    | extended | 
+  activity_identifier  | character varying |                    | extended | 
+  project_identifier   | character varying |                    | extended | 
+  time_resolution      | interval          |                    | plain    | 
+ Indexes:
+     "model_run_pkey" PRIMARY KEY, btree (identifier)
+     "model_run_doi_key" UNIQUE CONSTRAINT, btree (doi)
+     "model_run_model_identifier_scenario_identifier_spatial_reso_key" UNIQUE CONSTRAINT, btree (model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence)
+ Check constraints:
+     "model_run_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+ Foreign-key constraints:
+     "model_run_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "model_run_model_identifier_fkey" FOREIGN KEY (model_identifier) REFERENCES model(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "model_run_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     "model_run_scenario_identifier_fkey" FOREIGN KEY (scenario_identifier) REFERENCES scenario(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+\=cut
+
+

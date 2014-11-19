@@ -115,13 +115,13 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.activity">activity</a>
+            <a name="gcis-metadata.table.model">model</a>
         </h2>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>activity Structure</caption>
+                <caption>model Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -155,10 +155,18 @@
             <tr class="tr1">
                 <td>
                 
+                  
+                  <a href="table_gcis_metadata.project.html#gcis-metadata.table.project">project.identifier</a>
+                  
+                
                 </td>
-                <td>data_usage</td>
+                <td>project_identifier</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
                 
 
                 
@@ -172,7 +180,7 @@
                 <td>
                 
                 </td>
-                <td>methodology</td>
+                <td>name</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -188,71 +196,7 @@
                 <td>
                 
                 </td>
-                <td>start_time</td>
-                <td>timestamp without time zone</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>end_time</td>
-                <td>timestamp without time zone</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>duration</td>
-                <td>interval</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>computing_environment</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>output_artifacts</td>
+                <td>version</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -268,7 +212,39 @@
                 <td>
                 
                 </td>
-                <td>software</td>
+                <td>reference_url</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                NOT NULL
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>website</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>description</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -284,23 +260,7 @@
                 <td>
                 
                 </td>
-                <td>visualization_software</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>notes</td>
+                <td>description_attribution</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -319,36 +279,12 @@
 
         <!-- Constraint List -->
         
-        <p>&nbsp;</p>
-        <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>activity Constraints</caption>
-            <tr>
-                <th>Name</th>
-                <th>Constraint</th>
-            </tr>
-            
-            <tr class="tr0">
-                <td>ck_activity_identifer</td>
-                <td>CHECK (((identifier)::text ~ &#39;[a-z0-9_-]+&#39;::text))</td>
-            </tr>
-            
-            <tr class="tr1">
-                <td>ck_activity_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-        </table>
-        
 
         <!-- Foreign Key Discovery -->
         
             <p>Tables referencing this one via Foreign Key Constraints:</p>
         
-                <a href="table_gcis_metadata.methodology.html">methodology</a><br>
-        
                 <a href="table_gcis_metadata.model_run.html">model_run</a><br>
-        
-                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
         
         
 

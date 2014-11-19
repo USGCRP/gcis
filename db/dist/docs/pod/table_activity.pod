@@ -45,6 +45,7 @@ activity
      "ck_activity_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:
      TABLE "methodology" CONSTRAINT "methodology_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier)
+     TABLE "model_run" CONSTRAINT "model_run_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "publication_map" CONSTRAINT "publication_map_activity_identifier_fkey" FOREIGN KEY (activity_identifier) REFERENCES activity(identifier)
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON activity FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
