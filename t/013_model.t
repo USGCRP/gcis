@@ -34,6 +34,7 @@ $t->get_ok("/project")->status_is(200)->content_like(qr/cmip12/);
 # Model
 my %model = (
     identifier => 'ccsm3',
+    project_identifier => 'cmip12',
     name => 'Community Climate System Model, version 3.0 (CCSM3)',
     reference_url => 'http://www-pcmdi.llnl.gov/ipcc/model_documentation/CCSM3.htm',
     website => 'http://www2.cesm.ucar.edu/',
