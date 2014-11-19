@@ -467,6 +467,37 @@ CREATE TABLE methodology (
 
 
 
+CREATE TABLE model (
+    identifier character varying NOT NULL,
+    project_identifier character varying,
+    name character varying,
+    version character varying,
+    reference_url character varying NOT NULL,
+    website character varying,
+    description character varying,
+    description_attribution character varying
+);
+
+
+
+CREATE TABLE model_run (
+    identifier character varying NOT NULL,
+    doi character varying,
+    model_identifier character varying NOT NULL,
+    scenario_identifier character varying NOT NULL,
+    spatial_resolution character varying NOT NULL,
+    range_start date NOT NULL,
+    range_end date NOT NULL,
+    sequence integer DEFAULT 1 NOT NULL,
+    sequence_description character varying,
+    activity_identifier character varying,
+    project_identifier character varying,
+    time_resolution interval,
+    CONSTRAINT model_run_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+);
+
+
+
 CREATE TABLE organization (
     identifier character varying NOT NULL,
     name character varying,
@@ -548,6 +579,16 @@ COMMENT ON COLUMN platform.description_attribution IS 'A URL containing the sour
 
 CREATE TABLE platform_type (
     identifier character varying NOT NULL
+);
+
+
+
+CREATE TABLE project (
+    identifier character varying NOT NULL,
+    name character varying,
+    description character varying,
+    description_attribution character varying,
+    website character varying
 );
 
 
@@ -722,6 +763,16 @@ CREATE TABLE role_type (
     identifier character varying NOT NULL,
     label character varying NOT NULL,
     sort_key integer
+);
+
+
+
+CREATE TABLE scenario (
+    identifier character varying NOT NULL,
+    name character varying,
+    description character varying,
+    description_attribution character varying,
+    CONSTRAINT scenario_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -967,6 +1018,26 @@ ALTER TABLE ONLY methodology
 
 
 
+ALTER TABLE ONLY model
+    ADD CONSTRAINT model_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_doi_key UNIQUE (doi);
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_model_identifier_scenario_identifier_spatial_reso_key UNIQUE (model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence);
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_pkey PRIMARY KEY (identifier);
+
+
+
 ALTER TABLE ONLY organization_map
     ADD CONSTRAINT organization_map_pkey PRIMARY KEY (organization_identifier, other_organization_identifier, organization_relationship_identifier);
 
@@ -1009,6 +1080,11 @@ ALTER TABLE ONLY platform
 
 ALTER TABLE ONLY platform_type
     ADD CONSTRAINT platform_type_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY project
+    ADD CONSTRAINT project_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1094,6 +1170,11 @@ ALTER TABLE ONLY report
 
 ALTER TABLE ONLY role_type
     ADD CONSTRAINT role_type_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY scenario
+    ADD CONSTRAINT scenario_pkey PRIMARY KEY (identifier);
 
 
 
@@ -1749,6 +1830,31 @@ ALTER TABLE ONLY methodology
 
 ALTER TABLE ONLY methodology
     ADD CONSTRAINT methodology_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id);
+
+
+
+ALTER TABLE ONLY model
+    ADD CONSTRAINT model_project_identifier_fkey FOREIGN KEY (project_identifier) REFERENCES project(identifier);
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_activity_identifier_fkey FOREIGN KEY (activity_identifier) REFERENCES activity(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_model_identifier_fkey FOREIGN KEY (model_identifier) REFERENCES model(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_project_identifier_fkey FOREIGN KEY (project_identifier) REFERENCES project(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY model_run
+    ADD CONSTRAINT model_run_scenario_identifier_fkey FOREIGN KEY (scenario_identifier) REFERENCES scenario(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

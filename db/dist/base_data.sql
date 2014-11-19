@@ -318,6 +318,8 @@ COPY instrument_measurement (platform_identifier, instrument_identifier, dataset
 COPY publication_type (identifier, "table") FROM stdin;
 platform	platform
 instrument	instrument
+model	model
+scenario	scenario
 \.
 
 
@@ -334,6 +336,38 @@ COPY publication (id, publication_type_identifier, fk) FROM stdin;
 --
 
 COPY methodology (activity_identifier, publication_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: project; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY project (identifier, name, description, description_attribution, website) FROM stdin;
+\.
+
+
+--
+-- Data for Name: model; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY model (identifier, project_identifier, name, version, reference_url, website, description, description_attribution) FROM stdin;
+\.
+
+
+--
+-- Data for Name: scenario; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY scenario (identifier, name, description, description_attribution) FROM stdin;
+\.
+
+
+--
+-- Data for Name: model_run; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence, sequence_description, activity_identifier, project_identifier, time_resolution) FROM stdin;
 \.
 
 
