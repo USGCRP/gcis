@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    Images in <%= current_report->title %>
+    Images
 </h2>
 </center>
 

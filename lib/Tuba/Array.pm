@@ -35,47 +35,6 @@ sub show {
     $c->SUPER::show(@_);
 }
 
-=head1 list
-
-Show arrays for selected report.
-
-=cut
-
-sub list {
-    my $c = shift;
-    my $identifier = $c->current_report->identifier;
-    my $page = $c->page;
-    my $limit = 20;
-    my $offset = ( $page - 1 ) * 20;
-    if ($c->param('all')) {
-        $limit = 10_000;
-        $offset = 0;
-    }
-    my $objects = Arrays->get_objects_from_sql(
-        args => [ $identifier, $identifier ],
-        sql => qq[select i.*
-        from "array" i
-            inner join array_table_map m on m.array_identifier = i.identifier
-            inner join "table" f on f.identifier = m.table_identifier
-            inner join chapter c on f.chapter_identifier = c.identifier
-        where c.report_identifier = ? or f.report_identifier = ?
-        order by c.number,f.ordinal
-        limit $limit offset $offset ]
-    );
-    unless ($c->param('all')) {
-        $c->dbs->query('select count(1) from
-            "array" i
-                inner join array_table_map m on m.array_identifier = i.identifier
-                inner join "table" f on f.identifier = m.table_identifier
-                inner join chapter c on f.chapter_identifier = c.identifier
-            where c.report_identifier = ? or f.report_identifier = ?
-            ',$identifier,$identifier)->into(my $count);
-        $c->set_pages($count);
-    }
-    $c->stash(objects => $objects);
-    $c->SUPER::list(@_);
-}
-
 sub update_rel_form {
     my $c = shift;
     $c->stash(relationships => [ map Array->meta->relationship($_), qw/tables/ ]);

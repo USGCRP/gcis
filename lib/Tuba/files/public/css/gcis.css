@@ -121,3 +121,25 @@ a.blackbutton {
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
   outline:none;
 }
+table.array {
+    background-color:white;
+    border:1px solid #999;
+    border-collapse:collapse;
+    margin:5px;
+}
+table.array tr td {
+    border:1px solid #ddd;
+    text-align:right;
+}
+table.array tr.header td {
+    font-weight:bold;
+    text-align:center;
+}
+table.array caption {
+    border:1px solid #999;
+    background-color:white;
+}
+table tr.header td {
+    font-weight:bold;
+    text-align:center;
+}

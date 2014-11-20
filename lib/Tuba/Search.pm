@@ -52,7 +52,7 @@ sub autocomplete {
     my $restrict = $c->param('restrict');
 
     my @tables;
-    if ($want && $want=~/^(finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument)$/) {
+    if ($want && $want=~/^(array|finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument)$/) {
        @tables = ( $want );
     } elsif ($want && ($want !~ /^(all|full)$/)) {
         return $c->render(json => { error => "undefined type" } );
