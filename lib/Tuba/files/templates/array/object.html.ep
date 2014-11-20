@@ -36,7 +36,7 @@
     </p>
     % }
     % my $row = 0;
-    <table class='table table-striped table-condensed table-bordered'>
+    <table class='table table-bordered table-condensed array'>
         % for my $x ($array->rows) {
             % if ($row++ < $array->rows_in_header) {
             <tr class='header'>

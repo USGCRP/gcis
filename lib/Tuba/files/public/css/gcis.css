@@ -122,13 +122,11 @@ a.blackbutton {
   outline:none;
 }
 table.array {
-    background-color:white;
-    border:1px solid #999;
-    border-collapse:collapse;
     margin:5px;
+    width:auto;
+    background-color:white;
 }
 table.array tr td {
-    border:1px solid #ddd;
     text-align:right;
 }
 table.array tr.header td {
@@ -136,7 +134,9 @@ table.array tr.header td {
     text-align:center;
 }
 table.array caption {
-    border:1px solid #999;
+    border-top:1px solid rgb(221,221,221);
+    border-right:1px solid rgb(221,221,221);
+    border-left:1px solid rgb(221,221,221);
     background-color:white;
 }
 table tr.header td {
