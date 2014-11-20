@@ -148,14 +148,13 @@ sub _process_rows {
     } else {
         my %opts;
         $opts{sep_char} = "\t" if $format eq 'tsv';
+        open my $fh, "<:encoding(utf8)", \$content
+             or do { $c->flash(error => $!); return; };
         my $csv = Text::CSV_XS->new({binary => 1, allow_whitespace => 1, %opts});
-        for my $line (split /\n\r?/, $content) {
-            $csv->parse($line) or do {
-                $c->flash(error => $csv->error_diag);
-                return -1;
-            };
-            push @array, [ $csv->fields ];
+        while ( my $row = $csv->getline($fh)) {
+            push @array, $row;
         }
+        $csv->eof or do { $c->flash(error => $csv->error_diag()); return -1; };
     }
     return \@array;
 }
