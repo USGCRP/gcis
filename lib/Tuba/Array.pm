@@ -105,7 +105,7 @@ sub update_rel {
     }
 
     for my $id ($c->param('delete_table')) {
-        ArrayFigureMaps->delete_objects({ table => $id, array => $object->identifier });
+        ArrayTableMaps->delete_objects({ table_identifier => $id, array_identifier => $object->identifier });
         $c->flash(message => 'Saved changes');
     }
 
