@@ -28,7 +28,9 @@
         % }
         </div>
         <h2><%= $table->title %></h2>
+        % if ($table->numeric) {
         <h3>table <%= $table->numeric %></h3>
+        % }
         <i>
         %= include commify => objs => scalar $table->all_orgs
         </i>
