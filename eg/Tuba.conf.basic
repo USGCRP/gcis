@@ -2,7 +2,6 @@
 database :
     dbname   : gcis
     schema   : gcis_metadata
-data_dir : <%= $ENV{HOME} %>/tuba_data
 image_upload_dir : <%= $ENV{HOME} %>/tuba_assets
 auth :
     secret : random_stuff
