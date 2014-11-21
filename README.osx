@@ -85,6 +85,12 @@ starting from the basics.
         replace 'easy_pass' with an easy password
         replace random_stuff with a string of random characters
 
+11. Install the database :
+
+    perl Build.PL
+    ./Build
+    ./Build dbinstall
+
 11. Start tuba
 
     morbo ./bin/tuba
