@@ -75,7 +75,24 @@ starting from the basics.
 
     cpanm --installdeps .
 
-10. Configure Tuba :
+10. Install raptor from <http://librdf.org/raptor/> :
+
+    wget http://download.librdf.org/source/raptor2-2.0.15.tar.gz
+    tar xzvf raptor2-2.0.15.tar.gz
+    cd raptor2-2.0.15
+    ./configure
+    make
+    make install
+
+11. Test :
+
+    perl Build.PL
+    ./Build
+    ./Build test
+
+If all goes well :
+
+12. Configure Tuba :
 
     cp eg/Tuba.conf.basic Tuba.conf
 
@@ -85,17 +102,17 @@ starting from the basics.
         replace 'easy_pass' with an easy password
         replace random_stuff with a string of random characters
 
-11. Install the database :
+13. Install the database :
 
     perl Build.PL
     ./Build
     ./Build dbinstall
 
-11. Start tuba
+14. Start tuba
 
     morbo ./bin/tuba
 
-12. Open a web browser to http://localhost:3000
+15. Open a web browser to http://localhost:3000
 
 Done!
 
