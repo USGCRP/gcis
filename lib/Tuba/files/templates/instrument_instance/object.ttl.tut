@@ -1,7 +1,6 @@
 % layout 'default', namespaces => [qw/dcterms gcis prov/];
 %#
 <<%= current_resource %>>
-   dcterms:identifier "<%= $instrument_instance->identifier %>";
 % for my $platform ($instrument_instance->platform_identifier) {
    gcis:Platform <<%= uri($platform) %>>;
 % }
