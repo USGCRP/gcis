@@ -74,7 +74,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.15"
+         "version" : "1.16"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -181,6 +181,9 @@
       "Tuba::DB::Object::Methodology" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Methodology.pm"
       },
+      "Tuba::DB::Object::ModelRun" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/ModelRun.pm"
+      },
       "Tuba::DB::Object::Organization" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm"
       },
@@ -268,6 +271,12 @@
       "Tuba::Log" : {
          "file" : "lib/Tuba/Log.pm"
       },
+      "Tuba::Model" : {
+         "file" : "lib/Tuba/Model.pm"
+      },
+      "Tuba::ModelRun" : {
+         "file" : "lib/Tuba/ModelRun.pm"
+      },
       "Tuba::Organization" : {
          "file" : "lib/Tuba/Organization.pm"
       },
@@ -285,6 +294,9 @@
       },
       "Tuba::Plugin::TubaHelpers" : {
          "file" : "lib/Tuba/Plugin/TubaHelpers.pm"
+      },
+      "Tuba::Project" : {
+         "file" : "lib/Tuba/Project.pm"
       },
       "Tuba::Publication" : {
          "file" : "lib/Tuba/Publication.pm"
@@ -304,6 +316,9 @@
       "Tuba::RouteParam" : {
          "file" : "lib/Tuba/RouteParam.pm"
       },
+      "Tuba::Scenario" : {
+         "file" : "lib/Tuba/Scenario.pm"
+      },
       "Tuba::Search" : {
          "file" : "lib/Tuba/Search.pm"
       },
@@ -318,5 +333,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.15"
+   "version" : "1.16"
 }
