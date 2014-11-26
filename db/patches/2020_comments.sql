@@ -1,4 +1,9 @@
 
+/* unused */
+
+drop table dataset_lineage;
+drop table submitter;
+drop table ref_type;
 
 /** table _report_editor **/
 comment on table "_report_editor" is 'Users who have permissions to make changes to a given report.';
@@ -47,8 +52,6 @@ comment on column "article".journal_vol is 'The volume of the journal in which t
 comment on column "article".journal_pages is 'The pages of the journal on which the article appears (source: crossref.org)';
 comment on column "article".url is 'A URL for the article (not necessary if there is a DOI).';
 comment on column "article".notes is 'Notes about this entry.';
-
-select topic from book;
 
 /** table book **/
 comment on table "book" is 'Entries in this table are publications classified as books.  They should have ISBN numbers. ';
@@ -117,8 +120,6 @@ comment on column "dataset".lat_max is 'The nothernmost latitude in the bounding
 comment on column "dataset".lon_min is 'The westernmost longitude in the bounding box for this dataset.';
 comment on column "dataset".lon_max is 'The eastermost longitude in the bounding box for this dataset.';
 
-drop table dataset_lineage;
-
 /** table exterm **/
 comment on table "exterm" is 'External terms which can be mapped to GCIS identifiers.';
 comment on column "exterm".context is 'A brief identifier for the context of this term.';
@@ -146,8 +147,6 @@ comment on column "figure".source_citation is 'Text describing the source of thi
 comment on column "figure".ordinal is 'The numeric position of this figure within a chapter.';
 comment on column "figure".report_identifier is 'The report associated with this figure';
 
-select location from file where location is not null;
-
 /** table file **/
 comment on table "file" is 'Files are distinct downloadable entities which may be associated with publications.';
 comment on column "file".file is 'The URI for this file (relative to /assets/ or to the location)';
@@ -171,8 +170,6 @@ comment on column "finding".evidence is 'A description of the evidence base.';
 comment on column "finding".uncertainties is 'A description of the uncertainties.';
 comment on column "finding".confidence is 'An assessment of the confidence in this finding based on the evidence.';
 
-select * from gcmd_keyword limit 10;
-
 /** table gcmd_keyword **/
 comment on table "gcmd_keyword" is 'Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/keyword_list.html>.';
 comment on column "gcmd_keyword".identifier is 'The UUID for this keyword.';
@@ -184,8 +181,6 @@ comment on column "gcmd_keyword".definition is 'The definition.';
 comment on table "generic" is 'Generic publications, not covered by other GCIS publication types.';
 comment on column "generic".identifier is 'A globally unique identifier (UUID)';
 comment on column "generic".attrs is 'Arbitray attributes and values for this generic publication.';
-
-select attributes from image;
 
 /** table image **/
 comment on table "image" is 'An image may be associated with multiple figures, may have provenance and other attributes distinct from that of a parent figure.';
@@ -209,9 +204,6 @@ comment on table "image_figure_map" is 'A figure can have many images and vice v
 comment on column "image_figure_map".image_identifier is 'The image.';
 comment on column "image_figure_map".figure_identifier is 'The figure.';
 comment on column "image_figure_map".report_identifier is 'The report containing the figure.';
-
-\x
-select * from instrument limit 10;
 
 /** table instrument **/
 comment on table "instrument" is 'An instrument is used for measurement.';
@@ -241,8 +233,6 @@ comment on column "journal".online_issn is 'The 10 or 13 digit ISSN for the onli
 comment on column "journal".publisher is 'The publisher of the journal.';
 comment on column "journal".country is 'The country of publication.';
 comment on column "journal".url is 'A URL for the landing page for this journal.';
-
-alter table journal drop column notes;
 
 /** table lexicon **/
 comment on table "lexicon" is 'A lexicon is a list of terms which correspond to GCIS identifiers.';
@@ -377,8 +367,6 @@ comment on table "publication_type" is 'Publications have types which correspond
 comment on column "publication_type".identifier is 'A descriptive type.';
 comment on column "publication_type".table is 'The database table.';
 
-drop table ref_type;
-
 /** table reference **/
 comment on table "reference" is 'A reference is a bibliographic entry.  It relates two publications.';
 comment on column "reference".identifier is 'A unique identifier (a UUID).';
@@ -422,10 +410,6 @@ comment on column "scenario".identifier is 'A desciptive identifier.';
 comment on column "scenario".name is 'A brief name.';
 comment on column "scenario".description is 'A description.';
 comment on column "scenario".description_attribution is 'A URL containing the description.';
-
-drop table submitter;
-
-select * from subpubref;
 
 /** table subpubref **/
 comment on table "subpubref" is 'Publications contained in other publications (e.g. chapters in reports) may be assocaited with references.';
