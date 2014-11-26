@@ -1,27 +1,27 @@
 
-\=head1 NAME
+=head1 NAME
 
 image_figure_map
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A figure can have many images and vice versa.
+
+=head1 FIELDS
+
+ image_identifier (character varying) - The image.
+ figure_identifier (character varying) - The figure.
+ report_identifier (character varying) - The report containing the figure.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- image_identifier (character varying) - 
- figure_identifier (character varying) - 
- report_identifier (character varying) - 
-
-
-\=head1 SCHEMA
-
-                    Table "gcis_metadata.image_figure_map"
-       Column       |       Type        | Modifiers | Storage  | Description 
- -------------------+-------------------+-----------+----------+-------------
-  image_identifier  | character varying | not null  | extended | 
-  figure_identifier | character varying | not null  | extended | 
-  report_identifier | character varying | not null  | extended | 
+                               Table "gcis_metadata.image_figure_map"
+       Column       |       Type        | Modifiers | Storage  |            Description            
+ -------------------+-------------------+-----------+----------+-----------------------------------
+  image_identifier  | character varying | not null  | extended | The image.
+  figure_identifier | character varying | not null  | extended | The figure.
+  report_identifier | character varying | not null  | extended | The report containing the figure.
  Indexes:
      "image_figure_map_pkey" PRIMARY KEY, btree (image_identifier, figure_identifier, report_identifier)
  Foreign-key constraints:
@@ -33,6 +33,6 @@ image_figure_map
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,47 +1,47 @@
 
-\=head1 NAME
+=head1 NAME
 
 image
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
+An image may be associated with multiple figures, may have provenance and other attributes distinct from that of a parent figure.
 
+=head1 FIELDS
 
-\=head1 FIELDS
-
- identifier (character varying) - A unique identifier for the image.
- position (character varying) - 
- title (character varying) - 
- description (character varying) - 
- attributes (character varying) - 
- time_start (timestamp(3) without time zone) - 
- time_end (timestamp(3) without time zone) - 
- lat_max (character varying) - 
- lat_min (character varying) - 
- lon_max (character varying) - 
- lon_min (character varying) - 
- usage_limits (character varying) - 
+ identifier (character varying) - A globally unique identifier (UUID).
+ position (character varying) - A description of where this image is within other figures.
+ title (character varying) - A title for this image.
+ description (character varying) - An optional description of this image.
+ attributes (character varying) - Comma separated free form attributes of this image.
+ time_start (timestamp(3) without time zone) - The start of the spatial extent represtented by this image.
+ time_end (timestamp(3) without time zone) - The end of the spatial extent represtented by this image.
+ lat_max (character varying) - The nothernmost latitude in the bounding box for this image.
+ lat_min (character varying) - The southernmost latitude in the bounding box for this image.
+ lon_max (character varying) - The eastermost longitude in the bounding box for this image.
+ lon_min (character varying) - The westernmost longitude in the bounding box for this image.
+ usage_limits (character varying) - Copyright restrictions describing how this image may be used.
  submission_dt (timestamp(3) without time zone) - 
  create_dt (timestamp(3) without time zone) - 
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
-                                         Table "gcis_metadata.image"
-     Column     |              Type              | Modifiers | Storage  |            Description             
- ---------------+--------------------------------+-----------+----------+------------------------------------
-  identifier    | character varying              | not null  | extended | A unique identifier for the image.
-  position      | character varying              |           | extended | 
-  title         | character varying              |           | extended | 
-  description   | character varying              |           | extended | 
-  attributes    | character varying              |           | extended | 
-  time_start    | timestamp(3) without time zone |           | plain    | 
-  time_end      | timestamp(3) without time zone |           | plain    | 
-  lat_max       | character varying              |           | extended | 
-  lat_min       | character varying              |           | extended | 
-  lon_max       | character varying              |           | extended | 
-  lon_min       | character varying              |           | extended | 
-  usage_limits  | character varying              |           | extended | 
+                                                       Table "gcis_metadata.image"
+     Column     |              Type              | Modifiers | Storage  |                          Description                          
+ ---------------+--------------------------------+-----------+----------+---------------------------------------------------------------
+  identifier    | character varying              | not null  | extended | A globally unique identifier (UUID).
+  position      | character varying              |           | extended | A description of where this image is within other figures.
+  title         | character varying              |           | extended | A title for this image.
+  description   | character varying              |           | extended | An optional description of this image.
+  attributes    | character varying              |           | extended | Comma separated free form attributes of this image.
+  time_start    | timestamp(3) without time zone |           | plain    | The start of the spatial extent represtented by this image.
+  time_end      | timestamp(3) without time zone |           | plain    | The end of the spatial extent represtented by this image.
+  lat_max       | character varying              |           | extended | The nothernmost latitude in the bounding box for this image.
+  lat_min       | character varying              |           | extended | The southernmost latitude in the bounding box for this image.
+  lon_max       | character varying              |           | extended | The eastermost longitude in the bounding box for this image.
+  lon_min       | character varying              |           | extended | The westernmost longitude in the bounding box for this image.
+  usage_limits  | character varying              |           | extended | Copyright restrictions describing how this image may be used.
   submission_dt | timestamp(3) without time zone |           | plain    | 
   create_dt     | timestamp(3) without time zone |           | plain    | 
  Indexes:
@@ -58,6 +58,6 @@ image
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

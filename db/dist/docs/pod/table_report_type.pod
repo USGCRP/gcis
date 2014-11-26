@@ -1,23 +1,23 @@
 
-\=head1 NAME
+=head1 NAME
 
 report_type
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A list of report types.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifer.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
-
-
-\=head1 SCHEMA
-
-                   Table "gcis_metadata.report_type"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
+                         Table "gcis_metadata.report_type"
+    Column   |       Type        | Modifiers | Storage  |       Description        
+ ------------+-------------------+-----------+----------+--------------------------
+  identifier | character varying | not null  | extended | A descriptive identifer.
  Indexes:
      "report_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
@@ -25,6 +25,6 @@ report_type
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

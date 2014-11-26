@@ -1,81 +1,81 @@
 
-\=head1 NAME
+=head1 NAME
 
 dataset
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+Datasets are arbitrary collections of data.  They are a type of publication and may be associated with other publications.
+
+=head1 FIELDS
+
+ identifier (character varying) - A globally unique identifier for this dataset.  This may be a composite identifier derived from external identifier or publications associated with this dataset.
+ name (character varying) - A brief descriptive name.
+ type (character varying) - A free form type for this dataset.
+ version (character varying) - The version.
+ description (character varying) - A narrative description of this dataset.  If the description is a direct quote available at a URL, put that URL into description_attribution.
+ native_id (character varying) - The identifier for this dataset given by the producer or archive for the dataset.
+ access_dt (timestamp(3) without time zone) - The data on which this dataset was accessed.
+ url (character varying) - A URL for a landing page.
+ data_qualifier (character varying) - Assumptions or qualifying statements about this data.
+ scale (character varying) - If the data has been scaled, describe that here.
+ spatial_ref_sys (character varying) - The spatial reference system.
+ cite_metadata (character varying) - The preferred way to cite this dataset.
+ scope (character varying) - The scope of the data.
+ spatial_extent (character varying) - Brief description of the spatial extent, which corresponds to lat_min/lat_max, lon_min/lon_max
+ temporal_extent (character varying) - Brief description of the temporal extent, which corresponds to start_time/end_time
+ vertical_extent (character varying) - A brief description of the vertical extent.
+ processing_level (character varying) - The processessing level, if applicable.
+ spatial_res (character varying) - The spatial resolution.
+ doi (character varying) - A digital object identifier.
+ release_dt (timestamp without time zone) - The date on which this dataset was released.
+ publication_year (integer) - The date on which this dataset was initially published.
+ attributes (character varying) - Free form comma separated attributes for this dataset.
+ variables (character varying) - Variables represented by this dataset.
+ start_time (timestamp without time zone) - The beginning of the temporal extent.
+ end_time (timestamp without time zone) - The end of the temporal extent.
+ lat_min (numeric) - The southernmost latitude in the bounding box for this dataset.
+ lat_max (numeric) - The nothernmost latitude in the bounding box for this dataset.
+ lon_min (numeric) - The westernmost longitude in the bounding box for this dataset.
+ lon_max (numeric) - The eastermost longitude in the bounding box for this dataset.
+ description_attribution (character varying) - A URL which contains a description of this dataset.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- name (character varying) - 
- type (character varying) - 
- version (character varying) - 
- description (character varying) - 
- native_id (character varying) - 
- access_dt (timestamp(3) without time zone) - 
- url (character varying) - 
- data_qualifier (character varying) - 
- scale (character varying) - 
- spatial_ref_sys (character varying) - 
- cite_metadata (character varying) - 
- scope (character varying) - 
- spatial_extent (character varying) - 
- temporal_extent (character varying) - 
- vertical_extent (character varying) - 
- processing_level (character varying) - 
- spatial_res (character varying) - 
- doi (character varying) - 
- release_dt (timestamp without time zone) - 
- publication_year (integer) - 
- attributes (character varying) - 
- variables (character varying) - 
- start_time (timestamp without time zone) - 
- end_time (timestamp without time zone) - 
- lat_min (numeric) - 
- lat_max (numeric) - 
- lon_min (numeric) - 
- lon_max (numeric) - 
- description_attribution (character varying) - A URL containing the source text of the description field.
-
-
-\=head1 SCHEMA
-
-                                                         Table "gcis_metadata.dataset"
-          Column          |              Type              | Modifiers | Storage  |                        Description                         
- -------------------------+--------------------------------+-----------+----------+------------------------------------------------------------
-  identifier              | character varying              | not null  | extended | 
-  name                    | character varying              |           | extended | 
-  type                    | character varying              |           | extended | 
-  version                 | character varying              |           | extended | 
-  description             | character varying              |           | extended | 
-  native_id               | character varying              |           | extended | 
-  access_dt               | timestamp(3) without time zone |           | plain    | 
-  url                     | character varying              |           | extended | 
-  data_qualifier          | character varying              |           | extended | 
-  scale                   | character varying              |           | extended | 
-  spatial_ref_sys         | character varying              |           | extended | 
-  cite_metadata           | character varying              |           | extended | 
-  scope                   | character varying              |           | extended | 
-  spatial_extent          | character varying              |           | extended | 
-  temporal_extent         | character varying              |           | extended | 
-  vertical_extent         | character varying              |           | extended | 
-  processing_level        | character varying              |           | extended | 
-  spatial_res             | character varying              |           | extended | 
-  doi                     | character varying              |           | extended | 
-  release_dt              | timestamp without time zone    |           | plain    | 
-  publication_year        | integer                        |           | plain    | 
-  attributes              | character varying              |           | extended | 
-  variables               | character varying              |           | extended | 
-  start_time              | timestamp without time zone    |           | plain    | 
-  end_time                | timestamp without time zone    |           | plain    | 
-  lat_min                 | numeric                        |           | main     | 
-  lat_max                 | numeric                        |           | main     | 
-  lon_min                 | numeric                        |           | main     | 
-  lon_max                 | numeric                        |           | main     | 
-  description_attribution | character varying              |           | extended | A URL containing the source text of the description field.
+                                                                                                             Table "gcis_metadata.dataset"
+          Column          |              Type              | Modifiers | Storage  |                                                                            Description                                                                            
+ -------------------------+--------------------------------+-----------+----------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  identifier              | character varying              | not null  | extended | A globally unique identifier for this dataset.  This may be a composite identifier derived from external identifier or publications associated with this dataset.
+  name                    | character varying              |           | extended | A brief descriptive name.
+  type                    | character varying              |           | extended | A free form type for this dataset.
+  version                 | character varying              |           | extended | The version.
+  description             | character varying              |           | extended | A narrative description of this dataset.  If the description is a direct quote available at a URL, put that URL into description_attribution.
+  native_id               | character varying              |           | extended | The identifier for this dataset given by the producer or archive for the dataset.
+  access_dt               | timestamp(3) without time zone |           | plain    | The data on which this dataset was accessed.
+  url                     | character varying              |           | extended | A URL for a landing page.
+  data_qualifier          | character varying              |           | extended | Assumptions or qualifying statements about this data.
+  scale                   | character varying              |           | extended | If the data has been scaled, describe that here.
+  spatial_ref_sys         | character varying              |           | extended | The spatial reference system.
+  cite_metadata           | character varying              |           | extended | The preferred way to cite this dataset.
+  scope                   | character varying              |           | extended | The scope of the data.
+  spatial_extent          | character varying              |           | extended | Brief description of the spatial extent, which corresponds to lat_min/lat_max, lon_min/lon_max
+  temporal_extent         | character varying              |           | extended | Brief description of the temporal extent, which corresponds to start_time/end_time
+  vertical_extent         | character varying              |           | extended | A brief description of the vertical extent.
+  processing_level        | character varying              |           | extended | The processessing level, if applicable.
+  spatial_res             | character varying              |           | extended | The spatial resolution.
+  doi                     | character varying              |           | extended | A digital object identifier.
+  release_dt              | timestamp without time zone    |           | plain    | The date on which this dataset was released.
+  publication_year        | integer                        |           | plain    | The date on which this dataset was initially published.
+  attributes              | character varying              |           | extended | Free form comma separated attributes for this dataset.
+  variables               | character varying              |           | extended | Variables represented by this dataset.
+  start_time              | timestamp without time zone    |           | plain    | The beginning of the temporal extent.
+  end_time                | timestamp without time zone    |           | plain    | The end of the temporal extent.
+  lat_min                 | numeric                        |           | main     | The southernmost latitude in the bounding box for this dataset.
+  lat_max                 | numeric                        |           | main     | The nothernmost latitude in the bounding box for this dataset.
+  lon_min                 | numeric                        |           | main     | The westernmost longitude in the bounding box for this dataset.
+  lon_max                 | numeric                        |           | main     | The eastermost longitude in the bounding box for this dataset.
+  description_attribution | character varying              |           | extended | A URL which contains a description of this dataset.
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -92,6 +92,6 @@ dataset
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

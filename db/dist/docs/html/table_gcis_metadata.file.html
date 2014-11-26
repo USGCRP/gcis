@@ -118,6 +118,8 @@
             <a name="gcis-metadata.table.file">file</a>
         </h2>
         
+         <p>Files are distinct downloadable entities which may be associated with publications.</p>
+        
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
@@ -149,7 +151,7 @@
                 NOT NULL
                 
                 </i>
-                
+                <br><br>The URI for this file (relative to /assets/ or to the location)
                 </td>
              </tr>
             
@@ -172,7 +174,7 @@
                 
                 DEFAULT nextval(&#39;file_id_seq&#39;::regclass)
                 </i>
-                
+                <br><br>A globally unique identifier for this file (a UUID).
                 </td>
              </tr>
             
@@ -188,7 +190,7 @@
                 
                 
                 </i>
-                
+                <br><br>The location of a thumbnail version of this file (relative to /assets/)
                 </td>
              </tr>
             
@@ -204,7 +206,7 @@
                 NOT NULL
                 
                 </i>
-                
+                <br><br>The MIME Type (RFC 2046).
                 </td>
              </tr>
             
@@ -220,7 +222,7 @@
                 
                 
                 </i>
-                
+                <br><br>A SHA1 hash of the contents of this file.
                 </td>
              </tr>
             
@@ -236,7 +238,7 @@
                 
                 
                 </i>
-                
+                <br><br>The number of bytes in the file.
                 </td>
              </tr>
             
@@ -252,7 +254,7 @@
                 
                 
                 </i>
-                
+                <br><br>The host for this file, if it is outside of GCIS.
                 </td>
              </tr>
             
@@ -268,7 +270,7 @@
                 
                 
                 </i>
-                <br><br>An optional URL associated with this file
+                <br><br>A URL for the landing page for this file.
                 </td>
              </tr>
             

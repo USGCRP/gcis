@@ -1,45 +1,45 @@
 
-\=head1 NAME
+=head1 NAME
 
 model_run
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A model run associates a model with a scenario and a project.
+
+=head1 FIELDS
+
+ identifier (character varying) - A unique identifier for this model run.
+ doi (character varying) - A digital object identifier.
+ model_identifier (character varying) - The model.
+ scenario_identifier (character varying) - The scenario.
+ spatial_resolution (character varying) - The spatialr resolution of this run.
+ range_start (date) - The start of time range convered by this model
+ range_end (date) - The end of time range convered by this model
+ sequence (integer) - An index distinguishing this run from other runs with similar parameters.
+ sequence_description (character varying) - A description of how this run differens from others with similar parameters.
+ activity_identifier (character varying) - An activity associated with this model run.
+ project_identifier (character varying) - A project associated with this model.
+ time_resolution (interval) - The temporal resolution of this run.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- doi (character varying) - 
- model_identifier (character varying) - 
- scenario_identifier (character varying) - 
- spatial_resolution (character varying) - 
- range_start (date) - 
- range_end (date) - 
- sequence (integer) - 
- sequence_description (character varying) - 
- activity_identifier (character varying) - 
- project_identifier (character varying) - 
- time_resolution (interval) - 
-
-
-\=head1 SCHEMA
-
-                             Table "gcis_metadata.model_run"
-         Column        |       Type        |     Modifiers      | Storage  | Description 
- ----------------------+-------------------+--------------------+----------+-------------
-  identifier           | character varying | not null           | extended | 
-  doi                  | character varying |                    | extended | 
-  model_identifier     | character varying | not null           | extended | 
-  scenario_identifier  | character varying | not null           | extended | 
-  spatial_resolution   | character varying | not null           | extended | 
-  range_start          | date              | not null           | plain    | 
-  range_end            | date              | not null           | plain    | 
-  sequence             | integer           | not null default 1 | plain    | 
-  sequence_description | character varying |                    | extended | 
-  activity_identifier  | character varying |                    | extended | 
-  project_identifier   | character varying |                    | extended | 
-  time_resolution      | interval          |                    | plain    | 
+                                                              Table "gcis_metadata.model_run"
+         Column        |       Type        |     Modifiers      | Storage  |                                 Description                                  
+ ----------------------+-------------------+--------------------+----------+------------------------------------------------------------------------------
+  identifier           | character varying | not null           | extended | A unique identifier for this model run.
+  doi                  | character varying |                    | extended | A digital object identifier.
+  model_identifier     | character varying | not null           | extended | The model.
+  scenario_identifier  | character varying | not null           | extended | The scenario.
+  spatial_resolution   | character varying | not null           | extended | The spatialr resolution of this run.
+  range_start          | date              | not null           | plain    | The start of time range convered by this model
+  range_end            | date              | not null           | plain    | The end of time range convered by this model
+  sequence             | integer           | not null default 1 | plain    | An index distinguishing this run from other runs with similar parameters.
+  sequence_description | character varying |                    | extended | A description of how this run differens from others with similar parameters.
+  activity_identifier  | character varying |                    | extended | An activity associated with this model run.
+  project_identifier   | character varying |                    | extended | A project associated with this model.
+  time_resolution      | interval          |                    | plain    | The temporal resolution of this run.
  Indexes:
      "model_run_pkey" PRIMARY KEY, btree (identifier)
      "model_run_doi_key" UNIQUE CONSTRAINT, btree (doi)
@@ -51,9 +51,12 @@ model_run
      "model_run_model_identifier_fkey" FOREIGN KEY (model_identifier) REFERENCES model(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "model_run_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "model_run_scenario_identifier_fkey" FOREIGN KEY (scenario_identifier) REFERENCES scenario(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON model_run FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON model_run FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

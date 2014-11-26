@@ -1,25 +1,25 @@
 
-\=head1 NAME
+=head1 NAME
 
 organization_relationship
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+These are the possible ways in which two organizations may be related.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier.
+ label (character varying) - A human readable label.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- label (character varying) - 
-
-
-\=head1 SCHEMA
-
-            Table "gcis_metadata.organization_relationship"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
-  label      | character varying | not null  | extended | 
+                   Table "gcis_metadata.organization_relationship"
+    Column   |       Type        | Modifiers | Storage  |        Description        
+ ------------+-------------------+-----------+----------+---------------------------
+  identifier | character varying | not null  | extended | A descriptive identifier.
+  label      | character varying | not null  | extended | A human readable label.
  Indexes:
      "organization_relationship_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
@@ -30,6 +30,6 @@ organization_relationship
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

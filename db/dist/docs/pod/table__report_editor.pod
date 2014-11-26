@@ -1,25 +1,25 @@
 
-\=head1 NAME
+=head1 NAME
 
 _report_editor
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+Users who have permissions to make changes to a given report.
+
+=head1 FIELDS
+
+ report (character varying) - The identifier of the report.
+ username (character varying) - The name of the user.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- report (character varying) - 
- username (character varying) - 
-
-
-\=head1 SCHEMA
-
-                Table "gcis_metadata._report_editor"
-   Column  |       Type        | Modifiers | Storage  | Description 
- ----------+-------------------+-----------+----------+-------------
-  report   | character varying | not null  | extended | 
-  username | character varying | not null  | extended | 
+                         Table "gcis_metadata._report_editor"
+   Column  |       Type        | Modifiers | Storage  |          Description          
+ ----------+-------------------+-----------+----------+-------------------------------
+  report   | character varying | not null  | extended | The identifier of the report.
+  username | character varying | not null  | extended | The name of the user.
  Indexes:
      "_report_editor_pkey" PRIMARY KEY, btree (report, username)
  Foreign-key constraints:
@@ -27,6 +27,6 @@ _report_editor
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

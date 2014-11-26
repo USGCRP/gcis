@@ -1,38 +1,41 @@
 
-\=head1 NAME
+=head1 NAME
 
 scenario
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A scenario may be associated with a model via a model run.
+
+=head1 FIELDS
+
+ identifier (character varying) - A desciptive identifier.
+ name (character varying) - A brief name.
+ description (character varying) - A description.
+ description_attribution (character varying) - A URL containing the description.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- name (character varying) - 
- description (character varying) - 
- description_attribution (character varying) - 
-
-
-\=head1 SCHEMA
-
-                           Table "gcis_metadata.scenario"
-          Column          |       Type        | Modifiers | Storage  | Description 
- -------------------------+-------------------+-----------+----------+-------------
-  identifier              | character varying | not null  | extended | 
-  name                    | character varying |           | extended | 
-  description             | character varying |           | extended | 
-  description_attribution | character varying |           | extended | 
+                                      Table "gcis_metadata.scenario"
+          Column          |       Type        | Modifiers | Storage  |            Description            
+ -------------------------+-------------------+-----------+----------+-----------------------------------
+  identifier              | character varying | not null  | extended | A desciptive identifier.
+  name                    | character varying |           | extended | A brief name.
+  description             | character varying |           | extended | A description.
+  description_attribution | character varying |           | extended | A URL containing the description.
  Indexes:
      "scenario_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
      "scenario_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:
      TABLE "model_run" CONSTRAINT "model_run_scenario_identifier_fkey" FOREIGN KEY (scenario_identifier) REFERENCES scenario(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON scenario FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON scenario FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

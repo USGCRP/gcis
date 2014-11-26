@@ -1,29 +1,29 @@
 
-\=head1 NAME
+=head1 NAME
 
 instrument
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
-An instrument is a class of devices that may perform measurements, and may have sensors
+An instrument is used for measurement.
 
-\=head1 FIELDS
+=head1 FIELDS
 
- identifier (character varying) - 
- name (character varying) - 
- description (character varying) - 
- description_attribution (character varying) - A URL containing the source text of the description field.
+ identifier (character varying) - A descriptive identifier for this instrument.
+ name (character varying) - A brief name for this instrument.
+ description (character varying) - A description of this instrument.
+ description_attribution (character varying) - A URL which contains the description of this instrument.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
-                                                 Table "gcis_metadata.instrument"
-          Column          |       Type        | Modifiers | Storage  |                        Description                         
- -------------------------+-------------------+-----------+----------+------------------------------------------------------------
-  identifier              | character varying | not null  | extended | 
-  name                    | character varying | not null  | extended | 
-  description             | character varying |           | extended | 
-  description_attribution | character varying |           | extended | A URL containing the source text of the description field.
+                                                Table "gcis_metadata.instrument"
+          Column          |       Type        | Modifiers | Storage  |                       Description                        
+ -------------------------+-------------------+-----------+----------+----------------------------------------------------------
+  identifier              | character varying | not null  | extended | A descriptive identifier for this instrument.
+  name                    | character varying | not null  | extended | A brief name for this instrument.
+  description             | character varying |           | extended | A description of this instrument.
+  description_attribution | character varying |           | extended | A URL which contains the description of this instrument.
  Indexes:
      "instrument_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -40,6 +40,6 @@ An instrument is a class of devices that may perform measurements, and may have 
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,27 +1,27 @@
 
-\=head1 NAME
+=head1 NAME
 
 instrument_instance
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
-An instrument instance is an instrument on a platform.
+An instrument instance is the association of an instrument with a platform.
 
-\=head1 FIELDS
+=head1 FIELDS
 
- platform_identifier (character varying) - 
- instrument_identifier (character varying) - 
- location (character varying) - 
+ platform_identifier (character varying) - The platform.
+ instrument_identifier (character varying) - The instrument.
+ location (character varying) - The location of the instrument on the platform.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
-                    Table "gcis_metadata.instrument_instance"
-         Column         |       Type        | Modifiers | Storage  | Description 
- -----------------------+-------------------+-----------+----------+-------------
-  platform_identifier   | character varying | not null  | extended | 
-  instrument_identifier | character varying | not null  | extended | 
-  location              | character varying |           | extended | 
+                                      Table "gcis_metadata.instrument_instance"
+         Column         |       Type        | Modifiers | Storage  |                   Description                   
+ -----------------------+-------------------+-----------+----------+-------------------------------------------------
+  platform_identifier   | character varying | not null  | extended | The platform.
+  instrument_identifier | character varying | not null  | extended | The instrument.
+  location              | character varying |           | extended | The location of the instrument on the platform.
  Indexes:
      "instrument_instance_pkey" PRIMARY KEY, btree (platform_identifier, instrument_identifier)
  Foreign-key constraints:
@@ -35,6 +35,6 @@ An instrument instance is an instrument on a platform.
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

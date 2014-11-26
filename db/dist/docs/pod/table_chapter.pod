@@ -1,35 +1,35 @@
 
-\=head1 NAME
+=head1 NAME
 
 chapter
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A chapter is part of a report.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier for this chapter
+ title (character varying) - The title.
+ report_identifier (character varying) - The report containing this chapter.
+ number (integer) - The numeric chapter number.
+ url (character varying) - The URL for a landing page for this chapter.
+ sort_key (integer) - A key used to order this chapter within a report.
+ doi (character varying) - A digital object identifier for this chapter.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - A unique identifier for the chapter.
- title (character varying) - 
- report_identifier (character varying) - 
- number (integer) - 
- url (character varying) - 
- sort_key (integer) - 
- doi (character varying) - 
-
-
-\=head1 SCHEMA
-
-                                     Table "gcis_metadata.chapter"
-       Column       |       Type        | Modifiers | Storage  |             Description              
- -------------------+-------------------+-----------+----------+--------------------------------------
-  identifier        | character varying | not null  | extended | A unique identifier for the chapter.
-  title             | character varying |           | extended | 
-  report_identifier | character varying | not null  | extended | 
-  number            | integer           |           | plain    | 
-  url               | character varying |           | extended | 
-  sort_key          | integer           |           | plain    | 
-  doi               | character varying |           | extended | 
+                                           Table "gcis_metadata.chapter"
+       Column       |       Type        | Modifiers | Storage  |                    Description                    
+ -------------------+-------------------+-----------+----------+---------------------------------------------------
+  identifier        | character varying | not null  | extended | A descriptive identifier for this chapter
+  title             | character varying |           | extended | The title.
+  report_identifier | character varying | not null  | extended | The report containing this chapter.
+  number            | integer           |           | plain    | The numeric chapter number.
+  url               | character varying |           | extended | The URL for a landing page for this chapter.
+  sort_key          | integer           |           | plain    | A key used to order this chapter within a report.
+  doi               | character varying |           | extended | A digital object identifier for this chapter.
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "uk_number_report" UNIQUE CONSTRAINT, btree (number, report_identifier)
@@ -49,6 +49,6 @@ chapter
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

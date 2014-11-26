@@ -1,55 +1,55 @@
 
-\=head1 NAME
+=head1 NAME
 
 figure
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A figure appears in a report and may consist of one or more images.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier for this figure.
+ chapter_identifier (character varying) - The chapter in which this figure appears.
+ title (character varying) - The short title, if any.
+ caption (character varying) - The figure caption.
+ attributes (character varying) - A free form list of attributes for this figure.
+ time_start (timestamp(3) without time zone) - The start of the spatial extent represtented by this figure.
+ time_end (timestamp(3) without time zone) - The end of the spatial extent represtented by this figure.
+ lat_max (character varying) - The nothernmost latitude in the bounding box for this figure.
+ lat_min (character varying) - The southernmost latitude in the bounding box for this figure.
+ lon_max (character varying) - The eastermost longitude in the bounding box for this figure.
+ lon_min (character varying) - The westernmost longitude in the bounding box for this figure.
+ usage_limits (character varying) - Copyright restrictions describing how this figure may be used.
+ submission_dt (timestamp(3) without time zone) - The date on which this image was submitted.
+ create_dt (timestamp(3) without time zone) - The date on which this image was created.
+ source_citation (character varying) - Text describing the source of this figure.
+ ordinal (integer) - The numeric position of this figure within a chapter.
+ report_identifier (character varying) - The report associated with this figure
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - A unique identifier for the figure.
- chapter_identifier (character varying) - 
- title (character varying) - 
- caption (character varying) - 
- attributes (character varying) - 
- time_start (timestamp(3) without time zone) - 
- time_end (timestamp(3) without time zone) - 
- lat_max (character varying) - 
- lat_min (character varying) - 
- lon_max (character varying) - 
- lon_min (character varying) - 
- usage_limits (character varying) - 
- submission_dt (timestamp(3) without time zone) - 
- create_dt (timestamp(3) without time zone) - 
- source_citation (character varying) - 
- ordinal (integer) - The numeric identifier for this figure which is not part of the chapter
- report_identifier (character varying) - 
-
-
-\=head1 SCHEMA
-
-                                                              Table "gcis_metadata.figure"
-        Column       |              Type              | Modifiers | Storage  |                               Description                               
- --------------------+--------------------------------+-----------+----------+-------------------------------------------------------------------------
-  identifier         | character varying              | not null  | extended | A unique identifier for the figure.
-  chapter_identifier | character varying              |           | extended | 
-  title              | character varying              |           | extended | 
-  caption            | character varying              |           | extended | 
-  attributes         | character varying              |           | extended | 
-  time_start         | timestamp(3) without time zone |           | plain    | 
-  time_end           | timestamp(3) without time zone |           | plain    | 
-  lat_max            | character varying              |           | extended | 
-  lat_min            | character varying              |           | extended | 
-  lon_max            | character varying              |           | extended | 
-  lon_min            | character varying              |           | extended | 
-  usage_limits       | character varying              |           | extended | 
-  submission_dt      | timestamp(3) without time zone |           | plain    | 
-  create_dt          | timestamp(3) without time zone |           | plain    | 
-  source_citation    | character varying              |           | extended | 
-  ordinal            | integer                        |           | plain    | The numeric identifier for this figure which is not part of the chapter
-  report_identifier  | character varying              | not null  | extended | 
+                                                         Table "gcis_metadata.figure"
+        Column       |              Type              | Modifiers | Storage  |                          Description                           
+ --------------------+--------------------------------+-----------+----------+----------------------------------------------------------------
+  identifier         | character varying              | not null  | extended | A descriptive identifier for this figure.
+  chapter_identifier | character varying              |           | extended | The chapter in which this figure appears.
+  title              | character varying              |           | extended | The short title, if any.
+  caption            | character varying              |           | extended | The figure caption.
+  attributes         | character varying              |           | extended | A free form list of attributes for this figure.
+  time_start         | timestamp(3) without time zone |           | plain    | The start of the spatial extent represtented by this figure.
+  time_end           | timestamp(3) without time zone |           | plain    | The end of the spatial extent represtented by this figure.
+  lat_max            | character varying              |           | extended | The nothernmost latitude in the bounding box for this figure.
+  lat_min            | character varying              |           | extended | The southernmost latitude in the bounding box for this figure.
+  lon_max            | character varying              |           | extended | The eastermost longitude in the bounding box for this figure.
+  lon_min            | character varying              |           | extended | The westernmost longitude in the bounding box for this figure.
+  usage_limits       | character varying              |           | extended | Copyright restrictions describing how this figure may be used.
+  submission_dt      | timestamp(3) without time zone |           | plain    | The date on which this image was submitted.
+  create_dt          | timestamp(3) without time zone |           | plain    | The date on which this image was created.
+  source_citation    | character varying              |           | extended | Text describing the source of this figure.
+  ordinal            | integer                        |           | plain    | The numeric position of this figure within a chapter.
+  report_identifier  | character varying              | not null  | extended | The report associated with this figure
  Indexes:
      "figure_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "figure_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
@@ -68,6 +68,6 @@ figure
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

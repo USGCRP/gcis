@@ -1,39 +1,42 @@
 
-\=head1 NAME
+=head1 NAME
 
 project
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A project may be associated with a collection of models.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier.
+ name (character varying) - A short name.
+ description (character varying) - A description.
+ description_attribution (character varying) - A URL containing the description.
+ website (character varying) - A website officially assocaited with this project.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- name (character varying) - 
- description (character varying) - 
- description_attribution (character varying) - 
- website (character varying) - 
-
-
-\=head1 SCHEMA
-
-                           Table "gcis_metadata.project"
-          Column          |       Type        | Modifiers | Storage  | Description 
- -------------------------+-------------------+-----------+----------+-------------
-  identifier              | character varying | not null  | extended | 
-  name                    | character varying |           | extended | 
-  description             | character varying |           | extended | 
-  description_attribution | character varying |           | extended | 
-  website                 | character varying |           | extended | 
+                                               Table "gcis_metadata.project"
+          Column          |       Type        | Modifiers | Storage  |                    Description                     
+ -------------------------+-------------------+-----------+----------+----------------------------------------------------
+  identifier              | character varying | not null  | extended | A descriptive identifier.
+  name                    | character varying |           | extended | A short name.
+  description             | character varying |           | extended | A description.
+  description_attribution | character varying |           | extended | A URL containing the description.
+  website                 | character varying |           | extended | A website officially assocaited with this project.
  Indexes:
      "project_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
      TABLE "model" CONSTRAINT "model_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier)
      TABLE "model_run" CONSTRAINT "model_run_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON project FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON project FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

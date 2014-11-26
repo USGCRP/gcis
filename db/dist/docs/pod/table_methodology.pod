@@ -1,25 +1,25 @@
 
-\=head1 NAME
+=head1 NAME
 
 methodology
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A methodology is a publication associated with an activity
+
+=head1 FIELDS
+
+ activity_identifier (character varying) - The activity.
+ publication_id (integer) - The publication.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- activity_identifier (character varying) - 
- publication_id (integer) - 
-
-
-\=head1 SCHEMA
-
-                       Table "gcis_metadata.methodology"
-        Column        |       Type        | Modifiers | Storage  | Description 
- ---------------------+-------------------+-----------+----------+-------------
-  activity_identifier | character varying | not null  | extended | 
-  publication_id      | integer           | not null  | plain    | 
+                          Table "gcis_metadata.methodology"
+        Column        |       Type        | Modifiers | Storage  |   Description    
+ ---------------------+-------------------+-----------+----------+------------------
+  activity_identifier | character varying | not null  | extended | The activity.
+  publication_id      | integer           | not null  | plain    | The publication.
  Indexes:
      "methodology_pkey" PRIMARY KEY, btree (activity_identifier, publication_id)
  Foreign-key constraints:
@@ -31,6 +31,6 @@ methodology
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

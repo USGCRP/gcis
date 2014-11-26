@@ -1,27 +1,27 @@
 
-\=head1 NAME
+=head1 NAME
 
 publication
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A publication, similar to an entity, is a generic term for something that has been released to the public.
+
+=head1 FIELDS
+
+ id (serial) - An opaque numeric identifier
+ publication_type_identifier (character varying) - The type
+ fk (hstore) - Column column names and values of the primary key of this entitiy in its native table.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- id (serial) - 
- publication_type_identifier (character varying) - 
- fk (hstore) - 
-
-
-\=head1 SCHEMA
-
-                                                   Table "gcis_metadata.publication"
-            Column            |       Type        |                        Modifiers                         | Storage  | Description 
- -----------------------------+-------------------+----------------------------------------------------------+----------+-------------
-  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    | 
-  publication_type_identifier | character varying | not null                                                 | extended | 
-  fk                          | hstore            | not null                                                 | extended | 
+                                                                                        Table "gcis_metadata.publication"
+            Column            |       Type        |                        Modifiers                         | Storage  |                                      Description                                       
+ -----------------------------+-------------------+----------------------------------------------------------+----------+----------------------------------------------------------------------------------------
+  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    | An opaque numeric identifier
+  publication_type_identifier | character varying | not null                                                 | extended | The type
+  fk                          | hstore            | not null                                                 | extended | Column column names and values of the primary key of this entitiy in its native table.
  Indexes:
      "publication_pkey" PRIMARY KEY, btree (id)
      "publication_type_fk" UNIQUE CONSTRAINT, btree (publication_type_identifier, fk)
@@ -44,6 +44,6 @@ publication
  Has OIDs: no
  
 
-\=cut
+=cut
 
 
