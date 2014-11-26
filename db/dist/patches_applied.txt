@@ -140,3 +140,4 @@
 1310_more_exterm_triggers.sql	fa0ca98c83cbd44fbc3e43663ef5d884
 2000_model_scenario.sql	33ffc0ec9ced45ae7efbb681e83040f5
 2010_model_audit.sql	2338e82cb86842272c44e77bf7781522
+2020_comments.sql	b76d4b42aaca01d0314108614bd6311b

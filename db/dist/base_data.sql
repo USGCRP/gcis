@@ -172,21 +172,6 @@ COPY dataset (identifier, name, type, version, description, native_id, access_dt
 
 
 --
--- Data for Name: dataset_lineage; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY dataset_lineage (id, dataset_id, parent_id) FROM stdin;
-\.
-
-
---
--- Name: dataset_lineage_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
-
-
---
 -- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -455,29 +440,6 @@ COPY region (identifier, label, description) FROM stdin;
 
 COPY publication_region_map (publication_id, region_identifier) FROM stdin;
 \.
-
-
---
--- Data for Name: ref_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY ref_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: submitter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY submitter (id, person_id, "table", fk, contributor_id) FROM stdin;
-\.
-
-
---
--- Name: submitter_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('submitter_id_seq', 1, false);
 
 
 --
