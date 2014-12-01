@@ -1,15 +1,15 @@
 % layout 'default', namespaces => [qw/dcterms gcis prov/];
 %#
 <<%= current_resource %>>
-% for my $platform ($instrument_instance->platform_identifier) {
+% for my $platform ($instrument_instance->platform) {
    gcis:Platform <<%= uri($platform) %>>;
 % }
 %#
-% for my $instrument ($instrument_instance->instrument_identifier) {
+% for my $instrument ($instrument_instance->instrument) {
    gcis:Instrument <<%= uri($instrument) %>>;
 % }
 %#
-% for my $dataset ($instrument_instance->datasets) {
+% for my $dataset ($instrument_instance->instrument_measurements) {
    gcis:Dataset <<%= uri($dataset) %>>;
 % }
 
