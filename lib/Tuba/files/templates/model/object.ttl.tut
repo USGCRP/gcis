@@ -1,9 +1,12 @@
-% layout 'default', namespaces => [qw/dcterms gcis xsd prov skos/];
+% layout 'default', namespaces => [qw/dcterms gcis bibo xsd prov skos/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $model->identifier %>";
+   dcterms:title "<%= $model->name %>";
    dcterms:description "<%= $model->description %>";
+   gcis:hasVersion "<%= $model->version %>";
+   bibo:doi "<%= $model->doi %>";
    gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
    gcis:Project <<%= uri($model->project) %>>;
    a gcis:Model .
