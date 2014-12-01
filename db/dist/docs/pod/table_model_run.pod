@@ -17,7 +17,7 @@ A model run associates a model with a scenario and a project.
  range_start (date) - The start of time range convered by this model
  range_end (date) - The end of time range convered by this model
  sequence (integer) - An index distinguishing this run from other runs with similar parameters.
- sequence_description (character varying) - A description of how this run differens from others with similar parameters.
+ sequence_description (character varying) - A description of how this run differs from others with similar parameters.
  activity_identifier (character varying) - An activity associated with this model run.
  project_identifier (character varying) - A project associated with this model.
  time_resolution (interval) - The temporal resolution of this run.
