@@ -19,10 +19,16 @@
      %= include 'h/other_identifiers', gcid => $project->uri($self);
      <table class='table table-condensed table-bordered'>
          <caption>Models</caption>
+     <tr><th>identifier</th><th>Name</th><th>Runs</th></tr>
      % for my $model ($project->models) {
      <tr>
          <td><%= obj_link($model); %></td>
          <td><%= $model->name %></td>
+         <td>
+         %= link_to 'list_model_runs_for_model', { model_identifier => $model->identifier } => begin
+         <%= scalar(@{ $model->model_runs }) %>
+         %= end
+         </td>
      </tr>
      % }
      </table>
