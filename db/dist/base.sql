@@ -1241,7 +1241,7 @@ COMMENT ON COLUMN model_run.sequence IS 'An index distinguishing this run from o
 
 
 
-COMMENT ON COLUMN model_run.sequence_description IS 'A description of how this run differens from others with similar parameters.';
+COMMENT ON COLUMN model_run.sequence_description IS 'A description of how this run differs from others with similar parameters.';
 
 
 
