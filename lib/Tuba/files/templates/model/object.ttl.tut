@@ -3,12 +3,11 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $model->identifier %>";
-   dcterms:title "<%= $model->name %>";
-   dcterms:description "<%= $model->description %>";
-   gcis:hasVersion "<%= $model->version %>";
-   bibo:doi "<%= $model->doi %>";
-   gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
    gcis:Project <<%= uri($model->project) %>>;
+   dcterms:title "<%= $model->name %>";
+   gcis:hasVersion "<%= $model->version %>";
+   dcterms:description "<%= $model->description %>";
+   gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
    a gcis:Model .
 % end
 
