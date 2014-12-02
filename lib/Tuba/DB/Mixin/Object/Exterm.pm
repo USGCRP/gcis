@@ -20,6 +20,10 @@ sub native_url {
             platform => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
             instrument => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
         },
+        esg => {
+            model => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_scenario=any&d_frequency=any&d_offset=0&d_model=".$_[0] },
+            scenario => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_model=any&d_frequency=any&d_offset=0&d_scenario=".$_[0] },
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
