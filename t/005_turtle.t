@@ -265,4 +265,3 @@ $t->delete_ok("/journal/gators")->status_is(200);
 done_testing();
 
 1;
-
