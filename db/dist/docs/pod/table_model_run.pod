@@ -17,7 +17,7 @@ A model run associates a model with a scenario and a project.
  range_start (date) - The start of time range convered by this model
  range_end (date) - The end of time range convered by this model
  sequence (integer) - An index distinguishing this run from other runs with similar parameters.
- sequence_description (character varying) - A description of how this run differens from others with similar parameters.
+ sequence_description (character varying) - A description of how this run differs from others with similar parameters.
  activity_identifier (character varying) - An activity associated with this model run.
  project_identifier (character varying) - A project associated with this model.
  time_resolution (interval) - The temporal resolution of this run.
@@ -25,9 +25,9 @@ A model run associates a model with a scenario and a project.
 
 =head1 SCHEMA
 
-                                                              Table "gcis_metadata.model_run"
-         Column        |       Type        |     Modifiers      | Storage  |                                 Description                                  
- ----------------------+-------------------+--------------------+----------+------------------------------------------------------------------------------
+                                                             Table "gcis_metadata.model_run"
+         Column        |       Type        |     Modifiers      | Storage  |                                Description                                 
+ ----------------------+-------------------+--------------------+----------+----------------------------------------------------------------------------
   identifier           | character varying | not null           | extended | A unique identifier for this model run.
   doi                  | character varying |                    | extended | A digital object identifier.
   model_identifier     | character varying | not null           | extended | The model.
@@ -36,7 +36,7 @@ A model run associates a model with a scenario and a project.
   range_start          | date              | not null           | plain    | The start of time range convered by this model
   range_end            | date              | not null           | plain    | The end of time range convered by this model
   sequence             | integer           | not null default 1 | plain    | An index distinguishing this run from other runs with similar parameters.
-  sequence_description | character varying |                    | extended | A description of how this run differens from others with similar parameters.
+  sequence_description | character varying |                    | extended | A description of how this run differs from others with similar parameters.
   activity_identifier  | character varying |                    | extended | An activity associated with this model run.
   project_identifier   | character varying |                    | extended | A project associated with this model.
   time_resolution      | interval          |                    | plain    | The temporal resolution of this run.
