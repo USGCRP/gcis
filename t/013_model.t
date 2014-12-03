@@ -87,7 +87,7 @@ $t->get_ok("/model_run/012345.json")->status_is(200)
     });
 $t->get_ok("/model_run")->status_is(200)->content_like(qr[012345]);
 $t->get_ok("/model/ccsm3/run")->status_is(200)->content_like(qr[012345]);
-$t->get_ok("/model_run/ccsm3/sres_a2/2000-01-01/2020-01-01/1 mile/1.json")
+$t->get_ok("/model_run/ccsm3/sres_a2/2000-01-01/2020-01-01/1 mile/10 minutes/1.json")
   ->status_is(200)->content_like(qr/012345/);
 
 $t->delete_ok("/model_run/012345")->status_is(200);
