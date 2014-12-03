@@ -43,7 +43,7 @@
     % }
 
     % if (my @runs = $activity->model_runs) {
-    <p>This activity consisted of the following model runs :
+    <p>Model runs associated with this activity :
     <dl class='dl-horizontal'>
         % for my $run (@runs) {
         <dt><%= obj_link($run->model) %></dt>

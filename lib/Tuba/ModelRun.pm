@@ -63,6 +63,7 @@ sub lookup {
       model_identifier    => $c->stash('model_identifier'),
       scenario_identifier => $c->stash('scenario_identifier'),
       spatial_resolution  => $c->stash('spatial_resolution'),
+      time_resolution     => $c->stash('time_resolution'),
       range_start         => $c->stash('range_start'),
       range_end           => $c->stash('range_end'),
       sequence            => $c->stash('sequence'),

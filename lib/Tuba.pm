@@ -391,7 +391,7 @@ sub startup {
     $r->resource('scenario');
     $r->get("/model/:model_identifier/run")->to("model_run#list")->name("list_model_runs_for_model");
     $r->get("/scenario/:scenario_identifier/run")->to("model_run#list")->name("list_model_runs_for_scenario");
-    $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:sequence")
+    $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:time_resolution/:sequence")
         ->to("model_run#lookup");
 
     # Lexicons

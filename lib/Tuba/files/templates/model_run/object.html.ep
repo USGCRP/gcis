@@ -8,14 +8,16 @@
 
 <div class='row-fluid'>
     <div class='span10 offset1 well'>
+<h5>
 <pre>
  Model              : <%= obj_link_to $model_run->model => 'show' => begin %><%= $model_run->model->name || $model_run->model->identifier %><%= end %>
  Scenario           : <%= obj_link_to $model_run->scenario => 'show' => begin %><%= $model_run->scenario->name || $model_run->scenario->identifier %><%= end %>
  Time Range         : <%= $model_run->range_start->ymd %> to <%= $model_run->range_end->ymd %>
- Time resolution    : <%= $model_run->time_resolution %>
+ Time resolution    : <%= human_duration($model_run->time_resolution) %>
  Spatial resolution : <%= $model_run->spatial_resolution %>
  Sequence           : <%= $model_run->sequence  %>
 </pre>
+</h5>
         % if ($model_run->project) {
         <p>This model run is associated with project : <%= obj_link($model_run->project) %></p>
         % }

@@ -23,6 +23,7 @@ sub native_url {
         esg => {
             model => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_scenario=any&d_frequency=any&d_offset=0&d_model=".$_[0] },
             scenario => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_model=any&d_frequency=any&d_offset=0&d_scenario=".$_[0] },
+            model_run => sub { "https://esg.llnl.gov:8443/metadata/showObject.do?id=$_[0]" },
         },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
