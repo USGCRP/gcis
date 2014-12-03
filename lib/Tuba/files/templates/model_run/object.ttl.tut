@@ -8,7 +8,7 @@
    gcis:Scenario <<%= uri($model_run->scenario) %>>;
    gcis:Project <<%= uri($model_run->project) %>>;
    gcis:hasSpatialResolution "<%= $model_run->spatial_resolution %>";
-   gcis:hasTemporalResolution "<%= $model_run->time_resolution %>";
+   gcis:hasTemporalResolution "<%= human_duration($model_run->time_resolution) %>";
 % if (my $activity = $model_run->activity) {
    gcis:Activity <<%= uri($model_run->activity) %>>;
 % }
