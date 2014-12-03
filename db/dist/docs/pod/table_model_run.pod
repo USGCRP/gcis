@@ -43,7 +43,7 @@ A model run associates a model with a scenario and a project.
  Indexes:
      "model_run_pkey" PRIMARY KEY, btree (identifier)
      "model_run_doi_key" UNIQUE CONSTRAINT, btree (doi)
-     "model_run_model_identifier_scenario_identifier_spatial_reso_key" UNIQUE CONSTRAINT, btree (model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence)
+     "model_run_unique" UNIQUE CONSTRAINT, btree (model_identifier, scenario_identifier, range_start, range_end, sequence, time_resolution)
  Check constraints:
      "model_run_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Foreign-key constraints:

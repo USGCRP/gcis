@@ -2141,12 +2141,12 @@ ALTER TABLE ONLY model_run
 
 
 ALTER TABLE ONLY model_run
-    ADD CONSTRAINT model_run_model_identifier_scenario_identifier_spatial_reso_key UNIQUE (model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence);
+    ADD CONSTRAINT model_run_pkey PRIMARY KEY (identifier);
 
 
 
 ALTER TABLE ONLY model_run
-    ADD CONSTRAINT model_run_pkey PRIMARY KEY (identifier);
+    ADD CONSTRAINT model_run_unique UNIQUE (model_identifier, scenario_identifier, range_start, range_end, sequence, time_resolution);
 
 
 
