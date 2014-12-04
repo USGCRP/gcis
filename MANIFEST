@@ -314,6 +314,8 @@ db/patches/1310_more_exterm_triggers.sql
 db/patches/2000_model_scenario.sql
 db/patches/2010_model_audit.sql
 db/patches/2020_comments.sql
+db/patches/2030_model_runs.sql
+db/patches/2030_typo.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -548,8 +550,10 @@ lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
 lib/Tuba/files/templates/model/obj_header.html.ep
 lib/Tuba/files/templates/model/object.html.ep
+lib/Tuba/files/templates/model/object.ttl.tut
 lib/Tuba/files/templates/model/objects.html.ep
 lib/Tuba/files/templates/model_run/object.html.ep
+lib/Tuba/files/templates/model_run/object.ttl.tut
 lib/Tuba/files/templates/model_run/objects.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/obj_button.html.ep
