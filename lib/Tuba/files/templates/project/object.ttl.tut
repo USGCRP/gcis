@@ -3,7 +3,7 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $project->stringify %>";
-   dcterms:name "<%= $project->name %>";
+   dcterms:title "<%= $project->name %>";
    dcterms:description "<%= $project->description %>";
    gcis:hasURL "<%= $project->website %>"^^xsd:anyURI;
 % for my $model ($project->models) {
