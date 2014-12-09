@@ -341,7 +341,8 @@ sub startup {
     $r->resource('platform');
     $r->resource('instrument');
     $r->lookup('select_platform')->resource('instrument_instance', {
-            path_base => "instrument"
+            path_base => "instrument",
+            identifier => "instrument_identifier",
         });
 
     # Person.

@@ -9,8 +9,8 @@
    gcis:Instrument <<%= uri($instrument) %>>;
 % }
 %#
-% for my $dataset ($instrument_instance->instrument_measurements) {
-   gcis:Dataset <<%= uri($dataset) %>>;
+% for my $measurement ($instrument_instance->instrument_measurements) {
+   gcis:Dataset <<%= uri($measurement->dataset) %>>;
 % }
 
    a prov:Entity .

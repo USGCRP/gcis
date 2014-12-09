@@ -19,7 +19,7 @@ Show metadata about an instrument instance : this is an instrument on a platform
 sub show {
     my $c = shift;
     my $platform_identifier = $c->stash('platform_identifier') or die "missing platform";
-    my $instrument_identifier = $c->stash('instrument_instance_identifier') or die "missing instrument";
+    my $instrument_identifier = $c->stash('instrument_identifier') or die "missing instrument";
     my $object = InstrumentInstance->new(
       platform_identifier   => $platform_identifier,
       instrument_identifier => $instrument_identifier

@@ -56,7 +56,7 @@
                     </td>
 
                     <td>
-                    %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
+                    %= link_to 'show_instrument_instance', { instrument_identifier => $i->identifier, platform_identifier => $platform->identifier } => begin
                     <%= $i->count_datasets(platform => $platform) %>
                     %= end
                     </td>

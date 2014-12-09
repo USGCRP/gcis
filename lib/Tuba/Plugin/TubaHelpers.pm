@@ -273,7 +273,8 @@ sub register {
     $app->helper(uri => sub {
         my $c = shift;
         my $obj = shift or return "";
-        return $obj->uri($c,{ tab => 'show' })->to_abs;
+        my $uri = $obj->uri($c,{ tab => 'show' }) or die "no url for $obj";
+        return $uri->to_abs;
     });
     $app->helper(new_id => sub {
             state $id = 1;

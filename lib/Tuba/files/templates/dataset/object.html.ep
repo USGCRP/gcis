@@ -83,7 +83,7 @@
 
         % for my $measurement ($dataset->instrument_measurements) {
         This dataset uses data from
-        %= link_to 'show_instrument_instance' => {instrument_instance_identifier => $measurement->instrument->identifier, platform_identifier => $measurement->platform->identifier } => begin
+        %= link_to 'show_instrument_instance' => {instrument_identifier => $measurement->instrument->identifier, platform_identifier => $measurement->platform->identifier } => begin
         an instance of
         %= end
         the <%= obj_link($measurement->instrument) %> instrument on the 

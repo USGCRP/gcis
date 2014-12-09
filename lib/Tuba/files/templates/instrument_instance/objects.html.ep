@@ -23,7 +23,7 @@
        <td><%= obj_link_to $obj->platform, 'show' => begin %><%= $obj->platform_identifier %><%= end %></td>
        <td><%= obj_link_to $obj->instrument, 'show' => begin %><%= $obj->instrument_identifier %><%= end %></td>
        <td>
-       %= link_to 'show_instrument_instance', { instrument_instance_identifier => $obj->instrument_identifier, platform_identifier => $platform->identifier } => begin
+       %= link_to 'show_instrument_instance', { instrument_identifier => $obj->instrument_identifier, platform_identifier => $platform->identifier } => begin
        <%= $obj->instrument->count_datasets(platform => $platform) %>
        %= end
        </td>
