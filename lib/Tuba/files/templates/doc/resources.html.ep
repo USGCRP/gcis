@@ -8,89 +8,136 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
 <dl class='dl-horizontal'>
     <dt>Report</dt>
     <dd>A <i>report</i>, such as the <%= link_to 'show_report', { report_identifier => "nca3" } => begin %>nca3<%= end %>,
-    or the <%= link_to 'show_report', { report_identifier => 'nca2' } => begin %>nca2<%= end %>,
-    may have <i>chapters</i>, <i>figures</i>, <i>tables</i>, <i>findings</i>, and <i>references</i> associated with it.</dd>
+        or the <%= link_to 'show_report', { report_identifier => 'nca2' } => begin %>nca2<%= end %>,
+        may have <i>chapters</i>, <i>figures</i>, <i>tables</i>, <i>findings</i>, and <i>references</i> associated with it.</dd>
+
     <dt>Chapter</dt>
     <dd>A <i>chapter</i> of a <i>report</i>, such as 
-    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-climate" } => begin
-    our-changing-climate<%= end %>,
-    has a unique mnemonic identifiers, and possibly, a number.  Some <i>chapters</i>, for instance, an
-    %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science-supplement" } => begin
-    appendix<%= end %>, do not have a number.  <i>Chapters</i> may also have <i>figures</i>, <i>tables,</i>, <i>findings</i>, and <i>references</i> associated with them.
-    </dd>
+        %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-climate" } => begin
+        our-changing-climate<%= end %>,
+        has a unique mnemonic identifiers, and possibly, a number.  Some <i>chapters</i>, for instance, an
+        %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science-supplement" } => begin
+        appendix<%= end %>, do not have a number.  <i>Chapters</i> may also have <i>figures</i>, <i>tables,</i>, <i>findings</i>, and <i>references</i> associated with them.
+        </dd>
+
     <dt>Figure</dt><dd>A <i>figure</i> in a <i>report</i>, such as
-    %= link_to 'show_figure', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', figure_identifier => 'observed-us-temperature-change' } => begin
-    observed-us-temperature-change<%= end %>,
-    may be composed of one or more <i>images</i>.
-    </dd>
-    <dt>Finding</dt><dd>
-    A <i>finding</i> in a <i>report</i>, such as
-    %= link_to 'show_finding', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', finding_identifier => 'global-climate-is-changing' } => begin
-    global-climate-is-changing<%= end %>,
-    has a statement as well as phrases and bibliographic <i>references</i> describing the confidence level, uncertainties, and evidence for that <i>finding</i>.
-    </dd>
-    <dt>Table</dt><dd>A <i>table</i>, like a <i>figure</i>, is embedded in a <i>report</i>, and possibly in a <i>chapter</i> in a <i>report</i>.</dd>
-    <dt>Reference</dt><dd>A <i>reference</i> is a bibliographic entry or citation.  They are uniquely identified with
-    <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUIDs</a>, like
-    %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
-    e679d754-46b3-4d62-a7dd-4a7f0c727ebe<%= end %>.  A <i>reference</i>
-    in a <i>report</i> may appear in a <i>chapter</i>, <i>figure</i>, <i>finding</i> or <i>table</i> of that <i>report</i>.  Moreover, a <i>reference</i> refers to
-    a <i>publication</i> such as an <i>article</i>, <i>web page</i>, or <i>book</i>.</dd>
+        %= link_to 'show_figure', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', figure_identifier => 'observed-us-temperature-change' } => begin
+        observed-us-temperature-change<%= end %>,
+        may be composed of one or more <i>images</i>.
+        </dd>
+
+     <dt>Finding</dt>
+     <dd>A <i>finding</i> in a <i>report</i>, such as
+        %= link_to 'show_finding', { report_identifier => "nca3",chapter_identifier => 'our-changing-climate', finding_identifier => 'global-climate-is-changing' } => begin
+        global-climate-is-changing<%= end %>,
+        has a statement as well as phrases and bibliographic <i>references</i> describing the confidence level, uncertainties, and evidence for that <i>finding</i>.
+        </dd>
+
+    <dt>Table</dt>
+    <dd>A <i>table</i>, like a <i>figure</i>, is embedded in a <i>report</i>, and possibly in a <i>chapter</i> in a <i>report</i>.</dd>
+
+    <dt>Reference</dt>
+    <dd>A <i>reference</i> is a bibliographic entry or citation.  They are uniquely identified with
+        <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUIDs</a>, like
+        %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
+        e679d754-46b3-4d62-a7dd-4a7f0c727ebe<%= end %>.  A <i>reference</i>
+        in a <i>report</i> may appear in a <i>chapter</i>, <i>figure</i>, <i>finding</i> or <i>table</i> of that <i>report</i>.  Moreover, a <i>reference</i> refers to
+        a <i>publication</i> such as an <i>article</i>, <i>web page</i>, or <i>book</i>.</dd>
 
     <dt>Publication</dt>
     <dd>A <i>publication</i> in the GCIS may be a <i>report</i>, a report-specific resource -- a <i>chapter</i>, <i>figure</i>, <i>finding</i>, <i>table</i> -- or
     a non-report-specific resource :  a <i>journal</i>, <i>article</i>, <i>image</i>, <i>web page</i>, <i>book</i>, or <i>dataset</i>.</dd>
+
     <dt>Image</dt>
-    <dd>
-    An <i>image</i> may be associated with one or more figures.  For
-    instance,
-    %= link_to 'show_image', { image_identifier => "1f5a3cdd-fc45-403e-bf11-d1772005b430" } => begin
-    this image
-    %= end
-    is a part of the <i>figure</i> described above.
-    </dd>
+    <dd>An <i>image</i> may be associated with one or more figures.  For instance,
+        %= link_to 'show_image', { image_identifier => "1f5a3cdd-fc45-403e-bf11-d1772005b430" } => begin
+        this image
+        %= end
+        is a part of the <i>figure</i> described above.
+        </dd>
+
     <dt>Book</dt>
-    <dd>A
-    %= link_to 'show_book', { book_identifier => "70466915-7ddb-4edc-bdc6-b5fbe0de90cd" } => begin
-    book
-    %= end
-    has an <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" target="_blank">ISBN</a> number, but is uniquely identified within GCIS using a UUID.</dd>
+    <dd>A <%= link_to 'show_book', { book_identifier => "70466915-7ddb-4edc-bdc6-b5fbe0de90cd" } => begin %>
+        book
+        %= end
+        has an <a href="https://en.wikipedia.org/wiki/International_Standard_Book_Number" target="_blank">ISBN</a>, but is uniquely identified within GCIS using a UUID.</dd>
+
     <dt>Journals</dt>
     <dd>A <i>journal</i>
-    may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a> number, and is uniquely identified within GCIS using a mnemonic identifier, like
-    %= link_to 'show_journal', { journal_identifier => "climatic-change" } => begin
-    climatic-change
-    <%= end =%>.</dd>
+        may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a> number, and is uniquely identified within GCIS using a mnemonic identifier, like
+        %= link_to 'show_journal', { journal_identifier => "climatic-change" } => begin
+        climatic-change
+        <%= end =%>.</dd>
+
     <dt>Article</dt>
     <dd>An <i>article</i> in a <i>journal</i> has a DOI, like
-    %= link_to 'show_article', { article_identifier => "10.1002/grl.50527" } => begin
-    10.1002/grl.50527<%= end %>,
-    which is used to identify it uniquely in the GCIS.
-    </dd>
+        %= link_to 'show_article', { article_identifier => "10.1002/grl.50527" } => begin
+        10.1002/grl.50527<%= end %>,
+        which is used to identify it uniquely in the GCIS.
+        </dd>
+
     <dt>Web Page</dt>
     <dd>A web page is assigned a UUID, like
-    %= link_to 'show_webpage', { webpage_identifier => '26625ddf-dd19-4dd1-a35d-33c68c5b2d6e' } => begin
-    26625ddf-dd19-4dd1-a35d-33c68c5b2d6e<%= end %>,
-    to identify its state at a particular point in time.</dd>
+        %= link_to 'show_webpage', { webpage_identifier => '26625ddf-dd19-4dd1-a35d-33c68c5b2d6e' } => begin
+        26625ddf-dd19-4dd1-a35d-33c68c5b2d6e<%= end %>,
+        to identify its state at a particular point in time.</dd>
+
     <dt>Contributor</dt>
     <dd>A <i>contributor</i> to a <i>publication</i> is an <i>organization</i>, a role, and optionally a person.</dd>
+
     <dt>Organization</dt>
     <dd>An <i>organization</i> may be related to other <i>organizations</i>, and is identified uniquely by a mnemonic identifier.</dd>
+
     <dt>Person</dt>
     <dd>A person is given a numeric id.  If a person has an <a href="http://orcid.org" target="_blank">orcid</a>, it is
-    used to uniquely identify the person within the GCIS.  The only associations between people and <i>organizations</i> is
-    via their affiliations when contributing to GCIS <i>publications</i>.
-    </dd>
+        used to uniquely identify the person within the GCIS.  The only associations between people and <i>organizations</i> is
+        via their affiliations when contributing to GCIS <i>publications</i>.
+        </dd>
+
     <dt>Dataset</dt><dd>A <i>dataset</i> is given a unique mnemonic identifier, such as
-    %= link_to 'show_dataset', { dataset_identifier => 'nca3-ncep-ncar-r1' } => begin
-    nca3-ncep-ncar-r1<%= end =%>.
-    <i>Datasets</i> are considered a type of <i>publication</i>, as mentioned above.  As such, they may be generated by an <i>activity</i>.
+        %= link_to 'show_dataset', { dataset_identifier => 'nca3-ncep-ncar-r1' } => begin
+        nca3-ncep-ncar-r1<%= end =%>.
+        <i>Datasets</i> are considered a type of <i>publication</i>, as mentioned above.  As such, they may be generated by an <i>activity</i>.
     </dd>
-    <dt>Activity</dt><dd>An <i>activity</i>, such as
-    %= link_to 'show_activity', { activity_identifier => '063fd83f-maurer-process' } => begin
-    063fd83f-maurer-process<%= end %>,
-    is used to describe the process of going from one <i>publication</i> to another.  See below.
-    </dd>
+
+    <dt>Platform</dt>
+    <dd>A <i>platform</i>, such as <%= link_to 'show_platform', { platform_identifier => "jason-1" } => begin %>jason-1<%= end %>
+        may be associated with one more or <i>instruments</i>.</dd>
+
+    <dt>Instrument</dt>
+    <dd>An <i>instrument</i>, such as <%= link_to 'show_instrument', { instrument_identifier => 'poseidon-2' } => begin %>posiedon-2<%= end %>
+    may be associated with one or more <i>platform</i>s via <i>instrument instance</i>s.
+
+    <dt>Instrument Instance</dt>
+    <dd>An <i>instrument instance</i>, such as <%= link_to 'show_instrument_instance', { platform_identifier => "jason-1", instrument_identifier => 'poseidon-2' } => begin %>jason-1/posiedon-2<%= end %>
+       is a platform/instrument combination, and may be associated with one or more <i>dataset</i>s.
+
+    <dt>Activity</dt>
+    <dd>An <i>activity</i>, such as
+        %= link_to 'show_activity', { activity_identifier => '063fd83f-maurer-process' } => begin
+        063fd83f-maurer-process<%= end %>,
+        is used to describe the process of going from one <i>publication</i> to another.  See below.
+        </dd>
+
+    <dt>Project</dt>
+    <dd>A <i>project</i>, such as
+        <%= link_to 'show_project', { project_identifier => "cmip3" } => begin %>cmip3<%= end %>
+        may be associated with many models.</dd>
+
+    <dt>Model</dt>
+    <dd>A <i>model</i>, such as 
+        <%= link_to 'show_model', { model_identifier => "ccsm3" } => begin %>ccsm3<%= end %>
+        is used for a <i>model run</i>.</dd>
+
+    <dt>Scenario</dt>
+    <dd>A <i>scenario</i>, such as 
+        <%= link_to 'show_scenario', { scenario_identifier => "sres_b1" } => begin %>sres_b1<%= end %>
+        is also used for a <i>model run</i>.</dd>
+
+    <dt>Model Run</dt>
+    <dd>A <i>model run</i> is uniquely determined by a <i>model</i>, <i>scenario</i>, time range,
+    time resolution and sequence number.  Model runs may be associated with <i>activities</i>.</dd>
+
 </dl>
 <h3>Identifiers</h3>
 <p>Resources in GCIS are identified by URIs.  These URIs have been designed to be
