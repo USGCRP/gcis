@@ -6,17 +6,6 @@
 </center>
 
 %= include 'obj_header', object => $model
-% unless (param 'no_header') {
-    % if (user_can('update')) {
-       %= include 'history_modal';
-
-        <span style='float:right;'>
-        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-        </span>
-    % }
-% }
-
 
 <div class='row-fluid'>
     <div class='span10 offset1 well'>
