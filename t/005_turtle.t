@@ -247,6 +247,21 @@ $t->post_ok( "/activity" => json => $activity )->status_is(200);
 $t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
 $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
 
+# Scenario
+
+my $scenario = {
+    identifier => "chimp",
+    name => "not monkey\nnot organutan",
+    description => "primate\nnot really human",
+    description_attribution => "http://nationalzoo.org",
+};
+
+$t->post_ok( "/scenario" => json => $scenario )->status_is(200);
+$t->get_ok('/scenario/chimp.ttl')->status_is(200);
+$t->get_ok('/scenario/chimp.nt')->status_is(200);
+
+
+
 # Clean up
 $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
@@ -260,7 +275,7 @@ $t->delete_ok("/dataset/cmip3")->status_is(200);
 $t->delete_ok("/activity/teeth-brush")->status_is(200);
 $t->delete_ok("/article/gatorade")->status_is(200);
 $t->delete_ok("/journal/gators")->status_is(200);
-
+$t->delete_ok("/scenario/chimp")->status_is(200);
 
 done_testing();
 
