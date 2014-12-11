@@ -548,7 +548,6 @@ lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
 lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
-lib/Tuba/files/templates/model/obj_header.html.ep
 lib/Tuba/files/templates/model/object.html.ep
 lib/Tuba/files/templates/model/object.ttl.tut
 lib/Tuba/files/templates/model/objects.html.ep
@@ -557,6 +556,7 @@ lib/Tuba/files/templates/model_run/object.ttl.tut
 lib/Tuba/files/templates/model_run/objects.html.ep
 lib/Tuba/files/templates/not_found.html.ep
 lib/Tuba/files/templates/obj_button.html.ep
+lib/Tuba/files/templates/obj_header.html.ep
 lib/Tuba/files/templates/obj_thumbnails.html.ep
 lib/Tuba/files/templates/object.html.ep
 lib/Tuba/files/templates/object.thtml.ep
@@ -586,6 +586,7 @@ lib/Tuba/files/templates/platform/object.ttl.tut
 lib/Tuba/files/templates/platform/objects.html.ep
 lib/Tuba/files/templates/platform/relationships.html.ep
 lib/Tuba/files/templates/project/object.html.ep
+lib/Tuba/files/templates/project/object.ttl.tut
 lib/Tuba/files/templates/project/objects.html.ep
 lib/Tuba/files/templates/prov.html.ep
 lib/Tuba/files/templates/prov.ttl.tut
@@ -607,6 +608,7 @@ lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/representation.ttl.tut
 lib/Tuba/files/templates/scenario/object.html.ep
+lib/Tuba/files/templates/scenario/object.ttl.tut
 lib/Tuba/files/templates/search/gcid.html.ep
 lib/Tuba/files/templates/search/keyword.html.ep
 lib/Tuba/files/templates/table/object.html.ep
