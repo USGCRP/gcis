@@ -16,6 +16,7 @@ starting from the basics.
     brew install git
     brew install ossp-uuid
     brew install postgresql
+    brew install graphicsmagick
 
 3. Configure and start postgres :
 
