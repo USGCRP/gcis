@@ -8,6 +8,10 @@
    gcis:hasVersion "<%= $model->version %>";
    dcterms:description "<%= $model->description %>";
    gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
+% for my $model_run ($model->model_runs) {
+   gcis:ModelRun <<%= uri($model_run) %>>;
+% }
+
    a gcis:Model .
 % end
 

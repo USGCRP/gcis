@@ -1,0 +1,17 @@
+% layout 'default', namespaces => [qw/dcterms gcis xsd skos/];
+%= filter_lines_with empty_predicate() => begin
+%#
+<<%= current_resource %>>
+   dcterms:identifier "<%= $scenario->identifier %>";
+   dcterms:title "<%= $scenario->name %>";
+   dcterms:description "<%= $scenario->description %>";
+   gcis:hasURL "<%= $scenario->description_attribution %>"^^xsd:anyURI;
+% for my $model_run ($scenario->model_runs) {
+   gcis:ModelRun <<%= uri($model_run) %>>;
+% }
+
+   a gcis:Scenario .
+% end
+
+
+%= include 'other_identifiers', gcid => $scenario->uri($self);
