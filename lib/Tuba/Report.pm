@@ -291,5 +291,20 @@ DONE
 die $@ if $@;
 }
 
+sub _default_order {
+    return qw/identifier
+    title
+    url
+    doi
+    summary
+    publication_year
+    in_library
+    report_type_identifier
+    frequency
+    _public
+    topic
+    curation_note
+    curation_email/;
+}
 1;
 

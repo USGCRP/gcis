@@ -37,7 +37,7 @@
 
 
 <div itemscope itemtype="http://schema.org/CreativeWork" class='row-fluid'>
-    <div class='span10 offset1 well'>
+    <div class='span10 offset1 well' style='position:relative;'>
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <h2 itemprop="name"><%= $report->title %></h2>
@@ -70,7 +70,17 @@
         <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
         % }
         %= include 'h/cited_by', pub => $pub;
-        </div>
+        % if (my $curation_note = $object->curation_note) {
+            % if (my $curation_email = $object->curation_email) {
+                % my $uri = $object->uri($self);
+                % $curation_note = b($curation_note)->xml_escape;
+                % $curation_note =~ s{\[([^]]+)\]}{<a href="mailto:$curation_email?subject=$uri">$1</a>};
+            % }
+            <div style='position:absolute;bottom:0px;'>
+                <i><%== $curation_note %></i>
+            </div>
+        % }
+   </div>
 </div>
 
 <%= include 'h/other_formats'; =%>
