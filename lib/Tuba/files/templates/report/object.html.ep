@@ -70,14 +70,14 @@
         <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
         % }
         %= include 'h/cited_by', pub => $pub;
-        % if (my $curation_note = $object->curation_note) {
-            % if (my $curation_email = $object->curation_email) {
+        % if (my $contact_note = $object->contact_note) {
+            % if (my $contact_email = $object->contact_email) {
                 % my $uri = $object->uri($self);
-                % $curation_note = b($curation_note)->xml_escape;
-                % $curation_note =~ s{\[([^]]+)\]}{<a href="mailto:$curation_email?subject=$uri">$1</a>};
+                % $contact_note = b($contact_note)->xml_escape;
+                % $contact_note =~ s{\[([^]]+)\]}{<a href="mailto:$contact_email?subject=$uri">$1</a>};
             % }
             <div style='position:absolute;bottom:0px;'>
-                <i><%== $curation_note %></i>
+                <i><%== $contact_note %></i>
             </div>
         % }
    </div>

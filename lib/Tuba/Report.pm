@@ -303,8 +303,8 @@ sub _default_order {
     frequency
     _public
     topic
-    curation_note
-    curation_email/;
+    contact_note
+    contact_email/;
 }
 1;
 
