@@ -300,6 +300,9 @@ my $model_run = {
     model_identifier => "tiger",
     activity_identifier => "teeth-brush",
     project_identifier => "worm",  
+    sequence => "1",
+    sequence_description => "sequence is\n as follows",
+
 };
 
 $t->post_ok( "/model_run" => json => $model_run )->status_is(200);
