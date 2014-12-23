@@ -14,5 +14,6 @@
    skos:altLabel "<%= $exterm->term %>";
       % }
    skos:Concept <<%= uri($exterm->lexicon) %>>.
+
     % }
 % }
