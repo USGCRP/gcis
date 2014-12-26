@@ -1,8 +1,8 @@
-% layout 'default';
+% layout 'default', namespaces => [qw/dcterms cito biro/];
+%= filter_lines_with empty_predicate() => begin
+%#
 <<%= current_resource %>>
-   a biro:BibliographicReference;
-   dcterms:identifier "<%= $generic->identifier %>";
-   dcterms:type "<%= $generic->type %>";
- %#  dwc:year "<%= $generic->year %>";
- %#  xsd:gYear "<%= $generic->year %>".
+   dcterms:identifier "<%= $generic->identifier %>".
+% end
 
+%= include 'prov';
