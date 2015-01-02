@@ -473,7 +473,7 @@ sub register {
             my $c = shift;
             my $to = shift or return;
             $to = "http://$to" if $to !~ /:\/\//;
-            return unless $to =~ m[^(http|ftp)://];
+            return unless $to =~ m[^(https?|ftp)://];
             return $to;
         });
     $app->helper( filter_lines_with => sub {
