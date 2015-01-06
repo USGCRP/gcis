@@ -7,4 +7,4 @@
    gcis:isArrayOf <<%= uri($table) %>>;
 % }
 
-   a gcis:Array.
+   a gcis:Array .
