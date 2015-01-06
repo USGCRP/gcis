@@ -43,5 +43,29 @@ sub make_tree_for_show {
     return $obj;
 }
 
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Instrument->meta->relationship($_), qw/platforms/ ]);
+    $c->stash(controls => {
+            platforms => { template => 'many_to_many' },
+        });
+    $c->SUPER::update_rel_form(@_);
+}
+
+sub update_rel {
+    my $c = shift;
+    my $instrument = $c->_this_object;
+    $c->stash(tab => "update_rel_form");
+    if (my $platform_id = $c->param('delete_map_platforms')) {
+        my $map = Tuba::DB::Object::InstrumentInstance->new(
+                platform_identifier => $platform_id,
+                instrument_identifier => $instrument->identifier)->load(
+                speculative => 1) or return $c->redirect_without_error("Could not find $platform_id");
+        $map->delete or return $c->update_error($map->error);
+        $c->flash(info => "Deleted $platform_id");
+    }
+    return $c->SUPER::update_rel(@_);
+}
+
 1;
 

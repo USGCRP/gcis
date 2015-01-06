@@ -62,9 +62,35 @@ sub update_rel {
             $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
         }
     }
-    # TODO : handle form submission too
+    if (my $instrument_id = $c->param('delete_map_instruments')) {
+        my $map = Tuba::DB::Object::InstrumentInstance->new(
+                platform_identifier => $platform->identifier,
+                instrument_identifier => $instrument_id)->load(
+                speculative => 1) or return $c->redirect_without_error("Could not find $instrument_id");
+        $map->delete or return $c->update_error($map->error);
+        $c->flash(info => "Deleted $instrument_id");
+    }
+    $c->SUPER::update_rel(@_);
 
     return $c->redirect_without_error("update_rel_form");
+}
+
+sub _default_controls {
+    my $c = shift;
+    return (
+        $c->SUPER::_default_controls(),
+        platform_type_identifier => { template => 'select',
+            params => { values => [map $_->identifier, @{ PlatformTypes->get_objects(all => 1) } ] } },
+    );
+}
+
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Platform->meta->relationship($_), qw/instruments/ ]);
+    $c->stash(controls => {
+            instruments => { template => 'many_to_many' },
+        });
+    $c->SUPER::update_rel_form(@_);
 }
 
 1;

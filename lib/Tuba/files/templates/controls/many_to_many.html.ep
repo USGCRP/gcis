@@ -1,0 +1,21 @@
+
+% my $name = $rel->name;
+% my @existing = $object->$name;
+<div class='row-fluid'>
+
+%= hidden_field 'delete_map_'.$name;
+% my $i = 0;
+<ul>
+% for my $obj (sort { $a->sortkey cmp $b->sortkey } @existing) {
+    <li>
+    <%= tag 'button'
+    => class => 'btn btn-danger squeezevert'
+    => onClick => qq[{this.form.elements["delete_map_$name"].value = '].$obj->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+        %= obj_link_to $obj => 'update_form' => class => 'btn' => begin
+        %= $obj->stringify(short => 1);
+        %= end
+    </li>
+% }
+</ul>
+</div>
+
