@@ -47,6 +47,14 @@ sub make_tree_for_show {
 
 Update relationships for this platform.
 
+Sample JSON payloads :
+
+    add :
+        instrument_identifier : bar
+    
+    del :
+        Instrument_identifier : baz
+
 =cut
 
 sub update_rel {
@@ -60,6 +68,11 @@ sub update_rel {
             my $obj = InstrumentInstance->new( %$add );
             $obj->load(speculative => 1);
             $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
+        }
+        if (my $del = $json->{del}) {
+            $del->{platform_identifier} = $platform->identifier;
+            my $obj = InstrumentInstance->new( %$del );
+            $obj->delete;
         }
     }
     if (my $instrument_id = $c->param('delete_map_instruments')) {
