@@ -1743,6 +1743,8 @@ CREATE TABLE report (
     publication_year integer,
     topic character varying,
     in_library boolean,
+    contact_note character varying,
+    contact_email character varying,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999)))
 );
@@ -1794,6 +1796,14 @@ COMMENT ON COLUMN report.topic IS 'A brief free form comma-separated list of top
 
 
 COMMENT ON COLUMN report.in_library IS 'Whether or not this report is available in the USGCRP resources library.';
+
+
+
+COMMENT ON COLUMN report.contact_note IS 'A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.';
+
+
+
+COMMENT ON COLUMN report.contact_email IS 'A contact email address for this report.';
 
 
 

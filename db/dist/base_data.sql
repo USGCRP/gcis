@@ -22,7 +22,7 @@ report
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email) FROM stdin;
 \.
 
 
