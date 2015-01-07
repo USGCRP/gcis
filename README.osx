@@ -108,6 +108,10 @@ If all goes well :
     perl Build.PL
     ./Build
     ./Build dbinstall
+    
+    Note:  you might have to run the follwing before #14:
+    
+    postgres -D $HOME/pgdata
 
 14. Start tuba
 
