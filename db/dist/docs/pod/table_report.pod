@@ -20,13 +20,15 @@ A report is a publication that may have chapters, figures, findings, and tables.
  publication_year (integer) - The year of publication.
  topic (character varying) - A brief free form comma-separated list of topics associated with this report.
  in_library (boolean) - Whether or not this report is available in the USGCRP resources library.
+ contact_note (character varying) - A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.
+ contact_email (character varying) - A contact email address for this report.
 
 
 =head1 SCHEMA
 
-                                                                              Table "gcis_metadata.report"
-          Column         |       Type        |                  Modifiers                   | Storage  |                                  Description                                  
- ------------------------+-------------------+----------------------------------------------+----------+-------------------------------------------------------------------------------
+                                                                                                      Table "gcis_metadata.report"
+          Column         |       Type        |                  Modifiers                   | Storage  |                                                          Description                                                           
+ ------------------------+-------------------+----------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------
   identifier             | character varying | not null                                     | extended | A descriptive identifier.
   title                  | character varying | not null                                     | extended | The title.
   url                    | character varying |                                              | extended | A url for a landing page.
@@ -38,6 +40,8 @@ A report is a publication that may have chapters, figures, findings, and tables.
   publication_year       | integer           |                                              | plain    | The year of publication.
   topic                  | character varying |                                              | extended | A brief free form comma-separated list of topics associated with this report.
   in_library             | boolean           |                                              | plain    | Whether or not this report is available in the USGCRP resources library.
+  contact_note           | character varying |                                              | extended | A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.
+  contact_email          | character varying |                                              | extended | A contact email address for this report.
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
      "report_url_key" UNIQUE CONSTRAINT, btree (url)
