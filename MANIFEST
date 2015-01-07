@@ -316,6 +316,7 @@ db/patches/2010_model_audit.sql
 db/patches/2020_comments.sql
 db/patches/2030_model_runs.sql
 db/patches/2030_typo.sql
+db/patches/2040_contact_note.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -471,6 +472,7 @@ lib/Tuba/files/templates/controls/file.html.ep
 lib/Tuba/files/templates/controls/gcmd_keywords.html.ep
 lib/Tuba/files/templates/controls/grid.html.ep
 lib/Tuba/files/templates/controls/image.html.ep
+lib/Tuba/files/templates/controls/many_to_many.html.ep
 lib/Tuba/files/templates/controls/one_to_many.html.ep
 lib/Tuba/files/templates/controls/organizations.html.ep
 lib/Tuba/files/templates/controls/pubfile.html.ep
