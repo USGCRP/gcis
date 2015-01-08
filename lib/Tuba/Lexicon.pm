@@ -49,7 +49,7 @@ sub update_rel {
         $exterm->gcid($gcid);
         $exterm->save(audit_user => $c->user) or return $c->update_error($exterm->error);
     }
-    if (my @delete = $c->param('delete_term')) {
+    if (my @delete = @{ $c->every_param('delete_term') }) {
         for my $term (@delete) {
             logger->info("deleting $lexicon $context $term");
             my $ex = Exterm->new(lexicon => $lexicon, term => $term, context => $context);
