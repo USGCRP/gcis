@@ -36,6 +36,9 @@ $t->get_ok("/report/test-report.json")->json_is(
       chapters => [],
       href => "${base}report/test-report.json",
       report_type_identifier => 'report',
+      report_tables => [],
+      report_figures => [],
+      report_findings => [],
   }
 );
 
