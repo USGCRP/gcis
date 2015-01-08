@@ -238,7 +238,8 @@ sub make_tree_for_show {
     my $pub = $report->get_publication(autocreate => 1);
     my $uri = $report->uri($c);
     my $href = $uri->clone->to_abs;
-    $href .= ".".$c->stash('format') if $c->stash('format');
+    my $format = $c->stash('format');
+    $href .= ".$format" if $format;
     my %regions;
     if ($pub && $c->param('with_regions')) {
         $regions{regions} = [ map $_->as_tree(c => $c), $pub->regions];
@@ -256,6 +257,9 @@ sub make_tree_for_show {
       title        => $report->title,
       doi          => $report->doi,
       report_type_identifier => $report->report_type_identifier,
+      report_figures  => [ map +{$c->Tuba::Figure::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->figures ],
+      report_findings => [ map +{$c->Tuba::Finding::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->findings ],
+      report_tables   => [ map +{$c->Tuba::Table::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->tables ],
       chapters     => [
         map +{
           number     => $_->number,
