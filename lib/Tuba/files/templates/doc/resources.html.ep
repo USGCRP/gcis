@@ -70,7 +70,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
         <%= end =%>.</dd>
 
     <dt>Article</dt>
-    <dd>An <i>article</i> in a <i>journal</i> has a DOI, like
+    <dd>An <i>article</i> in a <i>journal</i> has a DOI (if available), like
         %= link_to 'show_article', { article_identifier => "10.1002/grl.50527" } => begin
         10.1002/grl.50527<%= end %>,
         which is used to identify it uniquely in the GCIS.
