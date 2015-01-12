@@ -562,6 +562,14 @@ sub register {
             my $word = shift;
             return b($word)->md5_sum;
         });
+    $app->helper(map_url => sub {
+            my $c = shift;
+            my %a = @_;
+            my ($lat,$lon) = @a{qw/lat lon/};
+            my $url = Mojo::URL->new("http://tools.wmflabs.org/geohack/geohack.php");
+            my $params = sprintf('%f_N_%f_E_',$lat,$lon);
+            return $url->query(params => $params);
+        });
 
 
 }

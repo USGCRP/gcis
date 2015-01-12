@@ -34,7 +34,7 @@
         % if (my $url = $dataset->description_attribution) {
         <blockquote><p class="linebreak" itemprop="description"><%= $dataset->description %></p>
             <small>
-                <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+                <%= link_to $url => target => '_blank' => begin %><%= url_host($url) %><%= end %>
             </small>
         </blockquote>
         % } else {
@@ -78,6 +78,11 @@
         <p>
         The spatial range for this dataset is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,
         and <%= $dataset->lon_min // 'unknown' %>° to <%= $dataset->lon_max // 'unknown' %>° longitude.
+        % if ($dataset->lat_min == $dataset->lat_max && $dataset->lon_min == $dataset->lon_max) {
+        %= link_to map_url(lat => $dataset->lat_min, lon => $dataset->lon_min) => target => '_blank' => begin
+        map
+        %= end
+        % }
         </p>
         % }
 
