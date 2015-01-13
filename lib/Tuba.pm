@@ -61,6 +61,7 @@ use Tuba::Converter;
 use Tuba::Log;
 use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
+use Path::Class qw/file/;
 use strict;
 
 our $VERSION = '1.19';
@@ -461,6 +462,19 @@ sub startup {
 
         $authed->get('/import_form')->to('importer#form')->name('import_form');
         $authed->post('/process_import')->to('importer#process_import')->name('process_import');
+    }
+    if (my $export = $config->{export}) {
+        $export = [ $export ] unless ref $export eq 'ARRAY';
+        for my $entry (@$export) {
+            my $file = $entry;
+            my $path = file($file)->basename;
+            -e $file or warn "missing export file $file";
+            $r->get("/export/$path" => sub {
+                    my $c = shift;
+                    -e $file or die "no file $file";
+                    $c->reply->asset(Mojo::Asset::File->new(path => $file));
+                } );
+        }
     }
 
     $r->post('/calculate_url' => sub {
