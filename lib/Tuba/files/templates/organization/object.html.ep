@@ -84,6 +84,7 @@
              @{ $object->contributors }) {
         %>
         % my @maps = @{ $ctr->publication_contributor_maps } or next;
+        % my $table = $maps[0]->publication->to_object->meta->table;
         <tr>
             <td>
                 % if ($ctr->person) {
@@ -93,30 +94,44 @@
                 % }
             </td>
             <td><%= $ctr->role_type->label %></td>
+            % if (@maps > 100) {
             <td>
-                <% for my $map (
-                    map $_->[1],
-                    sort { $a->[0] cmp $b->[0] }
-                    map [ $_->publication->to_object->stringify(short => 1), $_ ],
-                    @maps) {
-                %>
-                    % my $obj = $map->publication->to_object;
-                    % if ($ctr->person) {
-                    %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
-                    <%= $obj->meta->table %>
-                    %= end
-                    % } else {
-                    %= link_to 'organization_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
-                    <%= $obj->meta->table %>
-                    %= end
-                    % }
-                    : <%= obj_link($obj, short => 1) %>
-                    % if (my $ref = $map->reference) {
-                    <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
-                    % }
-                    <br>
-               <% } %>
+                % if ($ctr->person) {
+                %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                <%= scalar @maps %> <%= pl($table) %>
+                %= end
+                % } else {
+                %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                <%= scalar @maps %> <%= pl($table) %>
+                %= end
+                % }
             </td>
+            % } else {
+                <td>
+                    <% for my $map (
+                        map $_->[1],
+                        sort { $a->[0] cmp $b->[0] }
+                        map [ $_->publication->to_object->stringify(short => 1), $_ ],
+                        @maps) {
+                    %>
+                        % my $obj = $map->publication->to_object;
+                        % if ($ctr->person) {
+                        %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                        <%= $table %>
+                        %= end
+                        % } else {
+                        %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                        <%= $table %>
+                        %= end
+                        % }
+                        : <%= obj_link($obj, short => 1) %>
+                        % if (my $ref = $map->reference) {
+                        <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
+                        % }
+                        <br>
+                   <% } %>
+                </td>
+             % }
         </tr>    
         % }
     </table>

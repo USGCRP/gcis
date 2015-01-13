@@ -198,8 +198,8 @@ sub contributions {
     my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->render_not_found;
     $c->stash(role => $roletype );
     $c->respond_to(
-        json => { json => [ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ] },
-        yaml => sub { shift->render_yaml([ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ]) },
+        json => { json => [ map $_->as_tree(c => $c, bonsai => 1), @objs ] },
+        yaml => sub { shift->render_yaml([ map $_->as_tree(c => $c, bonsai => 1), @objs ]) },
         any => sub {
             shift->render,
         }

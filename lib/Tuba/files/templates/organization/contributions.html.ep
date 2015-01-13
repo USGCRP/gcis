@@ -16,9 +16,19 @@
 has served as <b><%= A(lc $role->label) %></b> for
 the following <b><%= 0+@$objs %> <%= PL((stash 'resource'),0+@$objs) %></b> :</p>
 
+% my $rows = 5;
+% my $row = 1;
 % while (my @next = splice @$objs, 0, 6) {
 <div class='row-fluid'>
     %= include 'obj_thumbnails', objs => \@next, no_table => 1;
+    % last if ++$row > $rows && !param('all');
 </div>
 % }
 
+% if (!param('all') && $rows * 6 < @$objs ) {
+<center>
+    %= link_to url_with->query([all => 1]) => class => 'btn btn-default' => begin
+    show all
+    %= end
+</center>
+% }
