@@ -79,9 +79,14 @@
         The spatial range for this dataset is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,
         and <%= $dataset->lon_min // 'unknown' %>° to <%= $dataset->lon_max // 'unknown' %>° longitude.
         % if ($dataset->lat_min == $dataset->lat_max && $dataset->lon_min == $dataset->lon_max) {
-        %= link_to map_url(lat => $dataset->lat_min, lon => $dataset->lon_min) => target => '_blank' => begin
-        map
-        %= end
+            %= link_to map_url(lat => $dataset->lat_min, lon => $dataset->lon_min) => target => '_blank' => begin
+            map
+            %= end
+        % } else {
+            <%= link_to map_url(lat => ( ($dataset->lat_min + $dataset->lat_max) / 2),
+                lon =>  (($dataset->lon_min + $dataset->lon_max) / 2)) => target => '_blank' => begin %>
+            map (center)
+            %= end
         % }
         </p>
         % }
