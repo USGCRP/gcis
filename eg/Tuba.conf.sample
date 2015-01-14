@@ -12,6 +12,7 @@ hypnotoad :
     listen :
        - http://*:8080
 image_upload_dir : /var/local/www/assets
+asset_path : /assets
 faceted_search :
     url : http://gcis-search.jpl.net/search
 database :
