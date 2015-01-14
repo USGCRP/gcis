@@ -25,6 +25,8 @@ Tuba provides a RESTful API to GCIS data.
     image_upload_dir : /var/www/assets
 
     asset_path : /assets
+    # for development :
+    asset_remote_fallback : http://data.globalchange.gov/assets
 
     database :
         dbname   : gcis

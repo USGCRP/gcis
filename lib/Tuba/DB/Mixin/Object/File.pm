@@ -39,8 +39,14 @@ sub as_tree {
 
 sub thumbnail_path {
     my $s = shift;
-    my $thumb = $s->_maybe_generate_thumbnail or return '/blank.png';
-    return join '/', get_config->{asset_path},"$thumb";
+    if (my $thumb = $s->_maybe_generate_thumbnail) {
+        return join '/', get_config->{asset_path},"$thumb";
+    } elsif (my $remote = get_config->{asset_remote_fallback}) {
+        # e.g. "http://data.globalchange.gov/assets"
+        return join '/', $remote, $s->thumbnail.'?gcis_remote=1';
+    } else {
+        return '/blank.png';
+    }
 }
 
 sub generate_thumbnail {
@@ -101,12 +107,12 @@ sub _generate_image_thumbnail {
     my $filename = shift or die "missing filename";
     my $source = $s->file;
     my $dir = Path::Class::File->new($filename);
-    logger->info("generating image thumbnail for ".$s->fullpath);
     return 1 if $s->thumbnail && -e $s->fullpath($s->thumbnail);
     -e $s->fullpath or do {
-        logger->error("cannot find ".$s->fullpath);
+        logger->info("cannot find ".$s->fullpath);
         return;
     };
+    logger->info("generating image thumbnail for ".$s->fullpath);
     my $cmd = sprintf("gm convert -resize 320x320 %s %s", $s->fullpath, $s->fullpath($filename));
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");
