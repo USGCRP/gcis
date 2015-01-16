@@ -25,6 +25,11 @@ sub native_url {
             scenario => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_model=any&d_frequency=any&d_offset=0&d_scenario=".$_[0] },
             model_run => sub { "https://esg.llnl.gov:8443/metadata/showObject.do?id=$_[0]" },
         },
+        ornl => {
+            dataset => sub {
+                "http://mercury.ornl.gov/oai/provider?verb=GetRecord&metadataPrefix=oai_dif&identifier=".shift;
+            },
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
