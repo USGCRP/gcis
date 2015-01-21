@@ -4,12 +4,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css";
-%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css";
 %= stylesheet "/css/gcis.css";
 %= stylesheet "/css/jquery.sidr.light.css";
 %= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";
-%= javascript "//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"
+%= javascript "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"
 %= javascript "//cdn.jsdelivr.net/jquery.form/3.45/jquery.form.min.js";
 %= javascript "/js/gcis.js";
 %= javascript "/js/jquery.sidr.min.js";
@@ -90,7 +90,7 @@
 
         <div class="navbar">
             <div class="container">
-                <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:28px;'>
+                <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
                      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </a>
                 <a href="/" class='navbar-left'><img class="logo" src="/logo-small.png" ></a>
@@ -104,10 +104,10 @@
                        <form action="http://google.com/cse" target="_blank" class="form navbar-form">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
-                           <input name="q" placeholder="Search" type="search">
+                           <input name="q" class="form-control" placeholder="Search" type="search">
                        </form>
                     <% } else { %>
-                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "Search" %><%= end %>
                     <% } %>
                     </li>
                     <li><% if (!config('read_only')) { %>

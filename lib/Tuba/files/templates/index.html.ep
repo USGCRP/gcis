@@ -31,9 +31,17 @@
       .navbar img.logo {
       	float: left;
       }
+      .col-lg-3 {
+      	  margin-bottom: 30px;
+      }
+      .col-lg-3 .btn {
+      	  margin-bottom: 20px;
+      	  color: #043c88;
+      	  font-weight: bold;
+      }
       
-      .col-lg-3 p {
-      	  min-height: 90px;
+      .row {
+      	  margin: 30px 0 30px;
       }
       
 </style>
@@ -52,7 +60,7 @@ by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program
 </p>
 
 <center>
-    <a class='btn btn-default btn-primary btn-lg' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
+    <a class='btn btn-default btn-primary btn-lg' style='color:white;letter-spacing: 0.1em;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
     <p>Please note : the <a href="http://nca2014.globalchange.gov/downloads" target="_blank">PDF</a> is the official version of the Third National Climate Assessment
     (NCA).</p>
 </center>
@@ -60,46 +68,46 @@ by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program
 
 <div class="row">
 
-<div class="col-lg-3">
-    <h2 class="centered">About</h2>
-    <p>How we use identifiers and semantic
-    information to provide points of reference and traceability.
-    </p>
+<div class="col-lg-3 col-md-6">
     <div class="centered front-block">
     %= link_to 'about' => class => 'btn btn-default btn-lg' => begin
 About the GCIS
 %= end
     </div>
+    <p>How we use identifiers and semantic
+    information to provide points of reference and traceability.
+    </p>
+    
 </div>
 
-<div class="col-lg-3">
-    <h2 class="centered">Examples</h2>
-    <p>
-    Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
-    </p>
+<div class="col-lg-3 col-md-6">
     <div class="centered front-block">
     <%= link_to 'examples' => class => "btn btn-default btn-lg centered" => begin %>GCIS examples<%= end %>
     </div>
+    <p>
+    Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+    </p>
+    
 </div>
 
-<div class="col-lg-3">
-    <h2 class="centered">Data model</h2>
+<div class="col-lg-3 col-md-6">
+    <div class="centered front-block">
+    <%= link_to 'resources' => class => "btn btn-default btn-lg center-block" => begin %>GCIS data model<%= end %>
+    </div>
     <p>
     A description of how the information is structured, including
     the overlaps between relational and semantic representations of
     the information.
     </p>
-    <div class="centered front-block">
-    <%= link_to 'resources' => class => "btn btn-default btn-lg center-block" => begin %>GCIS data model<%= end %>
-    </div>
+    
 </div>
 
-<div class="col-lg-3">
-    <h2 class="centered">API Reference</h2>
-    <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
+<div class="col-lg-3 col-md-6">
     <div class="centered front-block">
     <%= link_to 'api_reference' => class => "btn btn-default btn-lg" => begin %>GCIS API reference<%= end %>
     </div>
+    <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
+    
     
 </div>
 
