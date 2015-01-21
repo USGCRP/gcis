@@ -58,7 +58,12 @@ img[src*="gcis_remote=1"] {
      * http://www.karlhorky.com/2012/06/cross-browser-image-grayscale-with-css.html
      */
 }
-
+#simple-menu {
+	margin-top: 8px;
+}
+.logo {
+	margin: 6px 4px 0 4px;
+}
 .row {
     margin-left:0px;
 }
@@ -81,7 +86,7 @@ table.densetable tr th {
     padding-top:0px;
     padding-bottom:0px;
 }
-.navbar .nav {
+.navbar-nav {
 	margin:  0 10px 0 15px;
 }
 a.white {
