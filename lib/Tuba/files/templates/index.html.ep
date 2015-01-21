@@ -20,27 +20,29 @@
         font-size: 70px;
         line-height: 1;
       }
-      .jumbotron .lead {
+      .lead {
         font-size: 24px;
         line-height: 1.25;
+        padding: 0 40px;
       }
-      .navbar .nav {
+      .navbar-nav {
       	margin:  0 10px 0 15px;
       }
       .navbar img.logo {
       	float: left;
       }
-      .span2 {
-      width: 16%;
+      
+      .col-lg-3 p {
+      	  min-height: 90px;
       }
-
+      
 </style>
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
 <h3>Providing structured global change information.</h3>
 </div>
-
+<div class="container">
 <p class="lead" itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
 The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
 Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
@@ -50,59 +52,59 @@ by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program
 </p>
 
 <center>
-    <a class='btn btn-primary btn-large' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
+    <a class='btn btn-default btn-primary btn-lg' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
     <p>Please note : the <a href="http://nca2014.globalchange.gov/downloads" target="_blank">PDF</a> is the official version of the Third National Climate Assessment
     (NCA).</p>
 </center>
 <br>
 
-<div class="row-fluid">
+<div class="row">
 
-<div class="span3">
+<div class="col-lg-3">
     <h2 class="centered">About</h2>
     <p>How we use identifiers and semantic
     information to provide points of reference and traceability.
     </p>
+    <div class="centered front-block">
+    %= link_to 'about' => class => 'btn btn-default btn-lg' => begin
+About the GCIS
+%= end
+    </div>
 </div>
 
-<div class="span3">
+<div class="col-lg-3">
     <h2 class="centered">Examples</h2>
     <p>
-Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
-</p>
+    Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+    </p>
+    <div class="centered front-block">
+    <%= link_to 'examples' => class => "btn btn-default btn-lg centered" => begin %>GCIS examples<%= end %>
+    </div>
 </div>
 
-<div class="span3">
+<div class="col-lg-3">
     <h2 class="centered">Data model</h2>
     <p>
     A description of how the information is structured, including
     the overlaps between relational and semantic representations of
     the information.
     </p>
+    <div class="centered front-block">
+    <%= link_to 'resources' => class => "btn btn-default btn-lg center-block" => begin %>GCIS data model<%= end %>
+    </div>
 </div>
 
-<div class="span3">
+<div class="col-lg-3">
     <h2 class="centered">API Reference</h2>
     <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
+    <div class="centered front-block">
+    <%= link_to 'api_reference' => class => "btn btn-default btn-lg" => begin %>GCIS API reference<%= end %>
+    </div>
+    
 </div>
 
 </div>
-<div class='row-fluid' style='text-align:center;'>
-<div class="span3">
-%= link_to 'about' => class => 'btn btn-default btn-inverse btn-large white' => begin
-About the GCIS
-%= end
-</div>
-<div class="span3">
-    <%= link_to 'examples' => class => "btn btn-default btn-inverse btn-large white" => begin %>GCIS examples<%= end %>
-</div>
-<div class="span3">
-    <%= link_to 'resources' => class => "btn btn-default btn-inverse btn-large white" => begin %>GCIS data model<%= end %>
-</div>
-<div class="span3">
-    <%= link_to 'api_reference' => class => "btn btn-default btn-large btn-inverse white" => begin %>GCIS API reference<%= end %>
-</div>
-</div>
+
 
 <br><br>
 <div class="navbar">
@@ -159,6 +161,7 @@ About the GCIS
     <a href="http://www.usda.gov" target="_agency" title="U.S. Department of Agriculture">
         <img src="/logo/USDA.png" style="width:41px;"></a>
     </span>
+</div>
 </div>
 </div>
 
