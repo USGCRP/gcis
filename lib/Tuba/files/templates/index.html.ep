@@ -49,12 +49,24 @@ products selected by the 13 member agencies, the GCIS serves as a key access poi
 by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program</a>. The GCIS is managed, integrated, and curated by USGCRP.
 </p>
 
-<center>
-    <a class='btn btn-primary btn-large' style='color:white;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
-    <p>Please note : the <a href="http://nca2014.globalchange.gov/downloads" target="_blank">PDF</a> is the official version of the Third National Climate Assessment
-    (NCA).</p>
-</center>
-<br>
+<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
+The Third National Climate Assessment<%= end %>
+
+<h3><center>Current holdings</center></h3>
+<div class="row-fluid">
+
+    % for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
+    <div class='span1 centered'>
+        % my $route = $type =~ /figure/ ? 'list_all_figures' : "list_$type";
+        %= link_to $route => class => 'btn btn-inverse white' => style => 'width:90%;' => begin
+        <%= pl($type) %><br>
+        %= format_number(get_counts($type))
+        %= end
+    </div>
+    % }
+</div>
+
+</div>
 
 <div class="row-fluid">
 

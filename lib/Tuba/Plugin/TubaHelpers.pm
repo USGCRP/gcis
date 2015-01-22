@@ -570,8 +570,17 @@ sub register {
             my $params = sprintf('%f_N_%f_E_',$lat,$lon);
             return $url->query(params => $params);
         });
-
-
+    $app->helper(get_counts => sub {
+            my $c = shift;
+            my $table = shift;
+            my $count = $c->orm->{$table}->{mng}->get_objects_count;
+            return $count;
+        });
+    $app->helper(format_number => sub {
+            my $c = shift;
+            my $num = shift;
+            return Number::Format->new->format_number($num, @_);
+        });
 }
 
 
