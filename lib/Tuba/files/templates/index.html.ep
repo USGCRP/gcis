@@ -2,6 +2,8 @@
 % title => "Global Change Information System",
 % description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
 <style>
 <style type="text/css">
       body {
@@ -35,6 +37,51 @@
       }
 
 </style>
+
+<center>
+<svg width="100px" height="100px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <polygon style="fill:none;stroke:#999999;stroke-width:.5px" points="">
+</svg>
+</center>
+
+%= javascript begin
+$(function() {
+    d3.selectAll('svg').attr('height','900px');
+    d3.selectAll('svg').attr('width','900px');
+    var pts = [
+       [ 124.846628329842,192.728879323751 ],
+       [ 75.153371670158,192.728879323751 ],
+       [ 32.1177490060914,167.882250993909 ],
+       [ 7.27112067624945,124.846628329842 ],
+       [ 7.27112067624944,75.153371670158 ],
+       [ 32.1177490060914,32.1177490060915 ],
+       [ 75.1533716701579,7.27112067624947 ],
+       [ 124.846628329842,7.27112067624944 ],
+       [ 167.882250993909,32.1177490060914 ],
+       [ 192.728879323751,75.153371670158 ],
+       [ 192.728879323751,124.846628329842 ],
+       [ 167.882250993909,167.882250993909 ],
+    ];
+    d3.select('polygon')
+    .attr('points',function(d) {
+        return pts.map( function(d) {
+            return d.join(",")
+        }
+       ).join(" ");
+    });
+    // better to do a data join
+    for (var j = 3; j < 6; j++) {
+        for (var i = 0; i < 12; i++) {
+            d3.selectAll('svg').append('path')
+                .attr('stroke','#dedede')
+                .attr('stroke-width','0.2')
+                .attr('d',function(d) {
+                    return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
+                });
+        }
+    }
+})
+%= end
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
