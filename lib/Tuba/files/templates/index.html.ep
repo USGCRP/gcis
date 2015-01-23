@@ -15,10 +15,12 @@
         text-align: center;
         min-height: 80px;
         margin: 0;
+        margin-bottom: 30px;
       }
       .jumbotron h1 {
         font-size: 50px;
         line-height: 1;
+        color: #196cc9;
       }
       .jumbotron .lead {
         font-size: 24px;
@@ -33,18 +35,20 @@
       .span2 {
       width: 16%;
       }
-
+      
+     
 </style>
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
 <h3>Providing structured global change information.</h3>
 </div>
-
+<div class="container">
 <div class='row-fluid'>
     <div class='span12 centered' id='svgwrap'>
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
+   </div>
 <p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
 The Third National Climate Assessment<%= end %></p>
 </div>
@@ -53,41 +57,44 @@ The Third National Climate Assessment<%= end %></p>
 <style>
     a.j {
         font-weight:bold;
+        font-size: 22px;
     }
     svg a text {
         fill:#000000;
+        font-size: 8px;
     }
 </style>
 
-<ul class='unstyled'>
-<li><%= link_to 'about' => class => 'j' => begin %>About<%= end %>
+<div class='row'>
+<div class="span7 offset4 ">
+<h2><%= link_to 'about' => class => 'j' => begin %>About<%= end %></h2>
     <p>Who we are, what the GCIS is, and how we use identifiers and semantic
     information to provide points of reference and traceability.
     </p>
-</li>
 
-<li>
-    <%= link_to 'examples' => class => 'j' => begin %>Examples<%= end %>
+
+<h2>
+    <%= link_to 'examples' => class => 'j' => begin %>Examples<%= end %></h2>
     <p>
 Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
 </p>
-</li>
 
-<li>
-    <%= link_to 'resources'=> class => 'j' => begin %>Data model<%= end %>
+
+<h2>
+    <%= link_to 'resources'=> class => 'j' => begin %>Data model<%= end %></h2>
     <p>
     A description of how the information is structured, including
     the overlaps between relational and semantic representations of
     the information.
     </p>
-</li>
 
-<li>
-    <%= link_to 'api_reference' =>class => 'j' =>  begin %>API reference<%= end %>
+
+<h2>
+    <%= link_to 'api_reference' =>class => 'j' =>  begin %>API reference<%= end %></h2>
     <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
-</li>
 
-</ul>
+
+</div>
 
 
 </div>
@@ -163,18 +170,18 @@ function randlist(n,c) {
 
 $(function() {
     var pts = [
-       [ 124.846628329842,192.728879323751 ],
-       [ 75.153371670158,192.728879323751 ],
+       [ 134.846628329842,192.728879323751 ],
+       [ 65.153371670158,192.728879323751 ],
        [ 32.1177490060914,167.882250993909 ],
-       [ 7.27112067624945,124.846628329842 ],
-       [ 7.27112067624944,75.153371670158 ],
+       [ 0.27112067624945,124.846628329842 ],
+       [ 2.27112067624944,75.153371670158 ],
        [ 32.1177490060914,32.1177490060915 ],
-       [ 75.1533716701579,7.27112067624947 ],
-       [ 124.846628329842,7.27112067624944 ],
+       [ 65.1533716701579,7.27112067624947 ],
+       [ 134.846628329842,7.27112067624944 ],
        [ 167.882250993909,32.1177490060914 ],
-       [ 192.728879323751,75.153371670158 ],
-       [ 192.728879323751,124.846628329842 ],
-       [ 167.882250993909,167.882250993909 ],
+       [ 198.728879323751,75.153371670158 ],
+       [ 198.728879323751,124.846628329842 ],
+       [ 177.882250993909,167.882250993909 ],
     ];
     var svg = d3.select('svg');
     //var w = $(window).width() * 0.4;
@@ -199,7 +206,7 @@ $(function() {
         for (var i = 0; i < 12; i++) {
             svg.append('path')
                 .attr('stroke','#eeeeee')
-                .attr('stroke-width','0.2')
+                .attr('stroke-width','0.3')
                 .attr('id','path_' + n )
                 .attr('d',function(d) {
                     return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
@@ -224,7 +231,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr('font-size','5px')
+        .attr('font-size','4px')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 
@@ -234,16 +241,16 @@ $(function() {
 
     var last = randlist(n,rand(5) + 1);
     for (var i = 0; i < last.length; i++) {
-            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#aaaaaa');
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#bbbbbb');
     }
 
     setInterval(function() {
         var t = randlist(n,rand(5) + 1);
         for (var i = 0; i < t.length; i++) {
-            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#aaaaaa');
+            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#e79fdf');
         }
         for (var i = 0; i < last.length; i++) {
-            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#eeeeee');
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#dddddd');
         }
 
        last = t;
