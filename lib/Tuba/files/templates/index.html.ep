@@ -197,7 +197,7 @@ $(function() {
 
     // better to do a data join
     var n = 0;
-    for (var j = 3; j < 6; j++) {
+    for (var j = 1; j < 6; j++) {
         for (var i = 0; i < 12; i++) {
             svg.append('path')
                 .attr('stroke','#eeeeee')
@@ -235,13 +235,13 @@ $(function() {
     .attr('x',50).attr('y',50)
     .attr('width','100').attr('height',100);
 
-    var last = randlist(n,rand(4) + 1);
+    var last = randlist(n,rand(5) + 1);
     for (var i = 0; i < last.length; i++) {
             d3.select('#path_' + last[i]).transition().duration(2000).attr('stroke','#000000');
     }
 
     setInterval(function() {
-        var t = randlist(n,rand(4) + 1);
+        var t = randlist(n,rand(5) + 1);
         for (var i = 0; i < t.length; i++) {
             d3.select('#path_' + t[i]).transition().duration(2000).attr('stroke','#000000');
         }
