@@ -53,6 +53,9 @@ The Global Change Information System (GCIS) is a web-based resource for traceabl
     a.j {
         font-weight:bold;
     }
+    svg a text {
+        fill:#000000;
+    }
 </style>
 
 <ul class='unstyled'>
@@ -221,7 +224,6 @@ $(function() {
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
         .attr('font-size','5px')
-        .attr('fill','black')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 
@@ -244,7 +246,7 @@ $(function() {
         }
 
        last = t;
-    },10000);
+    },4500);
 })
 %= end
 
