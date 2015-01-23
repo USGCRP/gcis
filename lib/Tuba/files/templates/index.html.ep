@@ -228,8 +228,8 @@ $(function() {
         .text(function(d) { return d.text } )
 
     svg.append('image').attr('xlink:href','/usgcrp-globe-trans.png')
-    .attr('x',50).attr('y',50)
-    .attr('width','100').attr('height',100);
+    .attr('x',25).attr('y',25)
+    .attr('width','150').attr('height',150);
 
     var last = randlist(n,rand(5) + 1);
     for (var i = 0; i < last.length; i++) {
