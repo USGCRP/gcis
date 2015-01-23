@@ -40,7 +40,6 @@
 
 <center>
 <svg width="100px" height="100px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <polygon style="fill:none;stroke:#999999;stroke-width:.5px" points="">
 </svg>
 </center>
 
@@ -62,17 +61,21 @@ $(function() {
        [ 192.728879323751,124.846628329842 ],
        [ 167.882250993909,167.882250993909 ],
     ];
-    d3.select('polygon')
-    .attr('points',function(d) {
-        return pts.map( function(d) {
+    var svg = d3.select('svg');
+    var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
+    polygon.attr('style','fill:none;stroke:#999999;stroke-width:.5px');
+    polygon.attr('points',function(d) {
+        console.log('got',d);
+        return d.map( function(d) {
             return d.join(",")
         }
        ).join(" ");
     });
+
     // better to do a data join
     for (var j = 3; j < 6; j++) {
         for (var i = 0; i < 12; i++) {
-            d3.selectAll('svg').append('path')
+            svg.append('path')
                 .attr('stroke','#dedede')
                 .attr('stroke-width','0.2')
                 .attr('d',function(d) {
@@ -80,6 +83,15 @@ $(function() {
                 });
         }
     }
+
+    //svg.append('text')
+    //    .attr('x', pts[0][0])
+    //    .attr('y', pts[0][1])
+    //    .attr('font-family','sans-serif')
+    //    .attr('font-size','20px')
+    //    .attr('fill','red')
+
+
 })
 %= end
 
