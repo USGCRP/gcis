@@ -38,15 +38,28 @@
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
+<h3>Providing structured global change information.</h3>
 </div>
 
-<div style='float:right;'>
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
-</div>
-
-<p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
+<div class='row-fluid'>
+    <div class='span4'>
+        <p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
 The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
+Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
+products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
+products selected by the 13 member agencies, the GCIS serves as a key access point to assessments, reports, and tools produced
+by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program</a>. The GCIS is managed, integrated, and curated by USGCRP.
 </p>
+<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
+The Third National Climate Assessment<%= end %>
+</p>
+
+
+    </div>
+    <div class='span8 centered' id='svgwrap'>
+        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+    </div>
+</div>
 
 
 <style>
@@ -91,9 +104,6 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 
 </div>
 
-<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
-The Third National Climate Assessment<%= end %>
-<br>
 <div class="navbar">
         <div class='thumbnails' style='text-align:center;'>
     <span style="padding:1px;margin:1px;">
@@ -179,10 +189,13 @@ $(function() {
        [ 167.882250993909,167.882250993909 ],
     ];
     var svg = d3.select('svg');
-    var w = $(window).width() * 0.6;
-    var h = $(window).height() * 0.6;
+    //var w = $(window).width() * 0.4;
+    var h = $(window).height() * 0.4;
+    var w = document.getElementById('svgwrap').offsetWidth;
+
     svg.attr('height',h);
     svg.attr('width',w);
+
     var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
     polygon.attr('style','fill:none;stroke:#eeeeee;stroke-width:.5px');
     polygon.attr('points',function(d) {
