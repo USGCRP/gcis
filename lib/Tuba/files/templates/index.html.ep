@@ -87,23 +87,15 @@ $(function() {
 
     var a = svg.selectAll('a')
     .data([
-           { text : 'report', i : 0 },
-           { text : 'figure', i : 1 },
-           { text : 'book', i : 2 },
-           { text : 'journal', i : 3 },
-           { text : 'article', i : 4 },
-           { text : 'organization', i : 5 },
-           { text : 'person', i : 6 },
-           { text : 'dataset', i : 7 },
-           { text : 'platform', i : 8 },
-           { text : 'instrument', i : 9 },
-           { text : 'model', i : 10 },
-           { text : 'scenario', i : 11 }
+% my $i;
+% for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
+    { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
+% }
           ])
         .enter()
         .append('a');
 
-    a.attr('xlink:href', function(d) { return '/' + d.text } );
+    a.attr('xlink:href', function(d) { return d.link } );
     var text = a.append('text');
 
     text.attr( 'x', function (d) { return pts[d.i][0] } )
