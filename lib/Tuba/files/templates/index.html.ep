@@ -246,20 +246,20 @@ $(function() {
 
     var last = randlist(n,rand(5) + 1);
     for (var i = 0; i < last.length; i++) {
-            d3.select('#path_' + last[i]).transition().duration(2000).attr('stroke','#000000');
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#aaaaaa');
     }
 
     setInterval(function() {
         var t = randlist(n,rand(5) + 1);
         for (var i = 0; i < t.length; i++) {
-            d3.select('#path_' + t[i]).transition().duration(2000).attr('stroke','#000000');
+            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#aaaaaa');
         }
         for (var i = 0; i < last.length; i++) {
-            d3.select('#path_' + last[i]).transition().duration(2000).attr('stroke','#eeeeee');
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#eeeeee');
         }
 
        last = t;
-    },4500);
+    },2000);
 })
 %= end
 
