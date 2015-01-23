@@ -39,14 +39,12 @@
 </style>
 
 <center>
-<svg width="100px" height="100px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1">
 </svg>
 </center>
 
 %= javascript begin
 $(function() {
-    d3.selectAll('svg').attr('height','900px');
-    d3.selectAll('svg').attr('width','900px');
     var pts = [
        [ 124.846628329842,192.728879323751 ],
        [ 75.153371670158,192.728879323751 ],
@@ -62,10 +60,13 @@ $(function() {
        [ 167.882250993909,167.882250993909 ],
     ];
     var svg = d3.select('svg');
+    var w = $(window).width() * 0.8;
+    var h = $(window).height() * 0.8;
+    svg.attr('height',h);
+    svg.attr('width',w);
     var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
-    polygon.attr('style','fill:none;stroke:#999999;stroke-width:.5px');
+    polygon.attr('style','fill:none;stroke:#dedede;stroke-width:.5px');
     polygon.attr('points',function(d) {
-        console.log('got',d);
         return d.map( function(d) {
             return d.join(",")
         }
@@ -84,12 +85,43 @@ $(function() {
         }
     }
 
-    //svg.append('text')
-    //    .attr('x', pts[0][0])
-    //    .attr('y', pts[0][1])
-    //    .attr('font-family','sans-serif')
-    //    .attr('font-size','20px')
-    //    .attr('fill','red')
+    var text = svg.selectAll('text')
+    .data([
+           { text : 'report', i : 0 },
+           { text : 'figure', i : 1 },
+           { text : 'book', i : 2 },
+           { text : 'journal', i : 3 },
+           { text : 'article', i : 4 },
+           { text : 'organization', i : 5 },
+           { text : 'person', i : 6 },
+           { text : 'dataset', i : 7 },
+           { text : 'platform', i : 8 },
+           { text : 'instrument', i : 9 },
+           { text : 'model', i : 10 },
+           { text : 'scenario', i : 11 }
+          ])
+        .enter()
+        .append('text');
+
+    text.attr( 'x', function (d) { return pts[d.i][0] } )
+        .attr( 'y', function (d) { return pts[d.i][1] } )
+        .attr('font-family','sans-serif')
+        .attr('font-size','4px')
+        .attr('fill','black')
+        .attr('text-anchor','middle')
+        .text(function(d) { return d.text } )
+
+
+//    for (var i=0; i<12; i++) {
+//        svg.append('text')
+//            .attr('x', pts[i][0])
+//            .attr('y', pts[i][1])
+//            .attr('font-family','sans-serif')
+//            .attr('font-size','8px')
+//            .attr('fill','black')
+//            .attr('text-anchor','middle')
+//            .text('hello');
+//    }
 
 
 })
