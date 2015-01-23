@@ -42,23 +42,11 @@
 </div>
 
 <div class='row-fluid'>
-    <div class='span4'>
-        <p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
-The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
-Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
-products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
-products selected by the 13 member agencies, the GCIS serves as a key access point to assessments, reports, and tools produced
-by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program</a>. The GCIS is managed, integrated, and curated by USGCRP.
-</p>
-<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
-The Third National Climate Assessment<%= end %>
-</p>
-
-
-    </div>
-    <div class='span8 centered' id='svgwrap'>
+    <div class='span12 centered' id='svgwrap'>
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
+<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
+The Third National Climate Assessment<%= end %></p>
 </div>
 
 
@@ -190,7 +178,7 @@ $(function() {
     ];
     var svg = d3.select('svg');
     //var w = $(window).width() * 0.4;
-    var h = $(window).height() * 0.4;
+    var h = $(window).height() * 0.6;
     var w = document.getElementById('svgwrap').offsetWidth;
 
     svg.attr('height',h);
