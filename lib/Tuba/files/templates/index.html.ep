@@ -85,7 +85,7 @@ $(function() {
         }
     }
 
-    var text = svg.selectAll('text')
+    var a = svg.selectAll('a')
     .data([
            { text : 'report', i : 0 },
            { text : 'figure', i : 1 },
@@ -101,7 +101,10 @@ $(function() {
            { text : 'scenario', i : 11 }
           ])
         .enter()
-        .append('text');
+        .append('a');
+
+    a.attr('xlink:href', function(d) { return '/' + d.text } );
+    var text = a.append('text');
 
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
@@ -110,18 +113,6 @@ $(function() {
         .attr('fill','black')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
-
-
-//    for (var i=0; i<12; i++) {
-//        svg.append('text')
-//            .attr('x', pts[i][0])
-//            .attr('y', pts[i][1])
-//            .attr('font-family','sans-serif')
-//            .attr('font-size','8px')
-//            .attr('fill','black')
-//            .attr('text-anchor','middle')
-//            .text('hello');
-//    }
 
 
 })
