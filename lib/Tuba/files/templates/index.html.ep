@@ -13,13 +13,11 @@
 
       .jumbotron {
         text-align: center;
-        min-height: 110px;
+        min-height: 80px;
         margin: 0;
-      	padding: 100px 0;
-      	background: #ffffff url("/usgcrp-globe-trans.png") no-repeat center top;
       }
       .jumbotron h1 {
-        font-size: 70px;
+        font-size: 50px;
         line-height: 1;
       }
       .jumbotron .lead {
@@ -38,82 +36,14 @@
 
 </style>
 
-<center>
-<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1">
-</svg>
-</center>
-
-%= javascript begin
-$(function() {
-    var pts = [
-       [ 124.846628329842,192.728879323751 ],
-       [ 75.153371670158,192.728879323751 ],
-       [ 32.1177490060914,167.882250993909 ],
-       [ 7.27112067624945,124.846628329842 ],
-       [ 7.27112067624944,75.153371670158 ],
-       [ 32.1177490060914,32.1177490060915 ],
-       [ 75.1533716701579,7.27112067624947 ],
-       [ 124.846628329842,7.27112067624944 ],
-       [ 167.882250993909,32.1177490060914 ],
-       [ 192.728879323751,75.153371670158 ],
-       [ 192.728879323751,124.846628329842 ],
-       [ 167.882250993909,167.882250993909 ],
-    ];
-    var svg = d3.select('svg');
-    var w = $(window).width() * 0.8;
-    var h = $(window).height() * 0.8;
-    svg.attr('height',h);
-    svg.attr('width',w);
-    var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
-    polygon.attr('style','fill:none;stroke:#dedede;stroke-width:.5px');
-    polygon.attr('points',function(d) {
-        return d.map( function(d) {
-            return d.join(",")
-        }
-       ).join(" ");
-    });
-
-    // better to do a data join
-    for (var j = 3; j < 6; j++) {
-        for (var i = 0; i < 12; i++) {
-            svg.append('path')
-                .attr('stroke','#dedede')
-                .attr('stroke-width','0.2')
-                .attr('d',function(d) {
-                    return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
-                });
-        }
-    }
-
-    var a = svg.selectAll('a')
-    .data([
-% my $i;
-% for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
-    { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
-% }
-          ])
-        .enter()
-        .append('a');
-
-    a.attr('xlink:href', function(d) { return d.link } );
-    var text = a.append('text');
-
-    text.attr( 'x', function (d) { return pts[d.i][0] } )
-        .attr( 'y', function (d) { return pts[d.i][1] } )
-        .attr('font-family','sans-serif')
-        .attr('font-size','4px')
-        .attr('fill','black')
-        .attr('text-anchor','middle')
-        .text(function(d) { return d.text } )
-
-
-})
-%= end
-
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
-<h3>Providing structured global change information.</h3>
 </div>
+
+<center>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+</center>
+
 
 <p class="lead" itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
 The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
@@ -125,26 +55,6 @@ by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program
 
 <p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
 The Third National Climate Assessment<%= end %>
-
-<h4><center>Information products:</center></h4>
-<div class="row-fluid">
-    % my $i;
-
-    % for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
-    <div class='span2 centered'>
-        % my $route = $type =~ /figure/ ? 'list_all_figures' : "list_$type";
-        %= link_to $route => class => 'btn btn-default' => style => 'width:90%;' => begin
-        <%= pl($type) %><br>
-        %= format_number(get_counts($type))
-        %= end
-    </div>
-        % if (!(++$i % 6)) {
-        </div><div class='row-fluid'>
-        % }
-    % }
-</div>
-
-</div>
 
 <div class="row-fluid">
 
@@ -251,5 +161,76 @@ About the GCIS
     </span>
 </div>
 </div>
+
+%= javascript begin
+$(function() {
+    var pts = [
+       [ 124.846628329842,192.728879323751 ],
+       [ 75.153371670158,192.728879323751 ],
+       [ 32.1177490060914,167.882250993909 ],
+       [ 7.27112067624945,124.846628329842 ],
+       [ 7.27112067624944,75.153371670158 ],
+       [ 32.1177490060914,32.1177490060915 ],
+       [ 75.1533716701579,7.27112067624947 ],
+       [ 124.846628329842,7.27112067624944 ],
+       [ 167.882250993909,32.1177490060914 ],
+       [ 192.728879323751,75.153371670158 ],
+       [ 192.728879323751,124.846628329842 ],
+       [ 167.882250993909,167.882250993909 ],
+    ];
+    var svg = d3.select('svg');
+    var w = $(window).width() * 0.8;
+    var h = $(window).height() * 0.8;
+    svg.attr('height',h);
+    svg.attr('width',w);
+    var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
+    polygon.attr('style','fill:none;stroke:#dedede;stroke-width:.5px');
+    polygon.attr('points',function(d) {
+        return d.map( function(d) {
+            return d.join(",")
+        }
+       ).join(" ");
+    });
+
+    // better to do a data join
+    for (var j = 3; j < 6; j++) {
+        for (var i = 0; i < 12; i++) {
+            svg.append('path')
+                .attr('stroke','#dedede')
+                .attr('stroke-width','0.2')
+                .attr('d',function(d) {
+                    return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
+                });
+        }
+    }
+
+    var a = svg.selectAll('a')
+    .data([
+% my $i;
+% for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
+    { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
+% }
+          ])
+        .enter()
+        .append('a');
+
+    a.attr('xlink:href', function(d) { return d.link } );
+    var text = a.append('text');
+
+    text.attr( 'x', function (d) { return pts[d.i][0] } )
+        .attr( 'y', function (d) { return pts[d.i][1] } )
+        .attr('font-family','sans-serif')
+        .attr('font-size','4px')
+        .attr('fill','black')
+        .attr('text-anchor','middle')
+        .text(function(d) { return d.text } )
+
+    svg.append('image').attr('xlink:href','/usgcrp-globe-trans.png')
+    .attr('x',50).attr('y',50)
+    .attr('width','100').attr('height',100);
+
+})
+%= end
+
 
 
