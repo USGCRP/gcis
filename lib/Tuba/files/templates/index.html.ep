@@ -163,6 +163,17 @@ About the GCIS
 </div>
 
 %= javascript begin
+function rand(n) {
+    return Math.floor(Math.random() * n);
+}
+function randlist(n,c) {
+    var l = [];
+    for (var i=0;i<c;i++) {
+        l.push( rand(n) );
+    }
+    return l;
+}
+
 $(function() {
     var pts = [
        [ 124.846628329842,192.728879323751 ],
@@ -179,12 +190,12 @@ $(function() {
        [ 167.882250993909,167.882250993909 ],
     ];
     var svg = d3.select('svg');
-    var w = $(window).width() * 0.8;
-    var h = $(window).height() * 0.8;
+    var w = $(window).width() * 0.6;
+    var h = $(window).height() * 0.6;
     svg.attr('height',h);
     svg.attr('width',w);
     var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
-    polygon.attr('style','fill:none;stroke:#dedede;stroke-width:.5px');
+    polygon.attr('style','fill:none;stroke:#eeeeee;stroke-width:.5px');
     polygon.attr('points',function(d) {
         return d.map( function(d) {
             return d.join(",")
@@ -193,23 +204,26 @@ $(function() {
     });
 
     // better to do a data join
+    var n = 0;
     for (var j = 3; j < 6; j++) {
         for (var i = 0; i < 12; i++) {
             svg.append('path')
-                .attr('stroke','#dedede')
+                .attr('stroke','#eeeeee')
                 .attr('stroke-width','0.2')
+                .attr('id','path_' + n )
                 .attr('d',function(d) {
                     return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
                 });
+                n++;
         }
     }
 
     var a = svg.selectAll('a')
     .data([
-% my $i;
-% for my $type (qw/report figure book journal article organization person  dataset platform instrument model scenario/) {
-    { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
-% }
+        % my $i;
+        % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
+        % }
           ])
         .enter()
         .append('a');
@@ -220,7 +234,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr('font-size','4px')
+        .attr('font-size','5px')
         .attr('fill','black')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
@@ -229,6 +243,22 @@ $(function() {
     .attr('x',50).attr('y',50)
     .attr('width','100').attr('height',100);
 
+    var last = randlist(n,rand(4) + 1);
+    for (var i = 0; i < last.length; i++) {
+            d3.select('#path_' + last[i]).transition().duration(2000).attr('stroke','#000000');
+    }
+
+    setInterval(function() {
+        var t = randlist(n,rand(4) + 1);
+        for (var i = 0; i < t.length; i++) {
+            d3.select('#path_' + t[i]).transition().duration(2000).attr('stroke','#000000');
+        }
+        for (var i = 0; i < last.length; i++) {
+            d3.select('#path_' + last[i]).transition().duration(2000).attr('stroke','#eeeeee');
+        }
+
+       last = t;
+    },1400);
 })
 %= end
 
