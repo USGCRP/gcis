@@ -55,10 +55,7 @@ The Third National Climate Assessment<%= end %></p>
 
 
 <style>
-    a.j {
-        font-weight:bold;
-        font-size: 22px;
-    }
+    
     svg a text {
         fill:#000000;
         font-size: 8px;
