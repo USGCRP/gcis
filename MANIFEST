@@ -667,7 +667,6 @@ META.json
 META.yml
 README.md
 README.osx
-README.ubuntu
 t/001_start_db.t
 t/002_basic.t
 t/002_objects.t
