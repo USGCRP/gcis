@@ -20,7 +20,7 @@
       .jumbotron h1 {
         font-size: 50px;
         line-height: 1;
-        color: #196cc9;
+        color: #013d87;
       }
       .jumbotron .lead {
         font-size: 24px;
@@ -33,7 +33,17 @@
       	float: left;
       }
       .span2 {
-      width: 16%;
+       width: 16%;
+      }
+      #svgwrap a text {
+        fill: #000000;
+        font-size: 5px;
+      }
+      h2 {
+      	font-size: 20px;
+      }
+      .lead {
+      	margin: 15px 0;
       }
       
      
@@ -45,7 +55,7 @@
 </div>
 <div class="container">
 <div class='row-fluid'>
-    <div class='span12 centered' id='svgwrap'>
+    <div class='span12' id='svgwrap'>
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
    </div>
@@ -56,14 +66,11 @@ The Third National Climate Assessment<%= end %></p>
 
 <style>
     
-    svg a text {
-        fill:#000000;
-        font-size: 8px;
-    }
+    
 </style>
 
 <div class='row'>
-<div class="span7 offset4 ">
+<div class="span7 offset3 ">
 <h2><%= link_to 'about' => class => 'j' => begin %>About<%= end %></h2>
     <p>Who we are, what the GCIS is, and how we use identifiers and semantic
     information to provide points of reference and traceability.
@@ -182,7 +189,7 @@ $(function() {
     ];
     var svg = d3.select('svg');
     //var w = $(window).width() * 0.4;
-    var h = $(window).height() * 0.6;
+    var h = $(window).height() * 0.4;
     var w = document.getElementById('svgwrap').offsetWidth;
 
     svg.attr('height',h);
@@ -244,7 +251,7 @@ $(function() {
     setInterval(function() {
         var t = randlist(n,rand(5) + 1);
         for (var i = 0; i < t.length; i++) {
-            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#e79fdf');
+            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#db81d1');
         }
         for (var i = 0; i < last.length; i++) {
             d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#dddddd');
