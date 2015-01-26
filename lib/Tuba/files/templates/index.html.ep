@@ -36,7 +36,7 @@
        width: 16%;
       }
       #svgwrap a text {
-        
+        fill: #000000;
         font-size: 5px;
       }
       h2 {
