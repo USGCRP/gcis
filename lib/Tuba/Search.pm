@@ -39,7 +39,7 @@ sub keyword {
     }
     $c->stash(result_count_text => $result_count_text);
     $c->respond_to(
-        html => sub { shift->render(results => \@results); },
+        any => sub { shift->render(results => \@results); },
         json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
         yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
     );
