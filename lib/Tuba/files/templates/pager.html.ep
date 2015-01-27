@@ -6,31 +6,31 @@
 % my $count = stash 'count';
 % my $per_page = stash 'per_page';
 <div class="form form-inline">
-<div class='row-fluid'>
-    <div class='span5 pull-left'>
-        <span class='btn btn-small'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
+<div class='row'>
+    <div class='col-md-5 pull-left'>
+        <span class='btn btn-default btn-sm'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
         % if ($show_search_box) {
-           <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'span8 input',
+           <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'col-md-8 input form-control',
             placeholder => 'search';
             %>
         % }
     </div>
     % if ($page && $pages > 1) {
-        <div class='span2 text-center'>
+        <div class='col-md-2 text-center'>
             <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
                 % if ($page==1) {
-                    <span class='btn btn-small disabled'><i class='icon-backward'></i></span>
+                    <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-backward'></i></span>
                     % } else {
-                    <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-small' => begin %><i class='icon-backward'></i><%= end %><
+                    <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-backward'></i><%= end %><
                 % }
 
-                <button class='btn btn-small dropdown-toggle' data-toggle='dropdown'>
+                <button class='btn btn-default btn-sm dropdown-toggle' data-toggle='dropdown'>
                     <%= $page %> <span class='caret'></span>
                 </button>
                 <ul class='dropdown-menu' role='menu' area-labelledby='dLabel'>
                     % if (stash 'favorite_ok') {
-                        <li><%= link_to url_with->query([page => '♥']) => begin %><i class='icon-heart'></i><%= end %></li>
+                        <li><%= link_to url_with->query([page => '♥']) => begin %><i class='glyphicon glyphicon-heart'></i><%= end %></li>
                     % }
                 % my $i = 1;
                 % while ($i <= $pages) {
@@ -43,21 +43,21 @@
                 % }
                 </ul>
                 % if ($page==$pages) {
-                    <span class='btn btn-small disabled'><i class='icon-forward'></i></span>
+                    <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-forward'></i></span>
                 % } else {
-                    <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-small' => begin %><i class='icon-forward'></i><%= end %>
+                    <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-forward'></i><%= end %>
                 % }
             </div>
         </div>
     % }
-    <div class='span1 pull-right'>
+    <div class='col-md-1 pull-right'>
         <div class='btn-group'>
             % if (param 'thumbs') {
-                <%= link_to url_with->query([thumbs => 0]) => class => 'btn btn-small' => begin %><i class='icon-th-list'></i><%= end %>
-                <div class='btn btn-small active'><i class='icon-th'></i></div>
+                <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>
+                <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th'></i></div>
             % } else {
-                <div class='btn btn-small active'><i class='icon-th-list'></i></div>
-                <%= link_to url_with->query([thumbs => 1]) => class => 'btn btn-small' => begin %><i class='icon-th'></i><%= end %>
+                <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th-list'></i></div>
+                <%= link_to url_with->query([thumbs => 1]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th'></i><%= end %>
             % }
         </div>
     </div>
