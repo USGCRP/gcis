@@ -3,6 +3,7 @@ bin/tuba
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
+CONTRIBUTING.md
 db/dist/base.sql
 db/dist/base_data.sql
 db/dist/docs/gcis.dot
@@ -683,6 +684,7 @@ t/011_sparql.t
 t/012_lexicon.t
 t/013_model.t
 t/014_array.t
+t/015_search.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm
