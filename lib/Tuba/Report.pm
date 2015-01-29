@@ -253,6 +253,8 @@ sub make_tree_for_show {
       identifier              => $report->identifier,
       publication_year        => $report->publication_year,
       summary                 => $report->summary,
+      contact_email           => $report->contact_email,
+      contact_note            => $report->contact_note,
       contributors => [map $_->as_tree(c => $c), $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,
