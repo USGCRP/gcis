@@ -1,34 +1,25 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis rdf cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
-## Identifier and title
    dcterms:identifier "<%= $table->identifier %>";
+% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
+   % if (! $chapter->number) {
+   gcis:tableNumber "<%= $table->ordinal %>"^^xsd:string;
+   % } else {
+   gcis:tableNumber "<%= $chapter->number %>.<%= $table->ordinal %>"^^xsd:string;
+   % }
+% }
    dcterms:title "<%= no_tbibs($table->title) %>"^^xsd:string;
-
-## The number of the Chapter, the URI for the chapter, and URI for the report in which the table appears:
-% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
-   gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
-   gcis:isTableOf <<%= uri($chapter) %>>;
-   gcis:isTableOf <<%= obj_uri_for($report)->to_abs %>>;
-% }
-
-## This table is the #th table in that particular chapter, and as such has designation Table # :
-% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
-   rdf:value "<%= $table->ordinal %>"^^xsd:integer;
-   gcis:tableNumber "<%= $chapter->number %>.<%= $table->ordinal %>"^^xsd:float;
-% }   
-
-## Table caption:
    gcis:hasCaption "<%= no_tbibs($table->caption) %>"^^xsd:string;
-
-% for my $array ($table->arrays) {
-   gcis:hasArray <<%= obj_uri_for($array)->to_abs %>>;
+%#
+% if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
+   gcis:isTableOf <<%= uri($chapter) %>>;
+   gcis:isTableOf <<%= uri($report) %>>;
 % }
-
-% for my $keyword ($table->keywords) {
-## Keywords associated with table   
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%#
+% for my $array ($table->arrays) {
+   gcis:hasArray <<%= uri($array) %>>;
 % }
 
    a gcis:Table .
@@ -36,6 +27,10 @@
 % end
 
 
-
 ## This table cites the following entities:
 %= include 'prov';
+%#
+%# % for my $keyword ($table->keywords) {
+%# ## Keywords associated with table
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }

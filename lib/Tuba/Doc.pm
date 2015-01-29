@@ -25,12 +25,16 @@ limit 10",
         },
         { desc => "List all of the findings from the Third National Climate Assessment.",
           code => <<'SPARQL',
+
 PREFIX dcterms: <http://purl.org/dc/terms/>
+PREFIX dbpedia: <http://dbpedia.org/resource/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
 SELECT
- fn:concat($chapterNumber,'.',$findingNumber) as $number
- $statement
- $finding as $url
+    str($findingNumber) as $findingNumber 
+    str($statement) as $statement 
+    $finding 
+ 
 FROM <http://data.globalchange.gov>
 WHERE {
     $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
@@ -38,17 +42,18 @@ WHERE {
     $report gcis:hasChapter $chapter .
     $finding gcis:isFindingOf $chapter .
     $finding dcterms:description $statement .
-    $finding gcis:FindingNumber $findingNumber .
+    $finding dbpedia:Natural_number $ordinal .
+    $finding gcis:findingNumber $findingNumber .
     $finding a gcis:Finding .
     $chapter gcis:chapterNumber $chapterNumber .
 }
-ORDER BY $chapterNumber $findingNumber
+ORDER BY $chapterNumber $ordinal
 SPARQL
         },
         {
           desc => "List 10 figures and datasets from which they were derived.",
           code =>
-"select ?figure,?dataset FROM <http://data.globalchange.gov>
+"select ?figure ?dataset FROM <http://data.globalchange.gov>
 where {
  ?figure gcis:hasImage ?img .
  ?img prov:wasDerivedFrom ?dataset
@@ -63,6 +68,10 @@ limit 10"
     }
     $c->stash(sparql_url => $sparql_url);
     $c->stash(sparql => $sparql);
+    $c->respond_to(
+        json => { json => $sparql },
+        any => sub { shift->render }
+    );
 }
 
 1;

@@ -1,8 +1,10 @@
 {
    "abstract" : "The Useful Backend API",
-   "author" : [],
+   "author" : [
+      "unknown"
+   ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4203",
+   "generated_by" : "Module::Build version 0.421",
    "license" : [
       "agpl_3"
    ],
@@ -31,7 +33,7 @@
          "requires" : {
             "Algorithm::Permute" : "0",
             "Crypt::OpenSSL::RSA" : "0",
-            "DBD::Pg" : "3.003000",
+            "DBD::Pg" : "3.003",
             "DBIx::Connector" : "0",
             "DBIx::Custom" : "0",
             "DBIx::Simple" : "0",
@@ -40,14 +42,17 @@
             "DateTime::Format::Human::Duration" : "0",
             "Digest::SHA1" : "0",
             "File::ShareDir" : "1.00",
+            "IO::Socket::SSL" : "2",
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
             "LWP::UserAgent" : "0",
+            "Lingua::EN::Inflect" : "0",
             "Mojolicious" : "5.16",
             "Mojolicious::Plugin::InstallablePaths" : "0",
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
             "Number::Format" : "0",
+            "Path::Class" : "0",
             "Pg::hstore" : "0",
             "RDF::Query" : "0",
             "RDF::Trine" : "0",
@@ -69,7 +74,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.09"
+         "version" : "1.21"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -131,6 +136,9 @@
       "Tuba::DB::Object::Country" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Country.pm"
       },
+      "Tuba::DB::Object::Exterm" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Exterm.pm"
+      },
       "Tuba::DB::Object::Figure" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Figure.pm"
       },
@@ -158,14 +166,23 @@
       "Tuba::DB::Object::Image" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Image.pm"
       },
+      "Tuba::DB::Object::Instrument" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Instrument.pm"
+      },
       "Tuba::DB::Object::Journal" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Journal.pm"
+      },
+      "Tuba::DB::Object::Lexicon" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Lexicon.pm"
       },
       "Tuba::DB::Object::Manager" : {
          "file" : "lib/Tuba/DB/Object/Manager.pm"
       },
       "Tuba::DB::Object::Methodology" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Methodology.pm"
+      },
+      "Tuba::DB::Object::ModelRun" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/ModelRun.pm"
       },
       "Tuba::DB::Object::Organization" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm"
@@ -254,6 +271,12 @@
       "Tuba::Log" : {
          "file" : "lib/Tuba/Log.pm"
       },
+      "Tuba::Model" : {
+         "file" : "lib/Tuba/Model.pm"
+      },
+      "Tuba::ModelRun" : {
+         "file" : "lib/Tuba/ModelRun.pm"
+      },
       "Tuba::Organization" : {
          "file" : "lib/Tuba/Organization.pm"
       },
@@ -271,6 +294,9 @@
       },
       "Tuba::Plugin::TubaHelpers" : {
          "file" : "lib/Tuba/Plugin/TubaHelpers.pm"
+      },
+      "Tuba::Project" : {
+         "file" : "lib/Tuba/Project.pm"
       },
       "Tuba::Publication" : {
          "file" : "lib/Tuba/Publication.pm"
@@ -290,6 +316,9 @@
       "Tuba::RouteParam" : {
          "file" : "lib/Tuba/RouteParam.pm"
       },
+      "Tuba::Scenario" : {
+         "file" : "lib/Tuba/Scenario.pm"
+      },
       "Tuba::Search" : {
          "file" : "lib/Tuba/Search.pm"
       },
@@ -304,5 +333,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.09"
+   "version" : "1.21"
 }

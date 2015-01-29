@@ -1,0 +1,20 @@
+% layout 'default', namespaces => [qw/dcterms bibo gcis skos/];
+%= filter_lines_with empty_predicate() => begin
+%#
+<<%= current_resource %>>
+   dcterms:identifier "<%= $model_run->stringify %>";
+   bibo:doi "<%= $model_run->doi %>";
+   gcis:Model <<%= uri($model_run->model) %>>;
+   gcis:Scenario <<%= uri($model_run->scenario) %>>;
+   gcis:Project <<%= uri($model_run->project) %>>;
+   gcis:hasSpatialResolution "<%= $model_run->spatial_resolution %>";
+   gcis:hasTemporalResolution "<%= human_duration($model_run->time_resolution) %>";
+% if (my $activity = $model_run->activity) {
+   gcis:Activity <<%= uri($model_run->activity) %>>;
+% }
+
+   a gcis:ModelRun .
+% end
+
+
+%= include 'other_identifiers', gcid => $model_run->uri($self);

@@ -1,6 +1,7 @@
 language: perl
 perl:
   - "5.16"
+  - "5.20"
 before_install :
   - sudo apt-get install libuuid1 uuid-dev raptor2-utils
   - cpanm --quiet -notest Devel::Cover Devel::Cover::Report::Coveralls

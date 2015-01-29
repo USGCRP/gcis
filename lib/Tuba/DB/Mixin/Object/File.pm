@@ -1,6 +1,7 @@
 package Tuba::DB::Object::File;
 # Tuba::DB::Mixin::Object::File;
 use Mojo::ByteStream qw/b/;
+use Mojo::Parameters;
 use Data::UUID::LibUUID;
 use Path::Class ();
 use Tuba::Log qw/logger/;
@@ -34,13 +35,28 @@ sub as_tree {
     my $c = $a{c} or return $tree;
     $tree->{url} = $s->asset_location;
     $tree->{href} = $c->url_for($tree->{url})->to_abs;
+    if (my $thumb = $tree->{thumbnail}) {
+        my $path = get_config->{asset_path};
+        my $url = $c->req->url->clone;
+        $url->query(Mojo::Parameters->new());
+        $url->path("$path/$thumb");
+        $tree->{thumbnail_href} = $url->to_abs;
+    } else {
+        $tree->{thumbnail_href} = undef;
+    }
     return $tree;
 }
 
 sub thumbnail_path {
     my $s = shift;
-    my $thumb = $s->_maybe_generate_thumbnail or return '/blank.png';
-    return join '/', get_config->{asset_path},"$thumb";
+    if (my $thumb = $s->_maybe_generate_thumbnail) {
+        return join '/', get_config->{asset_path},"$thumb";
+    } elsif (my $remote = get_config->{asset_remote_fallback}) {
+        # e.g. "http://data.globalchange.gov/assets"
+        return join '/', $remote, $s->thumbnail.'?gcis_remote=1';
+    } else {
+        return '/blank.png';
+    }
 }
 
 sub generate_thumbnail {
@@ -101,12 +117,12 @@ sub _generate_image_thumbnail {
     my $filename = shift or die "missing filename";
     my $source = $s->file;
     my $dir = Path::Class::File->new($filename);
-    logger->info("generating image thumbnail for ".$s->fullpath);
     return 1 if $s->thumbnail && -e $s->fullpath($s->thumbnail);
     -e $s->fullpath or do {
-        logger->error("cannot find ".$s->fullpath);
+        logger->info("cannot find ".$s->fullpath);
         return;
     };
+    logger->info("generating image thumbnail for ".$s->fullpath);
     my $cmd = sprintf("gm convert -resize 320x320 %s %s", $s->fullpath, $s->fullpath($filename));
     system($cmd)==0 or do {
         logger->error("Command failed : $cmd : $! ${^CHILD_ERROR_NATIVE}");

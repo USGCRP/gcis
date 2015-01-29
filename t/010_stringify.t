@@ -26,7 +26,9 @@ my %r = (
     summary    => 'this is a report',
     doi        => '10.123/45',
     publication_year => '2000',
-    report_type_identifier => undef,
+    report_type_identifier => "",
+    contact_note => 'email me if you have problems',
+    contact_email => 'nobody@example.com',
 );
 $t->post_ok( "/report" => form => \%r )->status_is(200);
 
@@ -36,6 +38,9 @@ $t->get_ok("/report/test-report.json")->json_is(
       chapters => [],
       href => "${base}report/test-report.json",
       report_type_identifier => 'report',
+      report_tables => [],
+      report_figures => [],
+      report_findings => [],
   }
 );
 

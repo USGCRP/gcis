@@ -42,6 +42,21 @@
     <pre class='code'><%= $activity->output_artifacts %></pre>
     % }
 
+    % if (my @runs = $activity->model_runs) {
+    <p>Model runs associated with this activity :
+    <dl class='dl-horizontal'>
+        % for my $run (@runs) {
+        <dt><%= obj_link($run->model) %></dt>
+        <dd> 
+        <%= obj_link_to $run => 'show' => begin %>
+        <%= $run->range_start->ymd %> to <%= $run->range_end->ymd %> (<%= $run->scenario_identifier %>)
+        <%= end %>
+        </dd>
+        % }
+    </dl>
+    </p>
+    % }
+
     % if (my @maps = $activity->publication_maps) {
     <p>This activity resulted in the following :
         <ul class='unstyled'>

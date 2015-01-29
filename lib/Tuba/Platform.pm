@@ -27,9 +27,33 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub make_tree_for_show {
+    my $c = shift;
+    my $platform = shift;
+    my $obj = $c->SUPER::make_tree_for_show($platform, @_);
+    $obj->{instruments} = [
+        map +{
+            uri => "/instrument/".$_->identifier,
+            identifier => $_->identifier,
+            name => $_->name,
+            description => $_->description,
+            description_attribution => $_->description,
+        }, $platform->instruments
+    ];
+    return $obj;
+}
+
 =head1 update_rel
 
 Update relationships for this platform.
+
+Sample JSON payloads :
+
+    add :
+        instrument_identifier : bar
+    
+    del :
+        Instrument_identifier : baz
 
 =cut
 
@@ -45,10 +69,41 @@ sub update_rel {
             $obj->load(speculative => 1);
             $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
         }
+        if (my $del = $json->{del}) {
+            $del->{platform_identifier} = $platform->identifier;
+            my $obj = InstrumentInstance->new( %$del );
+            $obj->delete;
+        }
     }
-    # TODO : handle form submission too
+    if (my $instrument_id = $c->param('delete_map_instruments')) {
+        my $map = Tuba::DB::Object::InstrumentInstance->new(
+                platform_identifier => $platform->identifier,
+                instrument_identifier => $instrument_id)->load(
+                speculative => 1) or return $c->redirect_without_error("Could not find $instrument_id");
+        $map->delete or return $c->update_error($map->error);
+        $c->flash(info => "Deleted $instrument_id");
+    }
+    $c->SUPER::update_rel(@_);
 
     return $c->redirect_without_error("update_rel_form");
+}
+
+sub _default_controls {
+    my $c = shift;
+    return (
+        $c->SUPER::_default_controls(),
+        platform_type_identifier => { template => 'select',
+            params => { values => [map $_->identifier, @{ PlatformTypes->get_objects(all => 1) } ] } },
+    );
+}
+
+sub update_rel_form {
+    my $c = shift;
+    $c->stash(relationships => [ map Platform->meta->relationship($_), qw/instruments/ ]);
+    $c->stash(controls => {
+            instruments => { template => 'many_to_many' },
+        });
+    $c->SUPER::update_rel_form(@_);
 }
 
 1;

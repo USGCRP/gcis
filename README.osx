@@ -1,0 +1,126 @@
+
+Here's a quick guide to installing and running GCIS on OS/X
+starting from the basics.
+
+0. Install Xcode :
+
+     https://developer.apple.com/xcode/downloads/
+
+1. Install homebrew by following the instructions (one line)
+   here :
+
+    http://brew.sh
+
+2. Install a few prerequistes :
+
+    brew install git
+    brew install ossp-uuid
+    brew install postgresql
+    brew install graphicsmagick
+
+3. Configure and start postgres :
+
+    echo "audit.username = 'unknown'" >> /usr/local/var/postgres/postgresql.conf
+    echo "audit.note = ''" >> /usr/local/var/postgres/postgresql.conf
+
+    ln -sfv /usr/local/opt/postgresql/*.plist ~/Library/LaunchAgents
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.postgresql.plist
+
+4. (recommended) add git to your command prompt :
+
+    Edit ~/.bash_profile, and add these lines :
+
+    . /usr/local/etc/bash_completion.d/git-completion.bash
+    . /usr/local/etc/bash_completion.d/git-prompt.sh
+    export PS1='[\u@\h`__git_ps1` \W]\$ '
+
+5. install perlbrew, by following the (one line) instructions
+   here :
+
+    <http://perlbrew.pl/>
+
+    Then
+        perlbrew init
+
+    And add this line to ~/.bash_profile :
+
+        source ~/perl5/perlbrew/etc/bashrc
+
+    Close your terminal and open it again.
+
+6. Install perl-5.20.1 and cpanm
+
+    perlbrew install-cpanm
+    perlbrew install perl-5.20.1
+    # (this takes a while)
+
+    perlbrew switch perl-5.20.1
+    perlbrew lib create gcis
+    perlbrew switch perl-5.20.1@gcis
+
+    Verify you are using perl 5.20 by typing :
+
+        perl -v
+
+7. Download GCIS
+
+    git clone -o github https://github.com/usgcrp/gcis
+    cd gcis
+
+8. Install a few dependencies individually :
+
+    cpanm File::Find::Rule
+    cpanm -f Data::UUID::LibUUID
+
+9. Install the rest :
+
+    cpanm --installdeps .
+
+10. Install raptor from <http://librdf.org/raptor/> :
+
+    wget http://download.librdf.org/source/raptor2-2.0.15.tar.gz
+    tar xzvf raptor2-2.0.15.tar.gz
+    cd raptor2-2.0.15
+    ./configure
+    make
+    make install
+
+11. Test :
+
+    perl Build.PL
+    ./Build
+    ./Build test
+
+If all goes well :
+
+12. Configure Tuba :
+
+    cp eg/Tuba.conf.basic Tuba.conf
+
+    Then modify Tuba.conf as follows :
+
+        replace 'brian' with your name
+        replace 'easy_pass' with an easy password
+        replace random_stuff with a string of random characters
+
+13. Install the database :
+
+    perl Build.PL
+    ./Build
+    ./Build dbinstall
+    
+    Note:  you might have to run the follwing before #14:
+    
+    postgres -D $HOME/pgdata
+
+14. Start tuba
+
+    morbo ./bin/tuba
+
+15. Open a web browser to http://localhost:3000
+
+Done!
+
+
+
+

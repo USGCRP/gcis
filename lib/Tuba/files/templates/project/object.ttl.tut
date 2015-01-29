@@ -1,0 +1,16 @@
+% layout 'default', namespaces => [qw/dcterms gcis xsd skos/];
+%= filter_lines_with empty_predicate() => begin
+%#
+<<%= current_resource %>>
+   dcterms:identifier "<%= $project->stringify %>";
+   dcterms:title "<%= $project->name %>";
+   dcterms:description "<%= $project->description %>";
+   gcis:hasURL "<%= $project->website %>"^^xsd:anyURI;
+% for my $model ($project->models) {
+   gcis:Model <<%= uri($model) %>>;
+% }
+   a gcis:Project .
+% end
+
+
+%= include 'other_identifiers', gcid => $project->uri($self);

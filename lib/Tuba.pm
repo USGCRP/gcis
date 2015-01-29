@@ -25,6 +25,8 @@ Tuba provides a RESTful API to GCIS data.
     image_upload_dir : /var/www/assets
 
     asset_path : /assets
+    # for development :
+    asset_remote_fallback : http://data.globalchange.gov/assets
 
     database :
         dbname   : gcis
@@ -61,9 +63,10 @@ use Tuba::Converter;
 use Tuba::Log;
 use Tuba::Util qw/set_config/;
 use Data::UUID::LibUUID;
+use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.09';
+our $VERSION = '1.21';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -96,6 +99,7 @@ sub startup {
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
             my $str = shift;
             return "" unless defined($str) && length($str);
+            return $str if ref($str) eq 'Mojo::ByteStream';
             $str =~ s/"/\\"/g;
             $str =~ s/\n/\\n/g;
             $str =~ s/\r/\\r/g;
@@ -340,19 +344,23 @@ sub startup {
     $r->resource('platform');
     $r->resource('instrument');
     $r->lookup('select_platform')->resource('instrument_instance', {
-            path_base => "instrument"
+            path_base => "instrument",
+            identifier => "instrument_identifier",
         });
 
     # Person.
-    $r->resource(person => { restrict_identifier => qr/\d+/ } );
+    my $person = $r->resource(person => { restrict_identifier => qr/\d+/ } );
     $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{4})])
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
+    $person->get('/contributions/:role_type_identifier/:resource')->to('person#contributions')->name('person_contributions');
 
-    $r->resource('organization');
+    # Organization
+    my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
     $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
+    $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 
     $r->resource('gcmd_keyword');
     $r->resource('region');
@@ -380,10 +388,21 @@ sub startup {
     # Generic publication.
     $r->resource('generic');
 
+    # Projects, models, model runs, scenarios
+    $r->resource('project');
+    $r->resource('model');
+    $r->resource('model_run');
+    $r->resource('scenario');
+    $r->get("/model/:model_identifier/run")->to("model_run#list")->name("list_model_runs_for_model");
+    $r->get("/scenario/:scenario_identifier/run")->to("model_run#list")->name("list_model_runs_for_scenario");
+    $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:time_resolution/:sequence")
+        ->to("model_run#lookup");
+
     # Lexicons
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find');
+    $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
@@ -445,6 +464,19 @@ sub startup {
 
         $authed->get('/import_form')->to('importer#form')->name('import_form');
         $authed->post('/process_import')->to('importer#process_import')->name('process_import');
+    }
+    if (my $export = $config->{export}) {
+        $export = [ $export ] unless ref $export eq 'ARRAY';
+        for my $entry (@$export) {
+            my $file = $entry;
+            my $path = file($file)->basename;
+            -e $file or warn "missing export file $file";
+            $r->get("/export/$path" => sub {
+                    my $c = shift;
+                    -e $file or die "no file $file";
+                    $c->reply->asset(Mojo::Asset::File->new(path => $file));
+                } );
+        }
     }
 
     $r->post('/calculate_url' => sub {

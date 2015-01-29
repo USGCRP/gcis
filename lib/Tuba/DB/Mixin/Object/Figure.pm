@@ -5,7 +5,8 @@ use strict;
 sub numeric {
     my $c = shift;
     my $chapter = $c->chapter or return "";
-    return join '.', $chapter->number // '', $c->ordinal // '';
+    return $c->ordinal unless defined($chapter->number);
+    return join '.', $chapter->number, $c->ordinal // '';
 }
 
 sub stringify {
@@ -45,13 +46,18 @@ sub uri {
     $route_name .= '_report' unless $chapter_identifier;
     $route_name .= '_figure';
 
-    return $c->url_for($route_name) unless ref $s;
+    my $report_identifier;
+    $report_identifier = $s->report_identifier if ref $s; # object method
+    $report_identifier //= $c->current_report->identifier;
+
+    my $figure_identifier;
+    $figure_identifier = $s->identifier if ref $s;
 
     return $c->url_for(
       $route_name,
       {
-        figure_identifier  => $s->identifier,
-        report_identifier  => $s->report_identifier,
+        figure_identifier  => $figure_identifier,
+        report_identifier  => $report_identifier,
         chapter_identifier => $chapter_identifier,
       }
     );

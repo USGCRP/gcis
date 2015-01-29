@@ -1,58 +1,54 @@
 % layout 'default', namespaces => [qw/dcterms gcis xsd dwc bibo prov biro cito/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
    dwc:year "<%= $report->publication_year %>"^^xsd:gYear;
-
 % if ($report->doi) {
-## DOI of report
    bibo:doi "<%= $report->doi %>";
 % } else {
-## URL for report
    gcis:hasURL "<%= $report->url %>"^^xsd:anyURI;
 % }
-
-## A report can either be a report, assessment, or NCA3 technical input
-   dcterms:type "<%= $report->report_type_identifier %>";
-
-## Frequency of report release
-   dcterms:frequency "<%= $report->frequency %>"^^xsd:string;
-
-## Report summary
    dcterms:description "<%= $report->summary %>"^^xsd:string;
 
-## Report topics
+## A report can either be a report, assessment, or technical input
+   dcterms:type "<%= $report->report_type_identifier %>";
+
+## Frequency of report release:
+   dcterms:frequency "<%= human_duration($report->frequency) %>"^^xsd:string;
+
+## Report topic(s):
    dcterms:subject "<%= $report->topic %>"^^xsd:string;
 
-## This report contains multiple chapters:
+## Report chapter(s):
 % for my $chapter ($report->chapters) {
-   gcis:hasChapter <<%= obj_uri_for($chapter)->to_abs %>>;	
+   gcis:hasChapter <<%= uri($chapter) %>>;	
 % }
 
-## This report contains multiple figures:
+## Report figure(s):
 % for my $figure ($report->figures) {
-   gcis:hasFigure <<%= obj_uri_for($figure)->to_abs %>>;
+   gcis:hasFigure <<%= uri($figure) %>>;
 % }
 
-## This report contains multiple tables:
+## Report table(s):
 % for my $table ($report->tables) {
-   gcis:hasTable <<%= obj_uri_for($table)->to_abs %>>;
+   gcis:hasTable <<%= uri($table) %>>;
 % }
 
-## The report contains findings:
+## Report finding(s):
 % for my $finding ($report->findings) {
-   gcis:hasFinding <<%= obj_uri_for($finding)->to_abs %>>;
+   gcis:hasFinding <<%= uri($finding) %>>;
+% }
+
+## Region(s):
+% if (my $pub = $report->get_publication) {
+   dcterms:Relation <<%= uri($pub->regions) %>>;
 % }
 
    a gcis:Report .
 
 % end
 
-
-
-## Here is a subset of references cited in this report:
 %= include 'prov';
-
 %= include 'contributors';

@@ -22,7 +22,7 @@ report
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email) FROM stdin;
 \.
 
 
@@ -172,21 +172,6 @@ COPY dataset (identifier, name, type, version, description, native_id, access_dt
 
 
 --
--- Data for Name: dataset_lineage; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY dataset_lineage (id, dataset_id, parent_id) FROM stdin;
-\.
-
-
---
--- Name: dataset_lineage_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('dataset_lineage_id_seq', 1, false);
-
-
---
 -- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -318,6 +303,8 @@ COPY instrument_measurement (platform_identifier, instrument_identifier, dataset
 COPY publication_type (identifier, "table") FROM stdin;
 platform	platform
 instrument	instrument
+model	model
+scenario	scenario
 \.
 
 
@@ -334,6 +321,38 @@ COPY publication (id, publication_type_identifier, fk) FROM stdin;
 --
 
 COPY methodology (activity_identifier, publication_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: project; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY project (identifier, name, description, description_attribution, website) FROM stdin;
+\.
+
+
+--
+-- Data for Name: model; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY model (identifier, project_identifier, name, version, reference_url, website, description, description_attribution) FROM stdin;
+\.
+
+
+--
+-- Data for Name: scenario; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY scenario (identifier, name, description, description_attribution) FROM stdin;
+\.
+
+
+--
+-- Data for Name: model_run; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_resolution, range_start, range_end, sequence, sequence_description, activity_identifier, project_identifier, time_resolution) FROM stdin;
 \.
 
 
@@ -421,29 +440,6 @@ COPY region (identifier, label, description) FROM stdin;
 
 COPY publication_region_map (publication_id, region_identifier) FROM stdin;
 \.
-
-
---
--- Data for Name: ref_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY ref_type (identifier, "table") FROM stdin;
-\.
-
-
---
--- Data for Name: submitter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY submitter (id, person_id, "table", fk, contributor_id) FROM stdin;
-\.
-
-
---
--- Name: submitter_id_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
---
-
-SELECT pg_catalog.setval('submitter_id_seq', 1, false);
 
 
 --

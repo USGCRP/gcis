@@ -1,11 +1,17 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis/];
-
+% layout 'default', namespaces => [qw/dcterms xsd gcis prov skos/];
+%= filter_lines_with empty_predicate() => begin
+%#
 <<%= current_resource %>>
-   dcterms:identifier "<%= $instrument->platform_type_identifier %>";
+   dcterms:identifier "<%= $instrument->identifier %>";
    dcterms:title "<%= $instrument->name %>"^^xsd:string;
+% for my $platform ($instrument->platforms) {
+   gcis:inPlatform <<%= uri($platform) %>>;
+% }
    dcterms:description "<%= $instrument->description %>"^^xsd:string;
-<% for my $platform ($instrument->platforms) { %>
-   gcis:inPlatform <<%= obj_uri_for($platform)->to_abs %>>;
-   <% } %>
-
    a gcis:Instrument .
+
+% end
+
+
+%= include 'contributors';
+%= include 'other_identifiers', gcid => $instrument->uri($self);

@@ -30,7 +30,7 @@
         </h4>
         <h5><%= $webpage->title %></h5>
         % if ($webpage->access_date) {
-        <p>Accessed on <%= $webpage->access_dt->strftime('%B %d, %Y') %>.</p>
+        <p>Accessed on <%= $webpage->access_date->strftime('%B %d, %Y') %>.</p>
         % }
 
         %= include 'h/cited_by', pub => $webpage->get_publication;

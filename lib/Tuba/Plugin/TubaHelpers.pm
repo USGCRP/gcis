@@ -19,6 +19,7 @@ use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
 use URI::Find;
+use Lingua::EN::Inflect qw/A PL/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -65,6 +66,7 @@ sub register {
             my $c = shift;
             my $obj = shift;
             return "" unless defined($obj);
+            return "$obj" if ref($obj) eq 'DateTime';
             my $val = $obj->stringify(@_) || '[missing '.$obj->moniker.']';
             my $uri = $obj->uri($c);
             return $val unless $uri;
@@ -196,7 +198,7 @@ sub register {
             my $str = shift;
             my %pre = $c->turtle_namespaces;
             my $re = join '|', keys %pre;
-            $str =~ s[ ($re):(\S+)(?=\s)][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
+            $str =~ s[ ($re):(\w+)\b][ <a target=ontology class="ontology" alt="$pre{$1}$2" title="$pre{$1}$2" href="$pre{$1}$2">$1:$2</a>]g;
             return $str;
         });
     $app->helper(render_partial_ttl_as => sub {
@@ -271,7 +273,8 @@ sub register {
     $app->helper(uri => sub {
         my $c = shift;
         my $obj = shift or return "";
-        return $obj->uri($c,{ tab => 'show' })->to_abs;
+        my $uri = $obj->uri($c,{ tab => 'show' }) or die "no url for $obj";
+        return $uri->to_abs;
     });
     $app->helper(new_id => sub {
             state $id = 1;
@@ -291,16 +294,18 @@ sub register {
          my $c = shift;
          my $uri = shift;
 
-         # TODO clever generic way of doing this.
          my $obj;
          for ($uri) {
-             m[^/report/([^/]+)$]                 and $obj = Tuba::DB::Object::Report->new(identifier => $1);
-             m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $3);
-             m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $3);
-             m[^/report/([^/]+)/finding/([^/]+)$]  and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/chapter/([^/]+)/table/([^/]+)$]   and $obj = Tuba::DB::Object::Table->new(report_identifier => $1, identifier => $3);
+             m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
+             m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
+             m[^/report/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
+             m[^/organization/([^/]+)$]  and $obj = Tuba::DB::Object::Organization->new(identifier => $1);
+             m[^/instrument/([^/]+)$]    and $obj = Tuba::DB::Object::Instrument->new(identifier => $1);
+             m[^/platform/([^/]+)$] and $obj = Tuba::DB::Object::Platform->new(identifier => $1);
+             m[^/person/([^/]+)$]   and $obj = Tuba::DB::Object::Person->new(id => $1);
              m[^/article/(.*)$]     and $obj = Tuba::DB::Object::Article->new(identifier => $1);
              m[^/activity/([^/]+)$] and $obj = Tuba::DB::Object::Activity->new(identifier => $1);
              m[^/journal/([^/]+)$]  and $obj = Tuba::DB::Object::Journal->new(identifier => $1);
@@ -310,11 +315,11 @@ sub register {
              m[^/array/([^/]+)$]    and $obj = Tuba::DB::Object::Array->new(identifier => $1);
              m[^/webpage/([^/]+)$]  and $obj = Tuba::DB::Object::Webpage->new(identifier => $1);
              m[^/generic/([^/]+)$]  and $obj = Tuba::DB::Object::Generic->new(identifier => $1);
+             m[^/report/([^/]+)$]   and $obj = Tuba::DB::Object::Report->new(identifier => $1);
          }
          if ($obj && $obj->load(speculative => 1)) {
              return $obj;
          }
-         $c->app->logger->warn("Could not identify $uri");
          return;
     });
     $app->helper(uri_to_pub => sub {
@@ -468,7 +473,7 @@ sub register {
             my $c = shift;
             my $to = shift or return;
             $to = "http://$to" if $to !~ /:\/\//;
-            return unless $to =~ m[^(http|ftp)://];
+            return unless $to =~ m[^(https?|ftp)://];
             return $to;
         });
     $app->helper( filter_lines_with => sub {
@@ -487,6 +492,7 @@ sub register {
             return qr[
                        \                 # a space
                        ""                # empty quotes
+                       (?:"""")?         # four more empty quotes (for literals with newlines)
                         (?:\^\^xsd:
                            (?:[a-zA-Z]+) # optional type
                         )?
@@ -532,8 +538,49 @@ sub register {
           schema => 'http://schema.org/',
           skos   => 'http://www.w3.org/2004/02/skos/core#',
           place => 'http://purl.org/ontology/places#',
+          lemon => 'http://lemon-model.net/lemon#',
      )
     });
+    $app->helper(valid_gcid => sub {
+            my $c = shift;
+            my $gcid = shift;
+            my $obj = $c->uri_to_obj($gcid) and return 1;
+            return 0;
+        });
+    $app->helper(A => sub {
+            my $c = shift;
+            my $word = shift;
+            return A($word);
+        });
+    $app->helper(PL => sub {
+            my $c = shift;
+            my ($word,$count) = @_;
+            return PL($word,$count);
+        });
+    $app->helper(gen_id => sub {
+            my $c = shift;
+            my $word = shift;
+            return b($word)->md5_sum;
+        });
+    $app->helper(map_url => sub {
+            my $c = shift;
+            my %a = @_;
+            my ($lat,$lon) = @a{qw/lat lon/};
+            my $url = Mojo::URL->new("http://tools.wmflabs.org/geohack/geohack.php");
+            my $params = sprintf('%f_N_%f_E_',$lat,$lon);
+            return $url->query(params => $params);
+        });
+    $app->helper(get_counts => sub {
+            my $c = shift;
+            my $table = shift;
+            my $count = $c->orm->{$table}->{mng}->get_objects_count;
+            return $count;
+        });
+    $app->helper(format_number => sub {
+            my $c = shift;
+            my $num = shift;
+            return Number::Format->new->format_number($num, @_);
+        });
 }
 
 

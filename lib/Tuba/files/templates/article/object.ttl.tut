@@ -1,8 +1,7 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo gcis cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo dwc gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>   
-## Bibliographic information
    dcterms:identifier "<%= $article->identifier %>";
    dcterms:title "<%= $article->title %>"^^xsd:string;
    dcterms:isPartOf <<%= uri($article->journal) %>>;
@@ -17,7 +16,6 @@
 
    a bibo:Article .
 % end
-
 
 
 ## This article is cited by the following entities in GCIS:

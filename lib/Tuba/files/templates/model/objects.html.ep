@@ -1,0 +1,47 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-condensed table-bordered table-striped'>
+<tr>
+    <th>identifier</th>
+    <th>name</th>
+    <th>organizations</th>
+    <th>runs</th>
+</th>
+% for my $model (@$objects) {
+    <tr>
+       <td><%= obj_link_to $model, 'show' => begin %><%= $model->identifier %><%= end %></td>
+       <td><%= $model->name %></td>
+       <td>
+            % if (my $pub = $model->get_publication) {
+               <% for my $org ($pub->contributors) { %>
+               %= obj_link_to $org->organization => 'show' => class => 'label' => begin
+               %= $org->organization->identifier
+               %= end
+               <% } %>
+            % }
+       </td>
+       <td>
+           %= link_to 'list_model_runs_for_model', { model_identifier => $model->identifier } => begin
+           <%= scalar @{ $model->model_runs } %>
+           %= end
+       </td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

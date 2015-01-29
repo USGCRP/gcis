@@ -1,36 +1,36 @@
 
-\=head1 NAME
+=head1 NAME
 
 journal
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
+A journal is a peer reviewed publication which contains articles.
 
+=head1 FIELDS
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- title (character varying) - 
- print_issn (character varying) - 
- online_issn (character varying) - 
- publisher (character varying) - 
- country (character varying) - 
- url (character varying) - 
+ identifier (character varying) - A descriptive identifier for this journal.
+ title (character varying) - The title of the journal (source: crossref.org)
+ print_issn (character varying) - The 10 or 13 digit ISSN for the print version of this journal.
+ online_issn (character varying) - The 10 or 13 digit ISSN for the online version of this journal.
+ publisher (character varying) - The publisher of the journal.
+ country (character varying) - The country of publication.
+ url (character varying) - A URL for the landing page for this journal.
  notes (character varying) - 
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
-                     Table "gcis_metadata.journal"
-    Column    |       Type        | Modifiers | Storage  | Description 
- -------------+-------------------+-----------+----------+-------------
-  identifier  | character varying | not null  | extended | 
-  title       | character varying |           | extended | 
-  print_issn  | character varying |           | extended | 
-  online_issn | character varying |           | extended | 
-  publisher   | character varying |           | extended | 
-  country     | character varying |           | extended | 
-  url         | character varying |           | extended | 
+                                               Table "gcis_metadata.journal"
+    Column    |       Type        | Modifiers | Storage  |                           Description                           
+ -------------+-------------------+-----------+----------+-----------------------------------------------------------------
+  identifier  | character varying | not null  | extended | A descriptive identifier for this journal.
+  title       | character varying |           | extended | The title of the journal (source: crossref.org)
+  print_issn  | character varying |           | extended | The 10 or 13 digit ISSN for the print version of this journal.
+  online_issn | character varying |           | extended | The 10 or 13 digit ISSN for the online version of this journal.
+  publisher   | character varying |           | extended | The publisher of the journal.
+  country     | character varying |           | extended | The country of publication.
+  url         | character varying |           | extended | A URL for the landing page for this journal.
   notes       | character varying |           | extended | 
  Indexes:
      "journal_pkey" PRIMARY KEY, btree (identifier)
@@ -48,6 +48,6 @@ journal
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

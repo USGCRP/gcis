@@ -1,0 +1,49 @@
+
+=head1 NAME
+
+model
+
+=head1 DESCRIPTION
+
+Models may be associated with scenarios, model runs, and projects.
+
+=head1 FIELDS
+
+ identifier (character varying) - A unique descriptive identifier.
+ project_identifier (character varying) - A project associated with this model.
+ name (character varying) - A brief name.
+ version (character varying) - A version.
+ reference_url (character varying) - A URL to find publiations with details about this model.
+ website (character varying) - A public website with high level descriptions about this model.
+ description (character varying) - A description.
+ description_attribution (character varying) - A URL containing the description of this model.
+
+
+=head1 SCHEMA
+
+                                                      Table "gcis_metadata.model"
+          Column          |       Type        | Modifiers | Storage  |                           Description                           
+ -------------------------+-------------------+-----------+----------+-----------------------------------------------------------------
+  identifier              | character varying | not null  | extended | A unique descriptive identifier.
+  project_identifier      | character varying |           | extended | A project associated with this model.
+  name                    | character varying |           | extended | A brief name.
+  version                 | character varying |           | extended | A version.
+  reference_url           | character varying | not null  | extended | A URL to find publiations with details about this model.
+  website                 | character varying |           | extended | A public website with high level descriptions about this model.
+  description             | character varying |           | extended | A description.
+  description_attribution | character varying |           | extended | A URL containing the description of this model.
+ Indexes:
+     "model_pkey" PRIMARY KEY, btree (identifier)
+ Foreign-key constraints:
+     "model_project_identifier_fkey" FOREIGN KEY (project_identifier) REFERENCES project(identifier)
+ Referenced by:
+     TABLE "model_run" CONSTRAINT "model_run_model_identifier_fkey" FOREIGN KEY (model_identifier) REFERENCES model(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON model FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON model FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

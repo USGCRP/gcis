@@ -1,11 +1,19 @@
 
+% my $search_table = $meta->table;
+% my $show_search_box = ($search_table && !(stash 'no_search') && !(stash 'bottom'));
 % my $page = stash 'page';
 % my $pages = stash 'pages';
 % my $count = stash 'count';
 % my $per_page = stash 'per_page';
+<div class="form form-inline">
 <div class='row-fluid'>
     <div class='span5 pull-left'>
         <span class='btn btn-small'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
+        % if ($show_search_box) {
+           <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'span8 input',
+            placeholder => 'search';
+            %>
+        % }
     </div>
     % if ($page && $pages > 1) {
         <div class='span2 text-center'>
@@ -54,3 +62,24 @@
         </div>
     </div>
 </div>
+</div>
+
+% if ($show_search_box) {
+%= javascript begin
+% my $restrict = ( (stash 'report_identifier') ? "report_identifier:".(stash 'report_identifier') : "");
+$('#search_obj').typeahead({
+    minLength : 1,
+    items : 30,
+    updater: function(str) {
+        var pieces = str.split(' ');
+        window.location.href = pieces[0];
+    },
+    source : function(query,process) {
+    return $.get('/autocomplete', { q : query, items : 30, type : '<%= $search_table %>', restrict : '<%= $restrict %>', gcids : 1 }, function(data) {
+                 return process(data);
+            });
+        }
+});
+%= end
+% }
+

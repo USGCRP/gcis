@@ -23,6 +23,7 @@
 %= include 'update_tabs', active => 'fields';
 
 <div class='tab-content'>
+<p>Hover over a field name for help about that field.</p>
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 
@@ -30,8 +31,8 @@
 % for my $column (@$cols) {
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
-<label class="control-label<%= $required %>" for="<%= $column->name %>"><nobr><%= labelize($column->name) %></nobr></label>
-        <div class="controls">
+<label class="control-label<%= $required %>" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><nobr><%= labelize($column->name) %></nobr></label>
+        <div class="row-fluid">
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
@@ -47,11 +48,11 @@
                 %= $textfield->($column,$object);
                 % }
             % }
-            <span class="help-inline">
-            %= $column->remarks || ""
-            </span>
         </div>
 % }
+%= javascript begin
+$('.control-label').popover({trigger : 'hover'});
+%= end
 <div class='required_note'>required</div>
 
 <div class="form-actions">

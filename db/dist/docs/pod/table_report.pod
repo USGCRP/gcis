@@ -1,43 +1,47 @@
 
-\=head1 NAME
+=head1 NAME
 
 report
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A report is a publication that may have chapters, figures, findings, and tables.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier.
+ title (character varying) - The title.
+ url (character varying) - A url for a landing page.
+ doi (character varying) - A digital object identifier.
+ _public (boolean) - Indicates that this report is publically readable.
+ report_type_identifier (character varying) - The type of this report.
+ summary (character varying) - A brief summary
+ frequency (interval) - If this is a periodic report, how often it is released.
+ publication_year (integer) - The year of publication.
+ topic (character varying) - A brief free form comma-separated list of topics associated with this report.
+ in_library (boolean) - Whether or not this report is available in the USGCRP resources library.
+ contact_note (character varying) - A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.
+ contact_email (character varying) - A contact email address for this report.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - A unique identifier for the report.
- title (character varying) - 
- url (character varying) - 
- doi (character varying) - 
- _public (boolean) - 
- report_type_identifier (character varying) - 
- summary (character varying) - 
- frequency (interval) - 
- publication_year (integer) - 
- topic (character varying) - 
- in_library (boolean) - 
-
-
-\=head1 SCHEMA
-
-                                         Table "gcis_metadata.report"
-          Column         |       Type        |  Modifiers   | Storage  |             Description             
- ------------------------+-------------------+--------------+----------+-------------------------------------
-  identifier             | character varying | not null     | extended | A unique identifier for the report.
-  title                  | character varying | not null     | extended | 
-  url                    | character varying |              | extended | 
-  doi                    | character varying |              | extended | 
-  _public                | boolean           | default true | plain    | 
-  report_type_identifier | character varying |              | extended | 
-  summary                | character varying |              | extended | 
-  frequency              | interval          |              | plain    | 
-  publication_year       | integer           |              | plain    | 
-  topic                  | character varying |              | extended | 
-  in_library             | boolean           |              | plain    | 
+                                                                                                      Table "gcis_metadata.report"
+          Column         |       Type        |                  Modifiers                   | Storage  |                                                          Description                                                           
+ ------------------------+-------------------+----------------------------------------------+----------+--------------------------------------------------------------------------------------------------------------------------------
+  identifier             | character varying | not null                                     | extended | A descriptive identifier.
+  title                  | character varying | not null                                     | extended | The title.
+  url                    | character varying |                                              | extended | A url for a landing page.
+  doi                    | character varying |                                              | extended | A digital object identifier.
+  _public                | boolean           | default true                                 | plain    | Indicates that this report is publically readable.
+  report_type_identifier | character varying | not null default 'report'::character varying | extended | The type of this report.
+  summary                | character varying |                                              | extended | A brief summary
+  frequency              | interval          |                                              | plain    | If this is a periodic report, how often it is released.
+  publication_year       | integer           |                                              | plain    | The year of publication.
+  topic                  | character varying |                                              | extended | A brief free form comma-separated list of topics associated with this report.
+  in_library             | boolean           |                                              | plain    | Whether or not this report is available in the USGCRP resources library.
+  contact_note           | character varying |                                              | extended | A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.
+  contact_email          | character varying |                                              | extended | A contact email address for this report.
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
      "report_url_key" UNIQUE CONSTRAINT, btree (url)
@@ -61,6 +65,6 @@ report
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

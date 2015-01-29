@@ -1,0 +1,12 @@
+<p>
+% if (my $url = $obj->description_attribution) {
+<blockquote><p class="linebreaks"><%= $obj->description %></p>
+    <small>
+        <%= link_to $url => begin %><%= url_host($url) %><%= end %>
+    </small>
+</blockquote>
+% } else {
+<%= $obj->description %>
+% }
+</p>
+

@@ -1,27 +1,27 @@
 
-\=head1 NAME
+=head1 NAME
 
 role_type
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A list of roles that contributors may have.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier.
+ label (character varying) - A human readable label.
+ sort_key (integer) - A key for sorting contributors of this type.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- label (character varying) - 
- sort_key (integer) - 
-
-
-\=head1 SCHEMA
-
-                    Table "gcis_metadata.role_type"
-    Column   |       Type        | Modifiers | Storage  | Description 
- ------------+-------------------+-----------+----------+-------------
-  identifier | character varying | not null  | extended | 
-  label      | character varying | not null  | extended | 
-  sort_key   | integer           |           | plain    | 
+                                    Table "gcis_metadata.role_type"
+    Column   |       Type        | Modifiers | Storage  |                 Description                  
+ ------------+-------------------+-----------+----------+----------------------------------------------
+  identifier | character varying | not null  | extended | A descriptive identifier.
+  label      | character varying | not null  | extended | A human readable label.
+  sort_key   | integer           |           | plain    | A key for sorting contributors of this type.
  Indexes:
      "role_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
@@ -29,6 +29,6 @@ role_type
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

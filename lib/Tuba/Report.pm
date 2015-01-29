@@ -10,6 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 use Pg::hstore qw/hstore_decode/;
 use Encode;
 use Tuba::Log;
+use List::MoreUtils qw/uniq/;
 
 sub _user_can_view {
     my $c = shift;
@@ -152,46 +153,70 @@ sub select {
 
 sub watch {
     my $c = shift;
-    my $limit = $c->param('limit') || 50;
-    $limit = 50 unless $limit =~ /^\d+$/;
-    my $where = ['and'];
-    my %where;
+    my $view = $c->param('view') || 'details';
+    $view = 'details' unless $view && $view eq 'summary';
 
-    if (my $table = $c->param('t')) {
-        if ($table ne 'any') { push @$where,":table_name{=}"; $where{table_name} = $table }
-    }
-    if (my $type = $c->param('type')) {
-        if ($type ne 'changes') { push @$where,":action{=}"; $where{action} = $type; }
-    }
+    if ($view eq 'details') {
+        my $limit = $c->param('limit') || 50;
+        $limit = 50 unless $limit =~ /^\d+$/;
+        my $where = ['and'];
+        my %where;
 
-    if (my $user = $c->param('user')) { push @$where, ":audit_username{like}"; $where{audit_username} = "%$user%"; }
-    if (my $note = $c->param('note')) { push @$where, ":audit_note{like}";     $where{audit_note} = "%$note%";     }
-
-    my $result = $c->dbc->select(
-        [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
-        table => "audit.logged_actions",
-        (@$where > 1 ? 
-            ( where => [ $where, \%where ] ) : ()
-        ),
-        append => "order by action_tstamp_tx desc limit $limit",
-    );
-    my $change_log = $result->all;
-    for my $row (@$change_log) {
-        my $table = $row->{table_name};
-        next if $table =~ /^_/;
-        my $class = $c->orm->{$table}{obj} or next;
-        my $vals = hstore_decode($row->{row_data});
-        if (my $other = $row->{changed_fields}) {
-            $other = hstore_decode($other);
-            %$vals = ( %$vals, %$other);
+        if (my $table = $c->param('t')) {
+            if ($table ne 'any') { push @$where,":table_name{=}"; $where{table_name} = $table }
         }
-        $row->{changed_fields} = $row->{changed_fields} if defined($row->{changed_fields});
-        $row->{obj} = eval { $class->new(%$vals); };
+        if (my $type = $c->param('type')) {
+            if ($type ne 'changes') { push @$where,":action{=}"; $where{action} = $type; }
+        }
 
-        #$row->{obj}->load(speculative => 1);
+        if (my $user = $c->param('user')) { push @$where, ":audit_username{like}"; $where{audit_username} = "%$user%"; }
+        if (my $note = $c->param('note')) { push @$where, ":audit_note{like}";     $where{audit_note} = "%$note%";     }
+
+        my $result = $c->dbc->select(
+            [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
+            table => "audit.logged_actions",
+            (@$where > 1 ? 
+                ( where => [ $where, \%where ] ) : ()
+            ),
+            append => "order by action_tstamp_tx desc limit $limit",
+        );
+        my $change_log = $result->all;
+        for my $row (@$change_log) {
+            my $table = $row->{table_name};
+            next if $table =~ /^_/;
+            my $class = $c->orm->{$table}{obj} or next;
+            my $vals = hstore_decode($row->{row_data});
+            if (my $other = $row->{changed_fields}) {
+                $other = hstore_decode($other);
+                %$vals = ( %$vals, %$other);
+            }
+            $row->{changed_fields} = $row->{changed_fields} if defined($row->{changed_fields});
+            $row->{obj} = eval { $class->new(%$vals); };
+        }
+        $c->stash(change_log => $change_log);
+    } else {
+        my $cutoff = $c->param('cutoff') || '2 weeks';
+        $c->param(cutoff => $cutoff);
+        $cutoff = $c->dbc->dbh->quote($cutoff);
+        my $result = $c->dbc->select(
+            [ 'audit_username', 'table_name', 'count(1) as num' ],
+            table => "audit.logged_actions",
+            where => "action_tstamp_tx > (now() - interval $cutoff)",
+            append => "group by 1,2 order by 1,2"
+        );
+        my $hashes = $result->fetch_hash_all;
+        my $grid;
+        do { $grid->{$_->{audit_username}}{$_->{table_name}} = $_->{num} } for @$hashes;
+        $c->stash(
+          results    => $hashes,
+          all_users  => [uniq sort map $_->{audit_username}, @$hashes],
+          all_tables => [uniq sort map $_->{table_name}, @$hashes],
+          grid => $grid,
+        );
     }
 
-    $c->render(template => 'watch', change_log => $change_log);
+    my $template = $view eq 'summary' ? 'watch/summary' : 'watch/details';
+    $c->render($template);
 }
 
 sub update_rel_form {
@@ -213,7 +238,8 @@ sub make_tree_for_show {
     my $pub = $report->get_publication(autocreate => 1);
     my $uri = $report->uri($c);
     my $href = $uri->clone->to_abs;
-    $href .= ".".$c->stash('format') if $c->stash('format');
+    my $format = $c->stash('format');
+    $href .= ".$format" if $format;
     my %regions;
     if ($pub && $c->param('with_regions')) {
         $regions{regions} = [ map $_->as_tree(c => $c), $pub->regions];
@@ -227,10 +253,15 @@ sub make_tree_for_show {
       identifier              => $report->identifier,
       publication_year        => $report->publication_year,
       summary                 => $report->summary,
+      contact_email           => $report->contact_email,
+      contact_note            => $report->contact_note,
       contributors => [map $_->as_tree(c => $c), $pub->contributors ],
       title        => $report->title,
       doi          => $report->doi,
       report_type_identifier => $report->report_type_identifier,
+      report_figures  => [ map +{$c->Tuba::Figure::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->figures ],
+      report_findings => [ map +{$c->Tuba::Finding::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->findings ],
+      report_tables   => [ map +{$c->Tuba::Table::common_tree_fields($_)}, grep !$_->chapter_identifier, $report->tables ],
       chapters     => [
         map +{
           number     => $_->number,
@@ -266,5 +297,20 @@ DONE
 die $@ if $@;
 }
 
+sub _default_order {
+    return qw/identifier
+    title
+    url
+    doi
+    summary
+    publication_year
+    in_library
+    report_type_identifier
+    frequency
+    _public
+    topic
+    contact_note
+    contact_email/;
+}
 1;
 

@@ -25,7 +25,7 @@
        <td><%= obj_link_to $dataset, 'show' => begin %><%= $dataset->name %><%= end %></td>
        <td><%= external_link($dataset->url) %></td>
        <td><% for my $i ($dataset->instrument_measurements) { %>
-           %= link_to 'show_instrument_instance', { instrument_instance_identifier => $i->instrument->identifier, platform_identifier => $i->platform->identifier } => class => "badge" => begin
+           %= link_to 'show_instrument_instance', { instrument_identifier => $i->instrument->identifier, platform_identifier => $i->platform->identifier } => class => "badge" => begin
            <%= $i->platform->identifier %>/<%= $i->instrument->identifier %>
            %= end
            % }

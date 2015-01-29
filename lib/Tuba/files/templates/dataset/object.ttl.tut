@@ -1,6 +1,6 @@
-% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov/];
+% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov skos/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
    datacite:identifier "<%= $dataset->identifier %>";
    dcterms:title "<%= $dataset->name %>"^^xsd:string;
@@ -10,13 +10,11 @@
    datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
-
-## The formal description of the dataset
    dcterms:description "<%= no_tbibs($dataset->description) %>"^^xsd:string;
  
 ## Dates of dataset release and access
-   dcterms:issued "<%= $dataset->release_dt %>"^^xsd:date;
-   dcterms:date "<%= $dataset->access_dt %>"^^xsd:date;
+   dcterms:issued "<%= $dataset->release_dt %>"^^xsd:dateTime;
+   dcterms:date "<%= $dataset->access_dt %>"^^xsd:dateTime;
 
 ## Projection and resolution:
    gcis:spatialExtents "<%= $dataset->spatial_extent %>";
@@ -31,19 +29,14 @@
    dcat:keyword "<%== $keyword->stringify %>"^^xsd:string;
 % }
 
+## Instrument Instances
 % for my $measurement ($dataset->instrument_measurements) {
-## Instrument, Platform, and Instrument Instance
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument)->to_abs %>>;
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->platform)->to_abs %>>;
-   prov:wasDerivedFrom <<%= obj_uri_for($measurement->instrument_instance)->to_abs %>>;
+   prov:wasDerivedFrom <<%= uri($measurement->instrument_instance) %>>;
 % }
 
    a gcis:Dataset .
-
 % end
 
-
-
-%= include 'dataset/prov';
-
+%= include 'prov';
 %= include 'contributors';
+%= include 'other_identifiers', gcid => $dataset->uri($self);

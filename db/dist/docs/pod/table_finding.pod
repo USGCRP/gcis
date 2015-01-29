@@ -1,39 +1,39 @@
 
-\=head1 NAME
+=head1 NAME
 
 finding
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+A finding is associated with a report and optionally a chapter.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier for this finding.
+ chapter_identifier (character varying) - The chapter containing this finding.
+ statement (character varying) - The statement of the finding.
+ ordinal (integer) - The numeric position of this finding with a chapter (or report).
+ report_identifier (character varying) - The report associated with this finding.
+ process (character varying) - The process for developing this finding.
+ evidence (character varying) - A description of the evidence base.
+ uncertainties (character varying) - A description of the uncertainties.
+ confidence (character varying) - An assessment of the confidence in this finding based on the evidence.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- chapter_identifier (character varying) - 
- statement (character varying) - 
- ordinal (integer) - 
- report_identifier (character varying) - 
- process (character varying) - 
- evidence (character varying) - Description of evidence base
- uncertainties (character varying) - New information and remaining uncertainties
- confidence (character varying) - Assessment of confidence based on evidence
-
-
-\=head1 SCHEMA
-
-                                         Table "gcis_metadata.finding"
-        Column       |       Type        | Modifiers | Storage  |                 Description                 
- --------------------+-------------------+-----------+----------+---------------------------------------------
-  identifier         | character varying | not null  | extended | 
-  chapter_identifier | character varying |           | extended | 
-  statement          | character varying |           | extended | 
-  ordinal            | integer           |           | plain    | 
-  report_identifier  | character varying | not null  | extended | 
-  process            | character varying |           | extended | 
-  evidence           | character varying |           | extended | Description of evidence base
-  uncertainties      | character varying |           | extended | New information and remaining uncertainties
-  confidence         | character varying |           | extended | Assessment of confidence based on evidence
+                                                      Table "gcis_metadata.finding"
+        Column       |       Type        | Modifiers | Storage  |                              Description                               
+ --------------------+-------------------+-----------+----------+------------------------------------------------------------------------
+  identifier         | character varying | not null  | extended | A descriptive identifier for this finding.
+  chapter_identifier | character varying |           | extended | The chapter containing this finding.
+  statement          | character varying |           | extended | The statement of the finding.
+  ordinal            | integer           |           | plain    | The numeric position of this finding with a chapter (or report).
+  report_identifier  | character varying | not null  | extended | The report associated with this finding.
+  process            | character varying |           | extended | The process for developing this finding.
+  evidence           | character varying |           | extended | A description of the evidence base.
+  uncertainties      | character varying |           | extended | A description of the uncertainties.
+  confidence         | character varying |           | extended | An assessment of the confidence in this finding based on the evidence.
  Indexes:
      "finding_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "finding_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
@@ -50,6 +50,6 @@ finding
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

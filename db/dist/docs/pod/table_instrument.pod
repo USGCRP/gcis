@@ -1,0 +1,45 @@
+
+=head1 NAME
+
+instrument
+
+=head1 DESCRIPTION
+
+An instrument is used for measurement.
+
+=head1 FIELDS
+
+ identifier (character varying) - A descriptive identifier for this instrument.
+ name (character varying) - A brief name for this instrument.
+ description (character varying) - A description of this instrument.
+ description_attribution (character varying) - A URL which contains the description of this instrument.
+
+
+=head1 SCHEMA
+
+                                                Table "gcis_metadata.instrument"
+          Column          |       Type        | Modifiers | Storage  |                       Description                        
+ -------------------------+-------------------+-----------+----------+----------------------------------------------------------
+  identifier              | character varying | not null  | extended | A descriptive identifier for this instrument.
+  name                    | character varying | not null  | extended | A brief name for this instrument.
+  description             | character varying |           | extended | A description of this instrument.
+  description_attribution | character varying |           | extended | A URL which contains the description of this instrument.
+ Indexes:
+     "instrument_pkey" PRIMARY KEY, btree (identifier)
+ Check constraints:
+     "instrument_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+ Referenced by:
+     TABLE "instrument_instance" CONSTRAINT "instrument_instance_instrument_identifier_fkey" FOREIGN KEY (instrument_identifier) REFERENCES instrument(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "instrument_measurement" CONSTRAINT "instrument_measurement_instrument_identifier_fkey" FOREIGN KEY (instrument_identifier) REFERENCES instrument(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON instrument FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     delpub BEFORE DELETE ON instrument FOR EACH ROW EXECUTE PROCEDURE delete_publication()
+     update_exterms BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/instrument/')
+     updatepub BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
+ 
+
+=cut
+
+

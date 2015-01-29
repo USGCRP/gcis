@@ -3,11 +3,10 @@ package Tuba::DB::Object::Table;
 use strict;
 
 sub numeric {
-    my $s = shift;
-    if (my $chapter = $s->chapter) {
-        return sprintf('%s.%s',$chapter->number // '',$s->ordinal // '');
-    }
-    return $s->ordinal // '';
+    my $c = shift;
+    my $chapter = $c->chapter or return "";
+    return $c->ordinal unless defined($chapter->number);
+    return join '.', $chapter->number, $c->ordinal // '';
 }
 
 sub stringify {

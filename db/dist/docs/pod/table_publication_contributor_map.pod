@@ -1,29 +1,29 @@
 
-\=head1 NAME
+=head1 NAME
 
 publication_contributor_map
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+Publications can have one more contributors.
+
+=head1 FIELDS
+
+ publication_id (integer) - The publication.
+ contributor_id (integer) - The contributor.
+ reference_identifier (character varying) - A reference which makes the association between the publicaton and the contributor.
+ sort_key (integer) - A sort key for this entry.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- publication_id (integer) - 
- contributor_id (integer) - 
- reference_identifier (character varying) - 
- sort_key (integer) - 
-
-
-\=head1 SCHEMA
-
-                Table "gcis_metadata.publication_contributor_map"
-         Column        |       Type        | Modifiers | Storage  | Description 
- ----------------------+-------------------+-----------+----------+-------------
-  publication_id       | integer           | not null  | plain    | 
-  contributor_id       | integer           | not null  | plain    | 
-  reference_identifier | character varying |           | extended | 
-  sort_key             | integer           |           | plain    | 
+                                                    Table "gcis_metadata.publication_contributor_map"
+         Column        |       Type        | Modifiers | Storage  |                                     Description                                     
+ ----------------------+-------------------+-----------+----------+-------------------------------------------------------------------------------------
+  publication_id       | integer           | not null  | plain    | The publication.
+  contributor_id       | integer           | not null  | plain    | The contributor.
+  reference_identifier | character varying |           | extended | A reference which makes the association between the publicaton and the contributor.
+  sort_key             | integer           |           | plain    | A sort key for this entry.
  Indexes:
      "publication_contributor_map_pkey" PRIMARY KEY, btree (publication_id, contributor_id)
  Foreign-key constraints:
@@ -36,6 +36,6 @@ publication_contributor_map
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

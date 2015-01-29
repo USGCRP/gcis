@@ -17,14 +17,22 @@
     <th>identifier</th>
     <th>name</th>
     <th>type</th>
-    <th>url</th>
+    <th>orgs</th>
 </th>
 % for my $platform (@$objects) {
     <tr>
        <td><%= obj_link_to $platform, 'show' => begin %><%= $platform->identifier %><%= end %></td>
        <td><%= obj_link_to $platform, 'show' => begin %><%= $platform->name %><%= end %></td>
        <td><%= $platform->platform_type_identifier %></td>
-       <td><%= external_link($platform->url) %></td>
+       <td>
+            % if (my $pub = $platform->get_publication) {
+               <% for my $org ($pub->contributors) { %>
+               %= obj_link_to $org->organization => 'show' => class => 'label' => begin
+               %= $org->organization->identifier
+               %= end
+               <% } %>
+            % }
+       </td>
     </tr>
 % }
 </table>

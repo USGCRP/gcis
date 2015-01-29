@@ -6,24 +6,25 @@
             % my $person_id = obj_uri_for ($con->{person});
             % if ($person_id) {            
 ## Person and his/her role in the creation of the entity:
-<<%= obj_uri_for($object)->to_abs %>>
+<<%= uri($object) %>>
    prov:qualifiedAttribution [
       a prov:Attribution;
-      prov:agent <<%= obj_uri_for($con->{person})->to_abs %>>;
+      prov:agent <<%= uri($con->{person}) %>>;
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
                 % for my $org (@{ $con->{orgs} }) {
-      prov:actedOnBehalfOf <<%= obj_uri_for($org)->to_abs =%>>;
+      prov:actedOnBehalfOf <<%= uri($org) =%>>;
              % }
       ] ;
 .
+
          % } else {
              % my $first;
              % for my $org (@{ $con->{orgs} }) {
 ## This entity was produced by an organization:     
-<<%= obj_uri_for($object)->to_abs %>>    
+<<%= uri($object) %>>    
    prov:qualifiedAttribution [
       a prov:Attribution;
-      prov:agent <<%= obj_uri_for($org)->to_abs %>>;
+      prov:agent <<%= uri($org) %>>;
       prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
       ] ;
 .

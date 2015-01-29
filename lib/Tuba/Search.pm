@@ -38,7 +38,11 @@ sub keyword {
 
     }
     $c->stash(result_count_text => $result_count_text);
-    $c->render(results => \@results);
+    $c->respond_to(
+        any => sub { shift->render(results => \@results); },
+        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
+        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
+    );
 }
 
 sub autocomplete {
@@ -46,24 +50,27 @@ sub autocomplete {
     my $q = $c->param('q') || $c->json->{q};
     return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
-    my $want = $c->param('type');
+    my $want = $c->param('type') || 'all';  # all == all publications, full = orgs, people too
     my $elide = $c->param('elide') || 80;
     my $gcids = $c->param('gcids');
+    my $restrict = $c->param('restrict');
 
     my @tables;
-    if ($want && $want=~/^(region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic)$/) {
+    if ($want && $want=~/^(array|finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument)$/) {
        @tables = ( $want );
-    } elsif ($want && ($want ne 'all')) {
+    } elsif ($want && ($want !~ /^(all|full)$/)) {
         return $c->render(json => { error => "undefined type" } );
-    } else {
+    } elsif ($want eq 'all') {
        @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+    } elsif ($want eq 'full') {
+       @tables = map $_->table, @{ PublicationTypes->get_objects(all => 1) };
+       push @tables, ('organization', 'person');
     }
     my @results;
     for my $table (@tables) {
-        next if $want && $want ne 'all' && $table ne $want;
-        logger->info('looking in '.$table);
+        next if $want && $want !~ /^(all|full)$/ && $table ne $want;
         my $manager = $c->orm->{$table}{mng} or die "no manager for $table";
-        my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user);
+        my @got = $manager->dbgrep(query_string => $q, limit => $max, user => $c->user, restrict => $restrict);
         for (@got) {
             if ($gcids) {
                 push @results, $_->as_gcid_str($c,$elide,$table);

@@ -118,6 +118,8 @@
             <a name="gcis-metadata.table.report">report</a>
         </h2>
         
+         <p>A report is a publication that may have chapters, figures, findings, and tables.</p>
+        
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
@@ -148,7 +150,7 @@
                 
                 
                 </i>
-                <br><br>A unique identifier for the report.
+                <br><br>A descriptive identifier.
                 </td>
              </tr>
             
@@ -164,7 +166,7 @@
                 NOT NULL
                 
                 </i>
-                
+                <br><br>The title.
                 </td>
              </tr>
             
@@ -188,7 +190,7 @@
                 
                 
                 </i>
-                
+                <br><br>A url for a landing page.
                 </td>
              </tr>
             
@@ -204,7 +206,7 @@
                 
                 
                 </i>
-                
+                <br><br>A digital object identifier.
                 </td>
              </tr>
             
@@ -220,7 +222,7 @@
                 
                 DEFAULT true
                 </i>
-                
+                <br><br>Indicates that this report is publically readable.
                 </td>
              </tr>
             
@@ -241,10 +243,10 @@
                     
                 
 
-                
-                
+                NOT NULL
+                DEFAULT &#39;report&#39;::character varying
                 </i>
-                
+                <br><br>The type of this report.
                 </td>
              </tr>
             
@@ -260,7 +262,7 @@
                 
                 
                 </i>
-                
+                <br><br>A brief summary
                 </td>
              </tr>
             
@@ -276,7 +278,7 @@
                 
                 
                 </i>
-                
+                <br><br>If this is a periodic report, how often it is released.
                 </td>
              </tr>
             
@@ -292,7 +294,7 @@
                 
                 
                 </i>
-                
+                <br><br>The year of publication.
                 </td>
              </tr>
             
@@ -308,7 +310,7 @@
                 
                 
                 </i>
-                
+                <br><br>A brief free form comma-separated list of topics associated with this report.
                 </td>
              </tr>
             
@@ -324,7 +326,39 @@
                 
                 
                 </i>
+                <br><br>Whether or not this report is available in the USGCRP resources library.
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
                 
+                </td>
+                <td>contact_note</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A note about contacting someone about this report.  Phrases [in brackets] in this note will become links to the contact_email.
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>contact_email</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A contact email address for this report.
                 </td>
              </tr>
             

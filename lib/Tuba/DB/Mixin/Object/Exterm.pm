@@ -12,11 +12,23 @@ sub native_url {
         },
         ceos => {
             Mission => sub { "http://database.eohandbook.com/database/missionindex.aspx#".(uc substr($_[0],0,1)) },
+            missionID => sub { "http://database.eohandbook.com/database/missionsummary.aspx?missionID=".$_[0] },
             Instrument => sub { "http://database.eohandbook.com/database/instrumentindex.aspx#".(uc substr($_[0],0,1)) },
+            instrumentID => sub { "http://database.eohandbook.com/database/instrumentsummary.aspx?instrumentID=$_[0]" },
         },
         gcmd => {
             platform => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
             instrument => sub { "http://gcmdservices.gsfc.nasa.gov/static/kms/concept/".$_[0] },
+        },
+        esg => {
+            model => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_scenario=any&d_frequency=any&d_offset=0&d_model=".$_[0] },
+            scenario => sub { "https://esg.llnl.gov:8443/metadata/advancedDatasetSearch.do?d_model=any&d_frequency=any&d_offset=0&d_scenario=".$_[0] },
+            model_run => sub { "https://esg.llnl.gov:8443/metadata/showObject.do?id=$_[0]" },
+        },
+        ornl => {
+            dataset => sub {
+                "http://mercury.ornl.gov/oai/provider?verb=GetRecord&metadataPrefix=oai_dif&identifier=".shift;
+            },
         },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;

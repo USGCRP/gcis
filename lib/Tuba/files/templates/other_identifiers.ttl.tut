@@ -1,0 +1,19 @@
+% my $matches = orm->{'exterm'}{mng}->get_objects(
+%   query => [ gcid => "$gcid" ],
+%   sort_by => "lexicon_identifier, term"
+% );
+%#
+% if (@$matches) {
+## Also known as:
+    % for my $exterm (@$matches) {
+<<%= current_resource %>>
+      % if (my $url = $exterm->native_url) {
+   skos:altLabel "<%= $exterm->term %>";
+   gcis:hasURL "<%= $url %>";
+      % } else {
+   skos:altLabel "<%= $exterm->term %>";
+      % }
+   skos:Concept <<%= uri($exterm->lexicon) %>>.
+
+    % }
+% }

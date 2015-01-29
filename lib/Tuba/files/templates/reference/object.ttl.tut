@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms biro gcis/];
+% layout 'default', namespaces => [qw/dcterms biro/];
 
 <<%= current_resource %>>
    dcterms:identifier "<%= $reference->identifier %>";
@@ -9,7 +9,7 @@
    biro:references <<%= uri($publication) %>>;
 % }
 
-## This reference appears in Chapter # of the following report:
+## This reference appears in the following GCIS entities:
 % for my $subpub ($reference->subpubrefs) {
  % my $chapter = $subpub->publication->to_object;
    biro:isReferencedBy <<%= uri($chapter) %>>;

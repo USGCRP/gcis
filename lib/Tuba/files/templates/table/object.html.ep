@@ -28,7 +28,9 @@
         % }
         </div>
         <h2><%= $table->title %></h2>
+        % if ($table->numeric) {
         <h3>table <%= $table->numeric %></h3>
+        % }
         <i>
         %= include commify => objs => scalar $table->all_orgs
         </i>
@@ -41,14 +43,33 @@
         <p>This table appears in the <%= obj_link($table->report) %> report.</p>
         % }
 
+        % if (my @arrays = sorted_list($table,'arrays')) {
+            This table is composed of <%= @arrays==1 ? 'this array' : 'these arrays' %> :
+            <center>
+            % for my $a (sorted_list($table,'arrays')) {
+                % my $row = 0;
+                <table class='table table-bordered table-condensed array'>
+                    <caption><%= obj_link($a, short => 1); %></caption>
+                % for my $x ($a->rows) {
+                    % if ($row++ < $a->rows_in_header) {
+                    <tr class='header'>
+                    % } else {
+                    <tr>
+                    % }
+                    % for my $y (@$x) {
+                        <td><%= $y %></td>
+                    % }
+                    </tr>
+                % }
+            </table>
+            % }
+            </center>
+        % }
+
+
         <p><%= tbibs_to_links($table->caption) %></p>
         %= include 'h/cited_by', pub => $table->get_publication;
         %= include 'h/cites', pub => $table->get_publication;
-        % if (my @arrays = sorted_list($table,'arrays')) {
-        <br>
-        This table is composed of <%= @arrays==1 ? 'this array' : 'these arrays' %> :
-        %= include 'obj_thumbnails', objs => [ sorted_list($table,'arrays') ], no_table => 1, tiny_captions => 1;
-        % }
 
     </div>
 </div>

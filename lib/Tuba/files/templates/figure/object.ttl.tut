@@ -1,36 +1,27 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis rdf prov cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
-
+%#
 <<%= current_resource %>>
-## Identifier and title of the figure
    dcterms:identifier "<%= $figure->identifier %>";
+% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
+   % if (! $chapter->number) {
+   gcis:figureNumber "<%= $figure->ordinal %>"^^xsd:string;
+   % } else {
+   gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:string;
+   % }
+% }
    dcterms:title "<%= $figure->title %>"^^xsd:string;
-
-## The number of the Chapter, the URI for the chapter, and the URI for the report in which the figure appears:
+   cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
+   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
+   dcterms:RightsStatement "<%= $figure->usage_limits %>"^^xsd:string;
+%#
+% for my $image ($figure->images) {
+   gcis:hasImage <<%= uri($image) %>>;
+% }
 % if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
    gcis:isFigureOf <<%= uri($chapter) %>>;
-   gcis:isFigureOf <<%= obj_uri_for($report)->to_abs %>>;
+   gcis:isFigureOf <<%= uri($report) %>>;
 % }
-
-## This figure is the #th table in that particular chapter, and as such has designation Figure # :
-% if (my $chapter = ( (stash 'chapter') || $figure->chapter)) {
-   rdf:value "<%= $figure->ordinal %>"^^xsd:integer;
-   gcis:figureNumber "<%= $chapter->number %>.<%= $figure->ordinal %>"^^xsd:float;
-% }
-
-## Figure Caption
-   gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
-
-## The figure contains one or more images.
-% for my $image ($figure->images) {
-   gcis:hasImage <<%= obj_uri_for($image)->to_abs %>>;
-% }   
-
-## The figure was created on the following date:
-   dcterms:created "<%= $figure->create_dt %>"^^xsd:dateTime;
-
-## The image was submitted on the following date:
-   dcterms:dateSubmitted "<%= $figure->submission_dt %>"^^xsd:dateTime;
 
 ## Geographical extent of the figure content
    gcis:northBoundLatitude "<%= $figure->lat_max %>"^^xsd:float;
@@ -42,23 +33,14 @@
    gcis:startedAt "<%= $figure->time_start %>"^^xsd:dateTime;
    gcis:endedAt "<%= $figure->time_end %>"^^xsd:dateTime;
 
-## Figure source:
-   cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
-
-## Usage limits:
-   dcterms:RightsStatement "<%= $figure->usage_limits %>"^^xsd:string;
-
-% for my $keyword ($figure->keywords) {
-## Keywords associated with the figure
-   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-% }  
-
    a gcis:Figure .
 % end
 
 
-
-## This figure cites the following resource(s):
 %= include 'prov';
-
 %= include 'contributors';
+%#
+%# % for my $keyword ($figure->keywords) {
+%# ## Keywords associated with the figure
+%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
+%# % }

@@ -1,39 +1,39 @@
 
-\=head1 NAME
+=head1 NAME
 
 book
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+Entries in this table are publications classified as books.  They should have ISBN numbers. 
+
+=head1 FIELDS
+
+ identifier (character varying) - A globally unique identifier for this book.
+ title (character varying) - The title of the book
+ isbn (character varying) - The 10 or 13 digit ISBN number for this book.
+ year (numeric) - The year of publication.
+ publisher (character varying) - The name of the publisher.
+ number_of_pages (numeric) - The number of pages in the book.
+ url (character varying) - A url for a landing page for this book, or for the book itself, if it is available online.
+ in_library (boolean) - Whether or not this book is available in the USGCRP resources library.
+ topic (character varying) - A brief free form comma-separated list of topics associated with this book.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- identifier (character varying) - 
- title (character varying) - 
- isbn (character varying) - 
- year (numeric) - 
- publisher (character varying) - 
- number_of_pages (numeric) - 
- url (character varying) - 
- in_library (boolean) - 
- topic (character varying) - 
-
-
-\=head1 SCHEMA
-
-                         Table "gcis_metadata.book"
-      Column      |       Type        | Modifiers | Storage  | Description 
- -----------------+-------------------+-----------+----------+-------------
-  identifier      | character varying | not null  | extended | 
-  title           | character varying | not null  | extended | 
-  isbn            | character varying |           | extended | 
-  year            | numeric           |           | main     | 
-  publisher       | character varying |           | extended | 
-  number_of_pages | numeric           |           | main     | 
-  url             | character varying |           | extended | 
-  in_library      | boolean           |           | plain    | 
-  topic           | character varying |           | extended | 
+                                                                Table "gcis_metadata.book"
+      Column      |       Type        | Modifiers | Storage  |                                        Description                                         
+ -----------------+-------------------+-----------+----------+--------------------------------------------------------------------------------------------
+  identifier      | character varying | not null  | extended | A globally unique identifier for this book.
+  title           | character varying | not null  | extended | The title of the book
+  isbn            | character varying |           | extended | The 10 or 13 digit ISBN number for this book.
+  year            | numeric           |           | main     | The year of publication.
+  publisher       | character varying |           | extended | The name of the publisher.
+  number_of_pages | numeric           |           | main     | The number of pages in the book.
+  url             | character varying |           | extended | A url for a landing page for this book, or for the book itself, if it is available online.
+  in_library      | boolean           |           | plain    | Whether or not this book is available in the USGCRP resources library.
+  topic           | character varying |           | extended | A brief free form comma-separated list of topics associated with this book.
  Indexes:
      "book_pkey" PRIMARY KEY, btree (identifier)
      "book_isbn_key" UNIQUE CONSTRAINT, btree (isbn)
@@ -47,6 +47,6 @@ book
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

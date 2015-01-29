@@ -142,7 +142,20 @@ sub make_tree_for_show {
     $params{with_gcmd} = 1 if $c->param('with_gcmd');
     $params{with_regions} = 1 if $c->param('with_regions');
     $params{bonsai} = 1 if $c->param('brief');
-    return $obj->as_tree(c => $c, %params);
+    my $ret = $obj->as_tree(c => $c, %params);
+    if (my $gcid = $ret->{uri}) {
+        my $others = $c->orm->{'exterm'}{mng}->get_objects(
+           query => [ gcid => "$gcid" ],
+           sort_by => "lexicon_identifier, term"
+        );
+        $ret->{aliases} = [ map +{
+                url => scalar $_->native_url,
+                context => $_->context,
+                term => $_->term,
+                lexicon => $_->lexicon_identifier,
+            }, @$others ] if $others && @$others;
+    }
+    $ret;
 }
 
 sub maybe_include_generic_pub_rels {
@@ -193,7 +206,7 @@ sub show {
             $c->res->headers->content_type("application/x-turtle");
             $c->render_maybe("$table/object") or $c->render("object") },
         thtml => sub { my $c = shift;
-            $c->res->headers->content_type("text/html");
+            $c->res->headers->content_type("text/html;charset=UTF-8");
             $c->stash->{format} = 'ttl';
             $c->stash('turtle' => $c->render_partial_ttl($table));
             $c->stash->{format} = 'thtml';
@@ -925,6 +938,7 @@ sub update_contributors {
                 or return $c->update_error("invalid person $person");
         }
         if (my $id = $organization) {
+            $id =~ s[^/organization/][]; # Allow GCID or identifier
             $organization = Organization->new(identifier => $id)->load(speculative => 1)
                 or return $c->update_error("invalid organization $id");
         }
@@ -1367,6 +1381,10 @@ sub redirect_with_error {
     } else {
         $uri = $c->req->url;
     }
+    if (my $params = $c->stash('redirect_params')) {
+        $uri = Mojo::URL->new($uri) unless ref($uri);
+        $uri->query(@$params);
+    }
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {
@@ -1384,6 +1402,11 @@ sub redirect_without_error {
     my $c     = shift;
     my $tab   = shift;
     my $uri   = $c->_this_object->uri($c, {tab => $tab});
+    if (my $params = $c->stash('redirect_params')) {
+        $uri = Mojo::URL->new($uri) unless ref($uri);
+        $uri->query(@$params);
+    }
+
     $c->respond_to(
         html => sub { shift->redirect_to($uri) },
         json => sub { shift->render(json => { status => 'ok' }) },

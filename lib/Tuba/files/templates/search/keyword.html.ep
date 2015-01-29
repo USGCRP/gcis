@@ -4,7 +4,7 @@
 <label>Search for </label>
 %= text_field 'q'
 <label> in</label>
-%= select_field 'type' => [ 'all', sort ('platform', 'instrument', 'organization','person', db_identifiers('publication_type'))];
+%= select_field 'type' => [ 'all', sort ('organization','person', db_identifiers('publication_type'))];
 and show
 %= select_field 'format' => [ 'detailed', 'brief'];
 match results.
@@ -19,6 +19,11 @@ Your search returned <%= $result_count_text %>
 Please enter some search terms above.
 % }
 </p>
+
+<pre>
+<%= link_to url_with(format => 'json') => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to url_with(format => 'yaml') => class => 'label label-info' => begin %>YAML<%= end %> \
+</pre>
 
 % if ( ( (param 'format') // '') eq 'detailed') {
     % for my $obj (@clone) {

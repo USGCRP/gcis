@@ -110,7 +110,10 @@ our %RouteDoc = (
       brief => "Redirect to a person based on a name",
       description => "Given a name (case sensitive, concatenated by dashes), redirect if there is a single match.  The first and last names can be in either order.",
   },
-
+  organization_contributors => {
+      brief => "Show contributions made by an organizations",
+      description => "Given a role (contributor, author, etc.) and a resource type (e.g. platform, dataset, report), list contributions made by the organization of that type.",
+  },
 );
 
 sub find_doc {

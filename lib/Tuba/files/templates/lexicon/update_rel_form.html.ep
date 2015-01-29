@@ -7,6 +7,92 @@
 </center>
 
 %= include 'update_tabs', active => 'rel';
+%= include 'messages';
 
-not implemented
+% my $selected_context = param 'context';
+% my @contexts = $lexicon->contexts;
+<div class='row-fluid'>
+    <div class='span2'>
+    <ul class='nav nav-list well'>
+        <li class='nav-header'>Contexts</li>
+    % for my $context (sort @contexts) {
+    <li <%== ($selected_context && $selected_context eq $context) ? qq[class='active'] : "" %>>
+        <%= link_to $self->req->url->clone->query(context => $context) => begin %><%= $context %><%= end %></li>
+    % }
+    % if ($selected_context && !(grep { $_ eq $selected_context} @contexts)) {
+        <li class="active"><a href="#"><%= $selected_context %></a></li>
+    % }
+    <li <%== (!$selected_context) ? qq[class='active'] : ''%>>
+    <%= link_to $self->req->url->path => begin %>New context<%= end %></li>
+    </li>
+    </div>
+    <div class='span10'>
+
+        % if ($selected_context) {
+
+        %= form_for obj_uri_for($object,'update_rel'), method => 'POST', begin
+        %= hidden_field 'context' => $selected_context;
+        <dl class='dl-horizontal'>
+        <dt>
+        <dt>External term</dt>
+        <dd style='position:relative;'>GCID<span style='position:absolute;right:0px;'>delete?</span></dd>
+
+        % for my $exterm (@$terms) {
+        % if (my $url = $exterm->native_url) {
+            <dt><a target="_blank" href="<%= $exterm->native_url %>"><%= $exterm->term %></a></dt>
+        % } else {
+            <dt><%= $exterm->term %></dt>
+        % }
+        <dd style='position:relative;'>
+        % if (valid_gcid($exterm->gcid)) { # if error
+        <a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
+        % } else {
+        <a class='text-error' href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>
+        % }
+        <span style='position:absolute;right:5px;top:0px;'>
+            <%= check_box 'delete_term' => $exterm->term => style=>'margin:0px;' => onchange => "\$(this).parents('dd').toggleClass('alert-danger')" %></span>
+        </dd>
+        </dd>
+        % }
+        <dt>
+        <%= text_field 'new_term', class => "input input-small", placeholder => "New term" %>
+        </dt>
+        <dd>
+        <%= text_field 'new_gcid', class => "span10", autocomplete => "off", id => 'gcid_lookup', placeholder => "GCID" %>
+        </dd>
+        </dl>
+        <center>
+            <%= submit_button 'Add or delete terms', class => "btn btn-primary" %>
+        </center>
+        %= end
+
+
+        % } else {
+        <p>Please select or create a context for <%= $lexicon->identifier %> (<%= external_link($lexicon->url) %>).</p>
+        %= form_for obj_uri_for($object,'update_rel_form'), method => 'GET' => class => 'form form-inline' => begin
+        %= text_field 'context', class => "input", placeholder => "New Context";
+        %= submit_button 'Add', class =>"btn btn-primary";
+        %= end
+        % }
+
+    </div>
+</div>
+
+%= javascript begin
+$('#gcid_lookup').typeahead({
+    minLength : 1,
+    items : 15,
+    updater: function(str) {
+        var pieces = str.split(' ');
+        return pieces[0];
+        $('#gcid_lookup').attr('value',pieces[0]);
+    },
+    source : function(query,process) {
+    return $.get('/autocomplete', { q : query, items : 15, type : 'full', 'gcids' : 1 }, function(data) {
+                 return process(data);
+            });
+        }
+   });
+%= end
+
 

@@ -52,7 +52,7 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 DONE
 
     my $query = RDF::Query->new("$defaults\n$sparql");
-    ok $query, "parsed query" or diag RDF::Query::error();
+    ok $query, "parsed query" or diag "error parsing\n$defaults\n$sparql\n\n".RDF::Query::error();
 
     my $results = $query->execute($model);
     my @all;
@@ -147,7 +147,28 @@ $t->post_ok(
   }
 )->status_is(200);
 
-
+my $instrument_identifier = 'leica-dlux';
+my $platform_identifier = 'tripod';
+# The leica-dlux on the tripod was used to create the dataset.
+$t->post_ok( "/platform" => json => {
+        identifier => $platform_identifier,
+        name => "This is a tripod used to mount instruments and collect data."
+    });
+$t->post_ok( "/instrument" => json => {
+        identifier => $instrument_identifier,
+        name => "This is a sensitive camera used to collect data."
+    });
+$t->post_ok( "/platform/rel/$platform_identifier" => json => {
+        add => { instrument_identifier => $instrument_identifier },
+        location => "top"
+    }
+);
+$t->post_ok("/dataset/rel/$dataset_identifier" => json => {
+        add_instrument_measurement => {
+            platform_identifier => $platform_identifier,
+            instrument_identifier => $instrument_identifier,
+        }
+    });
 
 #
 # Parse them into the model
@@ -158,6 +179,8 @@ add_to_model('/report/trees/chapter/the-larch/figure/tall-green-larch-tree');
 add_to_model('/report/trees/chapter/the-larch/finding/larch-trees-are-tall');
 add_to_model("/image/$image_identifier");
 add_to_model("/dataset/$dataset_identifier");
+add_to_model("/platform/$platform_identifier");
+add_to_model("/instrument/$instrument_identifier");
 
 #
 # Okay, now let's do some sparql.
@@ -273,6 +296,31 @@ SPARQL
     finding => uri("/report/trees/chapter/the-larch/finding/larch-trees-are-tall"),
 }, "Found chapter finding in report.");
 
+# Ensure that the dataset is associated with the instrument instance.
+my $dataset_uri = uri("/dataset/$dataset_identifier");
+sparql_ok(<<SPARQL,
+select ?instance FROM <http://test.data.globalchange.gov>
+where {
+    <$dataset_uri> prov:wasDerivedFrom ?instance .
+}
+SPARQL
+{
+    instance => uri("/platform/$platform_identifier/instrument/$instrument_identifier")
+}, "Found instrument instance for dataset");
+
+#
+#
+# Ensure that the examples return valid triples
+#
+$t->get_ok('/examples');
+my $examples = $t->tx->res->json;
+for my $example (@$examples) {
+    my @rows = do_sparql( $example->{code} );
+    TODO : {
+        local $TODO = "Make tests for examples";
+        ok @rows, $example->{desc} or diag "no rows for \n".$example->{code};
+    }
+}
 
 #
 # Cleanup.
@@ -280,6 +328,8 @@ SPARQL
 $t->delete_ok("/report/trees" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/dataset/$dataset_identifier" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/image/$image_identifier" => { Accept => "application/json" })->status_is(200);
+$t->delete_ok("/platform/$platform_identifier");
+$t->delete_ok("/instrument/$instrument_identifier");
 
 done_testing();
 

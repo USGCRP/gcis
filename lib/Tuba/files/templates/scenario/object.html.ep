@@ -1,0 +1,31 @@
+% layout 'default', title => $scenario->identifier.' - '.$scenario->name,
+%   description => $scenario->description;
+
+<center>
+<h2>scenario : <%= $object->stringify %></h2>
+</center>
+
+%= include 'obj_header', object => $scenario
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        % my $pub = $scenario->get_publication;
+        %= include 'h/thumbnail', pub => $pub;
+        <h2><%= $scenario->name %></h2>
+        %= include commify => objs => scalar $scenario->all_orgs
+        %= include 'h/desc', obj => $scenario
+
+        <p>Model runs : 
+        %= link_to 'list_model_runs_for_scenario', { scenario_identifier => $scenario->identifier } => begin
+        <%= scalar @{ $scenario->model_runs } %>
+        %= end
+        </p>
+
+
+     %= include 'h/other_identifiers', gcid => $scenario->uri($self);
+
+    </div>
+</div>
+
+%= include 'h/other_formats';
+

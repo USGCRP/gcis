@@ -1,27 +1,27 @@
 
-\=head1 NAME
+=head1 NAME
 
 organization_map
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
+
+Organizations may be associated with other organizations.
+
+=head1 FIELDS
+
+ organization_identifier (character varying) - The first organization.
+ other_organization_identifier (character varying) - The target.
+ organization_relationship_identifier (character varying) - The relationship.
 
 
+=head1 SCHEMA
 
-\=head1 FIELDS
-
- organization_identifier (character varying) - 
- other_organization_identifier (character varying) - 
- organization_relationship_identifier (character varying) - 
-
-
-\=head1 SCHEMA
-
-                             Table "gcis_metadata.organization_map"
-                 Column                |       Type        | Modifiers | Storage  | Description 
- --------------------------------------+-------------------+-----------+----------+-------------
-  organization_identifier              | character varying | not null  | extended | 
-  other_organization_identifier        | character varying | not null  | extended | 
-  organization_relationship_identifier | character varying | not null  | extended | 
+                                   Table "gcis_metadata.organization_map"
+                 Column                |       Type        | Modifiers | Storage  |       Description       
+ --------------------------------------+-------------------+-----------+----------+-------------------------
+  organization_identifier              | character varying | not null  | extended | The first organization.
+  other_organization_identifier        | character varying | not null  | extended | The target.
+  organization_relationship_identifier | character varying | not null  | extended | The relationship.
  Indexes:
      "organization_map_pkey" PRIMARY KEY, btree (organization_identifier, other_organization_identifier, organization_relationship_identifier)
  Foreign-key constraints:
@@ -34,6 +34,6 @@ organization_map
  Has OIDs: no
  
 
-\=cut
+=cut
 
 

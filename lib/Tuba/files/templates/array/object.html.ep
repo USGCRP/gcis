@@ -1,0 +1,56 @@
+
+% layout 'default', title => $array->identifier;
+
+<center>
+<h2>array : <%= $object->identifier %></h2>
+</center>
+
+% unless (param 'no_header') {
+
+    %= include 'history_modal';
+
+    % if ($object->can('identifier') && user_can('update')) {
+        <span style='float:right;'>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        </span>
+    % }
+
+% }
+
+<div class='row-fluid'>
+    <div class='span10 offset1 well'>
+        %= include commify => objs => scalar $array->all_orgs
+        %= include 'h/prov', pub => $array->get_publication;
+        <h5>
+            Identifier : <%= $array->identifier %><br>
+            Rows : <%= $array->row_count %><br>
+            Columns : <%= $array->col_count %><br>
+            Rows in header : <%= $array->rows_in_header %>
+        </h5>
+    % if (my @tables = $array->tables) {
+    <p>This array is part of <%= @tables==1 ? 'this table' : 'these tables' %> :
+        % for my $table (@tables) {
+        %= obj_link($table);
+        % }
+    </p>
+    % }
+    % my $row = 0;
+    <table class='table table-bordered table-condensed array'>
+        % for my $x ($array->rows) {
+            % if ($row++ < $array->rows_in_header) {
+            <tr class='header'>
+            % } else {
+            <tr>
+            % }
+            % for my $y (@$x) {
+                <td><%= $y %></td>
+            % }
+            </tr>
+        % }
+    </table>
+
+    </div>
+</div>
+
+%= include 'h/other_formats';

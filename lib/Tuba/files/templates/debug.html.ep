@@ -9,5 +9,9 @@ debug
 columns :  <%= join ',', $obj->meta->columns; %>
 relationships :
  <% for my $rel ($obj->meta->relationships) { %> <%= $rel->name %> <% } %>
+keys :
+ <% for my $key ($obj->meta->primary_key, $obj->meta->unique_keys) {
+    %>  <%= $key->name %> : <%= join ',', $key->columns %>
+<% } %>
 % }
 </pre>

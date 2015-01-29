@@ -247,6 +247,68 @@ $t->post_ok( "/activity" => json => $activity )->status_is(200);
 $t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
 $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
 
+my $project = {
+    identifier => "worm",
+    name => "Noctural\nanimal",
+    description => "curly\nemerges when rains",
+    website => "http://nationalzoo.org",
+    description_attribution => "http://example.com",
+};
+
+$t->post_ok( "/project" => json => $project )->status_is(200);
+$t->get_ok('/project/worm.ttl')->status_is(200);
+$t->get_ok('/project/worm.nt')->status_is(200);
+
+# Scenario
+
+my $scenario = {
+    identifier => "chimp",
+    name => "not monkey\nnot organutan",
+    description => "primate\nnot really human",
+    description_attribution => "http://nationalzoo.org",
+};
+
+$t->post_ok( "/scenario" => json => $scenario )->status_is(200);
+$t->get_ok('/scenario/chimp.ttl')->status_is(200);
+$t->get_ok('/scenario/chimp.nt')->status_is(200);
+
+# Model
+my $model = {
+    identifier => "tiger",
+    name => "instance of\ncat",
+    version => "tiger",
+    description => "oh my lions\nbears",
+    description_attribution => "http://nationalzoo.org",
+    reference_url => "http://example.com",
+    project_identifier => "worm",
+};
+
+$t->post_ok( "/model" => json => $model )->status_is(200);
+$t->get_ok('/model/tiger.ttl')->status_is(200);
+$t->get_ok('/model/tiger.nt')->status_is(200);
+
+
+# Model Run
+my $model_run = {
+    identifier => "bat",
+    doi => "10.999999/9998",
+    spatial_resolution => "1 degree",
+    range_start => "2021-01-01T00:00:00",
+    range_end => "2050-01-01T00:00:00",
+    time_resolution => "15 minutes",
+    scenario_identifier => "chimp",
+    model_identifier => "tiger",
+    activity_identifier => "teeth-brush",
+    project_identifier => "worm",  
+    sequence => "1",
+    sequence_description => "sequence is\n as follows",
+
+};
+
+$t->post_ok( "/model_run" => json => $model_run )->status_is(200);
+$t->get_ok('/model_run/bat.ttl')->status_is(200);
+$t->get_ok('/model_run/bat.nt')->status_is(200);
+
 # Clean up
 $t->delete_ok("/reference/ref-ref-ref")->status_is(200);
 $t->delete_ok("/organization/aa")->status_is(200);
@@ -257,10 +319,13 @@ $t->delete_ok("/report/animals/chapter/alligators/figure/caimans")->status_is(20
 $t->delete_ok("/report/animals/chapter/alligators/table/population")->status_is(200);
 $t->delete_ok("/report/animals")->status_is(200);
 $t->delete_ok("/dataset/cmip3")->status_is(200);
+$t->delete_ok("/model_run/bat")->status_is(200);
 $t->delete_ok("/activity/teeth-brush")->status_is(200);
 $t->delete_ok("/article/gatorade")->status_is(200);
 $t->delete_ok("/journal/gators")->status_is(200);
-
+$t->delete_ok("/scenario/chimp")->status_is(200);
+$t->delete_ok("/model/tiger")->status_is(200);
+$t->delete_ok("/project/worm")->status_is(200);
 
 done_testing();
 

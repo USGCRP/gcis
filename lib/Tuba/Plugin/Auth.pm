@@ -78,7 +78,7 @@ sub register {
         });
     $app->helper(deny_auth => sub {
             my $c = shift;
-            $c->render(text => "unauthorized", status => 403);
+            $c->render("unauthorized", status => 403);
             return 0;
         });
     $app->helper(user_can => sub {

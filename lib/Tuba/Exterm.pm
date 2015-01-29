@@ -29,8 +29,8 @@ sub create {
         $term->load(speculative => 1);
         $term->gcid($json->{gcid});
     } else {
-        # TODO handle a form too
-        return $c->update_error("not implemented");
+        # NB: forms are handled through lexicon/rel
+        return $c->update_error("missing JSON to add exterm");
     }
     $term->save(audit_user => $c->user) or return $c->update_error($term->error);
     $c->stash(_this_object => $term);
@@ -67,6 +67,31 @@ sub remove {
     return $c->render(text => 'ok');
 }
 
+sub list_context {
+    my $c = shift;
+    my $lexicon_identifier = $c->stash('lexicon_identifier');
+    my $context = $c->stash('context');
+    my $terms = Exterms->get_objects(
+        query => [ lexicon_identifier => $lexicon_identifier, context => $context ],
+        sort_by => 'term',
+    );
+    $c->respond_to(
+       json => sub {
+                    my $c = shift;
+                    $c->render(json => [ map +{ term => $_->term, gcid => $_->gcid }, @$terms ])
+                   },
+       yaml  => sub {
+                    my $c = shift;
+                    $c->render_yaml([ map +{ term => $_->term, gcid => $_->gcid }, @$terms ])
+                   },
+       html => sub {
+                   my $c = shift;
+                   $c->res->headers->content_type('text/plain');
+                   $c->render(text => join "\n",
+                        map sprintf("%40s : %s",$_->term, $_->gcid), @$terms)
+                   },
+    );
+}
 
 1;
 

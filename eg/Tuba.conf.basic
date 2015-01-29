@@ -1,0 +1,15 @@
+---
+database :
+    dbname   : gcis
+    schema   : gcis_metadata
+image_upload_dir : <%= $ENV{HOME} %>/tuba_assets
+asset_path : /assets
+auth :
+    secret : random_stuff
+    valid_users :
+        brian : easy_pass
+authz :
+    root :
+        brian : 1
+    update :
+        brian : 1
