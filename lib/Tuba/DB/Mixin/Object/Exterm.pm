@@ -36,5 +36,19 @@ sub native_url {
     return $ctx->( $s->term );
 }
 
+sub same_as {
+    my $s = shift;
+    my $lookup =  {
+        dbpedia => {
+            resource => sub {
+                "http://dbpedia.org/resource/".shift
+            },
+        },
+    };
+    my $lex = $lookup->{ $s->lexicon_identifier } or return;
+    my $ctx = $lex->{ $s->context } or return;
+    return $ctx->( $s->term );
+}
+
 1;
 
