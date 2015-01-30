@@ -38,11 +38,16 @@
         <dd style='position:relative;'>GCID<span style='position:absolute;right:0px;'>delete?</span></dd>
 
         % for my $exterm (@$terms) {
-        % if (my $url = $exterm->native_url) {
-            <dt><a target="_blank" href="<%= $exterm->native_url %>"><%= $exterm->term %></a></dt>
-        % } else {
-            <dt><%= $exterm->term %></dt>
+        <dt>
+        % if (my $target = $exterm->same_as) {
+        <a target="_blank" href="<%= $target %>"><i class='icon-star'></i></a>
         % }
+        % if (my $target = $exterm->native_url) {
+            <a target="_blank" href="<%= $target %>"><%= $exterm->term %></a></dt>
+        % } else {
+            <%= $exterm->term %></dt>
+        % }
+
         <dd style='position:relative;'>
         % if (valid_gcid($exterm->gcid)) { # if error
         <a href="<%= $exterm->gcid %>"><%= $exterm->gcid %></a>

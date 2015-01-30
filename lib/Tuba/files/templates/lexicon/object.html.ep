@@ -57,8 +57,11 @@
             % for my $term (@$terms) {
                 <li>
                 <span style='display:inline-block;min-width:150pt;'>
+                % if (my $target = $term->same_as) {
+                    <a target="_blank" href="<%= $target %>"><i class='icon-star'></i></a>
+                % }
                 % if (my $target = $term->native_url) {
-                <a target="_blank" href="<%= $term->native_url %>"><%= $term->term %></a>
+                <a target="_blank" href="<%= $target %>"><%= $term->term %></a>
                 % } else  {
                 %= $term->term;
                 % }

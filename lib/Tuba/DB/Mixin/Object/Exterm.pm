@@ -30,6 +30,11 @@ sub native_url {
                 "http://mercury.ornl.gov/oai/provider?verb=GetRecord&metadataPrefix=oai_dif&identifier=".shift;
             },
         },
+        dbpedia => {
+            resource => sub {
+                "http://wikipedia.org/wiki/".shift
+            },
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
