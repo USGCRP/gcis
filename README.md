@@ -32,15 +32,17 @@ Install of Perl prerequisites :
     cd gcis
     cpanm --installdeps .
 
-Customize install_base :
+Customize install_base (optional) :
 
     echo $(dirname $(dirname $(which perl)))
     vi Build.PL
-    # replace install_base value of '/usr/local/gcis' with output of command above
+    # use the ouput of the command above as the value for --install_base below
+    # or create a file $HOME/.modulebuildrc, that contains :
+    #       install     --install_base /your/directory/here
 
 Software installation :
 
-    perl Build.PL
+    perl Build.PL --install_base=(see above)
     ./Build
     ./Build test
     ./Build install

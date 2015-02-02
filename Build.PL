@@ -18,7 +18,7 @@ my $audit_sql = join '', <$fp>;
 close $fp;
 
 my $builder = Module::Build::Database->new(
-    install_base        => '/home/gcisops/perl5/perlbrew/perls/perl-5.20.0',
+    install_base        => '/usr/local/gcis',
     database_type       => 'PostgreSQL',
     database_options    => {
         name => "gcis",
