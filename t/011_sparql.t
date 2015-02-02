@@ -49,6 +49,7 @@ sub do_sparql {
 PREFIX gcis: <http://data.globalchange.gov/gcis.owl#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX owl:  <http://www.w3.org/2002/07/owl#>
 DONE
 
     my $query = RDF::Query->new("$defaults\n$sparql");
@@ -169,6 +170,14 @@ $t->post_ok("/dataset/rel/$dataset_identifier" => json => {
             instrument_identifier => $instrument_identifier,
         }
     });
+
+# Add a dbpedia lexicon
+$t->post_ok( "/lexicon", json => { identifier => 'dbpedia' } )->status_is(200);
+
+# Also add a dbpedia owl:SameAs
+my $dbpedia_platform_identifier = "Three-pod";
+$t->post_ok( "/lexicon/dbpedia/term/new" => json => {
+        term => $dbpedia_platform_identifier, context => 'resource', gcid => "/platform/$platform_identifier" } );
 
 #
 # Parse them into the model
@@ -307,6 +316,19 @@ SPARQL
 {
     instance => uri("/platform/$platform_identifier/instrument/$instrument_identifier")
 }, "Found instrument instance for dataset");
+
+# Ensure that the platform is the same as the dbpedia platform
+my $platform_uri = uri("/platform/$platform_identifier");
+sparql_ok(<<SPARQL,
+select ?dbp FROM <http://test.data.globalchange.gov>
+where {
+    <$platform_uri> owl:SameAs ?dbp .
+}
+SPARQL
+{
+    dbp => "http://dbpedia.org/resource/$dbpedia_platform_identifier"
+}, "Found dbpedia platform sameAs this platform");
+
 
 #
 #

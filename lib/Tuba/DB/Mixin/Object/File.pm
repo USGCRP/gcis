@@ -1,6 +1,7 @@
 package Tuba::DB::Object::File;
 # Tuba::DB::Mixin::Object::File;
 use Mojo::ByteStream qw/b/;
+use Mojo::Parameters;
 use Data::UUID::LibUUID;
 use Path::Class ();
 use Tuba::Log qw/logger/;
@@ -34,6 +35,15 @@ sub as_tree {
     my $c = $a{c} or return $tree;
     $tree->{url} = $s->asset_location;
     $tree->{href} = $c->url_for($tree->{url})->to_abs;
+    if (my $thumb = $tree->{thumbnail}) {
+        my $path = get_config->{asset_path};
+        my $url = $c->req->url->clone;
+        $url->query(Mojo::Parameters->new());
+        $url->path("$path/$thumb");
+        $tree->{thumbnail_href} = $url->to_abs;
+    } else {
+        $tree->{thumbnail_href} = undef;
+    }
     return $tree;
 }
 

@@ -2,7 +2,9 @@
 % title => "Global Change Information System",
 % description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
-<style>
+%= javascript '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js';
+
+
 <style type="text/css">
       body {
         padding-top: 20px;
@@ -11,14 +13,14 @@
 
       .jumbotron {
         text-align: center;
-        min-height: 110px;
+        min-height: 80px;
         margin: 0;
-      	padding: 100px 0;
-      	background: #ffffff url("/usgcrp-globe-trans.png") no-repeat center top;
+        margin-bottom: 30px;
       }
       .jumbotron h1 {
-        font-size: 70px;
+        font-size: 50px;
         line-height: 1;
+        color: #013d87;
       }
       .lead {
         font-size: 24px;
@@ -31,6 +33,7 @@
       .navbar img.logo {
       	float: left;
       }
+
       .col-lg-3 {
       	  margin-bottom: 30px;
       }
@@ -43,78 +46,81 @@
       .row {
       	  margin: 30px 0 30px;
       }
+    
+
+      .span2 {
+       width: 16%;
+      }
+      #svgwrap a text {
+        fill: #000000;
+        font-size: 5px;
+      }
+      h2 {
+      	font-size: 20px;
+      }
+      .lead {
+      	margin: 15px 0;
+      }
       
+     
+
 </style>
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
 <h3>Providing structured global change information.</h3>
 </div>
-<div class="container">
-<p class="lead" itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
-The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.
-Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
-products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
-products selected by the 13 member agencies, the GCIS serves as a key access point to assessments, reports, and tools produced
-by the <a href="http://www.globalchange.gov">U.S. Global Change Research Program</a>. The GCIS is managed, integrated, and curated by USGCRP.
-</p>
 
-<center>
-    <a class='btn btn-default btn-primary btn-lg' style='color:white;letter-spacing: 0.1em;' href="/report/nca3">Explore the information in the Third National Climate Assessment</a>
-    <p>Please note : the <a href="http://nca2014.globalchange.gov/downloads" target="_blank">PDF</a> is the official version of the Third National Climate Assessment
-    (NCA).</p>
-</center>
-<br>
-
-<div class="row">
-
-<div class="col-lg-3 col-md-6">
-    <div class="centered front-block">
-    %= link_to 'about' => class => 'btn btn-default btn-lg' => begin
-About the GCIS
-%= end
+<div class='row'>
+    <div class='col-md-12' id='svgwrap'>
+        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
-    <p>How we use identifiers and semantic
+   </div>
+<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
+The Third National Climate Assessment<%= end %></p>
+
+
+
+<style>
+    
+    
+</style>
+
+<div class='row'>
+<div class="col-md-7 col-md-offset-3 ">
+<h2><%= link_to 'about' => class => 'j' => begin %>About<%= end %></h2>
+    <p>Who we are, what the GCIS is, and how we use identifiers and semantic
     information to provide points of reference and traceability.
     </p>
-    
-</div>
 
-<div class="col-lg-3 col-md-6">
-    <div class="centered front-block">
-    <%= link_to 'examples' => class => "btn btn-default btn-lg centered" => begin %>GCIS examples<%= end %>
-    </div>
+
+<h2>
+    <%= link_to 'examples' => class => 'j' => begin %>Examples<%= end %></h2>
     <p>
-    Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
-    </p>
-    
-</div>
+Examples and tutorials for using this system as a researcher, citizen scientist, application developer or information theorist.
+</p>
 
-<div class="col-lg-3 col-md-6">
-    <div class="centered front-block">
-    <%= link_to 'resources' => class => "btn btn-default btn-lg center-block" => begin %>GCIS data model<%= end %>
-    </div>
+
+<h2>
+    <%= link_to 'resources'=> class => 'j' => begin %>Data model<%= end %></h2>
+
     <p>
     A description of how the information is structured, including
     the overlaps between relational and semantic representations of
     the information.
     </p>
-    
-</div>
 
-<div class="col-lg-3 col-md-6">
-    <div class="centered front-block">
-    <%= link_to 'api_reference' => class => "btn btn-default btn-lg" => begin %>GCIS API reference<%= end %>
-    </div>
+
+<h2>
+    <%= link_to 'api_reference' =>class => 'j' =>  begin %>API reference<%= end %></h2>
     <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
-    
-    
+
+
 </div>
 
+
 </div>
 
-
-<br><br>
 <div class="navbar">
         <div class='thumbnails' style='text-align:center;'>
     <span style="padding:1px;margin:1px;">
@@ -172,5 +178,108 @@ About the GCIS
 </div>
 </div>
 </div>
+
+%= javascript begin
+function rand(n) {
+    return Math.floor(Math.random() * n);
+}
+function randlist(n,c) {
+    var l = [];
+    for (var i=0;i<c;i++) {
+        l.push( rand(n) );
+    }
+    return l;
+}
+
+$(function() {
+    var pts = [
+       [ 134.846628329842,192.728879323751 ],
+       [ 65.153371670158,192.728879323751 ],
+       [ 32.1177490060914,167.882250993909 ],
+       [ 0.27112067624945,124.846628329842 ],
+       [ 2.27112067624944,75.153371670158 ],
+       [ 32.1177490060914,32.1177490060915 ],
+       [ 65.1533716701579,7.27112067624947 ],
+       [ 134.846628329842,7.27112067624944 ],
+       [ 167.882250993909,32.1177490060914 ],
+       [ 198.728879323751,75.153371670158 ],
+       [ 198.728879323751,124.846628329842 ],
+       [ 177.882250993909,167.882250993909 ],
+    ];
+    var svg = d3.select('svg');
+    //var w = $(window).width() * 0.4;
+    var h = $(window).height() * 0.4;
+    var w = document.getElementById('svgwrap').offsetWidth;
+
+    svg.attr('height',h);
+    svg.attr('width',w);
+
+    var polygon = svg.selectAll('polygon').data([ pts ]).enter().append('polygon');
+    polygon.attr('style','fill:none;stroke:#eeeeee;stroke-width:.5px');
+    polygon.attr('points',function(d) {
+        return d.map( function(d) {
+            return d.join(",")
+        }
+       ).join(" ");
+    });
+
+    // better to do a data join
+    var n = 0;
+    for (var j = 1; j < 6; j++) {
+        for (var i = 0; i < 12; i++) {
+            svg.append('path')
+                .attr('stroke','#eeeeee')
+                .attr('stroke-width','0.3')
+                .attr('id','path_' + n )
+                .attr('d',function(d) {
+                    return 'M ' + pts[i][0] + ' ' + pts[i][1] + 'L' + pts[(i+j)%12][0] + ' ' + pts[(i+j)%12][1];
+                });
+                n++;
+        }
+    }
+
+    var a = svg.selectAll('a')
+    .data([
+        % my $i;
+        % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
+        % }
+          ])
+        .enter()
+        .append('a');
+
+    a.attr('xlink:href', function(d) { return d.link } );
+    var text = a.append('text');
+
+    text.attr( 'x', function (d) { return pts[d.i][0] } )
+        .attr( 'y', function (d) { return pts[d.i][1] } )
+        .attr('font-family','sans-serif')
+        .attr('font-size','4px')
+        .attr('text-anchor','middle')
+        .text(function(d) { return d.text } )
+
+    svg.append('image').attr('xlink:href','/usgcrp-globe-trans.png')
+    .attr('x',25).attr('y',25)
+    .attr('width','150').attr('height',150);
+
+    var last = randlist(n,rand(5) + 1);
+    for (var i = 0; i < last.length; i++) {
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#bbbbbb');
+    }
+
+    setInterval(function() {
+        var t = randlist(n,rand(5) + 1);
+        for (var i = 0; i < t.length; i++) {
+            d3.select('#path_' + t[i]).transition().duration(200).attr('stroke','#db81d1');
+        }
+        for (var i = 0; i < last.length; i++) {
+            d3.select('#path_' + last[i]).transition().duration(200).attr('stroke','#dddddd');
+        }
+
+       last = t;
+    },2000);
+})
+%= end
+
 
 

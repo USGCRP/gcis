@@ -27,6 +27,8 @@ my %r = (
     doi        => '10.123/45',
     publication_year => '2000',
     report_type_identifier => "",
+    contact_note => 'email me if you have problems',
+    contact_email => 'nobody@example.com',
 );
 $t->post_ok( "/report" => form => \%r )->status_is(200);
 

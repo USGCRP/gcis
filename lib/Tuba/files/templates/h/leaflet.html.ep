@@ -1,0 +1,56 @@
+<div class='pull-right thumbnail span4' style='top:2px;text-align:right;'>
+% my $lat_min = ( (stash 'lat_min') || $object->lat_min);
+% my $lat_max = ( (stash 'lat_max') || $object->lat_max);
+% my $lon_min = ( (stash 'lon_min') || $object->lon_min);
+% my $lon_max = ( (stash 'lon_max') || $object->lon_max);
+% if ($lon_min == 0. && $lon_max == 360.) {
+    % $lon_min = -180.;
+    % $lon_max = 180.;
+%}
+%= stylesheet "/js/leaflet/leaflet.css";
+%= javascript "/js/leaflet/leaflet.js";
+<style>
+  .map {
+    width: 470px;
+    height: 250px;
+  }
+</style>
+<center><div id='map' class='map'></div></center>
+<script>
+  $(function() {
+    var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, zoomControl: false});
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      maxZoom: 18
+    }).addTo(map);
+    var geojson = {
+      'type': 'Feature',
+      'properties': {
+        'name': 'test name',
+        'amenity': 'test amenity',
+        'popupContent': 'This is the popup content'
+      },
+      'geometry': {
+        'type': 'Polygon',
+        'coordinates': [[
+          [ <%= $lon_min %>, <%= $lat_min %> ],
+          [ <%= $lon_min %>, <%= $lat_max %> ],
+          [ <%= $lon_max %>, <%= $lat_max %> ],
+          [ <%= $lon_max %>, <%= $lat_min %> ],
+          [ <%= $lon_min %>, <%= $lat_min %> ]
+        ]]
+      }
+    };
+    L.geoJson(geojson, {
+      coordsToLatLng: function (coords) {
+        longitude = coords[0];
+        latitude = coords[1];
+        var latlng = L.latLng(latitude, longitude);
+        if (<%= $lon_min %> > <%= $lon_max %> && longitude == <%= $lon_max %>) {
+          return latlng.wrap(360, 0);
+        } else
+          return latlng.wrap();
+      }
+    }).bindPopup().addTo(map);
+  });
+</script> 
+</div>

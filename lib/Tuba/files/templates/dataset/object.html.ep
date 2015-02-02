@@ -90,6 +90,7 @@
         % }
         </p>
         % }
+        %= include 'h/leaflet', lat_min => $dataset->lat_min, lat_max => $dataset->lat_max, lon_min => $dataset->lon_min, lon_max => $dataset->lon_max;
 
         % for my $measurement ($dataset->instrument_measurements) {
         This dataset uses data from

@@ -518,6 +518,7 @@ sub register {
           gcis     => 'http://data.globalchange.gov/gcis.owl#',
           org      => 'http://www.w3.org/ns/org#',
           prov     => 'http://www.w3.org/ns/prov#',
+          owl      => 'http://www.w3.org/2002/07/owl#',
           rdf      => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
           rdfs     => 'http://www.w3.org/2000/01/rdf-schema#',
           xml      => 'http://www.w3.org/XML/1998/namespace',
@@ -570,8 +571,17 @@ sub register {
             my $params = sprintf('%f_N_%f_E_',$lat,$lon);
             return $url->query(params => $params);
         });
-
-
+    $app->helper(get_counts => sub {
+            my $c = shift;
+            my $table = shift;
+            my $count = $c->orm->{$table}->{mng}->get_objects_count;
+            return $count;
+        });
+    $app->helper(format_number => sub {
+            my $c = shift;
+            my $num = shift;
+            return Number::Format->new->format_number($num, @_);
+        });
 }
 
 

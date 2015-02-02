@@ -20,6 +20,11 @@ Please enter some search terms above.
 % }
 </p>
 
+<pre>
+<%= link_to url_with(format => 'json') => class => 'label label-info' => begin %>JSON<%= end %> \
+<%= link_to url_with(format => 'yaml') => class => 'label label-info' => begin %>YAML<%= end %> \
+</pre>
+
 % if ( ( (param 'format') // '') eq 'detailed') {
     % for my $obj (@clone) {
     <div class='row-fluid'>

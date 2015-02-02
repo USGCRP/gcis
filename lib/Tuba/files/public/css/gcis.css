@@ -162,6 +162,9 @@ a.blackbutton {
 .nav-tabs > .active > a, .nav-tabs > .active > a:hover {
   outline:none;
 }
+.navbar .thumbnails {
+	margin-top: 25px;
+}
 table.array {
     margin:5px;
     width:auto;

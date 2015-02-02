@@ -108,7 +108,7 @@ sub update {
 
         # Turn uris into ids
         if (my $uri = delete $json->{publication_uri}) {
-            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
+            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
             $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{publication_id} = $pub->id;
@@ -119,7 +119,7 @@ sub update {
 
         # ditto
         if (my $uri = delete $json->{child_publication_uri}) {
-            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => 'uri not found' } );
+            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
             $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{child_publication_id} = $pub->id;
