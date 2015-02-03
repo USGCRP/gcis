@@ -72,6 +72,8 @@
                 <li><%= link_to 'list_platform' => begin %>platforms<%= end %></li>
                 <li><%= link_to 'list_instrument' => begin %>instruments<%= end %></li>
                 <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
+                <li><%= link_to 'list_model' => begin %>models<%= end %></li>
+                <li><%= link_to 'list_scenario' => begin %>scenarios<%= end %></li>
             </ul>
         </li>
         <li>
