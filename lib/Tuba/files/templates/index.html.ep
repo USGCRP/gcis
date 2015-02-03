@@ -15,7 +15,7 @@
         text-align: center;
         min-height: 80px;
         margin: 0;
-        margin-bottom: 30px;
+        margin-bottom: 40px;
       }
       .jumbotron h1 {
         font-size: 50px;
@@ -36,8 +36,9 @@
        width: 16%;
       }
       #svgwrap a text {
-        fill: #000000;
+        fill: #428bca;
         font-size: 5px;
+        letter-spacing: -1.5px;
       }
       h2 {
       	font-size: 20px;
@@ -45,7 +46,14 @@
       .lead {
       	margin: 15px 0;
       }
-      
+      .row .thumbnails {
+      	  text-align: center;
+      }
+      .row .thumbnails span {
+      	  padding:1px;
+      	  margin:1px;
+     }
+
      
 </style>
 
@@ -55,7 +63,7 @@
 </div>
 <div class="container">
 <div class='row-fluid'>
-    <div class='span12' id='svgwrap'>
+    <div class='span8 offset2' id='svgwrap'>
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
    </div>
@@ -103,57 +111,57 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 
 </div>
 
-<div class="navbar">
+<div class="row">
         <div class='thumbnails' style='text-align:center;'>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.commerce.gov" target="_agency" title="U.S. Department of Commerce">
         <img src="/logo/DOC.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.defense.gov" target="_agency" title="U.S. Department of Defense">
         <img src="/logo/DOD.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.energy.gov" target="_agency" title="U.S. Department of Energy">
         <img src="/logo/DOE.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.doi.gov" target="_agency" title="U.S. Department of the Interior">
         <img src="/logo/DOI.png" style="width:43px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.state.gov" target="_agency" title="U.S. Department of State">
         <img src="/logo/DOS.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.dot.gov" target="_agency" title="US Department of Transportation">
         <img src="/logo/DOT.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.epa.gov" target="_agency" title="US Environmental Protection Agency">
         <img src="/logo/EPA.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.hhs.gov" target="_agency" title="U.S. Department of Health & Human Services">
         <img src="/logo/HHS.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.nasa.gov" target="_agency" title="NASA">
         <img src="/logo/NASA.png" style="width:46px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.nsf.gov" target="_agency" title="National Science Foundation">
         <img src="/logo/NSF.png" style="width:47px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.si.edu" target="_agency" title="Smithsonian">
         <img src="/logo/SI.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.usaid.gov" target="_agency" title="U.S. Agency for International Development">
         <img src="/logo/USAID.png" style="width:41px;"></a>
     </span>
-    <span style="padding:1px;margin:1px;">
+    <span>
     <a href="http://www.usda.gov" target="_agency" title="U.S. Department of Agriculture">
         <img src="/logo/USDA.png" style="width:41px;"></a>
     </span>
@@ -174,18 +182,18 @@ function randlist(n,c) {
 
 $(function() {
     var pts = [
-       [ 134.846628329842,192.728879323751 ],
-       [ 65.153371670158,192.728879323751 ],
-       [ 32.1177490060914,167.882250993909 ],
-       [ 0.27112067624945,124.846628329842 ],
-       [ 2.27112067624944,75.153371670158 ],
+       [ 139.846628329842,192.728879323751 ],
+       [ 63.153371670158,192.728879323751 ],
+       [ 29.1177490060914,167.882250993909 ],
+       [ 1.07112067624945,124.846628329842 ],
+       [ 0.07112067624944,75.153371670158 ],
        [ 32.1177490060914,32.1177490060915 ],
        [ 65.1533716701579,7.27112067624947 ],
        [ 134.846628329842,7.27112067624944 ],
        [ 167.882250993909,32.1177490060914 ],
-       [ 198.728879323751,75.153371670158 ],
-       [ 198.728879323751,124.846628329842 ],
-       [ 177.882250993909,167.882250993909 ],
+       [ 199.928879323751,75.153371670158 ],
+       [ 199.928879323751,124.846628329842 ],
+       [ 180.882250993909,167.882250993909 ],
     ];
     var svg = d3.select('svg');
     //var w = $(window).width() * 0.4;
@@ -223,7 +231,7 @@ $(function() {
     .data([
         % my $i;
         % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : '<%= format_number(get_counts($type)) %> <%= pl($type) %>' },
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number(get_counts($type)) %>)' },
         % }
           ])
         .enter()
