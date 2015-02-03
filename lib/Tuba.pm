@@ -420,6 +420,7 @@ sub startup {
 
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');
+    $r->get('/metrics')->to('controller#index')->name('metrics');
     $r->get('/api_reference' => sub {
       my $c = shift;
       my $trying; if (my $try = $c->param('try')) {

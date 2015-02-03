@@ -1275,17 +1275,16 @@ Handles / for tuba.
 
 sub index {
     my $c = shift;
-    state $count;
-    unless ($count) {
-        $count = Publications->get_objects_count;
+    my %counts;
+    for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+        $counts{$type} = $c->get_counts($type);
     }
-    my $demo_pubs;
-    push @$demo_pubs, @{ Publications->get_objects(
-            offset => ( int rand $count ),
-            limit => 1,
-        ) } for (1..6);
-    $c->stash(demo_pubs => [ shuffle @$demo_pubs ]);
-    $c->render('index');
+    $c->stash(counts => \%counts);
+    $c->respond_to(
+        json => sub { shift->render(json => { counts => \%counts } ) },
+        yaml => sub { shift->render_yaml( { counts => \%counts } ) },
+        any  => sub { shift->render('index') },
+    );
 }
 
 =item history

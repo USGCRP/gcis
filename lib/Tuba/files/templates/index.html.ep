@@ -64,6 +64,8 @@
 <div class="container">
 <div class='row-fluid'>
     <div class='span8 offset2' id='svgwrap'>
+        <%= link_to "metrics" => { format => 'json' } => class => 'label label-info pull-right' => begin %>JSON<%= end %>
+        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-info pull-right' => begin %>YAML<%= end %>
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div>
    </div>
@@ -231,7 +233,7 @@ $(function() {
     .data([
         % my $i;
         % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number(get_counts($type)) %>)' },
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number($counts->{$type}) %>)' },
         % }
           ])
         .enter()
