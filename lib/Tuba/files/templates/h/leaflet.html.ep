@@ -7,8 +7,8 @@
     % $lon_min = -180.;
     % $lon_max = 180.;
 %}
-%= stylesheet "/js/leaflet/leaflet.css";
-%= javascript "/js/leaflet/leaflet.js";
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <style>
   .map {
     width: 470px;
