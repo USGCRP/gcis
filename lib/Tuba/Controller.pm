@@ -932,7 +932,7 @@ sub update_contributors {
         $person = $json->{person_id};
         $reference_identifier = $json->{reference_identifier};
         $organization = $json->{organization_identifier};
-        logger->info("adding org $organization");
+        logger->info("adding org $organization") if $organization;
         if (my $id = $person) {
             $person = Person->new(id => $id)->load(speculative => 1)
                 or return $c->update_error("invalid person $person");
