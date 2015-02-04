@@ -9,6 +9,7 @@
       body {
         padding-top: 20px;
         padding-bottom: 60px;
+        font-size: 12px;
       }
 
       .jumbotron {
@@ -37,8 +38,7 @@
       }
       #svgwrap a text {
         fill: #428bca;
-        font-size: 5px;
-        letter-spacing: -1.5px;
+      
       }
       h2 {
       	font-size: 20px;
@@ -64,11 +64,14 @@
 <div class="container">
 <div class='row-fluid'>
     <div class='span8 offset2' id='svgwrap'>
-        <%= link_to "metrics" => { format => 'json' } => class => 'label label-info pull-right' => begin %>JSON<%= end %>
-        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-info pull-right' => begin %>YAML<%= end %>
+        
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+        
     </div>
    </div>
+<p class="text-center"><%= link_to "metrics" => { format => 'json' } => class => 'label label-info' => begin %>JSON<%= end %>
+        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-info' => begin %>YAML<%= end %>
+        </p>
 <p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
 The Third National Climate Assessment<%= end %></p>
 </div>
@@ -114,7 +117,7 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 </div>
 
 <div class="row">
-        <div class='thumbnails' style='text-align:center;'>
+        <div class='thumbnails'>
     <span>
     <a href="http://www.commerce.gov" target="_agency" title="U.S. Department of Commerce">
         <img src="/logo/DOC.png" style="width:41px;"></a>
@@ -245,7 +248,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr('font-size','4px')
+        .attr('font-size','0.5em')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 
