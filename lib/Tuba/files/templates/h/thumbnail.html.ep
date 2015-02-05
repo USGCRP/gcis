@@ -1,5 +1,9 @@
 <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
 % my $pub = ( (stash 'pub') || $object->get_publication);
+% my $lat_min = ( $object->can('lat_min') ? $object->lat_min : '');
+% my $lat_max = ( $object->can('lat_max') ? $object->lat_max : '');
+% my $lon_min = ( $object->can('lon_min') ? $object->lon_min : '');
+% my $lon_max = ( $object->can('lon_max') ? $object->lon_max : '');
 % if ($pub) {
     % my @files = $pub->files;
     % if (@files <= 1) {
@@ -43,6 +47,10 @@
             %= end
         % }
         </center>
+    % }
+
+    % if ($lat_min && $lat_max && $lon_min && $lon_max) {
+      %= include 'h/leaflet', lat_min => $lat_min, lat_max => $lat_max, lon_min => $lon_min, lon_max => $lon_max;
     % }
 
 % }
