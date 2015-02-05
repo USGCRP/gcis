@@ -515,6 +515,7 @@ lib/Tuba/files/templates/h/contributors.html.ep
 lib/Tuba/files/templates/h/contributors_short.html.ep
 lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/desc.html.ep
+lib/Tuba/files/templates/h/leaflet.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
 lib/Tuba/files/templates/h/other_identifiers.html.ep
