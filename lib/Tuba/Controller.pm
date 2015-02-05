@@ -1352,15 +1352,20 @@ sub page {
 
 sub per_page {
     my $c = shift;
+    return undef if $c->param('all');
     return 24 if $c->param('thumbs');
     return 20;
 }
 
 sub set_pages {
     my $c = shift;
-    my $count = shift || 1;
-    $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
-    $c->stash(per_page => $c->per_page);
+    my $count = shift // 1;
+    if ($c->per_page) {
+        $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
+        $c->stash(per_page => $c->per_page);
+    } else {
+        $c->stash(pages => 1);
+    }
     $c->stash(count => $count);
 }
 

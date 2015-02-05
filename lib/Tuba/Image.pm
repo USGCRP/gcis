@@ -76,5 +76,22 @@ sub create_form {
     return $c->SUPER::create_form(@_);
 }
 
+sub list {
+    my $c = shift;
+    my $report = $c->stash('report_identifier') or return $c->SUPER::list(@_);
+    my $all = $c->param('all');
+    my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
+    $c->stash(objects => Images->get_objects(
+        query => [report_identifier => $report ],
+        require_objects => [qw/figures/],
+        @page
+    ));
+    $c->set_pages( Images->get_objects_count(
+        query => [report_identifier => $report ],
+        require_objects => [qw/figures/],
+    ));
+    return $c->SUPER::list(@_);
+}
+
 1;
 
