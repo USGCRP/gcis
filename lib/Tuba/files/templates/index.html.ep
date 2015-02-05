@@ -77,11 +77,6 @@ The Third National Climate Assessment<%= end %></p>
 </div>
 
 
-<style>
-    
-    
-</style>
-
 <div class='row'>
 <div class="span7 offset3 ">
 <h2><%= link_to 'about' => class => 'j' => begin %>About<%= end %></h2>
