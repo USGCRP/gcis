@@ -12,8 +12,6 @@
 %= include 'pager', page => $page;
 % }
 <table class='table table-condensed table-bordered table-striped'>
-<caption>
-</caption>
 <tr>
     <th>identifier</th>
     <th>type</th>
@@ -30,27 +28,27 @@
     <td><%= link_to $report->uri($self) => begin %><%= $report->identifier %><%= end %></td>
     <td><%= $report->report_type_identifier // '' %></td>
     <td>
-        %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
         <%= @{ $report->chapters } %>
         %= end
     </td>
     <td>
-        %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
         <%= $report->count_figures %>
         %= end
     </td>
     <td>
-        %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
         <%= $report->count_findings %>
         %= end
     </td>
     <td>
-        %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
         <%= $report->count_tables %>
         %= end
     </td>
     <td>
-        %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+        %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
         %= $report->reference_count;
         %= end
     </td>
@@ -63,7 +61,7 @@
     </td>
 
     <td class='thumbnails'>
-    <div class='span2'>
+    <div class='col-md-2 col-xs-2'>
        % if (my $pub = $report->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }

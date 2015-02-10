@@ -27,6 +27,9 @@ ul.pager li a {
     padding-top:0px;
     padding-bottom:0px;
 }
+.form.search-box {
+	width: 350px;
+}
 .centered {
     text-align: center;
 }
@@ -58,7 +61,12 @@ img[src*="gcis_remote=1"] {
      * http://www.karlhorky.com/2012/06/cross-browser-image-grayscale-with-css.html
      */
 }
-
+#simple-menu {
+	margin-top: 8px;
+}
+.logo {
+	margin: 6px 4px 0 4px;
+}
 .row {
     margin-left:0px;
 }
@@ -81,8 +89,34 @@ table.densetable tr th {
     padding-top:0px;
     padding-bottom:0px;
 }
-.navbar .nav {
+.navbar-brand {
+	font-size: 22px;
+}
+.navbar-nav {
 	margin:  0 10px 0 15px;
+} 
+.navbar.main-menu .container {
+	background-color: #fafafa;
+  background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+  background-repeat: repeat-x;
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
+  min-height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.navbar.main-menu .container input.form-control {
+	width: 300px;
+}
+.navbar.main-menu .container .nav > li, .navbar.main-menu .container .nav > li > a {
+	float: left;
+	line-height: 20px;
+}
+.navbar.main-menu .container .form-control {
+	position: relative;
+	line-height: 1;
+
 }
 a.white {
     color:white;
