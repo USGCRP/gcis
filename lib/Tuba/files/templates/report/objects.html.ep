@@ -12,8 +12,6 @@
 %= include 'pager', page => $page;
 % }
 <table class='table table-condensed table-bordered table-striped'>
-<caption>
-</caption>
 <tr>
     <th>identifier</th>
     <th>type</th>
@@ -63,7 +61,7 @@
     </td>
 
     <td class='thumbnails'>
-    <div class='col-md-2'>
+    <div class='col-md-2 col-xs-2'>
        % if (my $pub = $report->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }

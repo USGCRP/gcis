@@ -90,9 +90,10 @@
     </ul>
 </div>
 
-        <div class="navbar main-menu">
+        <div class="navbar main-menu" role="navigation">
             <div class="container">
                 <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
+                	<span class="sr-only">Toggle navigation</span>
                      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </a>
                 <a href="/" class='navbar-left'><img class="logo" src="/logo-small.png" ></a>
@@ -103,7 +104,7 @@
                     <li>
                     % if(config('no_search')) {
                     % } elsif (config('google_site_search')) {
-                       <form action="http://google.com/cse" target="_blank" class="form navbar-form">
+                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
                            <input name="q" class="form-control" placeholder="search" type="search">

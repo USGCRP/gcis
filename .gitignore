@@ -1,13 +1,1 @@
-Build
-*.swp
-*.bak
-*.pid
-log/
-blib
-_build
-MYMETA.*
-postmaster.log
-*.tar.gz
-client_secrets.json
-Tuba.conf
-Makefile
+*~

@@ -27,6 +27,9 @@ ul.pager li a {
     padding-top:0px;
     padding-bottom:0px;
 }
+.form.search-box {
+	width: 350px;
+}
 .centered {
     text-align: center;
 }
@@ -113,7 +116,7 @@ table.densetable tr th {
 .navbar.main-menu .container .form-control {
 	position: relative;
 	line-height: 1;
-	border-radius: 15px;
+
 }
 a.white {
     color:white;
