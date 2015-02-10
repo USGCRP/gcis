@@ -4,6 +4,16 @@
 
 %= javascript '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js';
 
+<<<<<<< HEAD
+=======
+<style>
+<style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+        font-size: 12px;
+      }
+>>>>>>> master
 
 <style type="text/css">
      
@@ -11,10 +21,14 @@
         text-align: center;
         min-height: 80px;
         margin: 0;
+<<<<<<< HEAD
         margin-bottom: 30px;
         background-color: #ffffff;
         padding-bottom: 20px;
         padding-top: 0;
+=======
+        margin-bottom: 40px;
+>>>>>>> master
       }
       .jumbotron h1 {
         font-size: 50px;
@@ -39,8 +53,12 @@
    
       #svgwrap a text {
         fill: #428bca;
+<<<<<<< HEAD
         font-size: 5px;
         
+=======
+      
+>>>>>>> master
       }
       h2 {
       	font-size: 20px;
@@ -56,27 +74,37 @@
       	  margin:1px;
      }
 
+<<<<<<< HEAD
+=======
+     
+>>>>>>> master
 </style>
 
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 <h1 itemprop="name">Global Change Information System</h1>
 <h3>Providing structured global change information.</h3>
 </div>
+<<<<<<< HEAD
 
 <div class='row'>
     <div class='col-md-6 col-md-offset-3' id='svgwrap'>
+=======
+<div class="container">
+<div class='row-fluid'>
+    <div class='span8 offset2' id='svgwrap'>
+        
+>>>>>>> master
         <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+        
     </div>
    </div>
+<p class="text-center"><%= link_to "metrics" => { format => 'json' } => class => 'label label-info' => begin %>JSON<%= end %>
+        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-info' => begin %>YAML<%= end %>
+        </p>
 <p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
 The Third National Climate Assessment<%= end %></p>
 
 
-
-<style>
-    
-    
-</style>
 
 <div class='row'>
 <div class="col-md-7 col-md-offset-3 ">
@@ -188,7 +216,11 @@ $(function() {
        [ 139.846628329842,192.728879323751 ],
        [ 63.153371670158,192.728879323751 ],
        [ 29.1177490060914,167.882250993909 ],
+<<<<<<< HEAD
        [ 0.07112067624945,124.846628329842 ],
+=======
+       [ 1.07112067624945,124.846628329842 ],
+>>>>>>> master
        [ 0.07112067624944,75.153371670158 ],
        [ 32.1177490060914,32.1177490060915 ],
        [ 65.1533716701579,7.27112067624947 ],
@@ -234,7 +266,11 @@ $(function() {
     .data([
         % my $i;
         % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+<<<<<<< HEAD
             { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number(get_counts($type)) %>)' },
+=======
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number($counts->{$type}) %>)' },
+>>>>>>> master
         % }
           ])
         .enter()
@@ -246,7 +282,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr('font-size','4px')
+        .attr('font-size','0.5em')
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 

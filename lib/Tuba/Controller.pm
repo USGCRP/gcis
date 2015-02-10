@@ -932,7 +932,7 @@ sub update_contributors {
         $person = $json->{person_id};
         $reference_identifier = $json->{reference_identifier};
         $organization = $json->{organization_identifier};
-        logger->info("adding org $organization");
+        logger->info("adding org $organization") if $organization;
         if (my $id = $person) {
             $person = Person->new(id => $id)->load(speculative => 1)
                 or return $c->update_error("invalid person $person");
@@ -1275,17 +1275,16 @@ Handles / for tuba.
 
 sub index {
     my $c = shift;
-    state $count;
-    unless ($count) {
-        $count = Publications->get_objects_count;
+    my %counts;
+    for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+        $counts{$type} = $c->get_counts($type);
     }
-    my $demo_pubs;
-    push @$demo_pubs, @{ Publications->get_objects(
-            offset => ( int rand $count ),
-            limit => 1,
-        ) } for (1..6);
-    $c->stash(demo_pubs => [ shuffle @$demo_pubs ]);
-    $c->render('index');
+    $c->stash(counts => \%counts);
+    $c->respond_to(
+        json => sub { shift->render(json => { counts => \%counts } ) },
+        yaml => sub { shift->render_yaml( { counts => \%counts } ) },
+        any  => sub { shift->render('index') },
+    );
 }
 
 =item history
@@ -1353,15 +1352,20 @@ sub page {
 
 sub per_page {
     my $c = shift;
+    return undef if $c->param('all');
     return 24 if $c->param('thumbs');
     return 20;
 }
 
 sub set_pages {
     my $c = shift;
-    my $count = shift || 1;
-    $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
-    $c->stash(per_page => $c->per_page);
+    my $count = shift // 1;
+    if ($c->per_page) {
+        $c->stash(pages => 1 + int(($count - 1)/$c->per_page));
+        $c->stash(per_page => $c->per_page);
+    } else {
+        $c->stash(pages => 1);
+    }
     $c->stash(count => $count);
 }
 

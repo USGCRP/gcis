@@ -3,7 +3,7 @@
 
 <center>
 <h2>
-    Images
+    Images <%= (stash 'report_identifier') ? "in ".(stash 'report_identifier') : "" %>
 </h2>
 </center>
 

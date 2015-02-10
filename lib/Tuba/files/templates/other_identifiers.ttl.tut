@@ -17,5 +17,6 @@
    owl:SameAs <<%= $same_as %>>;
       % }
    skos:Concept <<%= uri($exterm->lexicon) %>>.
+   
     % }
 % }
