@@ -6,28 +6,17 @@
 % my $count = stash 'count';
 % my $per_page = stash 'per_page';
 <div class="form form-inline">
-<<<<<<< HEAD
 <div class='row'>
     <div class='col-md-5 pull-left'>
         <span class='btn btn-default btn-sm'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
-=======
-<div class='row-fluid'>
-    % if ($per_page && $page && $pages > 1) {
-    <div class='span5 pull-left'>
-        <span class='btn btn-small'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
->>>>>>> master
         % if ($show_search_box) {
            <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'col-md-8 input form-control',
             placeholder => 'search';
             %>
         % }
     </div>
-<<<<<<< HEAD
     % if ($page && $pages > 1) {
         <div class='col-md-2 text-center'>
-=======
-        <div class='span2 text-center'>
->>>>>>> master
             <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
                 % if ($page==1) {
