@@ -18,16 +18,12 @@
 <script>
   $(function() {
     var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, zoomControl: false});
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      maxZoom: 18
+    L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+      subdomains: '1234',
+      maxZoom: 18,
     }).addTo(map);
     var geojson = {
       'type': 'Feature',
-      'properties': {
-        'name': 'test name',
-        'amenity': 'test amenity',
-        'popupContent': 'This is the popup content'
-      },
       'geometry': {
         'type': 'Polygon',
         'coordinates': [[
@@ -40,6 +36,7 @@
       }
     };
     L.geoJson(geojson, {
+      clickable: false,
       coordsToLatLng: function (coords) {
         longitude = coords[0];
         latitude = coords[1];
