@@ -62,7 +62,7 @@
 
 % if ($show_search_box) {
         <div class="form search-box" role="search">
-        <div class="form-group">
+        <div class="form-group col-md-5 col-sm-8">
         <label class="sr-only">Search box</label>
            <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'input form-control',
             placeholder => 'search';
