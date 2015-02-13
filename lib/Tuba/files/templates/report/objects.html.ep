@@ -13,15 +13,15 @@
 % }
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
-    <th>identifier</th>
+    <th class="col-md-2 col-lg-2">identifier</th>
     <th>type</th>
     <th>chapters</th>
     <th>figures</th>
     <th>findings</th>
     <th>tables</th>
     <th>references</th>
-    <th>url</th>
-    <th>Files</th>
+    <th class="col-md-2 col-lg-2">url</th>
+    <th class="col-md-2 col-lg-2">Files</th>
 </tr>
 % for my $report (@$objects) {
     <tr>
@@ -60,12 +60,12 @@
         % }
     </td>
 
-    <td class='thumbnails'>
-    <div class='col-md-2 col-xs-2'>
+    <td>
+    
        % if (my $pub = $report->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
-    </div>
+       
     </td>
 
     </tr>
