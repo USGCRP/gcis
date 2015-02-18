@@ -17,7 +17,7 @@
 <center><div id='map' class='map'></div></center>
 <script>
   $(function() {
-    var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, zoomControl: false});
+    var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, zoomControl: false, crs: L.CRS.EPSG3395});
     L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
       subdomains: '1234',
       maxZoom: 18,
