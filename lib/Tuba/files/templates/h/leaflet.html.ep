@@ -35,7 +35,7 @@
         ]]
       }
     };
-    L.geoJson(geojson, {
+    map.fitBounds(L.geoJson(geojson, {
       clickable: false,
       coordsToLatLng: function (coords) {
         longitude = coords[0];
@@ -46,6 +46,6 @@
         } else
           return latlng.wrap();
       }
-    }).bindPopup().addTo(map);
+    }).bindPopup().addTo(map));
   });
 </script> 
