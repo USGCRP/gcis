@@ -2,10 +2,6 @@
 % my $lat_max = ( (stash 'lat_max') || $object->lat_max);
 % my $lon_min = ( (stash 'lon_min') || $object->lon_min);
 % my $lon_max = ( (stash 'lon_max') || $object->lon_max);
-% if ($lon_min == 0. && $lon_max == 360.) {
-    % $lon_min = -180.;
-    % $lon_max = 180.;
-%}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 <link rel="stylesheet" href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css' />
@@ -48,7 +44,7 @@
         longitude = coords[0];
         latitude = coords[1];
         var latlng = L.latLng(latitude, longitude);
-        if (<%= $lon_min %> > <%= $lon_max %> && longitude == <%= $lon_max %>) {
+        if (<%= $lon_min %> > <%= $lon_max %> || longitude > 180.) {
           return latlng.wrap(360, 0);
         } else
           return latlng.wrap();

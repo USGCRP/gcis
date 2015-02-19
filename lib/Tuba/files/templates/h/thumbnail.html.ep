@@ -46,7 +46,7 @@
         </center>
     % }
 
-    % if ($embed_leaflet && $object->lat_min && $object->lat_max && $object->lon_min && $object->lon_max) {
+    % if ($embed_leaflet && defined($object->lat_min) && defined($object->lat_max) && defined($object->lon_min) && defined($object->lon_max)) {
       %= include 'h/leaflet', lat_min => $object->lat_min, lat_max => $object->lat_max, lon_min => $object->lon_min, lon_max => $object->lon_max;
     % }
 
