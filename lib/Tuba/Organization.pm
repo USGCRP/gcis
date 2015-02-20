@@ -183,8 +183,9 @@ sub contributions {
                 organization_identifier => $organization->identifier,
                 role_type_identifier => $role_identifier,
                 person_id => undef,
+                publication_type_identifier => $resource,
         ],
-        with_objects => [qw/contributor/],
+        with_objects => [qw/contributor publication/],
     );
     my @pubs = map $_->publication, @$maps;
     my %id;
