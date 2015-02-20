@@ -65,7 +65,11 @@ img[src*="gcis_remote=1"] {
 	margin: 6px 4px 0 4px;
 }
 .row {
-    margin-left:0px;
+    margin-left:20px;
+    margin-right: 20px;
+}
+.thumbnail {
+	background-color: #f5f5f5;
 }
 .openrow {
 }

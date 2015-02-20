@@ -35,11 +35,11 @@
     <br>
 % }
 
-
-<div itemscope itemtype="http://schema.org/CreativeWork" class='row'>
-    <div class='col-md-10 col-md-offset-1 well' style='position:relative;'>
+<div itemscope itemtype="http://schema.org/CreativeWork" class="row well">
+   
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
+        <div class="col-md-8 col-lg-8 col-sm-8 col-xs-12">
         <h2 itemprop="name"><%= $report->title %></h2>
         <h5><span itemprop="copyrightYear"><%= $report->publication_year %></span>
             <%= labelize($report->report_type_identifier // '') %>
@@ -81,6 +81,7 @@
             </div>
         % }
    </div>
+</div>
 </div>
 
 <%= include 'h/other_formats'; =%>
