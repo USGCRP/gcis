@@ -9,11 +9,11 @@
     % if (@files <= 1) {
         % for my $file (@files) {
             % if (stash 'no_link') {
-            %= image $file->thumbnail_path, class => 'img-thumbnail', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+            %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
             % } else {
                 % my $dest = $file->landing_page || url_for('show_file', { file_identifier => $file->identifier });
                 %= link_to $dest => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail thumbnail', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
                 %= end
                 % if ($file->landing_page) {
                 <center><div class='caption'>
@@ -29,7 +29,7 @@
     %# Assume one high and one low-res.
         % for my $file ($pub->smallest_file) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
                 <center>
                 <div class='caption btn btn-default'>
                 screen version

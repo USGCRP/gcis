@@ -11,8 +11,8 @@
 
     % if ($object->can('identifier') && user_can('update')) {
         <span style='float:right;'>
-        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
+        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
+        <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
         </span>
     % }
 
@@ -35,27 +35,27 @@
 </th>
 <tr>
 <td>
-    %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
     <%= scalar @{ $report->chapters } %>
     %= end
 </td>
 <td>
-    %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
     <%= scalar @{ $report->figures } %>
     %= end
 </td>
 <td>
-    %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
     <%= scalar @{ $report->findings } %>
     %= end
 </td>
 <td>
-    %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
     <%= scalar @{ $report->tables } %>
     %= end
 </td>
 <td>
-    %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn squeezevert' => begin
+    %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
     %= $report->reference_count;
     %= end
 </td>
