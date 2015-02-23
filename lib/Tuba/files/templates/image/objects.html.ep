@@ -34,7 +34,7 @@
         % }
     </td>
     <td class='thumbnails'>
-    <div class='span2'>
+    <div>
        % if (my $pub = $o->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
