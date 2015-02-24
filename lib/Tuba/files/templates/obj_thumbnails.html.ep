@@ -15,21 +15,21 @@
                     % for my $file ($pub->smallest_file) {
                         % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
-                            <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-thumbnail' => style => 'padding:0px;' =%>
                         <%= end =%>
                         % } else {
-                            <%= image $file->thumbnail_path, class => 'img-polaroid' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-thumbnail' => style => 'padding:0px;' =%>
                         % }
                     % }
                 % } elsif (stash 'blanks') {
-                    <%= image '/blank.png', class => 'img-polaroid' => style => 'padding:0px;' =%>
+                    <%= image '/blank.png', class => 'img-thumbnail' => style => 'padding:0px;' =%>
                 % }
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify( (scalar 'tiny_captions' ? ( tiny => 1) : (short => 1)) );
                 <div class="caption" style='overflow:hidden;' title='<%= $val %>'>
 
                 % if ($uri) {
-                    %= link_to $obj->uri($self) => class => "squeezevert btn squoze" => alt => $val => title => $val => begin
+                    %= link_to $obj->uri($self) => class => "squeezevert btn btn-default squoze" => alt => $val => title => $val => begin
                     <%= $short %>
                     %= end
                 % } else {
@@ -37,7 +37,7 @@
                 % }
                 </div>
                 % if (my $field = (stash 'add_delete_button')) {
-                <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["$field"].value = '].$obj->get_publication(autocreate => 1)->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+                <%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["$field"].value = '].$obj->get_publication(autocreate => 1)->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
                 % }
             </div>
         </div>

@@ -5,9 +5,11 @@
 
 <div id="myModal"
  data-remote='<%= $history_url->clone->query(no_header => 1) %>'
- class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+ <div class="modal-content">
  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+   
     % my $pk = $object->meta->primary_key->columns->[0];
     <h5 id="myModalLabel">
 %= link_to $history_url  => begin
@@ -17,6 +19,12 @@ change history
 </h5>
  </div>
     <div class="modal-body"> <p>loading…</p> </div>
+     <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+               
+        </div>
+</div>
+</div>
 </div>
 
 % }
