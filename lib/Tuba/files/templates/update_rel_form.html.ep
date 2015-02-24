@@ -61,7 +61,10 @@
     <button type="reset" class="btn">Reset</button>
 </div>
 
+%= include '/h/other_identifiers', gcid => $object->uri($self);
+
 %= end
+
 
 </div>
 
