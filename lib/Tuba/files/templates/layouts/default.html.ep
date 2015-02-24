@@ -74,6 +74,7 @@
                 <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                 <li><%= link_to 'list_model' => begin %>models<%= end %></li>
                 <li><%= link_to 'list_scenario' => begin %>scenarios<%= end %></li>
+                <li><%= link_to 'list_lexicon' => begin %>lexicons<%= end %></li>
             </ul>
         </li>
         <li>
