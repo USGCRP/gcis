@@ -1,5 +1,5 @@
 % if (my $error = ( (stash 'error') || flash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
+    <div class='alert alert-danger'><%= $error %></div>
 % }
 % if (my $info = ( (stash 'info') || flash 'info')) {
     <div class='alert alert-success'><b><%= $info %></b></div>

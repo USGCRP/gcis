@@ -18,10 +18,10 @@
         var current = $("#j<%= $id %>").attr("class");
         if (current == 'closedrow') {
             $("#j<%= $id %>").attr("class","openrow");
-            $("#icon_<%= $id %>").attr("class","icon-resize-small");
+            $("#icon_<%= $id %>").attr("class","glyphicon glyphicon-resize-small");
        } else {
             $("#j<%= $id %>").attr("class","closedrow");
-            $("#icon_<%= $id %>").attr("class","icon-resize-full");
+            $("#icon_<%= $id %>").attr("class","glyphicon glyphicon-resize-full");
         }
     } );
 %= end
