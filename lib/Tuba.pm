@@ -213,12 +213,12 @@ sub startup {
         $resource->get("*$identifier" => \@restrict => \%defaults )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier" => \@restrict => \%defaults )->to('#show')->name("show_$name");
-        $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
+        $select = $resource->under(":$identifier")->to('#select')->name("select_$name");
       }
 
       return $select if $config->{read_only};
 
-      my $authed = $r->bridge("/$path_base")->to(cb => sub {
+      my $authed = $r->under("/$path_base")->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
               return 1;
@@ -373,7 +373,7 @@ sub startup {
     my $reference = $r->resource('reference');
     $report->get('/reference')->to('reference#list');
     $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
-    $r->bridge('/reference/match')
+    $r->under('/reference/match')
       ->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
@@ -446,7 +446,7 @@ sub startup {
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {
-        my $authed = $r->bridge->to(
+        my $authed = $r->under->to(
           cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
