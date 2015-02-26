@@ -228,7 +228,7 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $reference = $c->_this_object or return $c->render_not_found;
+    my $reference = $c->_this_object or return $c->reply->not_found;
     my $report = $reference->publication->to_object;
     undef $report unless $report->meta->table eq 'report';
 
@@ -294,12 +294,12 @@ sub lookup {
     my $c = shift;
     my $record_number = $c->stash('record_number');
 
-    $record_number =~ /^[0-9]+$/ or return $c->render_not_found;
+    $record_number =~ /^[0-9]+$/ or return $c->reply->not_found;
 
     my $found = References->get_objects(query => [ \"attrs->'_record_number' = ${record_number}::varchar" ], limit => 10 );
 
     unless ($found && @$found) {
-        return $c->render_not_found;
+        return $c->reply->not_found;
     }
     if (@$found > 1) {
         return $c->respond_to(

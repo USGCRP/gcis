@@ -483,7 +483,7 @@ sub startup {
     $r->post('/calculate_url' => sub {
         my $c = shift;
         my $for = $c->param('_route_name');
-        my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
+        my $route = $c->app->routes->lookup($for) or return $c->reply->not_found;
         my $params = $c->req->params->to_hash;
         delete $params->{_route_name};
         my $got = $c->url_for($for, $params);

@@ -131,13 +131,13 @@ sub update_form {
 
 sub lookup_name {
     my $c = shift;
-    my $name = $c->req->json->{name} or return $c->render_not_found;
+    my $name = $c->req->json->{name} or return $c->reply->not_found;
     my $org = Organization->new(name => $name)->load(speculative => 1);
     if ($org) {
         my $uri = $org->uri($c);
         return $c->redirect_to($uri);
     }
-    return $c->render_not_found;
+    return $c->reply->not_found;
 }
 
 sub merge {
@@ -196,7 +196,7 @@ sub contributions {
             map [ $_->stringify(short => 1), $_ ], @objs;
     $c->stash(objs => \@objs);
 
-    my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->render_not_found;
+    my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->reply->not_found;
     $c->stash(role => $roletype );
     $c->respond_to(
         json => { json => [ map $_->as_tree(c => $c, bonsai => 1), @objs ] },

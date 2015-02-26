@@ -189,7 +189,7 @@ sub set_title {
 sub show {
     my $c = shift;
 
-    my $object = $c->stash('object') or return $c->render_not_found;
+    my $object = $c->stash('object') or return $c->reply->not_found;
     my $meta  = $c->stash('meta') || $object->meta;
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
@@ -301,7 +301,7 @@ sub render_not_found_or_redirect {
         $sql .= " and " if $sql;
         $sql .= " row_data->'$name' = \$".@bind;
     }
-    return $c->render_not_found unless $identifier;
+    return $c->reply->not_found unless $identifier;
 
     my $sth = $c->db->dbh->prepare(<<SQL, { pg_placeholder_dollaronly => 1 });
 select changed_fields->'$identifier_column'
@@ -312,10 +312,10 @@ select changed_fields->'$identifier_column'
 SQL
     my $got = $sth->execute(@bind);
     my $rows = $sth->fetchall_arrayref;
-    return $c->render_not_found unless $rows && @$rows;
+    return $c->reply->not_found unless $rows && @$rows;
     my $replacement = $rows->[0][0];
     my $url = $c->req->url;
-    $url =~ s{/$table_name/$identifier(?=/|$|\.)}{/$table_name/$replacement} or return $c->render_not_found;
+    $url =~ s{/$table_name/$identifier(?=/|$|\.)}{/$table_name/$replacement} or return $c->reply->not_found;
     return $c->redirect_to($url);
 }
 
@@ -575,7 +575,7 @@ sub update_form {
     my $c = shift;
     my $controls = $c->stash('controls') || {};
     $c->stash(controls => { $c->_default_controls, %$controls } );
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
@@ -608,7 +608,7 @@ Generic update_prov_form.
 
 sub update_prov_form {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1) or return $c->render(text => $object->meta->table.' is not a publication');
@@ -635,7 +635,7 @@ Update the provenance for this object.
 
 sub update_prov {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(tab => 'update_prov_form');
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
@@ -727,7 +727,7 @@ be on this page, e.g.
 
 sub update_rel_form {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     my $controls = $c->stash('controls') || {};
     $c->stash(controls => { $c->_default_rel_controls, %$controls } );
     my $meta = $object->meta;
@@ -746,7 +746,7 @@ Form for updating files.
 
 sub update_files_form {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     $c->render("update_files_form");
@@ -760,7 +760,7 @@ Form for updating contributors.
 
 sub update_contributors_form {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     $c->render("update_contributors_form");
@@ -775,7 +775,7 @@ Update the files.
 
 sub update_files {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $c->stash(tab => "update_files_form");
 
     my $pub = $object->get_publication(autocreate => 1) or
@@ -989,7 +989,7 @@ sub update_contributors {
 sub _update_pub_many {
     my $c = shift;
     my $what = shift;
-    my $obj = $c->_this_object or return $c->render_not_found;
+    my $obj = $c->_this_object or return $c->reply->not_found;
     my $pub = $obj->get_publication(autocreate => 1);
     my $cwhat = "Tuba::DB::Object::$what";
     my $dwhat = decamelize($what);
@@ -1158,7 +1158,7 @@ sub can_set_replacement {
 
 sub update {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     my $next = $object->uri($c,{tab => 'update_form'});
     my %pk_changes;
     my %new_attrs;
@@ -1270,7 +1270,7 @@ Generic delete
 
 sub remove {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     $object->delete or return $c->render_exception($object->error);
     return $c->render(text => 'ok');
@@ -1306,7 +1306,7 @@ Generic history of changes to an object.
 
 sub history {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     my $pk = $object->meta->primary_key;
     my @columns = $pk->column_names;
 

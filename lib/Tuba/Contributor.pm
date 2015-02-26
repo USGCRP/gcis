@@ -11,7 +11,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub show {
   my $c = shift;
   my $con = Contributor->new( id => scalar $c->stash('contributor_identifier') )->load( speculative => 1)
-      or return $c->render_not_found;
+      or return $c->reply->not_found;
   my $format = $c->stash('format');
   if (my $p = $con->person) {
       my $uri = $p->uri($c);

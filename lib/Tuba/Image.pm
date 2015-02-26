@@ -48,7 +48,7 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);

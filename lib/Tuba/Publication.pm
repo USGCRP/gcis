@@ -12,8 +12,8 @@ sub show {
     my $c = shift;
     my $identifier = $c->stash('publication_identifier');
     my $pub = Publication->new( id => $identifier )->load( speculative => 1)
-      or return $c->render_not_found;
-    my $object = $pub->to_object or return $c->render_not_found;
+      or return $c->reply->not_found;
+    my $object = $pub->to_object or return $c->reply->not_found;
     return $c->redirect_to($object->uri($c)->to_abs);
 }
 
