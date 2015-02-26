@@ -857,10 +857,19 @@ sub update_files {
         $c->flash(message => 'Saved changes');
         return $c->redirect_without_error('update_files_form');
     }
+
+    my $existing_file;
     if (my $existing = $c->param('add_existing_file')) {
-        my $file = File->new_from_autocomplete($existing)
+        $existing_file = File->new_from_autocomplete($existing)
             or return $c->update_error("No match for $existing");
-        my $entry = PublicationFileMap->new(publication => $pub->id, file => $file->identifier);
+    }
+    if (my $existing = $json->{add_existing_file}) {
+        $existing =~ s[^/file/][]; # accept URI or identifier
+        $existing_file = File->new(identifier => $existing)
+            ->load(speculative => 1) or return $c->update_error("No file : $existing");
+    }
+    if ($existing_file) {
+        my $entry = PublicationFileMap->new(publication => $pub->id, file => $existing_file->identifier);
         $entry->save(audit_user => $c->user) or return $c->update_error($entry->error);
         $c->stash(message => 'Saved changes.');
         return $c->redirect_without_error('update_files_form');

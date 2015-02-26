@@ -24,6 +24,12 @@ $t->post_ok("/report" => form => { identifier => "test-report", title => "Test r
 $t->post_ok("/report/test-report/finding" => form => { identifier => "test-finding", statement => "Test Finding." } )->status_is(200);
 $t->get_ok("/report/test-report/finding/test-finding.json")->json_is('/statement' => "Test Finding.");
 
+$t->post_ok("/file" => json => { identifier => 'testfile', file => "fake", mime_type => 'foo' } )
+    ->status_is(200);
+
+$t->post_ok("/report/files/test-report" => json =>
+    {add_existing_file => "/file/testfile"} )->status_is(200);
+
 my $title = "Chapter one ± two";
 $t->post_ok("/report/test-report/chapter" => form => { identifier => "test-chapter", title => $title, number => 1 } )->status_is(200);
 $t->get_ok("/report/test-report/chapter/form/update/test-chapter.json")
@@ -84,6 +90,7 @@ $t->get_ok("/report/test-report")->status_is(302);
 
 $t->ua->max_redirects(1);
 
+$t->delete_ok("/file/testfile" => { Accept => "application/json" } )->status_is(200);
 $t->delete_ok("/report/test-report-changed" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/report/test-report2" => { Accept => "application/json" })->status_is(200);
 
