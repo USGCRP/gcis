@@ -3,6 +3,7 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $table->identifier %>";
+   gcis:isTableOf <<%= uri($report) %>>;
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    % if (! $chapter->number) {
    gcis:tableNumber "<%= $table->ordinal %>"^^xsd:string;
@@ -15,7 +16,6 @@
 %#
 % if (my $chapter = ( (stash 'chapter') || $table->chapter)) {
    gcis:isTableOf <<%= uri($chapter) %>>;
-   gcis:isTableOf <<%= uri($report) %>>;
 % }
 %#
 % for my $array ($table->arrays) {

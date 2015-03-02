@@ -19,7 +19,7 @@ sub list {
 
 sub show {
     my $c = shift;
-    my $kw = $c->_this_object or $c->render_not_found;
+    my $kw = $c->_this_object or $c->reply->not_found;
     $c->stash(object => $kw);
     $c->SUPER::show(@_);
 }

@@ -29,7 +29,7 @@ sub show {
     my $meta = Array->meta;
     my $object = Array->new( identifier => $identifier )
       ->load( speculative => 1, with => [qw/tables/] )
-      or return $c->render_not_found;
+      or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $meta);
     $c->SUPER::show(@_);
@@ -49,7 +49,7 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
@@ -120,7 +120,7 @@ sub _process_rows {
 
 sub update {
     my $c = shift;
-    my $obj = $c->_this_object or return $c->render_not_found;
+    my $obj = $c->_this_object or return $c->reply->not_found;
     if (my $in = $c->_process_rows) {
         if (ref $in eq 'ARRAY') {
             $c->stash(computed_params => { rows => $in } );

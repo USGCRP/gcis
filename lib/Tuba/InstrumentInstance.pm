@@ -24,7 +24,7 @@ sub show {
       platform_identifier   => $platform_identifier,
       instrument_identifier => $instrument_identifier
       )->load(speculative => 1)
-      or return $c->render_not_found;
+      or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     $c->SUPER::show(@_);

@@ -10,7 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    return $c->render_not_found;
+    return $c->reply->not_found;
     $c->stash(objects => Files->get_objects(with_objects => 'publications', page => $c->page));
     my $count = Files->get_objects_count;
     $c->set_pages($count);

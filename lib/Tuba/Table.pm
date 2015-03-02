@@ -63,12 +63,12 @@ sub show {
         )->load(speculative => 1, with => [qw/chapter arrays/]);
         return $c->redirect_to($object->uri_with_format($c)) if $object;
     };
-    return $c->render_not_found unless $object;
+    return $c->reply->not_found unless $object;
 
     if (!$c->stash('chapter_identifier') && $object->chapter_identifier) {
         $c->stash(chapter_identifier => $object->chapter_identifier);
     }
-    return $c->render_not_found unless $c->verify_consistent_chapter($object);
+    return $c->reply->not_found unless $c->verify_consistent_chapter($object);
 
     $c->stash(object => $object);
     $c->stash(meta => $meta);
@@ -86,7 +86,7 @@ sub redirect_to_identifier {
                 'ordinal' => $table_number,
             ]
         );
-    return $c->render_not_found unless $found && @$found;
+    return $c->reply->not_found unless $found && @$found;
     return $c->redirect_to( 'show_table' => { table_identifier => $found->[0]->identifier } );
 }
 
@@ -107,14 +107,14 @@ sub update_rel_form {
 
 sub update_form {
      my $c = shift;
-     my $object = $c->_this_object or return $c->render_not_found;
-     $c->verify_consistent_chapter($object) or return $c->render_not_found;
+     my $object = $c->_this_object or return $c->reply->not_found;
+     $c->verify_consistent_chapter($object) or return $c->reply->not_found;
      $c->SUPER::update_form(@_);
 }
 
 sub update_rel {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     my $next = $object->uri($c,{tab => 'update_rel_form'});
     $object->meta->error_mode('return');
     if (my $new = $c->param('new_array')) {

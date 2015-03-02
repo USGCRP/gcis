@@ -19,7 +19,7 @@ sub show {
     my $identifier = $c->stash('model_run_identifier');
     my $object = ModelRun->new( identifier => $identifier )
                       ->load( speculative => 1 )
-                          or return $c->render_not_found;
+                          or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => ModelRun->meta);
     $c->SUPER::show(@_);
@@ -73,7 +73,7 @@ sub lookup {
         return $c->redirect_with_error( show => $error );
     }
     $run->load( speculative => 1 ) or do {
-        return $c->render_not_found;
+        return $c->reply->not_found;
     };
     return $c->redirect_to("/model_run/".$run->identifier);
 }

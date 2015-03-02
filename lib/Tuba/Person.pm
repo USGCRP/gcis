@@ -37,7 +37,7 @@ sub redirect_by_name {
     my $c = shift;
     my $name = $c->stash('name');
     my @pieces = split /-/, $name;
-    return $c->render_not_found unless @pieces==2;
+    return $c->reply->not_found unless @pieces==2;
     my $front = Persons->get_objects(
       query => [first_name => $pieces[0], last_name => $pieces[1]],
       limit => 10
@@ -48,7 +48,7 @@ sub redirect_by_name {
     );
     my @found = (@$front, @$back);
 
-    return $c->render_not_found unless @found;
+    return $c->reply->not_found unless @found;
     if (@found==1) {
         return $c->redirect_to('show_person', { person_identifier => $found[0]->id } );
     }
@@ -65,7 +65,7 @@ sub redirect_by_name {
 
 sub redirect_by_orcid {
     my $c = shift;
-    my $person = Person->new(orcid => $c->stash('orcid'))->load(speculative => 1) or return $c->render_not_found;
+    my $person = Person->new(orcid => $c->stash('orcid'))->load(speculative => 1) or return $c->reply->not_found;
     return $c->redirect_to('show_person', { person_identifier => $person->id } );
 }
 
@@ -92,7 +92,7 @@ sub lookup_name {
     if ($matches && @$matches==1) {
         return $c->redirect_to($matches->[0]->uri($c));
     }
-    return $c->render_not_found unless @$matches;
+    return $c->reply->not_found unless @$matches;
     return $c->render(json => { matches => [ map $_->as_tree(bonsai => 1), @$matches ] } );
 }
 
@@ -182,8 +182,9 @@ sub contributions {
         query => [
                 role_type_identifier => $role_identifier,
                 person_id => $person->id,
+                publication_type_identifier => $resource,
         ],
-        with_objects => [qw/contributor/],
+        with_objects => [qw/contributor publication/],
     );
     my @pubs = map $_->publication, @$maps;
     my %id;
@@ -194,7 +195,7 @@ sub contributions {
             map [ $_->stringify(short => 1), $_ ], @objs;
     $c->stash(objs => \@objs);
 
-    my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->render_not_found;
+    my $roletype = RoleType->new(identifier => $role_identifier)->load(speculative => 1) or return $c->reply->not_found;
     $c->stash(role => $roletype );
     $c->respond_to(
         json => { json => [ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ] },

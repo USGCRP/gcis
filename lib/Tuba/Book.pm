@@ -40,7 +40,7 @@ sub update_rel_form {
 sub update {
     my $c = shift;
     $c->stash(tab => 'update_form');
-    my $book = $c->_this_object or return $c->render_not_found;
+    my $book = $c->_this_object or return $c->reply->not_found;
     if ($c->param('convert_into_report')) {
         return $c->update_error("Not converting because this book has an ISBN, and reports don't have ISBNs.") if $book->isbn && length($book->isbn);
         my $report = Report->new(
