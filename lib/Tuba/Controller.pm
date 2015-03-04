@@ -484,7 +484,8 @@ sub _this_object {
     my $meta = $object_class->meta;
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
-        my $val = $c->_pk_to_stashval($meta,$name) or next;
+        my $val = $c->_pk_to_stashval($meta,$name);
+        return unless defined($val);
         $pk{$name} = $val;
     }
 
@@ -1392,7 +1393,7 @@ sub redirect_with_error {
     if (my $obj = $c->_this_object) {
         $uri = $c->_this_object->uri($c, {tab => $tab});
     } else {
-        $uri = $c->req->url;
+        $uri = $c->_guess_object_class->uri($c, { tab => $tab } );
     }
     if (my $params = $c->stash('redirect_params')) {
         $uri = Mojo::URL->new($uri) unless ref($uri);
