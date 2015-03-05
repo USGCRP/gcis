@@ -1,12 +1,17 @@
 language: perl
 
+sudo: false
+
 perl:
   - "5.16"
   - "5.20"
 
 env:
     - PERL_CPANM_OPT=-n
-sudo: false
+
+before_install :
+    - cpanm App::cpanoutdated
+    - cpan-outdated | cpanm
 
 cache:
     directories :
