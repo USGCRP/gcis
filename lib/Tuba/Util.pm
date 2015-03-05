@@ -11,8 +11,9 @@ use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/xml_escape/;
 use Encode qw/decode/;
 use DateTime::Format::Human::Duration;
+use UUID::Tiny qw/:std/;
 
-our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs elide_str human_duration/;
+our @EXPORT_OK = qw/nice_db_error set_config get_config show_diffs elide_str human_duration new_uuid/;
 
 sub nice_db_error {
     my $err = shift or return;
@@ -58,6 +59,10 @@ sub human_duration {
     my $d = shift;
     return $d unless defined($d) && length($d) && ref($d) eq 'DateTime::Duration';
     return DateTime::Format::Human::Duration->new()->format_duration($d);
+}
+
+sub new_uuid {
+    return create_uuid_as_string(UUID_V4);
 }
 
 1;

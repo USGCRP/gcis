@@ -12,7 +12,7 @@ use Path::Class qw/file dir/;
 use File::Basename qw/basename/;
 use Tuba::Log;
 use Tuba::DB::Objects qw/-nicknames/;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 use Text::CSV_XS;
 
 =head1 ROUTES
@@ -73,7 +73,7 @@ sub update_rel {
 
 sub create_form {
     my $c = shift;
-    $c->param(identifier => new_uuid_string(4));
+    $c->param(identifier => new_uuid());
     $c->stash(controls => {
             rows => { template => 'grid' }
         });
