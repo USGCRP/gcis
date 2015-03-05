@@ -4,6 +4,7 @@ perl:
   - "5.20"
 env:
     - PERL_CPANM_OPT=-n
-before_install :
-  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
+sudo: 0
+#before_install :
+#  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
 
