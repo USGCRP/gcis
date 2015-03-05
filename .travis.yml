@@ -4,7 +4,11 @@ perl:
   - "5.20"
 env:
     - PERL_CPANM_OPT=-n
-sudo: 0
+sudo: false
+cache:
+    directories :
+        - /home/travis/perl5/perlbrew/perls/5.20/lib/site_perl
+        - /home/travis/perl5/perlbrew/perls/5.16/lib/site_perl
 #before_install :
 #  - sudo apt-get install libuuid1 uuid-dev raptor2-utils
 
