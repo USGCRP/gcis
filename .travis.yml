@@ -4,11 +4,4 @@ perl:
   - "5.20"
 before_install :
   - sudo apt-get install libuuid1 uuid-dev raptor2-utils
-  - cpanm --quiet -notest Devel::Cover Devel::Cover::Report::Coveralls
-script :
-  - perl Build.PL && ./Build
-  - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine ./Build test
-  - cover
-after_success :
-  - cover -report coveralls
 
