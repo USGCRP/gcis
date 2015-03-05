@@ -10,6 +10,12 @@ sub import {
     *{[caller]->[0].'::turtle_ok'} = \&turtle_ok;
 }
 
+sub Test::Mojo::turtle_ok {
+        my $t = shift;
+        turtle_ok($t->tx->res->body);
+        $t;
+};
+
 sub turtle_ok {
     my $ttl = shift;
     my $parser = RDF::Trine::Parser->new('turtle');

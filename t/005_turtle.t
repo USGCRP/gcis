@@ -13,7 +13,7 @@ use Test::Mojo;
 use tlib;
 use strict;
 
-chomp(my $found = `which raspper`);
+chomp(my $found = `which rapper`);
 if ($found) {
     chomp(my $version = `rapper --version`);
     diag "using $found (version $version)";

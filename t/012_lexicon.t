@@ -62,8 +62,7 @@ $t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)" => {Accept => "ap
   ->status_is(303)                  # 303 == "See Other"
   ->json_is({gcid => $gcid});
 
-$t->get_ok("/lexicon/ceos.ttl");
-turtle_ok($t->tx->res->body);
+$t->get_ok("/lexicon/ceos.ttl")->turtle_ok;
 
 $t->delete_ok("/lexicon/ceos/Mission/Aqua (with stuff here)")
   ->status_is(200);
