@@ -34,7 +34,7 @@
     % }
     <br>
 % }
-
+<div class="container">
 <div itemscope itemtype="http://schema.org/CreativeWork" class="row well">
    
         % my $pub = $report->get_publication;

@@ -1,3 +1,6 @@
+body {
+	padding-top: 0 !important;
+}
 table.squeeze tr td {
     padding-top:0px;
     padding-bottom:0px;
@@ -23,6 +26,9 @@ div.required_note:before {
     padding-top:0px;
     padding-bottom:0px;
 }
+.col-centered {
+    margin: 0 auto;
+}
 ul.pager li a {
     padding-top:0px;
     padding-bottom:0px;
@@ -40,6 +46,9 @@ a.btn {
 }
 a.btn-info {
     color: white;
+}
+.btn-push {
+	padding-top: 25px;
 }
 tr.ctr td {
     vertical-align:middle;
