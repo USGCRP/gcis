@@ -231,7 +231,7 @@ $(function() {
     .data([
         % my $i;
         % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number($counts->{$type}) %>)' },
+        { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
         % }
           ])
         .enter()
