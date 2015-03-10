@@ -7,7 +7,8 @@
 % my $meta_url = $self->req->url->clone;
 % $meta_url->query(Mojo::Parameters->new());
 % $meta_url =~ s/\.([^.]+)$//;
-% if (length($meta_url)) {
+% $meta_url = "$meta_url";
+% if (length($meta_url) > 1) {
     % $meta_url.=".rdfxml";
     <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
 % }
