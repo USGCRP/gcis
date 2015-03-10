@@ -3,7 +3,7 @@
     % my $nest = $pub->contributors_nested;
     <dl>
     % for my $row (@$nest) {
-    <dt><%= pl($row->{role}->label) %></dt>
+    <dt><%= pl($row->{role}->label, @{ $row->{people} ||[] } + @{ $row->{orgs}||[] }, 1) %></dt>
     <dd><ul>
         % for my $con (@{ $row->{people} }) {
         <li>

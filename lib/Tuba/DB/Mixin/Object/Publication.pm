@@ -266,14 +266,18 @@ sub _cons_with_role {
     my @out;
     for my $con (@$cons) {
         next unless $con->role_type_identifier eq $role->identifier;
-        next if $seen{$con->person_id}++;
-        push @out, +{
-            person => $con->person,
-            orgs => [ map $_->organization, grep { $_->person_id == $con->person_id
-                                                    and $_->role_type_identifier eq $con->role_type_identifier
-                                                 } @$cons
-            ],
-        };
+        next if $con->person_id && $seen{$con->person_id}++;
+        if ($con->person_id) {
+            push @out, +{
+                person => $con->person,
+                orgs => [ map $_->organization, grep { $_->person_id == $con->person_id
+                                                        and $_->role_type_identifier eq $con->role_type_identifier
+                                                     } @$cons
+                ],
+            };
+            next;
+        }
+        push @out, +{ person => undef, orgs => [ $con->organization ] };
     }
     return \@out;
 }
