@@ -4,6 +4,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+% my $meta_url = $self->req->url->clone;
+% $meta_url->query(Mojo::Parameters->new());
+% $meta_url =~ s/\.([^.]+)$//;
+% if (length($meta_url)) {
+    % $meta_url.=".rdfxml";
+    <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
+% }
 %= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
 %= stylesheet "/css/gcis.css";
 %= stylesheet "/css/jquery.sidr.light.css";
