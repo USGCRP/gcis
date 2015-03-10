@@ -3,7 +3,7 @@
 % my ($api_pw,$api_key) = $self->Tuba::Auth::make_api_key;
 <div class="row">
 <p>To upload files from the command line (using an HTTP PUT request):</p>
-<textarea class='col-md-12 col-sm-12 col-xs-12' readonly rows=1>
+<textarea class='col-md-12 col-sm-12 col-xs-12 form-control' readonly rows=1>
 curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$meta->table)->to_abs %>/
 </textarea>
 </div>
@@ -15,16 +15,16 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
 % my $pub = $object->get_publication;
 % if ($pub) {
     % for my $file ($pub->files) {
-    <div class='row col-centered'>
-    <div class='col-md-3 col-sm-6 col-xs-12 btn-push'>
+    <div class='row'>
+    <div class='col-md-4 col-sm-2 col-xs-2 btn-push'>
         <span class='btn btn-default'><%= obj_link($file); %></span>
     </div>
-    <div class='col-md-3 col-sm-6 col-xs-12 btn-push col-centered'>
+    <div class='col-md-4 col-sm-8 col-xs-8'>
     %= link_to $file->uri($self) => begin
-    <%= image $file->thumbnail_path, class => 'img-thumbnail col-md-6 col-sm-8 col-sm-offset-4 col-xs-3' => style => 'padding:0px;' =%>
+    <%= image $file->thumbnail_path, class => 'img-thumbnail col-md-4 col-sm-6 col-xs-6 pull-right' => style => 'padding:0px;' =%>
     %= end
     </div>
-    <div class='col-md-3 col-sm-12 col-xs-12 btn-push col-centered'>
+    <div class='col-md-4 col-sm-2 col-xs-2 btn-push col-centered'>
     <%= tag 'button' => class => 'btn btn-default btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
     </div>
     </div>

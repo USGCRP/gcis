@@ -9,7 +9,7 @@
 <li id='<%= $p->{reference}->identifier %>'>
 % if ($p->{child}) {
 <%= link_to 'show_publication', { publication_identifier => $p->{child}->id }, begin %><%= $p->{child}->stringify(no_elide => 1) =%><%= end =%>
-<% } elsif (user_can('update')) { %><span class='badge badge-important'>missing</span><% } %>
+<% } elsif (user_can('update')) { %><span class='badge'>missing</span><% } %>
   (<%= obj_link_to $p->{reference}, 'show' => begin %><%= $p->{reference}->stringify(short => 1) %><%= end %>)
 </li>
 % }
