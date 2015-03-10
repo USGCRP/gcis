@@ -58,7 +58,9 @@ img[src*="gcis_remote=1"] {
      * http://www.karlhorky.com/2012/06/cross-browser-image-grayscale-with-css.html
      */
 }
-
+#footer {
+	margin-top: 15px;
+}
 .row {
     margin-left:0px;
 }
