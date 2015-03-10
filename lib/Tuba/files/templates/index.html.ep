@@ -10,7 +10,7 @@
       body {
         padding-top: 20px;
         padding-bottom: 60px;
-        font-size: 12px;
+        font-size: 14px;
       } 
       .jumbotron {
         text-align: center;
