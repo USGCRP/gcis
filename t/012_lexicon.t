@@ -3,6 +3,7 @@
 use FindBin;
 use lib $FindBin::Bin;
 use tinit;
+use tlib;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
@@ -61,8 +62,7 @@ $t->get_ok("/lexicon/ceos/find/Mission/Aqua (with stuff here)" => {Accept => "ap
   ->status_is(303)                  # 303 == "See Other"
   ->json_is({gcid => $gcid});
 
-$t->get_ok("/lexicon/ceos.nt")->content_unlike(qr/error converting to ntriples/)
-  ->status_is(200, "No errors making ntriples");
+$t->get_ok("/lexicon/ceos.ttl")->turtle_ok;
 
 $t->delete_ok("/lexicon/ceos/Mission/Aqua (with stuff here)")
   ->status_is(200);

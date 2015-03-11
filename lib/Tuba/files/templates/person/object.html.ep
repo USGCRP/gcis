@@ -1,5 +1,6 @@
 
 % layout 'default';
+% use List::MoreUtils qw/uniq/;
 
 <center>
 <h2>person <%= $person->id %></h2>
@@ -35,28 +36,41 @@
     </p>
     % }
     % unless (param 'no_header') {
-        % my $ctr = $object->contributors;
         <div class='row collapse-wrapper'>
         <table class='table table-condensed table-bordered table-striped'>
-            <tr><th>Organization</th><th>Role</th><th>Publications</th>
-            </tr>
+            <tr><th>Organization</th><th>Role</th><th>Publications</th></tr>
             % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
+            % my @all_maps = @{ $ctr->publication_contributor_maps };
+            % my @tables = uniq map $_->publication->publication_type_identifier, @all_maps;
             <tr>
-                <td><%= obj_link($ctr->organization) %></td>
-                <td><%= $ctr->role_type->label %></td>
-                <td>
-                    <% for my $map (@{ $ctr->publication_contributor_maps }) { %>
-                        % my $obj = $map->publication->to_object;
-                        %= link_to 'person_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
-                        <%= $obj->meta->table %>
-                        %= end
-                        : <%= obj_link($obj) %>
-                        % if (my $ref = $map->reference) {
-                        <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
-                        % }
-                        <br>
-                   <% } %>
+                <td rowspan="<%= scalar @tables %>">
+                    <%= obj_link($ctr->organization) %>
                 </td>
+                % my $i = 0;
+                % for my $table (sort @tables) {
+                        % my @maps = grep { $_->publication->publication_type_identifier eq $table } @all_maps;
+                        % if ($i++) {
+                            </tr><tr>
+                        % }
+                    <td><%= $ctr->role_type->label %></td>
+                    <td>
+                        <% for my $map (
+                            map $_->[1],
+                            sort { $a->[0] cmp $b->[0] }
+                            map [ $_->publication->to_object->stringify(short => 1), $_ ],
+                            @maps) { %>
+                            % my $obj = $map->publication->to_object;
+                            %= link_to 'person_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
+                            <%= $obj->meta->table %>
+                            %= end
+                            : <%= obj_link($obj, short => 1) %>
+                            % if (my $ref = $map->reference) {
+                            <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
+                            % }
+                            <br>
+                       <% } %>
+                    </td>
+                % }
             </tr>    
             % }
         </table>

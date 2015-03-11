@@ -1,0 +1,58 @@
+#!/usr/bin/env perl
+
+# tuba_generate_sitemap
+
+use Tuba::DB::Objects qw/-autoconnect -nicknames/;
+use Mojo::Loader qw/data_section/;
+use Mojo::Template;
+use Data::Dumper;
+use Smart::Comments;
+use v5.16;
+
+my $c = Tuba::Controller->new();
+$c->app(Tuba->new());
+
+&main;
+
+sub do_resource {
+    my $resource = shift;
+    my $cb = shift;
+    
+    ### $resource
+    my $class = join '::',  'Tuba','DB','Object',(ucfirst $resource),'Manager';
+    for ( @{ $class->get_objects(all => 1) }) { ### dumping===[%]     done
+        $cb->({ uri => $_->uri($c) });
+    }
+}
+
+sub main {
+    my $base = "http://data.globalchange.gov";
+    my $data = data_section main::;
+    print $data->{header};
+    my $cb = sub {
+        my $args = shift;
+        print Mojo::Template->new->render($data->{url}, $base, $args->{uri} );
+    };
+    do_resource('report',$cb);
+    do_resource('figure',$cb);
+    do_resource('finding',$cb);
+    do_resource('chapter',$cb);
+    for my $resource (qw/article
+         journal book webpage region person organization dataset activity platform instrument image/) {
+        do_resource($resource,$cb);
+    }
+
+    print $data->{footer};
+}
+
+__DATA__
+@@ header
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+@@ url
+% my ($base,$uri) = @_;
+<url><loc><%= $base %><%= $uri %></loc><changefreq>weekly</changefreq></url>
+@@ footer
+</urlset>
+

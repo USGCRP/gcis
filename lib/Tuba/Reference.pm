@@ -9,7 +9,7 @@ use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/:all/;
 use Tuba::Log qw/logger/;;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 
 sub list {
     my $c = shift;
@@ -349,7 +349,7 @@ sub set_title {
 
 sub create_form {
     my $c = shift;
-    $c->param(identifier => new_uuid_string(4));
+    $c->param(identifier => new_uuid());
     return $c->SUPER::create_form(@_);
 }
 
