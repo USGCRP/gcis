@@ -1,17 +1,11 @@
-% layout 'default',
+% layout 'front',
 % title => "Global Change Information System",
 % description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
 %= javascript '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js';
 
-<style>
 <style type="text/css">
-      body {
-        padding-top: 20px;
-        padding-bottom: 60px;
-        font-size: 12px;
-      }
-
+     
       .jumbotron {
         text-align: center;
         min-height: 80px;
@@ -37,7 +31,7 @@
        width: 16%;
       }
       #svgwrap a text {
-        fill: #428bca;
+        fill: #0088cc;
       
       }
       h2 {
@@ -46,20 +40,25 @@
       .lead {
       	margin: 15px 0;
       }
-      .row .thumbnails {
+      .row .front-footer {
       	  text-align: center;
+      	  margin-top: 20px;
       }
-      .row .thumbnails span {
+      .row .front-footer span {
       	  padding:1px;
       	  margin:1px;
      }
 
      
 </style>
-
+<div class="container">
+	<a href="http://www.globalchange.gov/" target="_blank">
+	<img src="usgcrp-300.png" class="usgcrp thumbnail">
+	</a>
+</div>
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
-<h1 itemprop="name">Global Change Information System</h1>
-<h3>Providing structured global change information.</h3>
+	<h1 itemprop="name">Global Change Information System</h1>
+	<h3 class="sub-title">Providing structured global change information.</h3>
 </div>
 <div class="container">
 <div class='row-fluid'>
@@ -112,7 +111,7 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 </div>
 
 <div class="row">
-        <div class='thumbnails'>
+        <div class='front-footer'>
     <span>
     <a href="http://www.commerce.gov" target="_agency" title="U.S. Department of Commerce">
         <img src="/logo/DOC.png" style="width:41px;"></a>
