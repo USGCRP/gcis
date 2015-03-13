@@ -22,18 +22,18 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
 
 =head1 SCHEMA
 
-                                                          Table "gcis_metadata.article"
-        Column       |       Type        | Modifiers | Storage  |                                  Description                                  
- --------------------+-------------------+-----------+----------+-------------------------------------------------------------------------------
-  identifier         | character varying | not null  | extended | The identifier : this should be the DOI, if there is one.
-  title              | character varying |           | extended | The title of the article (source: crossref.org).
-  doi                | character varying |           | extended | The digital object identifier for the articel.
-  year               | integer           |           | plain    | The year of publication.
-  journal_identifier | character varying | not null  | extended | The GCIS identifier for the journal.
-  journal_vol        | character varying |           | extended | The volume of the journal in which the article appears (source: crossref.org)
-  journal_pages      | character varying |           | extended | The pages of the journal on which the article appears (source: crossref.org)
-  url                | character varying |           | extended | A URL for the article (not necessary if there is a DOI).
-  notes              | character varying |           | extended | Notes about this entry.
+                                                                 Table "gcis_metadata.article"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
+ --------------------+-------------------+-----------+----------+--------------+-------------------------------------------------------------------------------
+  identifier         | character varying | not null  | extended |              | The identifier : this should be the DOI, if there is one.
+  title              | character varying |           | extended |              | The title of the article (source: crossref.org).
+  doi                | character varying |           | extended |              | The digital object identifier for the articel.
+  year               | integer           |           | plain    |              | The year of publication.
+  journal_identifier | character varying | not null  | extended |              | The GCIS identifier for the journal.
+  journal_vol        | character varying |           | extended |              | The volume of the journal in which the article appears (source: crossref.org)
+  journal_pages      | character varying |           | extended |              | The pages of the journal on which the article appears (source: crossref.org)
+  url                | character varying |           | extended |              | A URL for the article (not necessary if there is a DOI).
+  notes              | character varying |           | extended |              | Notes about this entry.
  Indexes:
      "article_pkey" PRIMARY KEY, btree (identifier)
      "article_doi_key" UNIQUE CONSTRAINT, btree (doi)
@@ -47,7 +47,6 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
      audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON article FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON article FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

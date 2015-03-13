@@ -15,11 +15,11 @@ Publications contained in other publications (e.g. chapters in reports) may be a
 
 =head1 SCHEMA
 
-                           Table "gcis_metadata.subpubref"
-         Column        |       Type        | Modifiers | Storage  |   Description    
- ----------------------+-------------------+-----------+----------+------------------
-  publication_id       | integer           | not null  | plain    | The publication.
-  reference_identifier | character varying | not null  | extended | The reference.
+                                   Table "gcis_metadata.subpubref"
+         Column        |       Type        | Modifiers | Storage  | Stats target |   Description    
+ ----------------------+-------------------+-----------+----------+--------------+------------------
+  publication_id       | integer           | not null  | plain    |              | The publication.
+  reference_identifier | character varying | not null  | extended |              | The reference.
  Indexes:
      "subpubref_pkey" PRIMARY KEY, btree (publication_id, reference_identifier)
  Foreign-key constraints:
@@ -28,7 +28,6 @@ Publications contained in other publications (e.g. chapters in reports) may be a
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON subpubref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON subpubref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

@@ -15,17 +15,16 @@ Publications can have zero or more keywords.  And vice versa.
 
 =head1 SCHEMA
 
-                  Table "gcis_metadata.publication_gcmd_keyword_map"
-          Column          |       Type        | Modifiers | Storage  |  Description   
- -------------------------+-------------------+-----------+----------+----------------
-  publication_id          | integer           | not null  | plain    | A publication.
-  gcmd_keyword_identifier | character varying | not null  | extended | A keyword.
+                          Table "gcis_metadata.publication_gcmd_keyword_map"
+          Column          |       Type        | Modifiers | Storage  | Stats target |  Description   
+ -------------------------+-------------------+-----------+----------+--------------+----------------
+  publication_id          | integer           | not null  | plain    |              | A publication.
+  gcmd_keyword_identifier | character varying | not null  | extended |              | A keyword.
  Indexes:
      "publication_gcmd_keyword_map_pkey" PRIMARY KEY, btree (publication_id, gcmd_keyword_identifier)
  Foreign-key constraints:
      "publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey" FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "publication_gcmd_keyword_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
- Has OIDs: no
  
 
 =cut

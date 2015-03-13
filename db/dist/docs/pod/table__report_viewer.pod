@@ -15,16 +15,15 @@ Users who have permission to view non-public reports.
 
 =head1 SCHEMA
 
-                         Table "gcis_metadata._report_viewer"
-   Column  |       Type        | Modifiers | Storage  |          Description          
- ----------+-------------------+-----------+----------+-------------------------------
-  report   | character varying | not null  | extended | The identifier of the report.
-  username | character varying | not null  | extended | The name of the user.
+                                 Table "gcis_metadata._report_viewer"
+   Column  |       Type        | Modifiers | Storage  | Stats target |          Description          
+ ----------+-------------------+-----------+----------+--------------+-------------------------------
+  report   | character varying | not null  | extended |              | The identifier of the report.
+  username | character varying | not null  | extended |              | The name of the user.
  Indexes:
      "_report_viewer_pkey" PRIMARY KEY, btree (report, username)
  Foreign-key constraints:
      "_report_viewer_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
- Has OIDs: no
  
 
 =cut

@@ -15,11 +15,11 @@ A methodology is a publication associated with an activity
 
 =head1 SCHEMA
 
-                          Table "gcis_metadata.methodology"
-        Column        |       Type        | Modifiers | Storage  |   Description    
- ---------------------+-------------------+-----------+----------+------------------
-  activity_identifier | character varying | not null  | extended | The activity.
-  publication_id      | integer           | not null  | plain    | The publication.
+                                 Table "gcis_metadata.methodology"
+        Column        |       Type        | Modifiers | Storage  | Stats target |   Description    
+ ---------------------+-------------------+-----------+----------+--------------+------------------
+  activity_identifier | character varying | not null  | extended |              | The activity.
+  publication_id      | integer           | not null  | plain    |              | The publication.
  Indexes:
      "methodology_pkey" PRIMARY KEY, btree (activity_identifier, publication_id)
  Foreign-key constraints:
@@ -28,7 +28,6 @@ A methodology is a publication associated with an activity
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON methodology FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON methodology FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut
