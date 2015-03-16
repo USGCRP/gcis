@@ -62,12 +62,12 @@
         <p>This dataset was accessed on <%= $dataset->access_dt->strftime('%B %d, %Y') %>.
         % }
         % if ($dataset->start_time && $dataset->end_time) {
-        <p>The time range for this dataset is <%= $dataset->start_time->strftime('%B %d, %Y (%H:%M %p)') %>
-         to <%= $dataset->end_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        <p>The time range for this dataset is <%= human_date($dataset->start_time) %>
+         to <%= human_date($dataset->end_time) %>.</p>
         % } elsif ($dataset->start_time) {
-        <p>The time range for this dataset starts at <%= $dataset->start_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        <p>The time range for this dataset starts at <%= human_date($dataset->start_time) %>.</p>
         % } elsif ($dataset->end_time) {
-        <p>The time range for this dataset ends at <%= $dataset->end_time->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+        <p>The time range for this dataset ends at <%= human_date($dataset->end_time) %>.</p>
         % }
         % if (my $extent = $dataset->temporal_extent) {
         % $extent =~ s[ ][/] if ( ( $extent =~ tr/ / /) == 1 );
