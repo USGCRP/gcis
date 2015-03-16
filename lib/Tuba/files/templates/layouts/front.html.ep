@@ -41,7 +41,7 @@
     .hideme { display:none; }
 </style>
 </head>
-    <body>
+    <body class="front-page">
  <div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
@@ -153,9 +153,7 @@
 % }
             <%= content %>
         </div>
-        <div id="footer" class="centered">
-        <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
-        </div>
+        
     </body>
 </html>
 % }
