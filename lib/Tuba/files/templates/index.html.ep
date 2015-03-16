@@ -17,16 +17,6 @@
         line-height: 1;
         color: #013d87;
       }
-      .jumbotron .lead {
-        font-size: 24px;
-        line-height: 1.25;
-      }
-      .navbar .nav {
-      	margin:  0 10px 0 15px;
-      }
-      .navbar img.logo {
-      	float: left;
-      }
       .span2 {
        width: 16%;
       }
@@ -36,9 +26,6 @@
       }
       h2 {
       	font-size: 20px;
-      }
-      .lead {
-      	margin: 15px 0;
       }
       .row .front-footer {
       	  text-align: center;
@@ -58,7 +45,7 @@
 </div>
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 	<h1 itemprop="name">Global Change Information System</h1>
-	<h3 class="sub-title">Providing structured global change information.</h3>
+	<h3 class="sub-title">Connecting global change resources.</h3>
 </div>
 <div class="container">
 <div class='row-fluid'>
