@@ -15,11 +15,11 @@ Publications can have many regions and vice versa.
 
 =head1 SCHEMA
 
-                  Table "gcis_metadata.publication_region_map"
-       Column       |       Type        | Modifiers | Storage  |  Description   
- -------------------+-------------------+-----------+----------+----------------
-  publication_id    | integer           | not null  | plain    | A publication.
-  region_identifier | character varying | not null  | extended | A region.
+                          Table "gcis_metadata.publication_region_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target |  Description   
+ -------------------+-------------------+-----------+----------+--------------+----------------
+  publication_id    | integer           | not null  | plain    |              | A publication.
+  region_identifier | character varying | not null  | extended |              | A region.
  Indexes:
      "publication_region_map_pkey" PRIMARY KEY, btree (publication_id, region_identifier)
  Foreign-key constraints:
@@ -28,7 +28,6 @@ Publications can have many regions and vice versa.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_region_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication_region_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

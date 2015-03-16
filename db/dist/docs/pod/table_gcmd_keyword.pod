@@ -17,13 +17,13 @@ Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/key
 
 =head1 SCHEMA
 
-                                 Table "gcis_metadata.gcmd_keyword"
-       Column       |       Type        | Modifiers | Storage  |            Description            
- -------------------+-------------------+-----------+----------+-----------------------------------
-  identifier        | character varying | not null  | extended | The UUID for this keyword.
-  parent_identifier | character varying |           | extended | The UUID for the parent keyword.
-  label             | character varying |           | extended | The brief label for this keyword.
-  definition        | character varying |           | extended | The definition.
+                                        Table "gcis_metadata.gcmd_keyword"
+       Column       |       Type        | Modifiers | Storage  | Stats target |            Description            
+ -------------------+-------------------+-----------+----------+--------------+-----------------------------------
+  identifier        | character varying | not null  | extended |              | The UUID for this keyword.
+  parent_identifier | character varying |           | extended |              | The UUID for the parent keyword.
+  label             | character varying |           | extended |              | The brief label for this keyword.
+  definition        | character varying |           | extended |              | The definition.
  Indexes:
      "gcmd_keyword_pkey" PRIMARY KEY, btree (identifier)
  Foreign-key constraints:
@@ -31,7 +31,6 @@ Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/key
  Referenced by:
      TABLE "gcmd_keyword" CONSTRAINT "fk_parent" FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED
      TABLE "publication_gcmd_keyword_map" CONSTRAINT "publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey" FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE
- Has OIDs: no
  
 
 =cut

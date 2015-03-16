@@ -27,23 +27,23 @@ An image may be associated with multiple figures, may have provenance and other 
 
 =head1 SCHEMA
 
-                                                       Table "gcis_metadata.image"
-     Column     |              Type              | Modifiers | Storage  |                          Description                          
- ---------------+--------------------------------+-----------+----------+---------------------------------------------------------------
-  identifier    | character varying              | not null  | extended | A globally unique identifier (UUID).
-  position      | character varying              |           | extended | A description of where this image is within other figures.
-  title         | character varying              |           | extended | A title for this image.
-  description   | character varying              |           | extended | An optional description of this image.
-  attributes    | character varying              |           | extended | Comma separated free form attributes of this image.
-  time_start    | timestamp(3) without time zone |           | plain    | The start of the spatial extent represtented by this image.
-  time_end      | timestamp(3) without time zone |           | plain    | The end of the spatial extent represtented by this image.
-  lat_max       | character varying              |           | extended | The nothernmost latitude in the bounding box for this image.
-  lat_min       | character varying              |           | extended | The southernmost latitude in the bounding box for this image.
-  lon_max       | character varying              |           | extended | The eastermost longitude in the bounding box for this image.
-  lon_min       | character varying              |           | extended | The westernmost longitude in the bounding box for this image.
-  usage_limits  | character varying              |           | extended | Copyright restrictions describing how this image may be used.
-  submission_dt | timestamp(3) without time zone |           | plain    | 
-  create_dt     | timestamp(3) without time zone |           | plain    | 
+                                                              Table "gcis_metadata.image"
+     Column     |              Type              | Modifiers | Storage  | Stats target |                          Description                          
+ ---------------+--------------------------------+-----------+----------+--------------+---------------------------------------------------------------
+  identifier    | character varying              | not null  | extended |              | A globally unique identifier (UUID).
+  position      | character varying              |           | extended |              | A description of where this image is within other figures.
+  title         | character varying              |           | extended |              | A title for this image.
+  description   | character varying              |           | extended |              | An optional description of this image.
+  attributes    | character varying              |           | extended |              | Comma separated free form attributes of this image.
+  time_start    | timestamp(3) without time zone |           | plain    |              | The start of the spatial extent represtented by this image.
+  time_end      | timestamp(3) without time zone |           | plain    |              | The end of the spatial extent represtented by this image.
+  lat_max       | character varying              |           | extended |              | The nothernmost latitude in the bounding box for this image.
+  lat_min       | character varying              |           | extended |              | The southernmost latitude in the bounding box for this image.
+  lon_max       | character varying              |           | extended |              | The eastermost longitude in the bounding box for this image.
+  lon_min       | character varying              |           | extended |              | The westernmost longitude in the bounding box for this image.
+  usage_limits  | character varying              |           | extended |              | Copyright restrictions describing how this image may be used.
+  submission_dt | timestamp(3) without time zone |           | plain    |              | 
+  create_dt     | timestamp(3) without time zone |           | plain    |              | 
  Indexes:
      "image_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -55,7 +55,6 @@ An image may be associated with multiple figures, may have provenance and other 
      audit_trigger_stm AFTER TRUNCATE ON image FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON image FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

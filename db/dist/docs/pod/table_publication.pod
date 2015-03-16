@@ -16,12 +16,12 @@ A publication, similar to an entity, is a generic term for something that has be
 
 =head1 SCHEMA
 
-                                                                                        Table "gcis_metadata.publication"
-            Column            |       Type        |                        Modifiers                         | Storage  |                                      Description                                       
- -----------------------------+-------------------+----------------------------------------------------------+----------+----------------------------------------------------------------------------------------
-  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    | An opaque numeric identifier
-  publication_type_identifier | character varying | not null                                                 | extended | The type
-  fk                          | hstore            | not null                                                 | extended | Column column names and values of the primary key of this entitiy in its native table.
+                                                                                                Table "gcis_metadata.publication"
+            Column            |       Type        |                        Modifiers                         | Storage  | Stats target |                                      Description                                       
+ -----------------------------+-------------------+----------------------------------------------------------+----------+--------------+----------------------------------------------------------------------------------------
+  id                          | integer           | not null default nextval('publication_id_seq'::regclass) | plain    |              | An opaque numeric identifier
+  publication_type_identifier | character varying | not null                                                 | extended |              | The type
+  fk                          | hstore            | not null                                                 | extended |              | Column column names and values of the primary key of this entitiy in its native table.
  Indexes:
      "publication_pkey" PRIMARY KEY, btree (id)
      "publication_type_fk" UNIQUE CONSTRAINT, btree (publication_type_identifier, fk)
@@ -41,7 +41,6 @@ A publication, similar to an entity, is a generic term for something that has be
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

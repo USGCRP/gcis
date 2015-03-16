@@ -16,12 +16,12 @@ An instrument measurement is a way of associating an instrument instance with a 
 
 =head1 SCHEMA
 
-                             Table "gcis_metadata.instrument_measurement"
-         Column         |       Type        | Modifiers | Storage  |           Description           
- -----------------------+-------------------+-----------+----------+---------------------------------
-  platform_identifier   | character varying | not null  | extended | The platform of the instrument.
-  instrument_identifier | character varying | not null  | extended | The instrument.
-  dataset_identifier    | character varying | not null  | extended | The dataset.
+                                    Table "gcis_metadata.instrument_measurement"
+         Column         |       Type        | Modifiers | Storage  | Stats target |           Description           
+ -----------------------+-------------------+-----------+----------+--------------+---------------------------------
+  platform_identifier   | character varying | not null  | extended |              | The platform of the instrument.
+  instrument_identifier | character varying | not null  | extended |              | The instrument.
+  dataset_identifier    | character varying | not null  | extended |              | The dataset.
  Indexes:
      "instrument_measurement_pkey" PRIMARY KEY, btree (platform_identifier, instrument_identifier, dataset_identifier)
  Foreign-key constraints:
@@ -32,7 +32,6 @@ An instrument measurement is a way of associating an instrument instance with a 
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_measurement FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON instrument_measurement FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut
