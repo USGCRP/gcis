@@ -364,6 +364,14 @@ sub register {
             return "" unless defined($val) && length($val);
             return DateTime::Format::Human::Duration->new()->format_duration($val);
         });
+    $app->helper(human_date => sub {
+            my $c = shift;
+            my $val = shift;
+            return "" unless defined($val) && ref($val);
+            return $val unless ref($val) eq 'DateTime';
+            return $val->strftime('%B %d, %Y (%H:%M %p)') if $val->hms ne '00:00:00';
+            return $val->strftime('%B %d, %Y');
+        });
     $app->helper(human_size => sub {
             my $c = shift;
             my $val = shift;
