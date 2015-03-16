@@ -32,7 +32,7 @@ as reports, report chapters, figures, images, tables, bibliographic
 entries, organizations and people.
 <h3>Identifiers</h3>
 <p>
-Each item referenced in the GCIS has a unique, persistent identifier.  This identifer takes the form of a Uniform Resource Identifier (URI), but may include or be related to other identifiers as well, such as Universally Unique Identifiers (UUIDs), Digital Object Identifiers (DOIs), ORCIds, and ISBN numbers.  Native identifiers for resources are incorporated in to the URI as much as possible to help with interoperability between the GCIS and other systems.
+Each item referenced in the GCIS has a unique, persistent identifier.  This identifer takes the form of a Uniform Resource Identifier (URI), but may include or be related to other identifiers as well, such as Universally Unique Identifiers (UUIDs), Digital Object Identifiers (DOIs), ORCIds, and ISBNs.  Native identifiers for resources are incorporated in to the URI as much as possible to help with interoperability between the GCIS and other systems.
 </p>
 
 <h3>Provenance and Semantics</h3>
