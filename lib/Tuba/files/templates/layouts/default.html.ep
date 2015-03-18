@@ -153,9 +153,6 @@
 % }
             <%= content %>
         </div>
-        <div id="footer" class="centered">
-        <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
-        </div>
     </body>
 </html>
 % }

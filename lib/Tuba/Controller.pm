@@ -904,7 +904,7 @@ Update the contributors associated with this publication.
 
 sub update_contributors {
     my $c = shift;
-    my $obj = $c->_this_object;
+    my $obj = $c->_this_object or return $c->reply->not_found;
     $c->stash(tab => 'update_contributors_form');
     my $pub = $obj->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user) unless $pub->id;
