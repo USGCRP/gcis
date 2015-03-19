@@ -93,6 +93,11 @@ SQL
 
 sub get_parents_with_references {
     my $s = shift;
+    my %args = @_;
+    # uniq => 1
+    #    will avoid duplicate publications (which can occur if multiple references
+    #    references refer to the same publication)
+
     my $first = <<SQL;
     select
         subp.publication_type_identifier,
@@ -119,6 +124,8 @@ SQL
 
     my @results = $dbs->query($first, $s->id)->hashes;
     push @results, $dbs->query($second, $s->id)->hashes;
+    my %uniq;
+    @results = grep !$uniq{$_->{parent_publication_id}}{$_->{child_publication_id}}++, @results if $args{uniq};
     for (@results) {
         $_->{parent} = (ref $s)->new(id => $_->{parent_publication_id})->load;
         $_->{child} = (ref $s)->new(id => $_->{child_publication_id})->load;
