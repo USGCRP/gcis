@@ -41,8 +41,10 @@
     .hideme { display:none; }
 </style>
 </head>
-    <body>
- <div id="sidr" class='hideme'>
+<body>
+	<div id="wrap">
+		<div id="main">
+	<div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
         <li><span>Search</span>
@@ -96,10 +98,10 @@
         <li><%= link_to 'admin' => begin %>admin<%= end %></li>
         % }
     </ul>
-</div>
-
-        <div class="navbar">
-            <div class="navbar-inner">
+    </div>
+	
+        	<div class="navbar">
+            	<div class="navbar-inner">
                 <a id="simple-menu" class='pull-left btn btn-medium' href="#sidr" style='color:black;height:22px;'>
                      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </a>
@@ -138,20 +140,25 @@
                     </li>
                 </ul>
 
-            </div>
-        </div>
-        % if (stash 'fixed') {
-        <div class='container' id='maincontent'>
-        % } else {
-        <div class='container-fluid' id='maincontent'>
-        % }
-% if (my $msg = flash 'message') {
-<div class='alert alert-info'>
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-%= $msg
-</div>
+                </div>
+             </div>
+        
+             % if (stash 'fixed') {
+             <div class='container' id='maincontent'>
+             % } else {
+             <div class='container-fluid' id='maincontent'>
+             % }
+             % if (my $msg = flash 'message') {
+             	<div class='alert alert-info'>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					%= $msg
+				</div>
 % }
             <%= content %>
+            </div>
+        </div>
+        </div>
+        </div>
         </div>
         <div id="footer" class="centered">
         <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
