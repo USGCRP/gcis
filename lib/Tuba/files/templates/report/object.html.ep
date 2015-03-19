@@ -5,7 +5,7 @@
 % my $table = $object->meta->table;
 
 <center>
-    <h2>Report : <%= $report->identifier %>
+    <h2><%= join ' ', map ucfirst, split /_/, ($report->report_type_identifier || 'report') %> : <%= $report->identifier %>
 </center>
 
 % unless (param 'no_header') {
