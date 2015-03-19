@@ -22,7 +22,7 @@ sub stringify {
         /report/ and return $label;
         /article/ and return $label;
         /book/ and return $label;
-        /^(image|figure|book)$/ and $args{tiny} and return $label;
+        /^(image|book)$/ and $args{tiny} and return $label;
     }
     return $self->publication_type_identifier.' '.$label;
 }
