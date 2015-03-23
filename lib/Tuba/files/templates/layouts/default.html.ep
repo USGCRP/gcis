@@ -153,13 +153,13 @@
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
 					%= $msg
 				</div>
-% }
+				% }
             <%= content %>
             </div>
         </div>
         </div>
-        </div>
-        </div>
+      
+        
         <div id="footer" class="centered">
         <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
         </div>
