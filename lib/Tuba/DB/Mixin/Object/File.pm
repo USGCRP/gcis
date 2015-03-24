@@ -2,7 +2,7 @@ package Tuba::DB::Object::File;
 # Tuba::DB::Mixin::Object::File;
 use Mojo::ByteStream qw/b/;
 use Mojo::Parameters;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 use Path::Class ();
 use Tuba::Log qw/logger/;
 use Tuba::Util qw/get_config/;
@@ -11,7 +11,7 @@ use Path::Class ();
 use strict;
 
 __PACKAGE__->meta->primary_key_generator(sub {
-    return new_uuid_string(4);
+    return new_uuid();
 });
 
 our %typeMap = (

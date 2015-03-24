@@ -1,9 +1,9 @@
 package Tuba::DB::Object::Image;
 # Tuba::DB::Mixin::Object::Image;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 
 __PACKAGE__->meta->primary_key_generator(sub {
-    return new_uuid_string(4);
+    return new_uuid();
 });
 
 sub stringify {

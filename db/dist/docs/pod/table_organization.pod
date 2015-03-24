@@ -18,14 +18,14 @@ An organization is an entity with which people and publications may be associate
 
 =head1 SCHEMA
 
-                                                 Table "gcis_metadata.organization"
-             Column            |       Type        | Modifiers | Storage  |                      Description                       
- ------------------------------+-------------------+-----------+----------+--------------------------------------------------------
-  identifier                   | character varying | not null  | extended | A descriptive identifier.
-  name                         | character varying |           | extended | The name.
-  url                          | character varying |           | extended | The URL for the organization.
-  country_code                 | character varying |           | extended | The country with which this organizaion is affiliated.
-  organization_type_identifier | character varying |           | extended | The type of organization.
+                                                        Table "gcis_metadata.organization"
+             Column            |       Type        | Modifiers | Storage  | Stats target |                      Description                       
+ ------------------------------+-------------------+-----------+----------+--------------+--------------------------------------------------------
+  identifier                   | character varying | not null  | extended |              | A descriptive identifier.
+  name                         | character varying |           | extended |              | The name.
+  url                          | character varying |           | extended |              | The URL for the organization.
+  country_code                 | character varying |           | extended |              | The country with which this organizaion is affiliated.
+  organization_type_identifier | character varying |           | extended |              | The type of organization.
  Indexes:
      "organization_pkey" PRIMARY KEY, btree (identifier)
      "organization_name_key" UNIQUE CONSTRAINT, btree (name)
@@ -42,7 +42,6 @@ An organization is an entity with which people and publications may be associate
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      update_exterms BEFORE UPDATE ON organization FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/organization/')
- Has OIDs: no
  
 
 =cut

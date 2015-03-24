@@ -68,7 +68,6 @@
 
 
 % unless (param 'no_header') {
-    % my $ctr = $object->contributors;
     <div class='row collapse-wrapper'>
     <table class='table table-condensed table-bordered table-striped'>
         <caption>Contributions</caption>
@@ -105,11 +104,11 @@
                     <td>
                         % if ($ctr->person) {
                         %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                        <%= scalar @maps %> <%= pl($table) %>
+                        <%= pl($table, scalar @maps) %>
                         %= end
                         % } else {
                         %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                        <%= scalar @maps %> <%= pl($table) %>
+                        <%= pl($table, scalar @maps) %>
                         %= end
                         % }
                     </td>

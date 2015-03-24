@@ -16,12 +16,12 @@ An array is an n-dimensional grid of data, and may be associated with a table.
 
 =head1 SCHEMA
 
-                                                 Table "gcis_metadata.array"
-      Column     |        Type         | Modifiers | Storage  |                         Description                          
- ----------------+---------------------+-----------+----------+--------------------------------------------------------------
-  identifier     | character varying   | not null  | extended | A globally unique identifier for this array, such as a UUID.
-  rows_in_header | integer             | default 0 | plain    | The number of rows in the header of this array.
-  rows           | character varying[] |           | extended | The data in this array.
+                                                         Table "gcis_metadata.array"
+      Column     |        Type         | Modifiers | Storage  | Stats target |                         Description                          
+ ----------------+---------------------+-----------+----------+--------------+--------------------------------------------------------------
+  identifier     | character varying   | not null  | extended |              | A globally unique identifier for this array, such as a UUID.
+  rows_in_header | integer             | default 0 | plain    |              | The number of rows in the header of this array.
+  rows           | character varying[] |           | extended |              | The data in this array.
  Indexes:
      "array_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -33,7 +33,6 @@ An array is an n-dimensional grid of data, and may be associated with a table.
      audit_trigger_stm AFTER TRUNCATE ON "array" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON "array" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

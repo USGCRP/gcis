@@ -19,15 +19,15 @@ People are stored using opaque numeric identifiers.
 
 =head1 SCHEMA
 
-                                                            Table "gcis_metadata.person"
-    Column    |       Type        |                      Modifiers                      | Storage  |                  Description                   
- -------------+-------------------+-----------------------------------------------------+----------+------------------------------------------------
-  id          | integer           | not null default nextval('person_id_seq'::regclass) | plain    | A unique numeric identifier.
-  url         | character varying |                                                     | extended | A URL with information about this person.
-  orcid       | character varying |                                                     | extended | An ORCID (<http://orcid.org>) for this person.
-  first_name  | character varying | not null                                            | extended | The given name of the person.
-  last_name   | character varying | not null                                            | extended | The family name of the person.
-  middle_name | character varying |                                                     | extended | The middle name of the person.
+                                                                    Table "gcis_metadata.person"
+    Column    |       Type        |                      Modifiers                      | Storage  | Stats target |                  Description                   
+ -------------+-------------------+-----------------------------------------------------+----------+--------------+------------------------------------------------
+  id          | integer           | not null default nextval('person_id_seq'::regclass) | plain    |              | A unique numeric identifier.
+  url         | character varying |                                                     | extended |              | A URL with information about this person.
+  orcid       | character varying |                                                     | extended |              | An ORCID (<http://orcid.org>) for this person.
+  first_name  | character varying | not null                                            | extended |              | The given name of the person.
+  last_name   | character varying | not null                                            | extended |              | The family name of the person.
+  middle_name | character varying |                                                     | extended |              | The middle name of the person.
  Indexes:
      "person_pkey" PRIMARY KEY, btree (id)
      "person_orcid_key" UNIQUE CONSTRAINT, btree (orcid)
@@ -39,7 +39,6 @@ People are stored using opaque numeric identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

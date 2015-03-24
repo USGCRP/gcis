@@ -18,14 +18,14 @@ Publications can be related to other publications.
 
 =head1 SCHEMA
 
-                                      Table "gcis_metadata.publication_map"
-        Column        |       Type        | Modifiers | Storage  |                 Description                  
- ---------------------+-------------------+-----------+----------+----------------------------------------------
-  child               | integer           | not null  | plain    | The child publication.
-  relationship        | character varying | not null  | extended | The relationship, in the form ontology:term.
-  parent              | integer           | not null  | plain    | The parent publication.
-  note                | character varying |           | extended | A narrative comment about this relationship.
-  activity_identifier | character varying |           | extended | XXX
+                                             Table "gcis_metadata.publication_map"
+        Column        |       Type        | Modifiers | Storage  | Stats target |                 Description                  
+ ---------------------+-------------------+-----------+----------+--------------+----------------------------------------------
+  child               | integer           | not null  | plain    |              | The child publication.
+  relationship        | character varying | not null  | extended |              | The relationship, in the form ontology:term.
+  parent              | integer           | not null  | plain    |              | The parent publication.
+  note                | character varying |           | extended |              | A narrative comment about this relationship.
+  activity_identifier | character varying |           | extended |              | XXX
  Indexes:
      "publication_map_pkey" PRIMARY KEY, btree (child, relationship, parent)
  Foreign-key constraints:
@@ -35,7 +35,6 @@ Publications can be related to other publications.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

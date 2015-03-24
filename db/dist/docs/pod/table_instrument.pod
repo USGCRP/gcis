@@ -17,13 +17,13 @@ An instrument is used for measurement.
 
 =head1 SCHEMA
 
-                                                Table "gcis_metadata.instrument"
-          Column          |       Type        | Modifiers | Storage  |                       Description                        
- -------------------------+-------------------+-----------+----------+----------------------------------------------------------
-  identifier              | character varying | not null  | extended | A descriptive identifier for this instrument.
-  name                    | character varying | not null  | extended | A brief name for this instrument.
-  description             | character varying |           | extended | A description of this instrument.
-  description_attribution | character varying |           | extended | A URL which contains the description of this instrument.
+                                                        Table "gcis_metadata.instrument"
+          Column          |       Type        | Modifiers | Storage  | Stats target |                       Description                        
+ -------------------------+-------------------+-----------+----------+--------------+----------------------------------------------------------
+  identifier              | character varying | not null  | extended |              | A descriptive identifier for this instrument.
+  name                    | character varying | not null  | extended |              | A brief name for this instrument.
+  description             | character varying |           | extended |              | A description of this instrument.
+  description_attribution | character varying |           | extended |              | A URL which contains the description of this instrument.
  Indexes:
      "instrument_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -37,7 +37,6 @@ An instrument is used for measurement.
      delpub BEFORE DELETE ON instrument FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/instrument/')
      updatepub BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

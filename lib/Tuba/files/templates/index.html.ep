@@ -1,10 +1,8 @@
-% layout 'default',
+% layout 'front',
 % title => "Global Change Information System",
 % description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
 %= javascript '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js';
-
-
 
 <style type="text/css">
       body {
@@ -12,6 +10,7 @@
         padding-bottom: 60px;
         font-size: 14px;
       } 
+
       .jumbotron {
         text-align: center;
         min-height: 80px;
@@ -38,34 +37,33 @@
       .navbar img.logo {
       	float: left;
       }
-
       .row {
       	  margin: 30px 0 30px;
       }
-   
       #svgwrap a text {
-        fill: #428bca;
-
+        fill: #0088cc;
       }
       h2 {
       	font-size: 20px;
       }
-      .lead {
-      	margin: 15px 0;
-      }
-      .row .thumbnails {
+      .row .front-footer {
       	  text-align: center;
+      	  margin-top: 20px;
       }
-      .row .thumbnails span {
+      .row .front-footer span {
       	  padding:1px;
       	  margin:1px;
      }
 
 </style>
-
+<div class="container">
+	<a href="http://www.globalchange.gov/" target="_blank">
+	<img src="usgcrp-300.png" class="usgcrp thumbnail">
+	</a>
+</div>
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
-<h1 itemprop="name">Global Change Information System</h1>
-<h3>Providing structured global change information.</h3>
+	<h1 itemprop="name">Global Change Information System</h1>
+	<h3 class="sub-title">Connecting global change resources.</h3>
 </div>
 
     <div class='col-md-6 col-md-offset-3' id='svgwrap'>
@@ -118,7 +116,7 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 </div>
 
 <div class="row">
-        <div class='thumbnails'>
+        <div class='front-footer'>
     <span>
     <a href="http://www.commerce.gov" target="_agency" title="U.S. Department of Commerce">
         <img src="/logo/DOC.png" style="width:41px;"></a>
@@ -238,7 +236,8 @@ $(function() {
     .data([
         % my $i;
         % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type) %> (<%= format_number($counts->{$type}) %>)' },
+
+        { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
 
         % }
           ])

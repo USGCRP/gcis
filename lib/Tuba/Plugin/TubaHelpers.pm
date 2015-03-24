@@ -330,23 +330,6 @@ sub register {
             $pub->save(audit_user => $c->user) unless $pub->id;
             return $pub;
         });
-    $app->helper(pl => sub {
-            my $c = shift;
-            my $str = shift;
-            my $plural = {person => 'people',
-                "Funding Agency" => "Funding Agencies",
-                "Point of Contact" => "Points of Contact",
-                }->{$str} || "${str}s";
-            return $plural unless @_;
-            my $count = shift;
-            my $no_numbers = pop;
-            if ($no_numbers) {
-                return $count==1 ? $str : $plural;
-            }
-            $count //= 0;
-            my $fmted = Number::Format->new->format_number($count);
-            return $count==1 ? "$fmted $str" : "$fmted $plural";
-        });
     $app->helper(db_labels => sub {
             my $c = shift;
             my $table = shift;
@@ -380,6 +363,14 @@ sub register {
             my $val = shift;
             return "" unless defined($val) && length($val);
             return DateTime::Format::Human::Duration->new()->format_duration($val);
+        });
+    $app->helper(human_date => sub {
+            my $c = shift;
+            my $val = shift;
+            return "" unless defined($val) && ref($val);
+            return $val unless ref($val) eq 'DateTime';
+            return $val->strftime('%B %d, %Y (%H:%M %p)') if $val->hms ne '00:00:00';
+            return $val->strftime('%B %d, %Y');
         });
     $app->helper(human_size => sub {
             my $c = shift;
@@ -553,10 +544,15 @@ sub register {
             my $word = shift;
             return A($word);
         });
-    $app->helper(PL => sub {
+    $app->helper(pl => sub {
             my $c = shift;
-            my ($word,$count) = @_;
-            return PL($word,$count);
+            my ($word,$count,$no_numbers) = @_;
+            $count //= 0;
+            Lingua::EN::Inflect::classical(names => 0);
+            my $pl = PL($word,$count);
+            return $pl if $no_numbers;
+            my $fmted = Number::Format->new->format_number($count);
+            return "$fmted $pl";
         });
     $app->helper(gen_id => sub {
             my $c = shift;

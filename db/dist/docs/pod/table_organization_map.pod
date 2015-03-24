@@ -16,12 +16,12 @@ Organizations may be associated with other organizations.
 
 =head1 SCHEMA
 
-                                   Table "gcis_metadata.organization_map"
-                 Column                |       Type        | Modifiers | Storage  |       Description       
- --------------------------------------+-------------------+-----------+----------+-------------------------
-  organization_identifier              | character varying | not null  | extended | The first organization.
-  other_organization_identifier        | character varying | not null  | extended | The target.
-  organization_relationship_identifier | character varying | not null  | extended | The relationship.
+                                           Table "gcis_metadata.organization_map"
+                 Column                |       Type        | Modifiers | Storage  | Stats target |       Description       
+ --------------------------------------+-------------------+-----------+----------+--------------+-------------------------
+  organization_identifier              | character varying | not null  | extended |              | The first organization.
+  other_organization_identifier        | character varying | not null  | extended |              | The target.
+  organization_relationship_identifier | character varying | not null  | extended |              | The relationship.
  Indexes:
      "organization_map_pkey" PRIMARY KEY, btree (organization_identifier, other_organization_identifier, organization_relationship_identifier)
  Foreign-key constraints:
@@ -31,7 +31,6 @@ Organizations may be associated with other organizations.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

@@ -1,4 +1,4 @@
-<% if (user_can('update')) { %>
+<% if (user_can('update') && (stash 'meta')) { %>
 <span style='float:right;'><%= include 'create_link'%></span>
 <% } %>
 % my $base = $self->req->url->clone;

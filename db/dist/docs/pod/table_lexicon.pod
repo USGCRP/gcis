@@ -16,12 +16,12 @@ A lexicon is a list of terms which correspond to GCIS identifiers.
 
 =head1 SCHEMA
 
-                                                          Table "gcis_metadata.lexicon"
-    Column    |       Type        | Modifiers | Storage  |                                      Description                                      
- -------------+-------------------+-----------+----------+---------------------------------------------------------------------------------------
-  identifier  | character varying | not null  | extended | A brief descriptive identifier for this lexicon.
-  description | character varying |           | extended | A description of the lexicon, possibly including the organization associated with it.
-  url         | character varying |           | extended | A url for further information.
+                                                                  Table "gcis_metadata.lexicon"
+    Column    |       Type        | Modifiers | Storage  | Stats target |                                      Description                                      
+ -------------+-------------------+-----------+----------+--------------+---------------------------------------------------------------------------------------
+  identifier  | character varying | not null  | extended |              | A brief descriptive identifier for this lexicon.
+  description | character varying |           | extended |              | A description of the lexicon, possibly including the organization associated with it.
+  url         | character varying |           | extended |              | A url for further information.
  Indexes:
      "lexicon_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -31,7 +31,6 @@ A lexicon is a list of terms which correspond to GCIS identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON lexicon FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON lexicon FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

@@ -14,7 +14,7 @@
 <p>
 <%= obj_link($person)%>
 has served as <b><%= A(lc $role->label) %></b> for
-the following <b><%= 0+@$objs %> <%= PL((stash 'resource'),0+@$objs) %></b> :</p>
+the following <b><%= pl((stash 'resource'),0+@$objs) %></b> :</p>
 
 % while (my @next = splice @$objs, 0, 6) {
 <div class='row-fluid'>

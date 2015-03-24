@@ -13,11 +13,10 @@ use Tuba::Search;
 use Pg::hstore qw/hstore_encode hstore_decode/;
 use Path::Class qw/file/;
 use Tuba::Log;
-use Tuba::Util qw/nice_db_error show_diffs/;
+use Tuba::Util qw/nice_db_error show_diffs human_duration/;
 use File::Temp;
 use YAML qw/Dump/;
 use Encode qw/encode decode/;
-use Tuba::Util qw/human_duration/;
 use Mojo::Util qw/camelize decamelize/;
 use LWP::UserAgent;
 use HTTP::Request;
@@ -484,7 +483,8 @@ sub _this_object {
     my $meta = $object_class->meta;
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
-        my $val = $c->_pk_to_stashval($meta,$name) or next;
+        my $val = $c->_pk_to_stashval($meta,$name);
+        return unless defined($val);
         $pk{$name} = $val;
     }
 
@@ -904,7 +904,7 @@ Update the contributors associated with this publication.
 
 sub update_contributors {
     my $c = shift;
-    my $obj = $c->_this_object;
+    my $obj = $c->_this_object or return $c->reply->not_found;
     $c->stash(tab => 'update_contributors_form');
     my $pub = $obj->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user) unless $pub->id;
@@ -1392,7 +1392,7 @@ sub redirect_with_error {
     if (my $obj = $c->_this_object) {
         $uri = $c->_this_object->uri($c, {tab => $tab});
     } else {
-        $uri = $c->req->url;
+        $uri = $c->_guess_object_class->uri($c, { tab => $tab } );
     }
     if (my $params = $c->stash('redirect_params')) {
         $uri = Mojo::URL->new($uri) unless ref($uri);

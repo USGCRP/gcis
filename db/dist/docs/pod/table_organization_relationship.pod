@@ -15,11 +15,11 @@ These are the possible ways in which two organizations may be related.
 
 =head1 SCHEMA
 
-                   Table "gcis_metadata.organization_relationship"
-    Column   |       Type        | Modifiers | Storage  |        Description        
- ------------+-------------------+-----------+----------+---------------------------
-  identifier | character varying | not null  | extended | A descriptive identifier.
-  label      | character varying | not null  | extended | A human readable label.
+                          Table "gcis_metadata.organization_relationship"
+    Column   |       Type        | Modifiers | Storage  | Stats target |        Description        
+ ------------+-------------------+-----------+----------+--------------+---------------------------
+  identifier | character varying | not null  | extended |              | A descriptive identifier.
+  label      | character varying | not null  | extended |              | A human readable label.
  Indexes:
      "organization_relationship_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
@@ -27,7 +27,6 @@ These are the possible ways in which two organizations may be related.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization_relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

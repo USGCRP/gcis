@@ -15,19 +15,21 @@ A table is in a report, and may contain one or more arrays.
  ordinal (integer) - The numeric postiion of this table within the chapter.
  title (character varying) - The title of the table.
  caption (character varying) - The caption for the table.
+ url (character varying) - A URL for a landing page for this table.
 
 
 =head1 SCHEMA
 
-                                               Table "gcis_metadata.table"
-        Column       |       Type        | Modifiers | Storage  |                      Description                       
- --------------------+-------------------+-----------+----------+--------------------------------------------------------
-  identifier         | character varying | not null  | extended | A desciptive identifier.
-  report_identifier  | character varying | not null  | extended | The report.
-  chapter_identifier | character varying |           | extended | The chapter containing this table.
-  ordinal            | integer           |           | plain    | The numeric postiion of this table within the chapter.
-  title              | character varying |           | extended | The title of the table.
-  caption            | character varying |           | extended | The caption for the table.
+                                                       Table "gcis_metadata.table"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                      Description                       
+ --------------------+-------------------+-----------+----------+--------------+--------------------------------------------------------
+  identifier         | character varying | not null  | extended |              | A desciptive identifier.
+  report_identifier  | character varying | not null  | extended |              | The report.
+  chapter_identifier | character varying |           | extended |              | The chapter containing this table.
+  ordinal            | integer           |           | plain    |              | The numeric postiion of this table within the chapter.
+  title              | character varying |           | extended |              | The title of the table.
+  caption            | character varying |           | extended |              | The caption for the table.
+  url                | character varying |           | extended |              | A URL for a landing page for this table.
  Indexes:
      "table_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "table_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
@@ -43,7 +45,6 @@ A table is in a report, and may contain one or more arrays.
      audit_trigger_stm AFTER TRUNCATE ON "table" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON "table" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

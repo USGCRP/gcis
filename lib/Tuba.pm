@@ -61,12 +61,11 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Tuba::Converter;
 use Tuba::Log;
-use Tuba::Util qw/set_config/;
-use Data::UUID::LibUUID;
+use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.23';
+our $VERSION = '1.24';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -277,9 +276,9 @@ sub startup {
         return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
         $c->res->headers->content_type('text/plain');
         $c->respond_to(
-          text => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
-          html => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
-          json => sub { shift->render( json => [ map new_uuid_string(4), 1..$count ] ) },
+          text => sub { shift->render( text => ( join "\n", (map new_uuid(), 1..$count) ) ) },
+          html => sub { shift->render( text => ( join "\n", (map new_uuid(), 1..$count) ) ) },
+          json => sub { shift->render( json => [ map new_uuid(), 1..$count ] ) },
         );
       } => 'uuid'
     );
