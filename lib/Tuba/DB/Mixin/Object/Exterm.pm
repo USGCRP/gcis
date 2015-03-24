@@ -30,6 +30,11 @@ sub native_url {
                 "http://mercury.ornl.gov/oai/provider?verb=GetRecord&metadataPrefix=oai_dif&identifier=".shift;
             },
         },
+        nsidc => {
+            dataset => sub {
+                 "http://nsidc.org/api/dataset/2/oai?verb=GetRecord&metadataPrefix=dif&identifier=".shift;
+            },
+        },
         dbpedia => {
             resource => sub {
                 "http://wikipedia.org/wiki/".shift

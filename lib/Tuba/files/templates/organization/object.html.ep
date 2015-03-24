@@ -104,11 +104,11 @@
                     <td>
                         % if ($ctr->person) {
                         %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                        <%= scalar @maps %> <%= pl($table) %>
+                        <%= pl($table, scalar @maps) %>
                         %= end
                         % } else {
                         %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                        <%= scalar @maps %> <%= pl($table) %>
+                        <%= pl($table, scalar @maps) %>
                         %= end
                         % }
                     </td>
