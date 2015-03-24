@@ -34,9 +34,11 @@ or edit grid directly:
 </div>
 
 <div id="editable_grid"></div>
+
 %= hidden_field 'grid_array';
+
 <br/>
-<button class="btn btn-danger" id="dump_btn">dump data to console (for testing only)</button>
+
 %= javascript begin
 var row_count = null, row_count = null;
 
@@ -108,11 +110,6 @@ $(function() {
     $('#rows_in_header').on('change', function() {
         hot.render();
     });
-
-   $('#dump_btn').on('click', function(e) {
-        e.preventDefault(); 
-        console.log(hot.getData());
-   });
 
    // add listener to submit button to dump array to hidden field
    $('[name="grid_array"]').closest('form').submit(function() {
