@@ -111,9 +111,7 @@
                      <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
                     </a>
                 <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" ></a>
-                <%= link_to 'index', class => 'navbar-brand' => begin %>
-                    GCIS
-                <%= end %>
+                
                 <ul class='navbar-right nav'>
                     <li>
                     % if(config('no_search')) {

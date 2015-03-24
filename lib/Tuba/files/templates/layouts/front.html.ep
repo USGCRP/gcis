@@ -12,11 +12,12 @@
     % $meta_url.=".rdfxml";
     <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
 % }
-%= stylesheet "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css";s";
 %= stylesheet "/css/gcis.css";
 %= stylesheet "/css/jquery.sidr.light.css";
-%= javascript "//cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js";
-%= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"
+%= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";
+%= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/3.1.1/js/bootstrap.min.js"
 %= javascript "//cdn.jsdelivr.net/jquery.form/3.45/jquery.form.min.js";
 %= javascript "/js/gcis.js";
 %= javascript "/js/jquery.sidr.min.js";
@@ -98,23 +99,23 @@
     </ul>
 </div>
 
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a id="simple-menu" class='pull-left btn btn-medium' href="#sidr" style='color:black;height:22px;'>
-                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+        <div class="navbar main-menu" role="navigation">
+            <div class="container">
+                <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
+                     <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
                     </a>
                 <a href="/" class='pull-left'><img class="logo" src="/gcis-logo-100.png" ></a>
-                <ul class='pull-right nav'>
+                <ul class='navbar-right nav'>
                     <li>
                     % if(config('no_search')) {
                     % } elsif (config('google_site_search')) {
-                       <form action="http://google.com/cse" target="_blank" class="form navbar-search">
+                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
                            <input name="q" placeholder="Search" type="search">
                        </form>
                     <% } else { %>
-                    <%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
                     <% } %>
                     </li>
                     <li><% if (!config('read_only')) { %>
@@ -145,12 +146,12 @@
         % } else {
         <div class='container-fluid' id='maincontent'>
         % }
-% if (my $msg = flash 'message') {
-<div class='alert alert-info'>
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-%= $msg
-</div>
-% }
+        % if (my $msg = flash 'message') {
+        <div class='alert alert-info'>
+        	<button type="button" class="close" data-dismiss="alert">&times;</button>
+        	%= $msg
+        </div>
+        % }
             <%= content %>
         </div>
         
