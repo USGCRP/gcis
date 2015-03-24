@@ -13,8 +13,8 @@
 </tr>
 % }
 </table>
-<div style='font-size:75%;'>
-%= text_field 'new_gcmd_keyword', placeholder => "search GCMD keywords", id => "new_gcmd_keyword", class => 'span9', autocomplete => 'off';
+<div>
+%= text_field 'new_gcmd_keyword', placeholder => "search GCMD keywords", id => "new_gcmd_keyword", class => 'form-control col-lg-9 col-md-9 col-sm-8', autocomplete => 'off';
 </div>
 
 %= javascript begin
