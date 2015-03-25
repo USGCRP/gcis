@@ -1,4 +1,6 @@
+% use Mojo::JSON qw(encode_json);
 % my $base = $column->name;
+% my $array_data = "";
 %= javascript "//handsontable.com/dist/handsontable.full.js";
 %= stylesheet "//handsontable.com/plugins/bootstrap/handsontable.bootstrap.css";
 %= stylesheet "//handsontable.com/dist/handsontable.full.css";
@@ -8,6 +10,7 @@
     % my $header = $obj->rows_in_header;
     % if ($val) {
     %= include 'view_array', val => $val, header_rows => $obj->rows_in_header;
+    %  $array_data = $val;
     % }
 % }
 %= select_field "$base.array_upload_format", [ [  'CSV upload' => 'csv' ], [ 'TSV upload' => 'tsv' ], [ 'JSON upload' => 'json' ] ], class => 'input'
@@ -56,11 +59,15 @@ function unhighlight_row(instance, td, row, col, prop, value, cell_props) {
 }
 
 $(function() {
+% if ($array_data) {
+    var data = <%== encode_json($array_data) %>,
+% }else {
     var data = [
-                   ["header_1", "header_2"],
-                   ["description_1", "description_2"],
-                   ["landing_page_1", "landing_page_2"]
+      ["header_1", "header_2"],
+      ["description_1", "description_2"],
+      ["landing_page_1", "landing_page_2"]
     ],
+% }
     container = document.getElementById('editable_grid'),
     options = document.querySelectorAll('.options input'),
     table,
