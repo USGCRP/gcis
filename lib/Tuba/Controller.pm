@@ -1227,7 +1227,17 @@ sub update {
         $c->app->log->debug("Updating primary key");
         # See Tuba::DB::Object.
         if (my $new = $object->update_primary_key(audit_user => $c->user, audit_note => $audit_note, %pk_changes, %new_attrs)) {
-            $new->$_($object->$_) for map { $_->is_primary_key_member ? () : $_->name } $object->meta->columns;
+            for my $col ($object->meta->columns) {
+                if (!$col->is_primary_key_member) {
+                    my $name = $col->name;
+                    # handle case of updating an array
+                    if (ref($object->$name) eq "ARRAY") {
+                        $new->$name([$object->$name]);
+                    } else {
+                        $new->$name($object->$name);
+                    }
+                }
+            }
             $object = $new;
         } else {
             $ok = 0;
