@@ -48,8 +48,8 @@ Upload a file
 <label class="control-label col-lg-3 col-md-3 col-sm-4">
 Retrieve a file from a url
 </label>
-<div class="col-lg-9 col-md-9 col-sm-8">
-%= text_field 'file_url', class => 'col-lg-9 col-md-9 col-sm-8', placeholder => 'http://example.com/image.jpg'
+<div>
+%= text_field 'file_url', class => 'col-lg-9 col-md-9 col-sm-8 col-xs-12', placeholder => 'http://example.com/image.jpg'
 </div>
 </div>
 
