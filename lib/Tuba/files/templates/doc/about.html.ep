@@ -65,3 +65,5 @@ Xiagoang (Marshall) Ma, Peter Fox and the team at the <a href="http://tw.rpi.edu
 <p>If you're interested in contributing to the
 development and evolution of the Global Change Information System, please subscribe 
 to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.
+
+GCIS is also on <a href="https://github.com/USGCRP/gcis">GitHub</a>. 
