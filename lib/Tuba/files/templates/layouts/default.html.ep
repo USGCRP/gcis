@@ -36,13 +36,18 @@
 <meta name="Description" content="<%= $desc %>">
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= title %> - GCIS</title>
 <style>
     .hideme { display:none; }
 </style>
 </head>
-    <body>
- <div id="sidr" class='hideme'>
+<body>
+	<div id="wrap">
+		<div id="main">
+	<div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
         <li><span>Search</span>
@@ -108,13 +113,13 @@
                     <li>
                     % if(config('no_search')) {
                     % } elsif (config('google_site_search')) {
-                       <form action="http://google.com/cse" target="_blank" class="form navbar-search">
+                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
-                           <input name="q" placeholder="Search" type="search">
+                           <input name="q" class="form-control" placeholder="Search" type="search">
                        </form>
                     <% } else { %>
-                    <%= form_for 'search' => class => "form navbar-search" => begin %><%= text_field 'q', class => 'input-small search-query', placeholder => "search" %><%= end %>
+                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
                     <% } %>
                     </li>
                     <li><% if (!config('read_only')) { %>
@@ -138,21 +143,30 @@
                     </li>
                 </ul>
 
+                </div>
+             </div>
+        
+             % if (stash 'fixed') {
+             <div class='container' id='maincontent'>
+             % } else {
+             <div class='container-fluid' id='maincontent'>
+             % }
+             % if (my $msg = flash 'message') {
+             	<div class='alert alert-info'>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					%= $msg
+				</div>
+				% }
+            <%= content %>
             </div>
         </div>
-        % if (stash 'fixed') {
-        <div class='container' id='maincontent'>
-        % } else {
-        <div class='container-fluid' id='maincontent'>
-        % }
-% if (my $msg = flash 'message') {
-<div class='alert alert-info'>
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-%= $msg
-</div>
-% }
-            <%= content %>
         </div>
+      
+        
+        <div id="footer" class="centered">
+        <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
+        </div>
+
     </body>
 </html>
 % }
