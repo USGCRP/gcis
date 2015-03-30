@@ -1,19 +1,16 @@
-<div class='pull-right col-md-4 col-lg-4 col-sm-4 col-xs-12' style='top:2px;text-align:right;'>
+<div class='pull-right col-md-4 col-lg-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
 % my $pub = ( (stash 'pub') || $object->get_publication);
-% my $lat_min = ( $object->can('lat_min') ? $object->lat_min : '');
-% my $lat_max = ( $object->can('lat_max') ? $object->lat_max : '');
-% my $lon_min = ( $object->can('lon_min') ? $object->lon_min : '');
-% my $lon_max = ( $object->can('lon_max') ? $object->lon_max : '');
+% my $embed_leaflet = ( (stash 'embed_leaflet') || 0);
 % if ($pub) {
     % my @files = $pub->files;
     % if (@files <= 1) {
         % for my $file (@files) {
             % if (stash 'no_link') {
-            %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+            %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;', itemprop => "thumbnailUrl";
             % } else {
                 % my $dest = $file->landing_page || url_for('show_file', { file_identifier => $file->identifier });
                 %= link_to $dest => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;', itemprop => "thumbnailUrl";
                 %= end
                 % if ($file->landing_page) {
                 <center><div class='caption'>
@@ -29,7 +26,7 @@
     %# Assume one high and one low-res.
         % for my $file ($pub->smallest_file) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl";
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;', itemprop => "thumbnailUrl";
                 <center>
                 <div class='caption btn btn-default'>
                 screen version
@@ -49,8 +46,8 @@
         </center>
     % }
 
-    % if ($lat_min && $lat_max && $lon_min && $lon_max) {
-      %= include 'h/leaflet', lat_min => $lat_min, lat_max => $lat_max, lon_min => $lon_min, lon_max => $lon_max;
+    % if ($embed_leaflet && defined($object->lat_min) && defined($object->lat_max) && defined($object->lon_min) && defined($object->lon_max)) {
+      %= include 'h/leaflet', lat_min => $object->lat_min, lat_max => $object->lat_max, lon_min => $object->lon_min, lon_max => $object->lon_max;
     % }
 
 % }

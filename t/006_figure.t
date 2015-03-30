@@ -34,7 +34,8 @@ $t->post_ok(
     report_identifier  => "vegetables",
     chapter_identifier => "carrots",
     identifier         => "orange",
-    title              => "Orange Carrots"
+    title              => "Orange Carrots",
+    url                => 'http://example.com/carrots',
   }
 )->status_is(200);
 
@@ -63,23 +64,24 @@ $t->post_ok(
 )->status_is(422)->json_is({error => "uri is not a valid field."});
 
 my %o = (
-   report_identifier  => "vegetables",
-   chapter_identifier => "carrots",
-   identifier         => "orange",
-   title              => "Orange Carrots!",
    attributes         => undef,
    caption            => undef,
+   chapter_identifier => "carrots",
    create_dt         => undef,
+   identifier         => "orange",
    lat_max           => undef,
    lat_min           => undef,
    lon_max           => undef,
    lon_min           => undef,
    ordinal           => undef,
+   report_identifier  => "vegetables",
    source_citation   => undef,
    submission_dt     => undef,
    time_end          => undef,
    time_start        => undef,
-   usage_limits      => undef
+   title              => "Orange Carrots!",
+   url               => 'http://example.com/carrots.html',
+   usage_limits      => undef,
 );
 
 # successful update
@@ -99,48 +101,13 @@ $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
 $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => $uuid );
 
-$t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")->json_is(
- {
-   'attributes' => undef,
-   'caption' => undef,
-   'chapter_identifier' => 'carrots',
-   'create_dt' => undef,
-   'identifier' => 'orange',
-   'lat_max' => undef,
-   'lat_min' => undef,
-   'lon_max' => undef,
-   'lon_min' => undef,
-   'ordinal' => undef,
-   'report_identifier' => 'vegetables',
-   'source_citation' => undef,
-   'submission_dt' => undef,
-   'time_end' => undef,
-   'time_start' => undef,
-   'title' => 'Orange Carrots!',
-   'usage_limits' => undef
- }) or diag explain($t->tx->res->json);
+$t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")->json_is(\%o
+ ) or diag explain($t->tx->res->json);
 
 # List figures across reports
 $t->get_ok("/figure.json")->json_is(
 [
- {
-   'attributes' => undef,
-   'caption' => undef,
-   'chapter_identifier' => 'carrots',
-   'create_dt' => undef,
-   'identifier' => 'orange',
-   'lat_max' => undef,
-   'lat_min' => undef,
-   'lon_max' => undef,
-   'lon_min' => undef,
-   'ordinal' => undef,
-   'report_identifier' => 'vegetables',
-   'source_citation' => undef,
-   'submission_dt' => undef,
-   'time_end' => undef,
-   'time_start' => undef,
-   'title' => 'Orange Carrots!',
-   'usage_limits' => undef,
+ { %o,
    'href' => "$server_url/report/vegetables/chapter/carrots/figure/orange.json",
    'uri' => "/report/vegetables/chapter/carrots/figure/orange",
  }

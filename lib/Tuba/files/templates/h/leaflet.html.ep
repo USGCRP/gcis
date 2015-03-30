@@ -2,32 +2,31 @@
 % my $lat_max = ( (stash 'lat_max') || $object->lat_max);
 % my $lon_min = ( (stash 'lon_min') || $object->lon_min);
 % my $lon_max = ( (stash 'lon_max') || $object->lon_max);
-% if ($lon_min == 0. && $lon_max == 360.) {
-    % $lon_min = -180.;
-    % $lon_max = 180.;
-%}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+<link rel="stylesheet" href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css' />
+<script src="//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/Leaflet.fullscreen.min.js"></script>
 <style>
   .map {
     width: 300px;
     height: 250px;
+    border:1px solid #A9A9A9;
+    border-radius:5px;
+    -moz-border-radius:5px;
   }
 </style>
 <center><div id='map' class='map'></div></center>
 <script>
   $(function() {
-    var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, zoomControl: false});
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      maxZoom: 18
+    var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, 
+                             zoomControl: true, crs: L.CRS.EPSG3395,
+                             fullscreenControl: true, zoomAnimation: false });
+    L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+      subdomains: '1234',
+      maxZoom: 18,
     }).addTo(map);
     var geojson = {
       'type': 'Feature',
-      'properties': {
-        'name': 'test name',
-        'amenity': 'test amenity',
-        'popupContent': 'This is the popup content'
-      },
       'geometry': {
         'type': 'Polygon',
         'coordinates': [[
@@ -39,16 +38,17 @@
         ]]
       }
     };
-    L.geoJson(geojson, {
+    map.fitBounds(L.geoJson(geojson, {
+      clickable: false,
       coordsToLatLng: function (coords) {
         longitude = coords[0];
         latitude = coords[1];
         var latlng = L.latLng(latitude, longitude);
-        if (<%= $lon_min %> > <%= $lon_max %> && longitude == <%= $lon_max %>) {
+        if (<%= $lon_min %> > <%= $lon_max %> || longitude > 180.) {
           return latlng.wrap(360, 0);
         } else
           return latlng.wrap();
       }
-    }).bindPopup().addTo(map);
+    }).bindPopup().addTo(map));
   });
 </script> 

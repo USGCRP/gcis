@@ -17,13 +17,13 @@ External terms which can be mapped to GCIS identifiers.
 
 =head1 SCHEMA
 
-                                               Table "gcis_metadata.exterm"
-        Column       |       Type        | Modifiers | Storage  |                       Description                       
- --------------------+-------------------+-----------+----------+---------------------------------------------------------
-  term               | character varying | not null  | extended | The term itself.
-  context            | character varying | not null  | extended | A brief identifier for the context of this term.
-  lexicon_identifier | character varying | not null  | extended | The lexicon associated with this term.
-  gcid               | character varying | not null  | extended | The GCIS identifier (URI) to which this term is mapped.
+                                                       Table "gcis_metadata.exterm"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                       Description                       
+ --------------------+-------------------+-----------+----------+--------------+---------------------------------------------------------
+  term               | character varying | not null  | extended |              | The term itself.
+  context            | character varying | not null  | extended |              | A brief identifier for the context of this term.
+  lexicon_identifier | character varying | not null  | extended |              | The lexicon associated with this term.
+  gcid               | character varying | not null  | extended |              | The GCIS identifier (URI) to which this term is mapped.
  Indexes:
      "exterm_pkey" PRIMARY KEY, btree (lexicon_identifier, context, term)
      "exterm_gcid" btree (gcid)
@@ -35,7 +35,6 @@ External terms which can be mapped to GCIS identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON exterm FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON exterm FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

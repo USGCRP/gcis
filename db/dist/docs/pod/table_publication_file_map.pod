@@ -15,11 +15,11 @@ Publications may have zero or more files.  And vice versa.
 
 =head1 SCHEMA
 
-                  Table "gcis_metadata.publication_file_map"
-      Column      |       Type        | Modifiers | Storage  |  Description   
- -----------------+-------------------+-----------+----------+----------------
-  publication_id  | integer           | not null  | plain    | A publication.
-  file_identifier | character varying | not null  | extended | A file.
+                          Table "gcis_metadata.publication_file_map"
+      Column      |       Type        | Modifiers | Storage  | Stats target |  Description   
+ -----------------+-------------------+-----------+----------+--------------+----------------
+  publication_id  | integer           | not null  | plain    |              | A publication.
+  file_identifier | character varying | not null  | extended |              | A file.
  Indexes:
      "publication_file_map_pkey" PRIMARY KEY, btree (publication_id, file_identifier)
  Foreign-key constraints:
@@ -28,7 +28,6 @@ Publications may have zero or more files.  And vice versa.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_file_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication_file_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

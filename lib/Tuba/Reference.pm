@@ -9,7 +9,7 @@ use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/:all/;
 use Tuba::Log qw/logger/;;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 
 sub list {
     my $c = shift;
@@ -228,7 +228,7 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $reference = $c->_this_object or return $c->render_not_found;
+    my $reference = $c->_this_object or return $c->reply->not_found;
     my $report = $reference->publication->to_object;
     undef $report unless $report->meta->table eq 'report';
 
@@ -294,12 +294,12 @@ sub lookup {
     my $c = shift;
     my $record_number = $c->stash('record_number');
 
-    $record_number =~ /^[0-9]+$/ or return $c->render_not_found;
+    $record_number =~ /^[0-9]+$/ or return $c->reply->not_found;
 
     my $found = References->get_objects(query => [ \"attrs->'_record_number' = ${record_number}::varchar" ], limit => 10 );
 
     unless ($found && @$found) {
-        return $c->render_not_found;
+        return $c->reply->not_found;
     }
     if (@$found > 1) {
         return $c->respond_to(
@@ -349,7 +349,7 @@ sub set_title {
 
 sub create_form {
     my $c = shift;
-    $c->param(identifier => new_uuid_string(4));
+    $c->param(identifier => new_uuid());
     return $c->SUPER::create_form(@_);
 }
 

@@ -19,7 +19,7 @@ sub show {
     my $identifier = $c->stash('model_identifier');
     my $object = Model->new( identifier => $identifier )
                       ->load( speculative => 1 )
-                          or return $c->render_not_found;
+                          or return $c->reply->not_found;
     $c->stash(object => $object);
     $c->stash(meta => Model->meta);
     $c->SUPER::show(@_);

@@ -18,22 +18,24 @@ A finding is associated with a report and optionally a chapter.
  evidence (character varying) - A description of the evidence base.
  uncertainties (character varying) - A description of the uncertainties.
  confidence (character varying) - An assessment of the confidence in this finding based on the evidence.
+ url (character varying) - A URL for a landing page for this finding.
 
 
 =head1 SCHEMA
 
-                                                      Table "gcis_metadata.finding"
-        Column       |       Type        | Modifiers | Storage  |                              Description                               
- --------------------+-------------------+-----------+----------+------------------------------------------------------------------------
-  identifier         | character varying | not null  | extended | A descriptive identifier for this finding.
-  chapter_identifier | character varying |           | extended | The chapter containing this finding.
-  statement          | character varying |           | extended | The statement of the finding.
-  ordinal            | integer           |           | plain    | The numeric position of this finding with a chapter (or report).
-  report_identifier  | character varying | not null  | extended | The report associated with this finding.
-  process            | character varying |           | extended | The process for developing this finding.
-  evidence           | character varying |           | extended | A description of the evidence base.
-  uncertainties      | character varying |           | extended | A description of the uncertainties.
-  confidence         | character varying |           | extended | An assessment of the confidence in this finding based on the evidence.
+                                                              Table "gcis_metadata.finding"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                              Description                               
+ --------------------+-------------------+-----------+----------+--------------+------------------------------------------------------------------------
+  identifier         | character varying | not null  | extended |              | A descriptive identifier for this finding.
+  chapter_identifier | character varying |           | extended |              | The chapter containing this finding.
+  statement          | character varying |           | extended |              | The statement of the finding.
+  ordinal            | integer           |           | plain    |              | The numeric position of this finding with a chapter (or report).
+  report_identifier  | character varying | not null  | extended |              | The report associated with this finding.
+  process            | character varying |           | extended |              | The process for developing this finding.
+  evidence           | character varying |           | extended |              | A description of the evidence base.
+  uncertainties      | character varying |           | extended |              | A description of the uncertainties.
+  confidence         | character varying |           | extended |              | An assessment of the confidence in this finding based on the evidence.
+  url                | character varying |           | extended |              | A URL for a landing page for this finding.
  Indexes:
      "finding_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "finding_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
@@ -47,7 +49,6 @@ A finding is associated with a report and optionally a chapter.
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

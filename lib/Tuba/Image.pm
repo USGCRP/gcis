@@ -12,7 +12,7 @@ use Path::Class qw/file dir/;
 use File::Basename qw/basename/;
 use Tuba::Log;
 use Tuba::DB::Objects qw/-nicknames/;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 
 =head1 ROUTES
 
@@ -48,7 +48,7 @@ sub update_rel_form {
 
 sub update_rel {
     my $c = shift;
-    my $object = $c->_this_object or return $c->render_not_found;
+    my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
@@ -72,7 +72,7 @@ sub update_rel {
 
 sub create_form {
     my $c = shift;
-    $c->param(identifier => new_uuid_string(4));
+    $c->param(identifier => new_uuid());
     return $c->SUPER::create_form(@_);
 }
 

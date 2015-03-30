@@ -21,17 +21,17 @@ A platform may be associated with one more more instruments.
 
 =head1 SCHEMA
 
-                                                      Table "gcis_metadata.platform"
-           Column          |            Type             | Modifiers | Storage  |                      Description                       
- --------------------------+-----------------------------+-----------+----------+--------------------------------------------------------
-  identifier               | character varying           | not null  | extended | A descriptive identifier for this platform.
-  name                     | character varying           | not null  | extended | A brief name.
-  description              | character varying           |           | extended | A description.
-  url                      | character varying           |           | extended | A landing page with information about this platform.
-  platform_type_identifier | character varying           |           | extended | The type.
-  description_attribution  | character varying           |           | extended | A URL containing the description.
-  start_date               | timestamp without time zone |           | plain    | The date on which this platform first began operating.
-  end_date                 | timestamp without time zone |           | plain    | The date on which this platform ceased operations.
+                                                             Table "gcis_metadata.platform"
+           Column          |            Type             | Modifiers | Storage  | Stats target |                      Description                       
+ --------------------------+-----------------------------+-----------+----------+--------------+--------------------------------------------------------
+  identifier               | character varying           | not null  | extended |              | A descriptive identifier for this platform.
+  name                     | character varying           | not null  | extended |              | A brief name.
+  description              | character varying           |           | extended |              | A description.
+  url                      | character varying           |           | extended |              | A landing page with information about this platform.
+  platform_type_identifier | character varying           |           | extended |              | The type.
+  description_attribution  | character varying           |           | extended |              | A URL containing the description.
+  start_date               | timestamp without time zone |           | plain    |              | The date on which this platform first began operating.
+  end_date                 | timestamp without time zone |           | plain    |              | The date on which this platform ceased operations.
  Indexes:
      "platform_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
@@ -47,7 +47,6 @@ A platform may be associated with one more more instruments.
      delpub BEFORE DELETE ON platform FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/platform/')
      updatepub BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
 =cut

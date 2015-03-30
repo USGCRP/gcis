@@ -27,6 +27,14 @@
                 %= end
             % }
         % }
+
+        % my $lat_min = $image->lat_min;
+        % my $lat_max = $image->lat_max;
+        % my $lon_min = $image->lon_min;
+        % my $lon_max = $image->lon_max;
+        % if (defined($lat_min) && defined($lat_max) && defined($lon_min) && defined($lon_max)) {
+            %= include 'h/leaflet', lat_min => $lat_min, lat_max => $lat_max, lon_min => $lon_min, lon_max => $lon_max;
+        % }
         </div>
         <h2><%= $image->title %></h2>
         <i>

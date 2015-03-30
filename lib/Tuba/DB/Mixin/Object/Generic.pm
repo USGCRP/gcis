@@ -1,6 +1,6 @@
 package Tuba::DB::Object::Generic;
 # Tuba::DB::Mixin::Object::Generic;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 use Pg::hstore;
 use Encode;
 use strict;
@@ -18,7 +18,7 @@ __PACKAGE__->meta->column('attrs')->add_trigger(
     });
 
 __PACKAGE__->meta->primary_key_generator(sub {
-    return new_uuid_string(4);
+    return new_uuid();
 });
 
 

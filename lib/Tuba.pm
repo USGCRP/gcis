@@ -61,12 +61,11 @@ use Mojo::Base qw/Mojolicious/;
 use Mojo::ByteStream qw/b/;
 use Tuba::Converter;
 use Tuba::Log;
-use Tuba::Util qw/set_config/;
-use Data::UUID::LibUUID;
+use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.22';
+our $VERSION = '1.24';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -213,12 +212,12 @@ sub startup {
         $resource->get("*$identifier" => \@restrict => \%defaults )->over(not_match => { $identifier => $reserved })->to('#show')->name("show_$name");
       } else {
         $resource->get(":$identifier" => \@restrict => \%defaults )->to('#show')->name("show_$name");
-        $select = $resource->bridge(":$identifier")->to('#select')->name("select_$name");
+        $select = $resource->under(":$identifier")->to('#select')->name("select_$name");
       }
 
       return $select if $config->{read_only};
 
-      my $authed = $r->bridge("/$path_base")->to(cb => sub {
+      my $authed = $r->under("/$path_base")->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
               return 1;
@@ -277,9 +276,9 @@ sub startup {
         return $c->render( text => "sorry, max is 1000 at once" ) if $count > 1000;
         $c->res->headers->content_type('text/plain');
         $c->respond_to(
-          text => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
-          html => sub { shift->render( text => ( join "\n", (map new_uuid_string(4), 1..$count) ) ) },
-          json => sub { shift->render( json => [ map new_uuid_string(4), 1..$count ] ) },
+          text => sub { shift->render( text => ( join "\n", (map new_uuid(), 1..$count) ) ) },
+          html => sub { shift->render( text => ( join "\n", (map new_uuid(), 1..$count) ) ) },
+          json => sub { shift->render( json => [ map new_uuid(), 1..$count ] ) },
         );
       } => 'uuid'
     );
@@ -373,7 +372,7 @@ sub startup {
     my $reference = $r->resource('reference');
     $report->get('/reference')->to('reference#list');
     $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
-    $r->bridge('/reference/match')
+    $r->under('/reference/match')
       ->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
@@ -446,7 +445,7 @@ sub startup {
     $r->get('/autocomplete')->to('search#autocomplete');
 
     unless ($config->{read_only}) {
-        my $authed = $r->bridge->to(
+        my $authed = $r->under->to(
           cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
@@ -483,7 +482,7 @@ sub startup {
     $r->post('/calculate_url' => sub {
         my $c = shift;
         my $for = $c->param('_route_name');
-        my $route = $c->app->routes->lookup($for) or return $c->render_not_found;
+        my $route = $c->app->routes->lookup($for) or return $c->reply->not_found;
         my $params = $c->req->params->to_hash;
         delete $params->{_route_name};
         my $got = $c->url_for($for, $params);

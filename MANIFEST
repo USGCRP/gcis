@@ -1,5 +1,6 @@
 .travis.yml
 bin/tuba
+bin/tuba_generate_sitemap
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
@@ -432,6 +433,7 @@ lib/Tuba/files/public/owl/jquery_002.js
 lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
+lib/Tuba/files/public/sitemap.xml
 lib/Tuba/files/public/test.html
 lib/Tuba/files/public/usgcrp-globe-trans.png
 lib/Tuba/files/templates/activity/object.html.ep
@@ -686,6 +688,7 @@ t/012_lexicon.t
 t/013_model.t
 t/014_array.t
 t/015_search.t
+t/016_turtle_syntax.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm

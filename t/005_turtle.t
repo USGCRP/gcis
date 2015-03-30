@@ -11,10 +11,17 @@ use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
 use tlib;
-
 use strict;
-use_ok "Tuba";
 
+chomp(my $found = `which rapper`);
+if ($found) {
+    chomp(my $version = `rapper --version`);
+    diag "using $found (version $version)";
+} else {
+    plan skip_all => "rapper not found";
+}
+
+use_ok "Tuba";
 my $t = Test::Mojo->new("Tuba");
 
 my %h = (Accept => 'application/json');

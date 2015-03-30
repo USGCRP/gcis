@@ -1,4 +1,4 @@
-% my @pubs = $pub ? $pub->get_parents_with_references : ();
+% my @pubs = $pub ? $pub->get_parents_with_references(uniq => 1) : ();
 % if (@pubs) {
 % my %refs;
 <p>Cited by

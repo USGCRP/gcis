@@ -1,12 +1,12 @@
 package Tuba::DB::Object::Array;
 # Tuba::DB::Mixin::Object::Array;
 use Mojo::ByteStream qw/b/;
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 use List::Util qw/max/;
 use strict;
 
 __PACKAGE__->meta->primary_key_generator(sub {
-    return new_uuid_string(4);
+    return new_uuid();
 });
 
 sub stringify {

@@ -5,7 +5,7 @@
 
 % my $controls = stash 'controls' || {};
 
-<div class='row-fluid'>
+<div class='row'>
 
 %= include 'update_tabs', active => 'files';
 
@@ -13,26 +13,28 @@
 
 %= form_for obj_uri_for($object,'update_files') => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
 % if (my $error = (flash 'error') || (stash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
+    <div class='alert alert-danger'><%= $error %></div>
 % }
 % if (my $info = (stash 'info')) {
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 
 %= include 'controls/pubfile';
+<div class="form-group">
 
-<div class='control-group'>
-<label class='control-label'>
+<label class='control-label col-lg-3 col-md-3 col-sm-4'>
     Add an existing file
 </label>
-<div class='controls'>
+<div class='col-lg-9 col-md-9 col-sm-8'>
     %= include 'controls/autocomplete', input_name => "add_existing_file", object_type => "file";
 </div>
 </div>
 
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="reset" class="btn">Reset</button>
+<div class="row">
+	<div class="col-lg-4 col-lg-offset-3 col-md-4 col-md-offset-3 col-sm-4 col-sm-offset-4">
+    <button type="submit" class="btn btn-default btn-primary">Save changes</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+    </div>
 </div>
 
 %= end

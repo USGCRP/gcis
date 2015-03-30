@@ -44,7 +44,7 @@ sub find {
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );
-    $term->load(speculative => 1) or return $c->render_not_found;
+    $term->load(speculative => 1) or return $c->reply->not_found;
     my $gcid = $term->gcid;
     $c->res->headers->location($gcid);
     $c->respond_to(
@@ -62,7 +62,7 @@ sub remove {
           context  => $c->stash('context'),
           term     => $c->stash('term'),
     );
-    $term->load(speculative => 1) or return $c->render_not_found;
+    $term->load(speculative => 1) or return $c->reply->not_found;
     $term->delete or return $c->render_exception($term->error);
     return $c->render(text => 'ok');
 }

@@ -4,17 +4,12 @@
 <h2><%= $organization->identifier %></h2>
 </center>
 
-% my $base = $self->req->url->clone;
-<pre>
-<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
-<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
-<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %>
-</pre>
+%= include 'list_formats';
 
 <p>
 <%= obj_link($organization)%>
 has served as <b><%= A(lc $role->label) %></b> for
-the following <b><%= 0+@$objs %> <%= PL((stash 'resource'),0+@$objs) %></b> :</p>
+the following <b><%= pl((stash 'resource'),0+@$objs) %></b> :</p>
 
 % my $rows = 5;
 % my $row = 1;

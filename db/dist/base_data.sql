@@ -70,7 +70,7 @@ COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi) 
 -- Data for Name: table; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY "table" (identifier, report_identifier, chapter_identifier, ordinal, title, caption) FROM stdin;
+COPY "table" (identifier, report_identifier, chapter_identifier, ordinal, title, caption, url) FROM stdin;
 \.
 
 
@@ -195,7 +195,7 @@ COPY exterm (term, context, lexicon_identifier, gcid) FROM stdin;
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier) FROM stdin;
+COPY figure (identifier, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier, url) FROM stdin;
 \.
 
 
@@ -218,7 +218,7 @@ SELECT pg_catalog.setval('file_id_seq', 1, false);
 -- Data for Name: finding; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY finding (identifier, chapter_identifier, statement, ordinal, report_identifier, process, evidence, uncertainties, confidence) FROM stdin;
+COPY finding (identifier, chapter_identifier, statement, ordinal, report_identifier, process, evidence, uncertainties, confidence, url) FROM stdin;
 \.
 
 

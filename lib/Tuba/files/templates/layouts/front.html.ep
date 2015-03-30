@@ -1,0 +1,184 @@
+% if (param 'no_header') {
+%= content
+% } else {
+<!DOCTYPE html>
+<html>
+<head>
+% my $meta_url = $self->req->url->clone;
+% $meta_url->query(Mojo::Parameters->new());
+% $meta_url =~ s/\.([^.]+)$//;
+% $meta_url = "$meta_url";
+% if (length($meta_url) > 1) {
+    % $meta_url.=".rdfxml";
+    <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
+% }
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css";s";
+%= stylesheet "/css/gcis.css";
+%= stylesheet "/css/jquery.sidr.light.css";
+%= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";
+%= javascript "//netdna.bootstrapcdn.com/twitter-bootstrap/3.1.1/js/bootstrap.min.js"
+%= javascript "//cdn.jsdelivr.net/jquery.form/3.45/jquery.form.min.js";
+%= javascript "/js/gcis.js";
+%= javascript "/js/jquery.sidr.min.js";
+%= javascript "/js/jquery.touchwipe.min.js";
+% if (my $ga = config('google_analytics')) {
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '<%= $ga->{id} %>', '<%= $ga->{domain} %>');
+  ga('send', 'pageview');
+</script>
+% }
+% if (my $desc = (stash 'description')) {
+<meta name="Description" content="<%= $desc %>">
+% }
+<link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
+<title><%= title %> - GCIS</title>
+<style>
+    .hideme { display:none; }
+</style>
+</head>
+<body class="front-page">
+    <div id="wrap">
+		<div id="main">
+ <div id="sidr" class='hideme'>
+    <ul>
+        % my $report_identifier = current_report->identifier;
+        <li><span>Search</span>
+        <ul>
+            <li><%= link_to 'gcid_lookup' => begin %>GCID lookup<%= end %></li>
+            <li><%= link_to 'search' => begin %>Advanced search<%= end %></li>
+            % if (my $f = config('faceted_search')) {
+            <li><%= link_to $f->{url} => target => "_blank" => begin %>GCIS Facet Search<%= end %></li>
+            % }
+            <li><%= link_to '/sparql' => target => "_blank" => begin %>SPARQL query<%= end %></li>
+        </ul>
+        </li>
+        <li>
+                <span class='elidden'><%= $report_identifier %> report </span>
+         <ul>
+            <li><%= link_to 'show_report'  => { report_identifier => $report_identifier } => class => "elidden" => begin %>report : <%= current_report->identifier %><%= end %></li>
+            <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapters<%= end %></li>
+            <li><%= link_to 'list_all_figures'  => { report_identifier => $report_identifier } => begin %>figures<%= end %></li>
+            <li><%= link_to 'list_all_tables'  => { report_identifier => $report_identifier } => begin %>tables<%= end %></li>
+            <li><%= link_to 'list_all_findings' => { report_identifier => $report_identifier } => begin %>findings<%= end %></li>
+            <li><%= link_to 'list_report_references' => { report_identifier => $report_identifier } => begin %>references<%= end %></li>
+         </ul>
+        </li>
+        <li>
+            <span>publications</span>
+            <ul>
+                <li><%= link_to 'show_report'  => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->identifier %><%= end %></li>
+                <li><%= link_to 'list_report'  => begin %>reports<%= end %></li>
+                <li><%= link_to 'list_figures_across_reports' => begin %>figures<%= end %></li>
+                <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
+                <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
+                <li><%= link_to 'list_journal' => begin %>journals<%= end %></li>
+                <li><%= link_to 'list_article' => begin %>articles<%= end %></li>
+                <li><%= link_to 'list_webpage' => begin %>web pages<%= end %></li>
+                <li><%= link_to 'list_platform' => begin %>platforms<%= end %></li>
+                <li><%= link_to 'list_instrument' => begin %>instruments<%= end %></li>
+                <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
+                <li><%= link_to 'list_model' => begin %>models<%= end %></li>
+                <li><%= link_to 'list_scenario' => begin %>scenarios<%= end %></li>
+                <li><%= link_to 'list_lexicon' => begin %>lexicons<%= end %></li>
+            </ul>
+        </li>
+        <li>
+            <span>contributors</span>
+            <ul>
+                <li><%= link_to 'list_person' => begin %>people<%= end %></li>
+                <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
+            </ul>
+        </li>
+        % if (user_can('update')) {
+        <li><%= link_to 'admin' => begin %>admin<%= end %></li>
+        % }
+    </ul>
+</div>
+
+        <div class="navbar main-menu" role="navigation">
+            <div class="container">
+                <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
+                     <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
+                    </a>
+                <a href="/" class='pull-left'><img class="logo" src="/gcis-logo-100.png" ></a>
+                <ul class='navbar-right nav'>
+                    <li>
+                    % if(config('no_search')) {
+                    % } elsif (config('google_site_search')) {
+                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
+                           <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
+                           <input name="ie" type="hidden" value="UTF-8">
+                           <input name="q" placeholder="Search" type="search">
+                       </form>
+                    <% } else { %>
+                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
+                    <% } %>
+                    </li>
+                    <li><% if (!config('read_only')) { %>
+                        <% if (my $user = user()) { %>
+                            <a class="dropdown-toggle" data-toggle="dropdown"><%= user_short() %></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><%= link_to 'logout' => begin %>logout <%= $user %><%= end %>
+                                % if (user_can('update')) {
+                                <li><%= link_to '_login_key' => begin %>API key<%= end %>
+                                % }
+                            </ul>
+                        <% } elsif (!config('hide_login_link')) { %>
+                            % my $dest = $self->req->url->path;
+                            % if ($dest && $dest ne '/') {
+                            <%= link_to url_for('login')->query(destination => $self->req->url->path) => begin %>log in<%= end %>
+                            % } else {
+                            <%= link_to url_for('login') => begin %>log in<%= end %>
+                            % }
+                        <% } %>
+                        <% } %>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        % if (stash 'fixed') {
+        <div class='container' id='maincontent'>
+        % } else {
+        <div class='container-fluid' id='maincontent'>
+        % }
+        % if (my $msg = flash 'message') {
+        <div class='alert alert-info'>
+        	<button type="button" class="close" data-dismiss="alert">&times;</button>
+        	%= $msg
+        </div>
+        % }
+            <%= content %>
+        </div>
+        </div>
+        </div>
+      
+        <div id="footer" class="centered">
+        <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
+        </div>
+    </body>
+</html>
+% }
+<script>
+  $(document).ready(function() {
+      $('#simple-menu').sidr();
+      $("#sidr").removeClass('hideme');
+  });
+  $(window).touchwipe({
+    wipeLeft: function() {
+      // Close
+      $.sidr('close', 'sidr-main');
+    },
+    wipeRight: function() {
+      // Open
+      $.sidr('open', 'sidr-main');
+    },
+    preventDefaultEvents: false
+  });
+</script>

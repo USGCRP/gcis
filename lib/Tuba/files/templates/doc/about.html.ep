@@ -8,7 +8,7 @@ The
 (USGCRP) has established the Global Change Information System (GCIS) to better coordinate and integrate the use of federal information products on changes in the global environment and the implications of those changes for society.
 </p>
 <p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
-The GCIS is a web-based resource for traceable, sound global change data, information, and products.
+The GCIS is an open-source, web-based resource for traceable, sound global change data, information, and products.
 Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
 products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
 products selected by the 13 member agencies, the GCIS serves as a key access point to assessments, reports, and tools produced
@@ -32,7 +32,7 @@ as reports, report chapters, figures, images, tables, bibliographic
 entries, organizations and people.
 <h3>Identifiers</h3>
 <p>
-Each item referenced in the GCIS has a unique, persistent identifier.  This identifer takes the form of a Uniform Resource Identifier (URI), but may include or be related to other identifiers as well, such as Universally Unique Identifiers (UUIDs), Digital Object Identifiers (DOIs), ORCIds, and ISBN numbers.  Native identifiers for resources are incorporated in to the URI as much as possible to help with interoperability between the GCIS and other systems.
+Each item referenced in the GCIS has a unique, persistent identifier.  This identifer takes the form of a Uniform Resource Identifier (URI), but may include or be related to other identifiers as well, such as Universally Unique Identifiers (UUIDs), Digital Object Identifiers (DOIs), ORCIds, and ISBNs.  Native identifiers for resources are incorporated in to the URI as much as possible to help with interoperability between the GCIS and other systems.
 </p>
 
 <h3>Provenance and Semantics</h3>

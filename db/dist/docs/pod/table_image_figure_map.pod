@@ -16,12 +16,12 @@ A figure can have many images and vice versa.
 
 =head1 SCHEMA
 
-                               Table "gcis_metadata.image_figure_map"
-       Column       |       Type        | Modifiers | Storage  |            Description            
- -------------------+-------------------+-----------+----------+-----------------------------------
-  image_identifier  | character varying | not null  | extended | The image.
-  figure_identifier | character varying | not null  | extended | The figure.
-  report_identifier | character varying | not null  | extended | The report containing the figure.
+                                      Table "gcis_metadata.image_figure_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target |            Description            
+ -------------------+-------------------+-----------+----------+--------------+-----------------------------------
+  image_identifier  | character varying | not null  | extended |              | The image.
+  figure_identifier | character varying | not null  | extended |              | The figure.
+  report_identifier | character varying | not null  | extended |              | The report containing the figure.
  Indexes:
      "image_figure_map_pkey" PRIMARY KEY, btree (image_identifier, figure_identifier, report_identifier)
  Foreign-key constraints:
@@ -30,7 +30,6 @@ A figure can have many images and vice versa.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image_figure_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON image_figure_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

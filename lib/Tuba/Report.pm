@@ -42,7 +42,7 @@ order by transaction_id limit 1
 SQL
     my $got = $sth->execute($identifier);
     my $rows = $sth->fetchall_arrayref;
-    return $c->render_not_found unless $rows && @$rows;
+    return $c->reply->not_found unless $rows && @$rows;
     my $replacement = $rows->[0][0];
     my $url = $c->req->url;
     $url =~ s{/report/$identifier(?=/|$)}{/report/$replacement};

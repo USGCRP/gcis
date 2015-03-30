@@ -4,6 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+% my $meta_url = $self->req->url->clone;
+% $meta_url->query(Mojo::Parameters->new());
+% $meta_url =~ s/\.([^.]+)$//;
+% $meta_url = "$meta_url";
+% if (length($meta_url) > 1) {
+    % $meta_url.=".rdfxml";
+    <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
+% }
 %= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
 %= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css";
 %= stylesheet "/css/gcis.css";
@@ -37,8 +45,10 @@
     .hideme { display:none; }
 </style>
 </head>
-    <body>
- <div id="sidr" class='hideme'>
+<body>
+	<div id="wrap">
+		<div id="main">
+	<div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
         <li><span>Search</span>
@@ -78,6 +88,7 @@
                 <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
                 <li><%= link_to 'list_model' => begin %>models<%= end %></li>
                 <li><%= link_to 'list_scenario' => begin %>scenarios<%= end %></li>
+                <li><%= link_to 'list_lexicon' => begin %>lexicons<%= end %></li>
             </ul>
         </li>
         <li>
@@ -93,16 +104,15 @@
     </ul>
 </div>
 
+
         <div class="navbar main-menu" role="navigation">
             <div class="container">
                 <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
                 	<span class="sr-only">Toggle navigation</span>
-                     <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+                     <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
                     </a>
-                <a href="/" class='navbar-left'><img class="logo" src="/logo-small.png" ></a>
-                <%= link_to 'index', class => 'navbar-brand' => begin %>
-                    GCIS
-                <%= end %>
+                <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" ></a>
+                
                 <ul class='navbar-right nav'>
                     <li>
                     % if(config('no_search')) {
@@ -110,7 +120,8 @@
                        <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
                            <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
                            <input name="ie" type="hidden" value="UTF-8">
-                           <input name="q" class="form-control" placeholder="search" type="search">
+
+                           <input name="q" class="form-control" placeholder="Search" type="search">
                        </form>
                     <% } else { %>
                     <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
@@ -137,21 +148,30 @@
                     </li>
                 </ul>
 
+                </div>
+             </div>
+        
+             % if (stash 'fixed') {
+             <div class='container' id='maincontent'>
+             % } else {
+             <div class='container-fluid' id='maincontent'>
+             % }
+             % if (my $msg = flash 'message') {
+             	<div class='alert alert-info'>
+					<button type="button" class="close" data-dismiss="alert">&times;</button>
+					%= $msg
+				</div>
+				% }
+            <%= content %>
             </div>
         </div>
-        % if (stash 'fixed') {
-        <div class='container' id='maincontent'>
-        % } else {
-        <div class='container-fluid' id='maincontent'>
-        % }
-% if (my $msg = flash 'message') {
-<div class='alert alert-info'>
-<button type="button" class="close" data-dismiss="alert">&times;</button>
-%= $msg
-</div>
-% }
-            <%= content %>
         </div>
+      
+        
+        <div id="footer" class="centered">
+        <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
+        </div>
+
     </body>
 </html>
 % }

@@ -9,35 +9,38 @@
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <input type="text" class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= to_textfield_value($object->$accessor) %>">
+    <input type="text" class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= to_textfield_value($object->$accessor) %>">
 % end
 
 % my $textarea = begin
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= to_textfield_value($object->$accessor) %></textarea>
+    <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= to_textfield_value($object->$accessor) %></textarea>
 % end
 
-<div class='row-fluid'>
+<div class='row'>
 %= include 'update_tabs', active => 'fields';
 
 <div class='tab-content'>
 <p>Hover over a field name for help about that field.</p>
+<div class="row">
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 
 % my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
+
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
-<label class="control-label<%= $required %>" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><nobr><%= labelize($column->name) %></nobr></label>
-        <div class="row-fluid">
+<div class="form-group">
+<label class="control-label<%= $required %> col-md-2 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
+        <div class="col-md-10">
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-                %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
+                %= text_field '_report', class => 'col-md-10', value => current_report->title, disabled => 1
             % } elsif (my $entry = $controls->{$column->name}) {
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
@@ -49,17 +52,18 @@
                 % }
             % }
         </div>
+        </div>
 % }
+</div>
 %= javascript begin
 $('.control-label').popover({trigger : 'hover'});
 %= end
 <div class='required_note'>required</div>
-
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="reset" class="btn">Reset</button>
-    <div class='input-prepend'>
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+<div class="row">
+    <button type="submit" class="btn btn-default btn-primary">Save changes</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+    <div class='input-prepend' style="display: inline";>
+    <button type="submit" name='delete' value='delete' class="btn btn-default btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     % if ($self->can_set_replacement) {
     %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
     % }

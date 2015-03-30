@@ -1,60 +1,63 @@
 %= hidden_field 'delete_file';
 
 % my ($api_pw,$api_key) = $self->Tuba::Auth::make_api_key;
-
+<div class="row">
 <p>To upload files from the command line (using an HTTP PUT request):</p>
-<textarea class='span12' readonly rows=1>
+<textarea class='col-md-12 col-sm-12 col-xs-12 form-control' readonly rows=1>
 curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$meta->table)->to_abs %>/
 </textarea>
-<br>
-<br>
+</div>
+<br />
+<br />
 
-<table class='table table-condensed table-bordered'>
+ <table class='table table-condensed table-bordered'>
 
 % my $pub = $object->get_publication;
 % if ($pub) {
     % for my $file ($pub->files) {
-    <tr class='row-fluid ctr'>
+    <tr class='row ctr'>
     <td>
-        <span class='btn squeezevert'><%= obj_link($file); %></span>
+    <span class='btn btn-default col-md-12 col-sm-12'><%= obj_link($file); %></span>
     </td>
     <td>
     %= link_to $file->uri($self) => begin
-    <%= image $file->thumbnail_path, class => 'img-polaroid span3' => style => 'padding:0px;' =%>
+    <%= image $file->thumbnail_path, class => 'img-thumbnail col-md-3 col-sm-6 col-xs-12' => style => 'padding:0px;' =%>
     %= end
     </td>
     <td>
-    <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+    <%= tag 'button' => class => 'btn btn-default btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
     </td>
     </tr>
     % }
 % }
 
 </table>
+<br />
+<br />
 
-<div class='control-group'>
-<label class="control-label">
+<div class='form-group'>
+<label class="control-label col-lg-3 col-md-3 col-sm-4">
 Upload a file
 </label>
-<div class="controls">
+<div class="col-lg-9 col-md-9 col-sm-8">
 %= file_field 'file_upload';
 </div>
 </div>
 
-<div class='control-group'>
-<label class="control-label">
+<div class='form-group'>
+<label class="control-label col-lg-3 col-md-3 col-sm-4">
 Retrieve a file from a url
 </label>
-<div class="controls">
-%= text_field 'file_url', class => 'span10', placeholder => 'http://example.com/image.jpg'
+<div>
+%= text_field 'file_url', class => 'col-lg-9 col-md-9 col-sm-8 col-xs-12', placeholder => 'http://example.com/image.jpg'
 </div>
 </div>
 
-<div class='control-group'>
-<label class="control-label" for='use_remote_location'>
+<div class='form-group'>
+<label class="control-label col-lg-3 col-md-3 col-sm-4" for='use_remote_location'>
 Use remote location.
 </label>
-<div class="controls">
+<div class="col-lg-9 col-md-9 col-sm-8">
     %= check_box 'use_remote_location' => 1;
 </div>
 </div>

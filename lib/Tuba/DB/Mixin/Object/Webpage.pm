@@ -1,10 +1,10 @@
 package Tuba::DB::Object::Webpage;
 # Tuba::DB::Mixin::Object::Webpage
-use Data::UUID::LibUUID;
+use Tuba::Util qw[new_uuid];
 use strict;
 
 __PACKAGE__->meta->primary_key_generator(sub {
-    return new_uuid_string(4);
+    return new_uuid();
 });
 
 

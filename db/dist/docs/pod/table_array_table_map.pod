@@ -16,12 +16,12 @@ Arrays and tables have a many-to-many relationship.
 
 =head1 SCHEMA
 
-                                 Table "gcis_metadata.array_table_map"
-       Column       |       Type        | Modifiers | Storage  |              Description              
- -------------------+-------------------+-----------+----------+---------------------------------------
-  array_identifier  | character varying | not null  | extended | The array.
-  table_identifier  | character varying | not null  | extended | The table.
-  report_identifier | character varying | not null  | extended | The report associated with the table.
+                                         Table "gcis_metadata.array_table_map"
+       Column       |       Type        | Modifiers | Storage  | Stats target |              Description              
+ -------------------+-------------------+-----------+----------+--------------+---------------------------------------
+  array_identifier  | character varying | not null  | extended |              | The array.
+  table_identifier  | character varying | not null  | extended |              | The table.
+  report_identifier | character varying | not null  | extended |              | The report associated with the table.
  Indexes:
      "array_table_map_pkey" PRIMARY KEY, btree (array_identifier, table_identifier, report_identifier)
  Foreign-key constraints:
@@ -30,7 +30,6 @@ Arrays and tables have a many-to-many relationship.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
 =cut

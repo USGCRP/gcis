@@ -65,7 +65,7 @@ sub uri {
 
 sub kindred_figures {
     my $s = shift;
-    my $results = $s->db->dbh->selectrow_arrayref(<<CUT, {}, $s->identifier);
+    my $results = $s->db->dbh->selectcol_arrayref(<<CUT, {}, $s->identifier);
 select distinct(y.figure_identifier,y.report_identifier)
 from image_figure_map x
 inner join image_figure_map y
