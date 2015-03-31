@@ -2,9 +2,9 @@
 % my $base = $column->name;
 % my $array_data = "";
 % my $rows_in_header = 1;
-%= javascript "//handsontable.com/dist/handsontable.full.js";
-%= stylesheet "//handsontable.com/plugins/bootstrap/handsontable.bootstrap.css";
-%= stylesheet "//handsontable.com/dist/handsontable.full.css";
+%= javascript "//cdn.rawgit.com/handsontable/handsontable/0.13.0/dist/handsontable.full.js";
+%= stylesheet "//cdn.rawgit.com/handsontable/handsontable/0.13.0/plugins/bootstrap/handsontable.bootstrap.css";
+%= stylesheet "//cdn.rawgit.com/handsontable/handsontable/0.13.0/dist/handsontable.full.css";
 % if (my $obj = stash 'object') {
     % my $k = $column->accessor_method_name;
     % my $val = $obj->$k;
