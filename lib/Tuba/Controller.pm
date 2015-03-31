@@ -1231,7 +1231,7 @@ sub update {
                 if (!$col->is_primary_key_member) {
                     my $name = $col->name;
                     # handle case of updating an array
-                    if (ref($object->$name) eq "ARRAY") {
+                    if ($col->type eq "array") {
                         $new->$name([$object->$name]);
                     } else {
                         $new->$name($object->$name);
