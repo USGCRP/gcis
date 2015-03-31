@@ -1,3 +1,20 @@
+html, body {
+	height: 100%;
+}
+#wrap {
+	min-height: 100%;
+}
+#main {
+	overflow: auto;
+	padding-bottom: 55px;
+}
+#footer {
+	margin: -55px auto 0 auto;
+	padding-top: 15px;
+	position: relative;
+	height: 55px;
+	clear: both;
+}
 table.squeeze tr td {
     padding-top:0px;
     padding-bottom:0px;
@@ -83,10 +100,7 @@ img[src*="gcis_remote=1"] {
      * http://www.karlhorky.com/2012/06/cross-browser-image-grayscale-with-css.html
      */
 }
-#footer {
-	margin-top: 15px;
-	padding-bottom: 20px;
-}
+
 .row {
     margin-left:0px;
 }
