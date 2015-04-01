@@ -66,8 +66,8 @@ $(function() {
 % }else {
     var data = [
       ["header_1", "header_2"],
-      ["description_1", "description_2"],
-      ["landing_page_1", "landing_page_2"]
+      ["", ""],
+      ["", ""]
     ],
 % }
     container = document.getElementById('editable_grid'),
