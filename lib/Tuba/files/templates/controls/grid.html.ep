@@ -1,11 +1,131 @@
+% use Mojo::JSON qw(encode_json);
 % my $base = $column->name;
+% my $array_data = "";
+% my $rows_in_header = 1;
+%= javascript "//cdn.rawgit.com/handsontable/handsontable/0.13.0/dist/handsontable.full.js";
+%= stylesheet "//cdn.rawgit.com/handsontable/handsontable/0.13.0/plugins/bootstrap/handsontable.bootstrap.css";
+%= stylesheet "//cdn.rawgit.com/handsontable/handsontable/0.13.0/dist/handsontable.full.css";
 % if (my $obj = stash 'object') {
     % my $k = $column->accessor_method_name;
     % my $val = $obj->$k;
     % my $header = $obj->rows_in_header;
     % if ($val) {
     %= include 'view_array', val => $val, header_rows => $obj->rows_in_header;
+    %  $array_data = $val;
+    %  $rows_in_header = $header;
     % }
 % }
 %= select_field "$base.array_upload_format", [ [  'CSV upload' => 'csv' ], [ 'TSV upload' => 'tsv' ], [ 'JSON upload' => 'json' ] ], class => 'input'
 %= file_field "$base.array_upload", class => 'input';
+
+<br/><br/>
+
+or edit grid directly:
+
+<br/><br/>
+
+<div class="control-group">
+    <label class="control-label" for="row_count">rows</label>
+    <div class="controls">
+        <input class="span1" id="row_count" type="number" min="1" />
+    </div>
+</div>
+
+<div class="control-group">
+    <label class="control-label" for="col_count">columns</label>
+    <div class="controls">
+        <input class="span1" id="col_count" type="number" min="1" />
+    </div>
+</div>
+
+<div id="editable_grid"></div>
+
+%= hidden_field 'grid_array';
+
+<br/>
+
+%= javascript begin
+var row_count = null, row_count = null;
+
+
+function highlight_row(instance, td, row, col, prop, value, cell_props) {
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+    td.style.fontWeight = 'bold';
+    td.style.color = 'green';
+}
+
+function unhighlight_row(instance, td, row, col, prop, value, cell_props) {
+    Handsontable.renderers.TextRenderer.apply(this, arguments);
+    td.style.fontWeight = 'normal';
+    td.style.color = 'black';
+}
+
+$(function() {
+% if ($array_data) {
+    var data = <%== encode_json($array_data) %>,
+% }else {
+    var data = [
+      ["header_1", "header_2"],
+      ["description_1", "description_2"],
+      ["landing_page_1", "landing_page_2"]
+    ],
+% }
+    container = document.getElementById('editable_grid'),
+    options = document.querySelectorAll('.options input'),
+    table,
+    hot;
+
+    // set current values
+    row_count = data.length;
+    $('#row_count').val(row_count);
+    col_count = data[0].length;
+    $('#col_count').val(col_count);
+    $('#rows_in_header').val(<%= $rows_in_header %>);
+    $('#rows_in_header').attr('max', row_count);
+
+    hot = new Handsontable(container, {
+        data: data,
+        colHeaders: true,
+        rowHeaders: true,
+        cells: function (row, col, prop) {
+            var cellProperties = {};
+            if (row < $('#rows_in_header').val()) {
+                cellProperties.renderer = highlight_row;
+            }else {
+                cellProperties.renderer = unhighlight_row;
+            }
+            return cellProperties;
+        }
+    });
+    table = document.querySelector('table');
+
+    Handsontable.Dom.addClass(table, 'table');
+
+    $('#row_count').on('change', function() {
+        var count = parseInt(this.value);
+        if (count > row_count) hot.alter('insert_row', null, count - row_count);
+        else hot.alter('remove_row', count, row_count - count);
+        row_count = count;
+        $('#rows_in_header').attr('max', row_count);
+    });
+
+    $('#col_count').on('change', function() {
+        var count = parseInt(this.value);
+        if (count > col_count) hot.alter('insert_col', null, count - col_count);
+        else hot.alter('remove_col', count, col_count - count);
+        col_count = count;
+    });
+
+    $('#rows_in_header').on('change', function() {
+        hot.render();
+    });
+
+   // add listener to submit button to dump array to hidden field
+   $('[name="grid_array"]').closest('form').submit(function() {
+        $('[name="grid_array"]').val(JSON.stringify(hot.getData(), ''));
+        return true;
+   });
+
+} );
+
+%= end
