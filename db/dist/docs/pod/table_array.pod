@@ -25,6 +25,7 @@ An array is an n-dimensional grid of data, and may be associated with a table.
  Indexes:
      "array_pkey" PRIMARY KEY, btree (identifier)
  Check constraints:
+     "array_dimensions" CHECK (array_ndims(rows) = 2)
      "ck_array_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:
      TABLE "array_table_map" CONSTRAINT "array_table_map_array_identifier_fkey" FOREIGN KEY (array_identifier) REFERENCES "array"(identifier) ON UPDATE CASCADE ON DELETE CASCADE
