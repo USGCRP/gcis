@@ -65,7 +65,7 @@ use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.24';
+our $VERSION = '1.25';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
