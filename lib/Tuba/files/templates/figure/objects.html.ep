@@ -35,7 +35,7 @@
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {
-                    <span class='btn squeezevert'><%= obj_link($_); %></span>
+                    <span class='btn btn-default squeezevert'><%= obj_link($_); %></span>
             %   }
             % } elsif (ref($got)) {
                 %= obj_link($got);
@@ -45,12 +45,12 @@
         </td>
 % }
 
-<td class='thumbnails'>
-<div class='span3'>
+<td class='thumbnails row'>
+<div >
    % if (my $pub = $o->get_publication) {
         % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail" => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;'
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail col-md-3 col-sm-3 col-lg-3" => begin
+                %= image $file->thumbnail_path, class => 'img-thumbnail thumbnail img-responsive', style => 'padding:0px;'
             %= end
         % }
     % }
@@ -65,10 +65,10 @@
     % if (user_can('update')) {
     <td>
         <%= obj_link_to $o, update_form => class => 'btn squeezevert' => target => "form" => begin %>meta<%= end %>
-        <%= obj_link_to $o, 'update_files_form' => class => 'btn squeezevert', target => "form" => begin %>files<% end %>
+        <%= obj_link_to $o, 'update_files_form' => class => 'btn btn-default squeezevert', target => "form" => begin %>files<% end %>
         %= form_for obj_uri_for($o,'update_files') => method => 'POST', target => "form" => enctype => 'multipart/form-data' => begin
             %= file_field 'file_upload';
-            <button type="submit" class="btn btn-primary btn-mini">Save</button>
+            <button type="submit" class="btn btn-default btn-primary btn-sm">Save</button>
         %= end
     </td>
     % }
