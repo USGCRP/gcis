@@ -39,9 +39,7 @@
      
 </style>
 <div class="container">
-	<a href="http://www.globalchange.gov/" target="_blank">
 	<img src="usgcrp-300.png" class="usgcrp thumbnail">
-	</a>
 </div>
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 	<h1 itemprop="name">Global Change Information System</h1>
