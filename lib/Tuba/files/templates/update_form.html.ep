@@ -40,7 +40,12 @@
             % my $val = $object->$accessor;
             % my $name = $column->name;
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
+
                 %= text_field '_report', class => 'col-md-10', value => current_report->title, disabled => 1
+                
+            % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
+                <input class="col-md-1 col-sm-1" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+
             % } elsif (my $entry = $controls->{$column->name}) {
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;

@@ -11,7 +11,7 @@ configure_requires:
   Module::Build::Database: '0'
   Module::Build::Mojolicious: '0'
   Mojolicious::Plugin::InstallablePaths: '0'
-dynamic_config: 1
+dynamic_config: 0
 generated_by: 'Module::Build version 0.421, CPAN::Meta::Converter version 2.142690'
 license: open_source
 meta-spec:

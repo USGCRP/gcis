@@ -18,6 +18,7 @@ db/dist/docs/html/func_gcis_metadata.avals(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.delete(gcis_metadata.hstore, text[]).html'
 db/dist/docs/html/func_gcis_metadata.delete_publication().html
 'db/dist/docs/html/func_gcis_metadata.each(hs gcis_metadata.hstore).html'
+'db/dist/docs/html/func_gcis_metadata.each(value gcis_metadata.hstore).html'
 'db/dist/docs/html/func_gcis_metadata.exist(gcis_metadata.hstore, text).html'
 'db/dist/docs/html/func_gcis_metadata.exists_all(gcis_metadata.hstore, text[]).html'
 'db/dist/docs/html/func_gcis_metadata.exists_any(gcis_metadata.hstore, text[]).html'
@@ -54,6 +55,10 @@ db/dist/docs/html/func_gcis_metadata.hstore_out(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_recv(internal).html
 db/dist/docs/html/func_gcis_metadata.hstore_send(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_to_array(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_json(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_json_loose(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_jsonb(gcis_metadata.hstore).html
+db/dist/docs/html/func_gcis_metadata.hstore_to_jsonb_loose(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_to_matrix(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_version_diag(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.isdefined(gcis_metadata.hstore, text).html'
@@ -201,6 +206,7 @@ db/patches/0260_chapter_url.sql
 db/patches/0270_report_access.sql
 db/patches/0280_report_public.sql
 db/patches/0290_chapter_number.sql
+db/patches/0300_array_dimensions.sql
 db/patches/0300_file_identifier.sql
 db/patches/0310_report_editors.sql
 db/patches/0320_report_viewers.sql
@@ -319,6 +325,7 @@ db/patches/2020_comments.sql
 db/patches/2030_model_runs.sql
 db/patches/2030_typo.sql
 db/patches/2040_contact_note.sql
+db/patches/2050_url_fields.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -405,6 +412,7 @@ lib/Tuba/files/public/css/gcis.css
 lib/Tuba/files/public/css/jquery.sidr.dark.css
 lib/Tuba/files/public/css/jquery.sidr.light.css
 lib/Tuba/files/public/favicon.ico
+lib/Tuba/files/public/gcis-logo-100.png
 lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/gcis.js
 lib/Tuba/files/public/js/jquery.sidr.min.js
@@ -435,6 +443,8 @@ lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/sitemap.xml
 lib/Tuba/files/public/test.html
+lib/Tuba/files/public/usgcrp-200.png
+lib/Tuba/files/public/usgcrp-300.png
 lib/Tuba/files/public/usgcrp-globe-trans.png
 lib/Tuba/files/templates/activity/object.html.ep
 lib/Tuba/files/templates/activity/object.ttl.tut
@@ -547,6 +557,7 @@ lib/Tuba/files/templates/journal/objects.html.ep
 lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.tut
+lib/Tuba/files/templates/layouts/front.html.ep
 lib/Tuba/files/templates/lexicon/object.html.ep
 lib/Tuba/files/templates/lexicon/object.ttl.tut
 lib/Tuba/files/templates/lexicon/objects.html.ep
@@ -664,7 +675,7 @@ lib/Tuba/Search.pm
 lib/Tuba/Table.pm
 lib/Tuba/Util.pm
 lib/Tuba/Webpage.pm
-LICENSE
+LICENSE.md
 Makefile.PL
 MANIFEST			This list of files
 META.json

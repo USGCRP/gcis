@@ -1,0 +1,6 @@
+do{ my $x = {
+       'tmp_db_????.sql' => 1,
+       'postmaster.log' => 1,
+       'Tuba-*' => 1
+     };
+$x; }
