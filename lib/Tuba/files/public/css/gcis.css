@@ -68,9 +68,6 @@ img.usgcrp.thumbnail {
 	border: 0 none #ffffff;
 	box-shadow: none;
 	margin: 0 auto;
-	background-color: #ffffff;
-    height:40px;
-
 }
 .navbar .nav {
     margin:  0 10px 0 15px;
@@ -124,8 +121,6 @@ img[src*="gcis_remote=1"] {
 }
 .thumbnail {
 	background-color: #f5f5f5;
-}
-.openrow {
 }
 .closedrow {
     max-height:200px;
