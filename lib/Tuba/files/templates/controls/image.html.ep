@@ -4,17 +4,17 @@
 <table class='table table-condensed table-bordered'>
 % for my $image ($object->images) {
 <tr>
-<td class='row'>
+<td>
 %= include 'obj_thumbnails', objs => [ $image ];
 </td>
 
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_image"].value = '].$image->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_image"].value = '].$image->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 </table>
-%= text_field 'new_image', placeholder => "search images", id => "newimage", class => 'span8';
+%= text_field 'new_image', placeholder => "search images", id => "newimage", class => 'col-md-8 col-lg-8 col-sm-8';
 
-<a href="#create_image" role="button" class="btn" data-toggle="modal">Create image</a>
+<a href="#create_image" role="button" class="btn btn-default" data-toggle="modal">Create image</a>
 %= include 'modal', url => url_for('create_form_image'), id => 'create_image'
 
 %= javascript begin
