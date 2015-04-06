@@ -17,11 +17,11 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     % for my $file ($pub->files) {
     <tr class='row ctr'>
     <td>
-    <span class='btn btn-default col-md-12 col-sm-12'><%= obj_link($file); %></span>
+    <span class='btn btn-default col-md-12 col-lg-12col-sm-12'><%= obj_link($file); %></span>
     </td>
     <td>
     %= link_to $file->uri($self) => begin
-    <%= image $file->thumbnail_path, class => 'img-thumbnail col-md-3 col-sm-6 col-xs-12' => style => 'padding:0px;' =%>
+    <%= image $file->thumbnail_path, class => 'img-thumbnail col-lg-6 col-md-6 col-sm-6 col-xs-12' => style => 'padding:0px;' =%>
     %= end
     </td>
     <td>
@@ -49,7 +49,7 @@ Upload a file
 Retrieve a file from a url
 </label>
 <div>
-%= text_field 'file_url', class => 'col-lg-9 col-md-9 col-sm-8 col-xs-12', placeholder => 'http://example.com/image.jpg'
+%= text_field 'file_url', class => 'col-lg-8 col-md-8 col-sm-8 col-xs-12', placeholder => 'http://example.com/image.jpg'
 </div>
 </div>
 
