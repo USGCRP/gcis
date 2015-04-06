@@ -119,6 +119,11 @@ COPY country (code, name) FROM stdin;
 --
 
 COPY organization_type (identifier) FROM stdin;
+federally funded research and development center
+non-profit
+professional society/organization
+foundation
+consortium
 \.
 
 
@@ -361,6 +366,8 @@ COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_
 --
 
 COPY organization_relationship (identifier, label) FROM stdin;
+managed_by	managed by
+operated_by	operated by
 \.
 
 
