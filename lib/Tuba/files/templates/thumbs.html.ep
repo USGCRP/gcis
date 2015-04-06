@@ -8,9 +8,6 @@
 
 %= include 'list_formats';
 
-<table class='table table-condensed table-bordered table-striped'>
-<caption>
-</caption>
 % my @clone = @$objects;
 
 % if (my $page = stash 'page') {
