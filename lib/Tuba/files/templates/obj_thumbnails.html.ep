@@ -1,11 +1,11 @@
-<div class='thumbnails' style='margin-left:0px;'>
+<div class='thumbnails row' style='margin-left:0px;clear:both'>
 % my $i = 0;
 % my $num_per_row = ( (stash 'per_row') || 6);
 %    for my $obj (@$objs) {
         % my $pub = $obj->get_publication;
         % my $uri = $obj->uri($self);
-        % my $size = ((stash 'size') || ( (stash 'small') ? 'span1' : 'span2'));
-        <div class='<%= $size %>' style='margin:2px;'>
+        % my $size = ((stash 'size') || ( (stash 'small') ? 'col-md-2 col-lg-2 col-sm-4 col-xs-4' : 'col-md-2 col-lg-2 col-sm-8 col-xs-8'));
+        <div class='<%= $size %>' >
             <div class='thumbnail centered'>
                 % if ($uri && !(stash 'no_table')) {
                 <div><small><%= $obj->meta->table %></small></div>
@@ -15,14 +15,14 @@
                     % for my $file ($pub->smallest_file) {
                         % if ($uri) {
                         <%= link_to $obj->uri($self) => begin =%>
-                            <%= image $file->thumbnail_path, class => 'img-thumbnail' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-thumbnail img-responsive'  =%>
                         <%= end =%>
                         % } else {
-                            <%= image $file->thumbnail_path, class => 'img-thumbnail' => style => 'padding:0px;' =%>
+                            <%= image $file->thumbnail_path, class => 'img-thumbnail img-responsive'  =%>
                         % }
                     % }
                 % } elsif (stash 'blanks') {
-                    <%= image '/blank.png', class => 'img-thumbnail' => style => 'padding:0px;' =%>
+                    <%= image '/blank.png', class => 'img-thumbnail img-responsive' =%>
                 % }
                 % my $val = $obj->stringify;
                 % my $short = $obj->stringify( (scalar 'tiny_captions' ? ( tiny => 1) : (short => 1)) );
@@ -43,7 +43,7 @@
         </div>
         % if (++$i % $num_per_row == 0 and $i < @$objs - 1) {
         </div>
-        <div class='thumbnails' style='margin-left:0px;'>
+      
         % }
 % }
 </div>

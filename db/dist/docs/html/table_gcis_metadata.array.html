@@ -202,6 +202,11 @@
             </tr>
             
             <tr class="tr0">
+                <td>array_dimensions</td>
+                <td>CHECK ((array_ndims(rows) = 2))</td>
+            </tr>
+            
+            <tr class="tr1">
                 <td>ck_array_identifier</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
             </tr>

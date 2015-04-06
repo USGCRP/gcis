@@ -157,6 +157,7 @@ CREATE TABLE "array" (
     identifier character varying NOT NULL,
     rows_in_header integer DEFAULT 0,
     rows character varying[],
+    CONSTRAINT array_dimensions CHECK ((array_ndims(rows) = 2)),
     CONSTRAINT ck_array_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 

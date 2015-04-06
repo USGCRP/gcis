@@ -93,9 +93,12 @@ sub _process_rows {
     my $c = shift;
     my $file = $c->req->upload('rows.array_upload');
     return 0 unless $file;
-    return 0 unless $file->size;
     my $format = $c->param('rows.array_upload_format');
     my $content = $file->asset->slurp;
+    if ($file->size == 0) {
+        $format = 'json';
+        $content = $c->param('grid_array');
+    }
     my @array;
     if ($format eq 'json') {
         my $ary = eval { JSON::XS->new->decode($content); };
