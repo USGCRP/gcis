@@ -19,10 +19,10 @@ sub create {
     my $lexicon = $c->stash('lexicon_identifier');
     my %entry;
     my $term;
-    if (my $json = $c->req->json) {
+    if (my $json = shift || $c->req->json) {
         %entry = (
-          term    => $json->{term},
-          context => $json->{context},
+          term    => $json->{term} // $c->stash('term'),
+          context => $json->{context} // $c->stash('context'),
           lexicon_identifier => $lexicon,
         );
         $term = Exterm->new(%entry);

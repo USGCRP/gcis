@@ -401,9 +401,13 @@ sub startup {
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find');
+    $lex->get('/:context/*term')
+                   ->over(not_match => { 'context' => qr[list|find] })
+                   ->to('exterm#find');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
+        $lex_authed->put('/:lexicon_identifier/:context/*term')->to('exterm#create');
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
     }
 
