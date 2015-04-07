@@ -60,7 +60,7 @@
         % }
     </td>
 
-    <td>
+    <td class="thumbnails">
     
        % if (my $pub = $report->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;

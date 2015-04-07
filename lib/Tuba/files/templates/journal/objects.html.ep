@@ -41,7 +41,7 @@
     </td>
 
     <td class='thumbnails'>
-    <div class='span2'>
+    <div class='col-lg-10 col-md-10 col-sm-12 col-xs-6'>
        % if (my $pub = $journal->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
