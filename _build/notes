@@ -1,5 +1,0 @@
-do{ my $x = {
-       'mojolicious_added' => 1,
-       'mojolicious_file_path' => '/Users/tsizer/Documents/Git/gcis/lib/Tuba/files'
-     };
-$x; }
