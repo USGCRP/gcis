@@ -9,11 +9,11 @@
 
 %= include 'list_formats';
 %= include 'pager';
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
-    <th>identifier</th>
-    <th>figures</th>
-    <th>files</th>
+    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">identifier</th>
+    <th class="col-lg-4 col-md-4 col-sm-2 col-xs-2">figures</th>
+    <th class="col-lg-4 col-md-4 col-sm-6 col-xs-6">files</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -34,11 +34,11 @@
         % }
     </td>
     <td class='thumbnails'>
-    <div>
+    
        % if (my $pub = $o->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
-    </div>
+    
     </td>
     </tr>
 % }

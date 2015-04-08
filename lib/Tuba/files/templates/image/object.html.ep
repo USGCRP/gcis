@@ -16,14 +16,14 @@
     % }
 % }
 <div class="container">
-<div class='row'>
-    <div class='col-lg-12 col-md-12 well'>
-        <div class='pull-right thumbnails col-lg-4 col-md-4' style='top:2px;text-align:right;'>
+<div class='row well'>
+    <div class='col-lg-12 col-md-12'>
+        <div class='pull-right thumbnails col-lg-4 col-md-5' style='top:2px;text-align:right;'>
         % my $pub = $image->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;'
+                %= image $file->thumbnail_path, class => 'img-thumbnail', style => 'padding:0px;'
                 %= end
             % }
         % }

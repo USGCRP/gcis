@@ -13,13 +13,12 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
-<tr>
-    <th>identifier</th>
-    <th>articles</th>
-    <th>online_issn</th>
-    <th>print_issn</th>
-    <th></th>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
+    <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">identifier</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">articles</th>
+    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">online_issn</th>
+    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">print_issn</th>
+    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></th>
 </tr>
 % for my $journal (@$objects) {
 <tr>
@@ -41,11 +40,9 @@
     </td>
 
     <td class='thumbnails'>
-    <div class='col-lg-10 col-md-10 col-sm-12 col-xs-6'>
        % if (my $pub = $journal->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
-    </div>
     </td>
 
     % if (user_can('update') && (param 'util')) {

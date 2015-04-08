@@ -3,17 +3,17 @@
 % if (stash 'simple') {
     % for my $file ($pub->smallest_file) {
     <div class="row">
-        %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "thumbnail col-lg-6 col-md-8 col-sm-8 col-sx-12" => begin
-        %= image $file->thumbnail_path, class => 'img-thumbnail col-md-12 col-sm-12 col-sx-12', style => 'padding:0px;'
+        %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "img-thumbnail col-lg-8 col-md-8 col-sm-8 col-sx-8" => begin
+        %= image $file->thumbnail_path, class => 'img-thumbnail col-lg-12 col-md-12 col-sm-12 col-sx-12', style => 'padding:0px;'
         %= end
         </div>
     % }
 % } elsif (stash 'files') {
 <ul>
 %   for my $file ($pub->smallest_file) {
-    <li class='thumbnail col-sm-3 col-md-3'>
+    <li class='thumbnail col-sm-3 col-md-3 col-xs-4'>
     %= link_to 'show_file', { file_identifier => $file->identifier } => begin
-    %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive' => style => 'padding:0px;';
+    %= image $file->thumbnail_path, class => 'img-thumbnail' => style => 'padding:0px;';
     %= end
     % my $obj = $pub->to_object($self);
     <div class='caption centered'>
@@ -26,7 +26,7 @@
 % } else {
 <ul>
 %   for my $file ($pub->smallest_file) {
-    <li class='thumbnail col-sm-3 col-md-3'>
+    <li class='thumbnail col-sm-3 col-md-3 col-xs-4'>
     %= link_to 'show_file', { file_identifier => $file->identifier } => begin
     %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive' => style => 'padding:0px;';
     %= end
