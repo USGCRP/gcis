@@ -1,4 +1,4 @@
-
+% use Scalar::Util qw/looks_like_number/;
 % layout 'default', title => $array->identifier;
 
 <center>
@@ -44,7 +44,11 @@
             <tr>
             % }
             % for my $y (@$x) {
-                <td><%= $y %></td>
+                % if (defined($y) && looks_like_number($y)) {
+                    <td><%= $y %></td>
+                % } else {
+                    <td style='text-align:left;'><%= $y %></td>
+                % }
             % }
             </tr>
         % }

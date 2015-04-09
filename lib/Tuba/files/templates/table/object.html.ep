@@ -1,3 +1,4 @@
+% use Scalar::Util qw/looks_like_number/;
 % layout 'default',
 %    title => "Table ".$table->stringify(short => 1),
 %    description => "Table ".$table->stringify(short => 1).': '.no_tbibs($table->caption);
@@ -42,6 +43,7 @@
         % } else {
         <p>This table appears in the <%= obj_link($table->report) %> report.</p>
         % }
+        <p><%= tbibs_to_links($table->caption) %></p>
 
         % if (my @arrays = sorted_list($table,'arrays')) {
             This table is composed of <%= @arrays==1 ? 'this array' : 'these arrays' %> :
@@ -57,7 +59,11 @@
                     <tr>
                     % }
                     % for my $y (@$x) {
-                        <td><%= $y %></td>
+                        % if (defined($y) && looks_like_number($y)) {
+                            <td><%= $y %></td>
+                        % } else {
+                            <td style='text-align:left;'><%= $y %></td>
+                        % }
                     % }
                     </tr>
                 % }
@@ -66,8 +72,6 @@
             </center>
         % }
 
-
-        <p><%= tbibs_to_links($table->caption) %></p>
         %= include 'h/cited_by', pub => $table->get_publication;
         %= include 'h/cites', pub => $table->get_publication;
 
