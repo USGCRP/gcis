@@ -90,6 +90,11 @@ a.btn-info {
 .btn-push {
 	padding-top: 25px;
 }
+td .label, td a.label {
+	margin-bottom: 4px;
+	display: inline-block;
+	font-size: 90%;
+}
 tr.ctr td {
     vertical-align:middle;
     text-align:center;

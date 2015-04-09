@@ -14,11 +14,11 @@
 % }
 
 <table class='table table-responsive table-condensed table-bordered table-striped'>
-    <th class="col-lg-3 col-md-3 col-sm-3 col-xs-3">identifier</th>
+    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">identifier</th>
     <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">articles</th>
     <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">online_issn</th>
     <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">print_issn</th>
-    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4"></th>
+    <th class="col-lg-2 col-md-2 col-sm-3 col-xs-3"></th>
 </tr>
 % for my $journal (@$objects) {
 <tr>

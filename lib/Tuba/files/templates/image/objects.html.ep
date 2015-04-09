@@ -11,9 +11,9 @@
 %= include 'pager';
 <table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
-    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">identifier</th>
-    <th class="col-lg-4 col-md-4 col-sm-2 col-xs-2">figures</th>
-    <th class="col-lg-4 col-md-4 col-sm-6 col-xs-6">files</th>
+    <th class="col-lg-4 col-md-4 col-sm-3 col-xs-3">identifier</th>
+    <th class="col-lg-4 col-md-4 col-sm-1 col-xs-1">figures</th>
+    <th class="col-lg-4 col-md-4 col-sm-2 col-xs-2">files</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -31,6 +31,7 @@
         %= obj_link_to $figure, 'show', class => 'label label-default' => begin
         %= $figure->stringify
         %= end
+        <br />
         % }
     </td>
     <td class='thumbnails'>

@@ -4,7 +4,7 @@
 
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well' => begin
 If this is a report and not a book, click the button on the right.  Note that this action cannot be undone.
-<button type="submit" name='convert_into_report' value='convert_into_report' class="btn btn-warning pull-right" onclick='{return confirm("Are you sure you want to convert this?")}'>Convert this into a report</button>
+<button type="submit" name='convert_into_report' value='convert_into_report' class="btn btn-default btn-warning pull-right" onclick='{return confirm("Are you sure you want to convert this?")}'>Convert this into a report</button>
 %= end
 
 %= end

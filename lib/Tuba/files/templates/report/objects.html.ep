@@ -11,17 +11,17 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
-    <th class="col-md-2 col-lg-2">identifier</th>
-    <th>type</th>
-    <th>chapters</th>
-    <th>figures</th>
-    <th>findings</th>
-    <th>tables</th>
-    <th>references</th>
-    <th class="col-md-2 col-lg-2">url</th>
-    <th class="col-md-2 col-lg-2">Files</th>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">identifier</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">type</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">chapters</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">figures</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">findings</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">tables</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">references</th>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">url</th>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">Files</th>
 </tr>
 % for my $report (@$objects) {
     <tr>
