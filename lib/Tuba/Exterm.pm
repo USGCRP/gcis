@@ -19,7 +19,8 @@ sub create {
     my $lexicon = $c->stash('lexicon_identifier');
     my %entry;
     my $term;
-    if (my $json = shift || $c->req->json) {
+    # PUT uses the URL (stash), POST uses the payload (json)
+    if (my $json = $c->req->json) {
         %entry = (
           term    => $json->{term} // $c->stash('term'),
           context => $json->{context} // $c->stash('context'),
