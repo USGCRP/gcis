@@ -62,7 +62,7 @@
                         % if (defined($y) && looks_like_number($y)) {
                             <td><%= $y %></td>
                         % } else {
-                            <td style='text-align:left;'><%= $y %></td>
+                            <td class='non_numeric'><%= $y %></td>
                         % }
                     % }
                     </tr>
