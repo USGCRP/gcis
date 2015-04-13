@@ -77,3 +77,4 @@ If you have comments, questions, or feedback about the contents of the GCIS, ple
 and use the USGCRP <%= link_to 'http://www.globalchange.gov/contact' => begin %>contact form<%= end %>.
 </p>
 
+GCIS is also on <a href="https://github.com/USGCRP/gcis">GitHub</a>.

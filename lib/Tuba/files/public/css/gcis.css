@@ -245,3 +245,10 @@ table tr.header td {
     font-weight:bold;
     text-align:center;
 }
+table tr.header td.non_numeric {
+    font-weight:bold;
+    text-align:center;
+}
+table tr td.non_numeric {
+    text-align:left;
+}

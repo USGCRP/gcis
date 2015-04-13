@@ -41,6 +41,7 @@ $t->get_ok("/report/test-report.json")->json_is(
       report_tables => [],
       report_figures => [],
       report_findings => [],
+      parents => [],
   }
 );
 

@@ -70,6 +70,7 @@
         <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
         % }
         %= include 'h/cited_by', pub => $pub;
+        %= include 'h/prov', pub => $pub;
         % if (my $contact_note = $object->contact_note) {
             % if (my $contact_email = $object->contact_email) {
                 % my $uri = $object->uri($self);

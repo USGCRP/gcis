@@ -97,6 +97,12 @@ sub get_parents_with_references {
     # uniq => 1
     #    will avoid duplicate publications (which can occur if multiple references
     #    references refer to the same publication)
+    # for_export => 1
+    #     will return data structures rather than objects.
+    # c => $controller
+    #     necessary for for_export
+    my $c = $args{c};
+    die "need controller for export" if $args{for_export} && !$c;
 
     my $first = <<SQL;
     select
@@ -112,7 +118,7 @@ sub get_parents_with_references {
 SQL
     my $dbs = DBIx::Simple->new($s->db->dbh);
     my $second = <<SQL;
-    select 
+    select
         p.publication_type_identifier,
         p.id                            as parent_publication_id,
         r.child_publication_id          as child_publication_id,
@@ -126,6 +132,17 @@ SQL
     push @results, $dbs->query($second, $s->id)->hashes;
     my %uniq;
     @results = grep !$uniq{$_->{parent_publication_id}}{$_->{child_publication_id}}++, @results if $args{uniq};
+    if ($args{for_export} && $c) {
+        my @serialized;
+        for (@results) {
+            my $parent = (ref $s)->new(id => $_->{parent_publication_id})->load->to_object;
+            my $record = { reference => "/reference/$_->{reference_identifier}",
+                           relationship => "cito:isCitedBy",
+                           uri => $parent->uri($c) };
+            push @serialized, $record;
+        }
+        return @serialized;
+    }
     for (@results) {
         $_->{parent} = (ref $s)->new(id => $_->{parent_publication_id})->load;
         $_->{child} = (ref $s)->new(id => $_->{child_publication_id})->load;

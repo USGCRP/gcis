@@ -27,14 +27,26 @@ $t->post_ok("/lexicon/ceos/term/new" => {Accept => "application/json"} => json =
   ->status_is(200)
   ->json_is({status => 'ok'});
 
+$t->put_ok("/lexicon/ceos/Agency/NOAA" => {Accept => "application/json"} => json =>
+    {gcid => '/organization/national-oceanic-and-atmospheric-administration'})
+  ->status_is(200)
+  ->json_is({status => 'ok'});
+
 $t->get_ok('/lexicon/ceos/list/Agency' => {Accept => 'application/json'})
     ->status_is(200)
     ->json_is([
             { term => 'ESA', gcid => $gcid },
             { term => 'NASA', gcid => "/organization/national-aeronatics-and-space-administration" },
+            { term => 'NOAA', gcid => "/organization/national-oceanic-and-atmospheric-administration"}
         ]);
 
 $t->get_ok("/lexicon/ceos/find/Agency/ESA")
+  ->status_is(303)                  # 303 == "See Other"
+  ->header_is(Location => $gcid)
+  ->content_like(qr/\Q$gcid\E/);    # The content SHOULD have a link, says RFC 2616
+
+# Alternative, more RESTful
+$t->get_ok("/lexicon/ceos/Agency/ESA")
   ->status_is(303)                  # 303 == "See Other"
   ->header_is(Location => $gcid)
   ->content_like(qr/\Q$gcid\E/);    # The content SHOULD have a link, says RFC 2616
