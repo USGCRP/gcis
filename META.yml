@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.25'
+    version: '1.26'
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -221,6 +221,7 @@ requires:
   Rose::DB::Object: '0'
   SQL::Abstract: '0'
   SQL::Interp: '0'
+  Scalar::Util: '0'
   String::Diff: '0'
   Text::CSV_XS: '0'
   Text::Format: '0'
@@ -230,4 +231,4 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.25'
+version: '1.26'
