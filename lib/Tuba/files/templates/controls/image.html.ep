@@ -1,7 +1,7 @@
 
 %= hidden_field 'delete_image';
 
-<table class='table table-condensed table-bordered'>
+<table class='table table-responsive table-condensed table-bordered'>
 % for my $image ($object->images) {
 <tr>
 <td>
@@ -12,7 +12,7 @@
 </tr>
 % }
 </table>
-%= text_field 'new_image', placeholder => "search images", id => "newimage", class => 'col-md-8 col-lg-8 col-sm-8';
+%= text_field 'new_image', placeholder => "search images", id => "newimage", class => 'col-md-8 col-lg-8 col-sm-8 col-xs-8';
 
 <a href="#create_image" role="button" class="btn btn-default" data-toggle="modal">Create image</a>
 %= include 'modal', url => url_for('create_form_image'), id => 'create_image'

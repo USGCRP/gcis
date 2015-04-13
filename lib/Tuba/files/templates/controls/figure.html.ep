@@ -1,7 +1,7 @@
 
 %= hidden_field 'delete_figure';
 
-<table class='table table-condensed table-bordered' style='width:auto;'>
+<table class='table table-responsive table-condensed table-bordered' style='width:auto;'>
 % for my $figure ($object->figures) {
 <tr>
 <td style='text-align:right;'>

@@ -1,4 +1,4 @@
-<div class='thumbnails row' style='margin-left:0px;clear:both'>
+<div class='row' style='margin-left:0px;clear:both'>
 % my $i = 0;
 % my $num_per_row = ( (stash 'per_row') || 6);
 %    for my $obj (@$objs) {

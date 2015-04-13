@@ -4,8 +4,8 @@
 % for my $method ('platform', 'instrument') {
 <tr>
 <td><%= $method %></td>
-<td class='row-fluid'>
-    <div class='row-fluid' style='position:relative;'>
+<td class='row'>
+    <div class='row' style='position:relative;'>
             %= include 'collapsible', row_content => begin
             %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
             %= end

@@ -1,22 +1,24 @@
 
 %= hidden_field 'delete_dataset';
 
-%= link_to 'create_form_dataset' => class => 'btn' => begin
+%= link_to 'create_form_dataset' => class => 'btn btn-default' => begin
 create new dataset
 %= end
 
-<table class='table table-condensed table-bordered'>
+<table class='table table-responsive table-condensed table-bordered'>
 % for my $dataset ($object->datasets) {
 <tr>
 <td class='row'>
 %= include 'obj_thumbnails', objs => [ $dataset ];
 </td>
 
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_dataset"].value = '].$dataset->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_dataset"].value = '].$dataset->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 </table>
-%= text_field 'new_dataset', placeholder => "search datasets", id => "newdataset", class => 'span9';
+<div class="row">
+%= text_field 'new_dataset', placeholder => "search datasets", id => "newdataset", class => 'col-lg-9 col-md-9 col-sm-9 col-xs-9 ';
+</div>
 
 %= javascript begin
 $('#newdataset').typeahead({

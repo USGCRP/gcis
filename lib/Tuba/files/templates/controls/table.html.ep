@@ -1,16 +1,16 @@
 
 %= hidden_field 'delete_table';
 
-<table class='table table-condensed table-bordered' style='width:auto;'>
+<table class='table table-responsive table-condensed table-bordered' style='width:auto;'>
 % for my $table ($object->tables) {
 <tr>
 <td style='text-align:right;'>
-    <span class='btn squeezevert'><%= obj_link($table); %></span>
+    <span class='btn btn-default squeezevert'><%= obj_link($table); %></span>
 </td>
 % unless (stash 'no_thumbnails') {
 <td><%== $table->thumbnail($self) %></td>
 % }
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_table"].value = '].$table->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_table"].value = '].$table->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 <tr>

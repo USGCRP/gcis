@@ -1,26 +1,26 @@
 
 % my $name = $rel->name;
 % my @existing = $object->$name;
-<div class='row-fluid'>
+<div class='row'>
 
 % my $i = 0;
 % for my $obj (sort { $a->sortkey cmp $b->sortkey } @existing) {
-    <div class='span2'>
-        %= obj_link_to $obj => 'update_form' => class => 'btn' => begin
+    <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
+        %= obj_link_to $obj => 'update_form' => class => 'btn btn-default' => begin
         %= $obj->stringify(short => 1);
         %= end
     </div>
     % if (++$i % 6 == 0) {
     </div>
-    <div class='row-fluid'>
+    <div class='row'>
     % }
 % }
 </div>
-<div class='row-fluid'>
-    <div class='span10'>
+<div class='row'>
+    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
         <center>
     <b>
-        %= obj_link_to $rel->class, 'create_form' => class => 'btn' => begin
+        %= obj_link_to $rel->class, 'create_form' => class => 'btn btn-default' => begin
         create <%= $name %>
         %= end
     </b>

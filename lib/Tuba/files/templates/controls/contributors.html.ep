@@ -29,7 +29,7 @@
         <td><%= obj_link($con->organization) %></td>
         <td><%= obj_link($map->reference, short => 1) %></td>
         <td><%= text_field 'sort_key_'.$con->id, class => "input-small squeezevert" %></td>
-        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        <td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
     </tr>
 % $last = $con;
 % }

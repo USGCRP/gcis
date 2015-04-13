@@ -2,7 +2,7 @@
 %= hidden_field 'delete_array';
 %= hidden_field 'make_array';
 
-<table class='table table-condensed table-bordered'>
+<table class='table table-responsive table-condensed table-bordered'>
 % for my $array ($object->arrays) {
 <tr>
 <td class='row'>
@@ -10,16 +10,16 @@
 </td>
 
 <td>
-    <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
+    <%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
 </td>
 </tr>
 % }
 </table>
-
-%= text_field 'new_array', placeholder => "search arrays", id => "newarray", class => 'span8';
-<a href="#create_array" role="button" class="btn" data-toggle="modal">Create array</a>
+<div class="row">
+%= text_field 'new_array', placeholder => "search arrays", id => "newarray", class => 'col-lg-8 col-md-8 col-sm-8 col-xs-8 ';
+<a href="#create_array" role="button" class="btn btn-default" data-toggle="modal">Create array</a>
 %= include 'modal', url => url_for('create_form_array'), id => 'create_array'
-
+</div>
 %= javascript begin
 $('#newarray').typeahead({
     minLength : 1,

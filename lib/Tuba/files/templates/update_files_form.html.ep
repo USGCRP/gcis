@@ -22,10 +22,10 @@
 %= include 'controls/pubfile';
 <div class="form-group">
 
-<label class='control-label col-lg-3 col-md-3 col-sm-4'>
+<label class='control-label col-lg-3 col-md-3 col-sm-4 col-xs-4'>
     Add an existing file
 </label>
-<div class='col-lg-9 col-md-9 col-sm-8'>
+<div class='col-lg-9 col-md-9 col-sm-8 col-xs-8'>
     %= include 'controls/autocomplete', input_name => "add_existing_file", object_type => "file";
 </div>
 </div>
