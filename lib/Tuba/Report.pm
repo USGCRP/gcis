@@ -244,6 +244,24 @@ sub make_tree_for_show {
     if ($pub && $c->param('with_regions')) {
         $regions{regions} = [ map $_->as_tree(c => $c), $pub->regions];
     }
+    my @parents;
+    if ($pub) {
+        for my $parent ($pub->get_parents) {
+            my $pub = $parent->{publication};
+            my $activity = $parent->{activity};
+            push @parents, {
+                relationship => $parent->{relationship},
+                publication_type_identifier => $pub->{publication_type_identifier},
+                activity_uri => ($activity ? $activity->uri($c) : undef ),
+                label => $pub->stringify,
+                uri   => $pub->to_object->uri($c),
+                note  => $parent->{note},
+                reference => undef,
+            };
+        }
+        push @parents, $pub->get_parents_with_references(uniq => 1, for_export => 1, c => $c);
+    }
+
     return {
       %regions,
       files                   => [map $_->as_tree(c => $c), $pub->files],
@@ -271,6 +289,7 @@ sub make_tree_for_show {
           $c->common_tree_fields($_),
         }, $report->chapters
       ],
+      parents => \@parents,
     };
 }
 
