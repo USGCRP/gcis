@@ -3,7 +3,7 @@ Build
 *.bak
 *.pid
 log/
-bli
+blib
 _build
 MYMETA.*
 postmaster.log
