@@ -60,6 +60,7 @@ sub update {
             my $refs = References->get_objects(query => [ child_publication_id => $pub->id ] );
             for my $ref (@$refs) {
                 $ref->child_publication_id($report_pub->id);
+                my $attrs = $ref->attrs; # workaround : call inflate trigger explicitly
                 $ref->save(audit_user => $c->user) or return $c->update_error($ref->error);
             }
             my $subs = Subpubrefs->get_objects(query => [ publication_id => $report_pub->id ]);
