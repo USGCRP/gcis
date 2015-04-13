@@ -10,20 +10,22 @@
 % if (user_can('update')) {
 %= include 'history_modal';
 
-<span style='float:right;'>
-<%= link_to obj_uri_for($object,'update_form') => class => "btn" => begin %>edit<%= end %>
-<a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-</span>
+<div class='row'>
+<div class='col-md-2 pull-right'>
+<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+</div>
+</div>
 % }
 
-<div class='row-fluid' itemscope itemtype="http://schema.org/ImageObject">
-    <div class='span10 offset1 well'>
-        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+<div class='row' itemscope itemtype="http://schema.org/ImageObject">
+    <div class='col-md-10 col-md-offset-1 well'>
+        <div class='pull-right thumbnails col-md-4' style='top:2px;text-align:right;'>
         % my $pub = $figure->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => itemprop => "url" => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl"
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl"
                 %= end
             % }
         % }

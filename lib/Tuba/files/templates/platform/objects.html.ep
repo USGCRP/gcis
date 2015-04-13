@@ -12,7 +12,7 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>identifier</th>
     <th>name</th>
@@ -27,9 +27,10 @@
        <td>
             % if (my $pub = $platform->get_publication) {
                <% for my $org ($pub->contributors) { %>
-               %= obj_link_to $org->organization => 'show' => class => 'label' => begin
+               %= obj_link_to $org->organization => 'show' => class => 'label label-default' => begin
                %= $org->organization->identifier
                %= end
+               <br />
                <% } %>
             % }
        </td>

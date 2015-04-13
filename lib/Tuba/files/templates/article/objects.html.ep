@@ -10,7 +10,7 @@ Articles
 %= include 'list_formats';
 
 %= include 'pager';
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th><%= $meta->primary_key %></th>
     <th>Title</th>

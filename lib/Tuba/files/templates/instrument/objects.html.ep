@@ -12,7 +12,7 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>identifier</th>
     <th>name</th>
@@ -25,9 +25,10 @@
        <td><%= $instrument->name %></td>
        <td><%= $instrument->description %></td>
        <td><% for my $platform ($instrument->platforms) { %>
-           %= obj_link_to $platform, 'show' => class => 'label' => begin
+           %= obj_link_to $platform, 'show' => class => 'label label-default' => begin
            %= $platform->identifier
            %= end
+           <br />
            <% } %>
        </td>
 

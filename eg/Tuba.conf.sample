@@ -13,6 +13,7 @@ hypnotoad :
        - http://*:8080
 image_upload_dir : /var/local/www/assets
 asset_path : /assets
+asset_remote_fallback : http://data.globalchange.gov/assets
 faceted_search :
     url : http://gcis-search.jpl.net/search
 database :

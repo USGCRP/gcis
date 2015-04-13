@@ -12,7 +12,7 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>identifier</th>
     <th>name</th>
@@ -25,9 +25,10 @@
        <td><%= obj_link_to $dataset, 'show' => begin %><%= $dataset->name %><%= end %></td>
        <td><%= external_link($dataset->url) %></td>
        <td><% for my $i ($dataset->instrument_measurements) { %>
-           %= link_to 'show_instrument_instance', { instrument_identifier => $i->instrument->identifier, platform_identifier => $i->platform->identifier } => class => "badge" => begin
+           %= link_to 'show_instrument_instance', { instrument_identifier => $i->instrument->identifier, platform_identifier => $i->platform->identifier } => class => "label label-default" => begin
            <%= $i->platform->identifier %>/<%= $i->instrument->identifier %>
            %= end
+           <br />
            % }
        </td>
     </tr>

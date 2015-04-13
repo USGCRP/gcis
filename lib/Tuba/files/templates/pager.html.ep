@@ -18,7 +18,7 @@
                 % if ($page==1) {
                     <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-backward'></i></span>
                     % } else {
-                    <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-backward'></i><%= end %><
+                    <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-backward'></i><%= end %>
                 % }
 
                 <button class='btn btn-default btn-sm dropdown-toggle' data-toggle='dropdown'>
