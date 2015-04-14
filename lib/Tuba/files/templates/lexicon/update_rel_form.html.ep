@@ -11,7 +11,7 @@
 
 % my $selected_context = param 'context';
 % my @contexts = $lexicon->contexts;
-<div class='row-fluid'>
+<div class='row'>
     <div class='span2'>
     <ul class='nav nav-list well'>
         <li class='nav-header'>Contexts</li>
@@ -26,7 +26,7 @@
     <%= link_to $self->req->url->path => begin %>New context<%= end %></li>
     </li>
     </div>
-    <div class='span10'>
+    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 
         % if ($selected_context) {
 
@@ -63,11 +63,13 @@
         <%= text_field 'new_term', class => "input input-small", placeholder => "New term" %>
         </dt>
         <dd>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         <%= text_field 'new_gcid', class => "span10", autocomplete => "off", id => 'gcid_lookup', placeholder => "GCID" %>
+        </div>
         </dd>
         </dl>
         <center>
-            <%= submit_button 'Add or delete terms', class => "btn btn-primary" %>
+            <%= submit_button 'Add or delete terms', class => "btn btn-default btn-primary" %>
         </center>
         %= end
 
@@ -76,7 +78,7 @@
         <p>Please select or create a context for <%= $lexicon->identifier %> (<%= external_link($lexicon->url) %>).</p>
         %= form_for obj_uri_for($object,'update_rel_form'), method => 'GET' => class => 'form form-inline' => begin
         %= text_field 'context', class => "input", placeholder => "New Context";
-        %= submit_button 'Add', class =>"btn btn-primary";
+        %= submit_button 'Add', class =>"btn brn-default btn-primary";
         %= end
         % }
 

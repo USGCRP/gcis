@@ -22,14 +22,14 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>
 </caption>
 <tr>
 % for my $c (@cols) {
     <th><%= $c %></th>
 % }
-<th>Files
+<th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">Files
 </th>
 </tr>
 % for my $o (@$objects) {
@@ -50,7 +50,7 @@
                     <div style='position:relative;'>
                         %= include 'collapsible', row_content => begin
                         %   for (@$got) {
-                        <span class='btn squeezevert'><%= obj_link($_, tiny => 1); %></span>
+                        <span class='btn btn-default squeezevert'><%= obj_link($_, tiny => 1); %></span>
                         %   }
                         %= end
                     </div>
@@ -63,7 +63,7 @@
 % }
 
     <td class='thumbnails'>
-    <div class='span2'>
+    <div>
        % if (my $pub = $o->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;
        % }
