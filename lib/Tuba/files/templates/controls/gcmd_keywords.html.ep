@@ -1,7 +1,7 @@
 
 %= hidden_field 'delete_gcmd_keyword';
 
-<table class='table table-condensed table-bordered'>
+<table class='table table-responsive table-condensed table-bordered'>
 % my @keywords = $object->get_publication(autocreate => 1)->gcmd_keywords;
 % for my $keyword (@keywords) {
 <tr>
@@ -9,12 +9,12 @@
 %= include 'obj_thumbnails', objs => [ $keyword ];
 </td>
 
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_gcmd_keyword"].value = '].$keyword->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_gcmd_keyword"].value = '].$keyword->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 </table>
-<div>
-%= text_field 'new_gcmd_keyword', placeholder => "search GCMD keywords", id => "new_gcmd_keyword", class => 'form-control col-lg-9 col-md-9 col-sm-8', autocomplete => 'off';
+<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+%= text_field 'new_gcmd_keyword', placeholder => "search GCMD keywords", id => "new_gcmd_keyword", class => '', autocomplete => 'off';
 </div>
 
 %= javascript begin

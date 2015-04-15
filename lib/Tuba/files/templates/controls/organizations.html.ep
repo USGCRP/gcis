@@ -1,22 +1,24 @@
 
 %= hidden_field 'delete_organization';
 
-%= link_to 'create_form_organization' => class => 'btn' => begin
+%= link_to 'create_form_organization' => class => 'btn btn-default' => begin
 create new organization
 %= end
 
-<table class='table table-condensed table-bordered'>
+<table class='table table-responsive table-condensed table-bordered'>
 % for my $organization ($object->organizations) {
 <tr>
 <td class='row'>
 %= include 'obj_thumbnails', objs => [ $organization ];
 </td>
 
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_organization"].value = '].$organization->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_organization"].value = '].$organization->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 </table>
-%= text_field 'new_organization', placeholder => "search organization", id => "neworganization", class => 'span9';
+<div class="row">
+%= text_field 'new_organization', placeholder => "search organization", id => "neworganization", class => 'col-lg-9 col-md-9 col-sm-9 col-xs-9';
+</div>
 
 %= javascript begin
 $('#neworganization').typeahead({

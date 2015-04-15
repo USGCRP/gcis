@@ -24,17 +24,16 @@ or edit grid directly:
 
 <br/><br/>
 
-<div class="control-group">
-    <label class="control-label" for="row_count">rows</label>
-    <div class="controls">
-        <input class="span1" id="row_count" type="number" min="1" />
+<div class="form-group">
+    <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="row_count">rows</label>
+    <div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
+        <input id="row_count" type="number" min="1" />
     </div>
 </div>
 
-<div class="control-group">
+<div class="form-group">
     <label class="control-label" for="col_count">columns</label>
-    <div class="controls">
-        <input class="span1" id="col_count" type="number" min="1" />
+        <input id="col_count" type="number" min="1" />
     </div>
 </div>
 

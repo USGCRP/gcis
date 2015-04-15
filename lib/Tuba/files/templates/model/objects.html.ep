@@ -12,12 +12,12 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
-    <th>identifier</th>
-    <th>name</th>
-    <th>organizations</th>
-    <th>runs</th>
+    <th class="col-lg-2 col-md-2 col-sm-2 col-xs-2">identifier</th>
+    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">name</th>
+    <th class="col-lg-4 col-md-4 col-sm-4 col-xs-4">organizations</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">runs</th>
 </th>
 % for my $model (@$objects) {
     <tr>
@@ -26,9 +26,10 @@
        <td>
             % if (my $pub = $model->get_publication) {
                <% for my $org ($pub->contributors) { %>
-               %= obj_link_to $org->organization => 'show' => class => 'label' => begin
+               %= obj_link_to $org->organization => 'show' => class => 'label label-default' => begin
                %= $org->organization->identifier
                %= end
+               <br />
                <% } %>
             % }
        </td>

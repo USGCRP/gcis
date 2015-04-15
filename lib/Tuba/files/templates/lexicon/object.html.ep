@@ -10,22 +10,24 @@
 
 % unless (param 'no_header') {
 
+ 
+  % if ($object->can('identifier') && user_can('update')) {
     %= include 'history_modal';
-
-    % if ($object->can('identifier') && user_can('update')) {
-        <span style='float:right;'>
-        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-        </span>
+        <div class='row'>
+            <div class='col-md-2 pull-right'>
+            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
+            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+        	</div>
+        </div>
     % }
 
 % }
-
-<div class='row-fluid'>
-<div class='span1'>
+<div class="container">
+<div class='row'>
+<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
 <%= link_to 'list_lexicon' => begin %>&larr;lexicons<%= end %>
 </div>
-    <div class='span10'>
+    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
 
         <h5><%= $lexicon->identifier %> : <%= $lexicon->description %>
         (<%= external_link($lexicon->url) %>)</h5>
@@ -45,12 +47,12 @@
                 <span class='pull-right'>
                 <%= link_to
                 url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.json'
-                => class => 'label label-info'
+                => class => 'label label-default label-info'
                 => begin %>json<%= end %>
 
                 <%= link_to
                 url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.yaml'
-                => class => 'label label-info'
+                => class => 'label label-default label-info'
                 => begin %>yaml<%= end %>
             </span>
 
@@ -58,7 +60,7 @@
                 <li>
                 <span style='display:inline-block;min-width:150pt;'>
                 % if (my $target = $term->same_as) {
-                    <a target="_blank" href="<%= $target %>"><i class='icon-star'></i></a>
+                    <a target="_blank" href="<%= $target %>"><i class='glyphicon glyphicon-star'></i></a>
                 % }
                 % if (my $target = $term->native_url) {
                 <a target="_blank" href="<%= $target %>"><%= $term->term %></a>
@@ -74,6 +76,7 @@
         </div>
 
     </div>
+</div>
 </div>
 
 %= include 'h/other_formats';

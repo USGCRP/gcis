@@ -1,20 +1,22 @@
 %= hidden_field 'delete_file';
 
-<table class='table table-condensed table-bordered' style='width:auto;'>
+<table class='table table-responsive table-condensed table-bordered' style='width:auto;'>
 % for my $file ($object->file) {
 <tr>
 <td>
-    <span class='btn squeezevert'><%= obj_link($file); %></span>
+    <span class='btn btn-default squeezevert'><%= obj_link($file); %></span>
 </td>
 <td><%== $file->thumbnail($self) %></td>
-<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 
 <tr>
 <td>
 % if (@$values) {
-%= select_field 'new_file', [ map $_->identifier.' '.$_->file, @$values], class => 'span8';
+<div class="row">
+%= select_field 'new_file', [ map $_->identifier.' '.$_->file, @$values], class => 'col-lg-8 col-md-8 col-sm-8 col-xs-8';
+</div>
 % } else {
 No files available to select.
 % }

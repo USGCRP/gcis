@@ -43,7 +43,7 @@
         <%= external_link($platform->url) %>
 
         % if (my @instruments = $platform->instruments) {
-        <table class='table table-condensed table-bordered'>
+        <table class='table table-responsive table-condensed table-bordered'>
         <tr>
             <th>Instrument</th>
             <th>Datasets</th>
