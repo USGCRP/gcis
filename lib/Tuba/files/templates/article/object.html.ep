@@ -20,7 +20,6 @@
 % }
 
 
-<div class='container'>
     <div class='row well'>
         <h2><%= $article->title %></h2>
         % if ($article->year) {
@@ -54,7 +53,6 @@
         %= include 'h/cited_by', pub => $article->get_publication;
         </p>
     </div>
-</div>
 
 %= include 'h/other_formats';
 

@@ -103,17 +103,17 @@
         % }
     </ul>
 </div>
+<div class='container' id='maincontent'>
 
-
-        <div class="navbar main-menu" role="navigation">
-            <div class="container">
+        <div class="navbar navbar-default main-menu" role="navigation">
+            
                 <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
                 	<span class="sr-only">Toggle navigation</span>
                      <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
                     </a>
                 <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" ></a>
                 
-                <ul class='navbar-right nav'>
+                <ul class='navbar-right nav navbar-nav'>
                     <li>
                     % if(config('no_search')) {
                     % } elsif (config('google_site_search')) {
@@ -148,14 +148,11 @@
                     </li>
                 </ul>
 
-                </div>
              </div>
         
-             % if (stash 'fixed') {
-             <div class='container' id='maincontent'>
-             % } else {
-             <div class='container-fluid' id='maincontent'>
-             % }
+           
+             
+             
              % if (my $msg = flash 'message') {
              	<div class='alert alert-info'>
 					<button type="button" class="close" data-dismiss="alert">&times;</button>

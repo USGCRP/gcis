@@ -11,7 +11,7 @@
 
 %= include 'pager';
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped well'>
 <tr>
 % for my $c (@cols) {
     <th><%= $c %></th>
@@ -64,7 +64,7 @@
 
     % if (user_can('update')) {
     <td>
-        <%= obj_link_to $o, update_form => class => 'btn squeezevert' => target => "form" => begin %>meta<%= end %>
+        <%= obj_link_to $o, update_form => class => 'btn btn-default squeezevert' => target => "form" => begin %>meta<%= end %>
         <%= obj_link_to $o, 'update_files_form' => class => 'btn btn-default squeezevert', target => "form" => begin %>files<% end %>
         %= form_for obj_uri_for($o,'update_files') => method => 'POST', target => "form" => enctype => 'multipart/form-data' => begin
             %= file_field 'file_upload';
@@ -76,5 +76,4 @@
 </tr>
 % }
 </table>
-
 %= include 'pager', bottom => 1;

@@ -2,11 +2,9 @@
 
 % if (stash 'simple') {
     % for my $file ($pub->smallest_file) {
-    <div class="row">
-        %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "thumbnail col-lg-12 col-md-12 col-sm-12 col-sx-12" => begin
+        %= link_to "show_".$meta->table, { $meta->table.'_identifier' => $pub->to_object->identifier } => class => "col-lg-12 col-md-12 col-sm-12 col-sx-12" => begin
         %= image $file->thumbnail_path, class => 'img-thumbnail col-lg-12 col-md-12 col-sm-12 col-sx-12', style => 'padding:0px;'
         %= end
-        </div>
     % }
 % } elsif (stash 'files') {
 <ul>

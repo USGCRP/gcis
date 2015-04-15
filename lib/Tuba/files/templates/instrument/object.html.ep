@@ -21,7 +21,6 @@
 
 % }
 
-<div class='container'>
     <div class='row well'>
         % my $pub = $instrument->get_publication;
         %= include 'h/thumbnail', pub => $pub;
@@ -49,6 +48,5 @@
          %= include 'h/other_identifiers', gcid => $instrument->uri($self);
 
     </div>
-</div>
 
 %= include 'h/other_formats';

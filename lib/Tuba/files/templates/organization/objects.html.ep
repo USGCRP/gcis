@@ -10,7 +10,7 @@
 %= include 'list_formats';
 
 %= include 'pager';
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>identitier</th>
     <th>name</th>
@@ -35,7 +35,7 @@
             % for my $c (@{ $o->contributors }) {
             % my $person = $c->person or next;
             % next if $seen{$person->id}++;
-    <span class='btn squeezevert'><%= obj_link($person) %></span>
+    <span class='btn btn-default squeezevert'><%= obj_link($person) %></span>
             % }
         </td>
     </tr>

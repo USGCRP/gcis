@@ -8,7 +8,7 @@
 %= include 'list_formats';
 
 %= include 'pager';
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>Name</th>
     <th>ORCID</th>
@@ -31,7 +31,7 @@
             % for my $contributor (@{ $o->contributors }) {
                 % if (my $org = $contributor->organization) {
                 % next if $seen{$org->{identifier}}++;
-                <span class='btn squeezevert'>
+                <span class='btn btn-default squeezevert'>
                 %= obj_link($org);
                 </span>
                 % }

@@ -8,12 +8,11 @@ html, body {
 	min-height: 100%;
 }
 #main {
-	overflow: auto;
+	overflow: hidden;
 	padding-bottom: 55px;
 }
 #footer {
 	margin: -55px auto 0 auto;
-	padding-top: 5px;
 	position: relative;
 	height: 55px;
 	clear: both;
@@ -70,8 +69,8 @@ img.usgcrp.thumbnail {
 	margin: 0 auto;
 	background-color: #ffffff;
 }
-.navbar .nav {
-    margin:  0 10px 0 15px;
+.navbar {
+    padding:  0 10px 0 15px;
 }
 .navbar .logo {
 	margin-left: 10px;
@@ -121,10 +120,6 @@ img[src*="gcis_remote=1"] {
 .logo {
 	margin: 6px 4px 0 4px;
 }
-.row {
-    margin-left:20px;
-    margin-right: 20px;
-}
 .thumbnail {
 	background-color: #f3f3f3;
 }
@@ -165,11 +160,11 @@ table.densetable tr th {
 .navbar.main-menu .container input.form-control {
 	width: 300px;
 }
-.navbar.main-menu .container .nav > li, .navbar.main-menu .container .nav > li > a {
+.navbar.main-menu .nav > li, .navbar.main-menu .nav > li > a {
 	float: left;
 	line-height: 20px;
 }
-.navbar.main-menu .container .form-control {
+.navbar.main-menu .form-control {
 	position: relative;
 	line-height: 1;
 }

@@ -7,7 +7,6 @@
 
 %= include 'obj_header', object => $scenario
 
-<div class='container'>
     <div class='row well'>
         % my $pub = $scenario->get_publication;
         %= include 'h/thumbnail', pub => $pub;
@@ -25,7 +24,6 @@
      %= include 'h/other_identifiers', gcid => $scenario->uri($self);
 
     </div>
-</div>
 
 %= include 'h/other_formats';
 

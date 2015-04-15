@@ -17,7 +17,7 @@
 
 % }
 
-<div class='container' itemscope itemtype="http://schema.org/Dataset">
+<div itemscope itemtype="http://schema.org/Dataset">
     <div class='row well'>
     
         %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;

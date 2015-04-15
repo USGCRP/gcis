@@ -24,7 +24,6 @@
 
 
 
-<div class='container'>
     <div class='row well'>
         % my $pub = $journal->get_publication;
         %= include 'h/thumbnail', pub => $pub, no_link => 1;
@@ -65,8 +64,8 @@
         </ul>
         </p>
         % }
-        </div>
-</div>
+    </div>
+
 
 <%= include 'h/other_formats'; =%>
 

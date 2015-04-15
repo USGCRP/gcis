@@ -15,7 +15,6 @@
         </span>
     % }
 % }
-<div class="container">
 <div class='row well'>
     <div class='col-lg-12 col-md-12'>
         <div class='pull-right thumbnails col-lg-4 col-md-5' style='top:2px;text-align:right;'>
@@ -81,7 +80,6 @@
         </p>
 
     </div>
-</div>
 </div>
 <%= include 'h/other_formats'; =%>
 
