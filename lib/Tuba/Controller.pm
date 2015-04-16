@@ -888,7 +888,7 @@ sub put_files {
     my $c = shift;
     my $file = Mojo::Upload->new(asset => Mojo::Asset::File->new->add_chunk($c->req->body));
     $file->filename($c->stash("filename") ||  'asset');
-    my $obj = $c->_this_object;
+    my $obj = $c->_this_object or return $c->reply->not_found;
     my $pub = $obj->get_publication(autocreate => 1);
     $pub->upload_file(c => $c, upload => $file) or do {
         return $c->render(status => 500, text => $pub->error);
