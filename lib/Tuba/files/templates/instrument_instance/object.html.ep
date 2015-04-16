@@ -18,7 +18,7 @@
     % }
 % }
 
-<div class='container well'>
+<div class='well'>
     <div class='row'>
         <%= include 'obj_thumbnails', objs => [ $object->platform, $object->instrument] %>
         <p>Measurements by the <%= obj_link($object->instrument) %> instrument on the <%= obj_link($object->platform) %> platform :</p>

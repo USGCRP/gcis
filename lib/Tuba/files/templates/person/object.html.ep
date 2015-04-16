@@ -11,10 +11,12 @@
     %= include 'history_modal';
 
     % if (user_can('update')) {
-        <span style='float:right;'>
-        <%= link_to 'update_form_'.$object->meta->table => class => "btn" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-        </span>
+        <div class='row'>
+            <div class='col-md-2 pull-right'>
+            <%= link_to 'update_form_'.$object->meta->table => class => "btn btn-default" => begin %>edit<%= end %>
+            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+          	</div>
+        </div>
     % }
 
     % my $base = url_for('current')->to_abs;
@@ -22,8 +24,8 @@
 
 % }
 
-<div itemscope itemtype="http://schema.org/Person" class='row-fluid'>
-    <div class='span10 offset1 well'>
+<div itemscope itemtype="http://schema.org/Person" class='row'>
+    <div class='well'>
         <h2 itemprop="name"><%= $person->first_name %> <%= $person->last_name %></h2>
     % if (my $orcid = $person->orcid) {
     <p>ORCID : <%= link_to "http://orcid.org/$orcid" => target => "_blank" => begin %><%= $orcid %><%= end %></p>
@@ -37,7 +39,7 @@
     % }
     % unless (param 'no_header') {
         <div class='row collapse-wrapper'>
-        <table class='table table-condensed table-bordered table-striped'>
+        <table class='table table-responsive table-condensed table-bordered table-striped'>
             <tr><th>Organization</th><th>Role</th><th>Publications</th></tr>
             % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
             % my @all_maps = @{ $ctr->publication_contributor_maps };
@@ -68,7 +70,7 @@
                             <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
                             % }
                             <br>
-                       <% } %>
+                       % } 
                     </td>
                 % }
             </tr>    

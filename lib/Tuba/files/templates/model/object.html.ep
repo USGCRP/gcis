@@ -7,7 +7,6 @@
 
 %= include 'obj_header', object => $model
 
-<div class='container'>
     <div class='row well'>
         % my $pub = $model->get_publication;
         %= include 'h/thumbnail', pub => $pub;
@@ -32,7 +31,7 @@
 
      %= include 'h/other_identifiers', gcid => $model->uri($self);
 
-    </div>
-</div>
+   </div>
+
 
 %= include 'h/other_formats';
