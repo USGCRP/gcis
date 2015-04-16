@@ -5,7 +5,7 @@
 %# This template should be in the controls subdirectory.
 % my $controls = stash 'controls';
 
-<div class="row-fluid">
+<div class="row">
 
 %= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well', id => 'create_form', enctype => 'multipart/form-data' => begin
 
@@ -18,19 +18,22 @@
 % my $column = $meta->column($column_name);
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
-    <div class="control-group" style='margin-bottom:2px;'>
-        <label class="control-label<%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
-        <div class="controls">
+    <div class="form-group" style='margin-bottom:2px;'>
+        <label class="control-label <%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+        <div>
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-                %= text_field '_report', class => 'span10', value => current_report->title, disabled => 1
+            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
+                </div>
             % } elsif (my $entry = $controls->{$name}) {
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } else {
-                %= text_field $name, placeholder => $column->type, id => $name, class => 'span8';
+            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                %= text_field $name, placeholder => $column->type, id => $name, class => 'form-control';
             % }
 
-            <span class="help-inline">
+            <span class="help-block">
             %= $column->remarks || ""
             </span>
         </div>
@@ -38,8 +41,8 @@
 % }
 <div class='required_note'>required</div>
 
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
+<div >
+    <button type="submit" class="btn btn-defualt btn-primary">Create new <%= $meta->table %></button>
 </div>
 
 %= hidden_field 'no_header' => +(param 'no_header');

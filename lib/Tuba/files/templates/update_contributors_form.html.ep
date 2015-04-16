@@ -23,26 +23,34 @@
 % }
 
 %= include 'controls/contributors';
-<div class='form-group'>
-%= label_for 'person', class => 'control-label col-lg-2 col-md-2 col-sm-2' => begin
+<div class='form-group row'>
+<div  class='col-lg-2 col-md-2 col-sm-2 text-right'>
+%= label_for 'person', class => 'control-label' => begin
 Person
 %= end
+</div>
 <div class='col-lg-6 col-md-6 col-sm-6'>
     %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
-    <a href="#create_person" role="button" class="btn btn-default col-lg-3 col-md-3 col-sm-3" data-toggle="modal">Create person</a>
+    </div>
+    <div  class='col-lg-2 col-md-2 col-sm-2 text-left'>
+    <a href="#create_person" role="button" class="btn btn-default" data-toggle="modal">Create person</a>
     %= include 'modal', url => url_for('create_form_person'), id => 'create_person'
 </div>
 </div>
 
 
 
-<div class='form-group'>
-%= label_for 'organization', class => 'control-label col-lg-2 col-md-2 col-sm-2 required' => begin
+<div class='form-group row'>
+<div  class='col-lg-2 col-md-2 col-sm-2 text-right'>
+%= label_for 'organization', class => 'control-label required' => begin
 Organization
 %= end
+</div>
 <div class='col-lg-6 col-md-6 col-sm-6'>
     %= include 'controls/autocomplete', input_name => 'organization', object_type => 'organization'
-    <a href="#create_organization" role="button" class="btn btn-default col-lg-4 col-md-4 col-sm-4" data-toggle="modal">Create organization</a>
+    </div>
+    <div  class='col-lg-2 col-md-2 col-sm-2 text-left'>
+    <a href="#create_organization" role="button" class="btn btn-default" data-toggle="modal">Create organization</a>
     %= include 'modal', url => url_for('create_form_organization'), id => 'create_organization'
 </div>
 </div>
@@ -50,11 +58,13 @@ Organization
 
 
 <div class='form-group'>
-%= label_for 'role', class => 'control-label col-lg-2 col-md-2 col-sm-2 required' => begin
+<div  class='col-lg-2 col-md-2 col-sm-2 text-right'>
+%= label_for 'role', class => 'control-label required' => begin
 Role
 %= end
+</div>
 <div class='controls col-lg-6 col-md-6 col-sm-6'>
-    %= select_field 'role', db_labels('role_type'), class => 'controls col-lg-8 col-md-8 col-sm-8';
+    %= select_field 'role', db_labels('role_type'), class => 'form-control';
 </div>
 </div>
 

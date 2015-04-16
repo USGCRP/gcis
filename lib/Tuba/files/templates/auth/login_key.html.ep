@@ -5,24 +5,36 @@
 
 % if (user_can('update')) {
     <p>
-    Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
+    <br />Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
     </p>
-    %= text_field 'key' => $api_pw, readonly => 'readonly', class => 'span10';
+    <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+    %= text_field 'key' => $api_pw, readonly => 'readonly', class => 'form-control';
+    </div>
+    </div>
     <p>
-    To verify that this works, try the following :
+    <br />To verify that this works, try the following :
     </p>
-    <textarea class='span10' readonly rows=2>
+    <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+    <textarea class='form-control' readonly rows=2>
     curl -L -u <%= $api_user %>:<%= $api_pw %> <%= url_for('login')->clone->to_abs %>.json
     </textarea>
+    </div>
+    </div>
     <br>
     or
-    <br>
-    <textarea class='span10' readonly rows=6>
+    <div class="row">
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+    <textarea class='form-control' readonly rows=6>
     curl -L \\
     -H 'Accept: application/json' \\
     -H 'Authorization: Basic <%= $api_key %>' \\
     <%= url_for('login')->clone->to_abs %>
     </textarea>
+    </div>
+    </div>
+    <br />
     <p>
     API keys expire after 1 month.<br>
     Refresh this page to generate a new API key for <b><%= user %></b>.
@@ -30,15 +42,15 @@
     <p>
     % my $base = $self->req->url;
     % $base =~ s/.html$//;
-    Save a
-    %= link_to "$base.json", class => 'label label-info' => begin
+    Save a &nbsp;
+    %= link_to "$base.json", class => 'label label-default label-info' => begin
     JSON version
     %= end
-    or a
-    %= link_to "$base.yaml", class => 'label label-info' => begin
+    &nbsp; or a &nbsp;
+    %= link_to "$base.yaml", class => 'label label-default label-info' => begin
     YAML version
     %= end
-    of your credentials to use them outside of the web browser.
+    &nbsp; of your credentials to use them outside of the web browser.
     </p>
 % } else {
     <div class='alert'>

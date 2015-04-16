@@ -14,7 +14,7 @@
 % }
 </table>
 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
-%= text_field 'new_region', placeholder => "search regions", id => "new_region", class => '', autocomplete => 'off';
+%= text_field 'new_region', placeholder => "search regions", id => "new_region", class => 'form-control', autocomplete => 'off';
 </div>
 
 %= javascript begin

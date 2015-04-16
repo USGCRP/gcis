@@ -21,19 +21,25 @@
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
     <div style='margin-bottom:2px;'>
-        <label class="control-label<%= $required %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // ""%>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+        <label class="control-label <%= $required %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // ""%>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
         <div >
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-                %= text_field '_report', class => 'col-md-10', value => current_report->title, disabled => 1
+            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
+                </div>
                 
             % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
-                <input class="col-md-1 col-sm-1" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+            	<div class="col-md-1 col-sm-1">
+                <input class="form-control" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+                </div>
 
             % } elsif (my $entry = $controls->{$name}) {
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } else {
-                %= text_field $name, placeholder => $column->type, id => $name, class => 'col-md-8';
+            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                %= text_field $name, placeholder => $column->type, id => $name, class => 'form-control';
+                </div>
             % }
 
         </div>
@@ -45,7 +51,7 @@ $('.control-label').popover({trigger : 'hover'});
 
 <div class='required_note'>required</div>
 
-<div class="form-actions">
+<div>
     <button type="submit" class="btn btn-default btn-primary">Create new <%= $meta->table %></button>
 </div>
 

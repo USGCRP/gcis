@@ -19,12 +19,12 @@
     <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= to_textfield_value($object->$accessor) %></textarea>
 % end
 
-<div class='row'>
+
 %= include 'update_tabs', active => 'fields';
 
 <div class='tab-content'>
 <p>Hover over a field name for help about that field.</p>
-<div class="row">
+
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 
@@ -33,31 +33,36 @@
 
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
-<div class="form-group">
-<label class="control-label<%= $required %> col-md-2 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
-        <div class="col-md-10">
+
+<label class="<%= $required %> col-lg-2 col-md-2 col-sm-2 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
+        
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-
-                %= text_field '_report', class => 'col-md-10', value => current_report->title, disabled => 1
+            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+                %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
+                
                 
             % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
-                <input class="col-md-1 col-sm-1" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+            	<div class="col-lg-1 col-md-1 col-sm-1">
+                <input class="form-control" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+                
 
             % } elsif (my $entry = $controls->{$column->name}) {
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
             % } else {
                 % if ($val && length($val) > 50) {
-                %= $textarea->($column,$object);
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+                %= $textarea->($column,$object), class => "form-control";
                 % } else {
-                %= $textfield->($column,$object);
+                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+                %= $textfield->($column,$object), class => "form-control";
                 % }
             % }
         </div>
-        </div>
+       
 % }
 </div>
 %= javascript begin
@@ -70,16 +75,16 @@ $('.control-label').popover({trigger : 'hover'});
     <div class='input-prepend' style="display: inline";>
     <button type="submit" name='delete' value='delete' class="btn btn-default btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     % if ($self->can_set_replacement) {
-    %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
+    %= text_field 'replacement_identifier', placeholder => 'replacement', class => "form-control", style=>'height:auto;';
     % }
     </div>
 </div>
 
 %= end
-</div>
+
 
 % if (my $footer = stash 'embed_footer') {
 %= $footer->();
 % }
-</div>
+
 

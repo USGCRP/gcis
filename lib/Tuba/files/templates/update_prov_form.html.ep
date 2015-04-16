@@ -22,7 +22,7 @@
 This publication
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= text_field '_url', class => 'col-lg-9 col-md-9 col-sm-8', value => $object->uri($self), disabled => 1
+%= text_field '_url', class => 'form-control', value => $object->uri($self), disabled => 1
 </div>
 </div>
 
@@ -31,7 +31,7 @@ This publication
 Relationship
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:cites', 'cito:isCitedBy' ], class => 'input col-lg-9 col-md-9 col-sm-8',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:cites', 'cito:isCitedBy' ], class => 'input form-control',
 </div>
 </div>
 
@@ -40,7 +40,7 @@ Relationship
 Other publication
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= text_field 'parent', class => 'col-lg-9 col-md-9 col-sm-8', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search publications';
+%= text_field 'parent', class => 'form-control', id => 'parent', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search publications';
 </div>
 </div>
 
@@ -49,7 +49,7 @@ Other publication
 Note
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= text_field 'note', class => 'col-lg-9 col-md-9 col-sm-8', id => 'note', placeholder => 'Note about the relationship';
+%= text_field 'note', class => 'form-control', id => 'note', placeholder => 'Note about the relationship';
 </div>
 </div>
 
@@ -58,7 +58,7 @@ Note
 Activity
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= text_field 'activity', class => 'col-lg-9 col-md-9 col-sm-8', id => 'activity', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search activities';
+%= text_field 'activity', class => 'form-control', id => 'activity', autocomplete => "off", 'data-provide' => 'typeahead', placeholder => 'search activities';
 %= link_to 'create_form_activity' => class => 'btn btn-default squeezevert' => target => '_blank' => begin
 new
 %= end
