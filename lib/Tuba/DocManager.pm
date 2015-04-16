@@ -72,11 +72,31 @@ our %RouteDoc = (
   list_dataset => { _list_defaults('dataset') },
   list_organization => { _list_defaults('organization') },
   list_book => { _list_defaults('book') },
+  list_platform => { _list_defaults('platform') },
   list_gcmd_keyword => { _list_defaults('GCMD keyword', add => "in the GCIS", not_all => 1) },
   list_reference => { _list_defaults('reference', not_all => 1) },
   list_generic => { _list_defaults('generic publication' ) },
+  list_instrument => { _list_defaults('instrument' ) },
+  list_instrument_instance => { _list_defaults('instrument', add => 'on a platform' ) },
+  list_project => { _list_defaults('project') },
+  list_model => { _list_defaults('model') },
+  list_model_run => { _list_defaults('model run') },
+  list_model_runs_for_model => { _list_defaults('model run', add => "for a particular model") },
+  list_model_runs_for_scenario => { _list_defaults('model run', add => "for a particular scenario") },
+  list_scenario => { _list_defaults('scenario') },
+  list_lexicon => { _list_defaults('lexicon') },
+
   show_report => { _show_defaults('report', withs => 1) },
   show_chapter => { _show_defaults('chapter', withs => 1) },
+  show_platform => { _show_defaults('platform') },
+  show_instrument => { _show_defaults('instrument') },
+  show_instrument_instance => { _show_defaults('instrument', add => 'on a platform' ) },
+  show_project => { _show_defaults('project') },
+  show_model => { _show_defaults('model') },
+  show_model_run => { _show_defaults('model run') },
+  show_lexicon => { _show_defaults('lexicon') },
+  model_run_lookup => { _show_defaults('model run') },
+  show_scenario => { _show_defaults('scenario') },
 
   show_figure => { _show_defaults('figure', withs => 1, add => "in a chapter") },
   show_finding => { _show_defaults('finding', withs => 1, add => "in a chapter") },
@@ -114,6 +134,31 @@ our %RouteDoc = (
       brief => "Show contributions made by an organizations",
       description => "Given a role (contributor, author, etc.) and a resource type (e.g. platform, dataset, report), list contributions made by the organization of that type.",
   },
+  person_contributions => {
+      brief => "Show contributions of a certain type by a person",
+      description => "Given a resource (dataset, report, etc.) and a role ('editor', etc'), and an identifier for a person, show the resources to which the person has contributed in that role."
+  },
+  organization_contributions => {
+      brief => "Show contributions of a certain type by an organization",
+      description => "Given a resource (dataset, report, etc.) and a role ('editor', etc'), and an identifier for an organization, show the resources to which the organization has contributed in that role."
+  },
+  find_term => {
+      brief => "Lookup a GCID from a term",
+      description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
+  },
+  lookup_term => {
+      brief => "Lookup a GCID from a term",
+      description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
+  },
+  lexicon_terms => {
+      brief => "List the terms within a context of a lexicon",
+      description => "List the terms within a context of a lexicon",
+  },
+  metrics => {
+      brief => "Get overall metrics about GCIS data",
+      description => "Get overall metrics about GCIS data",
+  },
+
 );
 
 sub find_doc {
