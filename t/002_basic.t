@@ -3,7 +3,7 @@
 use FindBin;
 use lib $FindBin::Bin;
 use tinit;
-use Test::More tests => 7;
+use Test::More tests => 9;
 use Test::Mojo;
 
 use_ok 'Tuba';
