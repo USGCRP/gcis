@@ -44,10 +44,12 @@ A report is a publication that may have chapters, figures, findings, and tables.
   contact_email          | character varying |                                              | extended |              | A contact email address for this report.
  Indexes:
      "report_pkey" PRIMARY KEY, btree (identifier)
+     "report_doi_unique" UNIQUE CONSTRAINT, btree (doi)
      "report_url_key" UNIQUE CONSTRAINT, btree (url)
  Check constraints:
      "ck_report_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
      "ck_report_pubyear" CHECK (publication_year > 0 AND publication_year < 9999)
+     "report_doi_check" CHECK (doi::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)
  Foreign-key constraints:
      "report_report_type_identifier_fkey" FOREIGN KEY (report_type_identifier) REFERENCES report_type(identifier)
  Referenced by:

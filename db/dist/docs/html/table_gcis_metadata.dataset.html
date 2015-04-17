@@ -429,10 +429,18 @@
             <tr class="tr0">
                 <td>
                 
+                  
+                
                 </td>
                 <td>doi</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    
+
+                    
+                       UNIQUE
+                    
                 
 
                 
@@ -641,6 +649,11 @@
             <tr class="tr1">
                 <td>ck_year</td>
                 <td>CHECK (((publication_year &gt; 1800) AND (publication_year &lt; 9999)))</td>
+            </tr>
+            
+            <tr class="tr0">
+                <td>dataset_doi_check</td>
+                <td>CHECK (((doi)::text ~ &#39;^10.[[:print:]]+/[[:print:]]+$&#39;::text))</td>
             </tr>
             
         </table>

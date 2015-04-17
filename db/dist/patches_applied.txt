@@ -147,3 +147,5 @@
 2050_url_fields.sql	dcd139a8c00bf414a7d29dc31f21e301
 0300_array_dimensions.sql	bfb4bf8a7404f1b0d89c40ca73a0079e
 2040_new_org_types_and_rels.sql	af1b30111d652e12e30a5b4cd0f639fe
+2060_dataset_doi.sql	b69ddab3398b38a09cd4caeb4d25da24
+2070_doi_checks.sql	57d4ca0856107c20940148b2f4cc1437

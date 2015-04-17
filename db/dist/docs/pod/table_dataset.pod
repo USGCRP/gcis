@@ -78,9 +78,11 @@ Datasets are arbitrary collections of data.  They are a type of publication and 
   description_attribution | character varying              |           | extended |              | A URL which contains a description of this dataset.
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
+     "dataset_doi" UNIQUE CONSTRAINT, btree (doi)
  Check constraints:
      "ck_dataset_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
      "ck_year" CHECK (publication_year > 1800 AND publication_year < 9999)
+     "dataset_doi_check" CHECK (doi::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)
  Referenced by:
      TABLE "instrument_measurement" CONSTRAINT "instrument_measurement_dataset_identifier_fkey" FOREIGN KEY (dataset_identifier) REFERENCES dataset(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
