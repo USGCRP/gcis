@@ -61,6 +61,10 @@ $dataset->{uri} = "/dataset/my-temps";
 $dataset->{instrument_measurements} = [];
 
 $t->get_ok( "/dataset/my-temps.json" )->status_is(200)->json_is($dataset);
+my $cb = sub { pop->req->headers->header(Accept => 'application/json') };
+$t->ua->on(start => $cb);
+$t->get_ok( "/dataset/lookup/10.123/123")->status_is(200)->json_is($dataset);
+$t->ua->unsubscribe(start => $cb);
 
 # A platform.
 my $platform = {

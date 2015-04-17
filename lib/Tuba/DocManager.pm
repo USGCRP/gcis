@@ -118,6 +118,7 @@ our %RouteDoc = (
   show_gcmd_keyword => { _show_defaults('GCMD keyword') },
   show_region => { _show_defaults('region') },
   show_dataset => { _show_defaults('dataset') },
+  dataset_doi => { brief => "Look up a dataset by DOI.", description => "Given a DOI, return a redirect to the GCIS dataset." },
   show_file => { _show_defaults('file') },
   show_reference => { _show_defaults('reference') },
   show_generic => { _show_defaults('generic publication') },

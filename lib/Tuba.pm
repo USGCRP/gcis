@@ -364,6 +364,7 @@ sub startup {
     $r->resource('gcmd_keyword');
     $r->resource('region');
     $r->resource('dataset');
+    $r->get("/dataset/lookup/*doi" => [ doi => qr[10\..*$] ])->to('dataset#lookup_doi')->name('dataset_doi');
 
     # Files.
     $r->resource("file", {no_list => 1});

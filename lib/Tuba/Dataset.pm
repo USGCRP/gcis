@@ -21,6 +21,13 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub lookup_doi {
+    my $c = shift;
+    my $doi = $c->stash('doi');
+    my $obj = Dataset->new(doi => $doi)->load(speculative => 1) or return $c->reply->not_found;
+    return $c->redirect_to($obj->uri($c));
+}
+
 sub make_tree_for_show {
     my $c = shift;
     my $dataset = shift;
