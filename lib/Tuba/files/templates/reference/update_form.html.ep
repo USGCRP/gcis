@@ -19,7 +19,6 @@
     <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
 % end
 
-<div class='row-fluid'>
 %= include 'update_tabs', active => 'fields';
 <div class='tab-content'>
     To edit this reference, please choose a valid tab from above.
