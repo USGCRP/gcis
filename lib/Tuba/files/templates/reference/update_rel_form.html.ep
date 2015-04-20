@@ -28,6 +28,7 @@
 </div>
 
 %= hidden_field 'delete_subpub';
+%= hidden_field 'delete_child_publication_id';
 
 <div class='control-group' style='margin:10px;'>
     <label class='control-label'>
@@ -52,7 +53,7 @@
     </label>
     <div class="controls" style='border:1px solid #ddd;'>
         % if ($child) {
-        %= include 'obj_thumbnails', objs => [ $child->to_object ];
+        %= include 'obj_thumbnails', objs => [ $child->to_object ], add_delete_button => "delete_child_publication_id";
         % }
         %= include 'controls/autocomplete', column => $meta->column('child_publication_id'), object_type => 'all';
     </div>
