@@ -35,6 +35,16 @@
     <br>
 % }
 
+% my $numeric_link = begin
+%   my ($count,$what,$list_page) = @_;
+    % my $method = $what.'s';
+    % $list_page ||= 'list_all_'.$method;
+    % if ($count==1) {
+           <%= obj_link_to $report->$method->[0] => 'show' => begin =%><%= pl($what,$count) =%><%= end =%>
+    % } else {
+         <%= link_to $list_page, { report_identifier => $report->identifier } => begin =%><%= pl($what, $count) =%><%= end =%>
+    % }
+% end
 
 <div itemscope itemtype="http://schema.org/CreativeWork" class='row-fluid'>
     <div class='span10 offset1 well' style='position:relative;'>
@@ -46,20 +56,19 @@
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
         %= include 'h/contributors_short', object => $report, role_regex => '(editor|author|distributor|data_producer|contributing_agency)';
         <p itemprop="description" class='linebreaks'><%= $report->summary %></p>
-        % my ($chp, $fig, $fin,$tab, $ref) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count);
+        % my ($chp, $fig, $fin,$tab, $ref, $img) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count, $report->count_images);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {
-   <p>This report has
-     <%= link_to 'list_all_figures', { report_identifier => $report->identifier } => begin%><%= pl('figure',$fig) %><%= end =%>.
-   </p>
+        <p>This report has <%== $numeric_link->($fig,'figure') %>
+        <% if ($img > 0) { =%> (<%= $numeric_link->($img => 'image', 'list_report_images'); %>)<% } =%>.
         % } elsif ($chp + $fig + $fin + $ref + $tab > 0) {
    <p>
         This report has
-         <%= link_to 'list_chapter', { report_identifier => $report->identifier } => begin%><%= pl('chapter', $chp) %><%= end =%>,
-     <%= link_to 'list_all_figures', { report_identifier => $report->identifier } => begin%><%= pl('figure', $fig) %><%= end =%>,
-    <%= link_to 'list_all_findings', { report_identifier => $report->identifier } => begin%><%= pl('finding', $fin) %><%= end =%>,
-      <%= link_to 'list_all_tables', { report_identifier => $report->identifier } => begin %> <%= pl('table', $tab) %><%= end =%>,
+        <%== $numeric_link->($chp => 'chapter') %>,
+        <%== $numeric_link->($fig => 'figure') %> <% if ($img > 0) { %> (<%= $numeric_link->($img => 'image', 'list_report_images'); =%>)<% } %>,
+        <%== $numeric_link->($fin => 'finding') %>,
+        <%== $numeric_link->($tab => 'table') %>
     and
-    <%= link_to 'list_report_references', { report_identifier => $report->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
+    <%== $numeric_link->($ref => 'reference' => 'list_report_references' ) %>
    </p>
         % }
 

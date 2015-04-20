@@ -83,6 +83,22 @@ sub count_chapters {
     return Tuba::DB::Object::Chapter::Manager->get_objects_count({report_identifier => $s->identifier });
 }
 
+sub count_images {
+    my $s = shift;
+    return Tuba::DB::Object::Image::Manager->get_objects_count(
+            query => [ report_identifier => $s->identifier ],
+            with_objects => [qw/figures/]
+    );
+}
+
+sub images {
+    my $s = shift;
+    return Tuba::DB::Object::Image::Manager->get_objects(
+            query => [ report_identifier => $s->identifier ],
+            with_objects => [qw/figures/]
+    );
+}
+
 sub stringify {
     my $s = shift;
     my %args = @_;

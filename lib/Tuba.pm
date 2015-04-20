@@ -322,7 +322,7 @@ sub startup {
 
     # Images (globally unique)
     $r->resource('image');
-    $report->get('/image')->to('image#list');
+    $report->get('/image')->to('image#list')->name('list_report_images');
 
     # array (globally unique)
     $r->resource('array');

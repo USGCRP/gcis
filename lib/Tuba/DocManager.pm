@@ -46,10 +46,10 @@ our %RouteDoc = (
   list_all_tables => { _list_defaults('table', add => "in a report") },
   list_report_references => { _list_defaults('reference', add => "in a report") },
 
-  image => { _list_defaults('image', add => 'associated with a report') },
+  image => { _list_defaults('image' ) },
   array => { _list_defaults('array', add => 'associated with a report') },
   webpage => { _list_defaults('webpage', add => 'associated with a report') },
-  image => { _list_defaults('image', add => 'associated with a report') },
+  list_report_images => { _list_defaults('image', add => 'associated with a report') },
   book => { _list_defaults('book', add => 'associated with a report') },
   reference => { _list_defaults('reference', add => 'of a report') },
   show_publication => {
