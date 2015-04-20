@@ -1693,7 +1693,8 @@ CREATE TABLE reference (
     attrs hstore,
     publication_id integer NOT NULL,
     child_publication_id integer,
-    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT no_self_references CHECK ((child_publication_id <> publication_id))
 );
 
 
