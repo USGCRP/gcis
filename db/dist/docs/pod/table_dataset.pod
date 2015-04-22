@@ -39,6 +39,7 @@ Datasets are arbitrary collections of data.  They are a type of publication and 
  lon_min (numeric) - The westernmost longitude in the bounding box for this dataset.
  lon_max (numeric) - The eastermost longitude in the bounding box for this dataset.
  description_attribution (character varying) - A URL which contains a description of this dataset.
+ temporal_resolution (character varying) - The temporal resolution (daily, monthly, etc.).
 
 
 =head1 SCHEMA
@@ -76,6 +77,7 @@ Datasets are arbitrary collections of data.  They are a type of publication and 
   lon_min                 | numeric                        |           | main     |              | The westernmost longitude in the bounding box for this dataset.
   lon_max                 | numeric                        |           | main     |              | The eastermost longitude in the bounding box for this dataset.
   description_attribution | character varying              |           | extended |              | A URL which contains a description of this dataset.
+  temporal_resolution     | character varying              |           | extended |              | The temporal resolution (daily, monthly, etc.).
  Indexes:
      "dataset_pkey" PRIMARY KEY, btree (identifier)
      "dataset_doi" UNIQUE CONSTRAINT, btree (doi)

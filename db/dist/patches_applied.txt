@@ -150,3 +150,4 @@
 2060_dataset_doi.sql	b69ddab3398b38a09cd4caeb4d25da24
 2070_doi_checks.sql	57d4ca0856107c20940148b2f4cc1437
 2080_no_self_references.sql	b87e300867902f063330b227a140a8ab
+2090_temporal_resolution.sql	5748cd5cbc1cb70656964cd0f9e37ad5

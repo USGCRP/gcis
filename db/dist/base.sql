@@ -452,6 +452,7 @@ CREATE TABLE dataset (
     lon_min numeric,
     lon_max numeric,
     description_attribution character varying,
+    temporal_resolution character varying,
     CONSTRAINT ck_dataset_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999))),
     CONSTRAINT dataset_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text))
@@ -580,6 +581,10 @@ COMMENT ON COLUMN dataset.lon_max IS 'The eastermost longitude in the bounding b
 
 
 COMMENT ON COLUMN dataset.description_attribution IS 'A URL which contains a description of this dataset.';
+
+
+
+COMMENT ON COLUMN dataset.temporal_resolution IS 'The temporal resolution (daily, monthly, etc.).';
 
 
 
