@@ -55,5 +55,41 @@ sub update_rel {
     return $c->redirect_without_error("update_rel_form");
 }
 
+sub _default_order {
+    return qw[
+     identifier
+     description
+     description_attribution
+     name
+     version
+     type
+     native_id
+     doi
+     url
+     access_dt
+     release_dt
+     publication_year
+     data_qualifier
+     scale
+     scope
+     processing_level
+     cite_metadata
+     spatial_extent
+     vertical_extent
+     spatial_res
+     spatial_ref_sys
+     lat_min
+     lat_max
+     lon_min
+     lon_max
+     temporal_extent
+     temporal_resolution
+     start_time
+     end_time
+     attributes
+     variables
+     ];
+}
+
 1;
 
