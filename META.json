@@ -46,7 +46,7 @@
             "JSON::XS" : "0",
             "LWP::UserAgent" : "0",
             "Lingua::EN::Inflect" : "0",
-            "Mojolicious" : "5.82",
+            "Mojolicious" : "6.08",
             "Mojolicious::Plugin::InstallablePaths" : "0",
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
@@ -75,7 +75,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.26"
+         "version" : "1.27"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -334,5 +334,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.26"
+   "version" : "1.27"
 }

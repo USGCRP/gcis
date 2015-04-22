@@ -327,6 +327,10 @@ db/patches/2030_typo.sql
 db/patches/2040_contact_note.sql
 db/patches/2040_new_org_types_and_rels.sql
 db/patches/2050_url_fields.sql
+db/patches/2060_dataset_doi.sql
+db/patches/2070_doi_checks.sql
+db/patches/2080_no_self_references.sql
+db/patches/2090_temporal_resolution.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
