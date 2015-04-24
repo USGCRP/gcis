@@ -57,7 +57,7 @@
 
             % for my $term (@$terms) {
                 <li>
-                <span style='display:inline-block;min-width:150pt;'>
+                <span style='display:inline-block;min-width:160pt;'>
                 % if (my $target = $term->same_as) {
                     <a target="_blank" href="<%= $target %>"><i class='glyphicon glyphicon-star'></i></a>
                 % }
@@ -76,9 +76,9 @@
 
     </div>
 </div>
-
+<br />
 %= include 'h/other_formats';
-
+<br />
 %= javascript begin
     $('#tabby a').click(function (e) {
     e.preventDefault();
