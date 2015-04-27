@@ -9,7 +9,7 @@
 
 % my @cols = qw/identifier numeric report chapter arrays/;
 
-%= include 'pager';
+%= include 'pager', page => $page;
 
 <table class='table table-condensed table-bordered table-striped'>
 <tr>
