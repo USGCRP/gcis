@@ -302,6 +302,7 @@ sub register {
              m[^/report/([^/]+)/chapter/([^/]+)$] and $obj = Tuba::DB::Object::Chapter->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/figure/([^/]+)$]  and $obj = Tuba::DB::Object::Figure->new(report_identifier => $1, identifier => $2);
              m[^/report/([^/]+)/finding/([^/]+)$] and $obj = Tuba::DB::Object::Finding->new(report_identifier => $1, identifier => $2);
+             m[^/report/([^/]+)/table/([^/]+)$]  and $obj = Tuba::DB::Object::Table->new(report_identifier => $1, identifier => $2);
              m[^/organization/([^/]+)$]  and $obj = Tuba::DB::Object::Organization->new(identifier => $1);
              m[^/instrument/([^/]+)$]    and $obj = Tuba::DB::Object::Instrument->new(identifier => $1);
              m[^/platform/([^/]+)$] and $obj = Tuba::DB::Object::Platform->new(identifier => $1);
