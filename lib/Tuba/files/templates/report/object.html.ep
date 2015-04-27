@@ -12,7 +12,7 @@
 
     % if ($object->can('identifier') && user_can('update')) {
         %= include 'history_modal';
-        <div class='row'>
+        <div class='row well'>
             <div class='col-md-2 pull-right'>
                 <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
                 <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
@@ -20,7 +20,7 @@
         </div>
         
         <div class='row'>
-            <div class='col-md-2 pull-right'>
+            <div class='col-lg-2 col-md-2 col-sm-4 col-xs-12 pull-right'>
             <div class='btn-group'>
             % if (my $prev = stash 'prev') {
                 <%= obj_link_to $prev => 'show', class => 'btn btn-default', => begin %><i class='glyphicon glyphicon-arrow-left'></i><%= end %>
@@ -47,8 +47,8 @@
     % }
 % end
 
-<div itemscope itemtype="http://schema.org/CreativeWork" class='row'>
-    <div class='well' style='position:relative;'>
+<div itemscope itemtype="http://schema.org/CreativeWork" class='row well'>
+
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <div class="col-md-8 col-lg-8 col-sm-8 col-xs-12">

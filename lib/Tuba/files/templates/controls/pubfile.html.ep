@@ -26,7 +26,7 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     %= end
     </td>
     <td>
-    <%= tag 'button' => class => 'btn btn-default btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+    <%= tag 'button' => class => 'btn btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
     </td>
     </tr>
     % }

@@ -5,7 +5,7 @@
 %# This template should be in the controls subdirectory.
 % my $controls = stash 'controls';
 
-<div class="row">
+
 
 %= form_for obj_uri_for($object_class, 'create'), method => 'POST', class => 'form-horizontal well', id => 'create_form', enctype => 'multipart/form-data' => begin
 
@@ -17,14 +17,15 @@
 % my $cols = stash 'cols';
 % $cols ||= [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
+<div class="form-group">
 % $column = $meta->column($column) unless ref $column;
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
-    <div style='margin-bottom:2px;'>
-        <label class="control-label <%= $required %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // ""%>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
-        <div >
+    
+        <label class="control-label col-lg-2 col-md-2 col-sm-2 <%= $required %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // ""%>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+       
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
                 </div>
                 
@@ -37,12 +38,11 @@
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
             % } else {
-            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 %= text_field $name, placeholder => $column->type, id => $name, class => 'form-control';
                 </div>
             % }
 
-        </div>
     </div>
 % }
 %= javascript begin
@@ -51,8 +51,10 @@ $('.control-label').popover({trigger : 'hover'});
 
 <div class='required_note'>required</div>
 
-<div>
-    <button type="submit" class="btn btn-default btn-primary">Create new <%= $meta->table %></button>
+<div class="row clear-both">
+	<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2">
+    <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
+</div>
 </div>
 
 %= hidden_field 'no_header' => +(param 'no_header');

@@ -13,9 +13,9 @@
 </tr>
 % }
 </table>
-<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
+
 %= text_field 'new_gcmd_keyword', placeholder => "search GCMD keywords", id => "new_gcmd_keyword", class => 'form-control', autocomplete => 'off';
-</div>
+
 
 %= javascript begin
 $('#new_gcmd_keyword').typeahead({

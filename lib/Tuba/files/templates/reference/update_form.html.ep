@@ -24,16 +24,21 @@
 % end
 
 %= include 'update_tabs', active => 'fields';
+<br />
 <div class='tab-content'>
-    To edit this reference, please choose a valid tab from above.
+    <p>To edit this reference, please choose a valid tab from above.</p>
 </div>
 
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
-<div>
-    <div class='input-prepend'>
+<div class="row">
+	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class='input-group'>
+    <span class="input-group-btn">
     <button type="submit" name='delete' value='delete' class="btn btn-default btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
-    %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
+    </span>
+    %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
+    </div>
     </div>
 </div>
 %= end

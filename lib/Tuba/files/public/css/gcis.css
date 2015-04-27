@@ -63,6 +63,9 @@ h3.sub-title {
 .centered {
     text-align: center;
 }
+pre {
+	margin: 0 auto 10px;
+}
 img.usgcrp.thumbnail {
 	border: 0 none #ffffff;
 	box-shadow: none;
@@ -79,6 +82,12 @@ img.usgcrp.thumbnail {
     font-size:75%;
     font-stretch: ultracondensed;
     font-family:monospace;
+}
+.clear-both {
+	clear: both;
+}
+.in-line {
+	display: inline;
 }
 a.btn {
     color: #0088cc;
