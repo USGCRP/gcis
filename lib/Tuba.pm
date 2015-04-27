@@ -65,7 +65,7 @@ use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.25';
+our $VERSION = '1.27';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -322,7 +322,7 @@ sub startup {
 
     # Images (globally unique)
     $r->resource('image');
-    $report->get('/image')->to('image#list');
+    $report->get('/image')->to('image#list')->name('list_report_images');
 
     # array (globally unique)
     $r->resource('array');
@@ -364,6 +364,7 @@ sub startup {
     $r->resource('gcmd_keyword');
     $r->resource('region');
     $r->resource('dataset');
+    $r->get("/dataset/lookup/*doi" => [ doi => qr[10\..*$] ])->to('dataset#lookup_doi')->name('dataset_doi');
 
     # Files.
     $r->resource("file", {no_list => 1});
@@ -395,15 +396,15 @@ sub startup {
     $r->get("/model/:model_identifier/run")->to("model_run#list")->name("list_model_runs_for_model");
     $r->get("/scenario/:scenario_identifier/run")->to("model_run#list")->name("list_model_runs_for_scenario");
     $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:time_resolution/:sequence")
-        ->to("model_run#lookup");
+        ->to("model_run#lookup")->name('model_run_lookup');
 
     # Lexicons
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');
-    $lex->get('/find/:context/*term')->to('exterm#find');
+    $lex->get('/find/:context/*term')->to('exterm#find')->name('find_term');
     $lex->get('/:context/*term')
                    ->over(not_match => { 'context' => qr[list|find] })
-                   ->to('exterm#find');
+                   ->to('exterm#find')->name('lookup_term');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');

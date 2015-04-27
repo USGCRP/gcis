@@ -21,6 +21,13 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub lookup_doi {
+    my $c = shift;
+    my $doi = $c->stash('doi');
+    my $obj = Dataset->new(doi => $doi)->load(speculative => 1) or return $c->reply->not_found;
+    return $c->redirect_to($obj->uri($c));
+}
+
 sub make_tree_for_show {
     my $c = shift;
     my $dataset = shift;
@@ -46,6 +53,42 @@ sub update_rel {
     }
     # TODO : handle form submission too
     return $c->redirect_without_error("update_rel_form");
+}
+
+sub _default_order {
+    return qw[
+     identifier
+     description
+     description_attribution
+     name
+     version
+     type
+     native_id
+     doi
+     url
+     access_dt
+     release_dt
+     publication_year
+     data_qualifier
+     scale
+     scope
+     processing_level
+     cite_metadata
+     spatial_extent
+     vertical_extent
+     spatial_res
+     spatial_ref_sys
+     lat_min
+     lat_max
+     lon_min
+     lon_max
+     temporal_extent
+     temporal_resolution
+     start_time
+     end_time
+     attributes
+     variables
+     ];
 }
 
 1;

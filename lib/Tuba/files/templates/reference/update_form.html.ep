@@ -23,7 +23,6 @@
     </div>
 % end
 
-<div class='row'>
 %= include 'update_tabs', active => 'fields';
 <div class='tab-content'>
     To edit this reference, please choose a valid tab from above.

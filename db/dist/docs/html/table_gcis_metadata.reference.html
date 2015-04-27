@@ -270,6 +270,11 @@
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
             </tr>
             
+            <tr class="tr1">
+                <td>no_self_references</td>
+                <td>CHECK ((child_publication_id &lt;&gt; publication_id))</td>
+            </tr>
+            
         </table>
         
 

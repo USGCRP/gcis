@@ -11,7 +11,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
 
  identifier (character varying) - The identifier : this should be the DOI, if there is one.
  title (character varying) - The title of the article (source: crossref.org).
- doi (character varying) - The digital object identifier for the articel.
+ doi (character varying) - The digital object identifier for the article.
  year (integer) - The year of publication.
  journal_identifier (character varying) - The GCIS identifier for the journal.
  journal_vol (character varying) - The volume of the journal in which the article appears (source: crossref.org)
@@ -27,7 +27,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
  --------------------+-------------------+-----------+----------+--------------+-------------------------------------------------------------------------------
   identifier         | character varying | not null  | extended |              | The identifier : this should be the DOI, if there is one.
   title              | character varying |           | extended |              | The title of the article (source: crossref.org).
-  doi                | character varying |           | extended |              | The digital object identifier for the articel.
+  doi                | character varying |           | extended |              | The digital object identifier for the article.
   year               | integer           |           | plain    |              | The year of publication.
   journal_identifier | character varying | not null  | extended |              | The GCIS identifier for the journal.
   journal_vol        | character varying |           | extended |              | The volume of the journal in which the article appears (source: crossref.org)

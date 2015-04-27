@@ -8,6 +8,18 @@
 
 %= include 'list_formats';
 
+% my $numeric_link = begin
+%   my ($count,$what,$list_page,$report) = @_;
+    % my $method = $what.'s';
+    % $list_page ||= 'list_all_'.$method;
+    % if ($count==1) {
+    <%= obj_link_to $report->$method->[0] => 'show' => class => "btn squeezevert" => begin =%><%= $count =%><%= end =%>
+    % } else {
+    <%= link_to $list_page, { report_identifier => $report->identifier } => class => "btn squeezevert" => begin =%><%= $count =%><%= end =%>
+    % }
+% end
+
+
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
@@ -28,29 +40,20 @@
     <td><%= link_to $report->uri($self) => begin %><%= $report->identifier %><%= end %></td>
     <td><%= $report->report_type_identifier // '' %></td>
     <td>
-        %= link_to 'list_chapter', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
-        <%= @{ $report->chapters } %>
-        %= end
+
+        %== $numeric_link->($report->count_chapters => 'chapter', undef, $report)
     </td>
     <td>
-        %= link_to 'list_all_figures', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
-        <%= $report->count_figures %>
-        %= end
+        %== $numeric_link->($report->count_figures => 'figure', undef, $report)
     </td>
     <td>
-        %= link_to 'list_all_findings', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
-        <%= $report->count_findings %>
-        %= end
+        %== $numeric_link->($report->count_findings => 'finding', undef, $report)
     </td>
     <td>
-        %= link_to 'list_all_tables', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
-        <%= $report->count_tables %>
-        %= end
+        %== $numeric_link->($report->count_tables => 'table', undef, $report)
     </td>
     <td>
-        %= link_to 'list_report_references', { report_identifier => $report->identifier } => class => 'btn btn-default squeezevert' => begin
-        %= $report->reference_count;
-        %= end
+        %== $numeric_link->($report->reference_count => 'reference', 'list_report_references', $report)
     </td>
     <td>
         % if (my $to = fix_url($report->url)) {

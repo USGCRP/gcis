@@ -172,7 +172,7 @@ SELECT pg_catalog.setval('contributor_id_seq', 1, false);
 -- Data for Name: dataset; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max, description_attribution) FROM stdin;
+COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max, description_attribution, temporal_resolution) FROM stdin;
 \.
 
 

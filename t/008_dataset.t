@@ -39,7 +39,8 @@ my $dataset = {
     cite_metadata    => "yes",
     scope            => "local",
     spatial_extent   => "my house",
-    temporal_extent  => "tuesdays feb 2014",
+    temporal_extent  => "feb 2014 to feb 2015",
+    temporal_resolution => 'weekly',
     vertical_extent  => "high",
     processing_level => "3",
     spatial_res      => "point",
@@ -61,6 +62,10 @@ $dataset->{uri} = "/dataset/my-temps";
 $dataset->{instrument_measurements} = [];
 
 $t->get_ok( "/dataset/my-temps.json" )->status_is(200)->json_is($dataset);
+my $cb = sub { pop->req->headers->header(Accept => 'application/json') };
+$t->ua->on(start => $cb);
+$t->get_ok( "/dataset/lookup/10.123/123")->status_is(200)->json_is($dataset);
+$t->ua->unsubscribe(start => $cb);
 
 # A platform.
 my $platform = {
