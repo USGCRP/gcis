@@ -1,0 +1,135 @@
+% layout 'default';
+
+<center>
+<h2>dataset : <%= $object->stringify %></h2>
+</center>
+
+% unless (param 'no_header') {
+   % if ($object->can('identifier') && user_can('update')) {
+    %= include 'history_modal';
+        <div class='row'>
+            <div class='col-md-2 pull-right'>
+            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
+            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+        	</div>
+        </div>
+    % }
+
+% }
+
+<div itemscope itemtype="http://schema.org/Dataset">
+    <div class='row well'>
+    
+        %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;
+        <h4><%= $dataset->identifier %></h4>
+        <h5 itemprop="name"><%= $dataset->name // '' %></h5>
+        % if ($dataset->publication_year) {
+        Published in <%= $dataset->publication_year %>.
+        % }
+        % if ($dataset->version) {
+        Version <%= $dataset->version %>.
+        % }
+        <i>
+        %= include commify => objs => scalar $dataset->all_orgs
+        </i>
+        <br>
+        %= include commify => objs => scalar $dataset->all_people
+
+        % if (my $url = $dataset->description_attribution) {
+        <blockquote><p class="linebreak" itemprop="description"><%= $dataset->description %></p>
+            <small>
+                <%= link_to $url => target => '_blank' => begin %><%= url_host($url) %><%= end %>
+            </small>
+        </blockquote>
+        % } else {
+        <p class="linebreaks" itemprop="description"><%= $dataset->description // ''%></p>
+        % }
+
+        % if ($dataset->url) {
+        <p>
+            %= link_to $dataset->url => target => "_blank" => itemprop => "url" => begin
+            <%= $dataset->url %>
+            <%= end %>
+        </p>
+        % }
+
+        % if ($dataset->native_id) {
+        <p>
+        Identified by : <%= $dataset->native_id %>
+        </p>
+        % }
+
+        % if ($dataset->release_dt) {
+        <p>This dataset was released on <%= $dataset->release_dt->strftime('%B %d, %Y') %>.
+        % }
+        % if ($dataset->access_dt) {
+        <p>This dataset was accessed on <%= $dataset->access_dt->strftime('%B %d, %Y') %>.
+        % }
+        % if ($dataset->start_time && $dataset->end_time) {
+        <p>The time range for this dataset is <%= human_date($dataset->start_time) %>
+         to <%= human_date($dataset->end_time) %>.</p>
+        % } elsif ($dataset->start_time) {
+        <p>The time range for this dataset starts at <%= human_date($dataset->start_time) %>.</p>
+        % } elsif ($dataset->end_time) {
+        <p>The time range for this dataset ends at <%= human_date($dataset->end_time) %>.</p>
+        % }
+        % if (my $extent = $dataset->temporal_extent) {
+        % $extent =~ s[ ][/] if ( ( $extent =~ tr/ / /) == 1 );
+        <p>The temporal extent of this dataset is <span itemprop="temporal"><%= $extent %></span>.
+        % }
+
+        % if (my $temporal_resolution = $dataset->temporal_resolution) {
+        <p>The temporal resolution of this dataset is <span itemprop="temporal"><%= $temporal_resolution %></span>.
+        % }
+
+        % if ($dataset->lat_min || $dataset->lat_max || $dataset->lon_min || $dataset->lon_max) { 
+        <p>
+        The spatial range for this dataset is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,
+        and <%= $dataset->lon_min // 'unknown' %>° to <%= $dataset->lon_max // 'unknown' %>° longitude.
+        % if ($dataset->lat_min == $dataset->lat_max && $dataset->lon_min == $dataset->lon_max) {
+            %= link_to map_url(lat => $dataset->lat_min, lon => $dataset->lon_min) => target => '_blank' => begin
+            map
+            %= end
+        % } else {
+            <%= link_to map_url(lat => ( ($dataset->lat_min + $dataset->lat_max) / 2),
+                lon =>  (($dataset->lon_min + $dataset->lon_max) / 2)) => target => '_blank' => begin %>
+            map (center)
+            %= end
+        % }
+        </p>
+        % }
+
+        % for my $measurement ($dataset->instrument_measurements) {
+        This dataset uses data from
+        %= link_to 'show_instrument_instance' => {instrument_identifier => $measurement->instrument->identifier, platform_identifier => $measurement->platform->identifier } => begin
+        an instance of
+        %= end
+        the <%= obj_link($measurement->instrument) %> instrument on the 
+        <%= obj_link($measurement->platform) %> platform.
+        <br>
+        % }
+
+        %= include 'h/prov', pub => $dataset->get_publication, thumbnails => 1;
+        %= include 'h/cited_by', pub => $dataset->get_publication;
+        %= include 'h/cites', pub => $dataset->get_publication;
+
+        % if ($dataset->cite_metadata) {
+        <p>When citing this dataset please refer to <%= $dataset->cite_metadata %>.</p>
+        % }
+        % if ($dataset->attributes) {
+        <p>Attributes : <%= $dataset->attributes %></p>
+        % }
+        % if (my $doi = $dataset->doi) {
+        DOI :
+            %= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin
+            <%= $doi %>
+            %= end
+        % }
+
+         %= include 'h/other_identifiers', gcid => $dataset->uri($self);
+
+    </div>
+</div>
+
+<%= include 'h/other_formats'; =%>
+

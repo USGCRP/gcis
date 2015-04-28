@@ -1,0 +1,80 @@
+% layout 'default', title => "About the Global Change Information System", fixed => 1;
+<h2>
+    <center>About the Global Change Information System</center>
+</h2>
+<p>
+The
+<a href="http://www.globalchange.gov/about">US Global Change Research Program</a>
+(USGCRP) has established the Global Change Information System (GCIS) to better coordinate and integrate the use of federal information products on changes in the global environment and the implications of those changes for society.
+</p>
+<p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
+The GCIS is an open-source, web-based resource for traceable, sound global change data, information, and products.
+Designed for use by scientists, decision makers, and the public, the GCIS provides coordinated links to a select group of information
+products produced, maintained, and disseminated by government agencies and organizations. As well as guiding users to global change research
+products selected by the 13 member agencies, the GCIS serves as a key access point to assessments, reports, and tools produced
+by the USGCRP. The GCIS is managed, integrated, and curated by USGCRP.
+</p>
+
+<h3>Global Change</h3>
+<p>
+For the purposes of the GCIS, “global change” refers to changes
+in the global environment that may alter the
+capacity of the Earth to sustain life. Global change encompasses climate
+change, but it also includes other critical drivers of environmental change
+that may interact with climate change, such as land use change, the
+alteration of the water cycle, changes in biogeochemical cycles, and
+biodiversity loss.
+</p>
+<p>
+Global change information is structured using the <%= link_to 'resources' => begin %>GCIS data model<%= end %>;
+this data model represents relationships and entities such
+as reports, report chapters, figures, images, tables, bibliographic
+entries, organizations and people.
+<h3>Identifiers</h3>
+<p>
+Each item referenced in the GCIS has a unique, persistent identifier.  This identifer takes the form of a Uniform Resource Identifier (URI), but may include or be related to other identifiers as well, such as Universally Unique Identifiers (UUIDs), Digital Object Identifiers (DOIs), ORCIds, and ISBNs.  Native identifiers for resources are incorporated in to the URI as much as possible to help with interoperability between the GCIS and other systems.
+</p>
+
+<h3>Provenance and Semantics</h3>
+<p>
+The World Wide Web Consortium (W3C) definition of provenance,
+"... information about entities, activities, and people involved in
+producing a piece of data or thing, which can be used to form assessments
+about its quality, reliability or trustworthiness ..." (W3C 2013),
+is the basis for the representation of provenance within the GCIS.
+Relationships between URIs within the GCIS are represented in a triple
+store.  A <%= link_to '/sparql' => begin %>SPARQL endpoint<%= end %>
+allows this triple store to be queried, as described in these
+<%= link_to '/examples' => begin %>examples<%= end %>.
+</p>
+
+<h3>GCIS Development Effort</h3>
+<p>GCIS is written in <a href="http://perl.org">Perl</a> using the <a href="http://mojolicio.us">mojolicious</a> web framework
+and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
+It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
+a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
+
+<p class='linebreaks'>GCIS Visionary : Curt Tilmes
+System Engineer : Brian Duggan
+
+Also thanks to :
+Andrew Buddenberg : Client development
+Steve Aulenbach : Data Curator
+Justin Goldstein : Researcher
+Robert Wolfe : Project Manager
+Amanda McQueen, Brent Newman : GCIS Interns
+Tania Sizer : Web Designer
+Xiagoang (Marshall) Ma, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+
+<h4>GCIS Version</h4>
+<p><%= $Tuba::VERSION %></p>
+
+<h3>Contacting us and contributing</h3>
+<p>If you're interested in contributing to the
+development and evolution of the Global Change Information System, please subscribe 
+to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.<br>
+If you have comments, questions, or feedback about the contents of the GCIS, please mention GCIS in the subject,
+and use the USGCRP <%= link_to 'http://www.globalchange.gov/contact' => begin %>contact form<%= end %>.
+</p>
+
+GCIS is also on <a href="https://github.com/USGCRP/gcis">GitHub</a>.
