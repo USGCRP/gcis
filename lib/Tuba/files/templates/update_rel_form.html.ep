@@ -15,27 +15,29 @@
 % if (my $info = ( (stash 'info') || flash 'info')) {
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
-
 % for my $rel (@{ (stash 'relationships') || $meta->relationships }) {
 % $rel = $object->meta->relationship($rel) unless ref $rel;
 
-<div class='row'>
-<div class='control-label col-lg-2 col-md-2 col-sm-3 col-xs-3'>
-%= $rel->name
-</div>
-
-<span class="btn btn-default col-lg-8  col-md-8 col-sm-9 col-xs-9">
     % if (my $entry = $controls->{$rel->name}) {
         % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
+        <div class='form-group well'>
+<label class='control-label col-lg-2 col-md-2 col-sm-3 col-xs-3'>
+%= $rel->name
+</label>
+        <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
         %= include 'controls/'.$entry->{template}, object => $object, rel => $rel, %{ $entry->{params} || {} };
+        </div>
+        </div>
     % } else {
+    <div class="row">
     <span class='alert alert-danger'>not implemented (<%= $rel->name %>)</span>
+    </div>
     % }
-</span>
-</div>
+
 % }
 
 % if (my $pub = $object->get_publication(autocreate => 1)) {
+
 <div class='form-group'>
 <label class='control-label col-lg-2 col-md-2 col-sm-2'>
     GCMD Keywords
@@ -46,14 +48,15 @@
 </div>
 <div class='form-group'>
 <label class='control-label col-lg-2 col-md-2 col-sm-2'>
-    Regions
+     Regions
 </label>
 <div class="col-lg-8 col-md-8 col-sm-10" >
     %= include 'controls/regions'
 </div>
 </div>
-% }
 
+% }
+<br />
 <div class="row">
 	<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
     <button type="submit" class="btn btn-primary">Save changes</button>

@@ -89,6 +89,12 @@ img.usgcrp.thumbnail {
 .in-line {
 	display: inline;
 }
+.btn {
+    white-space: normal;
+}
+.pagers .btn {
+	white-space: nowrap;
+}
 a.btn {
     color: #0088cc;
 }

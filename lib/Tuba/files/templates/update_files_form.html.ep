@@ -5,7 +5,6 @@
 
 % my $controls = stash 'controls' || {};
 
-<div class='row'>
 
 %= include 'update_tabs', active => 'files';
 
@@ -39,6 +38,5 @@
 
 %= end
 
-</div>
 </div>
 

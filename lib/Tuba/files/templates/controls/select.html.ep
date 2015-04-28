@@ -10,7 +10,7 @@
 % }
 % param $input_name => $input_value;
 
-%= select_field $input_name, $values, class => '';
+%= select_field $input_name, $values, class => 'form-control';
 
-</div>
+
 

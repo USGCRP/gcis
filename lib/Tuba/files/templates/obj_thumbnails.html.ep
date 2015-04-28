@@ -37,7 +37,7 @@
                 % }
                 </div>
                 % if (my $field = (stash 'add_delete_button')) {
-                <%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["$field"].value = '].$obj->get_publication(autocreate => 1)->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+                <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["$field"].value = '].$obj->get_publication(autocreate => 1)->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
                 % }
             </div>
         </div>

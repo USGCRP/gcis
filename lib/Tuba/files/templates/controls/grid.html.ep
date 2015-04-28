@@ -15,7 +15,7 @@
     %  $rows_in_header = $header;
     % }
 % }
-%= select_field "$base.array_upload_format", [ [  'CSV upload' => 'csv' ], [ 'TSV upload' => 'tsv' ], [ 'JSON upload' => 'json' ] ], class => 'input'
+%= select_field "$base.array_upload_format", [ [  'CSV upload' => 'csv' ], [ 'TSV upload' => 'tsv' ], [ 'JSON upload' => 'json' ] ], class => 'input form-control'
 %= file_field "$base.array_upload", class => 'input';
 
 <br/><br/>
@@ -27,13 +27,14 @@ or edit grid directly:
 <div class="form-group">
     <label class="control-label col-lg-1 col-md-1 col-sm-1 col-xs-1" for="row_count">rows</label>
     <div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
-        <input id="row_count" type="number" min="1" />
+        <input class="form-control" id="row_count" type="number" min="1" />
     </div>
 </div>
 
 <div class="form-group">
     <label class="control-label" for="col_count">columns</label>
-        <input id="col_count" type="number" min="1" />
+    <div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
+        <input class="form-control" id="col_count" type="number" min="1" />
     </div>
 </div>
 

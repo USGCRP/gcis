@@ -19,50 +19,48 @@
     <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= to_textfield_value($object->$accessor) %></textarea>
 % end
 
-
 %= include 'update_tabs', active => 'fields';
 
 <div class='tab-content'>
 <p>Hover over a field name for help about that field.</p>
-
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 
 % my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
 % for my $column (@$cols) {
-
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
 <div class="form-group">
-<label class="<%= $required %> col-lg-2 col-md-2 col-sm-2 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
+<label class="<%= $required %> col-lg-2 col-md-4 col-sm-12 col-xs-12 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
         
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+            	<div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
                 %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
-                
+                </div>
                 
             % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
             	<div class="col-lg-1 col-md-1 col-sm-1">
                 <input class="form-control" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+                </div>
                 
             % } elsif (my $entry = $controls->{$column->name}) {
-            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            	<div class="col-lg-10 col-md-8 col-sm-10 col-xs-10">
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
+                </div>
             % } else {
                 % if ($val && length($val) > 50) {
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+                <div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
                 %= $textarea->($column,$object), class => "form-control";
                 % } else {
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
+                <div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
                 %= $textfield->($column,$object), class => "form-control";
                 % }
                 </div>
             % }
-        
 </div>
 % }
 
@@ -70,6 +68,7 @@
 $('.control-label').popover({trigger : 'hover'});
 %= end
 <div class='required_note clearfix'>required</div>
+
 <div class="row clear-both">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <button type="submit" class="btn btn-primary">Save changes</button>
@@ -84,12 +83,11 @@ $('.control-label').popover({trigger : 'hover'});
     </div>
     </div>
 </div>
+</div>
 
 %= end
-
-
+</div>
 % if (my $footer = stash 'embed_footer') {
 %= $footer->();
 % }
-
 
