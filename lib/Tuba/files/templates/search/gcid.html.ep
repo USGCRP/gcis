@@ -6,8 +6,10 @@ GCID Lookup
 </h3>
 
 <p>Type in the box below to find GCIS identifiers.  The first few matches of each resource type are shown.</p>
-
-%= text_field 'lookup', autocomplete => 'off', id => 'lookup', class => 'span12', placeholder => 'search resources';
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+%= text_field 'lookup', autocomplete => 'off', id => 'lookup', class => 'form-control', placeholder => 'search resources';
+</div>
+<br />
 
 %= javascript begin
 $('#lookup').typeahead({

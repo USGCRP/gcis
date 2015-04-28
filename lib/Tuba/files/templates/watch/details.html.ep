@@ -9,17 +9,34 @@
     </li>
 </ul>
 
-
+<div class="row watch">
 %= form_for current_route() => begin
-last <%= select_field 'limit' => [50,100,500,1000], onChange => '{this.form.submit();}', class => 'span2'; %>
-<%= select_field 'type' => ['changes',[ 'updates' => 'U' ],['inserts' => 'I'],['deletes' => 'D']], onChange => '{this.form.submit();}', class => 'span2'; %>
+<div class="col-lg-1 col-md-1 col-sm-1">
+last 
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1 integer">
+<%= select_field 'limit' => [50,100,500,1000], onChange => '{this.form.submit();}', class => 'form-control'; %>
+</div>
+<div class="col-lg-2 col-md-2 col-sm-2">
+<%= select_field 'type' => ['changes',[ 'updates' => 'U' ],['inserts' => 'I'],['deletes' => 'D']], onChange => '{this.form.submit();}', class => 'form-control'; %>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1">
 on
-<%= select_field 't' => [['any table' => 'any'],map[$_,$_], all_tables()], onChange => '{this.form.submit();}', class => 'span2'; %>.
-%= submit_button 'filter', class => 'btn btn-default pull-right', tabindex => 3;
-%= text_field 'note', placeholder => 'note', class => 'span2 pull-right', tabindex => 2;
-%= text_field 'user', placeholder => 'user', class => 'span2 pull-right', tabindex => 1;
-
+</div>
+<div class="col-lg-2 col-md-2 col-sm-2 any-table">
+<%= select_field 't' => [['any table' => 'any'],map[$_,$_], all_tables()], onChange => '{this.form.submit();}', class => 'form-control'; %>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1 pull-right">
+%= submit_button 'filter', class => 'btn btn-default', tabindex => 3;
+</div>
+<div class="col-lg-2 col-md-2 col-sm-2 pull-right">
+%= text_field 'note', placeholder => 'note', class => 'form-control', tabindex => 2;
+</div>
+<div class="col-lg-2 col-md-2 col-sm-2 pull-right">
+%= text_field 'user', placeholder => 'user', class => 'form-control', tabindex => 1;
+</div>
 %= end
+</div>
 
 <style>
     div.log {
@@ -43,7 +60,7 @@ on
         <%= format_ago($row->{action_tstamp_tx}) %>:
 
          <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show'))) { %>
-             <%= link_to $uri => class => 'btn squeezevert' => begin =%>
+             <%= link_to $uri => class => 'btn btn-default squeezevert' => begin =%>
                  <%= $row->{obj}->pk_values =%>
              <%= end %>
          <% } else { %>

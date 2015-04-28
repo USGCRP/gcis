@@ -231,7 +231,7 @@ COMMENT ON COLUMN article.title IS 'The title of the article (source: crossref.o
 
 
 
-COMMENT ON COLUMN article.doi IS 'The digital object identifier for the articel.';
+COMMENT ON COLUMN article.doi IS 'The digital object identifier for the article.';
 
 
 
@@ -452,8 +452,10 @@ CREATE TABLE dataset (
     lon_min numeric,
     lon_max numeric,
     description_attribution character varying,
+    temporal_resolution character varying,
     CONSTRAINT ck_dataset_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
-    CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999)))
+    CONSTRAINT ck_year CHECK (((publication_year > 1800) AND (publication_year < 9999))),
+    CONSTRAINT dataset_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text))
 );
 
 
@@ -579,6 +581,10 @@ COMMENT ON COLUMN dataset.lon_max IS 'The eastermost longitude in the bounding b
 
 
 COMMENT ON COLUMN dataset.description_attribution IS 'A URL which contains a description of this dataset.';
+
+
+
+COMMENT ON COLUMN dataset.temporal_resolution IS 'The temporal resolution (daily, monthly, etc.).';
 
 
 
@@ -1692,7 +1698,8 @@ CREATE TABLE reference (
     attrs hstore,
     publication_id integer NOT NULL,
     child_publication_id integer,
-    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT no_self_references CHECK ((child_publication_id <> publication_id))
 );
 
 
@@ -1757,7 +1764,8 @@ CREATE TABLE report (
     contact_note character varying,
     contact_email character varying,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
-    CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999)))
+    CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999))),
+    CONSTRAINT report_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text))
 );
 
 
@@ -2170,6 +2178,11 @@ ALTER TABLE ONLY country
 
 
 ALTER TABLE ONLY dataset
+    ADD CONSTRAINT dataset_doi UNIQUE (doi);
+
+
+
+ALTER TABLE ONLY dataset
     ADD CONSTRAINT dataset_pkey PRIMARY KEY (identifier);
 
 
@@ -2386,6 +2399,11 @@ ALTER TABLE ONLY reference
 
 ALTER TABLE ONLY region
     ADD CONSTRAINT region_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY report
+    ADD CONSTRAINT report_doi_unique UNIQUE (doi);
 
 
 

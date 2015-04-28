@@ -63,6 +63,9 @@ h3.sub-title {
 .centered {
     text-align: center;
 }
+pre {
+	margin: 0 auto 10px;
+}
 img.usgcrp.thumbnail {
 	border: 0 none #ffffff;
 	box-shadow: none;
@@ -79,6 +82,12 @@ img.usgcrp.thumbnail {
     font-size:75%;
     font-stretch: ultracondensed;
     font-family:monospace;
+}
+.clear-both {
+	clear: both;
+}
+.in-line {
+	display: inline;
 }
 a.btn {
     color: #0088cc;
@@ -116,9 +125,6 @@ img[src*="gcis_remote=1"] {
 }
 #simple-menu {
 	margin-top: 8px;
-}
-.logo {
-	margin: 6px 4px 0 4px;
 }
 .thumbnail {
 	background-color: #f3f3f3;
@@ -217,6 +223,13 @@ a.blackbutton {
 }
 .navbar {
 	width: 100%;
+}
+.row.watch, form.summary {
+	margin: 15px 0 20px 0;
+}
+.row.watch .any-table, .row.watch .integer {
+	position: relative;
+	margin-left: -50px;
 }
 table.array {
     margin:5px;

@@ -256,12 +256,16 @@ sub update_rel {
         return $c->render(json => { status => 'ok'});
     }
 
+    if ($c->param('delete_child_publication_id')) {
+        $reference->child_publication_id(undef);
+        $reference->save(changes_only => 1, audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
+    }
     if (my $child = $c->param('child_publication_id')) {
-        my $obj = $c->str_to_obj($child) or return $c->redirect_with_error("could not find $child");
+        my $obj = $c->str_to_obj($child) or return $c->redirect_with_error(update_rel_form => "could not find $child");
         my $child_publication = $obj->get_publication(autocreate => 1);
         $child_publication->save(audit_user => $c->user) unless $child_publication->id;
         $reference->child_publication_id($child_publication->id);
-        $reference->save(changes_only => 1, audit_user => $c->user) or return $c->redirect_with_error($reference->error);
+        $reference->save(changes_only => 1, audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if ( $report && (my $chapter_identifier = $c->param('chapter'))) {
         my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);

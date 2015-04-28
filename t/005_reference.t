@@ -22,7 +22,7 @@ my $desc = q[À l'exception de l'abondance de lichens, il y avait peu de différ
 my $id = q[f13367d9-1e7f-40ca-a495-542d7a3faf98];
 
 $t->app->db->dbh->do(q[delete from publication_type where identifier='report']);
-$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report')]);
+$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report'),('book','book')]);
 
 $t->post_ok(
   "/reference" => json => {
@@ -60,6 +60,31 @@ $t->get_ok("/reference/history/$id");
 my $body  = $t->tx->res->body;
 like $body, qr[this is an audit note], 'saved audit note in create';
 #like $body, qr[À l'exception de l'abondance de lichens], 'unicode okay on history page';
+
+# Make a book, convert to a report.
+$t->post_ok("/book" => "form" => { identifier => 'test-book', title => 'some title' } );
+$t->post_ok("/reference" => json => {
+        identifier => "newrefid",
+        publication_uri => "/report/test-report",
+        attrs => { testattr => "testvalue" }
+    })->status_is(200);
+$t->post_ok("/reference/newrefid" => json => {
+        identifier => "newrefid",
+        child_publication_uri => "/book/test-book",
+        attrs => { testattr => "testvalue" }
+    })->status_is(200);
+
+# Convert
+$t->post_ok(
+  "/book/test-book" => "form" => {
+     identifier => 'test-book', title => 'some title',
+     convert_into_report => 1});
+$t->get_ok( "/report/test-book" )->status_is(200);
+$t->get_ok( "/reference/newrefid.json" )->status_is(200)->json_is(
+    "/attrs" => { testattr => "testvalue" } );
+
+$t->delete_ok("/reference/newrefid")->status_is(200);
+$t->delete_ok("/report/test-book")->status_is(200);
 
 $t->delete_ok("/reference/$id" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/report/test-report" => { Accept => "application/json" })->status_is(200);

@@ -30,6 +30,7 @@ A reference is a bibliographic entry.  It relates two publications.
      "reference_identifier_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, publication_id)
  Check constraints:
      "ck_reference_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+     "no_self_references" CHECK (child_publication_id <> publication_id)
  Foreign-key constraints:
      "reference_child_publication_id_fkey" FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE SET NULL
      "reference_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE

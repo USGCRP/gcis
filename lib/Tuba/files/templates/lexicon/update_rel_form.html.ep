@@ -12,7 +12,7 @@
 % my $selected_context = param 'context';
 % my @contexts = $lexicon->contexts;
 <div class='row'>
-    <div class='span2'>
+    <div class='col-lg-2 col-md-2 col-sm-2 col-xs-2'>
     <ul class='nav nav-list well'>
         <li class='nav-header'>Contexts</li>
     % for my $context (sort @contexts) {
@@ -40,7 +40,7 @@
         % for my $exterm (@$terms) {
         <dt>
         % if (my $target = $exterm->same_as) {
-        <a target="_blank" href="<%= $target %>"><i class='icon-star'></i></a>
+        <a target="_blank" href="<%= $target %>"><i class='glyphicon glyphicon-star'></i></a>
         % }
         % if (my $target = $exterm->native_url) {
             <a target="_blank" href="<%= $target %>"><%= $exterm->term %></a></dt>
@@ -60,11 +60,11 @@
         </dd>
         % }
         <dt>
-        <%= text_field 'new_term', class => "input input-small", placeholder => "New term" %>
+        <%= text_field 'new_term', class => "input form-control input-small", placeholder => "New term" %>
         </dt>
         <dd>
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        <%= text_field 'new_gcid', class => "span10", autocomplete => "off", id => 'gcid_lookup', placeholder => "GCID" %>
+        <%= text_field 'new_gcid', class => "form-control", autocomplete => "off", id => 'gcid_lookup', placeholder => "GCID" %>
         </div>
         </dd>
         </dl>
@@ -77,8 +77,8 @@
         % } else {
         <p>Please select or create a context for <%= $lexicon->identifier %> (<%= external_link($lexicon->url) %>).</p>
         %= form_for obj_uri_for($object,'update_rel_form'), method => 'GET' => class => 'form form-inline' => begin
-        %= text_field 'context', class => "input", placeholder => "New Context";
-        %= submit_button 'Add', class =>"btn brn-default btn-primary";
+        %= text_field 'context', class => "input form-control", placeholder => "New Context";
+        %= submit_button 'Add', class =>"btn btn-default btn-primary";
         %= end
         % }
 

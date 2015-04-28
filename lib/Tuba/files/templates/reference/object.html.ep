@@ -6,11 +6,14 @@
 
 %= include 'history_modal';
 
-% if ($object->can('identifier') && user_can('update')) {
-    <span style='float:right;'>
-    <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
-    <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-    </span>
+    % if ($object->can('identifier') && user_can('update')) {
+        %= include 'history_modal';
+        <div class='row well'>
+            <div class='col-md-2 pull-right'>
+                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
+                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+            </div>
+        </div>
 % }
 
 <pre>
@@ -18,22 +21,25 @@
 <%= include 'db_meta'; =%>
 </pre>
 
-<div class='row-fluid'>
+<div class='row well'>
+<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
     % my $others= $reference->subpubrefs;
-    <div class='span8 well'>
+    <div class="row">
+    <div class='col-md-8 col-lg-8 col-sm-12 col-xs-12'>
         This bibliographic record appears in :
-        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->publication->to_object, @$others ], size => 'span3'
+        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->publication->to_object, @$others ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4'
     </div>
     % if (my $child = $reference->child_publication) {
-        <div class='span4 well'>
+        <div class='col-md-4 col-lg-4 col-sm-8 col-xs-8'>
             Publication/contributor :
             %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span12'
             % for my $map (@{ $reference->publication_contributor_maps }) {
             %= include 'obj_button', obj => $map->contributor, no_table => 1
             % }
-
+    </div>
+    </div>
     % } else {
-        <div class='span4 alert alert-error'>
+        <div class='col-lg-4 col-md-4 col-sm-4 col-xs-8 alert alert-danger'>
         <p style='text-align:center;'>This reference is not associated with a publication.
         % if (user_can('update')) {
         <br>
@@ -56,7 +62,7 @@
 % }
 
 % if (@ordered) {
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>Bibliographic fields</caption>
 % for my $k (@ordered) {
     % my $val = $attrs->{$k};
@@ -91,7 +97,7 @@
 % }
 
 % if (@internal) {
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>Bibliographic identifiers</caption>
 % for my $k (@internal) {
     % my $val = $attrs->{$k};

@@ -16,7 +16,7 @@
 % }
 </table>
 <div class="col-lg-9 col-md-9 col-sm-8 col-xs-8" style='font-size:75%;'>
-%= text_field 'new_publication', placeholder => "search publications", id => "new_publication", class => '', autocomplete => 'off';
+%= text_field 'new_publication', placeholder => "search publications", id => "new_publication", class => 'form-control', autocomplete => 'off';
 %= link_to 'create_form_article' => class => 'btn btn-default' => target => '_blank' => begin
 New article
 %= end

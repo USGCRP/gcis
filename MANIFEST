@@ -325,7 +325,12 @@ db/patches/2020_comments.sql
 db/patches/2030_model_runs.sql
 db/patches/2030_typo.sql
 db/patches/2040_contact_note.sql
+db/patches/2040_new_org_types_and_rels.sql
 db/patches/2050_url_fields.sql
+db/patches/2060_dataset_doi.sql
+db/patches/2070_doi_checks.sql
+db/patches/2080_no_self_references.sql
+db/patches/2090_temporal_resolution.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -444,6 +449,7 @@ lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/sitemap.xml
 lib/Tuba/files/public/test.html
 lib/Tuba/files/public/usgcrp-200.png
+lib/Tuba/files/public/usgcrp-220.png
 lib/Tuba/files/public/usgcrp-300.png
 lib/Tuba/files/public/usgcrp-globe-trans.png
 lib/Tuba/files/templates/activity/object.html.ep

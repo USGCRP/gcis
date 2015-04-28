@@ -9,28 +9,36 @@
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <input type="text" class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <input type="text" class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+    </div>
 % end
 
 % my $textarea = begin
     % my $column = shift;
     % my $object = shift;
     % my $accessor = $column->accessor_method_name;
-    <textarea rows=7 class="span8" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
+    </div>
 % end
 
-<div class='row-fluid'>
 %= include 'update_tabs', active => 'fields';
+<br />
 <div class='tab-content'>
-    To edit this reference, please choose a valid tab from above.
+    <p>To edit this reference, please choose a valid tab from above.</p>
 </div>
 
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
-<div class="form-actions">
-    <div class='input-prepend'>
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
-    %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
+<div class="row">
+	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class='input-group'>
+    <span class="input-group-btn">
+    <button type="submit" name='delete' value='delete' class="btn btn-default btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    </span>
+    %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
+    </div>
     </div>
 </div>
 %= end

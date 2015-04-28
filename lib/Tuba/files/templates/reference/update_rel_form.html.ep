@@ -9,66 +9,77 @@
 
 <div class='tab-content'>
 
-%= form_for obj_uri_for($object,'update_rel') => class => 'form-horizontal well' => method => 'POST' => begin
+%= form_for obj_uri_for($object,'update_rel') => class => 'form-horizontal' => method => 'POST' => begin
+<div class="well">
 % if (my $error = ( (stash 'error') || flash 'error')) {
-    <div class='alert alert-error'><%= $error %></div>
+    <div class='alert alert-danger'><%= $error %></div>
 % }
 % if (my $info = ( (stash 'info') || flash 'info')) {
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 
-<div class='control-group' style='margin:10px;'>
-    <label class='control-label'>
+<div class='row well'>
+    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
         Primary publication whose bibliography contains this reference (e.g. a report).
-    </label>
+    </div>
 
-    <div class="controls" style='border:1px solid #ddd;'>
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
         %= include 'obj_thumbnails', objs => [ $object->publication->to_object ];
     </div>
 </div>
 
 %= hidden_field 'delete_subpub';
+%= hidden_field 'delete_child_publication_id';
 
-<div class='control-group' style='margin:10px;'>
-    <label class='control-label'>
+<div class='row well'>
+    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
         Other publications containing this reference (e.g. chapters, figures).
-    </label>
+    </div>
 
-    <div class="controls" style='border:1px solid #ddd;'>
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
     % my @other = @{ $object->subpubrefs };
     %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, @other ], add_delete_button => 'delete_subpub';
         % if (@$chapters) {
         %= include 'controls/select', input_name => 'chapter', values => $chapters;
+       
         % }
+        <div class="col-lg-10 col-lg-offset-2 col-md-10 col-me-offset-2 col-sm-10 col-xs-10">
         %= include 'controls/autocomplete', input_name => 'other_pub', object_type => 'all';
+        </div>
     </div>
-</div>
+
 
 
 % my $child = $object->child_publication;
-<div class='control-group' style='margin:10px;'>
-    <label class='control-label'>
+
+<div class='row well'>
+    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
         Child publication
-    </label>
-    <div class="controls" style='border:1px solid #ddd;'>
-        % if ($child) {
-        %= include 'obj_thumbnails', objs => [ $child->to_object ];
+    </div>
+    % if ($child) {
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+        %= include 'obj_thumbnails', objs => [ $child->to_object ], add_delete_button => "delete_child_publication_id";
+    </div>
         % }
+    <div class="col-lg-10 col-lg-offset-2 col-md-10 col-me-offset-2 col-sm-10 col-xs-10">
         %= include 'controls/autocomplete', column => $meta->column('child_publication_id'), object_type => 'all';
     </div>
 </div>
 
 
-<div class="form-actions">
-    <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="reset" class="btn">Reset</button>
+<div class="row">
+	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
+    <button type="submit" class="btn btn-default btn-primary">Save changes</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+    </div>
 </div>
 
+
+</div>
+</div>
 %= end
-
-</div>
-
-<table class='table table-striped table-bordered squeeze'>
+<br />
+<table class='table table-responsive table-striped table-bordered squeeze'>
     <caption>Attributes</caption>
     % for my $k (sort keys %{ $reference->attrs }) {
     <tr>

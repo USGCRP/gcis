@@ -8,26 +8,37 @@
     <%= link_to $self->req->url->clone->query(view => 'summary') => begin %>summary<%= end %>
     </li>
 </ul>
-
-%= form_for current_route() => class => 'form form-inline' => begin
+<div>
+%= form_for current_route() => class => 'form form-inline summary' => begin
+<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 changes since
-<%= text_field 'cutoff', class => 'span2'; %> ago
+</div>
+<div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+<%= text_field 'cutoff', class => 'form-control'; %>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1">
+ago
+
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1">
 %= submit_button 'show', class => 'btn btn-default';
+</div>
 %= hidden_field 'view' => 'summary';
 %= end
-
-<table class='table table-condensed table-bordered'>
+</div>
+<br /><br />
+<table class='table table-responsive table-condensed table-bordered'>
     <tr>
-    <td>user&darr; <span style='float:right;'>table&rarr;</span></td>
+    <th class="col-lg-2 col-md-2 col-sm-2">user&darr; <span style='float:right;'>table&rarr;</span></th>
     % for my $table (@$all_tables) {
     <th><a href="/watch?view=details&t=<%= $table %>" alt="<%= $table %>" title="<%= $table %>"><%= substr($table,0,4) %></a></th>
     % }
     </tr>
     % for my $user (@$all_users) {
     <tr>
-        <th>
+        <td>
             <a href="/watch?view=details&user=<%= $user %>"><%= $user %></a>
-        </th>
+        </td>
         % for my $table (@$all_tables) {
         <td>
             <a href="/watch?view=details&t=<%= $table %>&user=<%= $user %>"><%= $grid->{$user}{$table} %></a>

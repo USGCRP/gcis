@@ -15,8 +15,8 @@
 </tr>
 % }
 </table>
-<div class="row">
-%= text_field 'new_array', placeholder => "search arrays", id => "newarray", class => 'col-lg-8 col-md-8 col-sm-8 col-xs-8 ';
+<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+%= text_field 'new_array', placeholder => "search arrays", id => "newarray", class => 'form-control';
 <a href="#create_array" role="button" class="btn btn-default" data-toggle="modal">Create array</a>
 %= include 'modal', url => url_for('create_form_array'), id => 'create_array'
 </div>

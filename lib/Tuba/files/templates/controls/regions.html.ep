@@ -9,13 +9,13 @@
 %= include 'obj_thumbnails', objs => [ $keyword ];
 </td>
 
-<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_region"].value = '].$keyword->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_region"].value = '].$keyword->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 </table>
-<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
-%= text_field 'new_region', placeholder => "search regions", id => "new_region", class => '', autocomplete => 'off';
-</div>
+
+%= text_field 'new_region', placeholder => "search regions", id => "new_region", class => 'form-control', autocomplete => 'off';
+
 
 %= javascript begin
 $('#new_region').typeahead({

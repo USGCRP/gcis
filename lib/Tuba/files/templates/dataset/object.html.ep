@@ -78,6 +78,10 @@
         <p>The temporal extent of this dataset is <span itemprop="temporal"><%= $extent %></span>.
         % }
 
+        % if (my $temporal_resolution = $dataset->temporal_resolution) {
+        <p>The temporal resolution of this dataset is <span itemprop="temporal"><%= $temporal_resolution %></span>.
+        % }
+
         % if ($dataset->lat_min || $dataset->lat_max || $dataset->lon_min || $dataset->lon_max) { 
         <p>
         The spatial range for this dataset is <%= $dataset->lat_min // 'unknown' %>° to <%= $dataset->lat_max // 'unknown' %>° latitude,

@@ -3,14 +3,15 @@
 % my ($api_pw,$api_key) = $self->Tuba::Auth::make_api_key;
 <div class="row">
 <p>To upload files from the command line (using an HTTP PUT request):</p>
-<textarea class='col-lg-12 col-md-12 col-sm-12 col-xs-12 form-control' readonly rows=1>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<textarea class='form-control' readonly rows=1>
 curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$meta->table)->to_abs %>/
 </textarea>
 </div>
 <br />
 <br />
 
- <table class='table table-condensed table-bordered'>
+ <table class='table table-responsive table-condensed table-bordered'>
 
 % my $pub = $object->get_publication;
 % if ($pub) {
@@ -25,7 +26,7 @@ curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$m
     %= end
     </td>
     <td>
-    <%= tag 'button' => class => 'btn btn-default btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
+    <%= tag 'button' => class => 'btn btn-danger' => onClick => qq[{this.form.elements["delete_file"].value = '].$file->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
     </td>
     </tr>
     % }
@@ -45,18 +46,18 @@ Upload a file
 </div>
 
 <div class='form-group'>
-<label class="control-label col-lg-3 col-md-3 col-sm-4">
+<label class="control-label col-lg-3 col-md-3 col-sm-4 col-xs-4">
 Retrieve a file from a url
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8 col-xs-8'>
-%= text_field 'file_url', class => '', placeholder => 'http://example.com/image.jpg'
+%= text_field 'file_url', class => 'form-control', placeholder => 'http://example.com/image.jpg'
 </div>
 </div>
 <div class='form-group'>
-<label class="control-label col-lg-3 col-md-3 col-sm-4 col-sm-4" for='use_remote_location'>
+<label class="control-label col-lg-3 col-md-3 col-sm-4 col-xs-4" for='use_remote_location'>
 Use remote location.
 </label>
-<div class="col-lg-9 col-md-9 col-sm-8 col-sm-8">
+<div class="col-lg-9 col-md-9 col-sm-8 col-xs-8">
     %= check_box 'use_remote_location' => 1;
 </div>
 </div>

@@ -31,24 +31,6 @@ sub _user_can_edit {
     return 0;
 }
 
-sub render_not_found_or_redirect {
-    my $c = shift;
-    my $identifier = $c->stash('report_identifier');
-    my $sth = $c->db->dbh->prepare(<<'SQL', { pg_placeholder_dollaronly => 1 });
-select changed_fields->'identifier'
- from audit.logged_actions where table_name='report' and changed_fields?'identifier'
- and row_data->'identifier' = $1
-order by transaction_id limit 1
-SQL
-    my $got = $sth->execute($identifier);
-    my $rows = $sth->fetchall_arrayref;
-    return $c->reply->not_found unless $rows && @$rows;
-    my $replacement = $rows->[0][0];
-    my $url = $c->req->url;
-    $url =~ s{/report/$identifier(?=/|$)}{/report/$replacement};
-    return $c->redirect_to($url);
-}
-
 sub show {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');

@@ -2,13 +2,13 @@
 
 %= form_for 'search' => class => "form form-inline well" => begin
 <label>Search for </label>
-%= text_field 'q'
+%= text_field 'q', class => "form-control"
 <label> in</label>
 %= select_field 'type' => [ 'all', sort ('organization','person', db_identifiers('publication_type'))];
 and show
 %= select_field 'format' => [ 'detailed', 'brief'];
 match results.
-%= submit_button 'search', class => "btn btn-search btn-primary"
+%= submit_button 'search', class => "btn btn-default btn-search btn-primary"
 %= end
 
 % my @clone = @$results;
@@ -21,14 +21,14 @@ Please enter some search terms above.
 </p>
 
 <pre>
-<%= link_to url_with(format => 'json') => class => 'label label-info' => begin %>JSON<%= end %> \
-<%= link_to url_with(format => 'yaml') => class => 'label label-info' => begin %>YAML<%= end %> \
+<%= link_to url_with(format => 'json') => class => 'label label-default label-info' => begin %>JSON<%= end %> \
+<%= link_to url_with(format => 'yaml') => class => 'label label-default label-info' => begin %>YAML<%= end %> \
 </pre>
 
 % if ( ( (param 'format') // '') eq 'detailed') {
     % for my $obj (@clone) {
-    <div class='row-fluid'>
-        <div class='span11'>
+    <div class='row'>
+        <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
             <h4>
             <%= obj_link_to $obj, 'show'  => begin %>
             <%= $obj->meta->table %> <%= $obj->stringify(brief => 1) %>
@@ -36,7 +36,7 @@ Please enter some search terms above.
             </h4>
             <p><%= $obj->as_text %></p>
         </div>
-        <div class='span1'>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             % if (my $pub = $obj->get_publication) {
             %= include 'pub_thumbnails', pub => $pub, meta => $obj->meta, simple => 1;
             % }
@@ -45,7 +45,7 @@ Please enter some search terms above.
     % }
 % } else {
     % while (my @next = splice(@clone, 0, 6)) {
-        <div class='row-fluid'>
+        <div class='row'>
             %= include 'obj_thumbnails', objs => \@next;
         </div>
     % }

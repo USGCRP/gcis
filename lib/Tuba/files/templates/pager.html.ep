@@ -7,12 +7,24 @@
 % my $per_page = stash 'per_page';
 
 <div class='row'>
-    <div class='col-md-2 col-xs-4 col-sm-4 pull-left'>
-        <span class='btn btn-default btn-sm'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %></span>
+    <div class='col-lg-4 col-md-4 col-xs-4 col-sm-4 pull-left'>
+    	<div class="input-group">
+    	<span class="input-group-btn">
+        <button class='btn btn-default btn-sm'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
+        </button>
+        </span>
+        
+    % if ($show_search_box) {
+           <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'form-control',
+            placeholder => 'search';
+            %>
+    % } 
+        
+    </div>
         
     </div>
     % if ($page && $pages > 1) {
-        <div class='col-md-2 col-md-offset-3 col-sm-4 col-xs-5 centered'>
+        <div class='col-lg-2 col-lg-offset-1 col-md-2 col-md-offset-1 col-sm-4 col-xs-5 centered'>
             <div class='btn-group<%= (stash 'bottom') ? ' dropup' : '' %>' style='margin-bottom:4px;'>
 
                 % if ($page==1) {
@@ -46,7 +58,7 @@
             </div>
         </div>
     % }
-    <div class='col-md-2 col-md-offset-3 col-sm-4 col-xs-3 pull-right'>
+    <div class='col-lg-1 col-md-1 col-sm-4 col-xs-3 pull-right'>
         <div class='btn-group'>
             % if (param 'thumbs') {
                 <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>
@@ -60,19 +72,7 @@
 
 </div>
 
-% if ($show_search_box) {
-        <div class="form search-box" role="search">
-        <div class="form-group col-md-5 col-sm-8">
-        <label class="sr-only">Search box</label>
-           <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'input form-control',
-            placeholder => 'search';
-            %>
-            </div>
-        </div>
-
-        % } 
-        
-
+	
 
 % if ($show_search_box) {
 %= javascript begin

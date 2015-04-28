@@ -6,7 +6,7 @@
 % my $pub = $object->get_publication;
 % my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
 
-<table class='table table-condensed table-bordered densetable'>
+<table class='table table-responsive table-condensed table-bordered densetable'>
     <tr>
         <th>Role</th>
         <th>Person</th>
@@ -28,8 +28,8 @@
         % }
         <td><%= obj_link($con->organization) %></td>
         <td><%= obj_link($map->reference, short => 1) %></td>
-        <td><%= text_field 'sort_key_'.$con->id, class => "input-small squeezevert" %></td>
-        <td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        <td><%= text_field 'sort_key_'.$con->id, class => "form-control input-small squeezevert" %></td>
+        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_contributor"].value = '].$con->id.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
     </tr>
 % $last = $con;
 % }
