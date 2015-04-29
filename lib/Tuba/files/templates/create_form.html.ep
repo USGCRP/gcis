@@ -72,7 +72,7 @@ $(function() {
         target : '#<%= $target %>',
         success : function(response) {
             if (response.indexOf('form') < 0) {
-                var dismiss='<button type="button" class="btn btn-default btn-success" data-dismiss="modal" aria-hidden="true">continue</button>'
+                var dismiss='<button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true">continue</button>'
                 $('#<%= $target %>').append('<center>' + dismiss + "</center>");
             }
         }

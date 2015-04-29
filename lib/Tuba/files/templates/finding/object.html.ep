@@ -11,10 +11,12 @@
 % unless (param 'no_header') {
     %= include 'history_modal';
     % if ($object->can('identifier') && user_can('update')) {
-        <span style='float:right;'>
-        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn" data-toggle="modal">history</a>
-        </span>
+<div class='row'>
+		<div class='col-md-2 pull-right'>
+		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+		</div>
+</div>
     % }
 % }
 
@@ -26,8 +28,7 @@
     % }
 </center>
 
-<div class='row-fluid'>
-    <div class='span10 offset1 well'>
+<div class='row well'>
         % my $pub = $report->get_publication;
         <p class='lead'><%= $finding->statement %></p>
         %= include 'h/contributors_short', object => $finding;
@@ -44,7 +45,7 @@
             % }
         % }
         %= include 'h/cites', pub => $finding->get_publication;
-    </div>
+
 </div>
 
 %= include 'h/other_formats';

@@ -92,7 +92,7 @@ img.usgcrp.thumbnail {
 .btn {
     white-space: normal;
 }
-.pagers .btn {
+.pagers .btn, .no-wrap {
 	white-space: nowrap;
 }
 a.btn {

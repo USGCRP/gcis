@@ -10,7 +10,8 @@
 
 <div class='tab-content'>
 
-%= form_for obj_uri_for($object,'update_files') => class => 'form-horizontal well' => method => 'POST', enctype => 'multipart/form-data' => begin
+%= form_for obj_uri_for($object,'update_files') => class => 'form-horizontal' => method => 'POST', enctype => 'multipart/form-data' => begin
+<div class="well">
 % if (my $error = (flash 'error') || (stash 'error')) {
     <div class='alert alert-danger'><%= $error %></div>
 % }
@@ -36,7 +37,9 @@
     </div>
 </div>
 
-%= end
-
 </div>
+
+%= end
+</div>
+
 

@@ -13,7 +13,7 @@
 %= include 'pager', page => $page;
 % }
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>numeric</th>
     <th>identifier</th>

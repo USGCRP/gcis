@@ -28,13 +28,13 @@ logout
             <div class='alert alert-error'><%= $error %></div>
         % }
 
-        <div class="control-group">
+        <div class="form-group">
             <label class="control-label" for="inputUser">User</label>
-            <div class="controls">
-                <input type="text" id="inputUser" name='user' placeholder="email address">
+            <div>
+                <input type="text" class="form-control" id="inputUser" name='user' placeholder="email address">
             </div>
         </div>
-<div class="form-actions">
+<div class="row">
     %= hidden_field 'destination' => $destination;
     <button type="submit" class="btn btn-primary">Sign in with your Google account</button>
 </div>

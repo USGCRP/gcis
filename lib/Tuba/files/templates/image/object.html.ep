@@ -9,24 +9,26 @@
 % unless (param 'no_header') {
     % if ($object->can('identifier') && user_can('update')) {
         %= include 'history_modal';
-        <span style='float:right;'>
-        <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-        <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-        </span>
+        <div class='row'>
+		<div class='col-md-2 pull-right'>
+		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+		</div>
+	</div>
     % }
 % }
 <div class='row well'>
-    <div class='col-lg-12 col-md-12'>
-        <div class='pull-right thumbnails col-lg-4 col-md-5' style='top:2px;text-align:right;'>
+    
+        <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:right;'>
         % my $pub = $image->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => begin
                 %= image $file->thumbnail_path, class => 'img-thumbnail', style => 'padding:0px;'
                 %= end
             % }
         % }
-
+        <br />
         % my $lat_min = $image->lat_min;
         % my $lat_max = $image->lat_max;
         % my $lon_min = $image->lon_min;
@@ -75,11 +77,13 @@
         % if (my @figures = sorted_list($image,'figures')) {
         <p>
         This image is part of <%= @figures==1 ? 'this figure' : 'these figures' %> :
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         %= include 'obj_thumbnails', objs => [ sorted_list($image,'figures') ], no_table => 1, tiny_captions => 1;
+        </div>
         % }
         </p>
 
-    </div>
+
 </div>
 <%= include 'h/other_formats'; =%>
 

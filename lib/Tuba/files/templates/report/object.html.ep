@@ -48,7 +48,7 @@
 % end
 
 <div itemscope itemtype="http://schema.org/CreativeWork" class='row well'>
-
+	
         % my $pub = $report->get_publication;
         %= include 'h/thumbnail', pub => $pub;
         <div class="col-md-8 col-lg-8 col-sm-8 col-xs-12">
