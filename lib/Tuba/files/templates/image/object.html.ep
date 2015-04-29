@@ -44,6 +44,10 @@
         %= include commify => objs => scalar $image->all_people
         <p><%= $image->description // ''%></p>
 
+        % if ($image->usage_limits) {
+        <p><%= $image->usage_limits %></p>
+        % }
+
         % if ($image->time_start && $image->time_end) {
         <p>The time range for this image is <%= $image->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
          to <%= $image->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
