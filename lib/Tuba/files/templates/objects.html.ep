@@ -22,6 +22,8 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
+<br />
+<br />
 <table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>
 </caption>
@@ -62,7 +64,7 @@
         </td>
 % }
 
-    <td class='thumbnails'>
+    <td>
     <div>
        % if (my $pub = $o->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1;

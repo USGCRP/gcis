@@ -46,12 +46,12 @@
                 <span class='pull-right'>
                 <%= link_to
                 url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.json'
-                => class => 'label label-default label-info'
+                => class => 'label label-info'
                 => begin %>json<%= end %>
 
                 <%= link_to
                 url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->identifier }).'.yaml'
-                => class => 'label label-default label-info'
+                => class => 'label label-info'
                 => begin %>yaml<%= end %>
             </span>
 

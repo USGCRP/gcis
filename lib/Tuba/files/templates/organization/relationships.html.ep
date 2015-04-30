@@ -1,6 +1,6 @@
 % my $sorters = stash 'sorters';
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 
 <tr> <td>organization_type</td>

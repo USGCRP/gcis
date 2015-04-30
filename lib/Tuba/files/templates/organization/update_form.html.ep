@@ -14,7 +14,7 @@ To merge this organization into another organization, select an organization bel
 
 <div>
     %= include 'controls/autocomplete', id => "merge_org", input_name => 'merge_organization', object_type => 'organization'
-    <button type="submit" class="btn btn-default btn-primary btn-warning" onclick='return confirm_merge()'>Merge into other organization and remove this record</button>
+    <button type="submit" class="btn btn-primary btn-warning" onclick='return confirm_merge()'>Merge into other organization and remove this record</button>
 </div>
 
 %= end

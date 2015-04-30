@@ -18,7 +18,7 @@
 %= hidden_field 'contributor_id';
 %= hidden_field 'delete_publication';
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>Contributions</caption>
     % for my $c (sort {$a->role_type_identifier cmp $b->role_type_identifier} @ctrs) {
         <tr>
@@ -43,20 +43,25 @@
     <tr>
         <td colspan=3>
             <center>New contributor</center>
-            <div class='row-fluid'>
-            <%= label_for 'role_type', class => 'control-label' => begin %>Role<%= end %>
-            <div class='controls'>
-                %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+            <div class='form-group'>
+            <%= label_for 'role_type', class => 'col-md-2 control-label' => begin %>Role<%= end %>
+            <div class='col-md-8'>
+                %= select_field 'role_type', db_labels('role_type'), class => 'form-control';
+            </div>
             </div>
 
-            <%= label_for 'person', class => 'control-label' => begin %>Person<%= end %>
-            <div class='controls'>
+            <div class='form-group'>
+            <%= label_for 'person', class => 'col-md-2 control-label' => begin %>Person<%= end %>
+            <div class='col-md-8'>
                 %= include 'controls/autocomplete', input_name => 'person', object_type => 'person'
             </div>
+            </div>
 
-            <%= label_for 'publication', class => 'control-label' => begin %>Publication<%= end %>
-            <div class='controls'>
+            <div class='form-group'>
+            <%= label_for 'publication', class => 'col-md-2 control-label' => begin %>Publication<%= end %>
+            <div class='col-md-8'>
                 %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
+            </div>
             </div>
     </td>
 </tr>
@@ -66,7 +71,7 @@
 %= hidden_field 'delete_relationship_to';
 %= hidden_field 'delete_relationship_type';
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>Related organizations</caption>
 
     % for my $map ($object->organization_maps) {
@@ -85,23 +90,26 @@
     <tr>
         <td colspan=3>
             <center>Associate with another organization</center>
-            <%= label_for 'organization_relationship_identifier', class => 'control-label' => begin %>Relationship<%= end %>
-            <div class='controls'>
-                %= select_field 'organization_relationship_identifier', db_labels('organization_relationship'), class => 'span8';
+            <div class='form-group'>
+            <%= label_for 'organization_relationship_identifier', class => 'col-md-2 control-label' => begin %>Relationship<%= end %>
+            <div class='col-md-8'>
+                %= select_field 'organization_relationship_identifier', db_labels('organization_relationship'), class => 'form-control';
             </div>
-
-            <%= label_for 'related_org', class => 'control-label' => begin %>Other organization<%= end %>
-            <div class='controls'>
+            </div>
+            
+            <div class='form-group'>
+            <%= label_for 'related_org', class => 'col-md-2 control-label' => begin %>Other organization<%= end %>
+            <div class='col-md-8'>
                 %= include 'controls/autocomplete', input_name => 'related_org', object_type => 'organization'
             </div>
-
+            </div>
         </td>
     </tr>
 </table>
 
 <div class="form-actions">
     <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="reset" class="btn">Reset</button>
+    <button type="reset" class="btn btn-default">Reset</button>
 </div>
 </div>
 

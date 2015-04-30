@@ -24,8 +24,8 @@
 
 % }
 
-<div itemscope itemtype="http://schema.org/Person" class='row'>
-    <div class='well'>
+<div itemscope itemtype="http://schema.org/Person" class='row well'>
+   
         <h2 itemprop="name"><%= $person->first_name %> <%= $person->last_name %></h2>
     % if (my $orcid = $person->orcid) {
     <p>ORCID : <%= link_to "http://orcid.org/$orcid" => target => "_blank" => begin %><%= $orcid %><%= end %></p>
@@ -78,7 +78,7 @@
         </table>
         </div>
     % }
-    </div>
+  
 </div>
 
 %= include 'h/other_formats';

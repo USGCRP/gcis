@@ -28,7 +28,7 @@
         </td>
         <td>
             %   for ($o->methodologies) {
-                <span class='btn squeezevert'><%= obj_link($_); %></span>
+                <span class='btn btnsqueezevert'><%= obj_link($_); %></span>
             %   }
         </td>
         <td>
