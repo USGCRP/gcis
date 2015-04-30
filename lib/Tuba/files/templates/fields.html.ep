@@ -8,7 +8,7 @@
 % my $k = $col->accessor_method_name;
 % my $val = $object->$k;
     <tr>
-        <td><nobr><%= labelize($k) %></nobr></td>
+        <td class="no-wrap"><%= labelize($k) %></td>
         <td>
             % if (!$val) {
 

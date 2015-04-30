@@ -48,7 +48,7 @@
         </div>
     </div>
 
-
+</div>
 
 % my $child = $object->child_publication;
 
@@ -59,24 +59,25 @@
     % if ($child) {
     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         %= include 'obj_thumbnails', objs => [ $child->to_object ], add_delete_button => "delete_child_publication_id";
-    </div>
+    
         % }
     <div class="col-lg-10 col-lg-offset-2 col-md-10 col-me-offset-2 col-sm-10 col-xs-10">
         %= include 'controls/autocomplete', column => $meta->column('child_publication_id'), object_type => 'all';
+    </div>
     </div>
 </div>
 
 
 <div class="row">
 	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
-    <button type="submit" class="btn btn-default btn-primary">Save changes</button>
+    <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="reset" class="btn btn-default">Reset</button>
     </div>
 </div>
 
 
 </div>
-</div>
+
 %= end
 <br />
 <table class='table table-responsive table-striped table-bordered squeeze'>
@@ -88,5 +89,5 @@
     </tr>
     % }
 </table>
-
+</div>
 

@@ -11,17 +11,17 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
+<br />
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 
-<table class='table table-condensed table-bordered table-striped'>
-<caption> </caption>
 <tr>
-    <th>identifier</th>
-    <th>type</th>
-    <th>title</th>
+    <th class="col-lg-2 col-md-2 col-sm-2">identifier</th>
+    <th class="col-lg-1 col-md-1 col-sm-1">type</th>
+    <th class="col-lg-3 col-md-3 col-sm-3">title</th>
 % unless (stash 'chapter') {
-    <th>chapters</th>
+    <th class="col-lg-3 col-md-3 col-sm-3">chapters</th>
 % }
-    <th>publication</th>
+    <th class="col-lg-3 col-md-3 col-sm-3">publication</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -33,18 +33,18 @@
     <td> <%= $o->attrs->{reftype} %> </td>
     <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
 % unless (stash 'chapter') {
-    <td class='thumbnails'>
-        <div class='span2'>
+    <td>
+        <div>
             % for my $sub ($o->subpubrefs) {
             <%= link_to $sub->uri($self) => class => "btn btn-default" => begin %><%= $sub->publication->stringify %><%= end %>
             % }
         </div>
     </td>
 % }
-    <td class='thumbnails'>
+    <td>
         % if (my $pub = $o->child_publication) {
-            <div class='span2'>
-                <%= link_to $pub->uri($self) => class => "btn btn-default" => begin %><%= $pub->stringify %><%= end %>
+            <div>
+                <%= link_to $pub->uri($self) => class => "btn btn-default col-lg-12 col-md-12 col-sm-12" => begin %><%= $pub->stringify %><%= end %>
             </div>
         % } else {
             no publication

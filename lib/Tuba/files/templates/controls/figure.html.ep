@@ -10,12 +10,12 @@
 % unless (stash 'no_thumbnails') {
 <td><%== $figure->thumbnail($self) %></td>
 % }
-<td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_figure"].value = '].$figure->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+<td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_figure"].value = '].$figure->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
 </tr>
 % }
 <tr>
 <td>
-%= text_field 'new_figure', placeholder => "search figures", id => "newfigure", style => "width:100%;";
+%= text_field 'new_figure', placeholder => "search figures", id => "newfigure", class => 'form-control', style => "width:100%;";
 </td>
 </tr>
 </table>

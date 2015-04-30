@@ -17,7 +17,7 @@ Change history for
 </h5>
 % }
 
-<table class='table table-condensed table-bordered squeeze'>
+<table class='table table-responsive table-condensed table-bordered squeeze'>
 <tr>
 <th>action</th>
 <th>changes</th>

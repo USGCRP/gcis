@@ -8,26 +8,25 @@
     <div class='alert alert-error'><%= $error %></div>
 % }
 
-    <div class="control-group">
+    <div class="form-group">
         <label class="control-label" for="spreadsheet">Spreadsheet</label>
-        <div class="controls">
-            <%= select_field spreadsheet => [ ['--select--',''], @$spreadsheets], id => 'spreadsheet' %>
+        
+        <%= select_field spreadsheet => [ ['--select--',''], @$spreadsheets], id => 'spreadsheet' %>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
         <label class="control-label" for="worksheet">Worksheet</label>
-        <div class="controls">
-            <%= select_field worksheet => [ ['--select--','']], id => 'worksheet' %>
+        
+        <%= select_field worksheet => [ ['--select--','']], id => 'worksheet' %>
     </div>
 
-    <div class="control-group">
+    <div class="form-group">
         <label class="control-label" for="update_only">Update only</label>
-        <div class="controls">
-            <%= check_box 'update_only', value => 1 %>
+        <%= check_box 'update_only', value => 1 %>
     </div>
 
 
-<div class="form-actions">
+<div class="row">
     <button type="submit" class="btn btn-primary">Import</button>
 </div>
 

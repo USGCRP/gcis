@@ -8,8 +8,8 @@
 curl -T ./filename.jpg -u <%= user %>:<%= $api_pw %> <%= url_for('put_files_'.$meta->table)->to_abs %>/
 </textarea>
 </div>
-<br />
-<br />
+</div>
+
 
  <table class='table table-responsive table-condensed table-bordered'>
 

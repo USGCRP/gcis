@@ -3,7 +3,7 @@
 % my ($cons, $role_count, $person_count) = $pub ? $pub->contributors_grouped : ([]);
 
 % if (@$cons) {
-    <table class='table table-condensed table-bordered'>
+    <table class='table table-responsive table-condensed table-bordered'>
     <caption> Contributors</caption>
         <tr>
             <th>Role</th>

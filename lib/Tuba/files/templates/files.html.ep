@@ -2,9 +2,7 @@
 
     <center>Files</center>
     <div class='row well'>
-    <div class='col-md-12'>
     %= include 'pub_thumbnails', pub => $pub, files => 1;
-    </div>
     </div>
 
 % }

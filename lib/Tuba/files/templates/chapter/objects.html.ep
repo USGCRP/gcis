@@ -12,7 +12,8 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
-<table class='table table-condensed table-bordered table-striped'>
+<br />
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th>number: title</th>
     <th>figures</th>

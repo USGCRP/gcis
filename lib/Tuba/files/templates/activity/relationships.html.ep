@@ -6,9 +6,9 @@
     <td>
         % for my $map ($activity->publication_maps) {
         <div class='btn-group'>
-            <%= obj_link_to $map->child_publication => 'show', class => 'btn' => begin %><%= $map->child_publication->stringify %><%= end %>
-            <%= link_to ontology_url($map->{relationship}) => class => 'btn' => target => "_blank" => begin %><%= $map->{relationship} %><%= end %>
-            <%= obj_link_to $map->parent_publication => 'show', class => 'btn' => begin %><%= $map->parent_publication->stringify %><%= end %>
+            <%= obj_link_to $map->child_publication => 'show', class => 'btn btn-default' => begin %><%= $map->child_publication->stringify %><%= end %>
+            <%= link_to ontology_url($map->{relationship}) => class => 'btn btn-default' => target => "_blank" => begin %><%= $map->{relationship} %><%= end %>
+            <%= obj_link_to $map->parent_publication => 'show', class => 'btn btn-default' => begin %><%= $map->parent_publication->stringify %><%= end %>
         </div>
         % }
      </td>
@@ -16,7 +16,7 @@
 
 <tr>
     <td>methodologies</td>
-    <td class='row-fluid'>
+    <td class='row'>
         %= include 'obj_thumbnails', objs => [ $activity->methodologies ],
     </td>
 </tr>

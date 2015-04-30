@@ -11,21 +11,21 @@
 %= include 'history_modal';
 
 <div class='row'>
-<div class='col-md-2 pull-right'>
-<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-</div>
+		<div class='col-md-2 pull-right'>
+		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+		</div>
 </div>
 % }
 
-<div class='row' itemscope itemtype="http://schema.org/ImageObject">
-    <div class='col-md-10 col-md-offset-1 well'>
-        <div class='pull-right thumbnails col-md-4' style='top:2px;text-align:right;'>
+<div class='row well' itemscope itemtype="http://schema.org/ImageObject">
+   
+        <div class='pull-right col-lg-4 col-md-4 col-sm-8 col-xs-12'>
         % my $pub = $figure->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => itemprop => "url" => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;', itemprop => "thumbnailUrl"
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => '' => itemprop => "url" => begin
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', itemprop => "thumbnailUrl"
                 %= end
             % }
         % }
@@ -81,10 +81,10 @@
         % if (my @images = sorted_list($figure,'images')) {
         <br>
         This figure is composed of <%= @images==1 ? 'this image' : 'these images' %> :
+        <br />
         %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1, tiny_captions => 1;
         % }
 
-    </div>
 </div>
 
 <%= include 'h/other_formats'; =%>

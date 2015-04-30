@@ -6,8 +6,8 @@
 % my $count = stash 'count';
 % my $per_page = stash 'per_page';
 
-<div class='row'>
-    <div class='col-lg-4 col-md-4 col-xs-4 col-sm-4 pull-left'>
+<div class='row pagers'>
+    <div class='col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-left'>
     	<div class="input-group">
     	<span class="input-group-btn">
         <button class='btn btn-default btn-sm'><%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
@@ -58,7 +58,7 @@
             </div>
         </div>
     % }
-    <div class='col-lg-1 col-md-1 col-sm-4 col-xs-3 pull-right'>
+    <div class='col-lg-1 col-md-1 col-sm-4 col-xs-4 pull-right'>
         <div class='btn-group'>
             % if (param 'thumbs') {
                 <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>

@@ -24,7 +24,7 @@ Errors         : <%= scalar @$errors %>
 
 % if (@$errors) {
     <center><b>Errors</b></center>
-    <table class='table table-condensed table-bordered squeeze'>
+    <table class='table table-responsive table-condensed table-bordered squeeze'>
     <tr> <th>Row</th> <th>Error</th> </tr>
     % for my $error (@$errors) {
         <tr> <td><%= $error->{row} %></td> <td><%= $error->{message} %></td> </tr>
@@ -34,7 +34,7 @@ Errors         : <%= scalar @$errors %>
 
 % if (@$warnings) {
     <center><b>Warnings</b></center>
-    <table class='table table-condensed table-bordered squeeze'>
+    <table class='table table-responsive table-condensed table-bordered squeeze'>
     <tr> <th>Row</th> <th>warning</th> </tr>
     % for my $warning (@$warnings) {
         <tr> <td><%= $warning->{row} %></td> <td><%= $warning->{message} %></td> </tr>

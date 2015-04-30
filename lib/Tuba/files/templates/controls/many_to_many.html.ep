@@ -9,7 +9,7 @@
 % for my $obj (sort { $a->sortkey cmp $b->sortkey } @existing) {
     <li>
     <%= tag 'button'
-    => class => 'btn btn-default btn-danger squeezevert'
+    => class => 'btn btn-danger squeezevert'
     => onClick => qq[{this.form.elements["delete_map_$name"].value = '].$obj->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %>
         %= obj_link_to $obj => 'update_form' => class => 'btn btn-default' => begin
         %= $obj->stringify(short => 1);

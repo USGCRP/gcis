@@ -10,7 +10,7 @@
 </td>
 
 <td>
-    <%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
+    <%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_array"].value = '].$array->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %><br>
 </td>
 </tr>
 % }

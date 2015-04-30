@@ -31,8 +31,8 @@ DELETE
 
 </ul>
 
-<div class="row-fluid">
-<div class="span12">
+<div class="row">
+
 %#-----------------------------------------------------------------
 % my $show_node = begin
   % my $node = shift;
@@ -96,7 +96,7 @@ DELETE
 % end
 %#-----------------------------------------------------------------
 
-<table class='table table-condensed table-striped'>
+<table class='table table-responsive table-condensed table-striped'>
   <tr>
     <th>Methods</th>
     <th>Path</th>
@@ -137,15 +137,15 @@ DELETE
         %= form_for 'try', method => 'POST', id => "theform", class => "form-horizontal" => begin
             %= hidden_field '_route_name' => $trying->name;
             % for my $p (@{ (stash 'placeholders') }) {
-                <div class="control-group">
+                <div class="form-group">
                     <label class="control-label" for="<%= $p %>"><%= $p %></label>
-                    <div class="controls">
-                        <%= text_field $p, value => $defaults->{$p} || ''%>
+                    <div>
+                        <%= text_field $p, class => 'form-control', value => $defaults->{$p} || ''%>
                     </div>
                 </div>
             % }
-            <div class="control-group">
-                <div class="controls">
+            <div class="form-group">
+                <div>
                 %= submit_button 'GET json', class => 'btn btn-primary', onclick => '{return tryit("json");}'
                 %= submit_button 'GET html', class => 'btn btn-primary', onclick => '{return tryit("text");}'
                 </div>
@@ -154,7 +154,7 @@ DELETE
         <pre id='request_url' style='display:none;'></pre>
         <pre id='results' style='display:none;'></pre>
         </div>
-</div>
+
 % }
 </div>
 

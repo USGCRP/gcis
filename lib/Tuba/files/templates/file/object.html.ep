@@ -7,48 +7,40 @@
 
 % if (user_can('update')) {
 %= include 'history_modal';
-<div class="row">
-<div class="col-xs-6 col-xs-offset-6 col-sm-4 col-sm-offset-8 col-md-3 col-md-offset-9">
-<%= link_to 'update_form_'.$object->meta->table => class => "btn btn-default" => begin %>edit<%= end %>
-<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-</div>
+<div class='row'>
+		<div class='col-md-2 pull-right'>
+		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+		</div>
 </div>
 % }
 
-<div class='row'>
-    <div class='col-xs-12 col-sm-12 col-md-10 col-md-offset-1 well'>
-            <div class='col-md-8 col-md-offset-4' style='text-align:center;'>
+<div class='row well'>
+        <div class='col-md-8 col-md-offset-4' style='text-align:center;'>
                 %= link_to $object->asset_location => download => $file->file => class => "btn  btn-default btn-lg thumbnail" => begin
                 <img style='border:1px solid #aaa;' class="img-responsive" src='<%= $file->thumbnail_path %>' />
                 <div class='caption centered' style='color:white;'>download (<%= human_size($file->size) %>)
 % if ($file->location) {
 <br>from <%= url_host($file->location) %>
 % }
-                </div>
-                %= end
-            </div>
+         </div>
+         %= end
+</div>
       
 
         <br>
-        <div class='row'>
-            <div class='col-md-12'>
+        <div class="row">
 % if ($file->sha1) {
                 <p>SHA1 hash : <%= $file->sha1 %>.</p>
 % }
-            </div>
-        </div>
+        </div>  
         % if (my @pubs = $file->publications) {
-        <div class='row'>
-            <div class='col-md-12'>
+        
         <p>This file is associated with <%= include 'commify', objs => \@pubs %>.</p>
-        	</div>
-        </div>
+        	
         % } else {
         <p>This file is not associated with any publications.</p>
-            </div>
-        </div>
         % }
-    </div>
 </div>
 
 <%= include 'h/other_formats' =%>

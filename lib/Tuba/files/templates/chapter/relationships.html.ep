@@ -7,7 +7,7 @@
 %  tables => url_for('list_table', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier }),
 % );
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <caption>Relationships</caption>
 % my $rels = ( (stash 'relationships') || $meta->relationships );
 
