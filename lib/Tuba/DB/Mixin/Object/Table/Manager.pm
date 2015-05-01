@@ -13,9 +13,12 @@ sub dbgrep {
     my $user = $a{user};
 
     my @query = $self->_make_query($query_string);
+    my $dbh = $self->object_class->meta->db->dbh;
+    my $q = $dbh->quote('%'.$query_string.'%');
+    push @query, \(qq[t2.number::text || '.' || ordinal::text like $q]);
 
     my @viewable;
-    my @with = ( 'report' );
+    my @with = ( 'chapter', 'report' );
     if ($user) {
         @viewable = ( or => [ _public => 't', username => $user ] );
         push @with, 'report._report_viewers';
