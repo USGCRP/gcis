@@ -18,8 +18,7 @@
     % }
 % }
 
-<div class='well'>
-    <div class='row'>
+<div class='row well'>
         <%= include 'obj_thumbnails', objs => [ $object->platform, $object->instrument] %>
         <p>Measurements by the <%= obj_link($object->instrument) %> instrument on the <%= obj_link($object->platform) %> platform :</p>
         % if (my @measurements = $object->instrument_measurements) {
@@ -28,7 +27,6 @@
         <i>(none)</i>
         % }
 
-    </div>
 </div>
 
 %= include 'h/other_formats';

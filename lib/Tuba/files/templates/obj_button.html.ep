@@ -4,7 +4,7 @@
 % my $val = $obj->stringify;
 % my $short = $obj->stringify(short => 1);
 % if (my $uri = $obj->uri($self)) {
-    %= link_to $obj->uri($self) => class => 'squeezevert btn' => alt => $val => title => $val => begin
+    %= link_to $obj->uri($self) => class => 'squeezevert btn btn-default' => alt => $val => title => $val => begin
     <%= $short %>
     %= end
 % } else {

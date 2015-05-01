@@ -6,8 +6,8 @@
 
 %= include 'obj_header', object => $model_run
 
-<div class='row-fluid'>
-    <div class='span10 offset1 well'>
+<div class='row well'>
+   
 <h5>
 <pre>
  Model              : <%= obj_link_to $model_run->model => 'show' => begin %><%= $model_run->model->name || $model_run->model->identifier %><%= end %>
@@ -26,7 +26,7 @@
         % }
 
      %= include 'h/other_identifiers', gcid => $model_run->uri($self);
-    </div>
+    
 </div>
 
 %= include 'h/other_formats';

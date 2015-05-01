@@ -237,6 +237,9 @@ a.blackbutton {
 	position: relative;
 	margin-left: -50px;
 }
+.alert-box {
+	margin-bottom: 10px;
+}
 table.array {
     margin:5px;
     width:auto;

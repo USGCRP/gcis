@@ -18,7 +18,7 @@
 %= hidden_field 'contributor_id';
 %= hidden_field 'delete_publication';
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>Contributions</caption>
     % for my $c (@ctrs) {
         <tr>
@@ -42,30 +42,32 @@
 
 </table>
 
-<div class='control-group' style='margin-bottom:0px;'>
-    <%= label_for 'role_type', class => 'control-label' => begin %>Role<%= end %>
-    <div class='controls'>
-        %= select_field 'role_type', db_labels('role_type'), class => 'span8';
+<div class='form-group' style='margin-bottom:0px;'>
+    <%= label_for 'role_type', class => 'col-md-2 control-label' => begin %>Role<%= end %>
+    <div class='col-md-8'>
+        %= select_field 'role_type', db_labels('role_type'), class => 'form-control';
     </div>
 </div>
 
-<div class='control-group' style='margin-bottom:0px;'>
-    <%= label_for 'organization', class => 'control-label' => begin %>Organization<%= end %>
-    <div class='controls'>
+<div class='form-group' style='margin-bottom:0px;'>
+    <%= label_for 'organization', class => 'col-md-2 control-label' => begin %>Organization<%= end %>
+    <div class='col-md-8'>
         %= include 'controls/autocomplete', input_name => 'organization', object_type => 'organization'
     </div>
 </div>
 
-<div class='control-group' style='margin-bottom:0px;'>
-    <%= label_for 'publication', class => 'control-label' => begin %>Publication<%= end %>
-    <div class='controls'>
+<div class='form-group' style='margin-bottom:0px;'>
+    <%= label_for 'publication', class => 'col-md-2 control-label' => begin %>Publication<%= end %>
+    <div class='col-md-8'>
         %= include 'controls/autocomplete', input_name => 'publication', object_type => 'all'
     </div>
 </div>
-
-<div class="form-actions">
+<br />
+<div class="row">
+<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
     <button type="submit" class="btn btn-primary">Save changes</button>
-    <button type="reset" class="btn">Reset</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+    </div>
 </div>
 
 %= end
