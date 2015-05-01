@@ -54,7 +54,7 @@
         %= end
     </td>
     <td>
-     <div class='span2'>
+     <div class='col-md-2'>
        % if (my $pub = $chapter->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1
        % }

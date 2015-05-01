@@ -32,6 +32,7 @@
     <div class="row alert-box">
     <span class='alert alert-danger'>not implemented (<%= $rel->name %>)</span>
     </div>
+    <br />
     % }
 
 % }

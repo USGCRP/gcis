@@ -18,14 +18,14 @@
         </div>
 % }
 
-<div class='row-fluid'>
-    <div class='span10 offset1 well'>
-        <div class='pull-right thumbnails span4' style='top:2px;text-align:right;'>
+<div class='row well'>
+  
+        <div class='pull-right col-md-4' style='top:2px;text-align:right;'>
         % my $pub = $table->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-polaroid', style => 'padding:0px;width:300px;'
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;'
                 %= end
             % }
         % }
@@ -52,7 +52,7 @@
             <center>
             % for my $a (sorted_list($table,'arrays')) {
                 % my $row = 0;
-                <table class='table table-bordered table-condensed array'>
+                <table class='table table-responsive table-bordered table-condensed array'>
                     <caption><%= obj_link($a, short => 1); %></caption>
                 % for my $x ($a->rows) {
                     % if ($row++ < $a->rows_in_header) {
@@ -77,7 +77,6 @@
         %= include 'h/cited_by', pub => $table->get_publication;
         %= include 'h/cites', pub => $table->get_publication;
 
-    </div>
 </div>
 
 <%= include 'h/other_formats'; =%>

@@ -22,6 +22,7 @@
 %= javascript "/js/gcis.js";
 %= javascript "/js/jquery.sidr.min.js";
 %= javascript "/js/jquery.touchwipe.min.js";
+%= javascript "//cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.10.4/dist/typeahead.jquery.js";
 % if (my $ga = config('google_analytics')) {
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
