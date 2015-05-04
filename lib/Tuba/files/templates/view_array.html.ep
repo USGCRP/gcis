@@ -1,6 +1,6 @@
 %# inputs : val, header_rows
 
-<table class='table table-condensed table-striped table-bordered'>
+<table class='table table-responsive table-condensed table-striped table-bordered'>
 % for my $row (@$val) {
 % my $tag = $header_rows ? 'th' : 'td';
 % $header_rows-- if $header_rows;

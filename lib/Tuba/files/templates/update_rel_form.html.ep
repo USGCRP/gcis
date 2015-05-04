@@ -21,9 +21,9 @@
     % if (my $entry = $controls->{$rel->name}) {
         % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
         <div class='form-group well'>
-<label class='control-label col-lg-2 col-md-2 col-sm-3 col-xs-3'>
-%= $rel->name
-</label>
+        <label class='control-label col-lg-2 col-md-2 col-sm-3 col-xs-3'>
+        %= $rel->name
+		</label>
         <div class="col-lg-10 col-md-10 col-sm-9 col-xs-9">
         %= include 'controls/'.$entry->{template}, object => $object, rel => $rel, %{ $entry->{params} || {} };
         </div>
