@@ -37,8 +37,8 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     <dd>A <i>table</i>, like a <i>figure</i>, is embedded in a <i>report</i>, and possibly in a <i>chapter</i> in a <i>report</i>.</dd>
 
     <dt>Reference</dt>
-    <dd>A <i>reference</i> is a bibliographic entry or citation.  They are uniquely identified with
-        <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUIDs</a>, like
+    <dd>A <i>reference</i> is a bibliographic entry or citation.  It is uniquely identified with a
+        <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUID</a>, like
         %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
         e679d754-46b3-4d62-a7dd-4a7f0c727ebe<%= end %>.  A <i>reference</i>
         in a <i>report</i> may appear in a <i>chapter</i>, <i>figure</i>, <i>finding</i> or <i>table</i> of that <i>report</i>.  Moreover, a <i>reference</i> refers to
