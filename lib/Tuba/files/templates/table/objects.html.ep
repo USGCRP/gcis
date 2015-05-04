@@ -9,9 +9,9 @@
 
 % my @cols = qw/identifier numeric report chapter arrays/;
 
-%= include 'pager';
+%= include 'pager', page => $page;
 
-<table class='table table-condensed table-bordered table-striped'>
+<table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
 % for my $c (@cols) {
     <th><%= $c %></th>
@@ -34,7 +34,7 @@
         <td>
             % if (ref($got) eq 'ARRAY') {
             %   for (@$got) {
-            <span class='btn squeezevert'><%= obj_link($_, short => 1); %></span>
+            <span class='btn btn-default squeezevert'><%= obj_link($_, short => 1); %></span>
             %   }
             % } elsif (ref($got)) {
                 %= obj_link($got);

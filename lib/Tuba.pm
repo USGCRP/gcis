@@ -65,7 +65,7 @@ use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.27';
+our $VERSION = '1.28';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -403,7 +403,7 @@ sub startup {
     my $lex = $r->lookup('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find')->name('find_term');
     $lex->get('/:context/*term')
-                   ->over(not_match => { 'context' => qr[list|find] })
+                   ->over(not_match => { 'context' => qr[list|find|update] })
                    ->to('exterm#find')->name('lookup_term');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {

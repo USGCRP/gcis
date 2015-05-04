@@ -22,7 +22,7 @@
 </pre>
 
 <div class='row well'>
-<div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+
     % my $others= $reference->subpubrefs;
     <div class="row">
     <div class='col-md-8 col-lg-8 col-sm-12 col-xs-12'>
@@ -32,7 +32,7 @@
     % if (my $child = $reference->child_publication) {
         <div class='col-md-4 col-lg-4 col-sm-8 col-xs-8'>
             Publication/contributor :
-            %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'span12'
+            %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'col-md-12'
             % for my $map (@{ $reference->publication_contributor_maps }) {
             %= include 'obj_button', obj => $map->contributor, no_table => 1
             % }
@@ -43,13 +43,13 @@
         <p style='text-align:center;'>This reference is not associated with a publication.
         % if (user_can('update')) {
         <br>
-        %= link_to 'update_rel_form_reference', class => 'btn' => begin
+        %= link_to 'update_rel_form_reference', class => 'btn btn-default' => begin
         Assign a publication
         %= end
         % }
         </p>
     % }
-    </div>
+ 
 </div>
 
 % my @internal;

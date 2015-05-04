@@ -36,7 +36,9 @@
 
             % } elsif (my $entry = $controls->{$name}) {
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
+                </div>
             % } else {
             	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 %= text_field $name, placeholder => $column->type, id => $name, class => 'form-control';

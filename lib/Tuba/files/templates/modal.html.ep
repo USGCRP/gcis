@@ -3,12 +3,18 @@
      
 <div id="<%= $id %>"
     data-remote='<%= $url->clone->query(no_header => 1, modalbody => "$id\_modalbody") %>'
-    class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    class="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
     <div class="modal-content">
  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">">&times;</button>
  </div>
- <div class="modal-body" id='<%= $id %>_modalbody'> <p>loading…</p> </div>
+ <div class="modal-body" id='<%= $id %>_modalbody'> <p>loading…</p> 
+ </div>
+ <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>
+ </div>
  </div>
 </div>
 

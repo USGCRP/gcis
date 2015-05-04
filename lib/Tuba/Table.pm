@@ -115,8 +115,12 @@ sub update_form {
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object or return $c->reply->not_found;
+    $c->stash(tab => "update_rel_form");
+    my $json = $c->req->json;
+
     my $next = $object->uri($c,{tab => 'update_rel_form'});
     $object->meta->error_mode('return');
+
     if (my $new = $c->param('new_array')) {
         my $array = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_arrays($array);
@@ -125,7 +129,12 @@ sub update_rel {
             return $c->redirect_to($next);
         };
     }
-
+    if (my $new = $json->{add_array_identifier}) {
+        my $img = Array->new(identifier => $new)->load(speculative => 1)
+            or return $c->update_error("array $new not found");
+        $object->add_arrays($img);
+        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
+    }
 
     my $report_identifier = $c->stash('report_identifier');
     for my $id (grep { defined && length } $c->param('delete_array')) {

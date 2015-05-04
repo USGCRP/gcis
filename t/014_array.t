@@ -6,12 +6,31 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use strict;
+use warnings;
 
 use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
+
+$t->app->db->dbh->do(q[delete from publication_type]);
+$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('table','table')]);
+my $base = $t->ua->server->url;
+$base =~ s[/$][];
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
+
+$t->post_ok("/report" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
+
+$t->post_ok("/report/vegetables/table" =>
+  { Accept => "application/json"} => json => {
+      identifier => 'veggietable',
+      report_identifier => 'vegetables',
+      title => 'veggie table',
+      ordinal => 1,
+      caption => 'numbers of veggies',
+      url => 'http://example.com/veggies'
+})->status_is(200);
 
 $t->post_ok(
   "/array" => form => {
@@ -22,8 +41,38 @@ $t->post_ok(
   }
 )->status_is(200);
 
-my $base = $t->ua->server->url;
-$base =~ s[/$][];
+$t->post_ok(
+  "/report/vegetables/table/rel/veggietable" => json =>
+  { add_array_identifier => "simple" }
+)->status_is(200);
+
+$t->get_ok("/report/vegetables/table/veggietable.json")->status_is(200)
+  ->json_is(
+ {
+   'arrays' => [
+     {
+       'identifier' => 'simple',
+       'rows' => [ [ '1', '2', '3' ] ],
+       'rows_in_header' => 0
+     }
+   ],
+   'caption' => 'numbers of veggies',
+   'chapter_identifier' => undef,
+   'contributors' => [],
+   'files' => [],
+   'href' => "$base/report/vegetables/table/veggietable.json",
+   'identifier' => 'veggietable',
+   'ordinal' => 1,
+   'parents' => [],
+   'references' => [],
+   'report_identifier' => 'vegetables',
+   'title' => 'veggie table',
+   'uri' => '/report/vegetables/table/veggietable',
+   'url' => 'http://example.com/veggies'
+ }
+);
+
+#diag explain $t->tx->res->json;
 
 $t->get_ok("/array/simple.json")->json_is({
              identifier => 'simple',
@@ -31,7 +80,20 @@ $t->get_ok("/array/simple.json")->json_is({
                    rows => [ [ 1, 2, 3 ] ],
                     uri => '/array/simple',
                    href => "$base/array/simple.json",
+                   tables => [
+                     {
+                       'caption' => 'numbers of veggies',
+                       'chapter_identifier' => undef,
+                       'identifier' => 'veggietable',
+                       'ordinal' => 1,
+                       'report_identifier' => 'vegetables',
+                       'title' => 'veggie table',
+                       'url' => 'http://example.com/veggies'
+                     }
+                   ],
     });
+
+#diag explain $t->tx->res->json;
 
 $t->delete_ok("/array/simple");
 
@@ -75,5 +137,7 @@ $t->get_ok("/array/multirow-csv.json")->json_is({
     });
 
 $t->delete_ok("/array/multirow-csv");
+$t->delete_ok("/report/vegetables/table/veggietable");
+$t->delete_ok("/report/vegetables");
 
 done_testing();

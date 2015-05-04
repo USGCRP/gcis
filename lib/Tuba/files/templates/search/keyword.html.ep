@@ -8,7 +8,7 @@
 and show
 %= select_field 'format' => [ 'detailed', 'brief'];
 match results.
-%= submit_button 'search', class => "btn btn-default btn-search btn-primary"
+%= submit_button 'search', class => "btn btn-search btn-primary"
 %= end
 
 % my @clone = @$results;

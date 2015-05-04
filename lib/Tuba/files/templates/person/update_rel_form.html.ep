@@ -31,7 +31,7 @@
         % for my $pub  ($c->publications) {
             <tr>
                 <td></td>
-                <td><%= include obj_thumbnails => objs => [ $pub->to_object ] %></td>
+                <td><%= include obj_thumbnails => objs => [ $pub->to_object ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4' %></td>
                 <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
                     onClick => qq[{this.form.elements["contributor_id"].value = '].$c->id.
                     qq[';this.form.elements["delete_publication"].value = '].$pub->id.

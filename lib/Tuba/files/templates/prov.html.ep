@@ -20,7 +20,7 @@
     %= hidden_field 'delete_relationship';
     % }
 
-    <table class='table table-condensed table-bordered table-striped'>
+    <table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>Provenance</caption>
     <tr>
         <th>publication</th>
@@ -43,7 +43,7 @@
         </td>
         <td><%= $parent->{note} || "" %></td>
         % if (stash 'add_delete_buttons') {
-            <td><%= tag 'button' => class => 'btn btn-default btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+            <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_publication"].value = ].$parent_pub->id.qq[; this.form.elements["delete_relationship"].value='].$parent->{relationship}.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
         % }
     </tr>
     % }
@@ -77,7 +77,7 @@
 % }
 </table>
 % if (!(stash 'no_refs') && @children_with_references) {
-   <table class='table table-condensed table-bordered table-striped'>
+   <table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>
         % if ($references_url) {
             <%= link_to $references_url => begin %>References<%= end %>

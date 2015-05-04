@@ -1,14 +1,14 @@
 %# send $object and $meta
 % if (my @rels = default_html_relationships($object)) {
 
-    <table class='table table-condensed table-bordered table-striped'>
+    <table class='table table-responsive table-condensed table-bordered table-striped'>
     <caption>Relationships</caption>
 
     % for my $method (@rels) {
     <tr>
     <td><%= $method %></td>
-    <td class='row-fluid'>
-        <div class='row-fluid' style='position:relative;'>
+    <td>
+        <div class='row' style='position:relative;'>
                 %= include 'collapsible', row_content => begin
                 %= include 'obj_thumbnails', objs => [ sorted_list($object,$method) ], no_table => 1;
                 %= end
