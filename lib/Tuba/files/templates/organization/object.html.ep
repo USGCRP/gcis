@@ -45,7 +45,7 @@
                 <dt>This organization is related to these organizations : </dt>
                 <dd>
                     <ul class='unstyled'>
-                    % for my $map (@maps) {
+                        % for my $map (keysort sub { $_->other_organization->stringify }, @maps) {
                     <li><%= $map->organization_relationship->label %> <%= obj_link($map->other_organization) %></li>
                     % }
                     </ul>
@@ -56,7 +56,7 @@
                 <dt>These organizations are related to this organization :</dt>
                 <dd>
                 <ul class='unstyled'>
-                % for my $map (@maps) {
+                % for my $map (keysort sub {$_->organization->stringify}, @maps) {
                     <li><%= obj_link($map->organization)  %> <%= $map->organization_relationship->label %> <%= $object->stringify %></li>
                 % }
                 </ul>

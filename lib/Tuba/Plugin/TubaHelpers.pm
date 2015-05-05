@@ -20,6 +20,7 @@ use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
 use URI::Find;
 use Lingua::EN::Inflect qw/A PL/;
+use Sort::Key qw/keysort/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -578,6 +579,11 @@ sub register {
             my $c = shift;
             my $num = shift;
             return Number::Format->new->format_number($num, @_);
+        });
+    $app->helper(keysort => sub {
+            my $c = shift;
+            my ($block, @thingies) = @_;
+            return keysort(sub { $block->() }, @thingies);
         });
 }
 

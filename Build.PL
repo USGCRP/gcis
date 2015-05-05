@@ -73,6 +73,7 @@ my $builder = Module::Build::Database->new(
         'JSON::WebToken' => 0,
         'Crypt::OpenSSL::RSA' => 0,
         'Pg::hstore' => 0,
+        'Sort::Key' => 0,
         'Text::CSV_XS' => 0,
         'Text::Format' => 0,
         'Time::Duration' => 0,
