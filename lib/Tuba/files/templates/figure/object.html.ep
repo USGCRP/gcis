@@ -41,6 +41,9 @@
         % } else {
         <p>This figure appears in the <%= obj_link($figure->report) %> report.</p>
         % }
+        % if (my $to = fix_url($figure->url)) {
+        <p><%= link_to $to => target => "_blank" => begin %><%= $figure->url %><%= end %></p>
+        % }
 
         <p><%= tbibs_to_links($figure->caption) %></p>
         % if ($figure->source_citation){

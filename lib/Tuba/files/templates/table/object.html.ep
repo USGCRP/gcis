@@ -43,6 +43,9 @@
         % } else {
         <p>This table appears in the <%= obj_link($table->report) %> report.</p>
         % }
+        % if (my $to = fix_url($table->url)) {
+        <p><%= link_to $to => target => "_blank" => begin %><%= $table->url %><%= end %></p>
+        % }
         <p><%= tbibs_to_links($table->caption) %></p>
 
         % if (my @arrays = sorted_list($table,'arrays')) {
