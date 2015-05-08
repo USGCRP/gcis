@@ -104,7 +104,6 @@
         % }
     </ul>
 </div>
-<div class='container' id='maincontent'>
 
         <div class="navbar navbar-default main-menu" role="navigation">
             
@@ -151,7 +150,7 @@
 
              </div>
         
-           
+   <div class='container' id='maincontent'>        
              
              
              % if (my $msg = flash 'message') {
