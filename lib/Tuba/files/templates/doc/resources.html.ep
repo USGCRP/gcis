@@ -15,7 +15,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     <dd>A <i>chapter</i> of a <i>report</i>, such as 
         %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-climate" } => begin
         our-changing-climate<%= end %>,
-        has a unique mnemonic identifiers, and possibly, a number.  Some <i>chapters</i>, for instance, an
+        has a unique mnemonic identifier, and possibly, a number.  Some <i>chapters</i>, for instance an
         %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science-supplement" } => begin
         appendix<%= end %>, do not have a number.  <i>Chapters</i> may also have <i>figures</i>, <i>tables,</i>, <i>findings</i>, and <i>references</i> associated with them.
         </dd>
