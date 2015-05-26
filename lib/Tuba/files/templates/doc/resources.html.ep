@@ -64,7 +64,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
 
     <dt>Journals</dt>
     <dd>A <i>journal</i>
-        may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a> number, and is uniquely identified within GCIS using a mnemonic identifier, like
+        may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a>, and is uniquely identified within GCIS using a mnemonic identifier, like
         %= link_to 'show_journal', { journal_identifier => "climatic-change" } => begin
         climatic-change
         <%= end =%>.</dd>
