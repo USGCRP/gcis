@@ -10,7 +10,7 @@
    prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;
 
 ## Duration of the activity
-   dcterms:SizeOrDuration "<%= human_duration ($activity->duration) %>"^^xsd:string;
+   dcterms:extent [ rdf:value "<%= human_duration ($activity->duration) %>"^^xsd:string ] ;
 
 ## Output datafiles   
    dbpedia_owl:filename "<%= $activity->output_artifacts %>"^^xsd:string;
