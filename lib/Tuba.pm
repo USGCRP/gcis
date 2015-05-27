@@ -398,6 +398,9 @@ sub startup {
     $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:time_resolution/:sequence")
         ->to("model_run#lookup")->name('model_run_lookup');
 
+    # Roles
+    $r->resource('role_type');
+
     # Lexicons
     $r->resource('lexicon');
     my $lex = $r->lookup('select_lexicon');

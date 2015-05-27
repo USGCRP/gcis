@@ -11,11 +11,18 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
+    my @q;
+    my $role;
+    if (my $r = $c->param('role')) {
+        @q = (query => [role_type_identifier => $r], with_objects => [qw/contributors/]);
+        $role = RoleType->new(identifier => $r)->load(speculative => 1);
+    }
+    $c->stash(role => $role);
     if ($c->param('all')) {
-        $c->stash(objects => Persons->get_objects);
+        $c->stash(objects => Persons->get_objects(@q));
     } else {
-        $c->stash(objects => scalar Persons->get_objects(sort_by => 'last_name, first_name', page => $c->page));
-        $c->set_pages(Persons->get_objects_count);
+        $c->stash(objects => scalar Persons->get_objects(@q, sort_by => 'last_name, first_name', page => $c->page));
+        $c->set_pages(Persons->get_objects_count(@q));
     }
     $c->SUPER::list(@_);
 }

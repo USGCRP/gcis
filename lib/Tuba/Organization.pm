@@ -19,6 +19,24 @@ sub show {
     return $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    my @q;
+    my $role;
+    if (my $r = $c->param('role')) {
+        @q = (query => [role_type_identifier => $r, person_id => undef], with_objects => [qw/contributors/]);
+        $role = RoleType->new(identifier => $r)->load(speculative => 1);
+    }
+    $c->stash(role => $role);
+    if ($c->param('all')) {
+        $c->stash(objects => Organizations->get_objects(@q));
+    } else {
+        $c->stash(objects => scalar Organizations->get_objects(@q, sort_by => 'name', page => $c->page));
+        $c->set_pages(Organizations->get_objects_count(@q));
+    }
+    $c->SUPER::list(@_);
+}
+
 sub update_rel {
     my $c = shift;
     my $org = $c->_this_object;

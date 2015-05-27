@@ -62,13 +62,17 @@ sub common_tree_fields {
     );
 }
 
+sub _default_list_order {
+    return "identifier";
+}
+
 sub list {
     my $c = shift;
     my $objects = $c->stash('objects');
     my $all = $c->param('all') ? 1 : 0;
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier", $all ? () : (page => $c->page, per_page => $c->per_page));
+        $objects = $manager_class->get_objects(sort_by => $c->_default_list_order, $all ? () : (page => $c->page, per_page => $c->per_page));
         $c->set_pages($manager_class->get_objects_count) unless $all;
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
