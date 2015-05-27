@@ -10,7 +10,7 @@
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= uri($con->{person}) %>>;
-      prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
+      prov:hadRole <<%= (uri($row->{role})) %>>;
                 % for my $org (@{ $con->{orgs} }) {
       prov:actedOnBehalfOf <<%= uri($org) =%>>;
              % }
@@ -25,7 +25,7 @@
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= uri($org) %>>;
-      prov:hadRole "<%= ($row->{role}->label) %>"^^xsd:string;
+      prov:hadRole <<%= uri($row->{role}) %>;
       ] ;
 .
 

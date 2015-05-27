@@ -23,7 +23,7 @@
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
       prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
-      prov:hadRole "<%= $ctr->role_type->label %>"^^xsd:string;
+      prov:hadRole <<%= uri($ctr->role_type) %>>;
    ] 
 .
 
