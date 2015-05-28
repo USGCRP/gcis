@@ -19,6 +19,13 @@ $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values 
 
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
+$t->ua->max_redirects(0);
+
+$t->post_ok("/report" => json => { identifier => 'test-etags', title => 'Etag test' } )->status_is(302);
+like $t->tx->res->headers->etag, qr/\w+-\w+-\w+-\w+/;
+$t->delete_ok('/report/test-etags');
+
+$t->ua->max_redirects(1);
 
 $t->post_ok("/report" => form => { identifier => "test-report", title => "Test report" } )->status_is(200);
 $t->post_ok("/report/test-report/finding" => form => { identifier => "test-finding", statement => "Test Finding." } )->status_is(200);
