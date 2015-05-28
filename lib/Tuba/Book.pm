@@ -50,23 +50,23 @@ sub update {
             url => $book->url,
             publication_year => $book->year
         );
-        $report->save(audit_user => $c->user) or do {
+        $report->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or do {
             return $c->update_error($report->error);
         };
         my $pub = $book->get_publication;
         if ($pub) {
             my $report_pub = $report->get_publication(autocreate => 1);
-            $report_pub->save(audit_user => $c->user);
+            $report_pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note);
             my $refs = References->get_objects(query => [ child_publication_id => $pub->id ] );
             for my $ref (@$refs) {
                 $ref->child_publication_id($report_pub->id);
                 my $attrs = $ref->attrs; # workaround : call inflate trigger explicitly
-                $ref->save(audit_user => $c->user) or return $c->update_error($ref->error);
+                $ref->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ref->error);
             }
             my $subs = Subpubrefs->get_objects(query => [ publication_id => $report_pub->id ]);
             for my $sub (@$subs) {
                 $sub->publication_id($report_pub->id);
-                $sub->save(audit_user => $c->user) or return $c->update_error($sub->error);
+                $sub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($sub->error);
             }
         }
         $book->delete;

@@ -46,7 +46,7 @@ sub update_rel {
             $add->{dataset_identifier} = $dataset->identifier;
             my $obj = InstrumentMeasurement->new( %$add );
             $obj->load(speculative => 1);
-            $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
+            $obj->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($obj->error);
         } else {
             warn "no json";
         }

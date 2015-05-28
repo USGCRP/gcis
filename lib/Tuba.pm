@@ -110,6 +110,9 @@ sub startup {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
         $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
+        if (my $id = $c->session('id')) {
+            $c->res->headers->etag(qq["$id"]) if $c->req->method =~ /^(POST|PUT)$/;
+        }
     } );
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).

@@ -65,7 +65,7 @@ sub normalize_form_parameter {
     }
     if ($obj) {
         my $pub = $obj->get_publication(autocreate => 1);
-        $pub->save(audit_user => $c->user) unless $pub->id;
+        $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
         return $pub->id;
     }
     return $value;
@@ -78,7 +78,7 @@ sub create {
             my $report = $c->uri_to_obj($uri) or return $c->render(json => { error  => "uri $uri not found" } );
             $report->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
             my $pub = $report->get_publication(autocreate => 1);
-            $pub->save(audit_user => $c->user) unless $pub->id;
+            $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
             $json->{publication_id} = $pub->id;
             $c->stash(object_json => $json);
         }
@@ -242,7 +242,7 @@ sub update_rel {
                 return $c->render(status => 400, json => { error => "$subpubref not found" });
             };
             $reference->add_subpubrefs({publication_id => $pub->id});
-            $reference->save(changes_only => 1, audit_user => $c->user) or return $c->render_exception;
+            $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->render_exception;
         }
         if (my $subpubref = $json->{delete_subpub}) {
             my $pub = $c->uri_to_pub($subpubref) or do {
@@ -258,30 +258,30 @@ sub update_rel {
 
     if ($c->param('delete_child_publication_id')) {
         $reference->child_publication_id(undef);
-        $reference->save(changes_only => 1, audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
+        $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if (my $child = $c->param('child_publication_id')) {
         my $obj = $c->str_to_obj($child) or return $c->redirect_with_error(update_rel_form => "could not find $child");
         my $child_publication = $obj->get_publication(autocreate => 1);
-        $child_publication->save(audit_user => $c->user) unless $child_publication->id;
+        $child_publication->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $child_publication->id;
         $reference->child_publication_id($child_publication->id);
-        $reference->save(changes_only => 1, audit_user => $c->user) or return $c->redirect_with_error(update_rel_form => $reference->error);
+        $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if ( $report && (my $chapter_identifier = $c->param('chapter'))) {
         my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
         my $chapter_pub = $chapter->get_publication(autocreate => 1);
-        $chapter_pub->save(audit_user => $c->user) unless $chapter_pub->id;
+        $chapter_pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $chapter_pub->id;
         $reference->add_subpubrefs({ publication_id => $chapter_pub->id });
-        $reference->save(changes_only => 1, audit_user => $c->user) or
+        $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if (my $other_pub = $c->param('other_pub')) {
         my $obj = $c->str_to_obj($other_pub)
             or return $c->redirect_without_error(update_rel_form => "not found : $other_pub");
         my $pub = $obj->get_publication(autocreate => 1);
-        $pub->save(audit_user => $c->user) unless $pub->id;
+        $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
         $reference->add_subpubrefs({ publication_id => $pub->id });
-        $reference->save(changes_only => 1, audit_user => $c->user) or
+        $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
     if (my $which = $c->param('delete_subpub')) {
