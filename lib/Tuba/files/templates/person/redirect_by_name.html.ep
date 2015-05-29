@@ -1,11 +1,19 @@
 % layout 'default';
 Multiple matches found for <b><%= stash 'name' %></b>:
-<dl>
+<ol>
 % for my $p (@$people) {
-<dd>
-%= link_to 'show_person' => { person_identifier => $p->id } => begin
-%= $p->name
-%= end
-</dd>
+    <li>
+    %= link_to 'show_person' => { person_identifier => $p->id } => class => 'btn btn-small' => begin
+        <%= $p->first_name %>
+        <%= $p->middle_name || '' %>
+        <%= $p->last_name %>
+        %= end
+        % if ($p->url) {
+        <%= link_to $p->url => target => '_blank', begin %><%= $p->url %><%= end %>
+        % }
+        % if ($p->orcid) {
+            <%= link_to 'http://orcid.org/'.$p->orcid => target => '_blank', begin %><%= $p->orcid %><%= end %>
+        % }
+    </li>
 % }
-</dl>
+</ol>
