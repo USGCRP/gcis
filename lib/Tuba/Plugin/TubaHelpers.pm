@@ -1,8 +1,11 @@
-ines (579 sloc)  25.249 kb
 =head1 NAME
+
 Tuba::Plugin::TubaHelpers -- various helpers
+
 =head1 SYNOPSIS
+
 app->plugin( 'tuba_helpers')
+
 =cut
 
 package Tuba::Plugin::TubaHelpers;
