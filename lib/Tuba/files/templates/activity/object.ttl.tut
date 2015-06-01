@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd prov dbpedia_owl gcis meth rdf/];
+% layout 'default', namespaces => [qw/dcterms xsd prov dbpedia_owl gcis meth rdf rdfs/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -15,14 +15,24 @@
 ## Output datafiles   
    dbpedia_owl:filename "<%= $activity->output_artifacts %>"^^xsd:string;
 
-## Software utilized
-   gcis:Software "<%= $activity->software %>"^^xsd:string;
-
 ## Computing environment
    dcterms:InteractiveResource "<%= $activity->computing_environment %>"^^xsd:string;
+   
+## assignment of responsibility to an agent for an activity, indicating that the agent 
+## had a role in the activity. It further allows for a plan to be specified, which is
+## the plan intended by the agent to achieve some goals in the context of this activity.
 
-## Methodology employed
-   meth:Methodology "<%= $activity->methodology %>"^^xsd:string;
+   prov:qualifiedAssociation [
+      a prov:QualifiedAssociation ;
+      prov:agent [
+         a prov:SoftwareAgent, gcis:Software ;
+         rdfs:label "<%= $activity->software %>"^^xsd:string;
+      ] ;
+      prov:hadPlan [
+         a prov:Plan, meth:Methodology ;
+         rdf:value "<%= $activity->methodology %>"^^xsd:string;
+      ] ;
+   ] ;
 
    a prov:Activity .
 
