@@ -16,6 +16,7 @@ sub stringify {
     my $val = $args{long} ? $c->statement : $c->identifier;
     if (my $num = $c->numeric) {
         return $num if $args{tiny};
+        return join ' ', $c->report_identifier.' '.$num if $args{short};
         return "$num: $val";
     }
     return $val;

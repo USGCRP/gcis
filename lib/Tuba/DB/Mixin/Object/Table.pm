@@ -11,7 +11,10 @@ sub numeric {
 
 sub stringify {
     my $c = shift;
+    my %args = @_;
     if (my $num = $c->numeric) {
+        return $num if $args{tiny};
+        return join ' ', $c->report_identifier.' '.$num if $args{short};
         return join ': ', $num, ($c->title || $c->identifier);
     }
     return $c->title || $c->identifier;
