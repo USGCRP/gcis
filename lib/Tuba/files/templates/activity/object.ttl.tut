@@ -30,7 +30,7 @@
          a prov:SoftwareAgent, gcis:Software ;
          rdfs:label "<%= $activity->software %>"^^xsd:string;
       ] ;
-      % { else {
+      % } else {
       prov:agent [
          a prov:Agent ;
       ] ;
