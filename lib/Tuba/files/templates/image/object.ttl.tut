@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis rdf prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
