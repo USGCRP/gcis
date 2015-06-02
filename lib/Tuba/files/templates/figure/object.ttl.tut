@@ -13,7 +13,7 @@
    dcterms:title "<%= $figure->title %>"^^xsd:string;
    cito:cites "<%= no_tbibs($figure->source_citation) %>"^^xsd:string;
    gcis:hasCaption "<%= no_tbibs($figure->caption) %>"^^xsd:string;
-   dcterms:Rights [ rdf:value "<%= $figure->usage_limits %>"^^xsd:string; ] ;
+   dcterms:rights [ rdf:value "<%= $figure->usage_limits %>"^^xsd:string; ] ;
 %#
 % for my $image ($figure->images) {
    gcis:hasImage <<%= uri($image) %>>;
