@@ -23,7 +23,7 @@
 
 ## Tags:
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
-   dcterms:RightsStatement "<%= $image->usage_limits %>"^^xsd:string;
+   dcterms:rights [ rdf:value "<%= $image->usage_limits %>"^^xsd:string; ] ;
 
    a gcis:Image .
 % end
