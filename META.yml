@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.28'
+    version: '1.29'
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -178,6 +178,8 @@ provides:
     file: lib/Tuba/Region.pm
   Tuba::Report:
     file: lib/Tuba/Report.pm
+  Tuba::RoleType:
+    file: lib/Tuba/RoleType.pm
   Tuba::RouteDoc:
     file: lib/Tuba/RouteDoc.pm
   Tuba::RouteParam:
@@ -222,6 +224,7 @@ requires:
   SQL::Abstract: '0'
   SQL::Interp: '0'
   Scalar::Util: '0'
+  Sort::Key: '0'
   String::Diff: '0'
   Text::CSV_XS: '0'
   Text::Format: '0'
@@ -231,4 +234,4 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.28'
+version: '1.29'
