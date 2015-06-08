@@ -11,11 +11,18 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
+    my @q;
+    my $role;
+    if (my $r = $c->param('role')) {
+        @q = (query => [role_type_identifier => $r], with_objects => [qw/contributors/]);
+        $role = RoleType->new(identifier => $r)->load(speculative => 1);
+    }
+    $c->stash(role => $role);
     if ($c->param('all')) {
-        $c->stash(objects => Persons->get_objects);
+        $c->stash(objects => Persons->get_objects(@q));
     } else {
-        $c->stash(objects => scalar Persons->get_objects(sort_by => 'last_name, first_name', page => $c->page));
-        $c->set_pages(Persons->get_objects_count);
+        $c->stash(objects => scalar Persons->get_objects(@q, sort_by => 'last_name, first_name', page => $c->page));
+        $c->set_pages(Persons->get_objects_count(@q));
     }
     $c->SUPER::list(@_);
 }
@@ -36,14 +43,20 @@ sub show {
 sub redirect_by_name {
     my $c = shift;
     my $name = $c->stash('name');
-    my @pieces = split /-/, $name;
+    my @pieces = split /[-_]/, $name;
     return $c->reply->not_found unless @pieces==2;
     my $front = Persons->get_objects(
-      query => [first_name => $pieces[0], last_name => $pieces[1]],
+      query => [
+        [ \("lower(first_name) = ?") => (lc $pieces[0])],
+        [ \("lower(last_name) = ?") => (lc $pieces[1]) ],
+        ],
       limit => 10
     );
     my $back = Persons->get_objects(
-      query => [first_name => $pieces[1], last_name => $pieces[0]],
+      query => [
+          [ \("lower(last_name) = ?")  => (lc $pieces[0]) ],
+          [ \("lower(first_name) = ?") => (lc $pieces[1]) ],
+      ],
       limit => 10
     );
     my @found = (@$front, @$back);
@@ -58,7 +71,7 @@ sub redirect_by_name {
             shift->render(json =>{ people =>  [ map $_->as_tree, @found ] }),
         },
         html => sub {
-            return $c->render(people => @found);
+            return $c->render(people => \@found);
         },
     );
 }
@@ -78,8 +91,8 @@ sub _this_object {
 
 sub _order_columns {
     my $c = shift;
-    return [ qw/id first_name last_name orcid url/ ] unless $c->current_route =~ /create/;
-    return [ qw/first_name last_name orcid url/ ];
+    return [ qw/id first_name middle_name last_name orcid url/ ] unless $c->current_route =~ /create/;
+    return [ qw/first_name middle_name last_name orcid url/ ];
 }
 
 sub lookup_name {
@@ -128,16 +141,16 @@ sub update_rel {
         my $obj = $c->param('publication') or return $c->update_error("Missing publication");
         $obj = $c->str_to_obj($obj) or return $c->update_error("No match for $obj");
         my $pub = $obj->get_publication(autocreate => 1);
-        $pub->save(audit_user => $c->user) unless $pub->id;
+        $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
         my $role_type = $c->param('role_type');
         my $ctr = Contributor->new(
           role_type_identifier    => $role_type,
           person_id               => $person->id,
           organization_identifier => $organization->identifier
         );
-        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error); 
+        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error); 
         $ctr->add_publications($pub);
-        $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error);
+        $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error);
     }
 
     $c->redirect_to($next);

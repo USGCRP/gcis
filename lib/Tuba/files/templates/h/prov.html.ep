@@ -26,7 +26,7 @@
     %   for my $rel (sort keys %{ $by_type_rel{$type} } ) {
             %   my $count = @{ $by_type_rel{$type}{$rel} };
             <li><%= pl($type,$count) %>  <%= ontology_human_pl($rel,$count) %> this <%= $pub->publication_type_identifier %> :
-            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, tiny => 1 =%>.
+            <%= include 'commify', objs => $by_type_rel{$type}{$rel}, short => 1 =%>.
             </li>
     %   }
     % }

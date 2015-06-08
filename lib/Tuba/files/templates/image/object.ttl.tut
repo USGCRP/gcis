@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis prov/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis rdf prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -23,7 +23,7 @@
 
 ## Tags:
    dcterms:subject "<%= $image->attributes %>"^^xsd:string;
-   dcterms:RightsStatement "<%= $image->usage_limits %>"^^xsd:string;
+   dcterms:rights [ rdf:value "<%= $image->usage_limits %>"^^xsd:string; ];
 
    a gcis:Image .
 % end

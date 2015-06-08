@@ -124,7 +124,7 @@ sub update_rel {
     if (my $new = $c->param('new_array')) {
         my $array = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_arrays($array);
-        $object->save(audit_user => $c->user) or do {
+        $object->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or do {
             $c->flash(error => $object->error);
             return $c->redirect_to($next);
         };
@@ -133,7 +133,7 @@ sub update_rel {
         my $img = Array->new(identifier => $new)->load(speculative => 1)
             or return $c->update_error("array $new not found");
         $object->add_arrays($img);
-        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
+        $object->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($object->error);
     }
 
     my $report_identifier = $c->stash('report_identifier');

@@ -15,7 +15,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     <dd>A <i>chapter</i> of a <i>report</i>, such as 
         %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "our-changing-climate" } => begin
         our-changing-climate<%= end %>,
-        has a unique mnemonic identifiers, and possibly, a number.  Some <i>chapters</i>, for instance, an
+        has a unique mnemonic identifier, and possibly, a number.  Some <i>chapters</i>, for instance an
         %= link_to 'show_chapter', { report_identifier => 'nca3', chapter_identifier => "appendix-climate-science-supplement" } => begin
         appendix<%= end %>, do not have a number.  <i>Chapters</i> may also have <i>figures</i>, <i>tables,</i>, <i>findings</i>, and <i>references</i> associated with them.
         </dd>
@@ -37,8 +37,8 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
     <dd>A <i>table</i>, like a <i>figure</i>, is embedded in a <i>report</i>, and possibly in a <i>chapter</i> in a <i>report</i>.</dd>
 
     <dt>Reference</dt>
-    <dd>A <i>reference</i> is a bibliographic entry or citation.  They are uniquely identified with
-        <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUIDs</a>, like
+    <dd>A <i>reference</i> is a bibliographic entry or citation.  It is uniquely identified with a
+        <a href="http://en.wikipedia.org/wiki/Universally_unique_identifier" target="_blank">UUID</a>, like
         %= link_to 'show_reference', { reference_identifier => 'e679d754-46b3-4d62-a7dd-4a7f0c727ebe' } => begin
         e679d754-46b3-4d62-a7dd-4a7f0c727ebe<%= end %>.  A <i>reference</i>
         in a <i>report</i> may appear in a <i>chapter</i>, <i>figure</i>, <i>finding</i> or <i>table</i> of that <i>report</i>.  Moreover, a <i>reference</i> refers to
@@ -64,7 +64,7 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
 
     <dt>Journals</dt>
     <dd>A <i>journal</i>
-        may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a> number, and is uniquely identified within GCIS using a mnemonic identifier, like
+        may have a print and online <a href="https://en.wikipedia.org/wiki/International_Standard_Serial_Number" target="_blank">ISSN</a>, and is uniquely identified within GCIS using a mnemonic identifier, like
         %= link_to 'show_journal', { journal_identifier => "climatic-change" } => begin
         climatic-change
         <%= end =%>.</dd>
@@ -160,8 +160,8 @@ annoted with a term from a semantic vocabulary.  Furthermore, the relationship m
 <h3>Semantic Model</h3>
 <p>All GCIS resources have representations in <a href="http://www.w3.org/TeamSubmission/turtle/" target="_blank">turtle</a>.
 The GCIS vocabulary is defined in the <a href="<%= url_for('gcis.owl') %>">GCIS ontology</a>.
-Many other ontologies are used including, most notably <a href="http://www.w3.org/ns/prov" target="_blank">PROV</a>.
-The entity-activity-agent model of prov has been applied to the GCIS through the use of resources, activities, and
+Many <%= link_to 'resources.yaml', { format => 'yaml'} => begin %>other ontologies<%= end %> are used including, most notably <a href="http://www.w3.org/ns/prov" target="_blank">PROV</a>.
+The entity-activity-agent model of PROV has been applied to the GCIS through the use of resources, activities, and
 contributors.
 <br>
 <br>

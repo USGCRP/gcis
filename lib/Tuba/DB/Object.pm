@@ -103,9 +103,8 @@ sub update_primary_key {
     # %changes should just be source_column -> new_value.
     my $table = $object->meta->table;
     my $db = $object->db;
+    my $dbh = $db->dbh or die $db->error;
     $db->do_transaction( sub {
-        $db->dbh->do("set local audit.username = ?",{},$audit_user);
-        $db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
         my %non_pk_changes = %changes;
         my %pk_changes;
         for (keys %pk) {
@@ -114,9 +113,11 @@ sub update_primary_key {
         for (keys %non_pk_changes) {
             $object->$_($non_pk_changes{$_});
         }
+        $dbh->do("set local audit.username = ?",{},$audit_user);
+        $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
         $object->save(audit_user => $audit_user, audit_note => $audit_note);
         
-        my $dbis = DBIx::Simple->new($db->dbh);
+        my $dbis = DBIx::Simple->new($dbh);
         $dbis->update(qq["$table"], \%pk_changes, \%pk) or die $dbis->error;
     } ) or do {
         $object->error($db->error) unless $object->error;
@@ -143,6 +144,7 @@ sub _am_recursing { # am I recursing?
 sub save {
     my $self = shift;
     my %args = @_;
+    Carp::confess("weird args") if @_ % 2;
     my $status;
     # This function will be called several times during a nested save (e.g. $figure->add_image(..) ).
     # But %args are not propogated.  So, store $audit_info in a package var which we use
@@ -158,11 +160,20 @@ sub save {
     $_audit_user = $audit_user;
     $_audit_note = $audit_note;
     $self->meta->error_mode('fatal');
-    $status = $self->db->do_transaction( sub {
-            $self->db->dbh->do("set local audit.username = ?",{},$audit_user);
-            $self->db->dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
-            $self->SUPER::save(%args);
-    } );
+    my $dbh = $self->db->dbh;
+    my $state = $dbh->ping;
+    return 0 if $state==4; # in failed transaction
+    if ($state==3) {  # already in a transaction
+        $dbh->do("set local audit.username = ?",{},$audit_user);
+        $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+        $status = $self->SUPER::save(%args);
+    } else { # not in a transaction
+        $status = $self->db->do_transaction( sub {
+                $dbh->do("set local audit.username = ?",{},$audit_user);
+                $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+                $status = $self->SUPER::save(%args);
+        });
+    }
     unless ($status) {
         logger->warn("save failed, obj error : ".($self->error || 'none'));
         logger->warn("save failed, db error : ".($self->db->error || 'none'));

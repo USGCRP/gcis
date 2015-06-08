@@ -27,6 +27,7 @@ use JSON::XS;
 use Mojo::JSON;
 use Time::Duration qw/ago/;
 use Tuba::Log;
+use Tuba::Util qw/new_uuid/;
 use Data::Dumper;
 
 my $key_expiration = 60 * 60 * 24 * 30;
@@ -63,8 +64,10 @@ sub _validate_api_key {
     }
     my $verify = b(Mojo::JSON::encode_json([$user,$secret,$create_time]))->hmac_sha1_sum;
     if ($verify eq $hash) {
-        logger->debug("Valid api key for $user, created ".ago(time - $create_time));
+        my $id = new_uuid();
+        logger->debug("Valid api key for $user, created ".ago(time - $create_time)."session id : $id");
         $c->session(user => $user);
+        $c->session(id => $id);
         return 1;
     } else {
         logger->warn("Invalid key for $user");
@@ -114,7 +117,7 @@ sub _google_secrets {
     state $google_secrets;
     return if $google_secrets && $google_secrets eq 'none';
     return $google_secrets->{web} if $google_secrets;
-    my $secrets_file = $c->config->{auth}{google_secrets_file};
+    my $secrets_file = $c->config->{auth}{google_secrets_file} or return;
     if ($secrets_file and !-e $secrets_file) {
         $c->app->log->warn("could not open google_secrets_file $secrets_file");
         $google_secrets = 'none';
@@ -176,6 +179,9 @@ sub _login_ok {
     my $user = shift;
     $c->app->log->info("Log in ok for $user");
     $c->session(user => $user);
+    my $id = new_uuid();
+    $c->app->log->info("Session id: $id");
+    $c->session(id => $id);
     my $dest = $c->param('destination') || $c->flash('destination') || 'index';
     $dest =~ s/^http(s)?://;
     return $c->redirect_to($dest);

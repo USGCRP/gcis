@@ -39,6 +39,9 @@
         <p>This finding is from <%= obj_link_to $finding->report, 'show' => begin %>
         <%= $finding->report->title %><%= end %>.</p>
         % }
+        % if (my $to = fix_url($finding->url)) {
+        <p><%= link_to $to => target => "_blank" => begin %><%= $finding->url %><%= end %></p>
+        % }
         % for my $what (qw/process evidence uncertainties confidence/) {
             % if ($finding->$what) {
             <p><b><%= $labels{$what} %> :</b><%= tbibs_to_links($finding->$what) %></p>
