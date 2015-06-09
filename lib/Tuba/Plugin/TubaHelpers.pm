@@ -588,6 +588,13 @@ sub register {
             my ($block, @thingies) = @_;
             return keysort(sub { $block->() }, @thingies);
         });
+    $app->helper(to_url => sub {
+            my $c = shift;
+            my $path = shift;
+            my $url = $c->req->url->clone;
+            $url->path($path);
+            return $url->to_abs;
+        });
 }
 1;
 1;
