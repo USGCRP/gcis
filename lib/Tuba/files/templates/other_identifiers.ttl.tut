@@ -16,7 +16,7 @@
       % if (my $same_as = $exterm->same_as) {
    owl:sameAs <<%= $same_as %>>;
       % }
-   skos:Concept <<%= uri($exterm->lexicon) %>> .
+   dcterms:subject <<%= uri($exterm->lexicon) %>> .
    
     % }
 % }
