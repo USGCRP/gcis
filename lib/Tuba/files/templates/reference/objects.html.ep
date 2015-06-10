@@ -16,14 +16,13 @@
 <caption> </caption>
 <tr>
     <th>identifier</th>
-    <th>type</th>
+    <th>ref type</th>
+    <th>pub type</th>
     <th>title</th>
-% unless (stash 'chapter') {
-    <th>chapters</th>
-% }
     <th>publication</th>
 </tr>
 % for my $o (@$objects) {
+% my $pub = $o->child_publication;
     <tr>
     <td>
         <%= link_to 'show_reference', { reference_identifier => $o->identifier } => begin %>
@@ -31,18 +30,10 @@
         <%= end %>
     </td>
     <td> <%= $o->attrs->{reftype} %> </td>
+    <td> <%= $pub ? $pub->publication_type_identifier : "" %></td>
     <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
-% unless (stash 'chapter') {
     <td class='thumbnails'>
-        <div class='span2'>
-            % for my $sub ($o->subpubrefs) {
-            <%= link_to $sub->uri($self) => class => "btn btn-default" => begin %><%= $sub->publication->stringify %><%= end %>
-            % }
-        </div>
-    </td>
-% }
-    <td class='thumbnails'>
-        % if (my $pub = $o->child_publication) {
+        % if ($pub) {
             <div class='span2'>
                 <%= link_to $pub->uri($self) => class => "btn btn-default" => begin %><%= $pub->stringify %><%= end %>
             </div>

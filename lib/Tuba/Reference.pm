@@ -337,19 +337,14 @@ SQL
 sub set_title {
     my $c = shift;
     my %args = @_;
-    if (my $ch = $args{object}) {
-        return $c->SUPER::set_title(%args);
-    }
-    if (my $ch = $c->stash('chapter')) {
-        $c->stash(title => sprintf("References in chapter %s of %s",$ch->stringify(tiny => 1), $ch->report->title));
-        return;
-    }
-    if (my $rp = $c->stash('report')) {
-        $c->stash(title => sprintf("References in %s",$rp->title));
+    my $obj = $args{object} || $c->stash('selected_object');
+    if ($obj) {
+        $c->stash(title => sprintf("References in %s",$obj->stringify(long => 1)));
         return;
     }
     return $c->SUPER::set_title(%args);
 }
+
 
 sub create_form {
     my $c = shift;
@@ -357,6 +352,28 @@ sub create_form {
     return $c->SUPER::create_form(@_);
 }
 
+sub list_for_publication {
+    my $c = shift;
+    my $obj = $c->stash('selected_object') || return $c->reply->not_found;
+    my $pub = $obj->get_publication(autocreate => 1);
+    my $all = !!$c->param('all');
+    $c->stash(title => "References for ".$obj->stringify(short => 1));
+    my $refs = References->get_objects(
+               query => [publication_id => $pub->id],
+               require_objects => ['subpubrefs'],
+               ( $all ? () : (page => $c->page, per_page => $c->per_page))
+    );
+    $c->set_pages(References->get_objects_count( 
+            query => [ "t2.publication_id" => $pub->id ],
+            require_objects => ['subpubrefs'])) unless $all;
+    $c->stash(objects => $refs);
+    $c->SUPER::list(@_);
+}
+
+#sub show_for_publication {
+#    my $c = shift;
+#
+#}
 
 1;
 

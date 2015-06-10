@@ -255,6 +255,7 @@ sub select {
     if ($loaded) {
         my $table = $loaded->meta->table;
         $c->stash($table => $loaded);
+        $c->stash(selected_object => $loaded);
         return 1;
     }
     $c->render_not_found_or_redirect;

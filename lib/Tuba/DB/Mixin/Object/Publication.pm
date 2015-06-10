@@ -111,25 +111,13 @@ sub get_parents_with_references {
         r.child_publication_id              as child_publication_id,
         r.identifier                        as reference_identifier
       from reference r
-        inner join publication p    on r.publication_id = p.id
         inner join subpubref s      on s.reference_identifier = r.identifier
         inner join publication subp on s.publication_id = subp.id
       where r.child_publication_id  = ?
 SQL
     my $dbs = DBIx::Simple->new($s->db->dbh);
-    my $second = <<SQL;
-    select
-        p.publication_type_identifier,
-        p.id                            as parent_publication_id,
-        r.child_publication_id          as child_publication_id,
-        r.identifier                    as reference_identifier
-    from reference r
-        inner join publication p    on r.publication_id = p.id
-    where r.child_publication_id = ?
-SQL
 
     my @results = $dbs->query($first, $s->id)->hashes;
-    push @results, $dbs->query($second, $s->id)->hashes;
     my %uniq;
     @results = grep !$uniq{$_->{parent_publication_id}}{$_->{child_publication_id}}++, @results if $args{uniq};
     if ($args{for_export} && $c) {
@@ -165,27 +153,14 @@ sub get_children_with_references {
         r.child_publication_id              as child_publication_id,
         r.identifier                        as reference_identifier
       from reference r
-        inner join publication p    on r.publication_id = p.id
         inner join subpubref s      on s.reference_identifier = r.identifier
         inner join publication subp on s.publication_id = subp.id
       where s.publication_id  = ?
       limit $limit
 SQL
     my $dbs = DBIx::Simple->new($s->db->dbh);
-    my $second = <<SQL;
-    select 
-        p.publication_type_identifier,
-        p.id                            as parent_publication_id,
-        r.child_publication_id          as child_publication_id,
-        r.identifier                    as reference_identifier
-    from reference r
-        inner join publication p    on r.publication_id = p.id
-    where p.id = ? and r.child_publication_id is not null
-    limit $limit
-SQL
 
     my @results = $dbs->query($first, $s->id)->hashes;
-    push @results, $dbs->query($second, $s->id)->hashes;
     @results = @results[0..$limit-1] if @results > $limit;
     for (@results) {
         $_->{parent} = $s;
