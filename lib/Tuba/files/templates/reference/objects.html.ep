@@ -17,7 +17,7 @@
 <tr>
     <th>identifier</th>
     <th>ref type</th>
-    <th>pub type</th>
+    <th>type</th>
     <th>title</th>
     <th>publication</th>
 </tr>
@@ -32,11 +32,9 @@
     <td> <%= $o->attrs->{reftype} %> </td>
     <td> <%= $pub ? $pub->publication_type_identifier : "" %></td>
     <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
-    <td class='thumbnails'>
+    <td>
         % if ($pub) {
-            <div class='span2'>
-                <%= link_to $pub->uri($self) => class => "btn btn-default" => begin %><%= $pub->stringify %><%= end %>
-            </div>
+           <%= link_to $pub->uri($self) => class => "" => begin %><%= $pub->stringify %><%= end %>
         % } else {
             no publication
         % }

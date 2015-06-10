@@ -61,7 +61,7 @@ sub stringify {
             return $1;
         }
     }
-    return $uuid;
+    return $s->attr('title') || $uuid;
 }
 
 sub attr {

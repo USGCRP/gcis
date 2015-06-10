@@ -25,7 +25,6 @@ ok $pub->save(audit_user => "test"), "Saved publication";
 
 my $ref = Reference->new(
     identifier => "ronaldo",
-    publication_id => $pub->id,
     attrs => { num => "7 ± 1" }
 );
 ok $ref->save(audit_user => "test"), "Saved reference";
