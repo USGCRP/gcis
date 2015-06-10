@@ -15,34 +15,16 @@ sub list {
     my $c = shift;
     my $pub;
     my $all = $c->param('all');
-    my $refs;
-
-    if (my $chapter = $c->current_chapter) {
-        $pub = $chapter->get_publication(autocreate => 1);
-        $c->stash(title => sprintf( "References for %s chapter %s : %s",
-                $c->current_report->identifier,
-                $chapter->number // '',
-                $chapter->identifier));
-        $refs = References->get_objects(
-            query => [ "t2.publication_id" => $pub->id ],
-            require_objects => ['subpubrefs'],
-            ( $all ? () : (page => $c->page, per_page => $c->per_page))
-        );
-        $c->set_pages(References->get_objects_count( 
-            query => [ "t2.publication_id" => $pub->id ],
-            require_objects => ['subpubrefs'])) unless $all;
-    } else {
-        $pub = $c->current_report->get_publication(autocreate => 1);
-        $c->stash(title => "References for ".$c->current_report->identifier." report");
-        $refs = References->get_objects(
-               query => [publication_id => $pub->id],
-               with_objects => ['subpubrefs'],
-               ( $all ? () : (page => $c->page, per_page => $c->per_page))
-        );
-        $c->set_pages(References->get_objects_count( query => [publication_id => $pub->id])) unless $all;
-    }
-    $c->stash(objects => $refs);
-    $c->SUPER::list(@_);
+    my $obj = $c->current_report;
+    return $c->redirect_to(
+      $c->url_for(
+        'list_report_references',
+        {
+          report_identifier => $obj->identifier,
+          format            => $c->stash('format') || ""
+        }
+      )->query($c->req->url->query)
+    );
 }
 
 sub show {
