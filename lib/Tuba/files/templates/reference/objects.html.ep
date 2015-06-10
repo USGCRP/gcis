@@ -1,9 +1,9 @@
 % layout 'default';
 
 <center>
-<h2>
+<h4>
     %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
-</h2>
+</h4>
 </center>
 
 %= include 'list_formats';
