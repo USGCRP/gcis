@@ -60,6 +60,11 @@ sub create {
         if (my $uri = delete $json->{publication_uri}) {
             $pubs ||= [];
             push @$pubs, $uri;
+            my $obj = $c->uri_to_obj($uri) or return $c->render(json => { error  => "uri $uri not found" } );
+            $obj->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
+            my $pub = $obj->get_publication(autocreate => 1);
+            $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
+            $c->stash(object_json => $json);
         }
         $c->stash(sub_publication_uris => $pubs);
     }
@@ -69,6 +74,7 @@ sub create {
 sub post_create {
   my $c         = shift;
   my $reference = shift;
+  my $tree = $reference->as_tree; # no-op for rose bug
   my $uris      = $c->stash('sub_publication_uris') or return 1;
   for my $uri (@$uris) {
     my $pub = $c->uri_to_pub($uri)
@@ -86,6 +92,7 @@ sub update {
         $c->stash(audit_note => $audit_note);
 
         # Turn uris into ids
+        my $pub_uris = delete $json->{sub_publication_uris};
         if (my $uri = delete $json->{publication_uri}) {
             my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
@@ -93,7 +100,8 @@ sub update {
             $json->{publication_id} = $pub->id;
         } else {
             my $obj = $c->_this_object or return $c->render(status => 400, json => { error => "no object found" } );
-            $json->{publication_id} = $obj->publication_id;
+            $pub_uris ||= [];
+            push @$pub_uris, $obj->uri($c);
         }
 
         # ditto
@@ -108,7 +116,7 @@ sub update {
         }
 
         $c->stash(object_json => $json);
-        $c->stash(sub_publication_uris => delete $json->{sub_publication_uris});
+        $c->stash(sub_publication_uris => $pub_uris);
         $c->stash(subpub_update_category => delete $json->{subpub_update_category});
     }
     $c->SUPER::update(@_);

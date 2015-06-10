@@ -293,7 +293,7 @@ sub register {
      });
     $app->helper(uri_to_obj => sub {
          my $c = shift;
-         my $uri = shift;
+         my $uri = shift or die "missing uri";
 
          my $obj;
          for ($uri) {
