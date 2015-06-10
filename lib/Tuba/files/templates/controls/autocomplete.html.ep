@@ -13,7 +13,7 @@
 %   param $input_name => $val;
 % }
 
-%= text_field $input_name, autocomplete => 'off', id => $input_name, class => 'span8', placeholder => 'search '.( $object_type eq 'all' ? 'publications' : pl($object_type));
+%= text_field $input_name, autocomplete => 'off', id => $input_name, class => 'span8', placeholder => 'search '.( $object_type eq 'all' ? 'publications' : pl($object_type,2,1));
 
 %= javascript begin
 $('#<%= $input_name %>').typeahead({
