@@ -2,7 +2,7 @@
 % my $name = $rel->name;
 % my @existing = $object->$name;
 
-<div class='row'>
+<div>
 
 % my $i = 0;
 % for my $obj (sort { $a->sortkey cmp $b->sortkey } @existing) {
@@ -13,15 +13,13 @@
     </div>
     % if (++$i % 6 == 0) {
     </div>
-    <div class='row'>
+    <div>
     % }
 % }
 </div>
-<br />
-<br />
-<div class='row'>
+<div>
     
-        %= obj_link_to $rel->class, 'create_form' => class => 'btn btn-default btn-lg col-lg-2 col-md-2 col-sm-6 col-xs-8' => begin
+        %= obj_link_to $rel->class, 'create_form' => class => 'btn btn-default btn-lg' => begin
         create <%= $name %>
         %= end
     

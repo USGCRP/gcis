@@ -132,6 +132,9 @@ img[src*="gcis_remote=1"] {
 #simple-menu {
 	margin-top: 8px;
 }
+.typeahead {
+	z-index: 1051
+}
 .thumbnail {
 	background-color: #f3f3f3;
 }
