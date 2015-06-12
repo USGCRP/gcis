@@ -21,7 +21,7 @@ $t->post_ok("/report" => form => { identifier => "test-report", title => "test r
 my $desc = q[À l'exception de l'abondance de lichens, il y avait peu de différences dans la végétation entre les sites brûlés (moyenne = 37 ± 1,7 ans) et non brûlés.];
 my $id = q[f13367d9-1e7f-40ca-a495-542d7a3faf98];
 
-$t->app->db->dbh->do(q[delete from publication_type where identifier='report']);
+$t->app->db->dbh->do(q[delete from publication_type where identifier in ('report','book')]);
 $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report'),('book','book')]);
 
 $t->post_ok(
@@ -48,7 +48,7 @@ for my $uri ("/reference/$id", "/report/test-report/reference/$id") {
             uri => "/reference/$id",
             href => "$base/reference/$id.json",
             child_publication_id => undef,
-            sub_publication_uris => [
+            publications => [
                 "/report/test-report",
             ],
             identifier => $id,

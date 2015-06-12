@@ -93,7 +93,7 @@ sub post_create {
   for my $uri (@$uris) {
     my $pub = $c->uri_to_pub($uri)
       or do { $reference->error("$uri not found"); return 0; };
-    $reference->add_publications({publication_id => $pub->id});
+    $reference->add_publications({id => $pub->id});
   }
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   return 1;
@@ -142,12 +142,12 @@ sub post_update {
   my $c         = shift;
   my $reference = shift;
   my $uris      = $c->stash('publication_uris') or return 1;
-  my %existing  = map { $_->publication_id => 1 } $reference->publications;
+  my %existing  = map { $_->id => 1 } $reference->publications;
   for my $uri (@$uris) {
     my $pub = $c->uri_to_pub($uri)
       or do { $reference->error("$uri not found"); return 0; };
     next if delete($existing{$pub->id});
-    $reference->add_publications({publication_id => $pub->id});
+    $reference->add_publications({id => $pub->id});
   }
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   for my $pub_id (keys %existing) {
@@ -248,7 +248,7 @@ sub update_rel {
             my $pub = $c->uri_to_pub($pub_uri) or do {
                 return $c->render(status => 400, json => { error => "$pub_uri not found" });
             };
-            $reference->add_publications({publication_id => $pub->id});
+            $reference->add_publications({id => $pub->id});
             $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->render_exception;
         }
         if (my $subpubref = $json->{delete_subpub}) { # Deprecation
@@ -281,7 +281,7 @@ sub update_rel {
         my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
         my $chapter_pub = $chapter->get_publication(autocreate => 1);
         $chapter_pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $chapter_pub->id;
-        $reference->add_publications({ publication_id => $chapter_pub->id });
+        $reference->add_publications({ id => $chapter_pub->id });
         $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
@@ -290,7 +290,7 @@ sub update_rel {
             or return $c->redirect_without_error(update_rel_form => "not found : $other_pub");
         my $pub = $obj->get_publication(autocreate => 1);
         $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
-        $reference->add_publications({ publication_id => $pub->id });
+        $reference->add_publications({ id => $pub->id });
         $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
@@ -374,7 +374,7 @@ sub list_for_publication {
                ( $all ? () : (page => $c->page, per_page => $c->per_page))
     );
     $c->set_pages(References->get_objects_count( 
-            query => [ "t2.publication_id" => $pub->id ],
+            query => [ "publication_id" => $pub->id ],
             require_objects => ['publications'])) unless $all;
     $c->stash(objects => $refs);
     $c->SUPER::list(@_);
