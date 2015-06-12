@@ -390,8 +390,8 @@ sub startup {
     for my $resource (qw/report chapter figure finding table webpage book dataset journal/) {
         # TODO: article
         my $route = $r->lookup("select_$resource") or die "bad pub $resource";
-        $route->get("/reference")->to("reference#list_for_publication")->name("list_$resource\_references");
-        $route->get("/reference/:reference_identifier")->to('reference#show_for_publication')->name("show_$resource\_reference");
+        $route->get("/reference")->to("reference#list_for_publication")->name("list_reference_$resource");
+        $route->get("/reference/:reference_identifier")->to('reference#show_for_publication')->name("show_reference_$resource");
     }
 
     # Generic publication.

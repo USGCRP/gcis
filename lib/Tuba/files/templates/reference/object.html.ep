@@ -23,6 +23,30 @@
     <div class='span8 well'>
         This bibliographic record appears in :
         %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, @$others ], size => 'span3'
+     <br>
+     Reference URIs:<br>
+     <ul>
+         <li>
+         % if (stash 'selected_object') {
+         <%= link_to 'show_reference' => begin %><%= url_for('show_reference') %><%= end %>
+         % } else {
+         <%= url_for('show_reference') %>
+         % }
+         </li>
+         % my $selected = stash 'selected_object';
+         % for my $sub (@$others) {
+             % my $pub = $sub->publication;
+             % my $obj = $pub->to_object;
+             % my $uri = obj_uri_for($obj, 'show_reference');
+             <li>
+             % if ($selected && $selected->pk_values eq $obj->pk_values) {
+             <%= $uri %>
+             % } else {
+             <%= link_to $uri => begin %><%= $uri %><%= end %>
+             % }
+             </li>
+         % }
+     </ul>
     </div>
     % if (my $child = $reference->child_publication) {
         <div class='span4 well'>

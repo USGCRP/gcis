@@ -18,7 +18,7 @@ sub list {
     my $obj = $c->current_report;
     return $c->redirect_to(
       $c->url_for(
-        'list_report_references',
+        'list_reference_report',
         {
           report_identifier => $obj->identifier,
           format            => $c->stash('format') || ""
@@ -35,6 +35,17 @@ sub show {
     $c->stash( object => $reference);
     $c->SUPER::show(@_);
 }
+
+sub show_for_publication {
+    my $c = shift;
+    my $obj = $c->stash('selected_object') || return $c->reply->not_found;
+    my $identifier = $c->stash('reference_identifier');
+    my $reference = Reference->new(identifier => $identifier);
+    $reference->load(speculative => 1) or return $c->render_not_found_or_redirect;
+    $c->stash( object => $reference);
+    $c->SUPER::show(@_);
+}
+
 
 sub normalize_form_parameter {
     my $c = shift;
@@ -356,11 +367,6 @@ sub list_for_publication {
     $c->stash(objects => $refs);
     $c->SUPER::list(@_);
 }
-
-#sub show_for_publication {
-#    my $c = shift;
-#
-#}
 
 1;
 
