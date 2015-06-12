@@ -68,7 +68,7 @@
         <%== $numeric_link->($fin => 'finding') %>,
         <%== $numeric_link->($tab => 'table') %>
     and
-    <%== $numeric_link->($ref => 'reference' => 'list_report_references' ) %>
+    <%== $numeric_link->($ref => 'reference' => 'list_reference_report' ) %>
    </p>
         % }
 

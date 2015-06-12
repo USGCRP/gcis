@@ -67,7 +67,10 @@ sub normalize_form_parameter {
 sub create {
     my $c = shift;
     if (my $json = $c->req->json) {
-        my $pubs = delete $json->{sub_publication_uris};
+        if ($json->{sub_publication_uris}) {
+            return $c->render(json => "error sub_publication_uris is deprecated, use publication_uris");
+        }
+        my $pubs = delete $json->{publication_uris};
         if (my $uri = delete $json->{publication_uri}) {
             $pubs ||= [];
             push @$pubs, $uri;
@@ -77,7 +80,7 @@ sub create {
             $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
             $c->stash(object_json => $json);
         }
-        $c->stash(sub_publication_uris => $pubs);
+        $c->stash(publication_uris => $pubs);
     }
     $c->SUPER::create(@_);
 }
@@ -86,11 +89,11 @@ sub post_create {
   my $c         = shift;
   my $reference = shift;
   my $tree = $reference->as_tree; # no-op for rose bug
-  my $uris      = $c->stash('sub_publication_uris') or return 1;
+  my $uris      = $c->stash('publication_uris') or return 1;
   for my $uri (@$uris) {
     my $pub = $c->uri_to_pub($uri)
       or do { $reference->error("$uri not found"); return 0; };
-    $reference->add_subpubrefs({publication_id => $pub->id});
+    $reference->add_publications({publication_id => $pub->id});
   }
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   return 1;
@@ -103,7 +106,10 @@ sub update {
         $c->stash(audit_note => $audit_note);
 
         # Turn uris into ids
-        my $pub_uris = delete $json->{sub_publication_uris};
+        if ($json->{sub_publication_uris}) {
+            return $c->render(status => 400, json => { error  => "sub_publication_uris is deprecated, use publication_uris" } );
+        }
+        my $pub_uris = delete $json->{publication_uris};
         if (my $uri = delete $json->{publication_uri}) {
             my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
@@ -127,26 +133,26 @@ sub update {
         }
 
         $c->stash(object_json => $json);
-        $c->stash(sub_publication_uris => $pub_uris);
-        $c->stash(subpub_update_category => delete $json->{subpub_update_category});
+        $c->stash(publication_uris => $pub_uris);
+        $c->stash(publication_update_category => delete $json->{publication_update_category});
     }
     $c->SUPER::update(@_);
 }
 sub post_update {
   my $c         = shift;
   my $reference = shift;
-  my $uris      = $c->stash('sub_publication_uris') or return 1;
-  my %existing  = map { $_->publication_id => 1 } $reference->subpubrefs;
+  my $uris      = $c->stash('publication_uris') or return 1;
+  my %existing  = map { $_->publication_id => 1 } $reference->publications;
   for my $uri (@$uris) {
     my $pub = $c->uri_to_pub($uri)
       or do { $reference->error("$uri not found"); return 0; };
     next if delete($existing{$pub->id});
-    $reference->add_subpubrefs({publication_id => $pub->id});
+    $reference->add_publications({publication_id => $pub->id});
   }
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
   for my $pub_id (keys %existing) {
-      my $s = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
-      if (my $cat = $c->stash('subpub_update_category')) {
+      my $s = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
+      if (my $cat = $c->stash('publication_update_category')) {
           next unless $s->publication->publication_type_identifier eq $cat;
       }
       $s->load(speculative => 1) or next;
@@ -232,22 +238,28 @@ sub update_rel {
 
     if (my $json = $c->req->json) {
         logger->info("got json");
-        if (my $subpubref = $json->{add_subpubref_uri}) {
-            logger->info("got $subpubref");
+        if (my $subpubref = $json->{add_subpubref_uri}) { # Deprecation
+            return $c->render(status => 400, json => { error => "add_subpubref_uri is deprecated, use add_publication_uri"} ); # Deprecation
+        }
+        if (my $pub_uri = $json->{add_publication_uri}) {
+            logger->info("got $pub_uri");
             # Add the URI for a chapter, figure, finding -- "sub publications" of a report --
             # to this references.
-            my $pub = $c->uri_to_pub($subpubref) or do {
-                return $c->render(status => 400, json => { error => "$subpubref not found" });
+            my $pub = $c->uri_to_pub($pub_uri) or do {
+                return $c->render(status => 400, json => { error => "$pub_uri not found" });
             };
-            $reference->add_subpubrefs({publication_id => $pub->id});
+            $reference->add_publications({publication_id => $pub->id});
             $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->render_exception;
         }
-        if (my $subpubref = $json->{delete_subpub}) {
-            my $pub = $c->uri_to_pub($subpubref) or do {
-                return $c->render(status => 400, json => { error => "$subpubref not found" });
+        if (my $subpubref = $json->{delete_subpub}) { # Deprecation
+            return $c->render(status => 400, json => { error => "delete_subpub is deprecated, use delete_publication"} );
+        }
+        if (my $pub_uri = $json->{delete_publication}) {
+            my $pub = $c->uri_to_pub($pub_uri) or do {
+                return $c->render(status => 400, json => { error => "$pub_uri not found" });
             };
-            my $sub = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $pub->id);
-            $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$subpubref not found");
+            my $sub = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub->id);
+            $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$pub not found");
             $sub->delete or return $c->render_exception;
         }
 
@@ -269,7 +281,7 @@ sub update_rel {
         my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
         my $chapter_pub = $chapter->get_publication(autocreate => 1);
         $chapter_pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $chapter_pub->id;
-        $reference->add_subpubrefs({ publication_id => $chapter_pub->id });
+        $reference->add_publications({ publication_id => $chapter_pub->id });
         $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
@@ -278,12 +290,12 @@ sub update_rel {
             or return $c->redirect_without_error(update_rel_form => "not found : $other_pub");
         my $pub = $obj->get_publication(autocreate => 1);
         $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
-        $reference->add_subpubrefs({ publication_id => $pub->id });
+        $reference->add_publications({ publication_id => $pub->id });
         $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or
             return $c->redirect_with_error(update_rel_form => $reference->error);
     }
-    if (my $which = $c->param('delete_subpub')) {
-        my $sub = Subpubref->new(reference_identifier => $reference->identifier, publication_id => $which);
+    if (my $which = $c->param('delete_publication')) {
+        my $sub = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $which);
         $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$sub not found");
         $sub->delete or return $c->redirect_with_error(update_rel_form => $sub->error);
         $c->stash(message => "saved changes");
@@ -358,12 +370,12 @@ sub list_for_publication {
     $c->stash(title => "References for ".$obj->stringify(short => 1));
     my $refs = References->get_objects(
                query => [publication_id => $pub->id],
-               require_objects => ['subpubrefs'],
+               require_objects => ['publications'],
                ( $all ? () : (page => $c->page, per_page => $c->per_page))
     );
     $c->set_pages(References->get_objects_count( 
             query => [ "t2.publication_id" => $pub->id ],
-            require_objects => ['subpubrefs'])) unless $all;
+            require_objects => ['publications'])) unless $all;
     $c->stash(objects => $refs);
     $c->SUPER::list(@_);
 }

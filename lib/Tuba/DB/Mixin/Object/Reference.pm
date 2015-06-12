@@ -31,12 +31,11 @@ sub as_tree {
       $t->{child_publication_uri}
         = $c && $obj ? $obj->uri($c) : "/publication/$id";
     }
-    if (my $sub = $s->subpubrefs) { # chapters
-        $t->{sub_publication_uris} = [
+    if (my $sub = $s->publications) {
+        $t->{publications} = [
             map {
-              my $pub = $_->publication;
-              $c ? $pub->to_object->uri($c) : "/publication/".$pub->id
-            } @$sub
+              $c ? $_->to_object->uri($c) : "/publication/".$_->id
+            } $s->publications
         ];
     }
     return $t;

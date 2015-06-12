@@ -10,8 +10,8 @@
 % }
 
 ## This reference appears in the following GCIS entities:
-% for my $subpub ($reference->subpubrefs) {
- % my $chapter = $subpub->publication->to_object;
+% for my $publication ($reference->publications) {
+ % my $chapter = $publication->to_object;
    biro:isReferencedBy <<%= uri($chapter) %>>;
 % }
 

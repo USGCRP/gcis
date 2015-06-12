@@ -36,8 +36,8 @@
     </label>
 
     <div class="controls" style='border:1px solid #ddd;'>
-    % my @other = @{ $object->subpubrefs };
-    %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, @other ], add_delete_button => 'delete_subpub';
+    % my @other = @{ $object->publications };
+    %= include 'obj_thumbnails', objs => [ map $publication->to_object, @other ], add_delete_button => 'delete_subpub';
         % if (@$chapters) {
         %= include 'controls/select', input_name => 'chapter', values => $chapters;
         % }

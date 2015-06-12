@@ -315,14 +315,13 @@ sub as_tree {
         if (my $p = $s->get_publication) {
             my ($ctrs, $role_count, $person_count) = $p->contributors_grouped;
             $tree->{contributors} = [ map $_->as_tree(c => $c), @$ctrs ];
-
-            my $refs = Tuba::DB::Object::Subpubref::Manager->get_objects(query => [ publication_id => $p->id ], limit => 200 );
+            my $refs = $p->references;
             my $format = $c->stash('format');
             $format &&= ".$format";
             my $base = $c->req->url->base;
             $tree->{references} = [ map +{
-                                            uri => "/reference/".$_->reference_identifier,
-                                            href => "$base/reference/".$_->reference_identifier."$format"
+                                            uri => "/reference/".$_->identifier,
+                                            href => "$base/reference/".$_->identifier."$format"
                                         }, @$refs ];
         }
     }
@@ -412,9 +411,7 @@ sub as_text {
 sub reference_count {
     my $ch = shift;
     my $pub = $ch->get_publication or return 0;
-    # chapter, figures, findings, tables are in subpubref, but reports are not.
-    # So this is overloaded in mixin/report.pm
-    my $sql = q[select count(1) from subpubref where publication_id = ?];
+    my $sql = q[select count(1) from publication_reference_map where publication_id = ?];
     my $dbs = DBIx::Simple->new($ch->db->dbh);
     my ($count) = $dbs->query($sql, $pub->id)->flat;
     return $count;
