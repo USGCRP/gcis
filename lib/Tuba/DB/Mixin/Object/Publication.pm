@@ -24,6 +24,7 @@ sub stringify {
         /book/ and return $label;
         /^(image|book)$/ and $args{tiny} and return $label;
     }
+    return $label if $args{long};
     return $self->publication_type_identifier.' '.$label;
 }
 
