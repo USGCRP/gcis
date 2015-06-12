@@ -42,17 +42,19 @@ my $got = $t->app->db->dbh->selectall_arrayref(q[select id from publication wher
 my $pub_id = $got->[0][0];
 like $pub_id, qr/\d+/, "got a publication id";
 
-$t->get_ok("/reference/$id" => { Accept => "application/json" })->status_is(200)->json_is(
-    {
-        uri => "/reference/$id",
-        href => "$base/reference/$id.json",
-        child_publication_id => undef,
-        sub_publication_uris => [
-            "/report/test-report",
-        ],
-        identifier => $id,
-        attrs => { description => $desc },
-    });
+for my $uri ("/reference/$id", "/report/test-report/reference/$id") {
+    $t->get_ok($uri => { Accept => "application/json" })->status_is(200)->json_is(
+        {
+            uri => "/reference/$id",
+            href => "$base/reference/$id.json",
+            child_publication_id => undef,
+            sub_publication_uris => [
+                "/report/test-report",
+            ],
+            identifier => $id,
+            attrs => { description => $desc },
+        });
+}
 
 $t->get_ok("/reference/$id.yaml")->content_like(qr[À l'exception de l'abondance de lichens]);
 
