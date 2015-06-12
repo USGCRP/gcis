@@ -17,27 +17,17 @@
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 
-<div class='control-group' style='margin:10px;'>
-    <label class='control-label'>
-        Primary publication whose bibliography contains this reference (e.g. a report).
-    </label>
-
-    <div class="controls" style='border:1px solid #ddd;'>
-        %= include 'obj_thumbnails', objs => [ $object->publication->to_object ];
-    </div>
-</div>
-
-%= hidden_field 'delete_subpub';
+%= hidden_field 'delete_publication';
 %= hidden_field 'delete_child_publication_id';
 
 <div class='control-group' style='margin:10px;'>
     <label class='control-label'>
-        Other publications containing this reference (e.g. chapters, figures).
+        Publications containing this reference:
     </label>
 
     <div class="controls" style='border:1px solid #ddd;'>
     % my @other = @{ $object->publications };
-    %= include 'obj_thumbnails', objs => [ map $publication->to_object, @other ], add_delete_button => 'delete_subpub';
+    %= include 'obj_thumbnails', objs => [ map $_->to_object, @other ], add_delete_button => 'delete_publication';
         % if (@$chapters) {
         %= include 'controls/select', input_name => 'chapter', values => $chapters;
         % }
@@ -49,7 +39,7 @@
 % my $child = $object->child_publication;
 <div class='control-group' style='margin:10px;'>
     <label class='control-label'>
-        Child publication
+        Publication to which this reference refers:
     </label>
     <div class="controls" style='border:1px solid #ddd;'>
         % if ($child) {

@@ -10,6 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 use Rose::DB::Object::Util qw/:all/;
 use Tuba::Log qw/logger/;;
 use Tuba::Util qw[new_uuid];
+use Data::Dumper;
 
 sub list {
     my $c = shift;
@@ -220,11 +221,10 @@ sub smartmatch {
 sub update_rel_form {
     my $c = shift;
     my $reference = $c->_this_object;
-    my $report = $reference->publication->to_object;
-    undef $report unless $report->meta->table eq 'report';
+    my ( $report ) = map $_->to_object, grep $_->to_object->meta->table eq 'report', $reference->publications;
     my @chapters;
     if ($report) { 
-        @chapters = ( [ 'add a chapter', ''], map [ $_->stringify, $_->identifier ], sort { $a->sortkey cmp $b->sortkey } $report->chapters );
+        @chapters = ( [ 'add a chapter', ''], map [ $_->stringify, "".$_->uri($c) ], sort { $a->sortkey cmp $b->sortkey } $report->chapters );
     }
     $c->stash(chapters => \@chapters);
     $c->SUPER::update_rel_form(@_);
@@ -233,8 +233,6 @@ sub update_rel_form {
 sub update_rel {
     my $c = shift;
     my $reference = $c->_this_object or return $c->reply->not_found;
-    my $report = $reference->publication->to_object;
-    undef $report unless $report->meta->table eq 'report';
 
     if (my $json = $c->req->json) {
         logger->info("got json");
@@ -277,8 +275,8 @@ sub update_rel {
         $reference->child_publication_id($child_publication->id);
         $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->redirect_with_error(update_rel_form => $reference->error);
     }
-    if ( $report && (my $chapter_identifier = $c->param('chapter'))) {
-        my $chapter = Chapter->new(identifier => $chapter_identifier, report_identifier => $report->identifier);
+    if (my $chapter_uri = $c->param('chapter')) {
+        my $chapter = $c->uri_to_obj($chapter_uri);
         my $chapter_pub = $chapter->get_publication(autocreate => 1);
         $chapter_pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $chapter_pub->id;
         $reference->add_publications({ id => $chapter_pub->id });

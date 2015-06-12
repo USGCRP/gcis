@@ -8,7 +8,7 @@
 % if (stash 'value') {
 %   $input_value = stash 'value';
 % }
-% param $input_name => $input_value;
+% param $input_name => ( ($input_value) || "");
 
 %= select_field $input_name, $values, class => 'span8';
 
