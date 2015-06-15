@@ -36,8 +36,7 @@ A publication, similar to an entity, is a generic term for something that has be
      TABLE "publication_map" CONSTRAINT "publication_map_parent_fkey" FOREIGN KEY (parent) REFERENCES publication(id) ON DELETE CASCADE
      TABLE "publication_region_map" CONSTRAINT "publication_region_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "reference" CONSTRAINT "reference_child_publication_id_fkey" FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE SET NULL
-     TABLE "reference" CONSTRAINT "reference_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
-     TABLE "subpubref" CONSTRAINT "subpubref_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
+     TABLE "publication_reference_map" CONSTRAINT "subpubref_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

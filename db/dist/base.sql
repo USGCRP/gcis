@@ -1655,6 +1655,25 @@ COMMENT ON COLUMN publication_map.activity_identifier IS 'XXX';
 
 
 
+CREATE TABLE publication_reference_map (
+    publication_id integer NOT NULL,
+    reference_identifier character varying NOT NULL
+);
+
+
+
+COMMENT ON TABLE publication_reference_map IS 'A map from publications to references.';
+
+
+
+COMMENT ON COLUMN publication_reference_map.publication_id IS 'The publication.';
+
+
+
+COMMENT ON COLUMN publication_reference_map.reference_identifier IS 'The reference.';
+
+
+
 CREATE TABLE publication_region_map (
     publication_id integer NOT NULL,
     region_identifier character varying NOT NULL
@@ -1696,10 +1715,8 @@ COMMENT ON COLUMN publication_type."table" IS 'The database table.';
 CREATE TABLE reference (
     identifier character varying NOT NULL,
     attrs hstore,
-    publication_id integer NOT NULL,
     child_publication_id integer,
-    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
-    CONSTRAINT no_self_references CHECK ((child_publication_id <> publication_id))
+    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -1713,10 +1730,6 @@ COMMENT ON COLUMN reference.identifier IS 'A unique identifier (a UUID).';
 
 
 COMMENT ON COLUMN reference.attrs IS 'Arbitrary name-value pairs for this reference.';
-
-
-
-COMMENT ON COLUMN reference.publication_id IS 'The publication in which this reference appears.';
 
 
 
@@ -1891,25 +1904,6 @@ COMMENT ON COLUMN scenario.description IS 'A description.';
 
 
 COMMENT ON COLUMN scenario.description_attribution IS 'A URL containing the description.';
-
-
-
-CREATE TABLE subpubref (
-    publication_id integer NOT NULL,
-    reference_identifier character varying NOT NULL
-);
-
-
-
-COMMENT ON TABLE subpubref IS 'Publications contained in other publications (e.g. chapters in reports) may be assocaited with references.';
-
-
-
-COMMENT ON COLUMN subpubref.publication_id IS 'The publication.';
-
-
-
-COMMENT ON COLUMN subpubref.reference_identifier IS 'The reference.';
 
 
 
@@ -2388,11 +2382,6 @@ ALTER TABLE ONLY reference
 
 
 ALTER TABLE ONLY reference
-    ADD CONSTRAINT reference_identifier_publication_id_key UNIQUE (identifier, publication_id);
-
-
-
-ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_pkey PRIMARY KEY (identifier);
 
 
@@ -2432,7 +2421,7 @@ ALTER TABLE ONLY scenario
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_pkey PRIMARY KEY (publication_id, reference_identifier);
 
 
@@ -2564,7 +2553,7 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON reference F
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON subpubref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_reference_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -2736,7 +2725,7 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON reference FOR EACH STATEMENT 
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON subpubref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_reference_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -3210,22 +3199,17 @@ ALTER TABLE ONLY reference
 
 
 
-ALTER TABLE ONLY reference
-    ADD CONSTRAINT reference_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
-
-
-
 ALTER TABLE ONLY report
     ADD CONSTRAINT report_report_type_identifier_fkey FOREIGN KEY (report_type_identifier) REFERENCES report_type(identifier);
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_reference_identifier_fkey FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE;
 
 

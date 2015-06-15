@@ -5,7 +5,7 @@ publication_reference_map
 
 =head1 DESCRIPTION
 
-Publications contained in other publications (e.g. chapters in reports) may be assocaited with references.
+A map from publications to references.
 
 =head1 FIELDS
 
