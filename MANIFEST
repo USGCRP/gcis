@@ -387,7 +387,6 @@ lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
 lib/Tuba/DB/Mixin/Object/Report.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
-lib/Tuba/DB/Mixin/Object/Subpubref.pm
 lib/Tuba/DB/Mixin/Object/Table.pm
 lib/Tuba/DB/Mixin/Object/Table/Manager.pm
 lib/Tuba/DB/Mixin/Object/Webpage.pm
