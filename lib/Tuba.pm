@@ -410,7 +410,7 @@ sub startup {
     $lex->get('/find/:context/*term')->to('exterm#find')->name('find_term');
     $lex->get('/:context/*term')
                    ->over(not_match => { 'context' => qr[list|find|update] })
-                   ->to('exterm#find')->name('lookup_term');
+                   ->to('exterm#find')->name('show_exterm');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');

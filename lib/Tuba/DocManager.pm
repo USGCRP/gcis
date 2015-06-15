@@ -147,7 +147,7 @@ our %RouteDoc = (
       brief => "Lookup a GCID from a term",
       description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
   },
-  lookup_term => {
+  show_exterm => {
       brief => "Lookup a GCID from a term",
       description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
   },

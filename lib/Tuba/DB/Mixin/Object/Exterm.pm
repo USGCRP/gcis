@@ -60,5 +60,14 @@ sub same_as {
     return $ctx->( $s->term );
 }
 
+sub uri {
+    my $s = shift;
+    my $c = shift or die "missing controller";
+    my $path = join '/', 'lexicon', $s->lexicon_identifier, $s->context, $s->term;
+    my $url = Mojo::URL->new->path($path);
+    $url->base($c->req->url->base);
+    return $url;
+}
+
 1;
 

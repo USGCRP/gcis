@@ -43,7 +43,7 @@ sub find {
     my $term = Exterm->new(
           lexicon_identifier  => $c->stash('lexicon_identifier'),
           context  => $c->stash('context'),
-          term     => $c->stash('term'),
+          term     => ( $c->stash('term') =~ s/\.t(tl|html)$//r ),
     );
     $term->load(speculative => 1) or return $c->reply->not_found;
     my $gcid = $term->gcid;
