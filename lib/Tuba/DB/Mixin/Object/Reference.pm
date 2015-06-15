@@ -28,8 +28,9 @@ sub as_tree {
     }
     if (my $id = $t->{child_publication_id}) {
         my $obj = $s->child_publication->to_object(autoclean => 1);
-      $t->{child_publication_uri}
+      $t->{child_publication}
         = $c && $obj ? $obj->uri($c) : "/publication/$id";
+        delete $t->{child_publication_id};
     }
     if (my $sub = $s->publications) {
         $t->{publications} = [

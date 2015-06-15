@@ -47,7 +47,7 @@ for my $uri ("/reference/$id", "/report/test-report/reference/$id") {
         {
             uri => "/reference/$id",
             href => "$base/reference/$id.json",
-            child_publication_id => undef,
+            child_publication => undef,
             publications => [
                 "/report/test-report",
             ],
@@ -62,6 +62,18 @@ $t->get_ok("/reference/history/$id");
 my $body  = $t->tx->res->body;
 like $body, qr[this is an audit note], 'saved audit note in create';
 #like $body, qr[À l'exception de l'abondance de lichens], 'unicode okay on history page';
+
+# Update, associate the reference with an article.
+my $article = "article-doi";
+$t->post_ok("/journal" => json => { identifier => 'nature', print_issn => '1234-5678'} );
+$t->post_ok("/article" => json => { identifier => $article, journal_identifier => 'nature' });
+
+$t->post_ok("/reference/$id" => json => {
+        attrs => { description => $desc },
+        child_publication => "/article/$article"
+    });
+
+$t->get_ok("/reference/$id")->status_is(200)->json_is( "/child_publication" => "/article/$article");
 
 # Make a book, convert to a report.
 $t->post_ok("/book" => "form" => { identifier => 'test-book', title => 'some title' } );
@@ -90,6 +102,7 @@ $t->delete_ok("/report/test-book")->status_is(200);
 
 $t->delete_ok("/reference/$id" => { Accept => "application/json" })->status_is(200);
 $t->delete_ok("/report/test-report" => { Accept => "application/json" })->status_is(200);
+$t->delete_ok("/article/$article");
 
 done_testing();
 
