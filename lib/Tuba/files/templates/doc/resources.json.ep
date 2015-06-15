@@ -1,0 +1,7 @@
+% use Mojo::JSON;
+<%== Mojo::JSON::encode_json({
+     rdf_sources => { turtle_namespaces(1) },
+     rdf_prefixes => { turtle_namespaces(0) }
+   });
+%>
+

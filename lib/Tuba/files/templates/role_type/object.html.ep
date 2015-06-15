@@ -1,0 +1,34 @@
+
+% layout 'default', title => "Role ".$role_type->label;
+
+<center>
+<h2><%= $role_type->label %></h2>
+</center>
+
+% if ($object->can('identifier') && user_can('update')) {
+    %= include 'history_modal';
+        <div class='row'>
+            <div class='col-md-2 pull-right'>
+            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
+            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+        	</div>
+        </div>
+    % }
+
+
+<div class='row well'>
+<div class='col-md-6 col-md-offset-3'>
+    <center><b>role identifier: <%= $role_type->identifier %></b></center>
+    Organizations:
+    <%= link_to url_for('list_organization')->query(role => $role_type_identifier) => begin %>
+    <%= $stats->{orgs} %><br>
+    <%= end %>
+    People:
+    <%= link_to url_for('list_person')->query(role => $role_type_identifier) => begin %>
+    <%= $stats->{people} %><br>
+    <%= end %>
+</div>
+</div>
+
+<%= include 'h/other_formats'; =%>
+

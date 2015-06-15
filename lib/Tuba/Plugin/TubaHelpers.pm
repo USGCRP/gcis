@@ -20,6 +20,7 @@ use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
 use URI::Find;
 use Lingua::EN::Inflect qw/A PL/;
+use Sort::Key qw/keysort/;
 
 use Tuba::Log;
 use Tuba::DocManager;
@@ -378,12 +379,10 @@ sub register {
             my $val = shift;
             return format_bytes($val, precision => 0);
         });
-
     $app->helper(default_html_relationships => sub {
         my $c = shift;
         my $obj = shift;
         my $rels = ( $c->stash('relationships') || $obj->meta->relationships );
-
         my @methods = grep {
                 ( $_ !~ /^_/ ) && ($_ !~ /^(contributors|report|chapter)$/)
             } map $_->name, @$rels;
@@ -498,41 +497,46 @@ sub register {
             return $c->link_to($url, $url, target => "_blank");
         });
     $app->helper(turtle_namespaces => sub {
-     return (
-          bibo     => 'http://purl.org/ontology/bibo/',
-          dbpedia  => 'http://dbpedia.org/resource/',
-          dbpprop => 'http://dbpedia.org/property/',
-          dbpedia_owl => 'http://dbpedia.org/ontology/',
-          dc       => 'http://purl.org/dc/elements/1.1/',
-          dcterms  => 'http://purl.org/dc/terms/',
-          dcmitype => 'http://purl.org/dc/dcmitype/',
-          foaf     => 'http://xmlns.com/foaf/0.1/',
-          gcis     => 'http://data.globalchange.gov/gcis.owl#',
-          org      => 'http://www.w3.org/ns/org#',
-          prov     => 'http://www.w3.org/ns/prov#',
-          owl      => 'http://www.w3.org/2002/07/owl#',
-          rdf      => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
-          rdfs     => 'http://www.w3.org/2000/01/rdf-schema#',
-          xml      => 'http://www.w3.org/XML/1998/namespace',
-          xsd      => 'http://www.w3.org/2001/XMLSchema#',
-          dwc      => 'http://rs.tdwg.org/dwc/terms/',
-          doco     => 'http://purl.org/spar/doco',
-          cito     => 'http://purl.org/spar/cito/',
-          biro     => 'http://purl.org/spar/biro/',
-          datacite => 'http://purl.org/spar/datacite/',
-          co       => 'http://purl.org/co/',
-          frbr     => 'http://purl.org/vocab/frbr/core#',
-          dcat     => 'http://www.w3.org/ns/dcat#',
-          vivo     => 'http://vivoweb.org/ontology/core#',
-          ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#',
-          meth   => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#',
-          geo    => 'http://www.w3.org/2003/01/geo/wgs84_pos#',
-          fabio  => 'http://purl.org/spar/fabio/',
-          schema => 'http://schema.org/',
-          skos   => 'http://www.w3.org/2004/02/skos/core#',
-          place => 'http://purl.org/ontology/places#',
-          lemon => 'http://lemon-model.net/lemon#',
-     )
+     my $c = shift;
+     my $sources = shift;
+     state $namespaces = [
+      # [ abbrev => prefix => src  ],
+        [  bibo     => 'http://purl.org/ontology/bibo/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/biro', ],
+        [  dbpedia  => 'http://dbpedia.org/resource/', ],
+        [  dbpprop  => 'http://dbpedia.org/property/' ],
+        [  dbpedia_owl => 'http://dbpedia.org/ontology/', ],
+        [  dc       => 'http://purl.org/dc/elements/1.1/' => 'http://dublincore.org/2012/06/14/dcelements.rdf' ],
+        [  dcterms  => 'http://purl.org/dc/terms/' => 'http://dublincore.org/2012/06/14/dcterms.rdf', ],
+        [  dcmitype => 'http://purl.org/dc/dcmitype/' => 'http://dublincore.org/2012/06/14/dctype.rdf', ],
+        [  foaf     => 'http://xmlns.com/foaf/0.1/'  => 'http://xmlns.com/foaf/spec/index.rdf', ],
+        [  gcis     => 'http://data.globalchange.gov/gcis.owl#' => 'http://data.globalchange.gov/owl/gcis.ttl', ],
+        [  org      => 'http://www.w3.org/ns/org#' => 'http://www.w3.org/ns/org', ],
+        [  prov     => 'http://www.w3.org/ns/prov#' => 'http://www.w3.org/ns/prov.owl', ],
+        [  owl      => 'http://www.w3.org/2002/07/owl#' => 'http://www.w3.org/2002/07/owl#', ],
+        [  rdf      => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' => 'http://www.w3.org/1999/02/22-rdf-syntax-ns#', ],
+        [  rdfs     => 'http://www.w3.org/2000/01/rdf-schema#' => 'http://www.w3.org/2000/01/rdf-schema#', ],
+        [  xml      => 'http://www.w3.org/XML/1998/namespace', ],
+        [  xsd      => 'http://www.w3.org/2001/XMLSchema#', ],
+        [  dwc      => 'http://rs.tdwg.org/dwc/terms/' => 'http://rs.tdwg.org/dwc/xsd/tdwg_dwc_simple.xsd', ],
+        [  doco     => 'http://purl.org/spar/doco' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/doco', ],
+        [  cito     => 'http://purl.org/spar/cito/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/cito', ],
+        [  biro     => 'http://purl.org/spar/biro/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/biro', ],
+        [  datacite => 'http://purl.org/spar/datacite/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/datacite', ],
+        [  co       => 'http://purl.org/co/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/co', ],
+        [  frbr     => 'http://purl.org/vocab/frbr/core#' => 'http://vocab.org/frbr/core.rdf', ],
+        [  dcat     => 'http://www.w3.org/ns/dcat#' => 'http://www.w3.org/ns/dcat.rdf', ],
+        [  vivo     => 'http://vivoweb.org/ontology/core#' => 'http://vivoweb.org/files/vivo-isf-public-1.6.owl#', ],
+        [  ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#' => 'http://sweet.jpl.nasa.gov/2.3/propTime.owl', ],
+        [  meth     => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#' => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#', ],
+        [  geo      => 'http://www.w3.org/2003/01/geo/wgs84_pos#' => 'http://www.w3.org/2003/01/geo/wgs84_pos#', ],
+        [  fabio    => 'http://purl.org/spar/fabio/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/fabio', ],
+        [  schema   => 'http://schema.org/', ],
+        [  skos     => 'http://www.w3.org/2004/02/skos/core#' => 'http://www.w3.org/TR/skos-reference/skos.rdf', ],
+        [  place    => 'http://purl.org/ontology/places#' => 'http://vocab.org/places/schema.rdf', ],
+        [  lemon    => 'http://lemon-model.net/lemon#', ],
+      ];
+     return ( map {( $_->[0] => $_->[2] )} @$namespaces ) if $sources;
+     return ( map {( $_->[0] => $_->[1] )} @$namespaces );
     });
     $app->helper(valid_gcid => sub {
             my $c = shift;
@@ -579,9 +583,11 @@ sub register {
             my $num = shift;
             return Number::Format->new->format_number($num, @_);
         });
+    $app->helper(keysort => sub {
+            my $c = shift;
+            my ($block, @thingies) = @_;
+            return keysort(sub { $block->() }, @thingies);
+        });
 }
-
-
 1;
-
 1;

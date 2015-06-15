@@ -67,7 +67,7 @@ sub update_rel {
             $add->{platform_identifier} = $platform->identifier;
             my $obj = InstrumentInstance->new( %$add );
             $obj->load(speculative => 1);
-            $obj->save(audit_user => $c->user) or return $c->update_error($obj->error);
+            $obj->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($obj->error);
         }
         if (my $del = $json->{del}) {
             $del->{platform_identifier} = $platform->identifier;

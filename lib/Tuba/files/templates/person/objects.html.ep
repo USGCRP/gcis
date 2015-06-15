@@ -2,7 +2,11 @@
 % layout 'default';
 
 <center>
-<h2>People </h2>
+% if ($role) {
+<h2>People <small>who have had the role <b><%= $role->label %></b></small></h2>
+% } else {
+<h2>People</h2>
+% }
 </center>
 
 %= include 'list_formats';

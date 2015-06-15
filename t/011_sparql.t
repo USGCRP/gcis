@@ -174,7 +174,7 @@ $t->post_ok("/dataset/rel/$dataset_identifier" => json => {
 # Add a dbpedia lexicon
 $t->post_ok( "/lexicon", json => { identifier => 'dbpedia' } )->status_is(200);
 
-# Also add a dbpedia owl:SameAs
+# Also add a dbpedia owl:sameAs
 my $dbpedia_platform_identifier = "Three-pod";
 $t->post_ok( "/lexicon/dbpedia/term/new" => json => {
         term => $dbpedia_platform_identifier, context => 'resource', gcid => "/platform/$platform_identifier" } );
@@ -322,7 +322,7 @@ my $platform_uri = uri("/platform/$platform_identifier");
 sparql_ok(<<SPARQL,
 select ?dbp FROM <http://test.data.globalchange.gov>
 where {
-    <$platform_uri> owl:SameAs ?dbp .
+    <$platform_uri> owl:sameAs ?dbp .
 }
 SPARQL
 {

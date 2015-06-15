@@ -3,7 +3,11 @@
 
 <center>
 <h2>
-    %= (stash 'plural') || ucfirst($meta->table) .'s'
+% if ($role) {
+<h2>Organizations <small>who have had the role <b><%= $role->label %></b></small></h2>
+% } else {
+<h2>Organizations</h2>
+% }
 </h2>
 </center>
 

@@ -33,7 +33,7 @@ sub create {
         # NB: forms are handled through lexicon/rel
         return $c->update_error("missing JSON to add exterm");
     }
-    $term->save(audit_user => $c->user) or return $c->update_error($term->error);
+    $term->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($term->error);
     $c->stash(_this_object => $term);
     return $c->redirect_without_error('create_form');
 }

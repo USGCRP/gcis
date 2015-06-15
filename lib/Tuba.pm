@@ -65,7 +65,7 @@ use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.28';
+our $VERSION = '1.29';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -110,6 +110,9 @@ sub startup {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
         $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
+        if (my $id = $c->session('id')) {
+            $c->res->headers->etag(qq["$id"]) if $c->req->method =~ /^(POST|PUT)$/;
+        }
     } );
     $app->hook(before_dispatch => sub {
         # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
@@ -397,6 +400,9 @@ sub startup {
     $r->get("/scenario/:scenario_identifier/run")->to("model_run#list")->name("list_model_runs_for_scenario");
     $r->get("/model_run/:model_identifier/:scenario_identifier/:range_start/:range_end/:spatial_resolution/:time_resolution/:sequence")
         ->to("model_run#lookup")->name('model_run_lookup');
+
+    # Roles
+    $r->resource('role_type');
 
     # Lexicons
     $r->resource('lexicon');

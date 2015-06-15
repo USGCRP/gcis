@@ -57,7 +57,7 @@ sub update_rel {
     if (my $new = $c->param('new_table')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_tables($img);
-        $object->save(audit_user => $c->user) or do {
+        $object->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or do {
             $c->flash(error => $object->error);
             return $c->update_rel_form(@_);
         };

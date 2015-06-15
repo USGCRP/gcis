@@ -331,6 +331,7 @@ db/patches/2060_dataset_doi.sql
 db/patches/2070_doi_checks.sql
 db/patches/2080_no_self_references.sql
 db/patches/2090_temporal_resolution.sql
+db/patches/2100_contributor_cleanup.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -509,6 +510,8 @@ lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/doc/about.html.ep
 lib/Tuba/files/templates/doc/examples.html.ep
 lib/Tuba/files/templates/doc/resources.html.ep
+lib/Tuba/files/templates/doc/resources.json.ep
+lib/Tuba/files/templates/doc/resources.yaml.ep
 lib/Tuba/files/templates/exception.development.html.ep
 lib/Tuba/files/templates/exception.development.json.ep
 lib/Tuba/files/templates/exception.production.html.ep
@@ -630,6 +633,8 @@ lib/Tuba/files/templates/report/object.ttl.tut
 lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/representation.ttl.tut
+lib/Tuba/files/templates/role_type/object.html.ep
+lib/Tuba/files/templates/role_type/objects.html.ep
 lib/Tuba/files/templates/scenario/object.html.ep
 lib/Tuba/files/templates/scenario/object.ttl.tut
 lib/Tuba/files/templates/search/gcid.html.ep
@@ -674,6 +679,7 @@ lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
 lib/Tuba/Region.pm
 lib/Tuba/Report.pm
+lib/Tuba/RoleType.pm
 lib/Tuba/RouteDoc.pm
 lib/Tuba/RouteParam.pm
 lib/Tuba/Scenario.pm

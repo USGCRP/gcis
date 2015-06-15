@@ -47,7 +47,7 @@ sub update_rel {
         my $exterm = Exterm->new(%entry);
         $exterm->load(speculative => 1);
         $exterm->gcid($gcid);
-        $exterm->save(audit_user => $c->user) or return $c->update_error($exterm->error);
+        $exterm->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($exterm->error);
     }
     if (my @delete = @{ $c->every_param('delete_term') }) {
         for my $term (@delete) {

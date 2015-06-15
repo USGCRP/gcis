@@ -62,13 +62,17 @@ sub common_tree_fields {
     );
 }
 
+sub _default_list_order {
+    return "identifier";
+}
+
 sub list {
     my $c = shift;
     my $objects = $c->stash('objects');
     my $all = $c->param('all') ? 1 : 0;
     unless ($objects) {
         my $manager_class = $c->stash('manager_class') || $c->_guess_manager_class;
-        $objects = $manager_class->get_objects(sort_by => "identifier", $all ? () : (page => $c->page, per_page => $c->per_page));
+        $objects = $manager_class->get_objects(sort_by => $c->_default_list_order, $all ? () : (page => $c->page, per_page => $c->per_page));
         $c->set_pages($manager_class->get_objects_count) unless $all;
     }
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
@@ -421,7 +425,7 @@ sub create {
             $obj{$col->name} = defined($got) && length($got) ? $got : undef;
         }
     }
-    my $audit_note = delete($obj{audit_note});
+    my $audit_note = $c->audit_note(delete($obj{audit_note}));
     if (exists($obj{report_identifier}) && $c->stash('report_identifier')) {
         $obj{report_identifier} = $c->stash('report_identifier');
     }
@@ -640,7 +644,7 @@ sub update_prov {
     $c->stash(object => $object);
     $c->stash(meta => $object->meta);
     my $pub = $object->get_publication(autocreate => 1);
-    $pub->save(changes_only => 1, audit_user => $c->user); # might be new.
+    $pub->save(changes_only => 1, audit_user => $c->user, audit_note => $c->audit_note); # might be new.
     $c->stash(publication => $pub);
     $c->stash->{template} = 'update_prov_form';
 
@@ -649,7 +653,7 @@ sub update_prov {
         my $other_pub = Publication->new(id => $delete)->load(speculative => 1);
         my $map = PublicationMap->new(child => $pub->id, parent => $delete, relationship => $rel);
         $map->load(speculative => 1) or return $c->update_error("could not find relationship");
-        $map->delete(audit_user => $c->user) or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->stash(info => "Deleted $rel ".($other_pub ? $other_pub->stringify : ""));
         return $c->render;
     }
@@ -673,7 +677,7 @@ sub update_prov {
         if (my $parent_uri  = $json->{parent_uri}) {
             my $parent      = $c->uri_to_obj($parent_uri) or return $c->update_error("Couldn't find $parent_uri");
             $parent_pub     = $parent->get_publication(autocreate => 1) or return $c->update_error("$parent_uri is not a publication");
-            $parent_pub->save(audit_user => $c->user) unless $parent_pub->id;
+            $parent_pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $parent_pub->id;
             $rel  = $json->{parent_rel} or return $c->update_error("Missing parent_rel");
             $note = $json->{note};
             $activity_identifier = $json->{activity};
@@ -682,7 +686,7 @@ sub update_prov {
         my $parent_str   = $c->param('parent') or return $c->render;
         my $parent       = $c->_text_to_object($parent_str) or return $c->render(error => 'cannot parse publication');
         $parent_pub      = $parent->get_publication(autocreate => 1);
-        $parent_pub->save(changes_only => 1, audit_user => $c->user) or return $c->render(error => $pub->error);
+        $parent_pub->save(changes_only => 1, audit_user => $c->user, audit_note => $c->audit_note) or return $c->render(error => $pub->error);
         $rel  = $c->param('parent_rel')    or return $c->render(error => "Please select a relationship");
         $note = $c->param('note');
         $activity_identifier = $c->param('activity');
@@ -709,7 +713,7 @@ sub update_prov {
         activity_identifier => $activity_identifier,
     );
     $map->load(speculative => 1);
-    $map->save(audit_user => $c->user) or return $c->update_error($map->error);
+    $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
     $c->stash(info => "Saved $rel : ".$parent_pub->stringify);
     return $c->redirect_without_error('update_prov_form');
 }
@@ -781,7 +785,7 @@ sub update_files {
     my $pub = $object->get_publication(autocreate => 1) or
         return $c->update_error( "Sorry, file uploads have only been implemented for publications.");
    unless ($pub->id) {
-      $pub->save(audit_user => $c->user)
+      $pub->save(audit_user => $c->user, audit_note => $c->audit_note)
         or return $c->update_error($pub->error);
    }
 
@@ -828,12 +832,12 @@ sub update_files {
             $new->port($remote_url->port) if $remote_url->port;
             $new_file->location($new->to_string);
             $new_file->file($remote_url->path);
-            $new_file->save(audit_user => $c->user);
+            $new_file->save(audit_user => $c->user, audit_note => $c->audit_user);
             logger->info("saving remote asset ".$remote_url);
         }
         if (my $landing_page = ($json->{landing_page} || $c->param('landing_page')) ) {
             $new_file->landing_page($landing_page);
-            $new_file->save(audit_user => $c->user);
+            $new_file->save(audit_user => $c->user, audit_note => $c->audit_note);
         }
     }
 
@@ -870,7 +874,7 @@ sub update_files {
     }
     if ($existing_file) {
         my $entry = PublicationFileMap->new(publication => $pub->id, file => $existing_file->identifier);
-        $entry->save(audit_user => $c->user) or return $c->update_error($entry->error);
+        $entry->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($entry->error);
         $c->stash(message => 'Saved changes.');
         return $c->redirect_without_error('update_files_form');
     }
@@ -907,7 +911,7 @@ sub update_contributors {
     my $obj = $c->_this_object or return $c->reply->not_found;
     $c->stash(tab => 'update_contributors_form');
     my $pub = $obj->get_publication(autocreate => 1);
-    $pub->save(audit_user => $c->user) unless $pub->id;
+    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $pub->id;
 
     my $json = $c->req->json || {};
 
@@ -929,7 +933,7 @@ sub update_contributors {
             $map->load(speculative => 1) or return $c->update_error("bad pub/contributor map ids");
             next if $map->sort_key && $map->sort_key == $sort_key;
             $map->sort_key($sort_key);
-            $map->save(audit_user => $c->user) or return $c->update_error("could not save ".$map->error);
+            $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error("could not save ".$map->error);
             $c->flash(info => "Saved changes");
         }
     }
@@ -970,18 +974,18 @@ sub update_contributors {
             logger->debug("Found contributor person ".($person // 'undef').' org '.($organization) // 'undef');
             logger->debug("json : ".Dumper($json));
     } else {
-            $contributor->save(audit_user => $c->user)
+            $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
                 or return $c->update_error($contributor->error);
     };
 
-    $pub->save(audit_user => $c->user) or return $c->update_error($contributor->error);
+    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
     my $map = Tuba::DB::Object::PublicationContributorMap->new(
         publication_id => $pub->id,
         contributor_id => $contributor->id
     );
     $map->load(speculative => 1);
     $map->reference_identifier($reference_identifier);
-    $map->save(audit_user => $c->user) or return $c->update_error($map->error);
+    $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
 }
@@ -996,7 +1000,7 @@ sub _update_pub_many {
     my $pwhat = $dwhat.'s';
     my $mwhat = "Tuba::DB::Object::Publication${what}Map";
 
-    $pub->save(audit_user => $c->user) unless $pub->id;
+    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $pub->id;
     if (my $json = $c->req->json) {
         my $delete_extra = delete $json->{_delete_extra};
         $json = [ $json ] if ref($json) eq 'HASH';
@@ -1010,7 +1014,7 @@ sub _update_pub_many {
             $pub->$method($kw);
             delete $to_delete{$kw->identifier};
         }
-        $pub->save(audit_user => $c->user);
+        $pub->save(audit_user => $c->user, audit_note => $c->audit_note);
         if ($delete_extra) {
             for my $extra (keys %to_delete) {
                 $mwhat->new(
@@ -1056,7 +1060,7 @@ sub update_rel {
     my $next = $object->uri($c,{tab => 'update_rel_form'});
 
     my $pub = $object->get_publication(autocreate => 1);
-    $pub->save(audit_user => $c->user) unless $pub->id;
+    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $pub->id;
 
     # Update generic many-many relationships for all publication types.
     for my $what (qw/GcmdKeyword Region/) {
@@ -1068,7 +1072,7 @@ sub update_rel {
             my $kwd = $cwhat->new_from_autocomplete($new);
             my $add_method = "add_${dwhat}s";
             $pub->$add_method($kwd);
-            $pub->save(audit_user => $c->user) or do {
+            $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or do {
                 $c->flash(error => $object->error);
                 return $c->redirect_to($next);
             };
@@ -1196,6 +1200,7 @@ sub update {
     my $audit_note = $c->stash('audit_note');
     $audit_note ||= (delete $json->{audit_note}) if $json;
     $audit_note ||= $c->param('audit_note');
+    $audit_note = $c->audit_note($audit_note);
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
@@ -1436,5 +1441,15 @@ sub redirect_without_error {
     );
 }
 
+sub audit_note {
+    my $c = shift;
+    my $custom = shift;
+    my $id = $c->session('id') or die "no session id";
+    return join ':', $c->session('id'), ($custom || ());
+}
+
+sub audit_user {
+    return shift->user;
+}
 
 1;

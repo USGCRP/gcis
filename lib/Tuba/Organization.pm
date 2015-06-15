@@ -19,6 +19,24 @@ sub show {
     return $c->SUPER::show(@_);
 }
 
+sub list {
+    my $c = shift;
+    my @q;
+    my $role;
+    if (my $r = $c->param('role')) {
+        @q = (query => [role_type_identifier => $r, person_id => undef], with_objects => [qw/contributors/]);
+        $role = RoleType->new(identifier => $r)->load(speculative => 1);
+    }
+    $c->stash(role => $role);
+    if ($c->param('all')) {
+        $c->stash(objects => Organizations->get_objects(@q));
+    } else {
+        $c->stash(objects => scalar Organizations->get_objects(@q, sort_by => 'name', page => $c->page));
+        $c->set_pages(Organizations->get_objects_count(@q));
+    }
+    $c->SUPER::list(@_);
+}
+
 sub update_rel {
     my $c = shift;
     my $org = $c->_this_object;
@@ -45,16 +63,16 @@ sub update_rel {
         my $obj = $c->param('publication') or return $c->update_error("Missing publication");
         $obj = $c->str_to_obj($obj) or return $c->update_error("No match for $obj");
         my $pub = $obj->get_publication(autocreate => 1);
-        $pub->save(audit_user => $c->user) unless $pub->id;
+        $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
         my $role_type = $c->param('role_type');
         my $ctr = Contributor->new(
           role_type_identifier    => $role_type,
           person_id               => $person ? $person->id : undef,
           organization_identifier => $org->identifier
         );
-        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error); 
+        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error); 
         $ctr->add_publications($pub);
-        $ctr->save(audit_user => $c->user) or return $c->update_error($ctr->error);
+        $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error);
     }
 
     if (my $related_org = $c->param('related_org')) {
@@ -65,7 +83,7 @@ sub update_rel {
           other_organization_identifier        => $related->identifier,
           organization_relationship_identifier => $relationship
         );
-        $map->save(audit_user => $c->user) or return $c->update_error($map->error);
+        $map->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->flash(info => "Saved changes.");
     }
     if (my $delete_rel = $c->param('delete_relationship_to')) {

@@ -118,13 +118,13 @@ sub update_rel {
     if (my $new = $c->param('new_image')) {
         my $img = $c->Tuba::Search::autocomplete_str_to_object($new);
         $object->add_images($img);
-        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
+        $object->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($object->error);
     }
     if (my $new = $json->{add_image_identifier}) {
         my $img = Image->new(identifier => $new)->load(speculative => 1)
             or return $c->update_error("Image $new not found");
         $object->add_images($img);
-        $object->save(audit_user => $c->user) or return $c->update_error($object->error);
+        $object->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($object->error);
     }
 
     my $report_identifier = $c->stash('report_identifier');

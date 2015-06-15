@@ -58,7 +58,7 @@
             </div>
         </div>
     % }
-    <div class='col-lg-1 col-md-1 col-sm-4 col-xs-4 pull-right'>
+    <div class='col-lg-1 col-md-2 col-sm-4 col-xs-4 pull-right'>
         <div class='btn-group'>
             % if (param 'thumbs') {
                 <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>
