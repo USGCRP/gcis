@@ -123,8 +123,9 @@ sub update {
         }
 
         # ditto
-        if (my $uri = delete $json->{child_publication_uri}) {
-            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
+        my $child_publication = delete $json->{child_publication_uri} || delete $json->{child_publication};
+        if ($child_publication) {
+            my $obj = $c->uri_to_obj($child_publication) or return $c->render(status => 400, json => { error  => "uri $child_publication not found" } );
             my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
             $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
             $json->{child_publication_id} = $pub->id;
