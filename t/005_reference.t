@@ -15,6 +15,12 @@ use v5.14;
 my $t = Test::Mojo->new("Tuba");
 
 $t->ua->max_redirects(1);
+
+my $base = $t->ua->server->url->clone->path("") =~ s[/$][]r;
+
+$t->app->db->dbh->do(q[delete from publication_type where identifier in ('report','book', 'article')]);
+$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report'),('book','book'), ('article','article')]);
+
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 $t->post_ok("/report" => form => { identifier => "test-report", title => "test report" } )->status_is(200);
 $t->post_ok("/report" => form => { identifier => "test-nother-report", title => "test report" } )->status_is(200);
@@ -22,32 +28,27 @@ $t->post_ok("/report" => form => { identifier => "test-nother-report", title => 
 my $desc = q[À l'exception de l'abondance de lichens, il y avait peu de différences dans la végétation entre les sites brûlés (moyenne = 37 ± 1,7 ans) et non brûlés.];
 my $reference_identifier = q[f13367d9-1e7f-40ca-a495-542d7a3faf98];
 
-$t->app->db->dbh->do(q[delete from publication_type where identifier in ('report','book', 'article')]);
-$t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('report','report'),('book','book'), ('article','article')]);
-
 # Two reports with the same citation.
 # NB: reference attrs will only be stored once.
 
-# Create for the first report.
+# Create the reference for the first report.
 $t->post_ok(
   "/reference" => json => {
-    identifier      => $reference_identifier,
-    publication_uri => "/report/test-report",
-    attrs           => { description => "$desc" },
-    audit_note      => "this is an audit note for test-report",
+    identifier  => $reference_identifier,
+    publication => "/report/test-report",
+    attrs       => { description => "$desc" },
+    audit_note  => "this is an audit note for test-report",
 })->status_is(200);
 diag $t->tx->res->body unless $t->tx->res->code==200;
 
-# Update to add the second report.
+# Update the reference to add the second report.
 $t->post_ok(
   "/reference/$reference_identifier" => json => {
-    identifier      => $reference_identifier,
-    publication_uri => "/report/test-nother-report",
-    attrs           => { description => "$desc" },
-    audit_note      => "this is an audit note for test-nother-report",
+    identifier  => $reference_identifier,
+    publication => "/report/test-nother-report",
+    attrs       => { description => "$desc" },
+    audit_note  => "this is an audit note for test-nother-report",
 })->status_is(200);
-
-my $base = $t->ua->server->url->clone->path("") =~ s[/$][]r;
 
 for my $uri ("/reference/$reference_identifier",
              "/report/test-report/reference/$reference_identifier",
@@ -90,7 +91,7 @@ $t->get_ok("/reference/$reference_identifier.json")->status_is(200)
 $t->post_ok("/book" => "form" => { identifier => 'test-book', title => 'some title' } );
 $t->post_ok("/reference" => json => {
         identifier => "newrefid",
-        publication_uri => "/report/test-report",
+        publication => "/report/test-report",
         attrs => { testattr => "testvalue" }
     })->status_is(200);
 $t->post_ok("/reference/newrefid" => json => {

@@ -72,7 +72,7 @@ sub create {
             return $c->render(json => "error sub_publication_uris is deprecated, use publication_uris");
         }
         my $pubs = delete $json->{publication_uris} || [];
-        my $more = delete $json->{publication_uri};
+        my $more = delete $json->{publication};
         push @$pubs, $more if $more;
         for my $uri (@$pubs) {
             my $obj = $c->uri_to_obj($uri) or do {
@@ -116,7 +116,7 @@ sub update {
             return $c->render(status => 400, json => { error  => "sub_publication_uris is deprecated, use publication_uris" } );
         }
         my $pubs = delete $json->{publication_uris} || [];
-        my $more = delete $json->{publication_uri};
+        my $more = delete $json->{publication};
         push @$pubs, $more if $more;
         $c->stash('publication_uris' => $pubs);
 
