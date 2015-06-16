@@ -71,12 +71,16 @@ sub create {
         if ($json->{sub_publication_uris}) {
             return $c->render(json => "error sub_publication_uris is deprecated, use publication_uris");
         }
-        my $pubs = delete $json->{publication_uris};
-        if (my $uri = delete $json->{publication_uri}) {
-            $pubs ||= [];
-            push @$pubs, $uri;
-            my $obj = $c->uri_to_obj($uri) or return $c->render(json => { error  => "uri $uri not found" } );
-            $obj->meta->table eq 'report' or return $c->render(json => { error => 'only reports for now' } );
+        my $pubs = delete $json->{publication_uris} || [];
+        my $more = delete $json->{publication_uri};
+        push @$pubs, $more if $more;
+        for my $uri (@$pubs) {
+            my $obj = $c->uri_to_obj($uri) or do {
+                return $c->render(status => 400, json => { error  => "uri $uri not found" } );
+            };
+            $obj->meta->table eq 'report' or do {
+                return $c->render(status => 400, json => { error => 'only reports for now' } );
+            };
             my $pub = $obj->get_publication(autocreate => 1);
             $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
             $c->stash(object_json => $json);
@@ -102,6 +106,7 @@ sub post_create {
 
 sub update {
     my $c = shift;
+    my $reference = $c->_this_object or return $c->reply->not_found;
     if (my $json = $c->req->json) {
         my $audit_note = delete($json->{audit_note});
         $c->stash(audit_note => $audit_note);
@@ -110,19 +115,12 @@ sub update {
         if ($json->{sub_publication_uris}) {
             return $c->render(status => 400, json => { error  => "sub_publication_uris is deprecated, use publication_uris" } );
         }
-        my $pub_uris = delete $json->{publication_uris};
-        if (my $uri = delete $json->{publication_uri}) {
-            my $obj = $c->uri_to_obj($uri) or return $c->render(status => 400, json => { error  => "uri $uri not found" } );
-            my $pub = $obj->get_publication(autocreate => 1) or return $c->render(status => 400, json => { error => 'not a publication'});
-            $pub->save(audit_user => $c->user, audit_note => $audit_note) unless $pub->id;
-            $json->{publication_id} = $pub->id;
-        } else {
-            my $obj = $c->_this_object or return $c->render(status => 400, json => { error => "no object found" } );
-            $pub_uris ||= [];
-            push @$pub_uris, $obj->uri($c);
-        }
+        my $pubs = delete $json->{publication_uris} || [];
+        my $more = delete $json->{publication_uri};
+        push @$pubs, $more if $more;
+        $c->stash('publication_uris' => $pubs);
 
-        # ditto
+        # child pub: uri to id
         my $child_publication = delete $json->{child_publication_uri} || delete $json->{child_publication};
         if ($child_publication) {
             my $obj = $c->uri_to_obj($child_publication) or return $c->render(status => 400, json => { error  => "uri $child_publication not found" } );
@@ -135,7 +133,6 @@ sub update {
         }
 
         $c->stash(object_json => $json);
-        $c->stash(publication_uris => $pub_uris);
         $c->stash(publication_update_category => delete $json->{publication_update_category});
     }
     $c->SUPER::update(@_);
@@ -143,20 +140,20 @@ sub update {
 sub post_update {
   my $c         = shift;
   my $reference = shift;
+  my $tree = $reference->as_tree; # no-op for rose bug
   my $uris      = $c->stash('publication_uris') or return 1;
   my %existing  = map { $_->id => 1 } $reference->publications;
   for my $uri (@$uris) {
-    my $pub = $c->uri_to_pub($uri)
-      or do { $reference->error("$uri not found"); return 0; };
+    my $pub = $c->uri_to_pub($uri) or do { $reference->error("$uri not found"); return 0; };
     next if delete($existing{$pub->id});
     $reference->add_publications({id => $pub->id});
   }
   $reference->save(audit_user => $c->user, audit_note => $c->stash('audit_note'));
+  # To remove all other pubs of a certain category.
+  my $cat = $c->stash('publication_update_category') or return 1;
   for my $pub_id (keys %existing) {
       my $s = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
-      if (my $cat = $c->stash('publication_update_category')) {
-          next unless $s->publication->publication_type_identifier eq $cat;
-      }
+      next unless $s->publication->publication_type_identifier eq $cat;
       $s->load(speculative => 1) or next;
       $s->delete or do { $reference->error($s->error); return 0; };
   }

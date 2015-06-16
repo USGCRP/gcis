@@ -1206,7 +1206,7 @@ sub update {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
         $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
-        $param = $c->normalize_form_parameter(column => $col->name, value => $param);
+        $param = $c->normalize_form_parameter(column => $col->name, value => $param) if !$json;
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
