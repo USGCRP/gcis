@@ -24,7 +24,7 @@
 
 % if ( $activity->software || $activity->methodology ) {
    prov:qualifiedAssociation [
-      a prov:QualifiedAssociation ;
+      a prov:Association ;
       % if ( $activity->software ) {
       prov:agent [
          a prov:SoftwareAgent, gcis:Software ;
