@@ -80,9 +80,9 @@ $t->post_ok("/organization" => \%h => json =>
     {identifier => "aa", name => "alligators anonymous"})->status_is(200);
 $t->post_ok(
   "/reference" => \%h => json => {
-    identifier      => "ref-ref-ref",
-    publication_uri => '/report/animals',
-    attrs           => {end => 'note'}
+    identifier   => "ref-ref-ref",
+    publication  => '/report/animals',
+    attrs        => {end => 'note'}
   }
 )->status_is(200);
 my $dataset = {

@@ -185,7 +185,7 @@ $t->get_ok("/organization/aa.nt")
 # Reference
 $t->post_ok("/reference" => \%h
      => json => { identifier => "ref-ref-ref",
-        publication_uri => '/report/animals',
+        publication => '/report/animals',
         attrs => { end => 'note' } } )->status_is(200);
 
 $t->get_ok("/reference/ref-ref-ref")->status_is(200);

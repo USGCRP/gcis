@@ -73,6 +73,7 @@ sub create {
         }
         my $pubs = delete $json->{publication_uris} || [];
         my $more = delete $json->{publication};
+        $more ||= delete $json->{publication_uri};
         push @$pubs, $more if $more;
         for my $uri (@$pubs) {
             my $obj = $c->uri_to_obj($uri) or do {
@@ -117,6 +118,7 @@ sub update {
         }
         my $pubs = delete $json->{publication_uris} || [];
         my $more = delete $json->{publication};
+        $more ||= delete $json->{publication_uri};
         push @$pubs, $more if $more;
         $c->stash('publication_uris' => $pubs);
 
@@ -206,8 +208,8 @@ sub smartmatch {
       json => sub {
         shift->render(
           json => {
-              publication_uri => ( $match ? $match->uri($c) : undef),
-              status          => $status,
+              publication => ( $match ? $match->uri($c) : undef),
+              status      => $status,
           });
       },
       html => sub {
