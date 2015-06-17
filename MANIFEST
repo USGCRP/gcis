@@ -112,6 +112,7 @@ db/dist/docs/html/table_gcis_metadata.publication_contributor_map.html
 db/dist/docs/html/table_gcis_metadata.publication_file_map.html
 db/dist/docs/html/table_gcis_metadata.publication_gcmd_keyword_map.html
 db/dist/docs/html/table_gcis_metadata.publication_map.html
+db/dist/docs/html/table_gcis_metadata.publication_reference_map.html
 db/dist/docs/html/table_gcis_metadata.publication_region_map.html
 db/dist/docs/html/table_gcis_metadata.publication_type.html
 db/dist/docs/html/table_gcis_metadata.reference.html
@@ -164,6 +165,7 @@ db/dist/docs/pod/table_publication_contributor_map.pod
 db/dist/docs/pod/table_publication_file_map.pod
 db/dist/docs/pod/table_publication_gcmd_keyword_map.pod
 db/dist/docs/pod/table_publication_map.pod
+db/dist/docs/pod/table_publication_reference_map.pod
 db/dist/docs/pod/table_publication_region_map.pod
 db/dist/docs/pod/table_publication_type.pod
 db/dist/docs/pod/table_reference.pod
@@ -332,6 +334,8 @@ db/patches/2070_doi_checks.sql
 db/patches/2080_no_self_references.sql
 db/patches/2090_temporal_resolution.sql
 db/patches/2100_contributor_cleanup.sql
+db/patches/2110_reference_changes.sql
+db/patches/2120_publication_reference_map.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
