@@ -40,6 +40,11 @@ sub native_url {
                 "http://wikipedia.org/wiki/".shift
             },
         },
+        usgs_publications => {
+            report_number => sub {
+                q[http://pubs.er.usgs.gov/service/search/xml/advance?report_number=].shift
+            }
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;

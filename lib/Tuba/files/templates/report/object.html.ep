@@ -90,6 +90,8 @@
                 <i><%== $contact_note %></i>
             </div>
         % }
+
+        %= include 'h/other_identifiers', gcid => $report->uri($self)
    </div>
 </div>
 
