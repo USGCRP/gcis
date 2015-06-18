@@ -64,7 +64,7 @@ Justin Goldstein : Researcher
 Robert Wolfe : Project Manager
 Amanda McQueen, Brent Newman : GCIS Interns
 Tania Sizer : Web Designer
-Xiagoang (Marshall) Ma, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+Xiagoang (Marshall) Ma, Stephan Zednik, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
 
 <h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
