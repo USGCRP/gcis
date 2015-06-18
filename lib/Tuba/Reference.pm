@@ -378,5 +378,17 @@ sub list_for_publication {
     $c->SUPER::list(@_);
 }
 
+sub make_tree_for_list {
+    my $c = shift;
+    my $obj = shift;
+    my $h = $c->SUPER::make_tree_for_list($obj);
+    $h->{child_publication} = undef;
+    if (my $id = $h->{child_publication_id}) {
+       $h->{child_publication} = Publication->new(id => $h->{child_publication_id})->load->to_object->uri($c);
+    }
+    delete $h->{child_publication_id};
+    return $h;
+}
+
 1;
 
