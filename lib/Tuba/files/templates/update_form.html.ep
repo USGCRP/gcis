@@ -63,7 +63,18 @@ $('.control-label').popover({trigger : 'hover'});
     <div class='input-prepend'>
     <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     % if ($self->can_set_replacement) {
-    %= text_field 'replacement_identifier', placeholder => 'replacement', style=>'height:auto;';
+    %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', style=>'height:auto;';
+    %= javascript begin
+    $('#replacement').typeahead({
+        minLength : 1,
+        items : 15,
+        source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : 'person' }, function(data) {
+                 return process(data);
+            });
+        }
+      });
+    %= end
     % }
     </div>
 </div>

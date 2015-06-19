@@ -1186,6 +1186,10 @@ sub update {
         if ($object->delete) {
             my $identifier = $object->pk_values;
             my $new = $c->param('replacement_identifier');
+            if (my $obj = $c->str_to_obj($new)) {
+                my @pk = $obj->pk_values;
+                $new = $pk[0] if @pk==1;
+            }
             if ($identifier && $new) {
                 $c->set_replacement($table_name, $identifier => $new);
             }

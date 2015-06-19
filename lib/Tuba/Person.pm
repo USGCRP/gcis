@@ -168,10 +168,11 @@ sub set_replacement {
     my $old_identifier = shift;
     my $new_identifier = shift;
     my $dbh = $c->dbs->dbh;
-    $dbh->do(<<SQL, {}, "id=>$new_identifier", $old_identifier) and return 1;
+    my $stmt = <<SQL;
         update audit.logged_actions set changed_fields = ?::hstore
          where action='D' and table_name='$table_name' and row_data->'id' = ?
 SQL
+    $dbh->do($stmt, {}, "id=>$new_identifier", $old_identifier) and return 1;
     $c->stash(error => $dbh->errstr);
     return 0;
 }
