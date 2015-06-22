@@ -35,8 +35,8 @@ is $found->attrs->{num}, "7 ± 1", "got unicode value back";
 
 my $rows = $dbh->selectall_arrayref("select * from reference where identifier='ronaldo'",{Slice =>{}});
 is $rows->[0]{attrs}, q["num"=>"7 ± 1"], "db handle returned unicode";
-ok $report->delete, 'delete report';
-ok $ref->delete, 'delete ref';
+ok $report->delete(audit_user => 'test'), 'delete report';
+ok $ref->delete(audit_user => 'test'), 'delete ref';
 
 done_testing();
 

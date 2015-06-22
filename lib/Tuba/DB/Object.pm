@@ -182,6 +182,45 @@ sub save {
     return $status;
 }
 
+sub delete {
+    my $object = shift;
+    my %args = @_;
+    my $audit_user = $args{audit_user} or die "missing audit_user for $object";
+    my $audit_note = $args{audit_note};
+    my $replacement;
+    my ($old_identifier) = $object->pk_values;
+    if ($replacement = $args{replacement}) {
+        my @pk = $replacement->pk_values;
+        die "cannot replace composite key" if @pk != 1;
+    }
+    my $table_name = $object->meta->table;
+    my $db = $object->db;
+    my $dbh = $db->dbh or die $db->error;
+    $db->do_transaction( sub {
+        $dbh->do("set local audit.username = ?",{},$audit_user);
+        $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+        $object->merge_into(new => $replacement, audit_user => $audit_user, audit_note => $audit_note) if $replacement;
+        $object->SUPER::delete(@_);
+        }
+    ) or do {
+        $object->error($db->error) unless $object->error;
+        return 0;
+    };
+
+    # Can't do this inside the transaction because audit changes are not visible
+    # until the transaction completes.
+    if ($replacement) {
+        my ($new_identifier) = $replacement->pk_values;
+        my @pk_fields = map $_->name, $object->meta->primary_key->columns;
+        $dbh->do(<<SQL, {}, "$pk_fields[0]=>$new_identifier", $old_identifier) or die $dbh->errstr;
+            update audit.logged_actions set changed_fields = ?::hstore
+             where action='D' and table_name='$table_name' and row_data->'$pk_fields[0]' = ?
+SQL
+        }
+
+    return 1;
+}
+
 sub get_publication {
     my $self = shift;
     die "not an object" unless ref($self);

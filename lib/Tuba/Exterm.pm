@@ -64,7 +64,7 @@ sub remove {
           term     => $c->stash('term'),
     );
     $term->load(speculative => 1) or return $c->reply->not_found;
-    $term->delete or return $c->render_exception($term->error);
+    $term->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->render_exception($term->error);
     return $c->render(text => 'ok');
 }
 

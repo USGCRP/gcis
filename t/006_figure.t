@@ -11,6 +11,7 @@ use_ok "Tuba";
 
 my $t = Test::Mojo->new("Tuba");
 
+$t->app->db->dbh->do(q[delete from publication]);
 $t->app->db->dbh->do(q[delete from publication_type]);
 $t->app->db->dbh->do(q[insert into publication_type ("table",identifier) values ('figure','figure')]);
 

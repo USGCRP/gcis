@@ -66,8 +66,8 @@ $t->post_ok("/report/contributors/uno" => json =>
 $t->post_ok("/report/contributors/dos" => json =>
     {person_id => $id2, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
 
-$t->get_ok("/report/uno")->json_is("/contributors/0/id" => $id);
-$t->get_ok("/report/dos")->json_is("/contributors/0/id" => $id2);
+$t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
+$t->get_ok("/report/dos")->json_is("/contributors/0/person/id" => $id2);
 
 $t->ua->max_redirects(0);
 
@@ -79,6 +79,15 @@ $t->post_ok("/person/$id2" => form => {
         replacement_identifier => "[person] {$id} John Smith",
     })->status_is(302)
 ->header_is(Location => "/person");
+
+# There is now one person for both reports
+$t->get_ok("/report/uno")->json_is("/contributors/0/id" => $id);
+$t->get_ok("/report/dos")->json_is("/contributors/0/id" => $id);
+
+# Also both reports are listed for that person.
+$t->get_ok("/person/$id")->status_is(200)
+  ->json_is("/contributors/0/publications" =>
+    [ { uri => "/report/uno" }, { uri => "/report/dos" } ]);
 
 $t->get_ok("/person/$id2")->status_is(302)->header_is("Location" => "/person/$id");
 $t->delete_ok("/person/$id")->status_is(200);
