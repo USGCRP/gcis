@@ -81,8 +81,8 @@ $t->post_ok("/person/$id2" => form => {
 ->header_is(Location => "/person");
 
 # There is now one person for both reports
-$t->get_ok("/report/uno")->json_is("/contributors/0/id" => $id);
-$t->get_ok("/report/dos")->json_is("/contributors/0/id" => $id);
+$t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
+$t->get_ok("/report/dos")->json_is("/contributors/0/person/id" => $id);
 
 # Also both reports are listed for that person.
 $t->get_ok("/person/$id")->status_is(200)
