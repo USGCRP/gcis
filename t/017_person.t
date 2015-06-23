@@ -78,7 +78,7 @@ $t->post_ok("/person/$id2" => form => {
         delete => 1,
         replacement_identifier => "[person] {$id} John Smith",
     })->status_is(302)
-->header_is(Location => "/person");
+->header_is(Location => "/person/form/update/$id");
 
 # There is now one person for both reports
 $t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
