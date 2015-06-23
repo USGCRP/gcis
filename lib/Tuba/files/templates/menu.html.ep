@@ -1,3 +1,4 @@
+ <div id="sidr" class='hideme'>
     <ul>
         % my $report_identifier = current_report->identifier;
         <li><span>Search</span>
@@ -92,4 +93,5 @@
                         <% } %>
                     </li>
                 </ul>
+            </div>
 

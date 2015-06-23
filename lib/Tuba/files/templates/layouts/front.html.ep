@@ -36,15 +36,16 @@
 <meta name="Description" content="<%= $desc %>">
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= title %> - GCIS</title>
 <style>
     .hideme { display:none; }
 </style>
 </head>
 <body class="front-page">
- <div id="sidr" class='hideme'>
     %= include 'menu';
-            </div>
         </div>
         % if (stash 'fixed') {
         <div class='container' id='maincontent'>
