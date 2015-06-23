@@ -1160,12 +1160,21 @@ sub update {
     }
 
     if ($c->param('delete')) {
-        my $new = $c->param('replacement_identifier');
-        my $rpl = $c->str_to_obj($new);
-        my $msg = $object->meta->table.' '.join '/', $object->pk_values;
-        if ($object->delete(audit_user => $c->user, replacement => $rpl)) {
-            $c->flash(message => "Deleted $msg");
-            return $c->redirect_to('list_'.$table);
+        if (my $new = $c->param('replacement_identifier')) {
+            my $rpl = $c->str_to_obj($new) or return $c->update_error("Replacement '$new' not found");
+            $rpl->same_as($object) and return $c->update_error("Replacement must be a different ".$rpl->meta->table);
+            my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
+            my $new_ids = $rpl->meta->table.' '.join '/', $rpl->pk_values;
+            $object->delete(audit_user => $c->user, replacement => $rpl) and do {
+                $c->flash(message => "Deleted $old_str, replaced with $new_ids");
+                return $c->redirect_to($rpl->uri($c, { tab => 'update_form'}));
+            };
+        } else {
+            my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
+            $object->delete(audit_user => $c->user) and do {
+                $c->flash(message => "Deleted $old_str");
+                return $c->redirect_to('list_'.$table);
+            };
         }
         return $c->redirect_with_error('update_form',$object->error);
     }
@@ -1359,7 +1368,7 @@ sub set_pages {
 sub update_error {
     my $c = shift;
     my $err = shift;
-    return $c->redirect_with_error($c->stash('tab'),$err);
+    return $c->redirect_with_error($c->stash('tab') || 'update_form',$err);
 }
 
 sub redirect_with_error {

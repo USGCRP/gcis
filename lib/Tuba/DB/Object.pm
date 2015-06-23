@@ -11,6 +11,7 @@ use DBIx::Simple;
 use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
 use Tuba::Util qw/elide_str human_duration/;
+use Mojo::JSON qw/encode_json/;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -521,6 +522,12 @@ SQL
     my $rows = $sth->fetchall_arrayref({});
     my @people = map Tuba::DB::Object::Person->new(id => $_->{id})->load, @$rows;
     return (wantarray ? @people : \@people);
+}
+
+sub same_as {
+    my $s = shift;
+    my $t = shift;
+    return encode_json( [ $s->pk_values ] ) eq encode_json( [ $t->pk_values ] );
 }
 
 1;
