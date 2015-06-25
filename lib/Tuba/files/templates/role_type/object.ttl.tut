@@ -1,0 +1,10 @@
+% layout 'default', namespaces => [qw/dcterms prov/];
+%= filter_lines_with empty_predicate() => begin
+%#
+<<%= current_resource %>>
+   dcterms:identifier "<%= $role_type->identifier %>";
+   prov:label "<%= $role_type->label %>";
+
+   a prov:Role .
+   
+% end
