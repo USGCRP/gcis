@@ -575,6 +575,7 @@ lib/Tuba/files/templates/lexicon/object.ttl.tut
 lib/Tuba/files/templates/lexicon/objects.html.ep
 lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
+lib/Tuba/files/templates/menu.html.ep
 lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
 lib/Tuba/files/templates/model/object.html.ep
@@ -637,6 +638,7 @@ lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/representation.ttl.tut
 lib/Tuba/files/templates/role_type/object.html.ep
+lib/Tuba/files/templates/role_type/object.ttl.tut
 lib/Tuba/files/templates/role_type/objects.html.ep
 lib/Tuba/files/templates/scenario/object.html.ep
 lib/Tuba/files/templates/scenario/object.ttl.tut
@@ -715,6 +717,7 @@ t/013_model.t
 t/014_array.t
 t/015_search.t
 t/016_turtle_syntax.t
+t/017_person.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm

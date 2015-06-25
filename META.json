@@ -76,7 +76,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.30"
+         "version" : "1.31"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -335,5 +335,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.30"
+   "version" : "1.31"
 }
