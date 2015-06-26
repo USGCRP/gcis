@@ -8,7 +8,7 @@
 
 <p>
 <%= obj_link($organization)%>
-has served as <b><%= A(lc $role->label) %></b> for
+has served as <b><%= obj_link_to $role, 'show' => begin %><%= A(lc $role->label) %><%= end %></b> for
 the following <b><%= pl((stash 'resource'),0+@$objs) %></b> :</p>
 
 % my $rows = 5;
