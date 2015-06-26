@@ -975,7 +975,7 @@ sub update_contributors {
     $contributor->organization_identifier($organization->identifier) if $organization;
     $contributor->person_id($person->id) if $person;
     if ( $contributor->load(speculative => 1)) {
-            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization) // 'undef');
+            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
             logger->debug("json : ".Dumper($json));
     } else {
             $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
