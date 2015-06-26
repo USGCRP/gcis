@@ -3,4 +3,5 @@
 </i>
 <br>
 %= include commify => objs => scalar $object->all_people(role_regex => scalar stash 'role_regex');
+<br>
 

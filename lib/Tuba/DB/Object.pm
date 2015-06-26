@@ -491,6 +491,7 @@ c.organization_identifier as identifier
 from publication_contributor_map m
 inner join contributor c on c.id = m.contributor_id
 where m.publication_id=?
+and c.organization_identifier is not null
 @{[ $role_regex ? "and role_type_identifier ~ ?" : "" ]}
 group by 1
 order by min(m.sort_key)
