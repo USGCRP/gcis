@@ -765,7 +765,7 @@ gcis:isDescribedIn a owl:ObjectProperty ;
 	rdfs:label "Is Described In" ;
 	rdfs:comment "A scenario is described in a report." ;
 	rdfs:domain gcis:Scenario ;
-	rdfs:range xsd:Report .
+	rdfs:range gcis:Report .
 
 gcis:tableNumber a owl:DatatypeProperty ;
 	rdfs:label "Table Number" ;
