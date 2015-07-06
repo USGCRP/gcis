@@ -33,6 +33,8 @@ sub merge_into {
     my $audit_user = $args{audit_user};
     my $audit_note = $args{audit_note};
 
+    die "Not replacing person with orcid" if $s->orcid;
+
     # ids for other contributors
     for my $contributor (@{ Tuba::DB::Object::Contributor::Manager->get_objects(
             query => [ person_id => $s->id ]) }) {
