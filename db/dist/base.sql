@@ -363,7 +363,7 @@ CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
     role_type_identifier character varying NOT NULL,
-    organization_identifier character varying NOT NULL,
+    organization_identifier character varying,
     CONSTRAINT ck_person_org CHECK (((person_id IS NOT NULL) OR (organization_identifier IS NOT NULL)))
 );
 

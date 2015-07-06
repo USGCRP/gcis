@@ -23,7 +23,7 @@ A contributor is an organization, a role, and optionally a person.
   id                      | integer           | not null default nextval('contributor_id_seq'::regclass) | plain    |              | An opaque numeric identifier for this contributor.
   person_id               | integer           |                                                          | plain    |              | The person (optional).
   role_type_identifier    | character varying | not null                                                 | extended |              | The role.
-  organization_identifier | character varying | not null                                                 | extended |              | The organization.
+  organization_identifier | character varying |                                                          | extended |              | The organization.
  Indexes:
      "contributor_pkey" PRIMARY KEY, btree (id)
      "contributor_person_id_role_type_organization_identifier_key" UNIQUE CONSTRAINT, btree (person_id, role_type_identifier, organization_identifier)
