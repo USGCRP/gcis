@@ -1,0 +1,14 @@
+% layout 'default', namespaces => [qw/dcterms rdfs xsd dbpedia/];
+%= filter_lines_with empty_predicate() => begin
+%#
+<<%= current_resource %>>
+   dcterms:identifier "<%= $gcmd_keyword->identifier %>";
+   rdfs:label "<%= $gcmd_keyword->label %>"^^xsd:string;
+   dcterms:description "<%= $gcmd_keyword->definition %>"^^xsd:string;
+   
+   a dbpedia:Index_term .
+
+% end
+
+
+%= include 'prov';
