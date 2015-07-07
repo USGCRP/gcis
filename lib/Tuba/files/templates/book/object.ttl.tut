@@ -10,7 +10,7 @@
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
    gcis:hasURL "<%= $book->url %>"^^xsd:anyURI;
 
-   a bibo:Book.
+   a gcis:Book.
 
 % end
 

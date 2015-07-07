@@ -13,6 +13,6 @@
    dcterms:hasPart <<%= uri($article) %>>;
 % }
 
-   a bibo:Journal .
+   a gcis::Journal .
 
 % end
