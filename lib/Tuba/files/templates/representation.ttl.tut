@@ -5,7 +5,7 @@
 <<%= to_url($term->gcid) %>>
    a skos:Concept;
    skos:inScheme <<%= uri($lexicon) %>> ;
-   skos:altLabel "<%= $term->term %>".
+   skos:prefLabel "<%= $term->term %>".
 
       % }
 
