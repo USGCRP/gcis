@@ -15,8 +15,10 @@
 ## Output datafiles   
    dbpedia_owl:filename "<%= $activity->output_artifacts %>"^^xsd:string;
 
+% if ($activity->computing_environment ) {
 ## Computing environment
-   dcterms:InteractiveResource "<%= $activity->computing_environment %>"^^xsd:string;
+   gcis:computingEnvironmentsUsed "<%= $activity->computing_environment %>"^^xsd:string;
+% }
    
 ## assignment of responsibility to an agent for an activity, indicating that the agent 
 ## had a role in the activity. It further allows for a plan to be specified, which is
