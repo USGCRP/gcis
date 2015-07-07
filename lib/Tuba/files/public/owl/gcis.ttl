@@ -8,8 +8,9 @@
 @prefix dctype: <http://purl.org/dc/dcmitype/> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix dbpprop: <http://dbpedia.org/property/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
-@prefix org: <http://www.w3.org/ns/org/> .
+@prefix org: <http://www.w3.org/ns/org#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <http://data.globalchange.gov/gcis.owl> a owl:Ontology ;
@@ -18,11 +19,59 @@
 	dcterms:date "2013-12-01";
 	owl:versionInfo "1.2";
 	rdfs:comment "An ontology designed for the Global Change Information System in the U.S. Global Change Research Program (www.globalchange.gov). Different versions of the ontology are  available at: http://escience.rpi.edu/ontology/GCIS-IMSAP/. The ontology uses the namespace prefix gcis." ;
-    dcterms:identifier "http://data.globalchange.gov/gcis.owl" ;
-	dcterms:creator "Xiaogang Ma <max7@rpi.edu>; Curt Tilmes <curt.tilmes@nasa.gov>; Peter Fox <foxp@rpi.edu>" ;
-	dcterms:contributor "Jin Guang Zheng <zhengj3@rpi.edu>; Justin Goldstein <jgoldstein@usgcrp.gov>; Linyun Fu <ful2@rpi.edu>; Brian Duggan <bduggan@ucar.edu>; Patrick West <westp@rpi.edu>; Steve Aulenbach <saulenbach@usgcrp.gov>; Chengcong Du <duc2@rpi.edu>; Jun Xu <xuj6@rpi.edu>; Anusha Akkiraju <akkira@rpi.edu>" ;
+    	dcterms:identifier "http://data.globalchange.gov/gcis.owl" ;
+	dcterms:creator gcis:xiaogang_ma, gcis:curt_tilmes, gcis:peter_fox ;
+	dcterms:contributor gcis:jin_guang_zheng, gcis:justin_goldstein, gcis:linyun_fu, gcis:brian_duggan, gcis:patrick_west, gcis:steve_aulenbach, gcis:chengcong_du, gcis:jun_xu, gcis:anusha_akkiraju ;
 	skos:historyNote "The ontology is a part of the result of the GCIS-IMSAP project (2012-2013) at Tetherless World Constellation, Rensselaer Polytechnic Institute. More details of that project is accessible at: http://tw.rpi.edu/web/project/gcis-imsap." . 
-	
+
+gcis:xiaogang_ma a foaf:Person ;
+	foaf:name "Xiaogang Ma" ;
+	foaf:mbox <mailto:max7@rpi.edu> .
+
+gcis:curt_tilmes a foaf:Person ;
+	foaf:name "Curt Tilmes" ;
+	foaf:mbox <mailto:curt.tilmes@nasa.gov> .
+
+gcis:peter_fox a foaf:Person ;
+	foaf:name "Peter Fox" ;
+	foaf:mbox <mailto:foxp@rpi.edu> .
+
+gcis:jin_guang_zheng a foaf:Person ;
+	foaf:name "Jin Guang Zheng" ;
+	foaf:mbox <mailto:zhengj3@rpi.edu> .
+
+gcis:justin_goldstein a foaf:Person ;
+	foaf:name "Justin Goldstein" ;
+	foaf:mbox <mailto:jgoldstein@usgcrp.gov> .
+
+gcis:linyun_fu a foaf:Person ;
+	foaf:name "Linyun Fu" ;
+	foaf:mbox <mailto:ful2@rpi.edu> .
+
+gcis:brian_duggan a foaf:Person ;
+	foaf:name "Brian Duggan" ;
+	foaf:mbox <mailto:bduggan@usgcrp.gov> .
+
+gcis:patrick_west a foaf:Person ;
+	foaf:name "Patrick West" ;
+	foaf:mbox <mailto:westp@rpi.edu> .
+
+gcis:steve_aulenbach a foaf:Person ;
+	foaf:name "Steve Aulenbach" ;
+	foaf:mbox <mailto:saulenbach@usgcrp.gov> .
+
+gcis:chengcong_du a foaf:Person ;
+	foaf:name "Chengcong Du" ;
+	foaf:mbox <mailto:duc2@rpi.edu> .
+
+gcis:jun_xu a foaf:Person ;
+	foaf:name "Jun Xu" ;
+	foaf:mbox <mailto:xuj6@rpi.edu> .
+
+gcis:anusha_akkiraju a foaf:Person ;
+	foaf:name "Anusha Akkiraju" ;
+	foaf:mbox <mailto:akkira@rpi.edu> .
+
 gcis:Publication a owl:Class ;
 	rdfs:subClassOf bibo:Document ;
 	rdfs:label "Publication" ;
@@ -372,7 +421,7 @@ gcis:Editor a prov:Role ;
 
 gcis:Mediator a prov:Role ;
 	rdfs:label "Mediator" ;
-	rdfs:comment "One who negotiates between parties and/or resrouces seeking agreement or access." .
+	rdfs:comment "One who negotiates between parties and/or resources seeking agreement or access." .
 
 gcis:RightsHolder a prov:Role ;
 	rdfs:label "Rights Holder" ;
@@ -513,24 +562,9 @@ gcis:hasInputDataset a owl:ObjectProperty ;
 	rdfs:subPropertyOf prov:used ;
 	rdfs:range gcis:Dataset .
 
-gcis:hasVersion a owl:DatatypeProperty ;
-	rdfs:label "Has Version" ;
-	rdfs:comment "A model may have a version." ;
-	rdfs:domain gcis:Model ;
-	rdfs:range xsd:string ;
-	rdfs:subPropertyOf dcterms:hasVersion .
-
-gcis:hasSpatialExtents a owl:ObjectProperty ;
-	rdfs:label "Has Spatial Extents" ;
-	rdfs:comment "An entity of model run may have spatial extents." ;
-	rdfs:domain gcis:ModelRun ;
-	rdfs:range gcis:SpatialExtents .
-
-gcis:hasTemporalExtents a owl:ObjectProperty ;
-	rdfs:label "Has Temporal Extents" ;
-	rdfs:comment "An entity of model run may have temporal extents." ;
-	rdfs:domain gcis:ModelRun ;
-	rdfs:range gcis:TemporalExtents .
+gcis:version a owl:DatatypeProperty ;
+	rdfs:label "version" ;
+	rdfs:subPropertyOf dbpprop:version .
 
 gcis:hasSpatialResolution a owl:ObjectProperty ;
 	rdfs:label "Has Spatial Resolution" ;
@@ -752,7 +786,7 @@ gcis:Expedition a owl:Class ;
 
 gcis:Scenario a owl:Class ;
 	rdfs:label "Scenario" ;
-	rdfs:comment "A coherent description of a potential future situation that serves as input to more detailed analyses or modeling. Scenarios are tools that explore, 'if, then.' statements, and are not predictions of or prescriptions for the future." ;
+	rdfs:comment "A coherent description of a potential future situation that serves as input to more detailed analyses or modeling. Scenarios are tools that explore, 'if�, then�.' statements, and are not predictions of or prescriptions for the future." ;
 	rdfs:subClassOf prov:Entity .
 	
 gcis:describesScenario a owl:ObjectProperty ;
@@ -765,7 +799,7 @@ gcis:isDescribedIn a owl:ObjectProperty ;
 	rdfs:label "Is Described In" ;
 	rdfs:comment "A scenario is described in a report." ;
 	rdfs:domain gcis:Scenario ;
-	rdfs:range xsd:Report .
+	rdfs:range gcis:Report .
 
 gcis:tableNumber a owl:DatatypeProperty ;
 	rdfs:label "Table Number" ;
@@ -833,11 +867,23 @@ gcis:startedAt a owl:DatatypeProperty ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:dateTime .
 
+gcis:startDate a owl:DatatypeProperty ;
+	rdfs:label "Start Date" ;
+	rdfs:comment "The start date of a temporal extent" ;
+	rdfs:domain gcis:TemporalExtents ;
+	rdfs:range xsd:date .
+
 gcis:endedAt a owl:DatatypeProperty ;
 	rdfs:label "Ended At" ;
 	rdfs:comment "The end date/time of a temporal extent." ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:dateTime .
+
+gcis:endDate a owl:DatatypeProperty ;
+	rdfs:label "End Date" ;
+	rdfs:comment "The end date of a temporalExtent" ;
+	rdfs:domain gcis:TemporalExtents ;
+	rdfs:range xsd:date .
 
 gcis:resolution a owl:DatatypeProperty ;
 	rdfs:label "Resolution" ;
@@ -985,3 +1031,36 @@ gcis:isSupportedBy  a owl:ObjectProperty ;
 	rdfs:label "Is Supported By" ;
 	rdfs:comment "A finding is supported by data, models, model runs, software, etc.";
 	rdfs:domain gcis:Finding .	
+
+gcis:computingEnvironmentsUsed a owl:DatatypeProperty ;
+	rdfs:label "computing environments used" ;
+	rdfs:comment "Description of the computing environment(s) associated with an activity" ;
+	rdfs:domain prov:Activity ;
+	rdfs:range xsd:string .
+
+gcis:descriptionOfOutputFiles a owl:DatatypeProperty ;
+	rdfs:label "description of output files" ;
+	rdfs:comment "narrative description of one or more files generated by an activity" ;
+	rdfs:domain prov:Activity ;
+	rdfs:range xsd:string .
+
+gcis:Book a owl:Class ;
+	rdfs:subClassOf gcis:Publication , bibo:Book , prov:Entity ;
+	rdfs:label "Book" ;	
+	rdfs:comment "A written or printed work of fiction or nonfiction, usually on sheets of paper fastened or bound together within covers." .	
+	
+gcis:Journal a owl:Class ;
+	rdfs:subClassOf gcis:Publication , bibo:Journal , prov:Entity ;
+	rdfs:label "Journal" ;
+	rdfs:comment "A periodical of scholarly journal Articles." .
+
+gcis:Article a owl:Class ;
+	rdfs:subClassOf gcis:Publication , bibo:Article , prov:Entity ;
+	rdfs:label "Article" ;
+	rdfs:comment "A written composition in prose, usually nonfiction, on a specific topic, forming an independent part of a book or other publication, as a newspaper or magazine." .	
+	
+gcis:Webpage a owl:Class ;
+	rdfs:subClassOf gcis:Publication , bibo:Webpage , prov:Entity ;
+	rdfs:label "Webpage" ;
+	rdfs:comment "A web page is an online document available (at least initially) on the world wide web. A web page is written first and foremost to appear on the web, as distinct from other online resources such as books, manuscripts or audio documents which use the web primarily as a distribution mechanism alongside other more traditional methods such as print." .	
+	
