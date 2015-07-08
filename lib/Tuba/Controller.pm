@@ -1260,7 +1260,15 @@ sub remove {
     my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     die "No auth in remove route" unless $c->user;
-    $object->delete(audit_user => $c->user) or return $c->render_exception($object->error);
+    my $json = $c->req->json;
+    my @replacement;
+    if ($json && $json->{replacement}) {
+        my $rpl = $c->uri_to_obj($json->{replacement})
+          or return $c->render_exception("couldn't find $json->{replacement}");
+        @replacement = (replacement => $rpl);
+    }
+    $object->delete(audit_user => $c->user, @replacement)
+      or return $c->render_exception($object->error);
     return $c->render(text => 'ok');
 }
 
