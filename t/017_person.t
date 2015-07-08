@@ -69,6 +69,27 @@ $t->post_ok("/report/contributors/dos" => json =>
 $t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
 $t->get_ok("/report/dos")->json_is("/contributors/0/person/id" => $id2);
 
+# test lookups
+$t->post_ok(
+  "/person" => json => {
+    url         => 'http://example2.com/john_smith',
+    last_name   => "smithers",
+    middle_name => undef,
+    first_name  => "john t.",
+  });
+
+$t->post_ok(
+  "/person/lookup/name" => json => {
+      last_name => "SMIthERS",
+      first_name => "John t",
+  } => { Accept => 'application/json' }
+)->status_is(200)
+->json_is('/first_name' => 'john t.')
+->json_is('/last_name' => 'smithers');
+
+my $person_uri = $t->tx->res->json->{uri};
+$t->delete_ok($person_uri)->status_is(200);
+
 $t->ua->max_redirects(0);
 
 # What, these are the same person?  Okay merge them.
