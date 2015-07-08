@@ -27,6 +27,10 @@
 gcis:xiaogang_ma a foaf:Person ;
 	foaf:name "Xiaogang Ma" ;
 	foaf:mbox <mailto:max7@rpi.edu> .
+	
+gcis:stephan_zednik a foaf:Person ;
+	foaf:name "Stephan Zednik" ;
+	foaf:mbox <mailto:zednis2@rpi.edu> .
 
 gcis:curt_tilmes a foaf:Person ;
 	foaf:name "Curt Tilmes" ;
@@ -125,7 +129,7 @@ gcis:SpatialResolution a owl:Class ;
 	
 gcis:TemporalExtents a owl:Class ;
 	rdfs:label "Temporal Extents" ;
-	rdfs:comment "The time information, including the earliest and last observations, of a dataset." ;
+	rdfs:comment "The time information, including that of the earliest and last observations, of a dataset." ;
 	rdfs:subClassOf prov:Entity .	
 
 gcis:TemporalResolution a owl:Class ;
@@ -140,7 +144,7 @@ gcis:Algorithm a owl:Class ;
 
 gcis:Platform a owl:Class ;
 	rdfs:label "Platform" ;
-	rdfs:comment "A scientific data collection entity to which other entities can be attached - particuarly instruments, sensors and other platforms." ;
+	rdfs:comment "A scientific data collection entity to which other entities - particuarly instruments, sensors and other platforms - can be attached." ;
 	rdfs:subClassOf prov:Entity .
 
 gcis:hasChapter a owl:ObjectProperty ;
@@ -164,13 +168,13 @@ gcis:hasAuthor a owl:ObjectProperty ;
 
 gcis:hasFinding a owl:ObjectProperty ;
 	rdfs:label "Has Finding" ;
-	rdfs:comment "A publication may have zero or more findings." ;
+	rdfs:comment "A publication may contain findings." ;
 	rdfs:range gcis:Finding ;
 	rdfs:subPropertyOf dcterms:hasPart.
 
 gcis:hasFigure a owl:ObjectProperty ;
 	rdfs:label "Has Figure" ;
-	rdfs:comment "A publication may have zero or more figures."; 
+	rdfs:comment "A publication may contain figures."; 
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Figure ;
 	rdfs:subPropertyOf dcterms:hasPart .
@@ -217,14 +221,14 @@ gcis:sourceModel a owl:ObjectProperty ;
 
 gcis:inPlatform a owl:ObjectProperty ;
 	rdfs:label "In Platform" ;
-	rdfs:comment "An instrument is deployed in a platform." ;
+	rdfs:comment "An instrument is deployed on a platform." ;
 	rdfs:domain gcis:Instrument ;
 	rdfs:range gcis:Platform ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 
 gcis:hasInstrument a owl:ObjectProperty ;
 	rdfs:label "Has Instrument" ;
-	rdfs:comment "An platform has one or more instruments." ;
+	rdfs:comment "A platform has one or more instruments." ;
 	rdfs:domain gcis:Platform ;
 	rdfs:range gcis:Instrument ;
 	rdfs:subPropertyOf dcterms:hasPart .	
@@ -237,7 +241,7 @@ gcis:implementedIn a owl:ObjectProperty ;
 	
 gcis:implements a owl:ObjectProperty ;
 	rdfs:label "Implements" ;
-	rdfs:comment "A software systemAn implements one or more algorithms." ;
+	rdfs:comment "A software system implements one or more algorithms." ;
 	rdfs:domain gcis:Software ;
 	rdfs:range gcis:Algorithm .	
 
@@ -360,7 +364,7 @@ gcis:Reviewer a prov:Role ;
 	rdfs:comment "A person who examines and evluates the draft of a writing work." .
 	
 gcis:CoAuthor a prov:Role ;
-	rdfs:label "Co Author" ;
+	rdfs:label "Co-Author" ;
 	rdfs:comment "A party who jointly authors a resource." .
 
 gcis:ResourceProvider a prov:Role ;
@@ -489,7 +493,7 @@ gcis:isBasedOn a owl:ObjectProperty ;
 
 gcis:hasTable a owl:ObjectProperty ;
 	rdfs:label "Has Table" ;
-	rdfs:comment "A publication may have zero or more tables." ;
+	rdfs:comment "A publication may contain tables." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Table ;
 	rdfs:subPropertyOf dcterms:hasPart .
@@ -527,7 +531,7 @@ gcis:targetSensor a owl:ObjectProperty ;
 	rdfs:range gcis:Sensor .
 
 gcis:publicationStatus a owl:DatatypeProperty ;
-	rdfs:label "Publication Status " ;
+	rdfs:label "Publication Status" ;
 	rdfs:comment "The status of the publication of a document." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range xsd:string .		
@@ -766,7 +770,7 @@ gcis:hasCaption a owl:DatatypeProperty ;
 	
 gcis:Mission a owl:Class ;
 	rdfs:label "Mission" ;
-	rdfs:comment "An official job that a person or group of people with which is tasked." ;
+	rdfs:comment "An official job with which individual(s) and/or groups are tasked." ;
 	rdfs:subClassOf prov:Entity .
 
 gcis:Experiment a owl:Class ;

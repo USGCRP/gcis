@@ -582,7 +582,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#Mission"></a><h3>Mission<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#Mission</p>
-<div class="comment"><p>An official job that a person or group of people with which is tasked.</p></div>
+<div class="comment"><p>An official job with which individual(s) and/or groups are tasked.</p></div>
 <dl class="description">
 <dt>has super-classes</dt>
 <dd>
@@ -677,7 +677,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#Platform"></a><h3>Platform<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#Platform</p>
-<div class="comment"><p>A scientific data collection entity to which other entities can be attached - particuarly instruments, sensors and other platforms.</p></div>
+<div class="comment"><p>A scientific data collection entity to which other entities - particuarly instruments, sensors and other platforms - can be attached.</p></div>
 <dl class="description">
 <dt>has super-classes</dt>
 <dd>
@@ -744,7 +744,7 @@
 </dd>
 <dt>is in domain of</dt>
 <dd>
-<a href="#d4e246" title="http://data.globalchange.gov/gcis.owl#hasFigure">Has Figure</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e379" title="http://data.globalchange.gov/gcis.owl#hasPublisher">Has Publisher</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e451" title="http://data.globalchange.gov/gcis.owl#hasTable">Has Table</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e1473" title="http://data.globalchange.gov/gcis.owl#publicationStatus">Publication Status </a><sup title="data property" class="type-dp">dp</sup>, <a href="#d4e825" title="http://data.globalchange.gov/gcis.owl#relatedProject">Related Project</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e1020" title="http://data.globalchange.gov/gcis.owl#wasPreparedBy">Was Prepared By</a><sup title="object property" class="type-op">op</sup>
+<a href="#d4e246" title="http://data.globalchange.gov/gcis.owl#hasFigure">Has Figure</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e379" title="http://data.globalchange.gov/gcis.owl#hasPublisher">Has Publisher</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e451" title="http://data.globalchange.gov/gcis.owl#hasTable">Has Table</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e1473" title="http://data.globalchange.gov/gcis.owl#publicationStatus">Publication Status</a><sup title="data property" class="type-dp">dp</sup>, <a href="#d4e825" title="http://data.globalchange.gov/gcis.owl#relatedProject">Related Project</a><sup title="object property" class="type-op">op</sup>, <a href="#d4e1020" title="http://data.globalchange.gov/gcis.owl#wasPreparedBy">Was Prepared By</a><sup title="object property" class="type-op">op</sup>
 </dd>
 <dt>is in range of</dt>
 <dd>
@@ -960,7 +960,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#TemporalExtents"></a><h3>Temporal Extents<sup title="class" class="type-c">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#TemporalExtents</p>
-<div class="comment"><p>The time information, including the earliest and last observations, of a dataset.</p></div>
+<div class="comment"><p>The time information, including that of the earliest and last observations, of a dataset.</p></div>
 <dl class="description">
 <dt>has super-classes</dt>
 <dd>
@@ -999,7 +999,7 @@
 <div class="comment"><p>A collection of temporal units used for measuring time.</p></div>
 <dl class="description">
 <dt>is equivalent to</dt>
-<dd>{ <a href="#d4e3164" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a> , <a href="#d4e3084" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a> , <a href="#d4e3138" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a> , <a href="#d4e3124" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a> , <a href="#d4e3111" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a> , <a href="#d4e3098" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a> , <a href="#d4e3151" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a> }</dd>
+<dd>{ <a href="#d4e3177" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a> , <a href="#d4e3097" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a> , <a href="#d4e3150" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a> , <a href="#d4e3137" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a> , <a href="#d4e3123" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a> , <a href="#d4e3110" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a> , <a href="#d4e3163" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a> }</dd>
 <dt>has super-classes</dt>
 <dd>
 <span class="dotted" title="http://www.w3.org/ns/prov#Entity">entity</span><sup title="class" class="type-c">c</sup>
@@ -1042,7 +1042,7 @@
 </dd>
 <dt>has members</dt>
 <dd>
-<a href="#d4e3084" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3098" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3111" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3124" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3138" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3151" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3164" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a><sup title="named individual" class="type-ni">ni</sup>
+<a href="#d4e3097" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3110" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3123" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3137" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3150" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3163" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a><sup title="named individual" class="type-ni">ni</sup>, <a href="#d4e3177" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a><sup title="named individual" class="type-ni">ni</sup>
 </dd>
 </dl>
 </div>
@@ -1315,7 +1315,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasFigure"></a><h3>Has Figure<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasFigure</p>
-<div class="comment"><p>A publication may have zero or more figures.</p></div>
+<div class="comment"><p>A publication may contain figures.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1339,7 +1339,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasFinding"></a><h3>Has Finding<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasFinding</p>
-<div class="comment"><p>A publication may have zero or more findings.</p></div>
+<div class="comment"><p>A publication may contain findings.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1433,7 +1433,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasInstrument"></a><h3>Has Instrument<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasInstrument</p>
-<div class="comment"><p>An platform has one or more instruments.</p></div>
+<div class="comment"><p>A platform has one or more instruments.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1556,7 +1556,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasTable"></a><h3>Has Table<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasTable</p>
-<div class="comment"><p>A publication may have zero or more tables.</p></div>
+<div class="comment"><p>A publication may contain tables.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1648,7 +1648,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#implements"></a><h3>Implements<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#implements</p>
-<div class="comment"><p>A software systemAn implements one or more algorithms.</p></div>
+<div class="comment"><p>A software system implements one or more algorithms.</p></div>
 <div class="description"><dl>
 <dt>has domain</dt>
 <dd>
@@ -1684,7 +1684,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#inPlatform"></a><h3>In Platform<sup title="object property" class="type-op">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#inPlatform</p>
-<div class="comment"><p>An instrument is deployed in a platform.</p></div>
+<div class="comment"><p>An instrument is deployed on a platform.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -2289,7 +2289,7 @@
 <li><a href="#d4e1429" title="http://data.globalchange.gov/gcis.owl#hasURL">Has URL</a></li>
 <li><a href="#d4e1442" title="http://data.globalchange.gov/gcis.owl#newInformationAndRemainingUncertainties">New Information and Remaining Uncertainties</a></li>
 <li><a href="#d4e1458" title="http://data.globalchange.gov/gcis.owl#northBoundLatitude">North Bound Latitude</a></li>
-<li><a href="#d4e1473" title="http://data.globalchange.gov/gcis.owl#publicationStatus">Publication Status </a></li>
+<li><a href="#d4e1473" title="http://data.globalchange.gov/gcis.owl#publicationStatus">Publication Status</a></li>
 <li><a href="#d4e1488" title="http://data.globalchange.gov/gcis.owl#resolution">Resolution</a></li>
 <li><a href="#d4e1504" title="http://data.globalchange.gov/gcis.owl#southBoundLatitude">South Bound Latitude</a></li>
 <li><a href="#d4e1519" title="http://data.globalchange.gov/gcis.owl#startDate">Start Date</a></li>
@@ -2582,7 +2582,7 @@
 </dl></div>
 </div>
 <div id="d4e1473" class="entity">
-<a name="http://data.globalchange.gov/gcis.owl#publicationStatus"></a><h3>Publication Status <sup title="data property" class="type-dp">dp</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a></span>
+<a name="http://data.globalchange.gov/gcis.owl#publicationStatus"></a><h3>Publication Status<sup title="data property" class="type-dp">dp</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#publicationStatus</p>
 <div class="comment"><p>The status of the publication of a document.</p></div>
@@ -2699,7 +2699,7 @@
 <li><a href="#d4e2497" title="http://data.globalchange.gov/gcis.owl#Author">Author</a></li>
 <li><a href="#d4e2961" title="http://data.globalchange.gov/gcis.owl#brian_duggan"><span>brian duggan</span></a></li>
 <li><a href="#d4e2973" title="http://data.globalchange.gov/gcis.owl#chengcong_du"><span>chengcong du</span></a></li>
-<li><a href="#d4e2510" title="http://data.globalchange.gov/gcis.owl#CoAuthor">Co Author</a></li>
+<li><a href="#d4e2510" title="http://data.globalchange.gov/gcis.owl#CoAuthor">Co-Author</a></li>
 <li><a href="#d4e2523" title="http://data.globalchange.gov/gcis.owl#Collaborator">Collaborator</a></li>
 <li><a href="#d4e2537" title="http://data.globalchange.gov/gcis.owl#CommitteeChair">Committee Chair</a></li>
 <li><a href="#d4e2550" title="http://data.globalchange.gov/gcis.owl#CommitteeMember">Committee Member</a></li>
@@ -2736,17 +2736,18 @@
 <li><a href="#d4e2882" title="http://data.globalchange.gov/gcis.owl#RightsHolder">Rights Holder</a></li>
 <li><a href="#d4e2895" title="http://data.globalchange.gov/gcis.owl#Sponsor">Sponsor</a></li>
 <li><a href="#d4e2909" title="http://data.globalchange.gov/gcis.owl#Stakeholder">Stakeholder</a></li>
-<li><a href="#d4e3072" title="http://data.globalchange.gov/gcis.owl#steve_aulenbach"><span>steve aulenbach</span></a></li>
-<li><a href="#d4e3084" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a></li>
-<li><a href="#d4e3098" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a></li>
-<li><a href="#d4e3111" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a></li>
-<li><a href="#d4e3124" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a></li>
-<li><a href="#d4e3138" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a></li>
-<li><a href="#d4e3151" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a></li>
-<li><a href="#d4e3164" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a></li>
+<li><a href="#d4e3072" title="http://data.globalchange.gov/gcis.owl#stephan_zednik"><span>stephan zednik</span></a></li>
+<li><a href="#d4e3084" title="http://data.globalchange.gov/gcis.owl#steve_aulenbach"><span>steve aulenbach</span></a></li>
+<li><a href="#d4e3097" title="http://data.globalchange.gov/gcis.owl#unitDay">Unit Day</a></li>
+<li><a href="#d4e3110" title="http://data.globalchange.gov/gcis.owl#unitHour">Unit Hour</a></li>
+<li><a href="#d4e3123" title="http://data.globalchange.gov/gcis.owl#unitMinute">Unit Minute</a></li>
+<li><a href="#d4e3137" title="http://data.globalchange.gov/gcis.owl#unitMonth">Unit Month</a></li>
+<li><a href="#d4e3150" title="http://data.globalchange.gov/gcis.owl#unitSecond">Unit Second</a></li>
+<li><a href="#d4e3163" title="http://data.globalchange.gov/gcis.owl#unitWeek">Unit Week</a></li>
+<li><a href="#d4e3177" title="http://data.globalchange.gov/gcis.owl#unitYear">Unit Year</a></li>
 <li><a href="#d4e2922" title="http://data.globalchange.gov/gcis.owl#User">User</a></li>
 <li><a href="#d4e2935" title="http://data.globalchange.gov/gcis.owl#VeryHigh">Very High</a></li>
-<li><a href="#d4e3178" title="http://data.globalchange.gov/gcis.owl#xiaogang_ma"><span>xiaogang ma</span></a></li>
+<li><a href="#d4e3190" title="http://data.globalchange.gov/gcis.owl#xiaogang_ma"><span>xiaogang ma</span></a></li>
 </ul>
 <div id="d4e2480" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#ActingFederalExOfficioMember"></a><h3>Acting Federal Ex Officio Member<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
@@ -2806,7 +2807,7 @@
 </dl>
 </div>
 <div id="d4e2510" class="entity">
-<a name="http://data.globalchange.gov/gcis.owl#CoAuthor"></a><h3>Co Author<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
+<a name="http://data.globalchange.gov/gcis.owl#CoAuthor"></a><h3>Co-Author<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#CoAuthor</p>
 <div class="comment"><p>A party who jointly authors a resource.</p></div>
@@ -3243,6 +3244,17 @@
 </dl>
 </div>
 <div id="d4e3072" class="entity">
+<a name="http://data.globalchange.gov/gcis.owl#stephan_zednik"></a><h3>stephan zednik<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
+</h3>
+<p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#stephan_zednik</p>
+<dl class="description">
+<dt>belongs to</dt>
+<dd>
+<span class="dotted" title="http://xmlns.com/foaf/0.1/Person">person</span><sup title="class" class="type-c">c</sup>
+</dd>
+</dl>
+</div>
+<div id="d4e3084" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#steve_aulenbach"></a><h3>steve aulenbach<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#steve_aulenbach</p>
@@ -3253,7 +3265,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3084" class="entity">
+<div id="d4e3097" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitDay"></a><h3>Unit Day<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitDay</p>
@@ -3265,7 +3277,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3098" class="entity">
+<div id="d4e3110" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitHour"></a><h3>Unit Hour<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitHour</p>
@@ -3277,7 +3289,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3111" class="entity">
+<div id="d4e3123" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitMinute"></a><h3>Unit Minute<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitMinute</p>
@@ -3289,7 +3301,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3124" class="entity">
+<div id="d4e3137" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitMonth"></a><h3>Unit Month<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitMonth</p>
@@ -3301,7 +3313,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3138" class="entity">
+<div id="d4e3150" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitSecond"></a><h3>Unit Second<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitSecond</p>
@@ -3313,7 +3325,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3151" class="entity">
+<div id="d4e3163" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitWeek"></a><h3>Unit Week<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitWeek</p>
@@ -3325,7 +3337,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3164" class="entity">
+<div id="d4e3177" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#unitYear"></a><h3>Unit Year<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#unitYear</p>
@@ -3361,7 +3373,7 @@
 </dd>
 </dl>
 </div>
-<div id="d4e3178" class="entity">
+<div id="d4e3190" class="entity">
 <a name="http://data.globalchange.gov/gcis.owl#xiaogang_ma"></a><h3>xiaogang ma<sup title="named individual" class="type-ni">ni</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#namedindividuals">Named Individual ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#xiaogang_ma</p>
