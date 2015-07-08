@@ -22,6 +22,28 @@ END; $$;
 
 
 
+CREATE FUNCTION name_hash(first_name text, last_name text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return 
+    concat(
+        regexp_replace(lower(first_name),'\W','','g'),
+        regexp_replace(lower(last_name),'\W','','g')
+    );
+END; $$;
+
+
+
+CREATE FUNCTION name_unique_hash(first_name text, last_name text, orcid text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return concat( name_hash(first_name, last_name), orcid );
+END; $$;
+
+
+
 CREATE FUNCTION update_exterms() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -2465,7 +2487,15 @@ CREATE INDEX exterm_gcid ON exterm USING btree (gcid);
 
 
 
+CREATE INDEX person_names ON person USING btree (name_hash((first_name)::text, (last_name)::text));
+
+
+
 CREATE UNIQUE INDEX uk_first_last_orcid ON person USING btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)));
+
+
+
+CREATE UNIQUE INDEX uk_person_names ON person USING btree (name_unique_hash((first_name)::text, (last_name)::text, (orcid)::text));
 
 
 

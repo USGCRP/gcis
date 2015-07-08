@@ -155,3 +155,4 @@
 2110_reference_changes.sql	0ffc2352907e3f5af8bfb49fcc3adeb8
 2120_publication_reference_map.sql	78c8424445afa5a3c214158eb5218bcc
 2130_null_orgs_ok.sql	4941ff29759a3cf32a9d2484f4f26eb1
+2140_people.sql	36ca16b4c257c3578328b28469fa7e33
