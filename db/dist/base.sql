@@ -928,6 +928,7 @@ CREATE TABLE image (
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
+    url character varying,
     CONSTRAINT ck_image_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -982,6 +983,10 @@ COMMENT ON COLUMN image.lon_min IS 'The westernmost longitude in the bounding bo
 
 
 COMMENT ON COLUMN image.usage_limits IS 'Copyright restrictions describing how this image may be used.';
+
+
+
+COMMENT ON COLUMN image.url IS 'A landing page for this image.';
 
 
 
@@ -2255,6 +2260,11 @@ ALTER TABLE ONLY image_figure_map
 
 ALTER TABLE ONLY image
     ADD CONSTRAINT image_pkey PRIMARY KEY (identifier);
+
+
+
+ALTER TABLE ONLY image
+    ADD CONSTRAINT image_url_key UNIQUE (url);
 
 
 

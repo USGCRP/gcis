@@ -247,7 +247,7 @@ COPY generic (identifier, attrs) FROM stdin;
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt) FROM stdin;
+COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, url) FROM stdin;
 \.
 
 
