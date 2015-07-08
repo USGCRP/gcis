@@ -1,5 +1,6 @@
 #!/bin/sh -ex
 
+cmt=`git ls-remote https://github.com/usgcrp/gcis-ontology | head -1 | awk '{print $1}'`
 src=https://raw.githubusercontent.com/USGCRP/gcis-ontology/master/gcis.ttl
 dst=./lib/Tuba/files/public/
 curl $src > $dst/owl/gcis.ttl
@@ -10,3 +11,4 @@ curl http://www.essepuntato.it/lode/owlapi/$src \
     | sed "s_http://eelst.cs.unibo.it/apps/LODE/_/owl/_" \
 > $dst/gcis.owl
 
+echo "update from usgcrp/gcis-ontology@$cmt"
