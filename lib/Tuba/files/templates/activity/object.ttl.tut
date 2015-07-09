@@ -22,17 +22,27 @@
 ## had a role in the activity. It further allows for a plan to be specified, which is
 ## the plan intended by the agent to achieve some goals in the context of this activity.
 
+% if ( $activity->software || $activity->methodology ) {
    prov:qualifiedAssociation [
-      a prov:QualifiedAssociation ;
+      a prov:Association ;
+      % if ( $activity->software ) {
       prov:agent [
          a prov:SoftwareAgent, gcis:Software ;
          rdfs:label "<%= $activity->software %>"^^xsd:string;
       ] ;
+      % } else {
+      prov:agent [
+         a prov:Agent ;
+      ] ;
+      % }
+      % if ( $activity->methodology ) {
       prov:hadPlan [
          a prov:Plan, meth:Methodology ;
          rdf:value "<%= $activity->methodology %>"^^xsd:string;
       ] ;
+      % }
    ] ;
+% }
 
    a prov:Activity .
 

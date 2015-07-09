@@ -76,7 +76,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.29"
+         "version" : "1.31"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -213,9 +213,6 @@
       "Tuba::DB::Object::Report::Manager" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Report/Manager.pm"
       },
-      "Tuba::DB::Object::Subpubref" : {
-         "file" : "lib/Tuba/DB/Mixin/Object/Subpubref.pm"
-      },
       "Tuba::DB::Object::Table" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Table.pm"
       },
@@ -338,5 +335,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.29"
+   "version" : "1.31"
 }

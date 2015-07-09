@@ -752,7 +752,7 @@ gcis:Expedition a owl:Class ;
 
 gcis:Scenario a owl:Class ;
 	rdfs:label "Scenario" ;
-	rdfs:comment "A coherent description of a potential future situation that serves as input to more detailed analyses or modeling. Scenarios are tools that explore, 'if…, then….' statements, and are not predictions of or prescriptions for the future." ;
+	rdfs:comment "A coherent description of a potential future situation that serves as input to more detailed analyses or modeling. Scenarios are tools that explore, 'ifÂ…, thenÂ….' statements, and are not predictions of or prescriptions for the future." ;
 	rdfs:subClassOf prov:Entity .
 	
 gcis:describesScenario a owl:ObjectProperty ;
@@ -853,7 +853,7 @@ gcis:equivalentScale a owl:DatatypeProperty ;
 
 gcis:hasTemporalUnit a owl:ObjectProperty ;
 	rdfs:label "Has Temporal Unit" ;
-	rdfs:comment "A temporal resolution has one or more tempporal units." ;
+	rdfs:comment "A temporal resolution has one or more temporal units." ;
 	rdfs:domain gcis:TemporalResolution ;
 	rdfs:range gcis:TemporalUnit .
 
@@ -983,5 +983,5 @@ gcis:hasSubOrganization  a owl:ObjectProperty ;
 
 gcis:isSupportedBy  a owl:ObjectProperty ;
 	rdfs:label "Is Supported By" ;
-	rdfs:comment "A finding is supported by data, models, model runs, softwares, etc.";
+	rdfs:comment "A finding is supported by data, models, model runs, software, etc.";
 	rdfs:domain gcis:Finding .	

@@ -255,6 +255,7 @@ sub select {
     if ($loaded) {
         my $table = $loaded->meta->table;
         $c->stash($table => $loaded);
+        $c->stash(selected_object => $loaded);
         return 1;
     }
     $c->render_not_found_or_redirect;
@@ -445,7 +446,7 @@ sub create {
                   return $c->_redirect_to_view($new);
               };
         $error = $new->error;
-    } 
+    }
     $c->app->log->error("Error creating $object_class : $error");
     $c->respond_to(
         json => sub {
@@ -669,7 +670,7 @@ sub update_prov {
           relationship => $rel
         );
         $map->load(speculative => 1) or return $c->update_error("relationship $rel $uri not found");
-        $map->delete or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
     }
 
     my ($parent_pub,$rel,$note,$activity_identifier);
@@ -851,11 +852,11 @@ sub update_files {
             publication => $pub->id,
             file => $obj->identifier
         );
-        $entry->delete or return $c->update_error($obj->error);
+        $entry->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($obj->error);
         $obj = File->new(identifier => $obj->identifier)->load;
         my @others = $obj->publications;
         unless (@others) {
-            $obj->delete or return $c->update_error($obj->error);
+            $obj->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($obj->error);
             -e $filename and do { unlink $filename or die $!; };
         }
         $c->flash(message => 'Saved changes');
@@ -946,14 +947,17 @@ sub update_contributors {
         $reference_identifier = $json->{reference_identifier};
         $organization = $json->{organization_identifier};
         logger->info("adding org $organization") if $organization;
-        if (my $id = $person) {
-            $person = Person->new(id => $id)->load(speculative => 1)
+        if ($person) {
+            logger->info("person is '$person'");
+            my $obj = Person->new(id => $person)->load(speculative => 1)
                 or return $c->update_error("invalid person $person");
+            $person = $obj;
         }
-        if (my $id = $organization) {
-            $id =~ s[^/organization/][]; # Allow GCID or identifier
-            $organization = Organization->new(identifier => $id)->load(speculative => 1)
-                or return $c->update_error("invalid organization $id");
+        if ($organization) {
+            $organization =~ s[^/organization/][]; # Allow GCID or identifier
+            my $obj = Organization->new(identifier => $organization)->load(speculative => 1)
+                or return $c->update_error("invalid organization $organization");
+            $organization = $obj;
         }
     } else {
         $person = $c->param('person');
@@ -966,7 +970,7 @@ sub update_contributors {
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
 
     my $role = $c->param('role') || $json->{role} or return $c->update_error("missing role");
-    
+
     my $contributor = Contributor->new(role_type => $role);
     $contributor->organization_identifier($organization->identifier) if $organization;
     $contributor->person_id($person->id) if $person;
@@ -1020,7 +1024,7 @@ sub _update_pub_many {
                 $mwhat->new(
                   publication        => $pub->id,
                   "${dwhat}_identifier" => $extra
-                )->delete;
+                )->delete(audit_user => $c->user, audit_note => $c->audit_note);
             }
         }
         return $c->render(json => 'ok');
@@ -1057,7 +1061,6 @@ Update the relationships.
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object;
-    my $next = $object->uri($c,{tab => 'update_rel_form'});
 
     my $pub = $object->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $pub->id;
@@ -1073,8 +1076,7 @@ sub update_rel {
             my $add_method = "add_${dwhat}s";
             $pub->$add_method($kwd);
             $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or do {
-                $c->flash(error => $object->error);
-                return $c->redirect_to($next);
+                return $c->redirect_with_error(update_rel_form => $object->error);
             };
         }
         for my $id ($c->param("delete_$dwhat")) {
@@ -1091,7 +1093,7 @@ sub update_rel {
             shift->render(json => { status => 'ok' })
         },
         html => sub {
-            return shift->redirect_to($next);
+            return shift->redirect_without_error('update_form');
         },
     );
 }
@@ -1124,28 +1126,6 @@ sub normalize_form_parameter {
     return $value;
 }
 
-=head2 set_replacement
-
-After deleting an object, indicate that another object takes precedence.
-
-(Not implemented for composite primary keys.)
-
-=cut
-
-sub set_replacement {
-    my $c = shift;
-    my $table_name = shift;
-    my $old_identifier = shift;
-    my $new_identifier = shift;
-    my $dbh = $c->dbs->dbh;
-    $dbh->do(<<SQL, {}, "identifier=>$new_identifier", $old_identifier) and return 1;
-        update audit.logged_actions set changed_fields = ?::hstore
-         where action='D' and table_name='$table_name' and row_data->'identifier' = ?
-SQL
-    $c->stash(error => $dbh->errstr);
-    return 0;
-}
-
 =head2 can_set_replacement
 
 See above.
@@ -1163,7 +1143,6 @@ sub can_set_replacement {
 sub update {
     my $c = shift;
     my $object = $c->_this_object or return $c->reply->not_found;
-    my $next = $object->uri($c,{tab => 'update_form'});
     my %pk_changes;
     my %new_attrs;
     my $table = $object->meta->table;
@@ -1181,18 +1160,23 @@ sub update {
     }
 
     if ($c->param('delete')) {
-        my $table_name = $object->meta->table;
-        if ($object->delete) {
-            my $identifier = $object->pk_values;
-            my $new = $c->param('replacement_identifier');
-            if ($identifier && $new) {
-                $c->set_replacement($table_name, $identifier => $new);
-            }
-            $c->flash(message => "Deleted $table");
-            return $c->redirect_to('list_'.$table);
+        if (my $new = $c->param('replacement_identifier')) {
+            my $rpl = $c->str_to_obj($new) or return $c->update_error("Replacement '$new' not found");
+            $rpl->same_as($object) and return $c->update_error("Replacement must be a different ".$rpl->meta->table);
+            my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
+            my $new_ids = $rpl->meta->table.' '.join '/', $rpl->pk_values;
+            $object->delete(audit_user => $c->user, replacement => $rpl) and do {
+                $c->flash(message => "Deleted $old_str, replaced with $new_ids");
+                return $c->redirect_to($rpl->uri($c, { tab => 'update_form'}));
+            };
+        } else {
+            my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
+            $object->delete(audit_user => $c->user) and do {
+                $c->flash(message => "Deleted $old_str");
+                return $c->redirect_to('list_'.$table);
+            };
         }
-        $c->flash(error => $object->error);
-        return $c->redirect_to($next);
+        return $c->redirect_with_error('update_form',$object->error);
     }
 
     my $ok = 1;
@@ -1205,7 +1189,7 @@ sub update {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});
         $param = $c->stash('report_identifier') if $col->name eq 'report_identifier' && $c->stash('report_identifier');
-        $param = $c->normalize_form_parameter(column => $col->name, value => $param);
+        $param = $c->normalize_form_parameter(column => $col->name, value => $param) if !$json;
         $param = undef unless defined($param) && length($param);
         my $acc = $col->accessor_method_name;
         $new_attrs{$col->name} = $object->$acc; # Set to old, then override with new.
@@ -1258,23 +1242,10 @@ sub update {
     }
     $error //= $object->error;
     if ($ok) {
-        $next = $object->uri($c,{tab => 'update_form'});
         $c->flash(message => "Saved changes");
-        return $c->redirect_to($next);
+        return $c->redirect_without_error('update_form');
     }
-    $c->respond_to(
-      html => sub {
-        my $c = shift;
-        $c->flash(error => substr($error, 0, 1000));
-        $c->redirect_to($next);
-      },
-      json => sub {
-        my $c = shift;
-        $c->res->code(
-          $error =~ /(already exists|violates unique constraint)/ ? 409 : 422);
-        $c->render(json => {error => $error});
-      }
-    );
+    return $c->redirect_with_error('update_form', $error);
 }
 
 =head2 remove
@@ -1287,7 +1258,8 @@ sub remove {
     my $c = shift;
     my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
-    $object->delete or return $c->render_exception($object->error);
+    die "No auth in remove route" unless $c->user;
+    $object->delete(audit_user => $c->user) or return $c->render_exception($object->error);
     return $c->render(text => 'ok');
 }
 
@@ -1396,13 +1368,14 @@ sub set_pages {
 sub update_error {
     my $c = shift;
     my $err = shift;
-    return $c->redirect_with_error($c->stash('tab'),$err);
+    return $c->redirect_with_error($c->stash('tab') || 'update_form',$err);
 }
 
 sub redirect_with_error {
     my $c     = shift;
     my $tab   = shift;
     my $error = nice_db_error(shift);
+    my $code = ($error =~ /(already exists|violates unique constraint)/ ? 409 : 422);
     my $uri;
     if (my $obj = $c->_this_object) {
         $uri = $c->_this_object->uri($c, {tab => $tab});
@@ -1416,7 +1389,7 @@ sub redirect_with_error {
     logger->debug("redirecting with error : $error");
     $c->respond_to(
         json => sub {
-            shift->render(status => 400, json => { error => $error })
+            shift->render(status => $code, json => { error => $error })
         },
         html => sub {
             my $c = shift;

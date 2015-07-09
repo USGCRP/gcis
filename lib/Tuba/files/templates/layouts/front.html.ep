@@ -38,107 +38,16 @@
 <meta name="Description" content="<%= $desc %>">
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= title %> - GCIS</title>
 <style>
     .hideme { display:none; }
 </style>
 </head>
 <body class="front-page">
- <div id="sidr" class='hideme'>
-    <ul>
-        % my $report_identifier = current_report->identifier;
-        <li><span>Search</span>
-        <ul>
-            <li><%= link_to 'gcid_lookup' => begin %>GCID lookup<%= end %></li>
-            <li><%= link_to 'search' => begin %>Advanced search<%= end %></li>
-            % if (my $f = config('faceted_search')) {
-            <li><%= link_to $f->{url} => target => "_blank" => begin %>GCIS Facet Search<%= end %></li>
-            % }
-            <li><%= link_to '/sparql' => target => "_blank" => begin %>SPARQL query<%= end %></li>
-        </ul>
-        </li>
-        <li>
-                <span class='elidden'><%= $report_identifier %> report </span>
-         <ul>
-            <li><%= link_to 'show_report'  => { report_identifier => $report_identifier } => class => "elidden" => begin %>report : <%= current_report->identifier %><%= end %></li>
-            <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapters<%= end %></li>
-            <li><%= link_to 'list_all_figures'  => { report_identifier => $report_identifier } => begin %>figures<%= end %></li>
-            <li><%= link_to 'list_all_tables'  => { report_identifier => $report_identifier } => begin %>tables<%= end %></li>
-            <li><%= link_to 'list_all_findings' => { report_identifier => $report_identifier } => begin %>findings<%= end %></li>
-            <li><%= link_to 'list_report_references' => { report_identifier => $report_identifier } => begin %>references<%= end %></li>
-         </ul>
-        </li>
-        <li>
-            <span>publications</span>
-            <ul>
-                <li><%= link_to 'show_report'  => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->identifier %><%= end %></li>
-                <li><%= link_to 'list_report'  => begin %>reports<%= end %></li>
-                <li><%= link_to 'list_figures_across_reports' => begin %>figures<%= end %></li>
-                <li><%= link_to 'list_image'   => begin %>images<%= end %></li>
-                <li><%= link_to 'list_book'    => begin %>books<%= end %></li>
-                <li><%= link_to 'list_journal' => begin %>journals<%= end %></li>
-                <li><%= link_to 'list_article' => begin %>articles<%= end %></li>
-                <li><%= link_to 'list_webpage' => begin %>web pages<%= end %></li>
-                <li><%= link_to 'list_platform' => begin %>platforms<%= end %></li>
-                <li><%= link_to 'list_instrument' => begin %>instruments<%= end %></li>
-                <li><%= link_to 'list_dataset' => { report_identifier => $report_identifier } => begin %>datasets<%= end %></li>
-                <li><%= link_to 'list_model' => begin %>models<%= end %></li>
-                <li><%= link_to 'list_scenario' => begin %>scenarios<%= end %></li>
-                <li><%= link_to 'list_lexicon' => begin %>lexicons<%= end %></li>
-            </ul>
-        </li>
-        <li>
-            <span>contributors</span>
-            <ul>
-                <li><%= link_to 'list_person' => begin %>people<%= end %></li>
-                <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
-            </ul>
-        </li>
-        % if (user_can('update')) {
-        <li><%= link_to 'admin' => begin %>admin<%= end %></li>
-        % }
-    </ul>
-</div>
 
-        <div class="navbar navbar-default main-menu" role="navigation">
-                <a id="simple-menu" class='navbar-left btn btn-default btn-medium' href="#sidr" style='color:black;height:30px;'>
-                     <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
-                    </a>
-                <a href="/" class='pull-left'><img class="logo" src="/gcis-logo-100.png" ></a>
-                <ul class='navbar-right nav navbar-nav'>
-                    <li>
-                    % if(config('no_search')) {
-                    % } elsif (config('google_site_search')) {
-                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
-                           <input name="cx" type="hidden" value="013381772809718463072:8vyf_-czy98">
-                           <input name="ie" type="hidden" value="UTF-8">
-                           <input name="q" placeholder="Search" type="search">
-                       </form>
-                    <% } else { %>
-                    <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
-                    <% } %>
-                    </li>
-                    <li><% if (!config('read_only')) { %>
-                        <% if (my $user = user()) { %>
-                            <a class="dropdown-toggle" data-toggle="dropdown"><%= user_short() %></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><%= link_to 'logout' => begin %>logout <%= $user %><%= end %>
-                                % if (user_can('update')) {
-                                <li><%= link_to '_login_key' => begin %>API key<%= end %>
-                                % }
-                            </ul>
-                        <% } elsif (!config('hide_login_link')) { %>
-                            % my $dest = $self->req->url->path;
-                            % if ($dest && $dest ne '/') {
-                            <%= link_to url_for('login')->query(destination => $self->req->url->path) => begin %>log in<%= end %>
-                            % } else {
-                            <%= link_to url_for('login') => begin %>log in<%= end %>
-                            % }
-                        <% } %>
-                        <% } %>
-                    </li>
-                </ul>
-        </div>
    <div class='container' id='maincontent'>
 
         % if (my $msg = flash 'message') {
@@ -149,10 +58,11 @@
 				% }
             <%= content %>
             </div>
-        </div>
-        </div>
+    %= include 'menu';
+
+       
       
-    </body>
+</body>
 </html>
 % }
 <script>

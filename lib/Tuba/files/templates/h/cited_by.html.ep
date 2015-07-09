@@ -5,7 +5,9 @@
 % for my $i (0..$#pubs) {
 % my $p = $pubs[$i];
 % $refs{$p->{reference}->identifier} = $p->{reference};
-<%= link_to 'show_publication', { publication_identifier => $p->{parent}->id }, begin %><%= $p->{parent}->stringify(tiny => 1) =%><%= end =%><%=
+% my $text = $p->{parent}->stringify(tiny => 1);
+% my $title = $p->{parent}->stringify(long => 1);
+<%= link_to 'show_publication', { publication_identifier => $p->{parent}->id }, alt => $title, title => $title, begin %><%= $text =%><%= end =%><%=
   $i==$#pubs - 1 ? ", and "
   : $i==$#pubs ? ""
   : "," =%><% } %>. (<%= pl('reference', scalar values %refs, 1 ) %>: <%= include 'commify', objs => [ values %refs ], short => 1; =%>)

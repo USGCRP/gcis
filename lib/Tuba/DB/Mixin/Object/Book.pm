@@ -12,7 +12,7 @@ sub stringify {
     my $s = shift;
     my %args = @_;
     my $str = $s->title || $s->identifier;
-    return $str if $args{no_elide};
+    return $str if $args{no_elide} || $args{long};
     if ($args{short}) {
         return $str unless length($str) > 30;
     }

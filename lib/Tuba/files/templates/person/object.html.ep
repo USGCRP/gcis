@@ -54,7 +54,7 @@
                         % if ($i++) {
                             </tr><tr>
                         % }
-                    <td><%= $ctr->role_type->label %></td>
+                    <td><%= obj_link($ctr->role_type) %></td>
                     <td>
                         <% for my $map (
                             map $_->[1],

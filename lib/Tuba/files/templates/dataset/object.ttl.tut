@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov skos/];
+% layout 'default', namespaces => [qw/datacite dcterms xsd dwc gcis cito dcat prov skos rdf/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -7,7 +7,7 @@
    dwc:year "<%= $dataset->publication_year %>"^^xsd:gYear;
    dcterms:hasVersion "<%= $dataset->version %>";
    datacite:doi "<%= $dataset->doi %>";
-   datacite:AlternateResourceIdentifier "<%= $dataset->native_id %>";
+   datacite:hasIdentifier [ a datacite:AlternateResourceIdentifier; rdf:value "<%= $dataset->native_id %>" ] ;
    gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
    dcterms:description "<%= no_tbibs($dataset->description) %>"^^xsd:string;

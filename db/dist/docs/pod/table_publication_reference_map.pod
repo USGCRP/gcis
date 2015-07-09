@@ -1,0 +1,35 @@
+
+=head1 NAME
+
+publication_reference_map
+
+=head1 DESCRIPTION
+
+A map from publications to references.
+
+=head1 FIELDS
+
+ publication_id (integer) - The publication.
+ reference_identifier (character varying) - The reference.
+
+
+=head1 SCHEMA
+
+                           Table "gcis_metadata.publication_reference_map"
+         Column        |       Type        | Modifiers | Storage  | Stats target |   Description    
+ ----------------------+-------------------+-----------+----------+--------------+------------------
+  publication_id       | integer           | not null  | plain    |              | The publication.
+  reference_identifier | character varying | not null  | extended |              | The reference.
+ Indexes:
+     "subpubref_pkey" PRIMARY KEY, btree (publication_id, reference_identifier)
+ Foreign-key constraints:
+     "subpubref_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
+     "subpubref_reference_identifier_fkey" FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_reference_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON publication_reference_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ 
+
+=cut
+
+

@@ -2,8 +2,9 @@
 % for my $context (sort @contexts) {
 % my $terms = orm->{exterm}{mng}->get_objects(query => [lexicon_identifier => $lexicon->identifier, context => $context]);
       % for my $term (@$terms) {
-<<%= $term->gcid %>>
+<<%= to_url($term->gcid) %>>
    a skos:Concept;
+   skos:inScheme <<%= uri($lexicon) %>> ;
    skos:altLabel "<%= $term->term %>".
 
       % }

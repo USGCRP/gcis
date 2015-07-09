@@ -13,7 +13,7 @@
 %= include 'messages';
 
 % my $cols = stash 'cols';
-% for my $column_name (qw/identifier publication_id child_publication_id/) {
+% for my $column_name (qw/identifier child_publication_id/) {
 % my $column = $meta->column($column_name);
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";

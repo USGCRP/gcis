@@ -21,13 +21,37 @@
 <%= include 'db_meta'; =%>
 </pre>
 
+
 <div class='row well'>
 
-    % my $others= $reference->subpubrefs;
-    <div class="row">
-    <div class='col-md-8 col-lg-8 col-sm-12 col-xs-12'>
+    % my $others= $reference->publications;
+    <div class='row'>
         This bibliographic record appears in :
-        %= include 'obj_thumbnails', objs => [ $reference->publication->to_object,  map $_->publication->to_object, @$others ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4'
+        %= include 'obj_thumbnails', objs => [ map $_->to_object, @$others ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4'
+     <br>
+     Reference URIs:<br>
+     <ul>
+         <li>
+         % if (stash 'selected_object') {
+         <%= link_to 'show_reference' => begin %><%= url_for('show_reference') %><%= end %>
+         % } else {
+         <%= url_for('show_reference') %>
+         % }
+         </li>
+         % my $selected = stash 'selected_object';
+         % for my $pub (@$others) {
+             % my $obj = $pub->to_object;
+             % my $uri = obj_uri_for($obj, 'show_reference');
+             <li>
+             % if ($selected && $selected->pk_values eq $obj->pk_values) {
+             <%= $uri %>
+             % } else {
+             <%= link_to $uri => begin %><%= $uri %><%= end %>
+             % }
+             </li>
+         % }
+     </ul>
+
     </div>
     % if (my $child = $reference->child_publication) {
         <div class='col-md-4 col-lg-4 col-sm-8 col-xs-8'>

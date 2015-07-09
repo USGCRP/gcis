@@ -1,9 +1,9 @@
 % layout 'default';
 
 <center>
-<h2>
+<h4>
     %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
-</h2>
+</h4>
 </center>
 
 %= include 'list_formats';
@@ -16,14 +16,13 @@
 
 <tr>
     <th class="col-lg-2 col-md-2 col-sm-2">identifier</th>
+    <th class="col-lg-1 col-md-1 col-sm-1">ref type</th>
     <th class="col-lg-1 col-md-1 col-sm-1">type</th>
     <th class="col-lg-3 col-md-3 col-sm-3">title</th>
-% unless (stash 'chapter') {
-    <th class="col-lg-3 col-md-3 col-sm-3">chapters</th>
-% }
     <th class="col-lg-3 col-md-3 col-sm-3">publication</th>
 </tr>
 % for my $o (@$objects) {
+% my $pub = $o->child_publication;
     <tr>
     <td>
         <%= link_to 'show_reference', { reference_identifier => $o->identifier } => begin %>
@@ -31,21 +30,12 @@
         <%= end %>
     </td>
     <td> <%= $o->attrs->{reftype} %> </td>
+    <td> <%= $pub ? $pub->publication_type_identifier : "" %></td>
     <td> <%= elide($o->attrs->{Title} // '',80) %> </td>
-% unless (stash 'chapter') {
     <td>
-        <div>
-            % for my $sub ($o->subpubrefs) {
-            <%= link_to $sub->uri($self) => class => "btn btn-default" => begin %><%= $sub->publication->stringify %><%= end %>
-            % }
-        </div>
-    </td>
-% }
-    <td>
-        % if (my $pub = $o->child_publication) {
-            <div>
-                <%= link_to $pub->uri($self) => class => "btn btn-default col-lg-12 col-md-12 col-sm-12" => begin %><%= $pub->stringify %><%= end %>
-            </div>
+        % if ($pub) {
+           <%= link_to $pub->uri($self) => class => "" => begin %><%= $pub->stringify %><%= end %>
+
         % } else {
             no publication
         % }

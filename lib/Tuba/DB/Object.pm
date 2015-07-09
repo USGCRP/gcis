@@ -11,6 +11,7 @@ use DBIx::Simple;
 use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
 use Tuba::Util qw/elide_str human_duration/;
+use Mojo::JSON qw/encode_json/;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -59,6 +60,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
+
     return $c->url_for($route_name) unless ref $s;
 
     my $table = $s->meta->table;
@@ -179,6 +181,45 @@ sub save {
         logger->warn("save failed, db error : ".($self->db->error || 'none'));
     }
     return $status;
+}
+
+sub delete {
+    my $object = shift;
+    my %args = @_;
+    my $audit_user = $args{audit_user} or die "missing audit_user for $object";
+    my $audit_note = $args{audit_note};
+    my $replacement;
+    my ($old_identifier) = $object->pk_values;
+    if ($replacement = $args{replacement}) {
+        my @pk = $replacement->pk_values;
+        die "cannot replace composite key" if @pk != 1;
+    }
+    my $table_name = $object->meta->table;
+    my $db = $object->db;
+    my $dbh = $db->dbh or die $db->error;
+    $db->do_transaction( sub {
+        $dbh->do("set local audit.username = ?",{},$audit_user);
+        $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+        $object->merge_into(new => $replacement, audit_user => $audit_user, audit_note => $audit_note) if $replacement;
+        $object->SUPER::delete(@_);
+        }
+    ) or do {
+        $object->error($db->error) unless $object->error;
+        return 0;
+    };
+
+    # Can't do this inside the transaction because audit changes are not visible
+    # until the transaction completes.
+    if ($replacement) {
+        my ($new_identifier) = $replacement->pk_values;
+        my @pk_fields = map $_->name, $object->meta->primary_key->columns;
+        $dbh->do(<<SQL, {}, "$pk_fields[0]=>$new_identifier", $old_identifier) or die $dbh->errstr;
+            update audit.logged_actions set changed_fields = ?::hstore
+             where action='D' and table_name='$table_name' and row_data->'$pk_fields[0]' = ?
+SQL
+        }
+
+    return 1;
 }
 
 sub get_publication {
@@ -314,14 +355,13 @@ sub as_tree {
         if (my $p = $s->get_publication) {
             my ($ctrs, $role_count, $person_count) = $p->contributors_grouped;
             $tree->{contributors} = [ map $_->as_tree(c => $c), @$ctrs ];
-
-            my $refs = Tuba::DB::Object::Subpubref::Manager->get_objects(query => [ publication_id => $p->id ], limit => 200 );
+            my $refs = $p->references;
             my $format = $c->stash('format');
             $format &&= ".$format";
             my $base = $c->req->url->base;
             $tree->{references} = [ map +{
-                                            uri => "/reference/".$_->reference_identifier,
-                                            href => "$base/reference/".$_->reference_identifier."$format"
+                                            uri => "/reference/".$_->identifier,
+                                            href => "$base/reference/".$_->identifier."$format"
                                         }, @$refs ];
         }
     }
@@ -411,9 +451,7 @@ sub as_text {
 sub reference_count {
     my $ch = shift;
     my $pub = $ch->get_publication or return 0;
-    # chapter, figures, findings, tables are in subpubref, but reports are not.
-    # So this is overloaded in mixin/report.pm
-    my $sql = q[select count(1) from subpubref where publication_id = ?];
+    my $sql = q[select count(1) from publication_reference_map where publication_id = ?];
     my $dbs = DBIx::Simple->new($ch->db->dbh);
     my ($count) = $dbs->query($sql, $pub->id)->flat;
     return $count;
@@ -484,6 +522,12 @@ SQL
     my $rows = $sth->fetchall_arrayref({});
     my @people = map Tuba::DB::Object::Person->new(id => $_->{id})->load, @$rows;
     return (wantarray ? @people : \@people);
+}
+
+sub same_as {
+    my $s = shift;
+    my $t = shift;
+    return encode_json( [ $s->pk_values ] ) eq encode_json( [ $t->pk_values ] );
 }
 
 1;

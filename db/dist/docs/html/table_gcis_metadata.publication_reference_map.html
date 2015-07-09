@@ -115,15 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.publication">publication</a>
+            <a name="gcis-metadata.table.publication-reference-map">publication_reference_map</a>
         </h2>
         
-         <p>A publication, similar to an entity, is a generic term for something that has been released to the public.</p>
+         <p>A map from publications to references.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>publication Structure</caption>
+                <caption>publication_reference_map Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -136,9 +136,13 @@
                 
                   
                 
+                  
+                  <a href="table_gcis_metadata.publication.html#gcis-metadata.table.publication">publication.id</a>
+                  
+                
                 </td>
-                <td>id</td>
-                <td>serial</td>
+                <td>publication_id</td>
+                <td>integer</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -146,11 +150,15 @@
 
                     
                 
+                    
+
+                    
+                
 
                 
                 
                 </i>
-                <br><br>An opaque numeric identifier
+                <br><br>The publication.
                 </td>
              </tr>
             
@@ -158,16 +166,17 @@
                 <td>
                 
                   
-                  <a href="table_gcis_metadata.publication_type.html#gcis-metadata.table.publication-type">publication_type.identifier</a>
-                  
                 
+                  
+                  <a href="table_gcis_metadata.reference.html#gcis-metadata.table.reference">reference.identifier</a>
                   
                 
                 </td>
-                <td>publication_type_identifier</td>
+                <td>reference_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
+                    PRIMARY KEY
                     
 
                     
@@ -175,38 +184,12 @@
                     
 
                     
-                       UNIQUE#1
-                    
                 
 
-                NOT NULL
+                
                 
                 </i>
-                <br><br>The type
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                
-                </td>
-                <td>fk</td>
-                <td>hstore</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE#1
-                    
-                
-
-                NOT NULL
-                
-                </i>
-                <br><br>Column column names and values of the primary key of this entitiy in its native table.
+                <br><br>The reference.
                 </td>
              </tr>
             
@@ -219,25 +202,6 @@
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.methodology.html">methodology</a><br>
-        
-                <a href="table_gcis_metadata.publication_contributor_map.html">publication_contributor_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_file_map.html">publication_file_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_gcmd_keyword_map.html">publication_gcmd_keyword_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_map.html">publication_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_reference_map.html">publication_reference_map</a><br>
-        
-                <a href="table_gcis_metadata.publication_region_map.html">publication_region_map</a><br>
-        
-                <a href="table_gcis_metadata.reference.html">reference</a><br>
-        
         
 
     <!-- Indexes -->

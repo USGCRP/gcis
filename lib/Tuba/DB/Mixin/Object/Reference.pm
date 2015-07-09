@@ -28,15 +28,16 @@ sub as_tree {
     }
     if (my $id = $t->{child_publication_id}) {
         my $obj = $s->child_publication->to_object(autoclean => 1);
-      $t->{child_publication_uri}
-        = $c && $obj ? $obj->uri($c) : "/publication/$id";
+        $t->{child_publication} = $c && $obj ? $obj->uri($c) : "/publication/$id";
+    } else {
+        $t->{child_publication} = undef;
     }
-    if (my $sub = $s->subpubrefs) { # chapters
-        $t->{sub_publication_uris} = [
+    delete $t->{child_publication_id};
+    if (my $sub = $s->publications) {
+        $t->{publications} = [
             map {
-              my $pub = $_->publication;
-              $c ? $pub->to_object->uri($c) : "/publication/".$pub->id
-            } @$sub
+              $c ? $_->to_object->uri($c) : "/publication/".$_->id
+            } $s->publications
         ];
     }
     return $t;
@@ -61,7 +62,7 @@ sub stringify {
             return $1;
         }
     }
-    return $uuid;
+    return $s->attr('title') || $uuid;
 }
 
 sub attr {

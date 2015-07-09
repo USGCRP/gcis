@@ -1,7 +1,11 @@
 % my @pubs = $pub ? $pub->get_children_with_references : ();
 % if (@pubs) {
 % my %refs;
-<p>References :
+<p>
+%= link_to 'list_reference_'.$pub->publication_type_identifier => begin
+References
+%= end
+:
 <ul class="references" style="list-style-type: none;">
 % for my $i (0..$#pubs) {
 % my $p = $pubs[$i];
