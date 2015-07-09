@@ -2,7 +2,7 @@
 % title => "Global Change Information System",
 % description => "The Global Change Information System (GCIS) is a web-based resource for traceable, sound global change data, information, and products.";
 
-%= javascript '//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js';
+%= javascript "//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js";
 
 <style type="text/css">
      
@@ -39,7 +39,7 @@
      
 </style>
 <div class="container">
-	<img src="usgcrp-220.png" class="usgcrp thumbnail">
+	<img src="usgcrp-220.png" class="usgcrp thumbnail" />
 </div>
 <div class="jumbotron" itemscope itemtype="http://schema.org/WebApplication">
 	<h1 itemprop="name">Global Change Information System</h1>
@@ -99,55 +99,55 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
         <div class='front-footer'>
     <span>
     <a href="http://www.commerce.gov" target="_agency" title="U.S. Department of Commerce">
-        <img src="/logo/DOC.png" style="width:41px;"></a>
+        <img src="/logo/DOC.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.defense.gov" target="_agency" title="U.S. Department of Defense">
-        <img src="/logo/DOD.png" style="width:41px;"></a>
+        <img src="/logo/DOD.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.energy.gov" target="_agency" title="U.S. Department of Energy">
-        <img src="/logo/DOE.png" style="width:41px;"></a>
+        <img src="/logo/DOE.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.doi.gov" target="_agency" title="U.S. Department of the Interior">
-        <img src="/logo/DOI.png" style="width:43px;"></a>
+        <img src="/logo/DOI.png" style="width:43px;" /></a>
     </span>
     <span>
     <a href="http://www.state.gov" target="_agency" title="U.S. Department of State">
-        <img src="/logo/DOS.png" style="width:41px;"></a>
+        <img src="/logo/DOS.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.dot.gov" target="_agency" title="US Department of Transportation">
-        <img src="/logo/DOT.png" style="width:41px;"></a>
+        <img src="/logo/DOT.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.epa.gov" target="_agency" title="US Environmental Protection Agency">
-        <img src="/logo/EPA.png" style="width:41px;"></a>
+        <img src="/logo/EPA.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.hhs.gov" target="_agency" title="U.S. Department of Health & Human Services">
-        <img src="/logo/HHS.png" style="width:41px;"></a>
+        <img src="/logo/HHS.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.nasa.gov" target="_agency" title="NASA">
-        <img src="/logo/NASA.png" style="width:46px;"></a>
+        <img src="/logo/NASA.png" style="width:46px;" /></a>
     </span>
     <span>
     <a href="http://www.nsf.gov" target="_agency" title="National Science Foundation">
-        <img src="/logo/NSF.png" style="width:47px;"></a>
+        <img src="/logo/NSF.png" style="width:47px;" /></a>
     </span>
     <span>
     <a href="http://www.si.edu" target="_agency" title="Smithsonian">
-        <img src="/logo/SI.png" style="width:41px;"></a>
+        <img src="/logo/SI.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.usaid.gov" target="_agency" title="U.S. Agency for International Development">
-        <img src="/logo/USAID.png" style="width:41px;"></a>
+        <img src="/logo/USAID.png" style="width:41px;" /></a>
     </span>
     <span>
     <a href="http://www.usda.gov" target="_agency" title="U.S. Department of Agriculture">
-        <img src="/logo/USDA.png" style="width:41px;"></a>
+        <img src="/logo/USDA.png" style="width:41px;" /></a>
     </span>
 </div>
 </div>
