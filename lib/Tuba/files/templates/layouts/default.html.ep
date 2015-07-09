@@ -52,7 +52,7 @@
 
      %= include 'menu';
 
-             </div>
+          
         
    <div class='container' id='maincontent'>        
              

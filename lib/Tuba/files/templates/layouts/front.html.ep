@@ -47,7 +47,9 @@
 </style>
 </head>
 <body class="front-page">
+	%= include 'menu';
 
+	</div>
    <div class='container' id='maincontent'>
 
         % if (my $msg = flash 'message') {
@@ -58,7 +60,7 @@
 				% }
             <%= content %>
             </div>
-    %= include 'menu';
+    
 
        
       

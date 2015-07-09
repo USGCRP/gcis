@@ -44,14 +44,14 @@
 
 % my $child = $object->child_publication;
 
-<div class='control-group' style='margin:10px;'>
+<div class='form-group' style='margin:10px;'>
     <label class='control-label col-lg-2 col-md-2 col-sm-2'>
         Publication to which this reference refers:
     </label>
     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style='border:1px solid #ddd;'>
         % if ($child) {
 
-        %= include 'obj_thumbnails', objs => [ $child->to_object ], add_delete_button => "delete_child_publication_id";
+        %= include 'obj_thumbnails', objs => [ $child->to_object ],size => 'col-md-3 col-lg-3 col-sm-4 col-xs-4', add_delete_button => "delete_child_publication_id";
     
         % }
     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -59,7 +59,7 @@
     </div>
     </div>
 </div>
-
+<br />
 
 <div class="row">
 	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
