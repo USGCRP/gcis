@@ -48,6 +48,14 @@
         <p><%= $image->usage_limits %></p>
         % }
 
+        % if ($image->url) {
+        <p>
+            %= link_to $image->url => target => "_blank" => itemprop => "url" => begin
+            <%= $image->url %>
+            <%= end %>
+        </p>
+        % }
+
         % if ($image->time_start && $image->time_end) {
         <p>The time range for this image is <%= $image->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
          to <%= $image->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>

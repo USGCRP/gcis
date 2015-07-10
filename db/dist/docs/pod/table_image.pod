@@ -23,6 +23,7 @@ An image may be associated with multiple figures, may have provenance and other 
  usage_limits (character varying) - Copyright restrictions describing how this image may be used.
  submission_dt (timestamp(3) without time zone) - 
  create_dt (timestamp(3) without time zone) - 
+ url (character varying) - A landing page for this image.
 
 
 =head1 SCHEMA
@@ -44,8 +45,10 @@ An image may be associated with multiple figures, may have provenance and other 
   usage_limits  | character varying              |           | extended |              | Copyright restrictions describing how this image may be used.
   submission_dt | timestamp(3) without time zone |           | plain    |              | 
   create_dt     | timestamp(3) without time zone |           | plain    |              | 
+  url           | character varying              |           | extended |              | A landing page for this image.
  Indexes:
      "image_pkey" PRIMARY KEY, btree (identifier)
+     "image_url_key" UNIQUE CONSTRAINT, btree (url)
  Check constraints:
      "ck_image_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:

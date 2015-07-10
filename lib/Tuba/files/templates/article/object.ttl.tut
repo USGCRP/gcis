@@ -14,7 +14,7 @@
    gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
 % }
 
-   a bibo:Article .
+   a gcis:Article .
 % end
 
 

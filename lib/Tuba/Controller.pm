@@ -975,7 +975,7 @@ sub update_contributors {
     $contributor->organization_identifier($organization->identifier) if $organization;
     $contributor->person_id($person->id) if $person;
     if ( $contributor->load(speculative => 1)) {
-            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization) // 'undef');
+            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
             logger->debug("json : ".Dumper($json));
     } else {
             $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
@@ -985,10 +985,11 @@ sub update_contributors {
     $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
     my $map = Tuba::DB::Object::PublicationContributorMap->new(
         publication_id => $pub->id,
-        contributor_id => $contributor->id
+        contributor_id => $contributor->id,
     );
     $map->load(speculative => 1);
     $map->reference_identifier($reference_identifier);
+    $map->sort_key($json->{sort_key}) if defined($json->{sort_key});
     $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
@@ -1259,7 +1260,15 @@ sub remove {
     my $object = $c->_this_object or return $c->reply->not_found;
     $object->meta->error_mode('return');
     die "No auth in remove route" unless $c->user;
-    $object->delete(audit_user => $c->user) or return $c->render_exception($object->error);
+    my $json = $c->req->json;
+    my @replacement;
+    if ($json && $json->{replacement}) {
+        my $rpl = $c->uri_to_obj($json->{replacement})
+          or return $c->render_exception("couldn't find $json->{replacement}");
+        @replacement = (replacement => $rpl);
+    }
+    $object->delete(audit_user => $c->user, @replacement)
+      or return $c->render_exception($object->error);
     return $c->render(text => 'ok');
 }
 

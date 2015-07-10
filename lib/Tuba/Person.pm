@@ -99,9 +99,11 @@ sub lookup_name {
     my $c = shift;
     my $first = $c->req->json->{first_name};
     my $last = $c->req->json->{last_name};
-    my $matches = Persons->get_objects(
-        query => [ first_name => $first, last_name => $last ]
-    );
+    $first = Person->meta->db->dbh->quote($first);
+    $last = Person->meta->db->dbh->quote($last);
+    my $matches = Persons->get_objects( query => [
+            \"name_hash(first_name, last_name) = name_hash($first,$last)"
+        ]);
     if ($matches && @$matches==1) {
         return $c->redirect_to($matches->[0]->uri($c));
     }

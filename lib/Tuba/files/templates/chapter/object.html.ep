@@ -43,7 +43,7 @@
              <%= link_to 'list_finding', { chapter_identifier => $chapter->identifier } => begin%><%= pl('finding', $fin) %><%= end =%>,
              <%= link_to 'list_table',   { chapter_identifier => $chapter->identifier } => begin %> <%= pl('table', $tab) %><%= end =%>,
             and
-            <%= link_to 'list_chapter_references', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
+            <%= link_to 'list_reference_chapter', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
            </p>
         % }
     </div>

@@ -96,5 +96,11 @@ sub stringify {
     return $str;
 }
 
+sub references {
+    my $c = shift;
+    my $pub = $c->get_publication or return;
+    return $pub->references;
+}
+
 1;
 
