@@ -8,10 +8,10 @@
     % for my $exterm (@$matches) {
 <<%= current_resource %>>
       % if (my $url = $exterm->native_url) {
-   skos:altLabel "<%= $exterm->term %>";
+   skos:prefLabel "<%= $exterm->term %>";
    gcis:hasURL "<%= $url %>";
       % } else {
-   skos:altLabel "<%= $exterm->term %>";
+   skos:prefLabel "<%= $exterm->term %>";
       % }
       % if (my $same_as = $exterm->same_as) {
    owl:sameAs <<%= $same_as %>>;

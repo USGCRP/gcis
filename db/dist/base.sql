@@ -22,6 +22,28 @@ END; $$;
 
 
 
+CREATE FUNCTION name_hash(first_name text, last_name text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return 
+    concat(
+        regexp_replace(lower(first_name),'\W','','g'),
+        regexp_replace(lower(last_name),'\W','','g')
+    );
+END; $$;
+
+
+
+CREATE FUNCTION name_unique_hash(first_name text, last_name text, orcid text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return concat( name_hash(first_name, last_name), orcid );
+END; $$;
+
+
+
 CREATE FUNCTION update_exterms() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -363,7 +385,7 @@ CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
     role_type_identifier character varying NOT NULL,
-    organization_identifier character varying NOT NULL,
+    organization_identifier character varying,
     CONSTRAINT ck_person_org CHECK (((person_id IS NOT NULL) OR (organization_identifier IS NOT NULL)))
 );
 
@@ -906,6 +928,7 @@ CREATE TABLE image (
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
+    url character varying,
     CONSTRAINT ck_image_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -960,6 +983,10 @@ COMMENT ON COLUMN image.lon_min IS 'The westernmost longitude in the bounding bo
 
 
 COMMENT ON COLUMN image.usage_limits IS 'Copyright restrictions describing how this image may be used.';
+
+
+
+COMMENT ON COLUMN image.url IS 'A landing page for this image.';
 
 
 
@@ -2236,6 +2263,11 @@ ALTER TABLE ONLY image
 
 
 
+ALTER TABLE ONLY image
+    ADD CONSTRAINT image_url_key UNIQUE (url);
+
+
+
 ALTER TABLE ONLY instrument_instance
     ADD CONSTRAINT instrument_instance_pkey PRIMARY KEY (platform_identifier, instrument_identifier);
 
@@ -2465,7 +2497,15 @@ CREATE INDEX exterm_gcid ON exterm USING btree (gcid);
 
 
 
+CREATE INDEX person_names ON person USING btree (name_hash((first_name)::text, (last_name)::text));
+
+
+
 CREATE UNIQUE INDEX uk_first_last_orcid ON person USING btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)));
+
+
+
+CREATE UNIQUE INDEX uk_person_names ON person USING btree (name_unique_hash((first_name)::text, (last_name)::text, (orcid)::text));
 
 
 

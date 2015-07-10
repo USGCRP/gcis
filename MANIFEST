@@ -1,6 +1,7 @@
 .travis.yml
 bin/tuba
 bin/tuba_generate_sitemap
+bin/tuba_get_ontology
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
@@ -63,6 +64,8 @@ db/dist/docs/html/func_gcis_metadata.hstore_to_matrix(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_version_diag(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.isdefined(gcis_metadata.hstore, text).html'
 'db/dist/docs/html/func_gcis_metadata.isexists(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.name_hash(last_name text, first_name text).html'
+'db/dist/docs/html/func_gcis_metadata.name_unique_hash(orcid text, last_name text, first_name text).html'
 'db/dist/docs/html/func_gcis_metadata.populate_record(anyelement, gcis_metadata.hstore).html'
 db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.slice(gcis_metadata.hstore, text[]).html'
@@ -336,6 +339,9 @@ db/patches/2090_temporal_resolution.sql
 db/patches/2100_contributor_cleanup.sql
 db/patches/2110_reference_changes.sql
 db/patches/2120_publication_reference_map.sql
+db/patches/2130_null_orgs_ok.sql
+db/patches/2140_people.sql
+db/patches/2150_image_url.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -391,6 +397,7 @@ lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
 lib/Tuba/DB/Mixin/Object/Report.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
+lib/Tuba/DB/Mixin/Object/RoleType.pm
 lib/Tuba/DB/Mixin/Object/Table.pm
 lib/Tuba/DB/Mixin/Object/Table/Manager.pm
 lib/Tuba/DB/Mixin/Object/Webpage.pm
@@ -531,6 +538,7 @@ lib/Tuba/files/templates/finding/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
+lib/Tuba/files/templates/gcmd_keyword/object.ttl.tut
 lib/Tuba/files/templates/generic/object.html.ep
 lib/Tuba/files/templates/generic/object.ttl.tut
 lib/Tuba/files/templates/h/cited_by.html.ep
@@ -718,6 +726,7 @@ t/014_array.t
 t/015_search.t
 t/016_turtle_syntax.t
 t/017_person.t
+t/017_person_api.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm
