@@ -16,12 +16,13 @@
 % }
 
 <div class='row well'>
-        <div class='col-md-8 col-md-offset-4' style='text-align:center;'>
+        <div class='col-md-8 col-md-offset-2' style='text-align:center;'>
                 %= link_to $object->asset_location => download => $file->file => class => "btn  btn-default btn-lg thumbnail" => begin
                 <img style='border:1px solid #aaa;' class="img-responsive" src='<%= $file->thumbnail_path %>' />
-                <div class='caption centered' style='color:white;'>download (<%= human_size($file->size) %>)
+                <div class='caption centered' >download (<%= human_size($file->size) %>)
 % if ($file->location) {
-<br>from <%= url_host($file->location) %>
+<br />
+from <%= url_host($file->location) %>
 % }
          </div>
          %= end
@@ -29,11 +30,11 @@
       
 
         <br>
-        <div class="row">
+        <div class="clear-both">
 % if ($file->sha1) {
                 <p>SHA1 hash : <%= $file->sha1 %>.</p>
 % }
-        </div>  
+     
         % if (my @pubs = $file->publications) {
         
         <p>This file is associated with <%= include 'commify', objs => \@pubs %>.</p>
@@ -42,6 +43,6 @@
         <p>This file is not associated with any publications.</p>
         % }
 </div>
-
+</div>
 <%= include 'h/other_formats' =%>
 
