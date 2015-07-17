@@ -43,7 +43,7 @@
 
 ## Region(s):
 % if (my $pub = $report->get_publication) {
-   dcterms:Relation <<%= uri($pub->regions) %>>;
+   dcterms:spatial <<%= uri($pub->regions) %>>;
 % }
 
    a gcis:Report .
