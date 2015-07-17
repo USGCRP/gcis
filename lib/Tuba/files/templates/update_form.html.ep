@@ -31,13 +31,13 @@
 % $column = $meta->column($column) unless ref $column;
 % my $required = $column->not_null ? ' required' : "";
 <div class="form-group">
-<label class="<%= $required %> col-lg-2 col-md-4 col-sm-12 col-xs-12 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
+<label class="<%= $required %> col-lg-2 col-md-2 col-sm-4 col-xs-12 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
         
             % my $accessor = $column->accessor_method_name;
             % my $val = $object->$accessor;
             % my $name = $column->name;
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-            	<div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
+            	<div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                 %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
                 </div>
                 
@@ -47,16 +47,16 @@
                 </div>
                 
             % } elsif (my $entry = $controls->{$column->name}) {
-            	<div class="col-lg-10 col-md-8 col-sm-10 col-xs-10">
+            	<div class="col-lg-10 col-md-10 col-sm-8 col-xs-12">
                 % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
                 %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
                 </div>
             % } else {
                 % if ($val && length($val) > 50) {
-                <div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
+                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                 %= $textarea->($column,$object), class => "form-control";
                 % } else {
-                <div class="col-lg-10 col-md-8 col-sm-10 col-xs-10 ">
+                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
                 %= $textfield->($column,$object), class => "form-control";
                 % }
                 </div>
@@ -69,8 +69,8 @@ $('.control-label').popover({trigger : 'hover'});
 %= end
 <div class='required_note clearfix'>required</div>
 
-<div class="row clear-both">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+<div class="form-group clear-both">
+	<div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-12">
     <button type="submit" class="btn btn-primary">Save changes</button>
     <button type="reset" class="btn btn-default">Reset</button>
     <div class='input-group'>

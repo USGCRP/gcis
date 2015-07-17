@@ -32,6 +32,11 @@ form label.required:after {
 }
 .required_note {
     float:right;
+    margin-right: 15px;
+}
+.row {
+	margin-left: 0;
+	margin-right: 0;
 }
 div.required_note:before {
     color: #e32;
@@ -64,7 +69,7 @@ h3.sub-title {
     text-align: center;
 }
 pre {
-	margin: 0 auto 10px;
+	margin: 0 14px 10px;
 }
 img.usgcrp.thumbnail {
 	border: 0 none #ffffff;
@@ -82,6 +87,9 @@ img.usgcrp.thumbnail {
     font-size:75%;
     font-stretch: ultracondensed;
     font-family:monospace;
+}
+.text-right {
+	text-align: right;
 }
 .clear-both {
 	clear: both;

@@ -13,9 +13,9 @@
     % my $method = $what.'s';
     % $list_page ||= 'list_all_'.$method;
     % if ($count==1) {
-    <%= obj_link_to $report->$method->[0] => 'show' => class => "btn squeezevert" => begin =%><%= $count =%><%= end =%>
+    <%= obj_link_to $report->$method->[0] => 'show' => class => "btn btn-default squeezevert" => begin =%><%= $count =%><%= end =%>
     % } else {
-    <%= link_to $list_page, { report_identifier => $report->identifier } => class => "btn squeezevert" => begin =%><%= $count =%><%= end =%>
+    <%= link_to $list_page, { report_identifier => $report->identifier } => class => "btn btn-default squeezevert" => begin =%><%= $count =%><%= end =%>
     % }
 % end
 

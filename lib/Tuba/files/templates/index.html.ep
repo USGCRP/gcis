@@ -43,6 +43,9 @@
       #svgwrap a text {
         fill: #0088cc;
       }
+      #svgwrap a {
+      	  font-size: 0.4em;
+      }
       h2 {
       	font-size: 20px;
       }
@@ -72,8 +75,8 @@
         
     </div>
    </div>
-<p class="text-center"><%= link_to "metrics" => { format => 'json' } => class => 'label label-info' => begin %>JSON<%= end %>
-        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-info' => begin %>YAML<%= end %>
+<p class="text-center"><%= link_to "metrics" => { format => 'json' } => class => 'label label-primary' => begin %>JSON<%= end %>
+        <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-primary' => begin %>YAML<%= end %>
         </p>
 <p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
 The Third National Climate Assessment<%= end %></p>
@@ -250,7 +253,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr('font-size', '0.4em')
+        .attr("font-size", "0.4em")
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 

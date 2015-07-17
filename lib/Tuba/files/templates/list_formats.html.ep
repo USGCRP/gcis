@@ -1,5 +1,6 @@
+<div class="row">
 <% if (user_can('update') && (stash 'meta')) { %>
-<span style='float:right;'><%= include 'create_link'%></span>
+<%= include 'create_link'%>
 <% } %>
 % my $base = $self->req->url->clone;
 % my $query = $base->query->clone;
@@ -18,5 +19,6 @@ Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relatio
 % }
 % }
 </pre>
+</div>
 
 
