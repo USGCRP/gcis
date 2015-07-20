@@ -22,6 +22,28 @@ END; $$;
 
 
 
+CREATE FUNCTION name_hash(first_name text, last_name text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return 
+    concat(
+        regexp_replace(lower(first_name),'\W','','g'),
+        regexp_replace(lower(last_name),'\W','','g')
+    );
+END; $$;
+
+
+
+CREATE FUNCTION name_unique_hash(first_name text, last_name text, orcid text) RETURNS character varying
+    LANGUAGE plpgsql IMMUTABLE
+    AS $$
+BEGIN
+return concat( name_hash(first_name, last_name), orcid );
+END; $$;
+
+
+
 CREATE FUNCTION update_exterms() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -363,7 +385,7 @@ CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
     role_type_identifier character varying NOT NULL,
-    organization_identifier character varying NOT NULL,
+    organization_identifier character varying,
     CONSTRAINT ck_person_org CHECK (((person_id IS NOT NULL) OR (organization_identifier IS NOT NULL)))
 );
 
@@ -906,6 +928,7 @@ CREATE TABLE image (
     usage_limits character varying,
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
+    url character varying,
     CONSTRAINT ck_image_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -960,6 +983,10 @@ COMMENT ON COLUMN image.lon_min IS 'The westernmost longitude in the bounding bo
 
 
 COMMENT ON COLUMN image.usage_limits IS 'Copyright restrictions describing how this image may be used.';
+
+
+
+COMMENT ON COLUMN image.url IS 'A landing page for this image.';
 
 
 
@@ -1655,6 +1682,25 @@ COMMENT ON COLUMN publication_map.activity_identifier IS 'XXX';
 
 
 
+CREATE TABLE publication_reference_map (
+    publication_id integer NOT NULL,
+    reference_identifier character varying NOT NULL
+);
+
+
+
+COMMENT ON TABLE publication_reference_map IS 'A map from publications to references.';
+
+
+
+COMMENT ON COLUMN publication_reference_map.publication_id IS 'The publication.';
+
+
+
+COMMENT ON COLUMN publication_reference_map.reference_identifier IS 'The reference.';
+
+
+
 CREATE TABLE publication_region_map (
     publication_id integer NOT NULL,
     region_identifier character varying NOT NULL
@@ -1696,10 +1742,8 @@ COMMENT ON COLUMN publication_type."table" IS 'The database table.';
 CREATE TABLE reference (
     identifier character varying NOT NULL,
     attrs hstore,
-    publication_id integer NOT NULL,
     child_publication_id integer,
-    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
-    CONSTRAINT no_self_references CHECK ((child_publication_id <> publication_id))
+    CONSTRAINT ck_reference_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
 
@@ -1713,10 +1757,6 @@ COMMENT ON COLUMN reference.identifier IS 'A unique identifier (a UUID).';
 
 
 COMMENT ON COLUMN reference.attrs IS 'Arbitrary name-value pairs for this reference.';
-
-
-
-COMMENT ON COLUMN reference.publication_id IS 'The publication in which this reference appears.';
 
 
 
@@ -1891,25 +1931,6 @@ COMMENT ON COLUMN scenario.description IS 'A description.';
 
 
 COMMENT ON COLUMN scenario.description_attribution IS 'A URL containing the description.';
-
-
-
-CREATE TABLE subpubref (
-    publication_id integer NOT NULL,
-    reference_identifier character varying NOT NULL
-);
-
-
-
-COMMENT ON TABLE subpubref IS 'Publications contained in other publications (e.g. chapters in reports) may be assocaited with references.';
-
-
-
-COMMENT ON COLUMN subpubref.publication_id IS 'The publication.';
-
-
-
-COMMENT ON COLUMN subpubref.reference_identifier IS 'The reference.';
 
 
 
@@ -2242,6 +2263,11 @@ ALTER TABLE ONLY image
 
 
 
+ALTER TABLE ONLY image
+    ADD CONSTRAINT image_url_key UNIQUE (url);
+
+
+
 ALTER TABLE ONLY instrument_instance
     ADD CONSTRAINT instrument_instance_pkey PRIMARY KEY (platform_identifier, instrument_identifier);
 
@@ -2388,11 +2414,6 @@ ALTER TABLE ONLY reference
 
 
 ALTER TABLE ONLY reference
-    ADD CONSTRAINT reference_identifier_publication_id_key UNIQUE (identifier, publication_id);
-
-
-
-ALTER TABLE ONLY reference
     ADD CONSTRAINT reference_pkey PRIMARY KEY (identifier);
 
 
@@ -2432,7 +2453,7 @@ ALTER TABLE ONLY scenario
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_pkey PRIMARY KEY (publication_id, reference_identifier);
 
 
@@ -2476,7 +2497,15 @@ CREATE INDEX exterm_gcid ON exterm USING btree (gcid);
 
 
 
+CREATE INDEX person_names ON person USING btree (name_hash((first_name)::text, (last_name)::text));
+
+
+
 CREATE UNIQUE INDEX uk_first_last_orcid ON person USING btree (first_name, last_name, (COALESCE(orcid, 'null'::character varying)));
+
+
+
+CREATE UNIQUE INDEX uk_person_names ON person USING btree (name_unique_hash((first_name)::text, (last_name)::text, (orcid)::text));
 
 
 
@@ -2564,7 +2593,7 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON reference F
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON subpubref FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_reference_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -2736,7 +2765,7 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON reference FOR EACH STATEMENT 
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON subpubref FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON publication_reference_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -3210,22 +3239,17 @@ ALTER TABLE ONLY reference
 
 
 
-ALTER TABLE ONLY reference
-    ADD CONSTRAINT reference_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
-
-
-
 ALTER TABLE ONLY report
     ADD CONSTRAINT report_report_type_identifier_fkey FOREIGN KEY (report_type_identifier) REFERENCES report_type(identifier);
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_publication_id_fkey FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE;
 
 
 
-ALTER TABLE ONLY subpubref
+ALTER TABLE ONLY publication_reference_map
     ADD CONSTRAINT subpubref_reference_identifier_fkey FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE;
 
 

@@ -43,17 +43,17 @@
     % my $base = $self->req->url;
     % $base =~ s/.html$//;
     Save a &nbsp;
-    %= link_to "$base.json", class => 'label label-default label-info' => begin
+    %= link_to "$base.json", class => 'label  label-primary' => begin
     JSON version
     %= end
     &nbsp; or a &nbsp;
-    %= link_to "$base.yaml", class => 'label label-default label-info' => begin
+    %= link_to "$base.yaml", class => 'label  label-primary' => begin
     YAML version
     %= end
     &nbsp; of your credentials to use them outside of the web browser.
     </p>
 % } else {
-    <div class='alert'>
+    <div class='alert alert-warning'>
         Please <%= link_to 'login' => begin %>log in<%= end %> to obtain an API key.
     </div>
 % }

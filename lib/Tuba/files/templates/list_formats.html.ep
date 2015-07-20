@@ -1,5 +1,6 @@
+<div class="row">
 <% if (user_can('update') && (stash 'meta')) { %>
-<span style='float:right;'><%= include 'create_link'%></span>
+<%= include 'create_link'%>
 <% } %>
 % my $base = $self->req->url->clone;
 % my $query = $base->query->clone;
@@ -7,9 +8,9 @@
 % $base->path->parts->[-1] =~ s/.html$$//;
 % $query = "?$query" if $query;
 <pre>
-<%= link_to "$base.json".$query => class => 'label label-info' => begin %>JSON<%= end %> \
-<%= link_to "$base.yaml".$query => class => 'label label-info' => begin %>YAML<%= end %> \
-<%= link_to "$base.html".$query => class => 'label label-info' => begin %>HTML<%= end %>
+<%= link_to "$base.json".$query => class => 'label label-primary' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml".$query => class => 'label label-primary' => begin %>YAML<%= end %> \
+<%= link_to "$base.html".$query => class => 'label label-primary' => begin %>HTML<%= end %>
 % if ($ENV{TUBA_DEBUG}) {
 % if (my $meta = stash 'meta') {
 Primary key : <%= $meta->primary_key %>
@@ -18,5 +19,6 @@ Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relatio
 % }
 % }
 </pre>
+</div>
 
 

@@ -293,7 +293,7 @@ sub register {
      });
     $app->helper(uri_to_obj => sub {
          my $c = shift;
-         my $uri = shift;
+         my $uri = shift or die "missing uri";
 
          my $obj;
          for ($uri) {
@@ -587,6 +587,13 @@ sub register {
             my $c = shift;
             my ($block, @thingies) = @_;
             return keysort(sub { $block->() }, @thingies);
+        });
+    $app->helper(to_url => sub {
+            my $c = shift;
+            my $path = shift;
+            my $url = $c->req->url->clone;
+            $url->path($path);
+            return $url->to_abs;
         });
 }
 1;

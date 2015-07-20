@@ -105,11 +105,11 @@ They are assigned Uniform Resource Identifiers, or URIs.</p> <h3>Resources</h3>
         may be associated with one more or <i>instruments</i>.</dd>
 
     <dt>Instrument</dt>
-    <dd>An <i>instrument</i>, such as <%= link_to 'show_instrument', { instrument_identifier => 'poseidon-2' } => begin %>posiedon-2<%= end %>
+    <dd>An <i>instrument</i>, such as <%= link_to 'show_instrument', { instrument_identifier => 'poseidon-2' } => begin %>poseidon-2<%= end %>
     may be associated with one or more <i>platform</i>s via <i>instrument instance</i>s.
 
     <dt>Instrument Instance</dt>
-    <dd>An <i>instrument instance</i>, such as <%= link_to 'show_instrument_instance', { platform_identifier => "jason-1", instrument_identifier => 'poseidon-2' } => begin %>jason-1/posiedon-2<%= end %>
+    <dd>An <i>instrument instance</i>, such as <%= link_to 'show_instrument_instance', { platform_identifier => "jason-1", instrument_identifier => 'poseidon-2' } => begin %>jason-1/poseidon-2<%= end %>
        is a platform/instrument combination, and may be associated with one or more <i>dataset</i>s.
 
     <dt>Activity</dt>

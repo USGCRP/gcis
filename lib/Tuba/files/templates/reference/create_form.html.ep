@@ -13,34 +13,34 @@
 %= include 'messages';
 
 % my $cols = stash 'cols';
-% for my $column_name (qw/identifier publication_id child_publication_id/) {
+% for my $column_name (qw/identifier child_publication_id/) {
 % my $column = $meta->column($column_name);
 % my $name = $column->name;
 % my $required = $column->not_null ? ' required' : "";
     <div class="form-group" style='margin-bottom:2px;'>
-        <label class="control-label <%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
+        <label class="control-label col-lg-2 col-md-4 col-sm-4 col-xs-12 pull-left <%= $required %>" for="<%= $column->name %>"><%= labelize($column->name) %></label>
             % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
-            	<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+            	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
                 </div>
             % } elsif (my $entry = $controls->{$name}) {
                 % $entry = $self->$entry if ref($entry) eq 'CODE';
-                <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 %= include 'controls/'.$entry->{template}, column => $column, %{ $entry->{params} || {} };
                 </div>
             % } else {
-            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+            	<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
                 %= text_field $name, placeholder => $column->type, id => $name, class => 'form-control';
                 </div>
             % }
 
-            <span class="help-block">
+            <div class="help-block col-lg-2 col-md-6 offset-col-md-4 col-sm-12 col-xs-12 pull-right">
             %= $column->remarks || ""
-            </span>
+            </div>
     </div>
 % }
 <div class='required_note'>required</div>
-
+<br />
 <div >
     <button type="submit" class="btn btn-primary">Create new <%= $meta->table %></button>
 </div>

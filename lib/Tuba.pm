@@ -65,7 +65,7 @@ use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
 use strict;
 
-our $VERSION = '1.29';
+our $VERSION = '1.32';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
 
 sub startup {
@@ -201,6 +201,7 @@ sub startup {
         my $reserved = qr[^(?:form/update
                                 (?:_prov|_rel|_files|_contributors)?
                              |form/create
+                             |reference
                              |update
                                 (?:_prov|_rel|_files|_contributors)?
                              |put_files
@@ -301,13 +302,11 @@ sub startup {
     $ch->resource('finding');
     $ch->resource('figure');
     $ch->resource('table');
-    $ch->get('/reference')->to('reference#list')->name('list_chapter_references');
 
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');
     $report->get('/figure') ->to('figure#list') ->name('list_all_figures');
     $report->get('/table')  ->to('table#list')  ->name('list_all_tables');
-    $report->get('/reference')->to('reference#list')->name('list_report_references');
     $report->resource('report_finding', { controller => 'Tuba::Finding', identifier => 'finding_identifier', path_base => 'finding', no_list => 1 });
     $report->resource('report_figure',  { controller => 'Tuba::Figure',  identifier => 'figure_identifier',  path_base => 'figure', no_list => 1 });
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table', no_list => 1 });
@@ -372,9 +371,8 @@ sub startup {
     # Files.
     $r->resource("file", {no_list => 1});
 
-    # Bibliographic entry.
+    # References (bibliographic entries)
     my $reference = $r->resource('reference');
-    $report->get('/reference')->to('reference#list');
     $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
     $r->under('/reference/match')
       ->to(cb => sub {
@@ -387,6 +385,14 @@ sub startup {
     #$r->get("/reference/lookup/:record_number" => [ record_number => qr/\d+/])->to('reference#lookup');
     $r->get('/reference/report/updates')->to('reference#updates_report')->name('reference_updates_report')
         unless $config->{read_only};
+
+    # Publications with references
+    for my $resource (qw/report chapter figure finding table webpage book dataset journal/) {
+        # TODO: article
+        my $route = $r->lookup("select_$resource") or die "bad pub $resource";
+        $route->get("/reference")->to("reference#list_for_publication")->name("list_reference_$resource");
+        $route->get("/reference/:reference_identifier")->to('reference#show_for_publication')->name("show_reference_$resource");
+    }
 
     # Generic publication.
     $r->resource('generic');
@@ -410,7 +416,7 @@ sub startup {
     $lex->get('/find/:context/*term')->to('exterm#find')->name('find_term');
     $lex->get('/:context/*term')
                    ->over(not_match => { 'context' => qr[list|find|update] })
-                   ->to('exterm#find')->name('lookup_term');
+                   ->to('exterm#find')->name('show_exterm');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
     if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');

@@ -43,7 +43,7 @@ sub find {
     my $term = Exterm->new(
           lexicon_identifier  => $c->stash('lexicon_identifier'),
           context  => $c->stash('context'),
-          term     => $c->stash('term'),
+          term     => ( $c->stash('term') =~ s/\.t(tl|html)$//r ),
     );
     $term->load(speculative => 1) or return $c->reply->not_found;
     my $gcid = $term->gcid;
@@ -64,7 +64,7 @@ sub remove {
           term     => $c->stash('term'),
     );
     $term->load(speculative => 1) or return $c->reply->not_found;
-    $term->delete or return $c->render_exception($term->error);
+    $term->delete(audit_user => $c->user, audit_note => $c->audit_note) or return $c->render_exception($term->error);
     return $c->render(text => 'ok');
 }
 

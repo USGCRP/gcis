@@ -17,6 +17,7 @@ sub stringify {
     if (my $num = $c->numeric) {
         return $num if $args{tiny};
         return join ' ', $c->report_identifier.' '.$num if $args{short};
+        return sprintf('%s %s %s', $c->report_identifier, $c->meta->table, $num) if $args{long};
         return "$num: $val";
     }
     return $val;

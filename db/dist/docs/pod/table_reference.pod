@@ -11,32 +11,27 @@ A reference is a bibliographic entry.  It relates two publications.
 
  identifier (character varying) - A unique identifier (a UUID).
  attrs (hstore) - Arbitrary name-value pairs for this reference.
- publication_id (integer) - The publication in which this reference appears.
  child_publication_id (integer) - The publication to which this reference refers.
 
 
 =head1 SCHEMA
 
-                                                   Table "gcis_metadata.reference"
-         Column        |       Type        | Modifiers | Storage  | Stats target |                   Description                    
- ----------------------+-------------------+-----------+----------+--------------+--------------------------------------------------
+                                                  Table "gcis_metadata.reference"
+         Column        |       Type        | Modifiers | Storage  | Stats target |                   Description                   
+ ----------------------+-------------------+-----------+----------+--------------+-------------------------------------------------
   identifier           | character varying | not null  | extended |              | A unique identifier (a UUID).
   attrs                | hstore            |           | extended |              | Arbitrary name-value pairs for this reference.
-  publication_id       | integer           | not null  | plain    |              | The publication in which this reference appears.
   child_publication_id | integer           |           | plain    |              | The publication to which this reference refers.
  Indexes:
      "reference_pkey" PRIMARY KEY, btree (identifier)
      "reference_identifier_child_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, child_publication_id)
-     "reference_identifier_publication_id_key" UNIQUE CONSTRAINT, btree (identifier, publication_id)
  Check constraints:
      "ck_reference_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
-     "no_self_references" CHECK (child_publication_id <> publication_id)
  Foreign-key constraints:
      "reference_child_publication_id_fkey" FOREIGN KEY (child_publication_id) REFERENCES publication(id) ON DELETE SET NULL
-     "reference_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON DELETE CASCADE
  Referenced by:
      TABLE "publication_contributor_map" CONSTRAINT "publication_contributor_map_reference_publication" FOREIGN KEY (reference_identifier, publication_id) REFERENCES reference(identifier, child_publication_id) ON UPDATE CASCADE ON DELETE CASCADE
-     TABLE "subpubref" CONSTRAINT "subpubref_reference_identifier_fkey" FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE
+     TABLE "publication_reference_map" CONSTRAINT "subpubref_reference_identifier_fkey" FOREIGN KEY (reference_identifier) REFERENCES reference(identifier) ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON reference FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON reference FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

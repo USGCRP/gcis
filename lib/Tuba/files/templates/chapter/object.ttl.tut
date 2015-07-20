@@ -1,10 +1,11 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro prov/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
 %#  
 <<%= current_resource %>>
    dcterms:identifier "<%= $chapter->identifier %>";
    gcis:chapterNumber "<%= $chapter->number %>"^^xsd:integer;
    dcterms:title "<%= $chapter->title %>"^^xsd:string;
+   bibo:doi "<%= $chapter->doi %>";
    gcis:hasURL "<%= $chapter->url %>"^^xsd:anyURI;
    gcis:isChapterOf <<%= uri($report) %>>;
  

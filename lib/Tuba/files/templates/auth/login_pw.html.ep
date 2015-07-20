@@ -22,20 +22,22 @@ logout
         % }
 
         <div class="form-group">
-            <label class="control-label" for="inputUser">Email address</label>
-            <div>
+            <label class="control-label col-md-2 col-sm-2 col-xs-12" for="inputUser">Email address</label>
+            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-10">
                 <input type="text" class="form-control" id="inputUser" name='user' placeholder="username">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="inputPassword">Password</label>
-            <div>
+            <label class="control-label col-md-2 col-sm-2 col-xs-12" for="inputPassword">Password</label>
+            <divl class="col-md-4 col-lg-4 col-sm-6 col-xs-10">
                 <input type="password" class="form-control" id="inputPassword" name='password' placeholder="secret">
             </div>
         </div>
 <div class="row">
+<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-2 col-xs-4 ">
     %= hidden_field 'destination' => $destination;
     <button type="submit" class="btn btn-primary">Sign in</button>
+    </div>
 </div>
 %= end
 % }

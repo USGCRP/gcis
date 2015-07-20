@@ -99,9 +99,11 @@ sub lookup_name {
     my $c = shift;
     my $first = $c->req->json->{first_name};
     my $last = $c->req->json->{last_name};
-    my $matches = Persons->get_objects(
-        query => [ first_name => $first, last_name => $last ]
-    );
+    $first = Person->meta->db->dbh->quote($first);
+    $last = Person->meta->db->dbh->quote($last);
+    my $matches = Persons->get_objects( query => [
+            \"name_hash(first_name, last_name) = name_hash($first,$last)"
+        ]);
     if ($matches && @$matches==1) {
         return $c->redirect_to($matches->[0]->uri($c));
     }
@@ -154,26 +156,6 @@ sub update_rel {
     }
 
     $c->redirect_to($next);
-}
-
-=head2 set_replacement
-
-Override to use id instead of identifier.
-
-=cut
-
-sub set_replacement {
-    my $c = shift;
-    my $table_name = shift;
-    my $old_identifier = shift;
-    my $new_identifier = shift;
-    my $dbh = $c->dbs->dbh;
-    $dbh->do(<<SQL, {}, "id=>$new_identifier", $old_identifier) and return 1;
-        update audit.logged_actions set changed_fields = ?::hstore
-         where action='D' and table_name='$table_name' and row_data->'id' = ?
-SQL
-    $c->stash(error => $dbh->errstr);
-    return 0;
 }
 
 sub _pk_to_stashval {

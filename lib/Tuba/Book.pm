@@ -63,10 +63,10 @@ sub update {
                 my $attrs = $ref->attrs; # workaround : call inflate trigger explicitly
                 $ref->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ref->error);
             }
-            my $subs = Subpubrefs->get_objects(query => [ publication_id => $report_pub->id ]);
-            for my $sub (@$subs) {
-                $sub->publication_id($report_pub->id);
-                $sub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($sub->error);
+            my $maps = PublicationReferenceMaps->get_objects(query => [ publication_id => $report_pub->id ]);
+            for my $map (@$maps) {
+                $map->publication_id($report_pub->id);
+                $map->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
             }
         }
         $book->delete;

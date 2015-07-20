@@ -1,6 +1,7 @@
 .travis.yml
 bin/tuba
 bin/tuba_generate_sitemap
+bin/tuba_get_ontology
 bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
@@ -63,6 +64,8 @@ db/dist/docs/html/func_gcis_metadata.hstore_to_matrix(gcis_metadata.hstore).html
 db/dist/docs/html/func_gcis_metadata.hstore_version_diag(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.isdefined(gcis_metadata.hstore, text).html'
 'db/dist/docs/html/func_gcis_metadata.isexists(gcis_metadata.hstore, text).html'
+'db/dist/docs/html/func_gcis_metadata.name_hash(last_name text, first_name text).html'
+'db/dist/docs/html/func_gcis_metadata.name_unique_hash(orcid text, last_name text, first_name text).html'
 'db/dist/docs/html/func_gcis_metadata.populate_record(anyelement, gcis_metadata.hstore).html'
 db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
 'db/dist/docs/html/func_gcis_metadata.slice(gcis_metadata.hstore, text[]).html'
@@ -112,6 +115,7 @@ db/dist/docs/html/table_gcis_metadata.publication_contributor_map.html
 db/dist/docs/html/table_gcis_metadata.publication_file_map.html
 db/dist/docs/html/table_gcis_metadata.publication_gcmd_keyword_map.html
 db/dist/docs/html/table_gcis_metadata.publication_map.html
+db/dist/docs/html/table_gcis_metadata.publication_reference_map.html
 db/dist/docs/html/table_gcis_metadata.publication_region_map.html
 db/dist/docs/html/table_gcis_metadata.publication_type.html
 db/dist/docs/html/table_gcis_metadata.reference.html
@@ -164,6 +168,7 @@ db/dist/docs/pod/table_publication_contributor_map.pod
 db/dist/docs/pod/table_publication_file_map.pod
 db/dist/docs/pod/table_publication_gcmd_keyword_map.pod
 db/dist/docs/pod/table_publication_map.pod
+db/dist/docs/pod/table_publication_reference_map.pod
 db/dist/docs/pod/table_publication_region_map.pod
 db/dist/docs/pod/table_publication_type.pod
 db/dist/docs/pod/table_reference.pod
@@ -332,6 +337,11 @@ db/patches/2070_doi_checks.sql
 db/patches/2080_no_self_references.sql
 db/patches/2090_temporal_resolution.sql
 db/patches/2100_contributor_cleanup.sql
+db/patches/2110_reference_changes.sql
+db/patches/2120_publication_reference_map.sql
+db/patches/2130_null_orgs_ok.sql
+db/patches/2140_people.sql
+db/patches/2150_image_url.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -387,7 +397,7 @@ lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
 lib/Tuba/DB/Mixin/Object/Report.pm
 lib/Tuba/DB/Mixin/Object/Report/Manager.pm
-lib/Tuba/DB/Mixin/Object/Subpubref.pm
+lib/Tuba/DB/Mixin/Object/RoleType.pm
 lib/Tuba/DB/Mixin/Object/Table.pm
 lib/Tuba/DB/Mixin/Object/Table/Manager.pm
 lib/Tuba/DB/Mixin/Object/Webpage.pm
@@ -528,6 +538,7 @@ lib/Tuba/files/templates/finding/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
+lib/Tuba/files/templates/gcmd_keyword/object.ttl.tut
 lib/Tuba/files/templates/generic/object.html.ep
 lib/Tuba/files/templates/generic/object.ttl.tut
 lib/Tuba/files/templates/h/cited_by.html.ep
@@ -572,6 +583,7 @@ lib/Tuba/files/templates/lexicon/object.ttl.tut
 lib/Tuba/files/templates/lexicon/objects.html.ep
 lib/Tuba/files/templates/lexicon/update_rel_form.html.ep
 lib/Tuba/files/templates/list_formats.html.ep
+lib/Tuba/files/templates/menu.html.ep
 lib/Tuba/files/templates/messages.html.ep
 lib/Tuba/files/templates/modal.html.ep
 lib/Tuba/files/templates/model/object.html.ep
@@ -634,6 +646,7 @@ lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
 lib/Tuba/files/templates/representation.ttl.tut
 lib/Tuba/files/templates/role_type/object.html.ep
+lib/Tuba/files/templates/role_type/object.ttl.tut
 lib/Tuba/files/templates/role_type/objects.html.ep
 lib/Tuba/files/templates/scenario/object.html.ep
 lib/Tuba/files/templates/scenario/object.ttl.tut
@@ -712,6 +725,8 @@ t/013_model.t
 t/014_array.t
 t/015_search.t
 t/016_turtle_syntax.t
+t/017_person.t
+t/017_person_api.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm

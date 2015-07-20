@@ -130,6 +130,7 @@ sub select {
     my $report = $c->_this_object or do { $c->render_not_found_or_redirect; return 0; };
     $c->_user_can_view($report) or do { $c->render(status => 403, text => "Forbidden"); return 0; };
     $c->stash(report => $report);
+    $c->stash(selected_object => $report);
     return 1;
 }
 

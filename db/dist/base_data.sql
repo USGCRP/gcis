@@ -247,7 +247,7 @@ COPY generic (identifier, attrs) FROM stdin;
 -- Data for Name: image; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt) FROM stdin;
+COPY image (identifier, "position", title, description, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, url) FROM stdin;
 \.
 
 
@@ -390,7 +390,7 @@ SELECT pg_catalog.setval('person_id_seq', 1, false);
 -- Data for Name: reference; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY reference (identifier, attrs, publication_id, child_publication_id) FROM stdin;
+COPY reference (identifier, attrs, child_publication_id) FROM stdin;
 \.
 
 
@@ -434,6 +434,14 @@ COPY publication_map (child, relationship, parent, note, activity_identifier) FR
 
 
 --
+-- Data for Name: publication_reference_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY publication_reference_map (publication_id, reference_identifier) FROM stdin;
+\.
+
+
+--
 -- Data for Name: region; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -446,14 +454,6 @@ COPY region (identifier, label, description) FROM stdin;
 --
 
 COPY publication_region_map (publication_id, region_identifier) FROM stdin;
-\.
-
-
---
--- Data for Name: subpubref; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY subpubref (publication_id, reference_identifier) FROM stdin;
 \.
 
 

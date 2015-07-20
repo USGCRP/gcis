@@ -18,27 +18,18 @@
     <div class='alert alert-success'><b><%= $info %></b></div>
 % }
 
-<div class='row well'>
-    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
-        Primary publication whose bibliography contains this reference (e.g. a report).
-    </div>
 
-    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10 ">
-        %= include 'obj_thumbnails', objs => [ $object->publication->to_object ];
-    </div>
-</div>
-
-%= hidden_field 'delete_subpub';
+%= hidden_field 'delete_publication';
 %= hidden_field 'delete_child_publication_id';
 
-<div class='row well'>
-    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
-        Other publications containing this reference (e.g. chapters, figures).
-    </div>
+<div class='form-group' style='margin:10px;'>
+    <label class='control-label col-lg-2 col-md-2 col-sm-2'>
+        Publications containing this reference:
+    </label>
 
-    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-    % my @other = @{ $object->subpubrefs };
-    %= include 'obj_thumbnails', objs => [ map $_->publication->to_object, @other ], add_delete_button => 'delete_subpub';
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style='border:1px solid #ddd;'>
+    % my @other = @{ $object->publications };
+    %= include 'obj_thumbnails', objs => [ map $_->to_object, @other ], add_delete_button => 'delete_publication';
         % if (@$chapters) {
         <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
         %= include 'controls/select', input_name => 'chapter', class => 'form-control', values => $chapters;
@@ -53,13 +44,14 @@
 
 % my $child = $object->child_publication;
 
-<div class='row well'>
-    <div class='control-label col-lg-2 col-md-2 col-sm-2'>
-        Child publication
-    </div>
-    % if ($child) {
-    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
-        %= include 'obj_thumbnails', objs => [ $child->to_object ], add_delete_button => "delete_child_publication_id";
+<div class='form-group' style='margin:10px;'>
+    <label class='control-label col-lg-2 col-md-2 col-sm-2'>
+        Publication to which this reference refers:
+    </label>
+    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style='border:1px solid #ddd;'>
+        % if ($child) {
+
+        %= include 'obj_thumbnails', objs => [ $child->to_object ],size => 'col-md-3 col-lg-3 col-sm-4 col-xs-4', add_delete_button => "delete_child_publication_id";
     
         % }
     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
@@ -67,7 +59,7 @@
     </div>
     </div>
 </div>
-
+<br />
 
 <div class="row">
 	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">

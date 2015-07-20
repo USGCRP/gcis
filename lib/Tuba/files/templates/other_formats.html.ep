@@ -1,14 +1,14 @@
 % my $base = $self->req->url;
 % $base =~ s/.html$//;
-<%= link_to "$base.json" => class => 'label label-info' => begin %>JSON<%= end %> \
-<%= link_to "$base.yaml" => class => 'label label-info' => begin %>YAML<%= end %> \
-<%= link_to "$base.txt" => class => 'label label-info' => begin %>text<%= end %> \
-<%= link_to "$base.html" => class => 'label label-info' => begin %>HTML<%= end %> \
-<%= link_to "$base.thtml" => class => 'label label-info' => begin %>Turtle<%= end %> \
-<%= link_to "$base.nt" => class => 'label label-info' => begin %>N-Triples<%= end %> \
-<%= link_to "$base.jsontriples" => class => 'label label-info' => begin %>JSON Triples<%= end %> \
-<%= link_to "$base.rdfxml" => class => 'label label-info' => begin %>RDF+XML<%= end %> \
-<%= link_to "$base.rdfjson" => class => 'label label-info' => begin %>RDF+JSON<%= end %> \
-<%= link_to "$base.dot" => class => 'label label-info' => begin %>Graphviz<%= end %> \
-<%= link_to "$base.svg" => class => 'label label-info' => begin %>SVG<%= end %>
+<%= link_to "$base.json" => class => 'label label-primary' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml" => class => 'label label-primary' => begin %>YAML<%= end %> \
+<%= link_to "$base.txt" => class => 'label label-primary' => begin %>text<%= end %> \
+<%= link_to "$base.html" => class => 'label label-primary' => begin %>HTML<%= end %> \
+<%= link_to "$base.thtml" => class => 'label label-primary' => begin %>Turtle<%= end %> \
+<%= link_to "$base.nt" => class => 'label label-primary' => begin %>N-Triples<%= end %> \
+<%= link_to "$base.jsontriples" => class => 'label label-primary' => begin %>JSON Triples<%= end %> \
+<%= link_to "$base.rdfxml" => class => 'label label-primary' => begin %>RDF+XML<%= end %> \
+<%= link_to "$base.rdfjson" => class => 'label label-primary' => begin %>RDF+JSON<%= end %> \
+<%= link_to "$base.dot" => class => 'label label-primary' => begin %>Graphviz<%= end %> \
+<%= link_to "$base.svg" => class => 'label label-primary' => begin %>SVG<%= end %>
 <%= $self->req->url %>

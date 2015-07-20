@@ -40,6 +40,11 @@ sub native_url {
                 "http://wikipedia.org/wiki/".shift
             },
         },
+        usgs_publications => {
+            report_number => sub {
+                q[http://pubs.er.usgs.gov/service/search/xml/advance?report_number=].shift
+            }
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
@@ -58,6 +63,15 @@ sub same_as {
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
     return $ctx->( $s->term );
+}
+
+sub uri {
+    my $s = shift;
+    my $c = shift or die "missing controller";
+    my $path = join '/', 'lexicon', $s->lexicon_identifier, $s->context, $s->term;
+    my $url = Mojo::URL->new->path($path);
+    $url->base($c->req->url->base);
+    return $url;
 }
 
 1;

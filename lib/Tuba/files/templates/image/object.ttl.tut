@@ -22,7 +22,6 @@
    gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
 
 ## Tags:
-   dcterms:subject "<%= $image->attributes %>"^^xsd:string;
    dcterms:rights [ rdf:value "<%= $image->usage_limits %>"^^xsd:string; ];
 
    a gcis:Image .

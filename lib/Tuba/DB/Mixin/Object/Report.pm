@@ -52,17 +52,6 @@ sub as_text {
     );
 }
 
-sub reference_count {
-    my $ch = shift;
-    my $pub = $ch->get_publication or return 0;
-    # chapter, figures, findings, tables are in subpubref, but reports are not.
-    # So this is overloaded in mixin/report.pm
-    my $sql = q[select count(1) from reference where publication_id = ?];
-    my $dbs = DBIx::Simple->new($ch->db->dbh);
-    my ($count) = $dbs->query($sql, $pub->id)->flat;
-    return $count;
-}
-
 sub count_figures {
     my $s = shift;
     return Tuba::DB::Object::Figure::Manager->get_objects_count({ report_identifier => $s->identifier});
@@ -105,6 +94,12 @@ sub stringify {
     return $s->identifier if $args{short} || $args{tiny};
     my $str = $s->title || $s->identifier;
     return $str;
+}
+
+sub references {
+    my $c = shift;
+    my $pub = $c->get_publication or return;
+    return $pub->references;
 }
 
 1;

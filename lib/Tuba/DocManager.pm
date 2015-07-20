@@ -40,11 +40,11 @@ our %RouteDoc = (
   list_figure  => { _list_defaults('figure'), brief => "List figures in a chapter", description => "Get a list of figures in a chapter." },
   list_figures_across_reports => { _list_defaults('figure'), brief => "List all figures", description => "List all the figures in GCIS." },
   list_table   => { _list_defaults('table'), brief => "List tables in a chapter", description => "Get a list of tables in a chapter." },
-  list_chapter_references => { _list_defaults('reference'), brief => "List references in a chapter", description => "Get a list of references in a chapter." },
+  list_reference_chapter => { _list_defaults('reference'), brief => "List references in a chapter", description => "Get a list of references in a chapter." },
   list_all_findings => { _list_defaults('finding', add => "in a report") },
   list_all_figures => { _list_defaults('figure', add => "in a report") },
   list_all_tables => { _list_defaults('table', add => "in a report") },
-  list_report_references => { _list_defaults('reference', add => "in a report") },
+  list_reference_report => { _list_defaults('reference', add => "in a report") },
 
   image => { _list_defaults('image' ) },
   array => { _list_defaults('array', add => 'associated with a report') },
@@ -147,7 +147,7 @@ our %RouteDoc = (
       brief => "Lookup a GCID from a term",
       description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
   },
-  lookup_term => {
+  show_exterm => {
       brief => "Lookup a GCID from a term",
       description => "Given a lexicon, term, and context, return a 303 redirect to a GCID",
   },
