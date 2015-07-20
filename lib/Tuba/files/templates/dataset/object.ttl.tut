@@ -8,7 +8,7 @@
    dcterms:hasVersion "<%= $dataset->version %>";
    datacite:doi "<%= $dataset->doi %>";
    datacite:hasIdentifier [ a datacite:AlternateResourceIdentifier; rdf:value "<%= $dataset->native_id %>" ] ;
-   gcis:accessURL "<%= $dataset->url %>"^^xsd:anyURI;
+   dcat:landingPage <<%= $dataset->url %>>;
    cito:citesAsMetadataDocument "<%= $dataset->cite_metadata %>";
    dcterms:description "<%= no_tbibs($dataset->description) %>"^^xsd:string;
  
