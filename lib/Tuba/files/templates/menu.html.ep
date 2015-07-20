@@ -60,6 +60,12 @@
                      <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                     </a>
                 <a href="/" class='pull-left'><img class="logo" src="/gcis-logo-100.png" ></a>
+                % unless (is_prod()) {
+                    <center class='badge badge-warning dev-banner'>
+                    % my $host = $self->req->url->clone->to_abs->host;
+                    %= $host
+                    </center>
+                % }
                 <ul class='pull-right nav'>
                     <li>
                     % if(config('no_search')) {

@@ -595,6 +595,12 @@ sub register {
             $url->path($path);
             return $url->to_abs;
         });
+    $app->helper(is_prod => sub {
+            my $c = shift;
+            return 0 unless $c->app->mode eq 'production';
+            return 0 unless $c->req->url->clone->to_abs->host eq 'data.globalchange.gov';
+            return 1;
+        });
 }
 1;
 1;
