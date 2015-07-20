@@ -12,7 +12,7 @@ env:
 before_install :
     - cpanm App::cpanoutdated
     - cpan-outdated | cpanm
-    - cpanm Devel::Cover Devel::Cover::Report::Coveralls
+    - cpanm -f Devel::Cover Devel::Cover::Report::Coveralls
 
 script :
    - perl Build.PL && ./Build
