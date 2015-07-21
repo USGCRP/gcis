@@ -10,9 +10,6 @@
    org:purpose "<%= $type->identifier %>";
 % }
 %#
-% if (my $country = $organization->country) {
-   place:Country "<%= $country->name %>"^^xsd:string;
-% }
 
    a gcis:Organization .
 
