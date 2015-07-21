@@ -1,11 +1,11 @@
 
 %= hidden_field 'delete_image';
-
+<p>In image.html</p>
 <table class='table table-responsive table-condensed table-bordered'>
 % for my $image ($object->images) {
 <tr>
 <td>
-%= include 'obj_thumbnails', objs => [ $image ];
+%= include 'obj_thumbnails', objs => [ $image ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4' ;
 </td>
 
 <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => onClick => qq[{this.form.elements["delete_image"].value = '].$image->identifier.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
