@@ -923,6 +923,29 @@ sub update_contributors {
             }) or return $c->update_error("Failed to remove contributor");
         $c->flash(info => "Saved changes.");
     }
+    if (my $role_identifier = $json->{remove_others_with_role}) {
+        for my $map (@{ PublicationContributorMaps->get_objects(
+            query => [
+              publication_id       => $pub->id,
+              role_type_identifier => $role_identifier,
+            ],
+            with_objects => 'contributor'
+          )})
+        {
+            my $contributor = $map->contributor;
+            my @pubs = $contributor->publications;
+            if (@pubs==1) {
+                # Only publication, remove contributor record and cascade.
+                $contributor->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($contributor->error);
+            } else {
+                # Just remove the map.
+                $map->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($map->error);
+            }
+        }
+    }
+
     if ($json && keys %$json) {
         # TODO JSON interface for updating sort keys
     } else {
