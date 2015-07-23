@@ -7,7 +7,7 @@
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
 %#
 % if (my $type = $organization->organization_type) {
-   org:purpose "<%= $type->identifier %>";
+   dbpprop:organizationType "<%= $type->identifier %>";
 % }
 %#
 
