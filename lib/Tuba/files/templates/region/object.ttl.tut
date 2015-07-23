@@ -13,6 +13,6 @@
   % }
 % }
 
-   a dbpedia:Region .
+   a gcis:Region .
 
 % end
