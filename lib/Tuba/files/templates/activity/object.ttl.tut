@@ -39,7 +39,7 @@
       % }
       % if ( $activity->methodology ) {
       prov:hadPlan [
-         a prov:Plan, 
+         a prov:Plan; 
          rdf:value "<%= $activity->methodology %>"^^xsd:string;
       ] ;
       % }
