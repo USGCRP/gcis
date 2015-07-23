@@ -18,8 +18,11 @@
    gcis:eastBoundLongitude "<%= $image->lon_max %>"^^xsd:float;
 
 ## Temporal extent of image content
-   gcis:startedAt "<%= $image->time_start %>"^^xsd:dateTime;
-   gcis:endedAt "<%= $image->time_end %>"^^xsd:dateTime;
+   dcterms:coverage [ 
+    a gcis:TemporalExtents ;
+    gcis:startedAt "<%= $image->time_start>"^^xsd:dateTime;
+    gcis:endedAt "<%= $image->time_end>"^^xsd:dateTime;
+  ] ;
 
 ## Tags:
    dcterms:rights [ rdf:value "<%= $image->usage_limits %>"^^xsd:string; ];
