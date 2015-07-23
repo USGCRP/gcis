@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd prov dbpedia_owl gcis meth rdf rdfs/];
+% layout 'default', namespaces => [qw/dcterms xsd prov dbpedia_owl gcis rdf rdfs/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -39,7 +39,7 @@
       % }
       % if ( $activity->methodology ) {
       prov:hadPlan [
-         a prov:Plan, meth:Methodology ;
+         a prov:Plan, 
          rdf:value "<%= $activity->methodology %>"^^xsd:string;
       ] ;
       % }
