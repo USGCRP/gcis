@@ -526,7 +526,7 @@ sub register {
         [  frbr     => 'http://purl.org/vocab/frbr/core#' => 'http://vocab.org/frbr/core.rdf', ],
         [  dcat     => 'http://www.w3.org/ns/dcat#' => 'http://www.w3.org/ns/dcat.rdf', ],
         [  vivo     => 'http://vivoweb.org/ontology/core#' => 'http://vivoweb.org/files/vivo-isf-public-1.6.owl#', ],
-        [  ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#' => 'http://sweet.jpl.nasa.gov/2.3/propTime.owl', 
+        [  ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#' => 'http://sweet.jpl.nasa.gov/2.3/propTime.owl', ],
         [  geo      => 'http://www.w3.org/2003/01/geo/wgs84_pos#' => 'http://www.w3.org/2003/01/geo/wgs84_pos#', ],
         [  fabio    => 'http://purl.org/spar/fabio/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/fabio', ],
         [  schema   => 'http://schema.org/', ],
