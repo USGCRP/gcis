@@ -11,7 +11,7 @@
    gcis:findingNumber "<%= $chapter->number %>.<%= $finding->ordinal %>"^^xsd:string;
    % }
 % }
-   dcterms:description "<%= $finding->statement %>"^^xsd:string;
+   gcis:findingStatement "<%= $finding->statement %>"^^xsd:string;
 %#
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    gcis:isFindingOf <<%= uri($chapter) %>>;
