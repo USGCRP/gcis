@@ -1287,11 +1287,11 @@ sub remove {
     my @replacement;
     if ($json && $json->{replacement}) {
         my $rpl = $c->uri_to_obj($json->{replacement})
-          or return $c->render->exception("couldn't find $json->{replacement}");
+          or return $c->redirect_with_error('update_form',"couldn't find $json->{replacement}");
         @replacement = (replacement => $rpl);
     }
     $object->delete(audit_user => $c->user, @replacement)
-      or return $c->reply->exception($object->error);
+      or return $c->redirect_with_error('update_form', $object->error);
     return $c->render(text => 'ok');
 }
 
