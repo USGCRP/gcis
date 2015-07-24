@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo dbpedia gcis cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo dbpprop gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>   
@@ -7,7 +7,7 @@
    dcterms:isPartOf <<%= uri($article->journal) %>>;
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
-   dbpedia:pubDate "<%= $article->year %>"^^xsd:integer;
+   dbpprop:pubDate "<%= $article->year %>"^^xsd:integer;
 % if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
 % } else {
