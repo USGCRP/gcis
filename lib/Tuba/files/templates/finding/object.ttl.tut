@@ -1,9 +1,8 @@
-% layout 'default', namespaces => [qw/dcterms dbpedia xsd gcis cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
-   dbpedia:Natural_number "<%= $finding->ordinal %>"^^xsd:integer;
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    % if (! $chapter->number) {
    gcis:findingNumber "<%= $finding->ordinal %>"^^xsd:string;
