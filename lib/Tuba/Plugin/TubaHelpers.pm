@@ -71,7 +71,7 @@ sub register {
             my $val = $obj->stringify(@_) || '[missing '.$obj->moniker.']';
             my $uri = $obj->uri($c);
             return $val unless $uri;
-            return $c->link_to($val, $uri );
+            return $c->link_to($val, $uri, @_ );
         } );
     $app->helper(obj_link_to => sub {
             my $c = shift;
