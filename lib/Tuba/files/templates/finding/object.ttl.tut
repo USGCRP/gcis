@@ -3,7 +3,6 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $finding->identifier %>";
-   dbpedia:Natural_number "<%= $finding->ordinal %>"^^xsd:integer;
 % if (my $chapter = ( (stash 'chapter') || $finding->chapter)) {
    % if (! $chapter->number) {
    gcis:findingNumber "<%= $finding->ordinal %>"^^xsd:string;
