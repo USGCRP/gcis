@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $book->identifier %>";
    dcterms:title "<%= $book->title %>"^^xsd:string;
-   dwc:year "<%= $book->year %>"^^xsd:gYear;
+   dbpedia:pubDate "<%= $article->year %>"^^xsd:integer;
    bibo:isbn "<%= $book->isbn %>";
    bibo:numPages "<%= $book->number_of_pages %>"^^xsd:integer;
    gcis:hasPublisher "<%= $book->publisher %>"^^xsd:string;
