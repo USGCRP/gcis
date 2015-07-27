@@ -1323,6 +1323,50 @@ Generic history of changes to an object.
 
 =cut
 
+sub _get_more_history {
+    my $c = shift;
+    my %args    = @_;
+    my @columns = @{$args{columns}};
+    my $object  = $args{object};
+    my $pkvals = $args{pkvals};
+    my %seen = %{ $args{seen} || {} }; # hash of event_id's already seen
+
+    my $where = join ' and ', map qq{ changed_fields->'$_' = :pkval_$_ }, @columns;
+    $where .= " and table_name=:table_name";
+    my %bind = ( %$pkvals, table_name => $object->meta->table );
+
+    my $more = $c->dbc->select(
+        [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
+        table => "audit.logged_actions",
+        where => [ $where, \%bind ],
+        append => 'order by action_tstamp_tx desc',
+    );
+    return unless $more;
+    my @results = @{ $more->all };
+    my @these = @results;
+    @these = grep !$seen{event_id}++, @these;
+    for my $row (@these) {
+        #warn Dumper($row);
+        my $row_data = hstore_decode($row->{row_data} // "");
+        my @row_changes = $c->_get_more_history(
+                  columns => \@columns,
+                  object  => $object,
+                  pkvals  => {map { ("pkval_$_" => $row_data->{$_}) } @columns},
+                  seen    => \%seen,
+            );
+        push @results, @row_changes if @row_changes;
+        my $changed_fields = hstore_decode($row->{changed_fields} // "");
+        my @id_changes = $c->_get_more_history(
+                  columns => \@columns,
+                  object  => $object,
+                  pkvals  => {map { ("pkval_$_" => $changed_fields->{$_}) } @columns},
+                  seen    => \%seen,
+        );
+        push @results, @id_changes if @id_changes;
+    }
+    return @results;
+}
+
 sub history {
     my $c = shift;
     my $object = $c->_this_object or return $c->reply->not_found;
@@ -1331,7 +1375,8 @@ sub history {
 
     my %bind  = map {( "pkval_$_" => $object->$_ )} @columns;
     my $where = join ' and ', map qq{ row_data->'$_' = :pkval_$_ }, @columns;
-    # TODO: also look for pk changes in changed_fields->'$pk' = :pkval_$pk) };
+    $where .= "and table_name=:table_name";
+    $bind{table_name} = $object->meta->table;
     my $result = $c->dbc->select(
         [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
         table => "audit.logged_actions",
@@ -1339,6 +1384,16 @@ sub history {
         append => 'order by action_tstamp_tx desc',
     );
     my $change_log = $result->all;
+
+    my @more = $c->_get_more_history(
+      columns => \@columns,
+      object  => $object,
+      pkvals  => {map { ("pkval_$_" => $object->$_) } @columns},
+      seen => { map { $_->{event_id} => 1 } @$change_log },
+    );
+    push @$change_log, @more;
+    my %seen;
+    @$change_log = grep !$seen{$_->{event_id}}++, @$change_log;
 
     # Also look for provenance changes.
     if (my $pub = $object->get_publication) {
@@ -1351,7 +1406,9 @@ sub history {
         );
 
         $change_log = [ @{ $more->all }, @$change_log ];
-        @$change_log = sort { $b->{sort_key} cmp $a->{sort_key} } @$change_log;
+        @$change_log = sort { $b->{sort_key} cmp $a->{sort_key}
+            || $b->{event_id} <=> $a->{event_id}
+            } @$change_log;
     }
 
     for my $row (reverse @$change_log) {
@@ -1361,7 +1418,29 @@ sub history {
         my $new = { %$old, %$changes };
         ($row->{removed},$row->{added}) = show_diffs(Dump($old),Dump($new));
     }
-    $c->render('history', change_log => $change_log, object => $object, pk => $pk)
+    $c->respond_to(
+        json => sub {
+            for (@$change_log) {
+                $_->{row_data} = hstore_decode($_->{row_data} // "");
+                $_->{changed_fields} = hstore_decode($_->{changed_fields} // "");
+                delete $_->{added};
+                delete $_->{removed};
+            }
+            shift->render(json => { change_log => $change_log });
+        },
+        yaml => sub {
+            for (@$change_log) {
+                $_->{row_data} = hstore_decode($_->{row_data} // "");
+                $_->{changed_fields} = hstore_decode($_->{changed_fields} // "");
+                delete $_->{added};
+                delete $_->{removed};
+            }
+            shift->render_yaml({ change_log => $change_log });
+        },
+        html => sub {
+            shift->render('history', change_log => $change_log, object => $object, pk => $pk)
+        }
+    );
 }
 
 sub page {
