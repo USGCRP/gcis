@@ -10,6 +10,8 @@
 
 </style>
 
+%= include 'list_formats';
+
 % unless (param 'no_header') {
 <h5>
 Change history for
