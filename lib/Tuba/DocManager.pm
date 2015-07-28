@@ -277,6 +277,7 @@ sub _walk_routes {
     my ($route, $depth) = @_;
     if ($route->is_endpoint) {
         my ($path,$params) = $s->_route_to_path($route);
+        my $doc = $s->find_doc($route->name) || Tuba::RouteDoc->new;
         return unless $path;
         my @via = @{ $route->via };
         my $name = $route->name;
@@ -285,7 +286,7 @@ sub _walk_routes {
             (
               $path => {
                 (lc $_) => {
-                  description => "$_ $name",
+                  description => $doc->description // "missing description",
                   responses   => {200 => { description => "ok" } },
                   produces    => [ "application/json" ],
                 },
