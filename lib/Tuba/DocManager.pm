@@ -236,4 +236,115 @@ sub _show_defaults {
       )
 }
  
+sub _route_to_path {
+  my $s = shift;
+  my $route = shift;
+  my $p = $route->parent or return '/';
+  my @p;
+  while ($p) {
+    unshift @p, $p;
+    $p = $p->parent;
+  }
+  my $str = "";
+  my @params;
+  for my $q (@p) {
+    for my $piece (@{ $q->pattern->tree }) {
+        $str .= !ref $piece                ? $piece
+            : $piece->[0] eq 'slash'       ? '/'
+            : $piece->[0] eq 'text'        ? $piece->[1]
+            : $piece->[0] eq 'placeholder' ? '{'.$piece->[1].'}'
+            : $piece->[0] eq 'wildcard'    ? '{'.$piece->[1].'}'
+            : $piece->[0] eq 'relaxed'     ? '{'.$piece->[1].'}'
+            : 'other';
+        push @params,
+          {
+              name     => $piece->[1],
+              in       => "path",
+              required => \1,
+              type => "string",
+              description => "$piece->[1] description",
+          }
+          if $piece->[0] =~ /placeholder|wildcard|relaxed/;
+    }
+  }
+  return $str unless @params;
+  return ( $str, \@params );
+}
+
+sub _walk_routes {
+    my $s = shift;
+    my $c = shift;
+    my ($route, $depth) = @_;
+    if ($route->is_endpoint) {
+        my ($path,$params) = $s->_route_to_path($route);
+        return unless $path;
+        my @via = @{ $route->via };
+        my $name = $route->name;
+        return (
+          map {
+            (
+              $path => {
+                (lc $_) => {
+                  description => "$_ $name",
+                  responses   => {200 => { description => "ok" } },
+                  produces    => [ "application/json" ],
+                },
+                ( parameters  => $params ) x !!$params,
+              }
+              )
+          } @via
+        );
+    }
+    return map $s->_walk_routes($c, $_, $depth + 1), @{ $route->children };
+}
+
+sub _build_paths {
+    my $s = shift;
+    my $c = shift;
+    #     Example from http://swagger.io/specification/#pathsObject
+    #     {
+    #       "/pets": {
+    #         "get": {
+    #           "description": "Returns all pets from the system that the user has access to",
+    #           "produces": [
+    #             "application/json"
+    #           ],
+    #           "responses": {
+    #             "200": {
+    #               "description": "A list of pets.",
+    #               "schema": {
+    #                 "type": "array",
+    #                 "items": {
+    #                   "$ref": "#/definitions/pet"
+    #                 }
+    #               }
+    #             }
+    #           }
+    #         }
+    #       }
+    #     }
+    my %routes = $s->_walk_routes($c, $c->app->routes, 0);
+    # XXX Insert docs
+    return \%routes;
+}
+
+sub as_swagger {
+    my $s = shift;
+    my $c = shift or die 'need controller';
+    my $url = $c->req->url->clone->to_abs;
+    my $host = $url->host;
+    $host .= ":".$url->port if $url->port;
+
+    return {
+        swagger => "2.0",
+        info => {
+            title => "Global Change Information System",
+            description => "The GCIS is an open-source, web-based resource for traceable, sound global change data, information, and products.",
+            version => $Tuba::VERSION,
+        },
+        host => $host,
+        paths => $s->_build_paths($c),
+    };
+}
+
 1;

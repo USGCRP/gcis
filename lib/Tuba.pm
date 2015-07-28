@@ -437,24 +437,7 @@ sub startup {
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');
     $r->get('/metrics')->to('controller#index')->name('metrics');
-    $r->get('/api_reference' => sub {
-      my $c = shift;
-      my $trying; if (my $try = $c->param('try')) {
-          $trying = $c->app->routes->lookup($try);
-      }
-      $c->stash(trying => $trying);
-      return unless $trying;
-      my @placeholders;
-      while ($trying) {
-          for my $n (@{ $trying->pattern->tree }) {
-              next unless @$n==2;
-              next unless $n->[0] =~ /^(placeholder|wildcard|relaxed)$/;
-              unshift @placeholders, $n->[1];
-          }
-          $trying = $trying->parent;
-      }
-      $c->stash(placeholders => \@placeholders);
-    } => 'api_reference');
+    $r->get('/api_reference')->to('doc#api_reference')->name('api_reference');
 
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');
