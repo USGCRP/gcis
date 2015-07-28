@@ -13,4 +13,12 @@ curl http://www.essepuntato.it/lode/owlapi/$src \
     | sed "s_http://eelst.cs.unibo.it/apps/LODE/_/owl/_" \
 > $dst/gcis.owl
 
+post_processor=../gcis-ontology/scripts/html-postprocessor/html-postprocessor.py
+if [ -e $post_processor ]; then
+    python $post_processor $dst/gcis.owl $dst/gcis.owl-post
+    mv $dst/gcis.owl-post $dst/gcis.owl
+else
+    echo "could not find post_processor: $post_processor"
+fi
+
 echo "update from usgcrp/gcis-ontology@$cmt"
