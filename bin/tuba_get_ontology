@@ -1,5 +1,7 @@
 #!/bin/sh -ex
 
+cd `dirname $0`
+cd ..
 cmt=`git ls-remote https://github.com/usgcrp/gcis-ontology | head -1 | awk '{print $1}'`
 src=https://raw.githubusercontent.com/USGCRP/gcis-ontology/master/gcis.ttl
 dst=./lib/Tuba/files/public/
