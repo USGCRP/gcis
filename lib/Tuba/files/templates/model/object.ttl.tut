@@ -4,9 +4,9 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $model->identifier %>";
    gcis:Project <<%= uri($model->project) %>>;
-   dcterms:title "<%= $model->name %>";
+   dcterms:title "<%= $model->name %>"^^xsd:string;
    gcis:hasVersion "<%= $model->version %>";
-   dcterms:description "<%= $model->description %>";
+   dcterms:description "<%= $model->description %>"^^xsd:string;
    gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
 % for my $model_run ($model->model_runs) {
    gcis:ModelRun <<%= uri($model_run) %>>;
