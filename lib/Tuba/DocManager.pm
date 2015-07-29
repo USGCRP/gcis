@@ -25,6 +25,7 @@ our %RouteDoc = (
     ]
   },
   list_report => {
+      tags   => [qw/report/],
       brief  => "Get a list of reports.",
       description => "List the reports, 20 per page.",
       note   => _common_list_note(),
@@ -35,16 +36,16 @@ our %RouteDoc = (
           }
           ],
   },
-  list_chapter => { _list_defaults('chapter'), brief => "List chapters in a report", description => "Get a list of chapters in a report." },
-  list_finding => { _list_defaults('finding'), brief => "List findings in a chapter", description => "Get a list of findings in a chapter." },
-  list_figure  => { _list_defaults('figure'), brief => "List figures in a chapter", description => "Get a list of figures in a chapter." },
-  list_figures_across_reports => { _list_defaults('figure'), brief => "List all figures", description => "List all the figures in GCIS." },
-  list_table   => { _list_defaults('table'), brief => "List tables in a chapter", description => "Get a list of tables in a chapter." },
+  list_chapter => { tags => [qw/report/], _list_defaults('chapter'), brief => "List chapters in a report", description => "Get a list of chapters in a report." },
+  list_finding => { tags => [qw/report/], _list_defaults('finding'), brief => "List findings in a chapter", description => "Get a list of findings in a chapter." },
+  list_figure  => { tags => [qw/report/], _list_defaults('figure'), brief => "List figures in a chapter", description => "Get a list of figures in a chapter." },
+  list_figures_across_reports => { tags => [qw/report/], _list_defaults('figure'), brief => "List all figures", description => "List all the figures in GCIS." },
+  list_table   => { tags => [qw/report/], _list_defaults('table'), brief => "List tables in a chapter", description => "Get a list of tables in a chapter." },
   list_reference_chapter => { _list_defaults('reference'), brief => "List references in a chapter", description => "Get a list of references in a chapter." },
-  list_all_findings => { _list_defaults('finding', add => "in a report") },
-  list_all_figures => { _list_defaults('figure', add => "in a report") },
-  list_all_tables => { _list_defaults('table', add => "in a report") },
-  list_reference_report => { _list_defaults('reference', add => "in a report") },
+  list_all_findings => { tags => [qw/report/], _list_defaults('finding', add => "in a report") },
+  list_all_figures => { tags => [qw/report/], _list_defaults('figure', add => "in a report") },
+  list_all_tables => { tags => [qw/report/], _list_defaults('table', add => "in a report") },
+  list_reference_report => { tags => [qw/report/], _list_defaults('reference', add => "in a report") },
 
   image => { _list_defaults('image' ) },
   array => { _list_defaults('array', add => 'associated with a report') },
@@ -167,11 +168,12 @@ sub find_doc {
     my $route_name = shift;
     my $entry = $RouteDoc{$route_name} or return;
     return Tuba::RouteDoc->new(
-        name => $route_name,
-        brief => $entry->{brief},
-        description => $entry->{description},
-        params => [ map Tuba::RouteParam->new( %$_ ), @{ $entry->{params} } ],
-        note => $entry->{note},
+      name        => $route_name,
+      brief       => $entry->{brief},
+      description => $entry->{description},
+      params      => [map Tuba::RouteParam->new(%$_), @{$entry->{params}}],
+      note        => $entry->{note},
+      tags        => $entry->{tags},
     );
 }
 
@@ -247,15 +249,16 @@ sub _route_to_path {
   }
   my $str = "";
   my @params;
-  for my $q (@p) {
+  for my $q (@p, $route) {
     for my $piece (@{ $q->pattern->tree }) {
-        $str .= !ref $piece                ? $piece
+        my $as_str = (!ref $piece                ? $piece
             : $piece->[0] eq 'slash'       ? '/'
             : $piece->[0] eq 'text'        ? $piece->[1]
             : $piece->[0] eq 'placeholder' ? '{'.$piece->[1].'}'
             : $piece->[0] eq 'wildcard'    ? '{'.$piece->[1].'}'
             : $piece->[0] eq 'relaxed'     ? '{'.$piece->[1].'}'
-            : 'other';
+            : 'other');
+        $str .= $as_str;
         push @params,
           {
               name     => $piece->[1],
@@ -281,19 +284,17 @@ sub _walk_routes {
         return unless $path;
         my @via = @{ $route->via };
         my $name = $route->name;
+        die "more than 1: @via " if @via > 1;
+        my $method = $via[0];
         return (
-          map {
-            (
               $path => {
-                (lc $_) => {
-                  description => $doc->description // "missing description",
+                  'method'    => lc $method,
+                  description => $doc->description // "missing description for $name",
                   responses   => {200 => { description => "ok" } },
                   produces    => [ "application/json" ],
-                },
-                ( parameters  => $params ) x !!$params,
+                  tags        => $doc->tags || [ "other" ],
+                  ( parameters  => $params ) x !!$params,
               }
-              )
-          } @via
         );
     }
     return map $s->_walk_routes($c, $_, $depth + 1), @{ $route->children };
@@ -324,9 +325,16 @@ sub _build_paths {
     #         }
     #       }
     #     }
-    my %routes = $s->_walk_routes($c, $c->app->routes, 0);
+    my @routes = $s->_walk_routes($c, $c->app->routes, 0);
+    # Merge same path, different methods
+    my %paths;
+    while (@routes) {
+        my $path = shift @routes;
+        my $entry = shift @routes;
+        $paths{$path}->{delete $entry->{method}} = $entry;
+    }
     # XXX Insert docs
-    return \%routes;
+    return \%paths;
 }
 
 sub as_swagger {
@@ -343,6 +351,11 @@ sub as_swagger {
             description => "The GCIS is an open-source, web-based resource for traceable, sound global change data, information, and products.",
             version => $Tuba::VERSION,
         },
+        tags => [
+            { name => "report", description => "Reports" },
+            { name => "dataset", description => "Datasets" },
+            { name => "other", description => "Other routes" },
+        ],
         host => $host,
         paths => $s->_build_paths($c),
     };

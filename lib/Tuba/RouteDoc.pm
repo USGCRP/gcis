@@ -12,6 +12,7 @@ has 'brief';
 has 'description';
 has 'params';
 has 'note';
+has 'tags';
 
 1;
 
