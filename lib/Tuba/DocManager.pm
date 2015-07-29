@@ -10,6 +10,8 @@ use Tuba::RouteDoc;
 use Tuba::RouteParam;
 use Mojo::ByteStream qw/b/;
 
+our $Exclude = qr/^(gcid_lookup|index|try|calculate_url|login|logout|forms|examples|api_reference|resources|import_form|(open)?search|about|sparql|reference_updates_report|admin)$/;
+
 our %RouteDoc = (
   uuid => {
     brief => "Generate a UUID.",
@@ -132,12 +134,12 @@ our %RouteDoc = (
   list_dataset => { tags => [qw/dataset/],  _list_defaults('dataset') },
   list_organization => { tags => [qw/contributor/], _list_defaults('organization') },
   list_book => { tags => [qw/publication/], _list_defaults('book') },
-  list_platform => { tags => [qw/data_collection/], _list_defaults('platform') },
+  list_platform => { tags => [qw/obs/], _list_defaults('platform') },
   list_gcmd_keyword => { tags => [ qw/other/],  _list_defaults('GCMD keyword', add => "in the GCIS", not_all => 1) },
   list_reference => { tags => [qw/reference/], _list_defaults('reference', not_all => 1) },
   list_generic => { tags => [qw/publication/], _list_defaults('generic publication' ) },
-  list_instrument => { tags => [qw/data_collection/], _list_defaults('instrument' ) },
-  list_instrument_instance => { tags => [qw/data_collection/], _list_defaults('instrument', add => 'on a platform' ) },
+  list_instrument => { tags => [qw/obs/], _list_defaults('instrument' ) },
+  list_instrument_instance => { tags => [qw/obs/], _list_defaults('instrument', add => 'on a platform' ) },
   list_project => { tags => [qw/model/], _list_defaults('project') },
   list_model => { tags => [qw/model/], _list_defaults('model') },
   list_model_run => { tags => [qw/model/], _list_defaults('model run') },
@@ -148,9 +150,9 @@ our %RouteDoc = (
 
   show_report => { tags => [qw/report/], _show_defaults('report', withs => 1) },
   show_chapter => {tags => [qw/report/],  _show_defaults('chapter', withs => 1) },
-  show_platform => {tags => [qw/data_collection/], _show_defaults('platform') },
-  show_instrument => {tags => [qw/data_collection/], _show_defaults('instrument') },
-  show_instrument_instance => {tags => [qw/data_collection/], _show_defaults('instrument', add => 'on a platform' ) },
+  show_platform => {tags => [qw/obs/], _show_defaults('platform') },
+  show_instrument => {tags => [qw/obs/], _show_defaults('instrument') },
+  show_instrument_instance => {tags => [qw/obs/], _show_defaults('instrument', add => 'on a platform' ) },
   show_project => {tags => [qw/model/], _show_defaults('project') },
   show_model => {tags => [qw/model/], _show_defaults('model') },
   show_model_run => {tags => [qw/model/], _show_defaults('model run') },
@@ -179,7 +181,7 @@ our %RouteDoc = (
   show_region => {tags => [qw/other/],  _show_defaults('region') },
   show_dataset => {tags => [qw/dataset/], _show_defaults('dataset') },
   dataset_doi => {tags => [qw/dataset/], brief => "Look up a dataset by DOI.", description => "Given a DOI, return a redirect to the GCIS dataset." },
-  show_file => { tags => [qw/figure image report/], _show_defaults('file') },
+  show_file => { tags => [qw/figure report/], _show_defaults('file') },
   show_reference => { tags => [qw/reference/], _show_defaults('reference') },
   show_generic => {tags => [qw/publication/],  _show_defaults('generic publication') },
 
@@ -227,6 +229,12 @@ our %RouteDoc = (
       tags => [qw/other/],
       brief => "Get overall metrics about GCIS data",
       description => "Get overall metrics about GCIS data",
+  },
+  list_role_type => {
+      tags => [qw/contributor/],
+      brief => "List roles",
+      description => "Get a list of the types of roles for contributors.",
+      _list_defaults('contributor'),
   },
 
 );
@@ -351,6 +359,7 @@ sub _walk_routes {
     my $c = shift;
     my ($route, $depth) = @_;
     if ($route->is_endpoint) {
+        return if $route->name =~ /$Exclude/;
         my ($path,$path_params) = $s->_route_to_path($route);
         my $doc = $s->find_doc($route->name) || Tuba::RouteDoc->new;
         return unless $path;
@@ -444,12 +453,15 @@ sub as_swagger {
             { name => "report", description => "Access data related to reports." },
             { name => "figure", description => "Everything related to figures and images." },
             { name => "finding", description => "Explore findings in reports." },
-            { name => "table", description => "Explore tables in reports and arrays (that comprise tables)." },
+            { name => "table", description => "Explore tables in reports and arrays." },
             { name => "dataset", description => "Datasets." },
             { name => "other", description => "Other routes" },
             { name => "publication", description => "Journals, articles, books, etc." },
             { name => "reference", description => "Routes related to bibliographic information." },
             { name => "contributor", description => "People and organizations." },
+            { name => "obs", description => "Platforms and instruments." },
+            { name => "lexicon", description => "Lexicons, contexts and terms, and their mapping to GCIS URIs." },
+            { name => "model", description => "Models, model runs, scenarios, projects." },
         ],
         host => $host,
         paths => $s->_build_paths($c),
