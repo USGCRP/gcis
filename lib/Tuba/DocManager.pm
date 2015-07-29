@@ -324,13 +324,20 @@ sub _walk_routes {
     my $c = shift;
     my ($route, $depth) = @_;
     if ($route->is_endpoint) {
-        my ($path,$params) = $s->_route_to_path($route);
+        my ($path,$path_params) = $s->_route_to_path($route);
         my $doc = $s->find_doc($route->name) || Tuba::RouteDoc->new;
         return unless $path;
         my @via = @{ $route->via };
-        my $name = $route->name;
         die "more than 1: @via " if @via > 1;
         my $method = $via[0];
+        my @query_params =
+            map +{
+                %$_, in => 'query',
+            }, @{ $doc->params || [] };
+        my @params = (
+            @{ $path_params || [] },
+            @query_params
+        );
         return (
               $path => {
                   'method'    => lc $method,
@@ -341,7 +348,7 @@ sub _walk_routes {
                   responses   => {200 => { description => "ok" } },
                   produces    => [ "application/json" ],
                   tags        => $doc->tags || [ "other" ],
-                  ( parameters  => $params ) x !!$params,
+                  ( parameters  => \@params ) x !!@params,
               }
         );
     }
