@@ -73,7 +73,7 @@ our %RouteDoc = (
         description => "Get a list of tables in a chapter."
     },
     list_reference_chapter => {
-        tabs => [qw/reference/],
+        tags => [qw/reference/],
         _list_defaults('reference'),
         brief       => "List references in a chapter",
         description => "Get a list of references in a chapter."
@@ -130,12 +130,12 @@ our %RouteDoc = (
   list_webpage => { tags => [qw/publication/],  _list_defaults('web page') },
   list_activity => { tags => [qw/dataset/], _list_defaults('activity') },
   list_person => { tags => [qw/contributor/], _list_defaults('person') },
-  list_region => { tags => [qw/other/], _list_defaults('region') },
+  list_region => { tags => [qw/misc/], _list_defaults('region') },
   list_dataset => { tags => [qw/dataset/],  _list_defaults('dataset') },
   list_organization => { tags => [qw/contributor/], _list_defaults('organization') },
   list_book => { tags => [qw/publication/], _list_defaults('book') },
   list_platform => { tags => [qw/obs/], _list_defaults('platform') },
-  list_gcmd_keyword => { tags => [ qw/other/],  _list_defaults('GCMD keyword', add => "in the GCIS", not_all => 1) },
+  list_gcmd_keyword => { tags => [ qw/misc/],  _list_defaults('GCMD keyword', add => "in the GCIS", not_all => 1) },
   list_reference => { tags => [qw/reference/], _list_defaults('reference', not_all => 1) },
   list_generic => { tags => [qw/publication/], _list_defaults('generic publication' ) },
   list_instrument => { tags => [qw/obs/], _list_defaults('instrument' ) },
@@ -177,8 +177,8 @@ our %RouteDoc = (
   show_activity => {tags => [qw/dataset/], _show_defaults('activity') },
   show_person => { tags => [qw/contributor/], _show_defaults('person') },
   show_organization => { tags => [qw/contributor/], _show_defaults('organization') },
-  show_gcmd_keyword => { tags => [qw/other/], _show_defaults('GCMD keyword') },
-  show_region => {tags => [qw/other/],  _show_defaults('region') },
+  show_gcmd_keyword => { tags => [qw/misc/], _show_defaults('GCMD keyword') },
+  show_region => {tags => [qw/misc/],  _show_defaults('region') },
   show_dataset => {tags => [qw/dataset/], _show_defaults('dataset') },
   dataset_doi => {tags => [qw/dataset/], brief => "Look up a dataset by DOI.", description => "Given a DOI, return a redirect to the GCIS dataset." },
   show_file => { tags => [qw/figure report/], _show_defaults('file') },
@@ -226,7 +226,7 @@ our %RouteDoc = (
       description => "List the terms within a context of a lexicon",
   },
   metrics => {
-      tags => [qw/other/],
+      tags => [qw/misc/],
       brief => "Get overall metrics about GCIS data",
       description => "Get overall metrics about GCIS data",
   },
@@ -361,7 +361,11 @@ sub _walk_routes {
     if ($route->is_endpoint) {
         return if $route->name =~ /$Exclude/;
         my ($path,$path_params) = $s->_route_to_path($route);
-        my $doc = $s->find_doc($route->name) || Tuba::RouteDoc->new;
+        my $doc = $s->find_doc($route->name);
+        unless ($doc) {
+            warn "# swagger: skipping ".$route->name if $ENV{SWAGGER_DEBUG};
+            return;
+        }
         return unless $path;
         my @via = @{ $route->via };
         die "more than 1: @via " if @via > 1;
@@ -391,7 +395,7 @@ sub _walk_routes {
                     }
                     },
                   produces    => [ "application/json" ],
-                  tags        => $doc->tags || [ "other" ],
+                  tags        => $doc->tags || [ "misc" ],
                   ( parameters  => \@params ) x !!@params,
               }
         );
@@ -450,12 +454,12 @@ sub as_swagger {
             version => $Tuba::VERSION,
         },
     tags => [
-            { name => "report", description => "Access data related to reports." },
+            { name => "report", description => "Explore information from published reports." },
             { name => "figure", description => "Everything related to figures and images." },
             { name => "finding", description => "Explore findings in reports." },
             { name => "table", description => "Explore tables in reports and arrays." },
             { name => "dataset", description => "Datasets." },
-            { name => "other", description => "Other routes" },
+            { name => "misc", description => "Various experimental and utility routes." },
             { name => "publication", description => "Journals, articles, books, etc." },
             { name => "reference", description => "Routes related to bibliographic information." },
             { name => "contributor", description => "People and organizations." },
