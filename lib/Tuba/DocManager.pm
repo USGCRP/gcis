@@ -231,10 +231,10 @@ our %RouteDoc = (
       description => "Get overall metrics about GCIS data",
   },
   list_role_type => {
+      _list_defaults('contributor'),
       tags => [qw/contributor/],
       brief => "List roles",
       description => "Get a list of the types of roles for contributors.",
-      _list_defaults('contributor'),
   },
 
 );
