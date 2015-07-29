@@ -25,27 +25,72 @@ our %RouteDoc = (
     ]
   },
   list_report => {
-      tags   => [qw/report/],
-      brief  => "Get a list of reports.",
-      description => "List the reports, 20 per page.",
-      note   => _common_list_note(),
-      params => [ _common_list_params('reports'),
-          { name => 'report_type',
-            description => 'The type of report.  Currently : report, assessment, technical_input, or indicator.',
-            type => 'string.',
-          }
-          ],
-  },
-  list_chapter => { tags => [qw/report/], _list_defaults('chapter'), brief => "List chapters in a report", description => "Get a list of chapters in a report." },
-  list_finding => { tags => [qw/report/], _list_defaults('finding'), brief => "List findings in a chapter", description => "Get a list of findings in a chapter." },
-  list_figure  => { tags => [qw/report/], _list_defaults('figure'), brief => "List figures in a chapter", description => "Get a list of figures in a chapter." },
-  list_figures_across_reports => { tags => [qw/report/], _list_defaults('figure'), brief => "List all figures", description => "List all the figures in GCIS." },
-  list_table   => { tags => [qw/report/], _list_defaults('table'), brief => "List tables in a chapter", description => "Get a list of tables in a chapter." },
-  list_reference_chapter => { _list_defaults('reference'), brief => "List references in a chapter", description => "Get a list of references in a chapter." },
-  list_all_findings => { tags => [qw/report/], _list_defaults('finding', add => "in a report") },
-  list_all_figures => { tags => [qw/report/], _list_defaults('figure', add => "in a report") },
-  list_all_tables => { tags => [qw/report/], _list_defaults('table', add => "in a report") },
-  list_reference_report => { tags => [qw/report/], _list_defaults('reference', add => "in a report") },
+    tags        => [qw/report/],
+    brief       => "Get a list of reports.",
+    description => "List the reports, 20 per page.",
+    note        => _common_list_note(),
+    params      => [
+      _common_list_params('reports'),
+      {
+        name => 'report_type',
+        description =>
+          'The type of report.  Currently : report, assessment, technical_input, or indicator.',
+        type => 'string.',
+      }
+    ],
+    },
+    list_chapter => {
+        tags => [qw/report/],
+        _list_defaults('chapter'),
+        brief       => "List chapters in a report",
+        description => "Get a list of chapters in a report."
+    },
+    list_finding => {
+        tags => [qw/finding/],
+        _list_defaults('finding'),
+        brief       => "List findings in a chapter",
+        description => "Get a list of findings in a chapter."
+    },
+    list_figure => {
+        tags => [qw/figure/],
+        _list_defaults('figure'),
+        brief       => "List figures in a chapter",
+        description => "Get a list of figures in a chapter."
+    },
+    list_figures_across_reports => {
+        tags => [qw/figure/],
+        _list_defaults('figure'),
+        brief       => "List all figures",
+        description => "List all the figures in GCIS."
+    },
+    list_table => {
+        tags => [qw/table/],
+        _list_defaults('table'),
+        brief       => "List tables in a chapter",
+        description => "Get a list of tables in a chapter."
+    },
+    list_reference_chapter => {
+        tabs => [qw/reference/],
+        _list_defaults('reference'),
+        brief       => "List references in a chapter",
+        description => "Get a list of references in a chapter."
+        },
+    list_all_findings => {
+        tags => [qw/finding/],
+        _list_defaults('finding', add => "in a report")
+    },
+   list_all_figures => {
+          tags => [qw/figure/],
+          _list_defaults('figure', add => "in a report")
+   },
+   list_all_tables => {
+          tags => [qw/table/],
+          _list_defaults('table', add => "in a report")
+   },
+   list_reference_report => {
+      tags => [qw/reference/],
+      _list_defaults('reference', add => "in a report")
+   },
 
   image => { _list_defaults('image' ) },
   array => { _list_defaults('array', add => 'associated with a report') },
@@ -289,7 +334,10 @@ sub _walk_routes {
         return (
               $path => {
                   'method'    => lc $method,
-                  description => $doc->description // "missing description for $name",
+                  ( summary     => $doc->brief ) x !!$doc->brief,
+                  description => $doc->description // do {
+                      # warn "missing description for $name\n";
+                      "missing"; },
                   responses   => {200 => { description => "ok" } },
                   produces    => [ "application/json" ],
                   tags        => $doc->tags || [ "other" ],
@@ -333,7 +381,6 @@ sub _build_paths {
         my $entry = shift @routes;
         $paths{$path}->{delete $entry->{method}} = $entry;
     }
-    # XXX Insert docs
     return \%paths;
 }
 
@@ -351,10 +398,14 @@ sub as_swagger {
             description => "The GCIS is an open-source, web-based resource for traceable, sound global change data, information, and products.",
             version => $Tuba::VERSION,
         },
-        tags => [
-            { name => "report", description => "Reports" },
-            { name => "dataset", description => "Datasets" },
+    tags => [
+            { name => "report", description => "Access report metadata." },
+            { name => "figure", description => "Access metadata about figures in reports." },
+            { name => "finding", description => "Access metadata about findings in reports." },
+            { name => "table", description => "Access metadata about tables in reports." },
+            { name => "dataset", description => "Query or update information related to datasets." },
             { name => "other", description => "Other routes" },
+            { name => "reference", description => "Routes related to bibliographic information." },
         ],
         host => $host,
         paths => $s->_build_paths($c),
