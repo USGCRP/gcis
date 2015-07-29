@@ -38,7 +38,7 @@ our %RouteDoc = (
         name => 'report_type',
         description =>
           'The type of report.  Currently : report, assessment, technical_input, or indicator.',
-        type => 'string.',
+        type => 'string',
       }
     ],
     },
