@@ -67,6 +67,7 @@ my $builder = Module::Build::Database->new(
         'RDF::Query' => 0,
         'SQL::Abstract' => 0,
         'SQL::Interp' => 0,
+        'Swagger2' => 0,
         'Date::Parse' => 0,
         'JSON::XS'    => 0,
         'Algorithm::Permute' => 0,
