@@ -18,11 +18,11 @@
 	dcterms:title "GCIS Ontology" ;
 	dcterms:date "2013-12-01";
 	owl:versionInfo "1.2";
-	rdfs:comment "An ontology designed for the Global Change Information System in the U.S. Global Change Research Program (www.globalchange.gov). Different versions of the ontology are  available at: http://escience.rpi.edu/ontology/GCIS-IMSAP/. The ontology uses the namespace prefix gcis." ;
-    	dcterms:identifier "http://data.globalchange.gov/gcis.owl" ;
+	dcterms:identifier "http://data.globalchange.gov/gcis.owl" ;
+	rdfs:comment "An ontology designed for the Global Change Information System (GCIS) of the U.S. Global Change Research Program (http://www.globalchange.gov).  The ontology is available at: https://data.globalchange.gov/gcis.owl. The ontology uses the namespace prefix gcis."  ;
 	dcterms:creator gcis:xiaogang_ma, gcis:curt_tilmes, gcis:peter_fox ;
 	dcterms:contributor gcis:jin_guang_zheng, gcis:justin_goldstein, gcis:linyun_fu, gcis:brian_duggan, gcis:patrick_west, gcis:steve_aulenbach, gcis:chengcong_du, gcis:jun_xu, gcis:anusha_akkiraju ;
-	skos:historyNote "The ontology is a part of the result of the GCIS-IMSAP project (2012-2013) at Tetherless World Constellation, Rensselaer Polytechnic Institute. More details of that project is accessible at: http://tw.rpi.edu/web/project/gcis-imsap." . 
+	skos:historyNote "The ontology is a part of the result of the GCIS-IMSAP project (2012-2013) at the Tetherless World Constellation of the Rensselaer Polytechnic Institute.  More details of that project are accessible at: http://tw.rpi.edu/web/project/gcis-imsap." . 
 
 gcis:xiaogang_ma a foaf:Person ;
 	foaf:name "Xiaogang Ma" ;
@@ -79,7 +79,7 @@ gcis:anusha_akkiraju a foaf:Person ;
 gcis:Publication a owl:Class ;
 	rdfs:subClassOf bibo:Document ;
 	rdfs:label "Publication" ;
-	rdfs:comment "A bounded physical representation of a body of information designed with the capacity (and usually intent) to communicate, and which has been made available to the public." ;
+	rdfs:comment "A distinct work with intent to communicate information that has been made available" ;
 	rdfs:subClassOf bibo:Document , prov:Entity .
 
 gcis:Report a owl:Class ;
@@ -116,6 +116,11 @@ gcis:Model a owl:Class ;
 	rdfs:label "Model" ;
 	rdfs:comment "A simplified description or particular design, especially a mathematical one, of a system or process, to assist calculations and predictions." ;
 	rdfs:subClassOf prov:Entity .
+	
+gcis:Region a owl:Class ;
+	rdfs:label "Region" ;
+	rdfs:comment "A spatial area defined by a common characteristic (e.g. coastal, southwest, rural communities, etc.)." ;
+	rdfs:subClassOf prov:Entity .	
 
 gcis:SpatialExtents a owl:Class ;
 	rdfs:label "Spatial Extents" ;
@@ -174,7 +179,7 @@ gcis:hasFinding a owl:ObjectProperty ;
 
 gcis:hasFigure a owl:ObjectProperty ;
 	rdfs:label "Has Figure" ;
-	rdfs:comment "A publication may contain figures."; 
+	rdfs:comment "A graphical component within a work which most times but not necessarily contains a title and caption ."; 
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Figure ;
 	rdfs:subPropertyOf dcterms:hasPart .
@@ -195,7 +200,7 @@ gcis:worksAt a owl:ObjectProperty ;
 
 gcis:hasImage a owl:ObjectProperty ;
 	rdfs:label "Has Image" ;
-	rdfs:comment "A figure or image may consist of one or more images." ;
+	rdfs:comment "The graphical component of a Figure." ;
 	rdfs:domain gcis:Figure, gcis:Image ;
 	rdfs:range gcis:Image ;
 	rdfs:subPropertyOf dcterms:hasPart .
@@ -253,7 +258,6 @@ gcis:hasMember a owl:ObjectProperty ;
 gcis:hasGoverningOrganization a owl:ObjectProperty ;
 	rdfs:label "Has Governing Organization" ;
 	rdfs:comment "An organization is responsible for a project." ;
-	rdfs:domain gcis:Project, gcis:Instrument ;
 	rdfs:range gcis:Organization .
 
 gcis:producedDataset a owl:ObjectProperty ;
@@ -275,7 +279,7 @@ gcis:Measuring a owl:Class ;
 
 gcis:Table a owl:Class ;
 	rdfs:label "Table" ;
-	rdfs:comment "A list of facts or numbers arranged in a special order, usually in rows and columns." ;
+	rdfs:comment "Facts or or numbers arranged in a special order, usually in rows and columns."  ;
 	rdfs:subClassOf prov:Entity .
 
 gcis:Sensor a owl:Class ;
@@ -572,14 +576,12 @@ gcis:version a owl:DatatypeProperty ;
 
 gcis:hasSpatialResolution a owl:ObjectProperty ;
 	rdfs:label "Has Spatial Resolution" ;
-	rdfs:comment "An entity of model run may have a spatial resolution." ;
-	rdfs:domain gcis:ModelRun ;
+	rdfs:comment "Description of the smallest quantity that is discernable in a geographic feature." ;
 	rdfs:range gcis:SpatialResolution .
 
 gcis:hasTemporalResolution a owl:ObjectProperty ;
 	rdfs:label "Has Temporal Resolution" ;
-	rdfs:comment "An entity of model run may have a temporal resoltuion." ;
-	rdfs:domain gcis:ModelRun ;
+	rdfs:comment "The frequency of an observation." ;
 	rdfs:range gcis:TemporalResolution .
 
 gcis:wasProducedBy a owl:ObjectProperty ;
@@ -711,29 +713,41 @@ gcis:findingProcess a owl:DatatypeProperty ;
 	rdfs:comment "A finding has a description of the finding generation process." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
+	
+gcis:findingStatement a owl:DatatypeProperty ;
+	rdfs:label "Key finding" ;
+	rdfs:comment "The text of a Finding in a Highly Influential Scientific Assessment." ;
+	rdfs:domain gcis:Finding ;
+	rdfs:range xsd:string .
+
+gcis:findingProcess a owl:DatatypeProperty ;
+	rdfs:label "Finding Process" ;
+	rdfs:comment "The description of the process used in order to reach the Finding." ;
+	rdfs:domain gcis:Finding ;
+	rdfs:range xsd:string .
 
 gcis:descriptionOfEvidenceBase a owl:DatatypeProperty ;
 	rdfs:label "Description of Evidence Base" ;
-	rdfs:comment "A finding has a description of evidence base." ;
+	rdfs:comment "Conveys additional information about the quality of the information used in reaching the Finding." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 	
 gcis:newInformationAndRemainingUncertainties a owl:DatatypeProperty ;
 	rdfs:label "New Information and Remaining Uncertainties" ;
-	rdfs:comment "A finding has a description of new information and remaining uncertainties." ;
+	rdfs:comment "A description of the new science developments over a specified timerange, which also includes information about remaining sources of Scientific uncertainty." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:assessmentOfConfidenceBasedOnEvidence a owl:DatatypeProperty ;
 	rdfs:label "Assessment of Confidence Based on Evidence" ;
-	rdfs:comment "A finding has an assessment of confidence based on evidence." ;
+	rdfs:comment "A description of the level of confidence which the authors have in the Finding."  ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .	
 	
 gcis:hasURL a owl:DatatypeProperty ;
 	rdfs:label "Has URL" ;
-	rdfs:comment "A resource has a URL." ;
-	rdfs:range xsd:anyURI .		
+	rdfs:comment "The World Wide Web address for the resource." ;
+	rdfs:range xsd:anyURI .			
 	
 gcis:subOrganizationOf a owl:ObjectProperty ;
 	rdfs:label "Sub Organization Of" ;
@@ -790,20 +804,19 @@ gcis:Expedition a owl:Class ;
 
 gcis:Scenario a owl:Class ;
 	rdfs:label "Scenario" ;
-	rdfs:comment "A coherent description of a potential future situation that serves as input to more detailed analyses or modeling. Scenarios are tools that explore, 'if�, then�.' statements, and are not predictions of or prescriptions for the future." ;
+	rdfs:comment "Sets of assumptions used to help understand potential future conditions such as population growth, land use, and sea level rise. Scenarios are neither predictions nor forecasts. Scenarios are commonly used for planning purposes." ;
 	rdfs:subClassOf prov:Entity .
 	
 gcis:describesScenario a owl:ObjectProperty ;
 	rdfs:label "Describes Scenario" ;
-	rdfs:comment "A report may describe one or more scenarios." ;
-	rdfs:domain gcis:Report;
-	rdfs:range gcis:Scenario .
+	rdfs:comment "A resource may describe one or more scenarios." ;
+	rdfs:range gcis:Scenario ;
+	owl:inverseOf gcis:scenarioDescribedIn .
 
-gcis:isDescribedIn a owl:ObjectProperty ;
+gcis:scenarioDescribedIn a owl:ObjectProperty ;
 	rdfs:label "Is Described In" ;
-	rdfs:comment "A scenario is described in a report." ;
-	rdfs:domain gcis:Scenario ;
-	rdfs:range gcis:Report .
+	rdfs:comment "A scenario is described in a resource." ;
+	rdfs:domain gcis:Scenario .
 
 gcis:tableNumber a owl:DatatypeProperty ;
 	rdfs:label "Table Number" ;
@@ -822,18 +835,6 @@ gcis:contactPoint a owl:ObjectProperty ;
 	rdfs:comment "The point of contact for a dataset." ;
 	rdfs:domain gcis:Dataset ;
 	rdfs:range gcis:Agent .
-
-gcis:accessURL a owl:DatatypeProperty ;
-	rdfs:label "Access URL" ;
-	rdfs:comment "Could be any kind of URL that gives access to a distribution of the dataset. E.g. landing page, download, feed URL, SPARQL endpoint. Use when your catalog does not have information on which it is or when it is definitely not a download." ;
-	rdfs:domain gcis:Dataset ;
-	rdfs:range xsd:anyURI .
-
-gcis:downloadURL a owl:DatatypeProperty ;
-	rdfs:label "Download URL" ;
-	rdfs:comment "This is a direct link to a downloadable file in a given format. E.g. CSV file or RDF file. The format is described by the distribution's dc:format and/or dcat:mediaType." ;
-	rdfs:domain gcis:Dataset ;
-	rdfs:range xsd:anyURI .
 
 gcis:extentTypeCode a owl:DatatypeProperty ;
 	rdfs:label "Extent Type Code" ;
@@ -1022,7 +1023,7 @@ gcis:isPublisherOf a owl:ObjectProperty ;
 	rdfs:range gcis:Publication ;
 	rdfs:subPropertyOf prov:contributed .
 
-gcis:hasSubOrganization  a owl:ObjectProperty ;
+gcis:hasSubOrganization a owl:ObjectProperty ;
 	rdfs:label "Has Sub Organization" ;
 	rdfs:comment "Represents hierarchical containment of Organizations or OrganizationalUnits; indicates an organization which is a sub-part or child of this organization." ;
 	owl:inverseOf gcis:subOrganizationOf ;
@@ -1031,7 +1032,7 @@ gcis:hasSubOrganization  a owl:ObjectProperty ;
 	rdfs:subPropertyOf prov:hadDelegate ;
 	rdfs:subPropertyOf org:hasSubOrganization .
 
-gcis:isSupportedBy  a owl:ObjectProperty ;
+gcis:isSupportedBy a owl:ObjectProperty ;
 	rdfs:label "Is Supported By" ;
 	rdfs:comment "A finding is supported by data, models, model runs, software, etc.";
 	rdfs:domain gcis:Finding .	
@@ -1044,7 +1045,7 @@ gcis:computingEnvironmentsUsed a owl:DatatypeProperty ;
 
 gcis:descriptionOfOutputFiles a owl:DatatypeProperty ;
 	rdfs:label "description of output files" ;
-	rdfs:comment "narrative description of one or more files generated by an activity" ;
+	rdfs:comment "Narrative description of one or more files generated by an activity" ;
 	rdfs:domain prov:Activity ;
 	rdfs:range xsd:string .
 
@@ -1066,5 +1067,19 @@ gcis:Article a owl:Class ;
 gcis:Webpage a owl:Class ;
 	rdfs:subClassOf gcis:Publication , bibo:Webpage , prov:Entity ;
 	rdfs:label "Webpage" ;
-	rdfs:comment "A web page is an online document available (at least initially) on the world wide web. A web page is written first and foremost to appear on the web, as distinct from other online resources such as books, manuscripts or audio documents which use the web primarily as a distribution mechanism alongside other more traditional methods such as print." .	
-	
+	rdfs:comment "A web page is an online document available (at least initially) on the World Wide Web. A web page is written first and foremost to appear on the web, as distinct from other online resources such as books, manuscripts or audio documents which use the web primarily as a distribution mechanism alongside other more traditional methods such as print." .
+
+gcis:CryptographicHash a owl:Class;
+	rdfs:label "Cryptographic Hash" ;
+	rdfs:comment "A cryptographic hash value computed for the purpose of authentication or verification of a digital entity" .
+
+gcis:cryptographicHash a owl:ObjectProperty ;
+	rdfs:label "cryptographic hash" ;
+	rdfs:comment "A cryptographic hash value computed for this digital entity" ;
+	rdfs:domain prov:Entity ;
+	rdfs:range gcis:CryptographicHash .
+
+gcis:hashFunction a owl:ObjectProperty ;
+	rdfs:label "hash function" ;
+	rdfs:comment "The function used to compute a hash value." ;
+	rdfs:domain gcis:CryptographicHash .
