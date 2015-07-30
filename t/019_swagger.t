@@ -5,6 +5,8 @@ use lib $FindBin::Bin;
 use tinit;
 use Test::More;
 use Test::Mojo;
+# use Test::MBD qw/-autostart/;
+# Uncomment the above line before adding any tests with database changes.
 use Swagger2;
 
 my $t = Test::Mojo->new("Tuba");

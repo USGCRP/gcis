@@ -20,7 +20,10 @@ use Encode qw/encode decode/;
 use Mojo::Util qw/camelize decamelize/;
 use LWP::UserAgent;
 use HTTP::Request;
+use Text::CSV_XS;
 use Data::Dumper;
+use Hash::Flatten qw/flatten/;
+use Data::Rmap qw/rmap_ref/;
 
 =head2 list
 
@@ -91,6 +94,15 @@ sub list {
             }
             # Trees are smaller when getting all objects.
             $c->render_yaml([ map $c->make_tree_for_list($_), @$objects ]) },
+        csv => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            # Trees are smaller when getting all objects.
+            $c->render_csv([ map $c->make_tree_for_list($_), @$objects ]);
+        },
         json => sub {
             my $c = shift;
             if (my $page = $c->stash('page')) {
@@ -98,7 +110,8 @@ sub list {
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
             # Trees are smaller when getting all objects.
-            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]) },
+            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]);
+        },
         html => sub {
              my $c = shift;
              $c->render_maybe("$table/$template", meta => $meta, objects => $objects )
@@ -126,6 +139,34 @@ sub render_yaml {
     $c->res->body(encode('UTF-8',Dump($stringified)));
     $c->res->code(200);
     $c->rendered;
+}
+
+sub render_csv {
+    my $c = shift;
+    my $thing = shift;
+    use Data::Dumper;
+    my $out = "";
+    my $csv = Text::CSV_XS->new();
+    my $first = 1;
+    my @fields;
+    for my $obj (@$thing) {
+        rmap_ref { $_ = "$_" if defined($_) && ref($_) && ref($_) !~ /ARRAY|HASH|SCALAR/; } $obj;
+        my $flat = flatten($obj);
+        if ($first) {
+            @fields = sort keys %$flat;
+            for my $col (reverse qw/uri href identifier name description/) {
+                next unless exists($flat->{$col});
+                @fields = ( $col, grep { $_ ne $col } @fields );
+            }
+            $csv->combine(@fields) or $c->reply->error($csv->error);
+            $out .= $csv->string."\n";
+        }
+        $flat->{href} =~ s/\.csv$//;
+        $csv->combine(@$flat{@fields}) or $c->reply->error($csv->error);
+        $out .= $csv->string."\n";
+        $first = 0;
+    }
+    $c->render(text => $out);
 }
 
 =head2 show

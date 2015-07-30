@@ -66,7 +66,7 @@ use Path::Class qw/file/;
 use strict;
 
 our $VERSION = '1.33';
-our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml/;
+our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
     my $app = shift;
