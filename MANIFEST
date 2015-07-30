@@ -468,7 +468,6 @@ lib/Tuba/files/templates/activity/object.ttl.tut
 lib/Tuba/files/templates/activity/objects.html.ep
 lib/Tuba/files/templates/activity/relationships.html.ep
 lib/Tuba/files/templates/admin.html.ep
-lib/Tuba/files/templates/api_reference.html.ep
 lib/Tuba/files/templates/array/object.html.ep
 lib/Tuba/files/templates/array/object.ttl.tut
 lib/Tuba/files/templates/array/objects.html.ep
