@@ -392,6 +392,7 @@ lib/Tuba/DB/Mixin/Object/Organization.pm
 lib/Tuba/DB/Mixin/Object/Person.pm
 lib/Tuba/DB/Mixin/Object/Person/Manager.pm
 lib/Tuba/DB/Mixin/Object/Publication.pm
+lib/Tuba/DB/Mixin/Object/PublicationContributorMap.pm
 lib/Tuba/DB/Mixin/Object/PublicationMap.pm
 lib/Tuba/DB/Mixin/Object/Reference.pm
 lib/Tuba/DB/Mixin/Object/Reference/Manager.pm
@@ -517,6 +518,7 @@ lib/Tuba/files/templates/dataset/objects.html.ep
 lib/Tuba/files/templates/db_meta.html.ep
 lib/Tuba/files/templates/debug.html.ep
 lib/Tuba/files/templates/doc/about.html.ep
+lib/Tuba/files/templates/doc/api_reference.html.ep
 lib/Tuba/files/templates/doc/examples.html.ep
 lib/Tuba/files/templates/doc/resources.html.ep
 lib/Tuba/files/templates/doc/resources.json.ep
@@ -726,6 +728,8 @@ t/015_search.t
 t/016_turtle_syntax.t
 t/017_person.t
 t/017_person_api.t
+t/018_contributor.t
+t/019_swagger.t
 t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm
