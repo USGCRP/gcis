@@ -4,7 +4,7 @@
 % my $base = $self->req->url->clone;
 % my $query = $base->query->clone;
 % $base->query(Mojo::Parameters->new);
-% $base->path->parts->[-1] =~ s/.html$$//;
+% $base->path->parts->[-1] =~ s/.html$//;
 % $query = "?$query" if $query;
 <pre>
 <%= link_to "$base.json".$query => class => 'label label-info' => begin %>JSON<%= end %> \
