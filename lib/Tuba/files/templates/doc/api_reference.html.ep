@@ -8,6 +8,12 @@
   The current version of this API is <b><%= $Tuba::VERSION %></b>.</p>
 <p>For definitions of the terms below, please read about the <a href="/resources">data model</a>.</p>
 <p>Click the method name on the left to see more information about a particular route.</p>
+<p>There are also
+<%= link_to url_with.'.json' => class => 'label label-info' => begin %>JSON<%= end %> and
+<%= link_to url_with.'.yaml' => class => 'label label-info' => begin %>YAML<%= end %> versions of
+this page which may be viewed using <%= link_to 'http://petstore.swagger.io?url='.$self->req->url->to_abs.'.json' => begin %>
+swagger<%= end %>.
+
 
 % my $show_method = ( (param 'show_method') || 'GET');
 <ul class='nav nav-tabs'>
