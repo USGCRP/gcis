@@ -20,7 +20,10 @@ use Encode qw/encode decode/;
 use Mojo::Util qw/camelize decamelize/;
 use LWP::UserAgent;
 use HTTP::Request;
+use Text::CSV_XS;
 use Data::Dumper;
+use Hash::Flatten qw/flatten/;
+use Data::Rmap qw/rmap_ref/;
 
 =head2 list
 
@@ -91,6 +94,15 @@ sub list {
             }
             # Trees are smaller when getting all objects.
             $c->render_yaml([ map $c->make_tree_for_list($_), @$objects ]) },
+        csv => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            # Trees are smaller when getting all objects.
+            $c->render_csv([ map $c->make_tree_for_list($_), @$objects ]);
+        },
         json => sub {
             my $c = shift;
             if (my $page = $c->stash('page')) {
@@ -98,7 +110,8 @@ sub list {
                 $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
             }
             # Trees are smaller when getting all objects.
-            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]) },
+            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]);
+        },
         html => sub {
              my $c = shift;
              $c->render_maybe("$table/$template", meta => $meta, objects => $objects )
@@ -126,6 +139,37 @@ sub render_yaml {
     $c->res->body(encode('UTF-8',Dump($stringified)));
     $c->res->code(200);
     $c->rendered;
+}
+
+sub render_csv {
+    my $c = shift;
+    my $thing = shift;
+    my $out = "";
+    my $csv = Text::CSV_XS->new({ auto_diag => 1 });
+    my $first = 1;
+    my @fields;
+    for my $obj (@$thing) {
+        rmap_ref { $_ = "$_" if defined($_) && ref($_) && ref($_) !~ /ARRAY|HASH|SCALAR/; } $obj;
+        my $flat = flatten($obj);
+        if ($first) {
+            @fields = sort keys %$flat;
+            for my $col (reverse qw/uri href identifier name description/) {
+                next unless exists($flat->{$col});
+                @fields = ( $col, grep { $_ ne $col } @fields );
+            }
+            $csv->combine(@fields) or $c->reply->error($csv->error);
+            $out .= $csv->string."\n";
+        }
+        $flat->{href} =~ s/\.csv$//;
+        $csv->combine(@$flat{@fields}) or $c->reply->error($csv->error);
+        $out .= $csv->string."\n";
+        $first = 0;
+    }
+    $c->res->headers->content_type('text/csv');
+    my $filename = $c->req->url->path->parts->[-2] || 'gcis-data';
+    $filename .= ".csv";
+    $c->res->headers->content_disposition(qq[attachment;filename="$filename"]);
+    $c->render(text => $out);
 }
 
 =head2 show
@@ -157,6 +201,20 @@ sub make_tree_for_show {
                 term => $_->term,
                 lexicon => $_->lexicon_identifier,
             }, @$others ] if $others && @$others;
+    }
+    unless ($obj->meta->table eq 'reference') {
+        if (my $pub = $obj->get_publication) {
+            my @pubs = $pub->get_parents_with_references;
+            $ret->{cited_by} = [
+                map +{
+                    reference => $_->{reference}->uri($c),
+                    publication => $_->{parent}->to_object->uri($c),
+                    publication_type => $_->{publication_type_identifier},
+                }, @pubs
+            ];
+        } else {
+            $ret->{cited_by} = [];
+        }
     }
     $ret;
 }
@@ -923,6 +981,29 @@ sub update_contributors {
             }) or return $c->update_error("Failed to remove contributor");
         $c->flash(info => "Saved changes.");
     }
+    if (my $role_identifier = $json->{remove_others_with_role}) {
+        for my $map (@{ PublicationContributorMaps->get_objects(
+            query => [
+              publication_id       => $pub->id,
+              role_type_identifier => $role_identifier,
+            ],
+            with_objects => 'contributor'
+          )})
+        {
+            my $contributor = $map->contributor;
+            my @pubs = $contributor->publications;
+            if (@pubs==1) {
+                # Only publication, remove contributor record and cascade.
+                $contributor->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($contributor->error);
+            } else {
+                # Just remove the map.
+                $map->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($map->error);
+            }
+        }
+    }
+
     if ($json && keys %$json) {
         # TODO JSON interface for updating sort keys
     } else {
@@ -1264,11 +1345,11 @@ sub remove {
     my @replacement;
     if ($json && $json->{replacement}) {
         my $rpl = $c->uri_to_obj($json->{replacement})
-          or return $c->render_exception("couldn't find $json->{replacement}");
+          or return $c->redirect_with_error('update_form',"couldn't find $json->{replacement}");
         @replacement = (replacement => $rpl);
     }
     $object->delete(audit_user => $c->user, @replacement)
-      or return $c->render_exception($object->error);
+      or return $c->redirect_with_error('update_form', $object->error);
     return $c->render(text => 'ok');
 }
 
@@ -1300,6 +1381,50 @@ Generic history of changes to an object.
 
 =cut
 
+sub _get_more_history {
+    my $c = shift;
+    my %args    = @_;
+    my @columns = @{$args{columns}};
+    my $object  = $args{object};
+    my $pkvals = $args{pkvals};
+    my %seen = %{ $args{seen} || {} }; # hash of event_id's already seen
+
+    my $where = join ' and ', map qq{ changed_fields->'$_' = :pkval_$_ }, @columns;
+    $where .= " and table_name=:table_name";
+    my %bind = ( %$pkvals, table_name => $object->meta->table );
+
+    my $more = $c->dbc->select(
+        [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
+        table => "audit.logged_actions",
+        where => [ $where, \%bind ],
+        append => 'order by action_tstamp_tx desc',
+    );
+    return unless $more;
+    my @results = @{ $more->all };
+    my @these = @results;
+    @these = grep !$seen{event_id}++, @these;
+    for my $row (@these) {
+        #warn Dumper($row);
+        my $row_data = hstore_decode($row->{row_data} // "");
+        my @row_changes = $c->_get_more_history(
+                  columns => \@columns,
+                  object  => $object,
+                  pkvals  => {map { ("pkval_$_" => $row_data->{$_}) } @columns},
+                  seen    => \%seen,
+            );
+        push @results, @row_changes if @row_changes;
+        my $changed_fields = hstore_decode($row->{changed_fields} // "");
+        my @id_changes = $c->_get_more_history(
+                  columns => \@columns,
+                  object  => $object,
+                  pkvals  => {map { ("pkval_$_" => $changed_fields->{$_}) } @columns},
+                  seen    => \%seen,
+        );
+        push @results, @id_changes if @id_changes;
+    }
+    return @results;
+}
+
 sub history {
     my $c = shift;
     my $object = $c->_this_object or return $c->reply->not_found;
@@ -1308,7 +1433,8 @@ sub history {
 
     my %bind  = map {( "pkval_$_" => $object->$_ )} @columns;
     my $where = join ' and ', map qq{ row_data->'$_' = :pkval_$_ }, @columns;
-    # TODO: also look for pk changes in changed_fields->'$pk' = :pkval_$pk) };
+    $where .= "and table_name=:table_name";
+    $bind{table_name} = $object->meta->table;
     my $result = $c->dbc->select(
         [ '*', 'extract(epoch from action_tstamp_tx) as sort_key' ],
         table => "audit.logged_actions",
@@ -1316,6 +1442,16 @@ sub history {
         append => 'order by action_tstamp_tx desc',
     );
     my $change_log = $result->all;
+
+    my @more = $c->_get_more_history(
+      columns => \@columns,
+      object  => $object,
+      pkvals  => {map { ("pkval_$_" => $object->$_) } @columns},
+      seen => { map { $_->{event_id} => 1 } @$change_log },
+    );
+    push @$change_log, @more;
+    my %seen;
+    @$change_log = grep !$seen{$_->{event_id}}++, @$change_log;
 
     # Also look for provenance changes.
     if (my $pub = $object->get_publication) {
@@ -1328,7 +1464,9 @@ sub history {
         );
 
         $change_log = [ @{ $more->all }, @$change_log ];
-        @$change_log = sort { $b->{sort_key} cmp $a->{sort_key} } @$change_log;
+        @$change_log = sort { $b->{sort_key} cmp $a->{sort_key}
+            || $b->{event_id} <=> $a->{event_id}
+            } @$change_log;
     }
 
     for my $row (reverse @$change_log) {
@@ -1338,7 +1476,29 @@ sub history {
         my $new = { %$old, %$changes };
         ($row->{removed},$row->{added}) = show_diffs(Dump($old),Dump($new));
     }
-    $c->render('history', change_log => $change_log, object => $object, pk => $pk)
+    $c->respond_to(
+        json => sub {
+            for (@$change_log) {
+                $_->{row_data} = hstore_decode($_->{row_data} // "");
+                $_->{changed_fields} = hstore_decode($_->{changed_fields} // "");
+                delete $_->{added};
+                delete $_->{removed};
+            }
+            shift->render(json => { change_log => $change_log });
+        },
+        yaml => sub {
+            for (@$change_log) {
+                $_->{row_data} = hstore_decode($_->{row_data} // "");
+                $_->{changed_fields} = hstore_decode($_->{changed_fields} // "");
+                delete $_->{added};
+                delete $_->{removed};
+            }
+            shift->render_yaml({ change_log => $change_log });
+        },
+        html => sub {
+            shift->render('history', change_log => $change_log, object => $object, pk => $pk)
+        }
+    );
 }
 
 sub page {

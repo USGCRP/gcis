@@ -44,7 +44,7 @@
         % }
         % for my $what (qw/process evidence uncertainties confidence/) {
             % if ($finding->$what) {
-            <p><b><%= $labels{$what} %> :</b><%= tbibs_to_links($finding->$what) %></p>
+            <p><b><%= $labels{$what} %>: </b><%= tbibs_to_links($finding->$what) %></p>
             % }
         % }
         %= include 'h/cites', pub => $finding->get_publication;

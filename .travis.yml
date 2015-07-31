@@ -1,6 +1,10 @@
 language: perl
 
 sudo: false
+addons:
+    apt:
+        packages:
+            - raptor2-utils
 
 perl:
   - "5.16"
@@ -12,9 +16,19 @@ env:
 before_install :
     - cpanm App::cpanoutdated
     - cpan-outdated | cpanm
+    - cpanm Devel::Cover Devel::Cover::Report::Coveralls
+
+script :
+   - perl Build.PL && ./Build
+   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine ./Build test
+   - cover
 
 cache:
     directories :
         - /home/travis/perl5/perlbrew/perls/5.20/lib/site_perl
+        - /home/travis/perl5/perlbrew/perls/5.20/bin
         - /home/travis/perl5/perlbrew/perls/5.16/lib/site_perl
+        - /home/travis/perl5/perlbrew/perls/5.16/bin
 
+after_success :
+     - cover -report coveralls

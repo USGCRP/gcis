@@ -1,11 +1,12 @@
-% layout 'default', namespaces => [qw/dcterms dbpedia dbpedia_owl xsd schema fabio/];
+% layout 'default', namespaces => [qw/dcterms gcis dbpedia rdf schema dbpedia_owl xsd fabio/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $file->identifier %>";
-   dbpedia:Domain_Name "<%= url_host($file->location) %>";
-   dbpedia:SHA-1 "<%= $file->sha1 %>";
-   dbpedia:MIME "<%= $file->mime_type %>";
+   gcis:cryptographicHash [ 
+      gcis:hashFunction dbpedia:SHA-1;
+      rdf:value "<%= $file->sha1 %>" ] ;
+   dcterms:format "<%= $file->mime_type %>";
 % if (my @pubs = $file->publications) {
    % for my $file (@pubs) {
    schema:isRelatedTo <<%= uri($file->to_object) %>>;
