@@ -144,9 +144,8 @@ sub render_yaml {
 sub render_csv {
     my $c = shift;
     my $thing = shift;
-    use Data::Dumper;
     my $out = "";
-    my $csv = Text::CSV_XS->new();
+    my $csv = Text::CSV_XS->new({ auto_diag => 1 });
     my $first = 1;
     my @fields;
     for my $obj (@$thing) {
@@ -166,6 +165,10 @@ sub render_csv {
         $out .= $csv->string."\n";
         $first = 0;
     }
+    $c->res->headers->content_type('text/csv');
+    my $filename = $c->req->url->path->parts->[-2] || 'gcis-data';
+    $filename .= ".csv";
+    $c->res->headers->content_disposition(qq[attachment;filename="$filename"]);
     $c->render(text => $out);
 }
 
