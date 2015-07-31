@@ -152,6 +152,9 @@ img[src*="gcis_remote=1"] {
     border-bottom:1px dotted #ddd;
     border-top:1px dotted #ddd;
 }
+.form-horizontal.well, .form-horizontal .well {
+	background-image: none;
+}
 div.collapse-wrapper {
     position:relative;
 }
