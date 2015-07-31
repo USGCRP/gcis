@@ -42,10 +42,17 @@ on
     <div class='logrow'>
         <%= format_ago($row->{action_tstamp_tx}) %>:
 
-         <% if ($row->{obj} && $row->{action} ne 'D' && (my $uri = obj_uri_for($row->{obj}, 'show'))) { %>
-             <%= link_to $uri => class => 'btn squeezevert' => begin =%>
-                 <%= $row->{obj}->pk_values =%>
-             <%= end %>
+         <% if ($row->{obj} && $row->{action} ne 'D' && (my @uri = obj_uri_for($row->{obj}, 'show'))) { %>
+             <% if (@uri > 1) { %>
+                <% for my $val ($row->{obj}->pk_values) { %>
+                     <%= link_to scalar (shift @uri) => begin %><%= $val %><%= end %>
+                     <% if (@uri) { %>/<% } %>
+                <% } %>
+             <% } else { %>
+                 <%= link_to $uri[0] => class => 'btn squeezevert' => begin =%>
+                     <%= $row->{obj}->pk_values =%>
+                 <%= end %>
+             <% } %>
          <% } else { %>
          <b><%= $row->{obj} ? ( eval{$row->{obj}->stringify} || scalar $row->{obj}->pk_values  )
              : $row->{yaml} ? $row->{yaml}

@@ -62,6 +62,7 @@
             "Scalar::Util" : "0",
             "Sort::Key" : "0",
             "String::Diff" : "0",
+            "Swagger2" : "0",
             "Text::CSV_XS" : "0",
             "Text::Format" : "0",
             "Time::Duration" : "0",
@@ -76,7 +77,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.32"
+         "version" : "1.33"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -197,6 +198,9 @@
       },
       "Tuba::DB::Object::Publication" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Publication.pm"
+      },
+      "Tuba::DB::Object::PublicationContributorMap" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/PublicationContributorMap.pm"
       },
       "Tuba::DB::Object::PublicationMap" : {
          "file" : "lib/Tuba/DB/Mixin/Object/PublicationMap.pm"
@@ -338,5 +342,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.32"
+   "version" : "1.33"
 }

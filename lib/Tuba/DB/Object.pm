@@ -193,6 +193,10 @@ sub delete {
     if ($replacement = $args{replacement}) {
         my @pk = $replacement->pk_values;
         die "cannot replace composite key" if @pk != 1;
+        if ($pk[0] eq [ $object->pk_values ]->[0]) {
+            $object->error("cannot replace ".$object->meta->table." with itself ($pk[0])");
+            return 0;
+        }
     }
     my $table_name = $object->meta->table;
     my $db = $object->db;

@@ -247,7 +247,7 @@ sub update_rel {
                 return $c->render(status => 400, json => { error => "$pub_uri not found" });
             };
             $reference->add_publications({id => $pub->id});
-            $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->render_exception;
+            $reference->save(changes_only => 1, audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->reply->exception;
         }
         if (my $subpubref = $json->{delete_subpub}) { # Deprecation
             return $c->render(status => 400, json => { error => "delete_subpub is deprecated, use delete_publication"} );
@@ -258,7 +258,7 @@ sub update_rel {
             };
             my $sub = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub->id);
             $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$pub not found");
-            $sub->delete or return $c->render_exception;
+            $sub->delete or return $c->reply->exception($sub->error);
         }
 
         return $c->render(json => { status => 'ok'});

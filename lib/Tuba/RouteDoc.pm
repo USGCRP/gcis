@@ -12,6 +12,8 @@ has 'brief';
 has 'description';
 has 'params';
 has 'note';
+has 'tags';
+has 'response_headers';
 
 1;
 

@@ -8,7 +8,7 @@
    gcis:inPlatform <<%= uri($platform) %>>;
 % }
    dcterms:description "<%= $instrument->description %>"^^xsd:string;
-   a gcis:Instrument .
+   a gcis:InstrumentType .
 
 % end
 

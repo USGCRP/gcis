@@ -74,5 +74,38 @@ limit 10"
     );
 }
 
+sub api_reference {
+  my $c = shift;
+  $c->respond_to(
+    json => sub {
+      my $c = shift;
+      $c->render(json => Tuba::DocManager->new->as_swagger($c));
+    },
+    yaml => sub {
+      my $c = shift;
+      $c->render_yaml(Tuba::DocManager->new->as_swagger($c));
+    },
+    html => sub {
+      my $trying;
+      if (my $try = $c->param('try')) {
+        $trying = $c->app->routes->lookup($try);
+      }
+      $c->stash(trying => $trying);
+      return unless $trying;
+      my @placeholders;
+      while ($trying) {
+        for my $n (@{$trying->pattern->tree}) {
+          next unless @$n == 2;
+          next unless $n->[0] =~ /^(placeholder|wildcard|relaxed)$/;
+          unshift @placeholders, $n->[1];
+        }
+        $trying = $trying->parent;
+      }
+      $c->stash(placeholders => \@placeholders);
+    }
+  );
+
+}
+
 1;
 

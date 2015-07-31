@@ -5,7 +5,7 @@
    dcterms:identifier "<%= $platform->identifier %>";
    dcterms:title "<%= $platform->name %>"^^xsd:string;
    dcterms:description "<%= $platform->description %>"^^xsd:string;
-   gcis:hasURL "<%= $platform->url %>"^^xsd:anyURI;
+   dcterms:source "<%= $platform->description_attribution %>";
    dcterms:type "<%= $platform->platform_type_identifier %>";
    dbpprop:launchDate "<%= $platform->start_date %>"^^xsd:dateTime;
    dbpprop:deactivated "<%= $platform->end_date %>"^^xsd:dateTime;

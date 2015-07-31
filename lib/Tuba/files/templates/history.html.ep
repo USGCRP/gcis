@@ -10,6 +10,8 @@
 
 </style>
 
+%= include 'list_formats';
+
 % unless (param 'no_header') {
 <h5>
 Change history for
@@ -36,7 +38,19 @@ Change history for
 %= $row->{row_data};
 </div>
 % } elsif ($row->{action} eq 'D') {
-
+    % my $id = "tabs_".++$i;
+    <ul class='nav nav-tabs tabby' id='<%= $id %>'>
+        <li class='active'><a href="#added<%= $id %>" data-toggle='tab'>added</a></li>
+        <li><a href="#removed<%= $id %>" data-toggle='tab'>removed</a></li>
+    </ul>
+    <div class='tab-content' style='white-space:pre-line;'>
+        <div class='tab-pane active' id='added<%= $id %>'>
+        %= $row->{added};
+        </div>
+        <div class='tab-pane' id='removed<%= $id %>'>
+        %= $row->{removed};
+        </div>
+    </div>
 % } elsif ($row->{action} eq 'U') {
 % my $id = "tabs_".++$i;
 <ul class='nav nav-tabs tabby' id='<%= $id %>'>

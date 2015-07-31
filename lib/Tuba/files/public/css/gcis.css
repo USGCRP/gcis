@@ -202,3 +202,9 @@ table tr.header td.non_numeric {
 table tr td.non_numeric {
     text-align:left;
 }
+.dev-banner {
+    position:absolute;
+    top:12px;
+    left:20%;
+    right:20%;
+}

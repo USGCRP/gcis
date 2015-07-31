@@ -1,5 +1,7 @@
 #!/bin/sh -ex
 
+cd `dirname $0`
+cd ..
 cmt=`git ls-remote https://github.com/usgcrp/gcis-ontology | head -1 | awk '{print $1}'`
 src=https://raw.githubusercontent.com/USGCRP/gcis-ontology/master/gcis.ttl
 dst=./lib/Tuba/files/public/
@@ -10,5 +12,13 @@ curl http://www.essepuntato.it/lode/owlapi/$src \
     | sed "s_${src}_http://data.globalchange.gov/owl/gcis.ttl_" \
     | sed "s_http://eelst.cs.unibo.it/apps/LODE/_/owl/_" \
 > $dst/gcis.owl
+
+post_processor=../gcis-ontology/scripts/html-postprocessor/html-postprocessor.py
+if [ -e $post_processor ]; then
+    python $post_processor $dst/gcis.owl $dst/gcis.owl-post
+    mv $dst/gcis.owl-post $dst/gcis.owl
+else
+    echo "could not find post_processor: $post_processor"
+fi
 
 echo "update from usgcrp/gcis-ontology@$cmt"

@@ -33,7 +33,7 @@ sub merge_into {
     my $audit_user = $args{audit_user};
     my $audit_note = $args{audit_note};
 
-    die "Not replacing person with orcid" if $s->orcid;
+    die "Not replacing person with orcid : ".$new->id." vs ".$s->id if $s->orcid;
 
     # ids for other contributors
     for my $contributor (@{ Tuba::DB::Object::Contributor::Manager->get_objects(
@@ -57,8 +57,9 @@ sub merge_into {
             #     person 2 --/                    \--- map entry -- publication 2
             #
             for my $pm (@{ Tuba::DB::Object::PublicationContributorMap::Manager->get_objects(query => [ contributor_id => $contributor->id ]) }) {
-                    Tuba::DB::Object::PublicationContributorMap->new(publication_id => $pm->publication_id, contributor_id => $record->id)
-                        ->save(audit_user => $audit_user, audit_note => $audit_note) or die "error";
+                    my $map = Tuba::DB::Object::PublicationContributorMap->new(publication_id => $pm->publication_id, contributor_id => $record->id);
+                    $map->load(speculative => 1) and next;
+                    $map->save(audit_user => $audit_user, audit_note => $audit_note) or die $map->error;
             }
             $contributor->delete(audit_user => $audit_user, audit_note => $audit_note) or die $contributor->error;
         } else {

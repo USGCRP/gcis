@@ -38,6 +38,7 @@ $t->get_ok("/journal/minecraft.json")->json_is(
         uri => "/journal/minecraft",
         href => "${base}journal/minecraft.json",
         articles  => [],
+        cited_by => [],
     }
 );
 
