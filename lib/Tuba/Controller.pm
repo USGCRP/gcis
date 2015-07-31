@@ -202,6 +202,20 @@ sub make_tree_for_show {
                 lexicon => $_->lexicon_identifier,
             }, @$others ] if $others && @$others;
     }
+    unless ($obj->meta->table eq 'reference') {
+        if (my $pub = $obj->get_publication) {
+            my @pubs = $pub->get_parents_with_references;
+            $ret->{cited_by} = [
+                map +{
+                    reference => $_->{reference}->uri($c),
+                    publication => $_->{parent}->to_object->uri($c),
+                    publication_type => $_->{publication_type_identifier},
+                }, @pubs
+            ];
+        } else {
+            $ret->{cited_by} = [];
+        }
+    }
     $ret;
 }
 
