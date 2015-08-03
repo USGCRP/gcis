@@ -72,14 +72,9 @@
                             % if (my $ref = $map->reference) {
                             <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
                             % }
-<<<<<<< HEAD
-                            <br>
-                       % } 
-=======
                             </li>
                        <% } %>
                        </ol>
->>>>>>> master
                     </td>
                 % }
             </tr>    
