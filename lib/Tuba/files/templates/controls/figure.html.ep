@@ -4,7 +4,7 @@
 <table class='table table-responsive table-condensed table-bordered' style='width:auto;'>
 % for my $figure ($object->figures) {
 <tr>
-<td style='text-align:right;'>
+<td style='text-align:right;width:90%;'>
     <span class='btn btn-default squeezevert'><%= obj_link($figure); %></span>
 </td>
 % unless (stash 'no_thumbnails') {

@@ -40,7 +40,7 @@
     % unless (param 'no_header') {
         <div class='row collapse-wrapper'>
         <table class='table table-responsive table-condensed table-bordered table-striped'>
-            <tr><th>Organization</th><th>Role</th><th>Publications</th></tr>
+            <tr><th>Organization</th><th>Role</th><th>Type<th>Publications</th></tr>
             % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
             % my @all_maps = @{ $ctr->publication_contributor_maps };
             % my @tables = uniq map $_->publication->publication_type_identifier, @all_maps;
@@ -55,22 +55,26 @@
                             </tr><tr>
                         % }
                     <td><%= obj_link($ctr->role_type) %></td>
-                    <td>
+                    <td><nobr>
+                            %= link_to 'person_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                            <%= pl($table,scalar @maps) %>
+                            %= end
+                        </nobr></td>
+                    <td><ol>
                         <% for my $map (
                             map $_->[1],
                             sort { $a->[0] cmp $b->[0] }
                             map [ $_->publication->to_object->stringify(short => 1), $_ ],
                             @maps) { %>
                             % my $obj = $map->publication->to_object;
-                            %= link_to 'person_contributions', { resource => $obj->meta->table, role_type_identifier => $ctr->role_type_identifier } => begin
-                            <%= $obj->meta->table %>
-                            %= end
-                            : <%= obj_link($obj, short => 1) %>
+                            <li>
+                            <%= obj_link($obj, short => 1) %>
                             % if (my $ref = $map->reference) {
                             <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
                             % }
-                            <br>
-                       % } 
+                            </li>
+                       <% } %>
+                       </ol>
                     </td>
                 % }
             </tr>    

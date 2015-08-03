@@ -96,12 +96,23 @@
                 % }
             </td>
             % my $i = 0;
-            % for my $table (@tables) {
+            % for my $table (sort @tables) {
                 % my @maps = grep { $_->publication->publication_type_identifier eq $table } @all_maps;
                 %if ($i++) {
                 </tr><tr>
                 %}
                 <td><%= obj_link($ctr->role_type) %></td>
+                <td>
+                    % if ($ctr->person) {
+                    %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                        <%= pl($table, scalar @maps) %>
+                    %= end
+                    % } else {
+                            %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
+                        <%= pl($table, scalar @maps) %>
+                    %= end
+                    % }
+                </td>
                 % if (@maps > 100) {
                     <td>
                         % if ($ctr->person) {
@@ -115,7 +126,7 @@
                         % }
                     </td>
                 % } else {
-                    <td>
+                    <td><ol>
                         <% for my $map (
                             map $_->[1],
                             sort { $a->[0] cmp $b->[0] }
@@ -123,21 +134,14 @@
                             @maps) {
                         %>
                             % my $obj = $map->publication->to_object;
-                            % if ($ctr->person) {
-                            %= link_to 'person_contributions', { person_identifier => $ctr->person->id, resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                            <%= $table %>
-                            %= end
-                            % } else {
-                            %= link_to 'organization_contributions', { resource => $table, role_type_identifier => $ctr->role_type_identifier } => begin
-                            <%= $table %>
-                            %= end
-                            % }
-                            : <%= obj_link($obj, short => 1) %>
-                            % if (my $ref = $map->reference) {
-                            <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
-                            % }
-                            <br>
+                                <li>
+                                <%= obj_link($obj, short => 1) %>
+                                % if (my $ref = $map->reference) {
+                                <span style='float:right;'>(ref: <%= obj_link($ref, short => 1) %>)</span>
+                                % }
+                                </li>
                        <% } %>
+                       </ol>
                     </td>
                  % }
             % }

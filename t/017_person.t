@@ -110,7 +110,9 @@ $t->get_ok("/person/$id")->status_is(200)
   ->json_is("/contributors/0/publications" =>
     [ { uri => "/report/uno" }, { uri => "/report/dos" } ]);
 
+# And redirect works.
 $t->get_ok("/person/$id2")->status_is(302)->header_is("Location" => "/person/$id");
+
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);
 $t->delete_ok("/report/dos")->status_is(200);

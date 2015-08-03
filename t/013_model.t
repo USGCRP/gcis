@@ -28,6 +28,7 @@ $t->post_ok("/project" => json => \%project )->status_is(200);
 $t->get_ok("/project/cmip12.json")->status_is(200)
   ->json_is( { %project,
     uri       => "/project/cmip12",
+    cited_by  => [],
     href => "$base/project/cmip12.json" });
 $t->get_ok("/project")->status_is(200)->content_like(qr/cmip12/);
 
@@ -46,6 +47,7 @@ $t->post_ok("/model" => json => \%model )->status_is(200);
 $t->get_ok("/model/ccsm3.json")->status_is(200)
   ->json_is( { %model,
     uri       => "/model/ccsm3",
+    cited_by  => [],
     href => "$base/model/ccsm3.json" });
 $t->get_ok("/model")->status_is(200)->content_like(qr/ccsm3/);
 
@@ -59,6 +61,7 @@ my %scenario = (
 $t->post_ok("/scenario" => json => \%scenario )->status_is(200);
 $t->get_ok("/scenario/sres_a2.json")->status_is(200)
   ->json_is( { %scenario,
+    cited_by => [],
     uri       => "/scenario/sres_a2",
     href => "$base/scenario/sres_a2.json" });
 $t->get_ok("/scenario")->status_is(200)->content_like(qr[sres_a2]);
@@ -84,6 +87,7 @@ $t->get_ok("/model_run/012345.json")->status_is(200)
         uri => "/model_run/012345",
         href => "$base/model_run/012345.json",
         sequence => 1,
+        cited_by => [],
     });
 $t->get_ok("/model_run")->status_is(200)->content_like(qr[012345]);
 $t->get_ok("/model/ccsm3/run")->status_is(200)->content_like(qr[012345]);

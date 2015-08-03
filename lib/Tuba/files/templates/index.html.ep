@@ -43,9 +43,6 @@
       #svgwrap a text {
         fill: #0088cc;
       }
-      #svgwrap a {
-      	  font-size: 0.4em;
-      }
       h2 {
       	font-size: 20px;
       }
@@ -253,7 +250,7 @@ $(function() {
     text.attr( 'x', function (d) { return pts[d.i][0] } )
         .attr( 'y', function (d) { return pts[d.i][1] } )
         .attr('font-family','sans-serif')
-        .attr("font-size", "0.4em")
+        .attr({fontSize: '12px'})
         .attr('text-anchor','middle')
         .text(function(d) { return d.text } )
 

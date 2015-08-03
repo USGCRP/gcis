@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms skos xsd gcis org place prov/];
+% layout 'default', namespaces => [qw/dcterms skos xsd gcis dbpprop org place prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -7,12 +7,9 @@
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
 %#
 % if (my $type = $organization->organization_type) {
-   org:purpose "<%= $type->identifier %>";
+   dbpprop:organizationType "<%= $type->identifier %>";
 % }
 %#
-% if (my $country = $organization->country) {
-   place:Country "<%= $country->name %>"^^xsd:string;
-% }
 
    a gcis:Organization .
 

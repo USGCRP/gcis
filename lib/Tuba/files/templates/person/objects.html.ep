@@ -17,6 +17,7 @@
     <th>Name</th>
     <th>ORCID</th>
     <th>Organizations</th>
+    <th>Publications</th>
 </tr>
 % for my $o (@$objects) {
     <tr>
@@ -32,13 +33,22 @@
         </td>
         <td>
             % my %seen;
+            % my %publications;
             % for my $contributor (@{ $o->contributors }) {
+                % for ($contributor->publications) {
+                    % $publications{$_->id} = $_;
+                % }
                 % if (my $org = $contributor->organization) {
                 % next if $seen{$org->{identifier}}++;
                 <span class='btn btn-default squeezevert'>
                 %= obj_link($org);
                 </span>
                 % }
+            % }
+        </td>
+        <td>
+            % for my $pub (values %publications) {
+            %= obj_link($pub->to_object, class => "btn squeezevert")
             % }
         </td>
     </tr>

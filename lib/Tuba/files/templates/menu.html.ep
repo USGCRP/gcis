@@ -59,7 +59,13 @@
                 	<span class="sr-only">Toggle navigation</span>
                      <span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span><span class="glyphicon glyphicon-bar"></span>
                     </a>
-                <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" /></a>
+                <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" ></a>
+                % unless (is_prod()) {
+                    <center class='label label-warning dev-banner'>
+                    % my $host = $self->req->url->clone->to_abs->host;
+                    %= $host
+                    </center>
+                % }
                 <ul class='navbar-right nav navbar-nav'>
                     <li>
                     % if(config('no_search')) {

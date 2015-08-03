@@ -5,11 +5,12 @@
 % my $base = $self->req->url->clone;
 % my $query = $base->query->clone;
 % $base->query(Mojo::Parameters->new);
-% $base->path->parts->[-1] =~ s/.html$$//;
+% $base->path->parts->[-1] =~ s/.html$//;
 % $query = "?$query" if $query;
 <pre>
 <%= link_to "$base.json".$query => class => 'label label-primary' => begin %>JSON<%= end %> \
 <%= link_to "$base.yaml".$query => class => 'label label-primary' => begin %>YAML<%= end %> \
+<%= link_to "$base.csv".$query => class => 'label label-primary' => begin %>CSV<%= end %> \
 <%= link_to "$base.html".$query => class => 'label label-primary' => begin %>HTML<%= end %>
 % if ($ENV{TUBA_DEBUG}) {
 % if (my $meta = stash 'meta') {

@@ -65,6 +65,7 @@ $t->get_ok("/report/vegetables/table/veggietable.json")->status_is(200)
    'ordinal' => 1,
    'parents' => [],
    'references' => [],
+   'cited_by' => [],
    'report_identifier' => 'vegetables',
    'title' => 'veggie table',
    'uri' => '/report/vegetables/table/veggietable',
@@ -91,6 +92,7 @@ $t->get_ok("/array/simple.json")->json_is({
                        'url' => 'http://example.com/veggies'
                      }
                    ],
+                   cited_by => [],
     });
 
 #diag explain $t->tx->res->json;
@@ -114,6 +116,7 @@ $t->get_ok("/array/multirow-csv.json")->json_is({
                              [ 1, 2, 3, 4 ] ],
                     uri => '/array/multirow-csv',
                    href => "$base/array/multirow-csv.json",
+                   cited_by => [],
     });
 
 # update multiple row data via editable grid
@@ -134,6 +137,7 @@ $t->get_ok("/array/multirow-csv.json")->json_is({
                              [ "foo", "bar" ] ],
                     uri => '/array/multirow-csv',
                    href => "$base/array/multirow-csv.json",
+                   cited_by => [],
     });
 
 $t->delete_ok("/array/multirow-csv");

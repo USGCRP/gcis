@@ -4,6 +4,8 @@ use FindBin;
 use lib $FindBin::Bin;
 use tinit;
 use Test::More tests => 9;
+# use Test::MBD qw/-autostart/;
+# NB: no database changes for these tests.  Uncomment the above line before adding any.
 use Test::Mojo;
 
 use_ok 'Tuba';

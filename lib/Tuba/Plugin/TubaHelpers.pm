@@ -71,7 +71,7 @@ sub register {
             my $val = $obj->stringify(@_) || '[missing '.$obj->moniker.']';
             my $uri = $obj->uri($c);
             return $val unless $uri;
-            return $c->link_to($val, $uri );
+            return $c->link_to($val, $uri, @_ );
         } );
     $app->helper(obj_link_to => sub {
             my $c = shift;
@@ -503,9 +503,9 @@ sub register {
       # [ abbrev => prefix => src  ],
         [  bibo     => 'http://purl.org/ontology/bibo/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/biro', ],
         [  dbpedia  => 'http://dbpedia.org/resource/', ],
-        [  dbpprop  => 'http://dbpedia.org/property/' ],
+        [  dbpprop  => 'http://dbpedia.org/property/', ],
         [  dbpedia_owl => 'http://dbpedia.org/ontology/', ],
-        [  dc       => 'http://purl.org/dc/elements/1.1/' => 'http://dublincore.org/2012/06/14/dcelements.rdf' ],
+        [  dc       => 'http://purl.org/dc/elements/1.1/' => 'http://dublincore.org/2012/06/14/dcelements.rdf', ],
         [  dcterms  => 'http://purl.org/dc/terms/' => 'http://dublincore.org/2012/06/14/dcterms.rdf', ],
         [  dcmitype => 'http://purl.org/dc/dcmitype/' => 'http://dublincore.org/2012/06/14/dctype.rdf', ],
         [  foaf     => 'http://xmlns.com/foaf/0.1/'  => 'http://xmlns.com/foaf/spec/index.rdf', ],
@@ -527,7 +527,6 @@ sub register {
         [  dcat     => 'http://www.w3.org/ns/dcat#' => 'http://www.w3.org/ns/dcat.rdf', ],
         [  vivo     => 'http://vivoweb.org/ontology/core#' => 'http://vivoweb.org/files/vivo-isf-public-1.6.owl#', ],
         [  ext      => 'http://http://sweet.jpl.nasa.gov/2.3/propTime.owl#' => 'http://sweet.jpl.nasa.gov/2.3/propTime.owl', ],
-        [  meth     => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#' => 'http://sweet.jpl.nasa.gov/2.3/reprSciMethodology.owl#', ],
         [  geo      => 'http://www.w3.org/2003/01/geo/wgs84_pos#' => 'http://www.w3.org/2003/01/geo/wgs84_pos#', ],
         [  fabio    => 'http://purl.org/spar/fabio/' => 'http://eelst.cs.unibo.it/apps/LODE/source?url=http://purl.org/spar/fabio', ],
         [  schema   => 'http://schema.org/', ],
@@ -594,6 +593,12 @@ sub register {
             my $url = $c->req->url->clone;
             $url->path($path);
             return $url->to_abs;
+        });
+    $app->helper(is_prod => sub {
+            my $c = shift;
+            return 0 unless $c->app->mode eq 'production';
+            return 0 unless $c->req->url->clone->to_abs->host eq 'data.globalchange.gov';
+            return 1;
         });
 }
 1;

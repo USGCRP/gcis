@@ -6,7 +6,7 @@
    vivo:orcidId "<%= $person->orcid %>";
    foaf:givenName "<%= $person->first_name %>"^^xsd:string;
    foaf:lastName "<%= $person->last_name %>"^^xsd:string;
-   gcis:hasURL "<%= $person->url %>"^^xsd:anyURI;
+   foaf:page "<%= $person->url %>"^^xsd:anyURI;
    
    a gcis:Person .
 % end

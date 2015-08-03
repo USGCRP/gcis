@@ -86,7 +86,19 @@ $t->get_ok("/person/$id")->status_is(200)
   ->json_is("/contributors/0/publications" =>
     [ { uri => "/report/uno" }, { uri => "/report/dos" } ]);
 
+# Redirect from old to new works.
 $t->get_ok("/person/$id2")->status_is(302)->header_is("Location" => "/person/$id");
+
+# Audit log for new person has both people.
+$t->get_ok("/person/history/$id")
+    ->status_is(200)
+    ->json_is("/change_log/0/action/" => "I")
+    ->json_is("/change_log/0/row_data/last_name" => "Smith")
+    ->json_is("/change_log/0/row_data/id" => $id)
+    ->json_is("/change_log/1/action/" => "D")
+    ->json_is("/change_log/1/row_data/last_name" => "Smyth")
+    ->json_is("/change_log/1/row_data/id" => $id2);
+
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);
 $t->delete_ok("/report/dos")->status_is(200);
