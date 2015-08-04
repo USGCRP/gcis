@@ -287,4 +287,5 @@ table tr td.non_numeric {
     top:8px;
     left:40%;
     right:40%;
+    white-space:nowrap;
 }
