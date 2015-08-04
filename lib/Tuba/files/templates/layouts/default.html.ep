@@ -27,7 +27,7 @@
     % $meta_url.=".rdfxml";
     <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
 % }
-%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css";
 %= stylesheet "/css/gcis.css";
 %= stylesheet "/css/jquery.sidr.light.css";
 %= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";
@@ -35,7 +35,7 @@
 %= javascript "/js/gcis.js";
 %= javascript "/js/jquery.sidr.min.js";
 %= javascript "/js/jquery.touchwipe.min.js";
-%= javascript "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"
+%= javascript "//netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
 %= javascript "/js/bootstrap3-typeahead.js";
 % if (my $ga = config('google_analytics')) {
 <script>

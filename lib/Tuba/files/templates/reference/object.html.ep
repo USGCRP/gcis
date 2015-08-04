@@ -4,22 +4,12 @@
 <h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
 </center>
 
-%= include 'history_modal';
+%= include 'edit_buttons';
 
-    % if ($object->can('identifier') && user_can('update')) {
-        %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-            </div>
-        </div>
-% }
-
-<pre>
+<div class='row well squeezevert'>
 <%= include 'other_formats'; =%>
 <%= include 'db_meta'; =%>
-</pre>
+</div>
 
 
 <div class='row well'>
