@@ -46,23 +46,20 @@
 </style>
 </head>
 <body class="front-page">
-	%= include 'menu';
-
-	</div>
-   <div class='container' id='maincontent'>
-
-        % if (my $msg = flash 'message') {
-             	<div class='alert alert-info'>
-					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					%= $msg
-				</div>
-				% }
-            <%= content %>
+    <div id="wrap">
+		<div id="main">
+        %= include 'menu';
+        <div class='container-fluid'>
+            % if (my $msg = flash 'message') {
+                    <div class='alert alert-info'>
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        %= $msg
+                    </div>
+                    % }
+                <%= content %>
             </div>
-    
-
-       
-      
+        </div>
+    </div>
 </body>
 </html>
 % }

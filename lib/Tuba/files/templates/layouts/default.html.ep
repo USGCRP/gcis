@@ -63,11 +63,7 @@
 <body>
 	<div id="wrap">
 		<div id="main">
-
      %= include 'menu';
-
-          
-        
    <div class='container-fluid' id='maincontent'>        
              
              
