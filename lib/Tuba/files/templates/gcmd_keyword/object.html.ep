@@ -10,16 +10,18 @@
 % if ($object->can('identifier') && user_can('update')) {
     <div class='row'>
 		<div class='col-md-2 pull-right'>
-		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-		</div>
+            <div class='btn-group'>
+            <%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+            </div>
+        </div>
 </div>
 % }
 
-<pre>
+<div class='row well squeezevert'>
 <%= include 'other_formats'; =%>
 <%= include 'db_meta'; =%>
-</pre>
+</div>
 
 % if (my $pub = $object->get_publication) {
 <center>Files</center>

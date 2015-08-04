@@ -1,5 +1,5 @@
-<div style='float:right;'>
-%= obj_link_to $meta->class, 'create_form' => class => 'btn btn-default' => begin
+<div class='pull-right'>
+%= obj_link_to $meta->class, 'create_form' => class => 'btn btn-default btn-xs' => begin
 Add <%= $meta->table %>
 %= end
 </div>

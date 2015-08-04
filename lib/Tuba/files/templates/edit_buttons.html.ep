@@ -1,0 +1,12 @@
+% unless (param 'no_header') {
+    % if (user_can('update')) {
+        %= include 'history_modal';
+        <div class='row'>
+		<div class='pull-right btn-group'>
+		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
+		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
+		</div>
+	</div>
+    % }
+% }
+

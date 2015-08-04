@@ -10,5 +10,5 @@
 <%= link_to "$base.rdfxml" => class => 'label label-primary' => begin %>RDF+XML<%= end %> \
 <%= link_to "$base.rdfjson" => class => 'label label-primary' => begin %>RDF+JSON<%= end %> \
 <%= link_to "$base.dot" => class => 'label label-primary' => begin %>Graphviz<%= end %> \
-<%= link_to "$base.svg" => class => 'label label-primary' => begin %>SVG<%= end %>
+<%= link_to "$base.svg" => class => 'label label-primary' => begin %>SVG<%= end %><br>
 <%= $self->req->url %>

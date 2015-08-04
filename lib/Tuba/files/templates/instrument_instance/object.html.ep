@@ -5,19 +5,6 @@
 <h2>Instrument instance : <%= $object->stringify %></h2>
 </center>
 
-% unless (param 'no_header') {
-
-  % if ($object->can('identifier') && user_can('update')) {
-    %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-        	</div>
-        </div>
-    % }
-% }
-
 <div class='row well'>
         <%= include 'obj_thumbnails', objs => [ $object->platform, $object->instrument] %>
         <p>Measurements by the <%= obj_link($object->instrument) %> instrument on the <%= obj_link($object->platform) %> platform :</p>

@@ -5,19 +5,10 @@
 <h2>file : <%= $object->stringify %></h2>
 </center>
 
-% if (user_can('update')) {
-%= include 'history_modal';
-<div class='row'>
-		<div class='col-md-2 pull-right'>
-		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-		</div>
-</div>
-% }
-
+%= include 'edit_buttons';
 <div class='row well'>
         <div class='col-md-8 col-md-offset-2' style='text-align:center;'>
-                %= link_to $object->asset_location => download => $file->file => class => "btn  btn-default btn-lg thumbnail" => begin
+                %= link_to $object->asset_location => download => $file->file => class => "thumbnail" => begin
                 <img style='border:1px solid #aaa;' class="img-responsive" src='<%= $file->thumbnail_path %>' />
                 <div class='caption centered' >download (<%= human_size($file->size) %>)
 % if ($file->location) {

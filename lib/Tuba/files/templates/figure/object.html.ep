@@ -7,17 +7,7 @@
 <h2>Figure : <%= $figure->identifier %></h2>
 </center>
 
-% if (user_can('update')) {
-%= include 'history_modal';
-
-<div class='row'>
-		<div class='col-md-2 pull-right'>
-		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-		</div>
-</div>
-% }
-
+%= include 'edit_buttons';
 <div class='row well' itemscope itemtype="http://schema.org/ImageObject">
    
         <div class='pull-right col-lg-4 col-md-4 col-sm-8 col-xs-12'>

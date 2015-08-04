@@ -8,18 +8,6 @@
 % 'uncertainties' => 'New information and remaining uncertainties',
 % 'confidence'    => 'Assessment of confidence based on evidence');
 
-% unless (param 'no_header') {
-    %= include 'history_modal';
-    % if ($object->can('identifier') && user_can('update')) {
-<div class='row'>
-		<div class='col-md-2 pull-right'>
-		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-		</div>
-</div>
-    % }
-% }
-
 <center>
     % if ($finding->chapter && $finding->chapter->number) {
     <h2>finding <%= $finding->numeric %> : <%= $finding->identifier %></h2>
@@ -28,6 +16,7 @@
     % }
 </center>
 
+%= include 'edit_buttons';
 <div class='row well'>
         % my $pub = $report->get_publication;
         <p class='lead'><%= $finding->statement %></p>

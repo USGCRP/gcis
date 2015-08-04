@@ -8,20 +8,8 @@
 <h2>Lexicon : <%= $lexicon->stringify %></h2>
 </center>
 
-% unless (param 'no_header') {
+%= include 'edit_buttons';
 
- 
-  % if ($object->can('identifier') && user_can('update')) {
-    %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-        	</div>
-        </div>
-    % }
-
-% }
 <div class='row'>
 <div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
 <%= link_to 'list_lexicon' => begin %>&larr;lexicons<%= end %>

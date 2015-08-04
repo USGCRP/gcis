@@ -13,7 +13,6 @@
     <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
 % }
 %= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css";
-%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css";
 %= stylesheet "/css/gcis.css";
 %= stylesheet "/css/jquery.sidr.light.css";
 %= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";

@@ -4,21 +4,7 @@
     <h2>book <%= $book->identifier %></h2>
 </center>
 
-% unless (param 'no_header') {
-
-    % if ($object->can('identifier') && user_can('update')) {
-        %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-            </div>
-        </div>
-        
-    % }
-    <br>
-% }
-
+%= include 'edit_buttons';
 
     <div class='row well'>
         % my $pub = $book->get_publication;

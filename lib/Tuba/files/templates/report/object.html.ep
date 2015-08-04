@@ -8,33 +8,7 @@
     <h2><%= join ' ', map ucfirst, split /_/, ($report->report_type_identifier || 'report') %> : <%= $report->identifier %>
 </center>
 
-% unless (param 'no_header') {
-
-    % if ($object->can('identifier') && user_can('update')) {
-        %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-            </div>
-        </div>
-        
-        <div class='row'>
-            <div class='col-lg-2 col-md-2 col-sm-4 col-xs-12 pull-right'>
-            <div class='btn-group'>
-            % if (my $prev = stash 'prev') {
-                <%= obj_link_to $prev => 'show', class => 'btn btn-default', => begin %><i class='glyphicon glyphicon-arrow-left'></i><%= end %>
-            % }
-            <%= link_to url_with->query([long => 1]), class => 'btn btn-default' => begin %>long<%= end %>
-            % if (my $next = stash 'next') {
-                <%= obj_link_to $next => 'show', class => 'btn btn-default', => begin %><i class='glyphicon glyphicon-arrow-right'></i><%= end %>
-            % }
-            </div>
-            </div>
-        </div>
-    % }
-    <br>
-% }
+%= include 'edit_buttons';
 
 % my $numeric_link = begin
 %   my ($count,$what,$list_page) = @_;

@@ -4,16 +4,7 @@
 <h2>Chapter: <%= $chapter->identifier %></h2>
 </center>
 
-% if (user_can('update')) {
-%= include 'history_modal';
-
-<div class='row well'>
-            <div class='col-md-2 pull-right'>
-                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-            </div>
-        </div>
-% }
+%= include 'edit_buttons', object => $object;
 
 % my $pub = $chapter->get_publication;
 <div class='row well'>

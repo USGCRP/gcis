@@ -6,17 +6,7 @@
 <h2>image : <%= $object->stringify %></h2>
 </center>
 
-% unless (param 'no_header') {
-    % if ($object->can('identifier') && user_can('update')) {
-        %= include 'history_modal';
-        <div class='row'>
-		<div class='col-md-2 pull-right'>
-		<%= link_to obj_uri_for($object,'update_form') => class => "btn btn-default" => begin %>edit<%= end %>
-		<a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-		</div>
-	</div>
-    % }
-% }
+%= include 'edit_buttons', object => $object;
 <div class='row well'>
     
         <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:right;'>

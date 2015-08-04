@@ -1,4 +1,5 @@
 <div class="row">
+    <div class="col-lg-12 well squeezevert">
 <% if (user_can('update') && (stash 'meta')) { %>
 <%= include 'create_link'%>
 <% } %>
@@ -7,7 +8,6 @@
 % $base->query(Mojo::Parameters->new);
 % $base->path->parts->[-1] =~ s/.html$//;
 % $query = "?$query" if $query;
-<pre>
 <%= link_to "$base.json".$query => class => 'label label-primary' => begin %>JSON<%= end %> \
 <%= link_to "$base.yaml".$query => class => 'label label-primary' => begin %>YAML<%= end %> \
 <%= link_to "$base.csv".$query => class => 'label label-primary' => begin %>CSV<%= end %> \
@@ -19,7 +19,7 @@ Unique keys : <%= join ',', $meta->unique_keys %>
 Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relationships } %>
 % }
 % }
-</pre>
+</div>
 </div>
 
 

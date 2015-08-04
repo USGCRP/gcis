@@ -98,13 +98,12 @@ img.usgcrp.thumbnail {
 	display: inline;
 }
 .btn {
-    white-space: normal;
+    max-height:100px;
+    overflow:hidden;
+    white-space:normal;
 }
 .pagers .btn, .no-wrap {
 	white-space: nowrap;
-}
-a.btn {
-    color: #0088cc;
 }
 a.btn-info {
     color: white;

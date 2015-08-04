@@ -5,7 +5,7 @@
 % my @keywords = $object->get_publication(autocreate => 1)->gcmd_keywords;
 % for my $keyword (@keywords) {
 <tr>
-<td class='row'>
+<td>
 %= include 'obj_thumbnails', objs => [ $keyword ];
 </td>
 

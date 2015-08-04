@@ -5,19 +5,7 @@
 <h2><%= $organization->identifier %></h2>
 </center>
 
-% unless (param 'no_header') {
-    %= include 'history_modal';
-
-   % if ($object->can('identifier') && user_can('update')) {
-    %= include 'history_modal';
-        <div class='row'>
-            <div class='col-md-2 pull-right'>
-            <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-            <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-        	</div>
-        </div>
-    % }
-% }
+%= include 'edit_buttons';
 
 <div itemscope itemtype="http://schema.org/Organization" class='row well'>
     

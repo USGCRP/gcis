@@ -43,7 +43,7 @@
 <label class='control-label col-lg-2 col-md-2 col-sm-2'>
     GCMD Keywords
 </label>
-<div class="col-lg-8 col-md-8 col-sm-10" >
+<div class='row'>
 %= include 'controls/gcmd_keywords'
 </div>
 </div>

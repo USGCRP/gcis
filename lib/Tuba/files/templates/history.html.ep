@@ -1,4 +1,11 @@
-% layout 'default';
+% layout 'default', modal_header => begin
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" aria-hidden="true">&times;</button>
+    % my $pk = $object->meta->primary_key->columns->[0];
+    <h4 id="myModalLabel" class="modal-title">
+        % my $history_url = $object->uri($self,{ tab => 'history' } );
+        <%= link_to $history_url  => begin %>change history<%= end %> for <%= $object->meta->table %> : <%= $object->$pk %>
+    </h4>
+% end
 <style>
     .removed {
         background-color:orange;

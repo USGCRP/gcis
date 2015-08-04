@@ -19,7 +19,7 @@
         </div>
     % }
 
-    <pre><%= include 'other_formats'; =%><%= include 'db_meta'; =%></pre>
+    <div class='row'>hi<%= include 'other_formats'; =%><%= include 'db_meta'; =%></div>
 
 % }
 
