@@ -79,7 +79,7 @@
         % if (my @figures = sorted_list($image,'figures')) {
         <p>
         This image is part of <%= @figures==1 ? 'this figure' : 'these figures' %> :
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
         %= include 'obj_thumbnails', objs => [ sorted_list($image,'figures') ], no_table => 1, tiny_captions => 1;
         </div>
         % }
