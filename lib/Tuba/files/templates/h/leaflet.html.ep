@@ -15,7 +15,9 @@
     -moz-border-radius:5px;
   }
 </style>
-<center><div id='map' class='map img-responsive'></div></center>
+<center>
+<div id='map' class='map img-responsive'></div>
+</center>
 <script>
   $(function() {
     var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, 
