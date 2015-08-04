@@ -24,7 +24,7 @@
     % unless (param 'no_header') {
         <div class='row collapse-wrapper'>
         <table class='table table-responsive table-condensed table-bordered table-striped'>
-            <tr><th>Organization</th><th>Role</th><th>Type<th>Publications</th></tr>
+            <tr><th>Organization</th><th>Role</th><th colspan=2>Publications</th></tr>
             % for my $ctr (sort { $a->role_type_identifier cmp $b->role_type_identifier } @{ $object->contributors }) {
             % my @all_maps = @{ $ctr->publication_contributor_maps };
             % my @tables = uniq map $_->publication->publication_type_identifier, @all_maps;
