@@ -284,7 +284,7 @@ table tr td.non_numeric {
 }
 .dev-banner {
     position:absolute;
-    top:12px;
-    left:20%;
-    right:20%;
+    top:8px;
+    left:40%;
+    right:40%;
 }

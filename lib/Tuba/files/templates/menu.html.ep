@@ -61,7 +61,7 @@
                     </a>
                 <a href="/" class='navbar-left'><img class="logo" src="/gcis-logo-100.png" ></a>
                 % unless (is_prod()) {
-                    <center class='label label-warning dev-banner'>
+                    <center class='btn btn-warning dev-banner'>
                     % my $host = $self->req->url->clone->to_abs->host;
                     %= $host
                     </center>
