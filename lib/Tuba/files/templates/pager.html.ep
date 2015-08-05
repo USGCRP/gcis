@@ -21,6 +21,14 @@
                     <button class='btn btn-default btn-sm dropdown-toggle' data-toggle='dropdown'>
                         <small>page <%= $page %></small> <span class='caret'></span>
                     </button>
+                    % if ($page==$pages) {
+                        <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-forward'></i></span>
+                    % } else {
+                        <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-forward'></i><%= end %>
+                    % }
+                    <span class="btn btn-default btn-sm">
+                        <%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
+                    </span>
                     <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>
                         % if (stash 'favorite_ok') {
                             <li><%= link_to url_with->query([page => '♥']) => begin %><i class='glyphicon glyphicon-heart'></i><%= end %></li>
@@ -35,14 +43,7 @@
                         % }
                     % }
                     </ul>
-                    % if ($page==$pages) {
-                        <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-forward'></i></span>
-                    % } else {
-                        <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-forward'></i><%= end %>
-                    % }
-                    <span class="btn btn-default btn-sm">
-                        <%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
-                    </span>
+
                 </div>
             % }
             % if ($show_search_box) {
