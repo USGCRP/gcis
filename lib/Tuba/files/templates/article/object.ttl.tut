@@ -7,7 +7,7 @@
    dcterms:isPartOf <<%= uri($article->journal) %>>;
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
-   dbpprop:pubDate "<%= $article->year %>"^^xsd:gYear;
+   dbpprop:pubYear "<%= $article->year %>"^^xsd:gYear;
 % if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
 % } else {

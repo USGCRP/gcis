@@ -4,7 +4,7 @@
 <<%= current_resource %>>
    dcterms:identifier "<%= $report->identifier %>";
    dcterms:title "<%= $report->title %>"^^xsd:string;
-   dbpprop:pubDate "<%= $report->publication_year %>"^^xsd:gYear;
+   dbpprop:pubYear "<%= $report->publication_year %>"^^xsd:gYear;
 % if ($report->doi) {
    bibo:doi "<%= $report->doi %>";
 % } else {
