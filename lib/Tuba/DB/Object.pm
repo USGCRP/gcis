@@ -12,6 +12,7 @@ use Pg::hstore qw/hstore_encode hstore_decode/;
 use Tuba::Log;
 use Tuba::Util qw/elide_str human_duration/;
 use Mojo::JSON qw/encode_json/;
+use Tuba::DB::Object::Metadata;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -533,6 +534,10 @@ sub same_as {
     my $s = shift;
     my $t = shift;
     return encode_json( [ $s->pk_values ] ) eq encode_json( [ $t->pk_values ] );
+}
+
+sub meta_class {
+    return "Tuba::DB::Object::Metadata";
 }
 
 1;
