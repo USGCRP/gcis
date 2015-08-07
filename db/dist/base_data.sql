@@ -86,7 +86,7 @@ COPY array_table_map (array_identifier, table_identifier, report_identifier) FRO
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY journal (identifier, title, print_issn, online_issn, publisher, country, url, notes) FROM stdin;
+COPY journal (identifier, title, publisher, country, url, notes, print_issn, online_issn) FROM stdin;
 \.
 
 
