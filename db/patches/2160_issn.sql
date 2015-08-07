@@ -5,6 +5,7 @@ create extension if not exists isn;
 update journal set print_issn  = '2040-2244' where print_issn = '2010-2244';
 update journal set online_issn = '545-7885X' where online_issn = '545-7885';
 update journal set online_issn = '0975-9174' where online_issn='0975–9174';
+delete from journal where online_issn is null and print_issn is null;
 
 alter table journal add column new_print_issn issn unique;
 alter table journal add column new_online_issn issn unique;
