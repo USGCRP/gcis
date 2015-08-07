@@ -31,7 +31,7 @@
 
 ## Instrument Instances
 % for my $measurement ($dataset->instrument_measurements) {
-   prov:wasDerivedFrom <<%= uri($measurement->instrument_instance) %>>;
+   prov:wasAttributedTo <<%= uri($measurement->instrument_instance) %>>;
 % }
 
    a gcis:Dataset .
