@@ -173,54 +173,6 @@
             <tr class="tr0">
                 <td>
                 
-                  
-                
-                </td>
-                <td>print_issn</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The 10 or 13 digit ISSN for the print version of this journal.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                
-                </td>
-                <td>online_issn</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The 10 or 13 digit ISSN for the online version of this journal.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
                 </td>
                 <td>publisher</td>
                 <td>character varying</td>
@@ -282,6 +234,54 @@
                 </td>
              </tr>
             
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>print_issn</td>
+                <td>issn</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                </td>
+                <td>online_issn</td>
+                <td>issn</td>
+                <td><i>
+                
+                    
+
+                    
+                       UNIQUE
+                    
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
         </table>
 
         <!-- Inherits -->
@@ -300,6 +300,11 @@
             <tr class="tr0">
                 <td>ck_journal_identifier</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>has_issn</td>
+                <td>CHECK (((print_issn IS NOT NULL) OR (online_issn IS NOT NULL)))</td>
             </tr>
             
         </table>
