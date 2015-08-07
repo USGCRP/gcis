@@ -40,7 +40,12 @@ sub _make_query {
             my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');
             push @query, \(qq[$name\::text like $q]);
             next;
+        } elsif ($col->type =~ /is[sb]n/) {
+            my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');
+            push @query, \(qq[$name\::text like $q]);
+            next;
         };
+
         push @query, $name => { ilike => '%'.$query_string.'%' };
     }
 

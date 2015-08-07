@@ -6,4 +6,8 @@ sub length {
     return 9;
 }
 
+sub type {
+    return "issn";
+}
+
 1;

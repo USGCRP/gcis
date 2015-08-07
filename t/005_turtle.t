@@ -140,7 +140,7 @@ $t->get_ok("/report/animals/chapter/alligators/finding/amphibians.nt")
 
 # Journal
 $t->post_ok("/journal" => \%h
-     => json => { identifier => "gators", title => "fakejournal" } )->status_is(200);
+     => json => { identifier => "gators", title => "fakejournal", print_issn => '1234-5679' } )->status_is(200);
 
 $t->get_ok("/journal/gators")->status_is(200);
 
