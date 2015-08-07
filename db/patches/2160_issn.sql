@@ -1,4 +1,4 @@
-create extension isn;
+create extension if not exists isn;
 
 /* data fixes for dev instances */
 

@@ -17,6 +17,10 @@ open my $fp, '< db/extra/audit.sql' or die "audit.sql :$!";
 my $audit_sql = join '', <$fp>;
 close $fp;
 
+$audit_sql .= <<MORE;
+create extension if not exists isn with schema gcis_metadata;
+MORE
+
 my $builder = Module::Build::Database->new(
     install_base        => '/usr/local/gcis',
     database_type       => 'PostgreSQL',
