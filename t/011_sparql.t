@@ -310,7 +310,7 @@ my $dataset_uri = uri("/dataset/$dataset_identifier");
 sparql_ok(<<SPARQL,
 select ?instance FROM <http://test.data.globalchange.gov>
 where {
-    <$dataset_uri> prov:wasDerivedFrom ?instance .
+    <$dataset_uri> prov:wasAttributedTo ?instance .
 }
 SPARQL
 {
