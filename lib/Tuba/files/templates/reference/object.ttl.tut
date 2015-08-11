@@ -15,4 +15,4 @@
    biro:isReferencedBy <<%= uri($chapter) %>>;
 % }
 
-   a biro:BibliographicRecord, dcterms:bibliographicCitation .
+   a biro:BibliographicRecord .
