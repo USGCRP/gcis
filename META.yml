@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.33'
+    version: '1.34'
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -90,6 +90,10 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/Lexicon.pm
   Tuba::DB::Object::Manager:
     file: lib/Tuba/DB/Object/Manager.pm
+  Tuba::DB::Object::Metadata:
+    file: lib/Tuba/DB/Object/Metadata.pm
+  Tuba::DB::Object::Metadata::Column::ISSN:
+    file: lib/Tuba/DB/Object/Metadata/Column/ISSN.pm
   Tuba::DB::Object::Methodology:
     file: lib/Tuba/DB/Mixin/Object/Methodology.pm
   Tuba::DB::Object::ModelRun:
@@ -203,10 +207,12 @@ requires:
   DBIx::Connector: '0'
   DBIx::Custom: '0'
   DBIx::Simple: '0'
+  Data::Rmap: '0'
   Date::Parse: '0'
   DateTime::Format::Human::Duration: '0'
   Digest::SHA1: '0'
   File::ShareDir: '1.00'
+  Hash::Flatten: '0'
   IO::Socket::SSL: '2'
   JSON::WebToken: '0'
   JSON::XS: '0'
@@ -237,4 +243,4 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.33'
+version: '1.34'
