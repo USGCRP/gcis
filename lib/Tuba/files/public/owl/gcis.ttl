@@ -107,10 +107,21 @@ gcis:Figure a owl:Class ;
 	rdfs:comment "A graphical/visual item in a publication that normally is referred to by a number and that has a caption." ;
 	rdfs:subClassOf prov:Entity .
 
-gcis:Instrument a owl:Class ;
-	rdfs:label "Instrument" ;
-	rdfs:comment "A tool or device used for a particular task, especially for scientific work." ;
+gcis:InstrumentType a owl:Class ;
+	rdfs:label "InstrumentType" ;
+	rdfs:comment "A type of tool or device used for a particular task, especially for scientific work." ;
 	rdfs:subClassOf prov:Entity .
+
+gcis:Instrument a owl:Class ;
+    rdfs:label "Instrument" ;
+    rdfs:comment "A physical instantiation of a tool or device used for a particular task, especially for scientific work." ;
+    rdfs:subClassOf prov:Entity .
+
+gcis:instrumentType a owl:ObjectProperty ;
+	rdfs:label "instrument type" ;
+	rdfs:comment "A specific type of instrument" ;
+	rdfs:domain gcis:Instrument ;
+	rdfs:range gcis:InstrumentType .
 
 gcis:Model a owl:Class ;
 	rdfs:label "Model" ;
@@ -179,7 +190,7 @@ gcis:hasFinding a owl:ObjectProperty ;
 
 gcis:hasFigure a owl:ObjectProperty ;
 	rdfs:label "Has Figure" ;
-	rdfs:comment "A graphical component within a work which most times but not necessarily contains a title and caption ."; 
+	rdfs:comment "A publication contains one or more graphical components which most times but not necessarily contain a title and caption ."; 
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Figure ;
 	rdfs:subPropertyOf dcterms:hasPart .
@@ -213,11 +224,10 @@ gcis:hasArray a owl:ObjectProperty ;
 	rdfs:subPropertyOf dcterms:hasPart .	
 
 gcis:sourceInstrument a owl:ObjectProperty ;
-	rdfs:label "Source Instrument" ;
+	rdfs:label "source instrument" ;
 	rdfs:comment "A dataset was collected by using one or more instruments." ;
 	rdfs:domain gcis:Dataset ;
-	rdfs:range gcis:Instrument ;
-	rdfs:subPropertyOf dcterms:hasPart .
+	rdfs:range gcis:Instrument .
 
 gcis:sourceModel a owl:ObjectProperty ;
 	rdfs:label "Source Model" ;
@@ -225,18 +235,16 @@ gcis:sourceModel a owl:ObjectProperty ;
 	rdfs:range gcis:Model .
 
 gcis:inPlatform a owl:ObjectProperty ;
-	rdfs:label "In Platform" ;
+	rdfs:label "in Platform" ;
 	rdfs:comment "An instrument is deployed on a platform." ;
 	rdfs:domain gcis:Instrument ;
-	rdfs:range gcis:Platform ;
-	rdfs:subPropertyOf dcterms:isPartOf .
+	rdfs:range gcis:Platform .
 
 gcis:hasInstrument a owl:ObjectProperty ;
-	rdfs:label "Has Instrument" ;
+	rdfs:label "has Instrument" ;
 	rdfs:comment "A platform has one or more instruments." ;
 	rdfs:domain gcis:Platform ;
-	rdfs:range gcis:Instrument ;
-	rdfs:subPropertyOf dcterms:hasPart .	
+	rdfs:range gcis:Instrument .	
 	
 gcis:implementedIn a owl:ObjectProperty ;
 	rdfs:label "Implemented In" ;
@@ -698,55 +706,55 @@ gcis:chapterNumber a owl:DatatypeProperty ;
 
 gcis:figureNumber a owl:DatatypeProperty ;
 	rdfs:label "Figure Number" ;
-	rdfs:comment "A figure may have a sequential number." ;
+	rdfs:comment "A figure may be numbered sequentially." ;
 	rdfs:domain gcis:Figure ;
 	rdfs:range xsd:string .	
 	
 gcis:FindingNumber a owl:DatatypeProperty ;
 	rdfs:label "Finding Number" ;
-	rdfs:comment "A finding may have a sequential number." ;
+	rdfs:comment "A finding may be numbered sequentially." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:findingProcess a owl:DatatypeProperty ;
 	rdfs:label "Finding Process" ;
-	rdfs:comment "A finding has a description of the finding generation process." ;
+	rdfs:comment "A finding has a description of the process through which it was derived." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 	
 gcis:findingStatement a owl:DatatypeProperty ;
 	rdfs:label "Key finding" ;
-	rdfs:comment "The text of a Finding in a Highly Influential Scientific Assessment." ;
+	rdfs:comment "The text of the Finding of a Highly Influential Scientific Assessment." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:findingProcess a owl:DatatypeProperty ;
 	rdfs:label "Finding Process" ;
-	rdfs:comment "The description of the process used in order to reach the Finding." ;
+	rdfs:comment "A finding contains a description of the process used in order to reach the Finding." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:descriptionOfEvidenceBase a owl:DatatypeProperty ;
 	rdfs:label "Description of Evidence Base" ;
-	rdfs:comment "Conveys additional information about the quality of the information used in reaching the Finding." ;
+	rdfs:comment "A finding contains additional information about the quality of the information used in reaching the Finding." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 	
 gcis:newInformationAndRemainingUncertainties a owl:DatatypeProperty ;
 	rdfs:label "New Information and Remaining Uncertainties" ;
-	rdfs:comment "A description of the new science developments over a specified timerange, which also includes information about remaining sources of Scientific uncertainty." ;
+	rdfs:comment "A finding contains a description of the new science developments over a specified timerange, which also includes information about remaining sources of Scientific uncertainty." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:assessmentOfConfidenceBasedOnEvidence a owl:DatatypeProperty ;
 	rdfs:label "Assessment of Confidence Based on Evidence" ;
-	rdfs:comment "A description of the level of confidence which the authors have in the Finding."  ;
+	rdfs:comment "A finding contains a description of the level of confidence which the authors have in it."  ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .	
 	
 gcis:hasURL a owl:DatatypeProperty ;
 	rdfs:label "Has URL" ;
-	rdfs:comment "The World Wide Web address for the resource." ;
+	rdfs:comment "A resource may have a digital home accessible at a given address on the World Wide Web." ;
 	rdfs:range xsd:anyURI .			
 	
 gcis:subOrganizationOf a owl:ObjectProperty ;
