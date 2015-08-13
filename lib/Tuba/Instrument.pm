@@ -61,7 +61,7 @@ sub update_rel {
                 platform_identifier => $platform_id,
                 instrument_identifier => $instrument->identifier)->load(
                 speculative => 1) or return $c->redirect_without_error("Could not find $platform_id");
-        $map->delete or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->flash(info => "Deleted $platform_id");
     }
     return $c->SUPER::update_rel(@_);

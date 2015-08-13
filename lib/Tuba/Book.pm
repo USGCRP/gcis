@@ -69,7 +69,7 @@ sub update {
                 $map->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
             }
         }
-        $book->delete;
+        $book->delete(audit_user => $c->audit_user, audit_note => $c->audit_note);
         return $c->redirect_to( $report->uri($c, { tab => 'show' } ) );
     }
     $c->SUPER::update(@_);

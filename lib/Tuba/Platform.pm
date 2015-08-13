@@ -72,7 +72,7 @@ sub update_rel {
         if (my $del = $json->{del}) {
             $del->{platform_identifier} = $platform->identifier;
             my $obj = InstrumentInstance->new( %$del );
-            $obj->delete;
+            $obj->delete(audit_user => $c->audit_user, audit_note => $c->audit_note);
         }
     }
     if (my $instrument_id = $c->param('delete_map_instruments')) {
@@ -80,7 +80,7 @@ sub update_rel {
                 platform_identifier => $platform->identifier,
                 instrument_identifier => $instrument_id)->load(
                 speculative => 1) or return $c->redirect_without_error("Could not find $instrument_id");
-        $map->delete or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->flash(info => "Deleted $instrument_id");
     }
     $c->SUPER::update_rel(@_);

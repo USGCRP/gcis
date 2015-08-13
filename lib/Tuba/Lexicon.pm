@@ -54,7 +54,7 @@ sub update_rel {
             logger->info("deleting $lexicon $context $term");
             my $ex = Exterm->new(lexicon => $lexicon, term => $term, context => $context);
             $ex->load(speculative => 1) or next;
-            $ex->delete or return $c->update_error($ex->error);
+            $ex->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ex->error);
         }
     }
     return $c->redirect_without_error('update_rel_form');

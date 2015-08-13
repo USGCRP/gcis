@@ -157,7 +157,7 @@ sub post_update {
       my $s = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub_id);
       next unless $s->publication->publication_type_identifier eq $cat;
       $s->load(speculative => 1) or next;
-      $s->delete or do { $reference->error($s->error); return 0; };
+      $s->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or do { $reference->error($s->error); return 0; };
   }
   return 1;
 }
@@ -258,7 +258,7 @@ sub update_rel {
             };
             my $sub = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $pub->id);
             $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$pub not found");
-            $sub->delete or return $c->reply->exception($sub->error);
+            $sub->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->reply->exception($sub->error);
         }
 
         return $c->render(json => { status => 'ok'});
@@ -295,7 +295,7 @@ sub update_rel {
     if (my $which = $c->param('delete_publication')) {
         my $sub = PublicationReferenceMap->new(reference_identifier => $reference->identifier, publication_id => $which);
         $sub->load(speculative => 1) or return $c->redirect_with_error(update_rel_form => "$sub not found");
-        $sub->delete(audit_user => $c->audit_user) or return $c->redirect_with_error(update_rel_form => $sub->error);
+        $sub->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->redirect_with_error(update_rel_form => $sub->error);
         $c->stash(message => "saved changes");
     }
     $c->redirect_without_error('update_rel_form');
