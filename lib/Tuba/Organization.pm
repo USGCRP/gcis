@@ -96,7 +96,7 @@ sub update_rel {
                 organization_relationship_identifier => $type
             );
         $map->load(speculative => 1) or return $c->update_error("relationship not found");
-        $map->delete or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->audit_user) or return $c->update_error($map->error);
         $c->stash(info => "Saved changes.");
     }
 
@@ -181,7 +181,7 @@ sub merge {
         { organization_identifier => $other->identifier},
         { organization_identifier => $org->identifier })
         or die $dbs->errstr;
-      $org->delete;
+      $org->delete(audit_user => $c->audit_user);
       $dbs->commit or die $dbs->error;
     };
     if ($@) { return $c->update_error($@) }
