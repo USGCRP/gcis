@@ -96,7 +96,7 @@ sub update_rel {
                 organization_relationship_identifier => $type
             );
         $map->load(speculative => 1) or return $c->update_error("relationship not found");
-        $map->delete(audit_user => $c->audit_user), audit_note => $c->audit_note or return $c->update_error($map->error);
+        $map->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->stash(info => "Saved changes.");
     }
 
