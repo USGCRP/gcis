@@ -14,7 +14,7 @@
    gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
 % }
 
-   a gcis:AcademicArticle .
+   a gcis:AcademicArticle, fabio:Article .
 % end
 
 
