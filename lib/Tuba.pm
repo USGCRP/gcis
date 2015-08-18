@@ -432,7 +432,12 @@ sub startup {
     # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl
     # Then prefix href's for the css at the top with
     #   http://ontorule-project.eu/parrot
-    $app->types->type(owl => 'text/html');
+    $app->types->type(owl         => 'text/html');
+    $app->types->type(ttl         => [ 'application/x-turtle', 'text/turtle' ]);
+    $app->types->type(nt          => [ 'application/n-triples', 'text/n3', 'text/rdf+n3' ]);
+    $app->types->type(jsontriples => [ 'application/ld+json' ]);
+    $app->types->type(rdfxml      => [ 'application/rdf+xml' ]);
+    $app->types->type(rdfjson     => [ 'application/rdf+json' ]);
 
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');

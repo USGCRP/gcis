@@ -4,6 +4,7 @@
 # This test creates a report, a chapter, and a finding, and tests that the
 # result is valid turtle.
 #
+use open ':std', ':encoding(utf8)';
 use FindBin;
 use lib $FindBin::Bin;
 use tinit;
@@ -38,32 +39,64 @@ $t->post_ok("/report" => form => { identifier => "animals", title => "Animals" }
 # Create a chapter called alligators
 $t->post_ok("/report/animals/chapter" => form => { identifier => "alligators", title => "All about alligators" } )->status_is(200);
 
-# Check representation of a report.
-$t->get_ok("/report/animals.ttl")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[gcis:hasChapter] );
+# Check representations of a report.
+{
+    $t->get_ok("/report/animals.ttl")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[gcis:hasChapter] );
+    my $body = $t->tx->res->body;
+    $t->get_ok("/report/animals" => { Accept => "application/x-turtle" } )
+        ->content_is($body);
+    $t->get_ok("/report/animals" => { Accept => "text/turtle" } )
+        ->content_is($body);
+}
 
 # Try some other formats
-$t->get_ok("/report/animals.nt")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[hasChapter] );
+{
+    $t->get_ok("/report/animals.nt")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[hasChapter] );
+    my $body = $t->tx->res->body;
+    $t->get_ok("/report/animals" => { Accept => "application/n-triples" } )
+        ->content_is($body);
+    $t->get_ok("/report/animals" => { Accept => "text/n3" } )
+        ->content_is($body);
+    $t->get_ok("/report/animals" => { Accept => "text/rdf+n3" } )
+        ->content_is($body);
+}
 
-$t->get_ok("/report/animals.jsontriples")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[hasChapter] );
+{
+    $t->get_ok("/report/animals.jsontriples")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[hasChapter] );
+    my $body = $t->tx->res->body;
+    $t->get_ok("/report/animals" => { Accept => "application/ld+json" } )
+        ->content_is($body);
+}
 
-$t->get_ok("/report/animals.rdfxml")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[hasChapter] );
+{
+    $t->get_ok("/report/animals.rdfxml")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[hasChapter] );
+    my $body = $t->tx->res->body;
+    $t->get_ok("/report/animals" => { Accept => "application/rdf+xml" } )
+        ->content_is($body);
+}
 
-$t->get_ok("/report/animals.rdfjson")
-    ->status_is(200)
-    ->content_like( qr[report/animals] )
-    ->content_like( qr[hasChapter] );
+{
+    # RDF JSON Alternate Serialization (not recommended)
+    $t->get_ok("/report/animals.rdfjson")
+        ->status_is(200)
+        ->content_like( qr[report/animals] )
+        ->content_like( qr[hasChapter] );
+    my $body = $t->tx->res->body;
+    $t->get_ok("/report/animals" => { Accept => "application/rdf+json" } )
+        ->content_is($body);
+}
 
 $t->get_ok("/report/animals.dot")
     ->status_is(200)
