@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo dbpprop gcis cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo dbpprop gcis fabio cito biro/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>   
@@ -14,7 +14,7 @@
    gcis:hasURL "<%= $article->url %>"^^xsd:anyURI;
 % }
 
-   a gcis:AcademicArticle .
+   a gcis:AcademicArticle, fabio:Article .
 % end
 
 
