@@ -46,7 +46,7 @@
    dcterms:spatial <<%= uri($pub->regions) %>>;
 % }
 
-   a gcis:Report .
+   a gcis:Report, fabio:Report .
 
 % end
 
