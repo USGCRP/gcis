@@ -115,17 +115,31 @@ sub startup {
         }
     } );
     $app->hook(before_dispatch => sub {
-        # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
+        # Support X-Forwarded-Base in reverse proxy setup
         my $c = shift;
-        push @{$c->req->url->base->path}, shift @{$c->req->url->path}
-          if @{ $c->req->url->path->parts } && $c->req->url->path->parts->[0] eq 'api';
         my $forward_base = $c->req->headers->header('X-Forwarded-Base');
         $c->req->url->base(Mojo::URL->new($forward_base)) if $forward_base;
-    }) if $app->mode eq 'production';
+
+        if ($c->req->url->path eq '/gcis.owl') {
+            if ($c->accepts('html')) {
+                $c->res->headers->content_type("text/html");
+                return 1;
+            }
+            $c->respond_to(
+                ttl => sub {
+                    my $c = shift;
+                    $c->res->headers->content_type("text/turtle");
+                    $c->app->static->serve($c,"owl/gcis.ttl");
+                    $c->rendered;
+                }
+            );
+        }
+        1;
+    });
     $app->hook(after_static => sub {
            my $c = shift;
-            $c->res->headers->content_disposition('attachment;') if $c->param('download');
-        });
+           $c->res->headers->content_disposition('attachment;') if $c->param('download');
+    });
     $app->hook(before_render => sub {
             # If there is an object, set the stash value corresponding to its moniker.
             my $c = shift;
@@ -432,7 +446,6 @@ sub startup {
     # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl
     # Then prefix href's for the css at the top with
     #   http://ontorule-project.eu/parrot
-    $app->types->type(owl         => 'text/html');
     $app->types->type(ttl         => [ 'application/x-turtle', 'text/turtle' ]);
     $app->types->type(nt          => [ 'application/n-triples', 'text/n3', 'text/rdf+n3' ]);
     $app->types->type(jsontriples => [ 'application/ld+json' ]);
