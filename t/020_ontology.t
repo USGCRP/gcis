@@ -30,6 +30,13 @@ $t->get_ok("/gcis.owl" => { Accept => "application/x-turtle" } )
     ->turtle_ok
     ->content_like(qr[\Qprefix gcis: <http://data.globalchange.gov/gcis.owl#> .\E]);
 
+$t->get_ok("/gcis.owl" => { Accept => "application/n-triples" } )
+  ->content_like(qr[\Q<http://data.globalchange.gov/gcis.owl> <http://www.w3.org/2000/01/rdf-schema#label> "GCIS Ontology" .\E])
+  ->status_is(200);
+
+$t->get_ok("/gcis.owl" => { Accept => "application/rdf+xml" } )
+  ->status_is(200)
+  ->content_like(qr{\Q<rdf:Description rdf:about="http://data.globalchange.gov/gcis.owl">\E});
 
 done_testing();
 

@@ -120,21 +120,33 @@ sub startup {
         my $forward_base = $c->req->headers->header('X-Forwarded-Base');
         $c->req->url->base(Mojo::URL->new($forward_base)) if $forward_base;
 
-        if ($c->req->url->path eq '/gcis.owl') {
-            if ($c->accepts('html')) {
-                $c->res->headers->content_type("text/html");
-                return 1;
-            }
-            $c->respond_to(
-                ttl => sub {
-                    my $c = shift;
-                    $c->res->headers->content_type("text/turtle");
-                    $c->app->static->serve($c,"owl/gcis.ttl");
-                    $c->rendered;
-                }
-            );
+        # Support various accept headers for gcis.owl
+        return 1 unless $c->req->url->path eq '/gcis.owl';
+        if ($c->accepts('html')) {
+            $c->res->headers->content_type("text/html");
+            return 1;
         }
-        1;
+        $c->respond_to(
+            ttl => sub {
+                my $c = shift;
+                $c->res->headers->content_type("text/turtle");
+                $c->app->static->serve($c,"owl/gcis.ttl");
+                $c->rendered;
+            },
+            nt => sub {
+                my $c = shift;
+                $c->res->headers->content_type("text/plain");
+                $c->render_ttl_as( $c->app->static->file("owl/gcis.ttl")->slurp,
+                    'ntriples');
+            },
+            rdfxml => sub {
+                my $c = shift;
+                $c->res->headers->content_type("application/rdf+xml");
+                $c->render_ttl_as( $c->app->static->file("owl/gcis.ttl")->slurp,
+                    'rdfxml');
+            },
+        );
+        return 1;
     });
     $app->hook(after_static => sub {
            my $c = shift;
