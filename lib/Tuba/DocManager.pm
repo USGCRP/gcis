@@ -118,6 +118,7 @@ our %RouteDoc = (
       description => "Given a numeric ID, redirect to the full URI of a publication.",
   },
   show_contributor => {
+      _show_defaults('contributor'),
       tags => [qw/contributor/],
       brief => "Redirect to a particular contributor.",
       description => "Given a numeric ID, redirect to the full URI of a contributor.",
@@ -191,6 +192,7 @@ our %RouteDoc = (
       description => "Given an ORCID, if there is a match, redirect to the person's URI.",
   },
   personname => {
+      _show_defaults('person'),
       tags => [qw/contributor/],
       brief => "Redirect to a person based on a name",
       description => "Given a name (case sensitive, concatenated by dashes), redirect if there is a single match.  The first and last names can be in either order.",
@@ -474,6 +476,7 @@ sub as_swagger {
             { name => "model", description => "Models, model runs, scenarios, projects." },
         ],
         host => $host,
+        basePath => $host,
         paths => $s->_build_paths($c),
     };
 }
