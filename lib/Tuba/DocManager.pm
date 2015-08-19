@@ -476,7 +476,6 @@ sub as_swagger {
             { name => "model", description => "Models, model runs, scenarios, projects." },
         ],
         host => $host,
-        basePath => $host,
         paths => $s->_build_paths($c),
     };
 }
