@@ -104,7 +104,6 @@ sub api_reference {
       $c->stash(placeholders => \@placeholders);
     }
   );
-
 }
 
 1;

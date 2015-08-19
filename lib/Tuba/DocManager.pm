@@ -251,6 +251,7 @@ sub find_doc {
       note        => $entry->{note},
       tags        => $entry->{tags},
       response_headers => $entry->{response_headers},
+      formats     => $entry->{formats},
     );
 }
 
@@ -308,6 +309,11 @@ sub _show_defaults {
     return (
       brief =>  "Get a representation of $an $phrase.",
       description => "Get JSON which represents the structure of $an $phrase.",
+      formats => [
+          'application/json', 'application/x-turtle', 'text/turtle',
+          'application/n-triples', 'text/n3', 'text/rdf+n3', 'application/ld+json',
+          'application/rdf+xml', 'application/rdf+json',
+      ],
       $a{withs} ? 
       (
           params => [
@@ -394,7 +400,7 @@ sub _walk_routes {
                       headers     => $doc->response_headers || {}
                     }
                     },
-                  produces    => [ "application/json" ],
+                  produces    => $doc->formats || [ "application/json" ],
                   tags        => $doc->tags || [ "misc" ],
                   ( parameters  => \@params ) x !!@params,
               }

@@ -14,6 +14,7 @@ has 'params';
 has 'note';
 has 'tags';
 has 'response_headers';
+has 'formats';
 
 1;
 
