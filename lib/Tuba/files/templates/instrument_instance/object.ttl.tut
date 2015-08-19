@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms gcis/];
+% layout 'default', namespaces => [qw/dcterms prov gcis/];
 
 <<%= current_resource %>>
 % for my $platform ($instrument_instance->platform) {
@@ -13,4 +13,4 @@
    prov:contributed <<%= uri($measurement->dataset) %>>;
 % }
 
-   a gcis:Instrument .
+   a gcis:Instrument, prov:Agent .
