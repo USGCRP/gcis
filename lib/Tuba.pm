@@ -63,6 +63,7 @@ use Tuba::Converter;
 use Tuba::Log;
 use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
+use Data::Rmap qw/rmap_all/;
 use strict;
 
 our $VERSION = '1.34';
@@ -95,6 +96,7 @@ sub startup {
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
 
+    # Renderers
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
             my $str = shift;
             return "" unless defined($str) && length($str);
@@ -104,6 +106,12 @@ sub startup {
             $str =~ s/\r/\\r/g;
             return $str;
         }}});
+    $app->renderer->add_handler(json_canonical => sub {
+            my ($r,$c,$o) = @_;
+            my $j = $c->stash('jsonxs');
+            rmap_all { $_ = "$_" if ref($_) && ref($_) eq 'Mojo::ByteStream' } \$j;
+            $$o = JSON::XS->new->canonical(1)->convert_blessed->encode($j);
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {

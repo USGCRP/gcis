@@ -79,7 +79,7 @@ sub api_reference {
   $c->respond_to(
     json => sub {
       my $c = shift;
-      $c->render(json => Tuba::DocManager->new->as_swagger($c));
+      $c->render(jsonxs => Tuba::DocManager->new->as_swagger($c), handler => 'json_canonical');
     },
     yaml => sub {
       my $c = shift;
