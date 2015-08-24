@@ -55,6 +55,7 @@ on
         height:20px;
     }
 </style>
+%= include 'list_formats', no_csv => 1;
 <div class='log well'>
 % for my $row (@$change_log) {
     <div class='logrow'>

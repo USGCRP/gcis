@@ -8,6 +8,8 @@
     <%= link_to $self->req->url->clone->query(view => 'summary') => begin %>summary<%= end %>
     </li>
 </ul>
+<br>
+%= include 'list_formats', no_csv => 1;
 <div>
 %= form_for current_route() => class => 'form form-inline summary' => begin
 <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
