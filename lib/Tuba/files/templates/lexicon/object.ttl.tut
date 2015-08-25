@@ -5,6 +5,6 @@
    dcterms:title "<%= $lexicon->description %>"^^xsd:string;
    gcis:hasURL "<%= $lexicon->url %>"^^xsd:anyURI;
 
-   a skos:ConceptScheme, dbpedia:Lexicon .
+   a skos:ConceptScheme .
 
 %= include 'representation';
