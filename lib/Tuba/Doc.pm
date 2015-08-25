@@ -29,25 +29,54 @@ limit 10",
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX dbpedia: <http://dbpedia.org/resource/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX gcis: <http://data.globalchange.gov/gcis.owl#>
 
-SELECT
-    str($findingNumber) as $findingNumber 
-    str($statement) as $statement 
-    $finding 
- 
-FROM <http://data.globalchange.gov>
-WHERE {
-    $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
-    $report a gcis:Report .
-    $report gcis:hasChapter $chapter .
-    $finding gcis:isFindingOf $chapter .
-    $finding dcterms:description $statement .
-    $finding dbpedia:Natural_number $ordinal .
-    $finding gcis:findingNumber $findingNumber .
-    $finding a gcis:Finding .
-    $chapter gcis:chapterNumber $chapterNumber .
+SELECT 
+	?Chapter_Title
+	?findingNumber
+	?chapterNumber
+	?figureOfChapter_Text
+	?Finding_Text
+	?Finding_ID
+{
+  { 
+    SELECT DISTINCT
+    	str(?chapterTitle) as ?Chapter_Title
+    	str(?findingNumber) as ?findingNumber
+    	str(?chapterNumber) as ?chapterNumber
+    	xsd:integer(SUBSTR(?findingNumber,3)) as ?figureOfChapter
+    	SUBSTR(?findingNumber,3) as ?figureOfChapter_Text
+    	str(?findingStatement) as ?Finding_Text
+    	?finding as ?Finding_ID
+	WHERE {
+		<http://data.globalchange.gov/report/nca3> gcis:hasChapter ?chapter .
+		?chapter dcterms:title ?chapterTitle .
+		?chapter gcis:chapterNumber ?chapterNumber .
+		?chapter gcis:hasFinding ?finding .
+		?finding gcis:findingNumber ?findingNumber .
+		?finding gcis:findingStatement ?findingStatement .
+		FILTER(?chapterNumber < 10)
+	} ORDER BY ?chapterNumber ?figureOfChapter
+  } UNION {
+	SELECT DISTINCT
+		str(?chapterTitle) as ?Chapter_Title
+    	str(?findingNumber) as ?findingNumber
+    	str(?chapterNumber) as ?chapterNumber
+		xsd:integer(SUBSTR(?findingNumber,4)) as ?figureOfChapter
+    	SUBSTR(?findingNumber,4) as ?figureOfChapter_Text
+		str(?findingStatement) as ?Finding_Text
+		?finding as ?Finding_ID
+	WHERE {
+		<http://data.globalchange.gov/report/nca3> gcis:hasChapter ?chapter .
+		?chapter dcterms:title ?chapterTitle .
+		?chapter gcis:chapterNumber ?chapterNumber .
+		?chapter gcis:hasFinding ?finding .
+		?finding gcis:findingNumber ?findingNumber .
+		?finding gcis:findingStatement ?findingStatement .
+		FILTER(?chapterNumber >= 10)
+	} ORDER BY ?chapterNumber ?figureOfChapter
+  }
 }
-ORDER BY $chapterNumber $ordinal
 SPARQL
         },
         {
