@@ -37,6 +37,11 @@ div#resources_container {
     $(function () {
       var url = 'http://' + window.location.host;
       url += "/api_reference.json";
+      var here = window.location.pathname;
+      if (here == '/api') {
+           here = '/api/';
+           window.location.href = here;
+      }
 
       // Pre load translate...
       if(window.SwaggerTranslator) {
@@ -52,7 +57,7 @@ div#resources_container {
               clientId: "your-client-id",
               clientSecret: "your-client-secret",
               realm: "your-realms",
-              appName: "your-app-name", 
+              appName: "your-app-name",
               scopeSeparator: ","
             });
           }

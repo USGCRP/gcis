@@ -481,7 +481,7 @@ sub startup {
     $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/about')->to('doc#about')->name('about');
     $r->get('/autocomplete')->to('search#autocomplete');
-    $r->get('/swagger/index' => sub { shift->render })->name('swagger/index');
+    $r->get('/api' => sub { shift->render(template => 'api/index') })->name('apiref');
 
     unless ($config->{read_only}) {
         my $authed = $r->under->to(

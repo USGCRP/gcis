@@ -106,7 +106,7 @@ Examples and tutorials for using this system as a researcher, citizen scientist,
 
 
 <h2>
-    <%= link_to 'swagger/index' =>class => 'j' =>  begin %>API reference<%= end %></h2>
+    <%= link_to 'api' => class => 'j' =>  begin %>API reference<%= end %></h2>
     <p>Complete documentation for the API, including methods for browsing and finding resources.</p>
 
 
