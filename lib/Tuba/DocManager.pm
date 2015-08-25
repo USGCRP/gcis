@@ -472,7 +472,7 @@ sub as_swagger {
             { name => "reference", description => "Routes related to bibliographic information." },
             { name => "contributor", description => "People and organizations." },
             { name => "obs", description => "Platforms and instruments." },
-            { name => "lexicon", description => "Lexicons, contexts and terms, and their mapping to GCIS URIs." },
+            { name => "lexicon", description => "Lexicons, contexts and terms." },
             { name => "model", description => "Models, model runs, scenarios, projects." },
         ],
         host => $host,
