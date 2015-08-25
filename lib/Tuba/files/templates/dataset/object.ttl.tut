@@ -23,7 +23,7 @@ dcterms:spatial [
     gcis:southBoundLatitude "<%= $dataset->lat_min %>"^^xsd:float;
     gcis:eastBoundLongitude "<%= $dataset->lon_max %>""^^xsd:float;
     gcis:westBoundLongitude "<%= $dataset->lon_min %>"^^xsd:float;
-  ]
+  ] ;
    dwc:geodeticDatum "<%= $dataset->spatial_ref_sys %>";
    gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
 dcterms:temporal [
