@@ -19,7 +19,7 @@ use Number::Bytes::Human qw/format_bytes/;
 use Mojo::ByteStream qw/b/;
 use Mojo::Util qw/decamelize xml_escape/;
 use URI::Find;
-use Lingua::EN::Inflect qw/A PL/;
+use Lingua::EN::Inflect qw/A PL PL_V/;
 use Sort::Key qw/keysort/;
 
 use Tuba::Log;
@@ -265,9 +265,7 @@ sub register {
             my $full = shift or return;
             my $count = shift;
             my $str = $c->ontology_human($full);
-            return $str if $count==1;
-            $str =~ s/was/were/;
-            $str =~ s/is/are/g;
+            return PL_V($str,$count);
             return $str;
         } );
  
