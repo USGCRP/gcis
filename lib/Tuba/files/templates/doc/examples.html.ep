@@ -35,6 +35,8 @@ $ curl http://data.globalchange.gov/report/nca3/chapter.json
 $ curl -H 'Accept: application/json' http://data.globalchange.gov/report/nca3/figure
 </pre>
 
+<p>For the complete list of endpoints, as well as the valid Accept headers, please
+refer to the <%= link_to 'apiref' => begin %>api reference<%= end %>.
 
 <h3>SPARQL interface</h3>
 <p>The GCIS API exposes a SPARQL endpoint at <%= link_to '/sparql' => begin %><%= $sparql_url %><%= end %>.
