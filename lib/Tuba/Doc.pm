@@ -23,7 +23,7 @@ sub examples {
 where { ?s a gcis:Figure }
 limit 10",
         },
-        { desc => "List all of the findings from the Third National Climate Assessment.",
+        { desc => "List all of the chapter findings from the Third National Climate Assessment.",
           code => <<'SPARQL',
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
