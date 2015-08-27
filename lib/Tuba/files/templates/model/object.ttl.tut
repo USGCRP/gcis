@@ -3,13 +3,13 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $model->identifier %>";
-   gcis:Project <<%= uri($model->project) %>>;
+   prov:wasAttributedTo <<%= uri($model->project) %>>;
    dcterms:title "<%= $model->name %>";
    gcis:hasVersion "<%= $model->version %>";
    dcterms:description "<%= $model->description %>";
    gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
 % for my $model_run ($model->model_runs) {
-   gcis:ModelRun <<%= uri($model_run) %>>;
+   prov:wasUsedBy <<%= uri($model_run) %>>;
 % }
 
    a gcis:Model .
