@@ -23,31 +23,18 @@ sub examples {
 where { ?s a gcis:Figure }
 limit 10",
         },
-        { desc => "List all of the findings from the Third National Climate Assessment.",
+        { desc => "Locate the year of the earliest publication cited in the Third National Climate Assessment.",
           code => <<'SPARQL',
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
-PREFIX dbpedia: <http://dbpedia.org/resource/>
-PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX cito: <http://purl.org/spar/cito/>
+PREFIX dbpprop: <http://dbpedia.org/property/>
 
-SELECT
-    str($findingNumber) as $findingNumber 
-    str($statement) as $statement 
-    $finding 
- 
-FROM <http://data.globalchange.gov>
-WHERE {
-    $report dcterms:title "Climate Change Impacts in the United States: The Third National Climate Assessment"^^xsd:string .
-    $report a gcis:Report .
-    $report gcis:hasChapter $chapter .
-    $finding gcis:isFindingOf $chapter .
-    $finding dcterms:description $statement .
-    $finding dbpedia:Natural_number $ordinal .
-    $finding gcis:findingNumber $findingNumber .
-    $finding a gcis:Finding .
-    $chapter gcis:chapterNumber $chapterNumber .
+select min(?pubYear as ?Publication_Year) FROM <http://data.globalchange.gov> where { 
+   ?s cito:isCitedBy ?nca3 .
+   ?nca3 dcterms:identifier "nca3" .
+   ?s dbpprop:pubYear ?pubYear
 }
-ORDER BY $chapterNumber $ordinal
 SPARQL
         },
         {
