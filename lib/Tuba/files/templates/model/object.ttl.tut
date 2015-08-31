@@ -9,7 +9,7 @@
    dcterms:description "<%= $model->description %>";
    gcis:hasURL "<%= $model->description_attribution %>"^^xsd:anyURI;
 % for my $model_run ($model->model_runs) {
-   prov:wasUsedBy <<%= uri($model_run) %>>;
+   prov:hadDerivation <<%= uri($model_run) %>>;
 % }
 
    a gcis:Model .
