@@ -27,6 +27,8 @@ div#resources_container {
   <script src='lib/highlight.7.3.pack.js' type='text/javascript'></script>
   <script src='lib/marked.js' type='text/javascript'></script>
   <script src='lib/swagger-oauth.js' type='text/javascript'></script>
+%= javascript "/js/jquery.sidr.min.js";
+%= javascript "/js/jquery.touchwipe.min.js";
 
   <!-- Some basic translations -->
   <!-- <script src='lang/translator.js' type='text/javascript'></script> -->
