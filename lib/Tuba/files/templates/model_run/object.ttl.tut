@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms bibo gcis skos/];
+% layout 'default', namespaces => [qw/dcterms bibo gcis prov skos/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
