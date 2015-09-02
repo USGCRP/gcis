@@ -11,6 +11,7 @@ use Pg::hstore qw/hstore_decode/;
 use Encode;
 use Tuba::Log;
 use List::MoreUtils qw/uniq/;
+use Data::Rmap qw/rmap/;
 
 sub _user_can_view {
     my $c = shift;
@@ -199,7 +200,31 @@ sub watch {
     }
 
     my $template = $view eq 'summary' ? 'watch/summary' : 'watch/details';
-    $c->render($template);
+    $c->respond_to(
+        html => sub {
+            shift->render($template);
+        },
+        json => sub {
+            my $c = shift;
+            my $data = $c->stash('change_log') || $c->stash('results');
+            for (@$data) {
+                if (my $obj = delete $_->{obj}) {
+                    $_->{uri} = [ $obj->uri($c) ];
+                }
+            }
+            $c->render(json => $data);
+        },
+        yaml => sub {
+            my $c = shift;
+            my $data = $c->stash('change_log') || $c->stash('results');
+            for (@$data) {
+                if (my $obj = delete $_->{obj}) {
+                    $_->{uri} = [ $obj->uri($c) ];
+                }
+            }
+            $c->render_yaml($data);
+        },
+    );
 }
 
 sub update_rel_form {

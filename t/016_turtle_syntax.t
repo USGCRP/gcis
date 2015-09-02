@@ -63,7 +63,7 @@ $t->post_ok(
   }
 )->status_is(200);
 $t->post_ok("/journal" => \%h => json =>
-    {identifier => "gators", title => "fakejournal"})->status_is(200);
+    {identifier => "gators", title => "fakejournal", print_issn => "1234-5679"})->status_is(200);
 $t->post_ok(
   "/article" => \%h => json => {
     identifier         => "gatorade",

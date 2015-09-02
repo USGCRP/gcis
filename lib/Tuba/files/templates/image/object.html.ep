@@ -9,12 +9,12 @@
 %= include 'edit_buttons', object => $object;
 <div class='row well'>
     
-        <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:right;'>
+        <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:center;'>
         % my $pub = $image->get_publication;
         % if ($pub) {
             % for my $file ($pub->files) {
             %= link_to "show_file", { 'file_identifier' => $file->identifier } => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail', style => 'padding:0px;'
+                %= image $file->thumbnail_path, class => 'img-thumbnail'
                 %= end
             % }
         % }

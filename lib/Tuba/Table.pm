@@ -142,7 +142,7 @@ sub update_rel {
         my $array = Array->new(identifier => $id);
         $array->load;
         if (!@{ $array->tables }) {
-            $array->delete;
+            $array->delete(audit_user => $c->audit_user, audit_note => $c->audit_note);
             $c->flash(message => 'Deleted array');
         } else {
             $c->flash(message => 'Deleted array for this table');

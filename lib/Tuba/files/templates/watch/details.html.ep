@@ -52,8 +52,10 @@ on
         overflow:hidden;
         text-overflow:ellipsis;
         width:100px;
+        height:20px;
     }
 </style>
+%= include 'list_formats', no_csv => 1;
 <div class='log well'>
 % for my $row (@$change_log) {
     <div class='logrow'>
@@ -66,7 +68,7 @@ on
                      <% if (@uri) { %>/<% } %>
                 <% } %>
              <% } else { %>
-                 <%= link_to $uri[0] => class => 'btn btn-default squeezevert' => begin =%>
+             <%= link_to $uri[0] => class => 'btn btn-default squeezevert' => title => $row->{obj}->pk_values => begin =%>
                      <%= $row->{obj}->pk_values =%>
                  <%= end %>
              <% } %>

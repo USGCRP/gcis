@@ -2,7 +2,8 @@ package Tuba::DB::Object::PublicationContributorMap;
 
 sub uri {
     my $s = shift;
-    return ( $s->publication->uri(@_), $s->contributor->uri(@_) );
+    return ( "/publication/".$s->publication_id,
+             "/contributor/".$s->contributor_id );
 }
 
 1;

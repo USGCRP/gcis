@@ -1095,13 +1095,14 @@ COMMENT ON COLUMN instrument_measurement.dataset_identifier IS 'The dataset.';
 CREATE TABLE journal (
     identifier character varying NOT NULL,
     title character varying,
-    print_issn character varying,
-    online_issn character varying,
     publisher character varying,
     country character varying,
     url character varying,
     notes character varying,
-    CONSTRAINT ck_journal_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    print_issn issn,
+    online_issn issn,
+    CONSTRAINT ck_journal_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT has_issn CHECK (((print_issn IS NOT NULL) OR (online_issn IS NOT NULL)))
 );
 
 
@@ -1115,14 +1116,6 @@ COMMENT ON COLUMN journal.identifier IS 'A descriptive identifier for this journ
 
 
 COMMENT ON COLUMN journal.title IS 'The title of the journal (source: crossref.org)';
-
-
-
-COMMENT ON COLUMN journal.print_issn IS 'The 10 or 13 digit ISSN for the print version of this journal.';
-
-
-
-COMMENT ON COLUMN journal.online_issn IS 'The 10 or 13 digit ISSN for the online version of this journal.';
 
 
 
@@ -2284,6 +2277,16 @@ ALTER TABLE ONLY instrument
 
 
 ALTER TABLE ONLY journal
+    ADD CONSTRAINT journal_new_online_issn_key UNIQUE (online_issn);
+
+
+
+ALTER TABLE ONLY journal
+    ADD CONSTRAINT journal_new_print_issn_key UNIQUE (print_issn);
+
+
+
+ALTER TABLE ONLY journal
     ADD CONSTRAINT journal_pkey PRIMARY KEY (identifier);
 
 
@@ -2465,16 +2468,6 @@ ALTER TABLE ONLY "table"
 
 ALTER TABLE ONLY "table"
     ADD CONSTRAINT table_report_identifier_chapter_identifier_ordinal_key UNIQUE (report_identifier, chapter_identifier, ordinal);
-
-
-
-ALTER TABLE ONLY journal
-    ADD CONSTRAINT uk_journal_online_issn UNIQUE (online_issn);
-
-
-
-ALTER TABLE ONLY journal
-    ADD CONSTRAINT uk_journal_print_issn UNIQUE (print_issn);
 
 
 

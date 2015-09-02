@@ -61,7 +61,7 @@
     <div class='row collapse-wrapper'>
     <table class='table table-responsive table-condensed table-bordered table-striped'>
         <caption>Contributions</caption>
-        <tr><th>Who</th><th>Role</th><th>Publications</th>
+        <tr><th>Who</th><th>Role</th><th colspan=2>Publications</th>
         </tr>
         <% for my $ctr (
             map $_->[1],

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+% my $meta_url = $self->req->url->clone;
+% $meta_url->query(Mojo::Parameters->new());
+% $meta_url =~ s/\.([^.]+)$//;
+% $meta_url = "$meta_url";
+% if (length($meta_url) > 1) {
+    % $meta_url.=".rdfxml";
+    <link rel="meta" type="application/rdf+xml" title="metadata" href="<%= $meta_url %>" />
+% }
+%= javascript "//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js";
+%= stylesheet "//netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css";
+%= stylesheet "/css/gcis.css";
+%= stylesheet "/css/jquery.sidr.light.css";
+% if (my $ga = config('google_analytics')) {
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '<%= $ga->{id} %>', '<%= $ga->{domain} %>');
+  ga('send', 'pageview');
+</script>
+% }
+<link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title><%= title %> - GCIS</title>
+<style>
+    .hideme { display:none; }
+</style>
+</head>
+<body>
+	<div id="wrap">
+		<div id="main">
+         %= include 'menu';
+         <div class='container-fluid' id='maincontent'>
+         %= content
+            <div id="footer" class="centered">
+            <a href="http://www.globalchange.gov/" target="_blank" id="no-cont"><img class="logo" src="/usgcrp-200.png" ></a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+% }
+<script>
+  $(document).ready(function() {
+      $('#simple-menu').sidr();
+      $("#sidr").removeClass('hideme');
+  });
+  $(window).touchwipe({
+    wipeLeft: function() {
+      // Close
+      $.sidr('close', 'sidr-main');
+    },
+    wipeRight: function() {
+      // Open
+      $.sidr('open', 'sidr-main');
+    },
+    preventDefaultEvents: false
+  });
+</script>

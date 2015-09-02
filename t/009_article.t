@@ -23,8 +23,8 @@ my $base = $t->ua->server->url;
 my %j = (
   identifier  => 'nature',
   title       => "Nature",
-  print_issn  => "1234-5678",
-  online_issn => "1234-5679",
+  print_issn  => "1234-5679",
+  online_issn => "1234-8678",
   publisher   => "nature publishing co",
   country     => "US",
   url         => "http://nature.com",
@@ -44,8 +44,8 @@ $t->get_ok("/journal/nature.json")->json_is(
 
 my %k = %j;
 $k{identifier} = 'nurture';
-$k{print_issn} = '2323-1313';
-$k{online_issn} = '3131-3123';
+$k{print_issn} = '2323-1319';
+$k{online_issn} = '3131-3124';
 $k{url} = 'http://nurture.com';
 $k{title} = 'Nurture';
 

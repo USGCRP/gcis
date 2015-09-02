@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo gcis cito biro prov/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis fabio cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
 %#  
 <<%= current_resource %>>
@@ -24,7 +24,7 @@
    gcis:hasFinding <<%= uri($finding) %>>;
 % }
 
-   a gcis:Chapter .
+   a gcis:Chapter, fabio:Chapter .
 
 % end
 

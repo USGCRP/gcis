@@ -75,7 +75,7 @@ $t->get_ok("/reference/history/$reference_identifier")
 
 # Update. Associate the reference with an article.
 my $article_doi = "10.123/456.789";
-$t->post_ok("/journal" => json => { identifier => 'nature', print_issn => '1234-5678'} );
+$t->post_ok("/journal" => json => { identifier => 'nature', print_issn => '1234-5679'} );
 $t->post_ok("/article" => json => { identifier => $article_doi, journal_identifier => 'nature' });
 
 $t->post_ok("/reference/$reference_identifier" => json => {

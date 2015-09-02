@@ -20,7 +20,7 @@
     <th>findings</th>
     <th>tables</th>
     <th>references</th>
-    <th>files</th>
+    <th class="col-lg-4 col-md-4 col-sm-2 col-xs-2">files</th>
 </th>
 % for my $chapter (@$objects) {
     <tr>
@@ -53,12 +53,10 @@
         %= $chapter->reference_count;
         %= end
     </td>
-    <td>
-     <div class='col-md-2'>
+    <td class="thumbnails">
        % if (my $pub = $chapter->get_publication) {
        %= include 'pub_thumbnails', pub => $pub, simple => 1
        % }
-    </div>
     </td>
     </tr>
 % }

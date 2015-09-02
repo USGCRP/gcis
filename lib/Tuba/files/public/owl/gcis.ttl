@@ -107,10 +107,21 @@ gcis:Figure a owl:Class ;
 	rdfs:comment "A graphical/visual item in a publication that normally is referred to by a number and that has a caption." ;
 	rdfs:subClassOf prov:Entity .
 
-gcis:Instrument a owl:Class ;
-	rdfs:label "Instrument" ;
-	rdfs:comment "A tool or device used for a particular task, especially for scientific work." ;
+gcis:InstrumentType a owl:Class ;
+	rdfs:label "InstrumentType" ;
+	rdfs:comment "A type of tool or device used for a particular task, especially for scientific work." ;
 	rdfs:subClassOf prov:Entity .
+
+gcis:Instrument a owl:Class ;
+    rdfs:label "Instrument" ;
+    rdfs:comment "A physical instantiation of a tool or device used for a particular task, especially for scientific work." ;
+    rdfs:subClassOf prov:Entity .
+
+gcis:instrumentType a owl:ObjectProperty ;
+	rdfs:label "instrument type" ;
+	rdfs:comment "A specific type of instrument" ;
+	rdfs:domain gcis:Instrument ;
+	rdfs:range gcis:InstrumentType .
 
 gcis:Model a owl:Class ;
 	rdfs:label "Model" ;
@@ -122,9 +133,9 @@ gcis:Region a owl:Class ;
 	rdfs:comment "A spatial area defined by a common characteristic (e.g. coastal, southwest, rural communities, etc.)." ;
 	rdfs:subClassOf prov:Entity .	
 
-gcis:SpatialExtents a owl:Class ;
-	rdfs:label "Spatial Extents" ;
-	rdfs:comment "A bounding box describing the northern, southern, western, and eastern limits of the data or results." ;
+gcis:SpatialExtent a owl:Class ;
+	rdfs:label "Spatial Extent" ;
+	rdfs:comment "A spatial region defined by a bounding box." ;
 	rdfs:subClassOf prov:Entity .	
 
 gcis:SpatialResolution a owl:Class ;
@@ -132,9 +143,9 @@ gcis:SpatialResolution a owl:Class ;
 	rdfs:comment "The detail with which a map or image depicts the location and shape of geographic features. The finer the map scale, the higher the possible resolution. As scale decreases from fine to coarse, resolution diminishes and feature boundaries must be smoothed, simplified, or not shown at all; for example, small areas may have to be represented as points." ;
 	rdfs:subClassOf prov:Entity .	
 	
-gcis:TemporalExtents a owl:Class ;
+gcis:TemporalExtent a owl:Class ;
 	rdfs:label "Temporal Extents" ;
-	rdfs:comment "The time information, including that of the earliest and last observations, of a dataset." ;
+	rdfs:comment "An interval of time defined by its start and end dates or datetimes." ;
 	rdfs:subClassOf prov:Entity .	
 
 gcis:TemporalResolution a owl:Class ;
@@ -152,21 +163,32 @@ gcis:Platform a owl:Class ;
 	rdfs:comment "A scientific data collection entity to which other entities - particuarly instruments, sensors and other platforms - can be attached." ;
 	rdfs:subClassOf prov:Entity .
 
+gcis:ObservationSystem a owl:Class ;
+	rdfs:label "Observation System" ;
+	rdfs:comment "One or more sensing elements that directly or indirectly collect observations of the Earth, measure environmental parameters, or survey biological or other Earth resources (land surface, biosphere, solid Earth, atmosphere, and oceans). Sensing elements may be deployed as individual sensors or in constellations or networks and may include instrumentation or human elements." ;
+	rdfs:subClassOf prov:Entity .
+
+gcis:hasSensingElement a owl:ObjectProperty ;
+	rdfs:label "has sensing element" ;
+	rdfs:comment "An observation system may consist of one or more sensing elements such as individual sensors, instruments, platforms and humans." ;
+	rdfs:domain gcis:ObservationSystem ;
+	rdfs:subPropertyOf dcterms:hasPart .
+	
 gcis:hasChapter a owl:ObjectProperty ;
-	rdfs:label "Has Chapter" ;
+	rdfs:label "has chapter" ;
 	rdfs:comment "A publication may have a number of chapters." ;
 	rdfs:range gcis:Chapter ;
 	rdfs:subPropertyOf dcterms:hasPart .	
 
 gcis:hasCommittee a owl:ObjectProperty ;
-	rdfs:label "Has Committee" ;
+	rdfs:label "has committee" ;
 	rdfs:comment "A report such as the National Climate Assessment may have a committee that is in charge of the writing and reviewing of that report." ;
 	rdfs:domain gcis:Report ;
 	rdfs:range gcis:Committee ;
 	rdfs:subPropertyOf prov:wasAttributedTo .
 
 gcis:hasAuthor a owl:ObjectProperty ;
-	rdfs:label "Has Author" ;
+	rdfs:label "has author" ;
 	rdfs:comment "A resource may have one or more authors." ;
 	rdfs:range gcis:Agent ;
 	rdfs:subPropertyOf prov:wasAttributedTo .
@@ -178,96 +200,93 @@ gcis:hasFinding a owl:ObjectProperty ;
 	rdfs:subPropertyOf dcterms:hasPart.
 
 gcis:hasFigure a owl:ObjectProperty ;
-	rdfs:label "Has Figure" ;
-	rdfs:comment "A graphical component within a work which most times but not necessarily contains a title and caption ."; 
+	rdfs:label "has figure" ;
+	rdfs:comment "A publication contains one or more graphical components which most times but not necessarily contain a title and caption ."; 
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Figure ;
 	rdfs:subPropertyOf dcterms:hasPart .
 
 gcis:relatedProject a owl:ObjectProperty ;
-	rdfs:label "Related Project" ;
+	rdfs:label "related project" ;
 	rdfs:comment "A publication or dataset may be the result of one or more projects." ;
 	rdfs:domain gcis:Publication, gcis:Dataset ;
 	rdfs:range gcis:Project ;
 	rdfs:subPropertyOf prov:wasAttributedTo .
 
 gcis:worksAt a owl:ObjectProperty ;
-	rdfs:label "Works At" ;
+	rdfs:label "works at" ;
 	rdfs:comment "A person works at an organization." ;
 	rdfs:domain gcis:Person ;
 	rdfs:range gcis:Organization, gcis:Group ;
 	rdfs:subPropertyOf prov:actedOnBehalfOf .
 
 gcis:hasImage a owl:ObjectProperty ;
-	rdfs:label "Has Image" ;
+	rdfs:label "has image" ;
 	rdfs:comment "The graphical component of a Figure." ;
 	rdfs:domain gcis:Figure, gcis:Image ;
 	rdfs:range gcis:Image ;
 	rdfs:subPropertyOf dcterms:hasPart .
 
 gcis:hasArray a owl:ObjectProperty ;
-	rdfs:label "Has Array" ;
+	rdfs:label "has array" ;
 	rdfs:comment "A table may consist of one or more arrays." ;
 	rdfs:domain gcis:Table ;
 	rdfs:range gcis:Array ;
 	rdfs:subPropertyOf dcterms:hasPart .	
 
 gcis:sourceInstrument a owl:ObjectProperty ;
-	rdfs:label "Source Instrument" ;
+	rdfs:label "source instrument" ;
 	rdfs:comment "A dataset was collected by using one or more instruments." ;
 	rdfs:domain gcis:Dataset ;
-	rdfs:range gcis:Instrument ;
-	rdfs:subPropertyOf dcterms:hasPart .
+	rdfs:range gcis:Instrument .
 
 gcis:sourceModel a owl:ObjectProperty ;
-	rdfs:label "Source Model" ;
+	rdfs:label "source model" ;
 	rdfs:comment "A dataset was generated by using one or more models." ;
 	rdfs:range gcis:Model .
 
 gcis:inPlatform a owl:ObjectProperty ;
-	rdfs:label "In Platform" ;
+	rdfs:label "in platform" ;
 	rdfs:comment "An instrument is deployed on a platform." ;
 	rdfs:domain gcis:Instrument ;
-	rdfs:range gcis:Platform ;
-	rdfs:subPropertyOf dcterms:isPartOf .
+	rdfs:range gcis:Platform .
 
 gcis:hasInstrument a owl:ObjectProperty ;
-	rdfs:label "Has Instrument" ;
+	rdfs:label "has instrument" ;
 	rdfs:comment "A platform has one or more instruments." ;
 	rdfs:domain gcis:Platform ;
-	rdfs:range gcis:Instrument ;
-	rdfs:subPropertyOf dcterms:hasPart .	
+	rdfs:range gcis:Instrument .	
 	
 gcis:implementedIn a owl:ObjectProperty ;
-	rdfs:label "Implemented In" ;
+	rdfs:label "implemented in" ;
 	rdfs:comment "An algorithm is implemented in a software system." ;
 	rdfs:domain gcis:Algorithm ;
 	rdfs:range gcis:Software .
 	
 gcis:implements a owl:ObjectProperty ;
-	rdfs:label "Implements" ;
+	rdfs:label "implements" ;
 	rdfs:comment "A software system implements one or more algorithms." ;
 	rdfs:domain gcis:Software ;
 	rdfs:range gcis:Algorithm .	
 
 gcis:hasMember a owl:ObjectProperty ;
-	rdfs:label "Has Member" ;
+	rdfs:label "has member" ;
 	rdfs:comment "An agent has some members." ;
 	rdfs:subPropertyOf prov:hadDelegate.
 
 gcis:hasGoverningOrganization a owl:ObjectProperty ;
-	rdfs:label "Has Governing Organization" ;
+	rdfs:label "has governing organization" ;
 	rdfs:comment "An organization is responsible for a project." ;
 	rdfs:range gcis:Organization .
 
 gcis:producedDataset a owl:ObjectProperty ;
-	rdfs:label "Produced Dataset" ;
+	rdfs:label "produced dataset" ;
 	rdfs:comment "An activity generates datasets." ;
 	rdfs:range gcis:Dataset	;
 	rdfs:subPropertyOf prov:generated.
 
 gcis:dataCenter a owl:ObjectProperty ;
-	rdfs:label "Data Center" ;
+	rdfs:label "data center" ;
 	rdfs:comment "A dataset is curated at a data center." ;
 	rdfs:subPropertyOf prov:wasAttributedTo ;
 	rdfs:range gcis:Organization, gcis:Group .
@@ -319,9 +338,14 @@ gcis:DatasetCapture a owl:Class ;
 
 gcis:ModelRun a owl:Class ;
 	rdfs:label "Model Run" ;
-	rdfs:comment "An entity generated by a model." ;
-	rdfs:subClassOf prov:Entity .
+	rdfs:comment "An activity of running a model." ;
+	rdfs:subClassOf prov:Activity .
 
+gcis:ModelRunOutput a owl:Class ;
+	rdfs:label "Model Run Output" ;
+	rdfs:comment "Results generated by running a model." ;
+	rdfs:subClassOf prov:Activity, gcis:Dataset .	
+	
 gcis:CommitteeChair a prov:Role ;
 	rdfs:label "Committee Chair" ;
 	rdfs:comment "A person who organizes and directs a committee." .
@@ -489,14 +513,14 @@ gcis:Calibration a owl:Class ;
 	rdfs:subClassOf prov:Entity .
 
 gcis:isBasedOn a owl:ObjectProperty ;
-	rdfs:label "Is Based On" ;
+	rdfs:label "is based on" ;
 	rdfs:comment "A key finding is based on one or more chapters." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range gcis:Finding ;
 	rdfs:subPropertyOf prov:wasDerivedFrom .
 
 gcis:hasTable a owl:ObjectProperty ;
-	rdfs:label "Has Table" ;
+	rdfs:label "has table" ;
 	rdfs:comment "A publication may contain tables." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Table ;
@@ -504,68 +528,68 @@ gcis:hasTable a owl:ObjectProperty ;
 	
 gcis:sourceDataset a owl:ObjectProperty ;
 	skos:editorialNote "The domain of gcis:sourceDataset covers various classes, so it is left as undefined." ;
-	rdfs:label "Source Dataset" ;
+	rdfs:label "source dataset" ;
 	rdfs:comment "A figure, table, publication, etc. may be based on one or more datasets." ;
 	rdfs:range gcis:Dataset .
 	
 gcis:sourceAlgorithm a owl:ObjectProperty ;
-	rdfs:label "Source Algorithm" ;
+	rdfs:label "source algorithm" ;
 	rdfs:comment "A dataset may be based on one or more algorithms." ;
 	rdfs:domain gcis:Dataset ;
 	rdfs:range gcis:Algorithm .
 
 gcis:hasSensor a owl:ObjectProperty ;
-	rdfs:label "Has Sensor" ;
+	rdfs:label "has sensor" ;
 	rdfs:comment "An instrument may have one or more sensors." ;
 	rdfs:domain gcis:Instrument ;
 	rdfs:range gcis:Sensor ;
 	rdfs:subPropertyOf dcterms:hasPart .
 	
 gcis:inInstrument a owl:ObjectProperty ;
-	rdfs:label "In Instrument" ;
+	rdfs:label "in instrument" ;
 	rdfs:comment "A sensor may be deployed in one or more instruments." ;
 	rdfs:domain gcis:Sensor ;
 	rdfs:range gcis:Instrument ;
 	rdfs:subPropertyOf dcterms:isPartOf .	
 
 gcis:targetSensor a owl:ObjectProperty ;
-	rdfs:label "Target Sensor" ;
+	rdfs:label "target sensor" ;
 	rdfs:comment "A calibration is applied to its target sensors." ;
 	rdfs:domain gcis:Calibration ;
 	rdfs:range gcis:Sensor .
 
 gcis:publicationStatus a owl:DatatypeProperty ;
-	rdfs:label "Publication Status" ;
+	rdfs:label "publication status" ;
 	rdfs:comment "The status of the publication of a document." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range xsd:string .		
 
 gcis:hasTraceableAccount a owl:ObjectProperty ;
-	rdfs:label "Has Traceable Account" ;
+	rdfs:label "has traceable account" ;
 	rdfs:comment "A finding may have a traceable account." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range gcis:TraceableAccount .
 
 gcis:confidence a owl:ObjectProperty ;
-	rdfs:label "Has Confidence" ;
+	rdfs:label "has confidence" ;
 	rdfs:comment "A finding has a confidence assertion." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range gcis:ConfidenceAssertion .
 
 gcis:subject a owl:ObjectProperty ;
-	rdfs:label "Subject" ;
+	rdfs:label "subject" ;
 	rdfs:comment "A publication, figure, message, dataset, etc. may use one or more concepts as subject." ;
 	rdfs:range skos:Concept ;
 	rdfs:subPropertyOf dcterms:subject .
 
 gcis:hasFundingAgency a owl:ObjectProperty ;
 	skos:editorialNote "The domain of gcis:hasFundingAgency covers various classes, so it is left as undefined." ;
-	rdfs:label "Has Funding Agency" ;
+	rdfs:label "has funding agency" ;
 	rdfs:comment "A project, software, instrument, etc. may be funded by an agent." ;
 	rdfs:range gcis:Agent .
 
 gcis:hasInputDataset a owl:ObjectProperty ;
-	rdfs:label "Has Input Dataset" ;
+	rdfs:label "has input dataset" ;
 	rdfs:comment "An activity may have input datasets." ;
 	rdfs:subPropertyOf prov:used ;
 	rdfs:range gcis:Dataset .
@@ -575,45 +599,45 @@ gcis:version a owl:DatatypeProperty ;
 	rdfs:subPropertyOf dbpprop:version .
 
 gcis:hasSpatialResolution a owl:ObjectProperty ;
-	rdfs:label "Has Spatial Resolution" ;
+	rdfs:label "has spatial resolution" ;
 	rdfs:comment "Description of the smallest quantity that is discernable in a geographic feature." ;
 	rdfs:range gcis:SpatialResolution .
 
 gcis:hasTemporalResolution a owl:ObjectProperty ;
-	rdfs:label "Has Temporal Resolution" ;
+	rdfs:label "has temporal resolution" ;
 	rdfs:comment "The frequency of an observation." ;
 	rdfs:range gcis:TemporalResolution .
 
 gcis:wasProducedBy a owl:ObjectProperty ;
-	rdfs:label "Was Produced By" ;
+	rdfs:label "was produced by" ;
 	rdfs:comment "A report was produced by an activity of report producing." ;
 	rdfs:domain gcis:Report ;
 	rdfs:range gcis:ReportGeneration ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
 gcis:wasWrittenBy a owl:ObjectProperty ;
-	rdfs:label "Was Written By" ;
+	rdfs:label "was written by" ;
 	rdfs:comment "A chapter was writen by an activity of chapter writing." ;
 	rdfs:domain gcis:Chapter ;
 	rdfs:range gcis:ChapterWriting ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
 gcis:wasPreparedBy a owl:ObjectProperty ;
-	rdfs:label "Was Prepared By" ;
+	rdfs:label "was prepared by" ;
 	rdfs:comment "A publication was prepared by an activitiy of publication preparation." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:PublicationPreparation ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
 gcis:wasCapturedBy a owl:ObjectProperty ;
-	rdfs:label "Was Captured By" ;
+	rdfs:label "was captured by" ;
 	rdfs:comment "A dataset was captured by an activity of dataset capturing." ;
 	rdfs:domain gcis:Dataset ;
 	rdfs:range gcis:DatasetCapture ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
 gcis:wasCompiledBy a owl:ObjectProperty ;
-	rdfs:label "Was Compiled By" ;
+	rdfs:label "was compiled by" ;
 	rdfs:comment "A figure was compiled by an activity of figure compiling." ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
@@ -678,105 +702,99 @@ gcis:ImageCreation a owl:Class ;
 	rdfs:subClassOf prov:Activity .
 
 gcis:cites a owl:ObjectProperty ;
-	rdfs:label "Cites" ;
+	rdfs:label "cites" ;
 	rdfs:comment "A person or a publication mentions another publication or person as a reason or an example, or in order to support the statement of itself." ;
 	rdfs:subPropertyOf bibo:cites ; 
 	rdfs:subPropertyOf dcterms:references .
 
 gcis:atLocation a owl:ObjectProperty ;
 	skos:editorialNote "The domain of gcis:atLocation covers various classes, so it is left as undefined." ;
-	rdfs:label "At Location" ;
+	rdfs:label "at location" ;
 	rdfs:comment "Something is at a geographic or non-geographic place." ;
 	rdfs:range gcis:Location ;
 	rdfs:subPropertyOf prov:atLocation .
 
 gcis:chapterNumber a owl:DatatypeProperty ;
-	rdfs:label "Chapter Number" ;
+	rdfs:label "chapter number" ;
 	rdfs:comment "A chapter may have a sequential number." ;
 	rdfs:domain gcis:Chapter ;
 	rdfs:range xsd:integer .	
 
 gcis:figureNumber a owl:DatatypeProperty ;
-	rdfs:label "Figure Number" ;
-	rdfs:comment "A figure may have a sequential number." ;
+	rdfs:label "figure number" ;
+	rdfs:comment "A figure may be numbered sequentially." ;
 	rdfs:domain gcis:Figure ;
 	rdfs:range xsd:string .	
 	
 gcis:FindingNumber a owl:DatatypeProperty ;
-	rdfs:label "Finding Number" ;
-	rdfs:comment "A finding may have a sequential number." ;
-	rdfs:domain gcis:Finding ;
-	rdfs:range xsd:string .
-
-gcis:findingProcess a owl:DatatypeProperty ;
-	rdfs:label "Finding Process" ;
-	rdfs:comment "A finding has a description of the finding generation process." ;
+	rdfs:label "finding number" ;
+	rdfs:comment "A finding may be numbered sequentially." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 	
 gcis:findingStatement a owl:DatatypeProperty ;
-	rdfs:label "Key finding" ;
-	rdfs:comment "The text of a Finding in a Highly Influential Scientific Assessment." ;
+	rdfs:label "key finding" ;
+	rdfs:comment "The text of the Finding of a Highly Influential Scientific Assessment." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:findingProcess a owl:DatatypeProperty ;
-	rdfs:label "Finding Process" ;
-	rdfs:comment "The description of the process used in order to reach the Finding." ;
+	rdfs:label "finding process" ;
+	rdfs:comment "A finding contains a description of the process used in order to reach it." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:descriptionOfEvidenceBase a owl:DatatypeProperty ;
-	rdfs:label "Description of Evidence Base" ;
-	rdfs:comment "Conveys additional information about the quality of the information used in reaching the Finding." ;
+	rdfs:label "description of evidence base" ;
+	rdfs:comment "A finding contains additional information about the quality of the information used in reaching the Finding." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 	
 gcis:newInformationAndRemainingUncertainties a owl:DatatypeProperty ;
-	rdfs:label "New Information and Remaining Uncertainties" ;
-	rdfs:comment "A description of the new science developments over a specified timerange, which also includes information about remaining sources of Scientific uncertainty." ;
+	rdfs:label "new information and remaining uncertainties" ;
+	rdfs:comment "A finding contains a description of the new science developments over a specified timerange, which also includes information about remaining sources of Scientific uncertainty." ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .
 
 gcis:assessmentOfConfidenceBasedOnEvidence a owl:DatatypeProperty ;
-	rdfs:label "Assessment of Confidence Based on Evidence" ;
-	rdfs:comment "A description of the level of confidence which the authors have in the Finding."  ;
+	rdfs:label "assessment of confidence based on evidence" ;
+	rdfs:comment "A finding contains a description of the level of confidence which the authors have in it."  ;
 	rdfs:domain gcis:Finding ;
 	rdfs:range xsd:string .	
 	
 gcis:hasURL a owl:DatatypeProperty ;
-	rdfs:label "Has URL" ;
-	rdfs:comment "The World Wide Web address for the resource." ;
+	rdfs:label "has URL" ;
+	rdfs:comment "A resource may have a digital home accessible at a given address on the World Wide Web." ;
 	rdfs:range xsd:anyURI .			
 	
 gcis:subOrganizationOf a owl:ObjectProperty ;
-	rdfs:label "Sub Organization Of" ;
+	rdfs:label "sub-organization of" ;
 	rdfs:comment "An Organization is a component of another organization." ;
 	rdfs:domain gcis:Organization ;
 	rdfs:range gcis:Organization ;
 	rdfs:subPropertyOf org:subOrganizationOf , prov:actedOnBehalfOf .
 
 gcis:hasPublisher a owl:ObjectProperty ;
-	rdfs:label "Has Publisher" ;
+	rdfs:label "has publisher" ;
 	rdfs:comment "A publication has a publisher that produced it and made it available to the public." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:Agent ;
 	rdfs:subPropertyOf prov:wasAttributedTo .
 
 gcis:used a owl:ObjectProperty ;
-	rdfs:label "Used" ;
+	rdfs:label "used" ;
 	rdfs:comment "An activity uses entities when the activity is being undertaken." ;
 	rdfs:subPropertyOf prov:used .
 
 gcis:wasCreatedBy a owl:ObjectProperty ;
-	rdfs:label "Was Created By" ;
+	rdfs:label "was created by" ;
 	rdfs:comment "An image was created by an activity of image creation." ;
 	rdfs:domain gcis:Image ;
 	rdfs:range gcis:ImageCreation ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
 
 gcis:hasCaption a owl:DatatypeProperty ;
-	rdfs:label "Has Caption" ;
+	rdfs:label "has caption" ;
 	rdfs:comment "A figure or table has a caption that explains or describes it." ;
 	rdfs:domain gcis:Figure , gcis:Table ;
 	rdfs:range xsd:string ;
@@ -808,102 +826,102 @@ gcis:Scenario a owl:Class ;
 	rdfs:subClassOf prov:Entity .
 	
 gcis:describesScenario a owl:ObjectProperty ;
-	rdfs:label "Describes Scenario" ;
+	rdfs:label "describes scenario" ;
 	rdfs:comment "A resource may describe one or more scenarios." ;
 	rdfs:range gcis:Scenario ;
 	owl:inverseOf gcis:scenarioDescribedIn .
 
 gcis:scenarioDescribedIn a owl:ObjectProperty ;
-	rdfs:label "Is Described In" ;
+	rdfs:label "is described in" ;
 	rdfs:comment "A scenario is described in a resource." ;
 	rdfs:domain gcis:Scenario .
 
 gcis:tableNumber a owl:DatatypeProperty ;
-	rdfs:label "Table Number" ;
+	rdfs:label "table number" ;
 	rdfs:comment "The number of a table in a publication." ;
 	rdfs:domain gcis:Table ;
 	rdfs:range xsd:string .
 	
 gcis:byteSize a owl:DatatypeProperty ;
-	rdfs:label "Byte Size" ;
+	rdfs:label "byte size" ;
 	rdfs:comment "The size of a dataset in bytes." ;
 	rdfs:domain gcis:Dataset;
 	rdfs:range xsd:string .
 
 gcis:contactPoint a owl:ObjectProperty ;
-	rdfs:label "Contact Point" ;
+	rdfs:label "contact point" ;
 	rdfs:comment "The point of contact for a dataset." ;
 	rdfs:domain gcis:Dataset ;
 	rdfs:range gcis:Agent .
 
 gcis:extentTypeCode a owl:DatatypeProperty ;
-	rdfs:label "Extent Type Code" ;
+	rdfs:label "extent type code" ;
 	rdfs:comment "The extent type code of a spatial extent." ;
 	rdfs:domain gcis:SpatialExtents ;
 	rdfs:range xsd:string .
 
 gcis:westBoundLongitude a owl:DatatypeProperty ;
-	rdfs:label "West Bound Longitude" ;
+	rdfs:label "west bound longitude" ;
 	rdfs:comment "The value of west bound longitude." ;
 	rdfs:domain gcis:SpatialExtents ;
 	rdfs:range xsd:float .
 
 gcis:eastBoundLongitude a owl:DatatypeProperty ;
-	rdfs:label "East Bound Longitude" ;
+	rdfs:label "east bound longitude" ;
 	rdfs:comment "The value of east bound longitude." ;
 	rdfs:domain gcis:SpatialExtents ;
 	rdfs:range xsd:float .
 
 gcis:southBoundLatitude a owl:DatatypeProperty ;
-	rdfs:label "South Bound Latitude" ;
+	rdfs:label "south bound latitude" ;
 	rdfs:comment "the value of south bound latitude." ;
 	rdfs:domain gcis:SpatialExtents ;
 	rdfs:range xsd:float .
 
 gcis:northBoundLatitude a owl:DatatypeProperty ;
-	rdfs:label "North Bound Latitude" ;
+	rdfs:label "north bound latitude" ;
 	rdfs:comment "The value of north bound latitude." ;
 	rdfs:domain gcis:SpatialExtents ;
 	rdfs:range xsd:float .
 
 gcis:startedAt a owl:DatatypeProperty ;
-	rdfs:label "Started At" ;
+	rdfs:label "started at" ;
 	rdfs:comment "The start date/time of a temporal extent." ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:dateTime .
 
 gcis:startDate a owl:DatatypeProperty ;
-	rdfs:label "Start Date" ;
+	rdfs:label "start date" ;
 	rdfs:comment "The start date of a temporal extent" ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:date .
 
 gcis:endedAt a owl:DatatypeProperty ;
-	rdfs:label "Ended At" ;
+	rdfs:label "ended at" ;
 	rdfs:comment "The end date/time of a temporal extent." ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:dateTime .
 
 gcis:endDate a owl:DatatypeProperty ;
-	rdfs:label "End Date" ;
+	rdfs:label "end date" ;
 	rdfs:comment "The end date of a temporalExtent" ;
 	rdfs:domain gcis:TemporalExtents ;
 	rdfs:range xsd:date .
 
 gcis:resolution a owl:DatatypeProperty ;
-	rdfs:label "Resolution" ;
+	rdfs:label "resolution" ;
 	rdfs:comment "The degree of fineness with which an image can be recorded or produced." ;
 	rdfs:domain gcis:SpatialResolution ;
 	rdfs:range xsd:string .
 
 gcis:equivalentScale a owl:DatatypeProperty ;
-	rdfs:label "Equivalent Scale" ;
+	rdfs:label "equivalent scale" ;
 	rdfs:comment "The equivalent scale of a graph." ;
 	rdfs:domain gcis:SpatialResolution ;
 	rdfs:range xsd:string .
 
 gcis:hasTemporalUnit a owl:ObjectProperty ;
-	rdfs:label "Has Temporal Unit" ;
+	rdfs:label "has temporal unit" ;
 	rdfs:comment "A temporal resolution has one or more temporal units." ;
 	rdfs:domain gcis:TemporalResolution ;
 	rdfs:range gcis:TemporalUnit .
@@ -951,35 +969,35 @@ gcis:unitYear a gcis:UnitType ;
 	rdfs:comment "A year is 12 months." .
 
 gcis:isTraceableAccountOf a owl:ObjectProperty ;
-	rdfs:label "Is Traceable Account Of" ;
+	rdfs:label "is traceable account of" ;
 	rdfs:comment "A traceable account supports a finding." ;
 	owl:inverseOf gcis:hasTraceableAccount ;
 	rdfs:domain gcis:TraceableAccount ;
 	rdfs:range gcis:Finding .
 
 gcis:isChapterOf a owl:ObjectProperty ;
-	rdfs:label "Is Chapter Of" ;
+	rdfs:label "is chapter of" ;
 	rdfs:comment "A chapter is in a publication." ;
 	owl:inverseOf gcis:hasChapter ;
 	rdfs:domain gcis:Chapter ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 
 gcis:isImageOf a owl:ObjectProperty ; 
-	rdfs:label "Is Image Of" ;
+	rdfs:label "is image of" ;
 	rdfs:comment "An image is in one or more figures or other images." ;
 	owl:inverseOf gcis:hasImage ;
 	rdfs:domain gcis:Image ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 	
 gcis:isArrayOf a owl:ObjectProperty ;
-	rdfs:label "Is Array Of" ;
+	rdfs:label "is array of" ;
 	rdfs:comment "An array is in one or more tables." ;
 	owl:inverseOf gcis:hasArray ;
 	rdfs:domain gcis:Array ;
 	rdfs:subPropertyOf dcterms:isPartOf .	
 
 gcis:isFigureOf a owl:ObjectProperty ;
-	rdfs:label "Is Figure Of" ;
+	rdfs:label "is figure of" ;
 	rdfs:comment "A figure is in a publication." ;
 	owl:inverseOf gcis:hasFigure ;
 	rdfs:domain gcis:Figure ;
@@ -987,7 +1005,7 @@ gcis:isFigureOf a owl:ObjectProperty ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 
 gcis:isTableOf a owl:ObjectProperty ;
-	rdfs:label "Is Table Of" ;
+	rdfs:label "is table of" ;
 	rdfs:comment "A table is in a publication." ;
 	owl:inverseOf gcis:hasTable ;
 	rdfs:domain gcis:Table ;
@@ -995,20 +1013,20 @@ gcis:isTableOf a owl:ObjectProperty ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 
 gcis:isFindingOf a owl:ObjectProperty ;
-	rdfs:label "Is Finding Of" ;
+	rdfs:label "is finding of" ;
 	rdfs:comment "A finding is described by a publication." ;
 	owl:inverseOf gcis:hasFinding ;
 	rdfs:domain gcis:Finding ;
 	rdfs:subPropertyOf dcterms:isPartOf .
 
 gcis:isMemberOf a owl:ObjectProperty ;
-	rdfs:label "Is Member Of" ;
+	rdfs:label "is member of" ;
 	rdfs:comment "The relationship that an agent belongs to another agent." ;
 	owl:inverseOf gcis:hasMember ;
 	rdfs:subPropertyOf prov:actedOnBehalfOf .
 
 gcis:isAuthorOf a owl:ObjectProperty ;
-	rdfs:label "Is Author Of" ;
+	rdfs:label "is author of" ;
 	rdfs:comment "An agent can be the author of one or more publications." ;
 	owl:inverseOf gcis:hasAuthor ;
 	rdfs:domain gcis:Agent;
@@ -1016,7 +1034,7 @@ gcis:isAuthorOf a owl:ObjectProperty ;
 	rdfs:subPropertyOf prov:contributed .
 
 gcis:isPublisherOf a owl:ObjectProperty ;
-	rdfs:label "Is Publisher Of" ;
+	rdfs:label "is publisher of" ;
 	rdfs:comment "An agent can be the publisher of one or more publications." ;
 	owl:inverseOf gcis:hasPublisher ;
 	rdfs:domain gcis:Agent;
@@ -1024,7 +1042,7 @@ gcis:isPublisherOf a owl:ObjectProperty ;
 	rdfs:subPropertyOf prov:contributed .
 
 gcis:hasSubOrganization a owl:ObjectProperty ;
-	rdfs:label "Has Sub Organization" ;
+	rdfs:label "has sub-organization" ;
 	rdfs:comment "Represents hierarchical containment of Organizations or OrganizationalUnits; indicates an organization which is a sub-part or child of this organization." ;
 	owl:inverseOf gcis:subOrganizationOf ;
 	rdfs:domain gcis:Organization ; 
@@ -1033,7 +1051,7 @@ gcis:hasSubOrganization a owl:ObjectProperty ;
 	rdfs:subPropertyOf org:hasSubOrganization .
 
 gcis:isSupportedBy a owl:ObjectProperty ;
-	rdfs:label "Is Supported By" ;
+	rdfs:label "is supported by" ;
 	rdfs:comment "A finding is supported by data, models, model runs, software, etc.";
 	rdfs:domain gcis:Finding .	
 

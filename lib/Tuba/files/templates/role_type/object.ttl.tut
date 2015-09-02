@@ -1,9 +1,9 @@
-% layout 'default', namespaces => [qw/dcterms prov/];
+% layout 'default', namespaces => [qw/dcterms rdfs prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $role_type->identifier %>";
-   prov:label "<%= $role_type->label %>";
+   rdfs:label "<%= $role_type->label %>";
 
    a prov:Role .
    

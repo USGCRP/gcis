@@ -3,7 +3,6 @@
 
 % if (@parents || @children) {
 <p>
-
     % for my $parent (@parents) {
         % my $parent_pub = $parent->{publication};
         This <%= $object->meta->table %>

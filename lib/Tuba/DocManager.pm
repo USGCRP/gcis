@@ -118,6 +118,7 @@ our %RouteDoc = (
       description => "Given a numeric ID, redirect to the full URI of a publication.",
   },
   show_contributor => {
+      _show_defaults('contributor'),
       tags => [qw/contributor/],
       brief => "Redirect to a particular contributor.",
       description => "Given a numeric ID, redirect to the full URI of a contributor.",
@@ -191,6 +192,7 @@ our %RouteDoc = (
       description => "Given an ORCID, if there is a match, redirect to the person's URI.",
   },
   personname => {
+      _show_defaults('person'),
       tags => [qw/contributor/],
       brief => "Redirect to a person based on a name",
       description => "Given a name (case sensitive, concatenated by dashes), redirect if there is a single match.  The first and last names can be in either order.",
@@ -251,6 +253,7 @@ sub find_doc {
       note        => $entry->{note},
       tags        => $entry->{tags},
       response_headers => $entry->{response_headers},
+      formats     => $entry->{formats},
     );
 }
 
@@ -308,6 +311,11 @@ sub _show_defaults {
     return (
       brief =>  "Get a representation of $an $phrase.",
       description => "Get JSON which represents the structure of $an $phrase.",
+      formats => [
+          'application/json', 'application/x-turtle', 'text/turtle',
+          'application/n-triples', 'text/n3', 'text/rdf+n3', 'application/ld+json',
+          'application/rdf+xml', 'application/rdf+json',
+      ],
       $a{withs} ? 
       (
           params => [
@@ -394,7 +402,7 @@ sub _walk_routes {
                       headers     => $doc->response_headers || {}
                     }
                     },
-                  produces    => [ "application/json" ],
+                  produces    => $doc->formats || [ "application/json" ],
                   tags        => $doc->tags || [ "misc" ],
                   ( parameters  => \@params ) x !!@params,
               }
@@ -464,7 +472,7 @@ sub as_swagger {
             { name => "reference", description => "Routes related to bibliographic information." },
             { name => "contributor", description => "People and organizations." },
             { name => "obs", description => "Platforms and instruments." },
-            { name => "lexicon", description => "Lexicons, contexts and terms, and their mapping to GCIS URIs." },
+            { name => "lexicon", description => "Lexicons, contexts and terms." },
             { name => "model", description => "Models, model runs, scenarios, projects." },
         ],
         host => $host,

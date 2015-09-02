@@ -63,9 +63,10 @@ use Tuba::Converter;
 use Tuba::Log;
 use Tuba::Util qw/set_config new_uuid/;
 use Path::Class qw/file/;
+use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.33';
+our $VERSION = '1.36';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -95,6 +96,7 @@ sub startup {
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
 
+    # Renderers
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
             my $str = shift;
             return "" unless defined($str) && length($str);
@@ -104,6 +106,12 @@ sub startup {
             $str =~ s/\r/\\r/g;
             return $str;
         }}});
+    $app->renderer->add_handler(json_canonical => sub {
+            my ($r,$c,$o) = @_;
+            my $j = $c->stash('jsonxs');
+            rmap_all { $_ = "$_" if ref($_) && ref($_) eq 'Mojo::ByteStream' } \$j;
+            $$o = JSON::XS->new->canonical(1)->convert_blessed->encode($j);
+        });
 
     # Hooks
     $app->hook(after_dispatch => sub {
@@ -115,17 +123,43 @@ sub startup {
         }
     } );
     $app->hook(before_dispatch => sub {
-        # Remove path when behind a proxy (see Mojolicious::Guides::Cookbook).
+        # Support X-Forwarded-Base in reverse proxy setup
         my $c = shift;
-        push @{$c->req->url->base->path}, shift @{$c->req->url->path}
-          if @{ $c->req->url->path->parts } && $c->req->url->path->parts->[0] eq 'api';
         my $forward_base = $c->req->headers->header('X-Forwarded-Base');
         $c->req->url->base(Mojo::URL->new($forward_base)) if $forward_base;
-    }) if $app->mode eq 'production';
+
+        # Support various accept headers for gcis.owl
+        return 1 unless $c->req->url->path eq '/gcis.owl';
+        if ($c->accepts('html')) {
+            $c->res->headers->content_type("text/html");
+            return 1;
+        }
+        $c->respond_to(
+            ttl => sub {
+                my $c = shift;
+                $c->res->headers->content_type("text/turtle");
+                $c->app->static->serve($c,"owl/gcis.ttl");
+                $c->rendered;
+            },
+            nt => sub {
+                my $c = shift;
+                $c->res->headers->content_type("text/plain");
+                $c->render_ttl_as( $c->app->static->file("owl/gcis.ttl")->slurp,
+                    'ntriples');
+            },
+            rdfxml => sub {
+                my $c = shift;
+                $c->res->headers->content_type("application/rdf+xml");
+                $c->render_ttl_as( $c->app->static->file("owl/gcis.ttl")->slurp,
+                    'rdfxml');
+            },
+        );
+        return 1;
+    });
     $app->hook(after_static => sub {
            my $c = shift;
-            $c->res->headers->content_disposition('attachment;') if $c->param('download');
-        });
+           $c->res->headers->content_disposition('attachment;') if $c->param('download');
+    });
     $app->hook(before_render => sub {
             # If there is an object, set the stash value corresponding to its moniker.
             my $c = shift;
@@ -432,7 +466,11 @@ sub startup {
     # http://ontorule-project.eu/parrot?documentUri=http://orion.tw.rpi.edu/~xgmatwc/ontology-doc/GCISOntology.ttl
     # Then prefix href's for the css at the top with
     #   http://ontorule-project.eu/parrot
-    $app->types->type(owl => 'text/html');
+    $app->types->type(ttl         => [ 'application/x-turtle', 'text/turtle' ]);
+    $app->types->type(nt          => [ 'application/n-triples', 'text/n3', 'text/rdf+n3' ]);
+    $app->types->type(jsontriples => [ 'application/ld+json' ]);
+    $app->types->type(rdfxml      => [ 'application/rdf+xml' ]);
+    $app->types->type(rdfjson     => [ 'application/rdf+json' ]);
 
     # Tuba-specific routes
     $r->get('/')->to('controller#index')->name('index');
@@ -443,6 +481,7 @@ sub startup {
     $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/about')->to('doc#about')->name('about');
     $r->get('/autocomplete')->to('search#autocomplete');
+    $r->get('/api' => sub { shift->render(template => 'api/index') })->name('apiref');
 
     unless ($config->{read_only}) {
         my $authed = $r->under->to(

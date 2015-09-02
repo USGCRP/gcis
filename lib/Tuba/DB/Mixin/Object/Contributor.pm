@@ -24,7 +24,10 @@ sub stringify {
 sub as_text {
     my $c = shift;
     if (my $person = $c->person) {
-        return sprintf('%s (%s)', $person->stringify, $c->organization->stringify);
+        if (my $org = $c->organization) {
+            return sprintf('%s (%s)', $person->stringify, $org->stringify);
+        }
+        return $person->stringify;
     }
     return $c->organization->stringify;
 }
