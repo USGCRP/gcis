@@ -75,9 +75,18 @@ sub update_rel {
         $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error);
     }
 
+    my $related;
+    my $relationship;
     if (my $related_org = $c->param('related_org')) {
-        my $related = $c->str_to_obj($related_org) or return $c->update_error("Could not find $related_org");
-        my $relationship = $c->param('organization_relationship_identifier') or return $c->update_error("missing relationship");
+        $related = $c->str_to_obj($related_org) or return $c->update_error("Could not find $related_org");
+        $relationship = $c->param('organization_relationship_identifier') or return $c->update_error("missing relationship");
+    }
+    if (my $related_org = $json->{'related_org'}) {
+        $related = $c->uri_to_obj($related_org) or return $c->update_error("Could not find $related_org");
+        $relationship = $json->{'relationship'} or return $c->update_error("missing relationship");
+    }
+
+    if ($related) {
         my $map = OrganizationMap->new(
           organization_identifier              => $org->identifier,
           other_organization_identifier        => $related->identifier,
@@ -223,6 +232,20 @@ sub contributions {
             shift->render,
         }
     );
+}
+
+sub make_tree_for_show {
+    my $c = shift;
+    my $org = shift;
+    my $obj = $c->SUPER::make_tree_for_show($org);
+    my $parents = OrganizationMaps->get_objects( query => [ organization_identifier => $org->identifier ] );
+    $obj->{parents} = [ map +{ relationship => $_->organization_relationship_identifier,
+                             organization => $_->other_organization->uri($c) }, @$parents ];
+    my $children = OrganizationMaps->get_objects( query => [ other_organization_identifier => $org->identifier ] );
+    $obj->{children} = [ map +{ relationship => $_->organization_relationship_identifier,
+                              organization => $_->organization->uri($c) }, @$children ];
+
+    return $obj;
 }
 
 1;

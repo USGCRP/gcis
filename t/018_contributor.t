@@ -36,6 +36,46 @@ $t->post_ok(
   }
 )->status_is(200);
 
+# Org relationships
+$t->post_ok(
+    "/organization" => json => {
+        identifier => 'baits_universal',
+        name => "This is the parent of baits and baits_too"
+    }
+)->status_is(200);
+
+$t->post_ok(
+    "/organization/rel/baits" => json => {
+        relationship => "managed_by",
+        related_org => "/organization/baits_universal",
+    }
+)->status_is(200);
+
+$t->post_ok(
+    "/organization/rel/baits_too" => json => {
+        relationship => "managed_by",
+        related_org => "/organization/baits_universal",
+    }
+)->status_is(200);
+
+$t->get_ok("/organization/baits_universal")
+    ->status_is(200)
+    ->json_is("/children/0/organization" => "/organization/baits")
+    ->json_is("/children/0/relationship" => "managed_by")
+    ->json_is("/children/1/organization" => "/organization/baits_too")
+    ->json_is("/children/1/relationship" => "managed_by")
+    ;
+
+$t->get_ok("/organization/baits")
+    ->json_is("/parents/0/organization" => "/organization/baits_universal")
+    ->json_is("/parents/0/relationship" => "managed_by")
+    ->status_is(200);
+
+$t->get_ok("/organization/baits_too")
+    ->json_is("/parents/0/organization" => "/organization/baits_universal")
+    ->json_is("/parents/0/relationship" => "managed_by")
+    ->status_is(200);
+
 # Make a dataset
 $t->post_ok("/dataset" => json => { identifier => 'big_dataset', name => 'Big Dataset' })->status_is(200);
 
@@ -57,6 +97,7 @@ $t->get_ok("/dataset/big_dataset")->status_is(200)
 $t->delete_ok("/dataset/big_dataset")->status_is(200);
 $t->delete_ok("/organization/baits")->status_is(200);
 $t->delete_ok("/organization/baits_too")->status_is(200);
+$t->delete_ok("/organization/baits_universal")->status_is(200);
 $t->delete_ok("/role_type/data_archive")->status_is(200);
 
 done_testing();
