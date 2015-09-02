@@ -3,7 +3,7 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $model->identifier %>";
-   prov:wasAttributedTo <<%= uri($model->project) %>>;
+   gcis:relatedProject <<%= uri($model->project) %>>;
    dcterms:title "<%= $model->name %>";
    gcis:hasVersion "<%= $model->version %>";
    dcterms:description "<%= $model->description %>";
