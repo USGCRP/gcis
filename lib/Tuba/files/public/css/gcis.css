@@ -8,7 +8,7 @@ html, body {
 	min-height: 100%;
 }
 #main {
-	overflow: hidden;
+	overflow: visible;
 	padding-bottom: 55px;
 }
 #footer {
@@ -85,7 +85,6 @@ img.usgcrp.thumbnail {
 }
 .little {
     font-size:75%;
-    font-stretch: ultracondensed;
     font-family:monospace;
 }
 .text-right {
@@ -139,8 +138,9 @@ img[src*="gcis_remote=1"] {
 #simple-menu {
 	margin-top: 8px;
 }
-.typeahead {
-	z-index: 1051
+.typeahead.dropdown-menu {
+	overflow-y: scroll;
+	max-height: 300px;
 }
 .thumbnail {
 	background-color: #f3f3f3;
