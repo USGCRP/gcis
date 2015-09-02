@@ -23,7 +23,7 @@ sub examples {
 where { ?s a gcis:Figure }
 limit 10",
         },
-        { desc => "Locate the year of the earliest publication cited in the Third National Climate Assessment.",
+        { desc => "Identify the year of the earliest publication cited in the Third National Climate Assessment.",
           code => <<'SPARQL',
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
