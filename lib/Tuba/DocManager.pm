@@ -351,7 +351,7 @@ sub _route_to_path {
           {
               name     => $piece->[1],
               in       => "path",
-              required => \1,
+              required => 1,
               type => "string",
               description => "$piece->[1] description",
           }
