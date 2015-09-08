@@ -17,7 +17,7 @@ before_install :
     - cpanm App::cpanoutdated
     - cpan-outdated | cpanm
     - cpanm Devel::Cover Devel::Cover::Report::Coveralls
-    - cpamn Swagger2@0.44
+    - cpanm Swagger2@0.44
 
 script :
    - perl Build.PL && ./Build
