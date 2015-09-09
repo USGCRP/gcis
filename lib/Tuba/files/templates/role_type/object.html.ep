@@ -19,6 +19,10 @@
 <div class='row well'>
 <div class='col-md-6 col-md-offset-3'>
     <center><b>role identifier: <%= $role_type->identifier %></b></center>
+    % if ($role_type->comment) {
+    <b><%= $role_type->label %></b> : <%= $role_type->comment %>
+    % }
+    <br>
     Organizations:
     <%= link_to url_for('list_organization')->query(role => $role_type_identifier) => begin %>
     <%= $stats->{orgs} %><br>
