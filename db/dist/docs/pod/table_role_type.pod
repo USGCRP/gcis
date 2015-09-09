@@ -12,6 +12,7 @@ A list of roles that contributors may have.
  identifier (character varying) - A descriptive identifier.
  label (character varying) - A human readable label.
  sort_key (integer) - A key for sorting contributors of this type.
+ comment (character varying) - A description of this role.
 
 
 =head1 SCHEMA
@@ -22,6 +23,7 @@ A list of roles that contributors may have.
   identifier | character varying | not null  | extended |              | A descriptive identifier.
   label      | character varying | not null  | extended |              | A human readable label.
   sort_key   | integer           |           | plain    |              | A key for sorting contributors of this type.
+  comment    | character varying |           | extended |              | A description of this role.
  Indexes:
      "role_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:

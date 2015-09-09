@@ -1876,7 +1876,8 @@ COMMENT ON COLUMN report_type.identifier IS 'A descriptive identifer.';
 CREATE TABLE role_type (
     identifier character varying NOT NULL,
     label character varying NOT NULL,
-    sort_key integer
+    sort_key integer,
+    comment character varying
 );
 
 
@@ -1894,6 +1895,10 @@ COMMENT ON COLUMN role_type.label IS 'A human readable label.';
 
 
 COMMENT ON COLUMN role_type.sort_key IS 'A key for sorting contributors of this type.';
+
+
+
+COMMENT ON COLUMN role_type.comment IS 'A description of this role.';
 
 
 

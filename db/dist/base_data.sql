@@ -149,9 +149,9 @@ COPY person (id, url, orcid, first_name, last_name, middle_name) FROM stdin;
 -- Data for Name: role_type; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY role_type (identifier, label, sort_key) FROM stdin;
-engineer	Engineer	190
-manager	Manager	200
+COPY role_type (identifier, label, sort_key, comment) FROM stdin;
+engineer	Engineer	190	\N
+manager	Manager	200	\N
 \.
 
 
