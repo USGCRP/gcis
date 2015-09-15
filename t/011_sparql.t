@@ -179,6 +179,17 @@ my $dbpedia_platform_identifier = "Three-pod";
 $t->post_ok( "/lexicon/dbpedia/term/new" => json => {
         term => $dbpedia_platform_identifier, context => 'resource', gcid => "/platform/$platform_identifier" } );
 
+# add a role
+my $role_identifier = "lead_author";
+$t->post_ok( "/role_type" => json => { identifier => $role_identifier } )->status_is(200);
+
+# add a person
+my $person_identifier = "1";
+$t->post_ok( "/person" => json => { identifier => $person_identifier } )->status_is(200);
+
+# The chapter was attributed to that author
+# TODO how do I use the REST API to add a chapter attribution with a role?
+
 #
 # Parse them into the model
 #
@@ -190,6 +201,8 @@ add_to_model("/image/$image_identifier");
 add_to_model("/dataset/$dataset_identifier");
 add_to_model("/platform/$platform_identifier");
 add_to_model("/instrument/$instrument_identifier");
+add_to_model("/role_type/$role_identifier");
+add_to_model("/person/$person_identifier")
 
 #
 # Okay, now let's do some sparql.
@@ -343,6 +356,26 @@ for my $example (@$examples) {
         ok @rows, $example->{desc} or diag "no rows for \n".$example->{code};
     }
 }
+
+# The chapter was attributed to a person
+sparql_ok(
+  <<'SPARQL',
+SELECT ?author ?role
+FROM <http://test.data.globalchange.gov>
+WHERE {
+    ?report rdf:type gcis:Report .
+    ?chapter rdf:type gcis:Chapter .
+    ?chapter gcis:isChapterOf ?report .
+    ?chapter prov:qualifiedAttribution ?attribution .
+    ?attribution prov:hadRole ?role .
+    ?attribution prov:agent ?author .
+    ?author rdf:type foaf:Person.
+}
+SPARQL
+  { author => uri("/person/$person_identifier"),
+    role => uri("/role_type/$role_identifier")
+  }, "The chapter was attributed to a person"
+);
 
 #
 # Cleanup.
