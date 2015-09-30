@@ -589,6 +589,7 @@ db/patches/2140_people.sql
 db/patches/2150_image_url.sql
 db/patches/2160_issn.sql
 db/patches/2170_report_types.sql
+db/patches/2180_role_comment.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -875,6 +876,7 @@ lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.tut
 lib/Tuba/files/templates/layouts/front.html.ep
+lib/Tuba/files/templates/layouts/minimal.html.ep
 lib/Tuba/files/templates/lexicon/object.html.ep
 lib/Tuba/files/templates/lexicon/object.ttl.tut
 lib/Tuba/files/templates/lexicon/objects.html.ep
