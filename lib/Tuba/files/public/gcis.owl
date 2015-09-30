@@ -100,7 +100,6 @@
 <li><a href="#Measuring" title="http://data.globalchange.gov/gcis.owl#Measuring">Measuring</a></li>
 <li><a href="#Mission" title="http://data.globalchange.gov/gcis.owl#Mission">Mission</a></li>
 <li><a href="#Model" title="http://data.globalchange.gov/gcis.owl#Model">Model</a></li>
-<li><a href="#ModelRun" title="http://data.globalchange.gov/gcis.owl#ModelRun">Model Run</a></li>
 <li><a href="#ModelRunOutput" title="http://data.globalchange.gov/gcis.owl#ModelRunOutput">Model Run Output</a></li>
 <li><a href="#ObservationSystem" title="http://data.globalchange.gov/gcis.owl#ObservationSystem">Observation System</a></li>
 <li><a href="#Organization" title="http://data.globalchange.gov/gcis.owl#Organization">Organization</a></li>
@@ -121,7 +120,7 @@
 <li><a href="#SpatialResolution" title="http://data.globalchange.gov/gcis.owl#SpatialResolution">Spatial Resolution</a></li>
 <li><a href="#Table" title="http://data.globalchange.gov/gcis.owl#Table">Table</a></li>
 <li><a href="#TableCompiling" title="http://data.globalchange.gov/gcis.owl#TableCompiling">Table Compiling</a></li>
-<li><a href="#TemporalExtent" title="http://data.globalchange.gov/gcis.owl#TemporalExtent">Temporal Extents</a></li>
+<li><a href="#TemporalExtent" title="http://data.globalchange.gov/gcis.owl#TemporalExtent">Temporal Extent</a></li>
 <li><a href="#TemporalResolution" title="http://data.globalchange.gov/gcis.owl#TemporalResolution">Temporal Resolution</a></li>
 <li><a href="#TemporalUnit" title="http://data.globalchange.gov/gcis.owl#TemporalUnit">Temporal Unit</a></li>
 <li><a href="#TraceableAccount" title="http://data.globalchange.gov/gcis.owl#TraceableAccount">Traceable Account</a></li>
@@ -195,7 +194,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#Array"></a><h3>Array<sup class="type-c" title="class">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#Array</p>
-<div class="comment"><p>A group of numbers, signs or values arranged in rows and columns.</p></div>
+<div class="comment"><p>A collection of numbers, signs or values arranged in rows and columns.</p></div>
 <dl class="description">
 <dt>has super-classes</dt>
 <dd>
@@ -342,6 +341,10 @@
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#CryptographicHash</p>
 <div class="comment"><p>A cryptographic hash value computed for the purpose of authentication or verification of a digital entity</p></div>
 <dl class="description">
+<dt>has super-classes</dt>
+<dd>
+<span class="dotted" title="http://www.w3.org/ns/prov#Entity">entity</span><sup class="type-c" title="class">c</sup>
+</dd>
 <dt>is in domain of</dt>
 <dd>
 <a href="#hashFunction" title="http://data.globalchange.gov/gcis.owl#hashFunction">hash function</a><sup class="type-op" title="object property">op</sup>
@@ -371,7 +374,7 @@
 </dd>
 <dt>is in domain of</dt>
 <dd>
-<a href="#byteSize" title="http://data.globalchange.gov/gcis.owl#byteSize">byte size</a><sup class="type-dp" title="data property">dp</sup>, <a href="#contactPoint" title="http://data.globalchange.gov/gcis.owl#contactPoint">contact point</a><sup class="type-op" title="object property">op</sup>, <a href="#relatedProject" title="http://data.globalchange.gov/gcis.owl#relatedProject">related project</a><sup class="type-op" title="object property">op</sup>, <a href="#sourceAlgorithm" title="http://data.globalchange.gov/gcis.owl#sourceAlgorithm">source algorithm</a><sup class="type-op" title="object property">op</sup>, <a href="#sourceInstrument" title="http://data.globalchange.gov/gcis.owl#sourceInstrument">source instrument</a><sup class="type-op" title="object property">op</sup>, <a href="#wasCapturedBy" title="http://data.globalchange.gov/gcis.owl#wasCapturedBy">was captured by</a><sup class="type-op" title="object property">op</sup>
+<a href="#byteSize" title="http://data.globalchange.gov/gcis.owl#byteSize">byte size</a><sup class="type-dp" title="data property">dp</sup>, <a href="#contactPoint" title="http://data.globalchange.gov/gcis.owl#contactPoint">contact point</a><sup class="type-op" title="object property">op</sup>, <a href="#sourceAlgorithm" title="http://data.globalchange.gov/gcis.owl#sourceAlgorithm">source algorithm</a><sup class="type-op" title="object property">op</sup>, <a href="#sourceInstrument" title="http://data.globalchange.gov/gcis.owl#sourceInstrument">source instrument</a><sup class="type-op" title="object property">op</sup>, <a href="#wasCapturedBy" title="http://data.globalchange.gov/gcis.owl#wasCapturedBy">was captured by</a><sup class="type-op" title="object property">op</sup>
 </dd>
 <dt>is in range of</dt>
 <dd>
@@ -463,11 +466,11 @@
 </dd>
 <dt>is in domain of</dt>
 <dd>
-<a href="#assessmentOfConfidenceBasedOnEvidence" title="http://data.globalchange.gov/gcis.owl#assessmentOfConfidenceBasedOnEvidence">assessment of confidence based on evidence</a><sup class="type-dp" title="data property">dp</sup>, <a href="#descriptionOfEvidenceBase" title="http://data.globalchange.gov/gcis.owl#descriptionOfEvidenceBase">description of evidence base</a><sup class="type-dp" title="data property">dp</sup>, <a href="#FindingNumber" title="http://data.globalchange.gov/gcis.owl#FindingNumber">finding number</a><sup class="type-dp" title="data property">dp</sup>, <a href="#findingProcess" title="http://data.globalchange.gov/gcis.owl#findingProcess">finding process</a><sup class="type-dp" title="data property">dp</sup>, <a href="#confidence" title="http://data.globalchange.gov/gcis.owl#confidence">has confidence</a><sup class="type-op" title="object property">op</sup>, <a href="#hasTraceableAccount" title="http://data.globalchange.gov/gcis.owl#hasTraceableAccount">has traceable account</a><sup class="type-op" title="object property">op</sup>, <a href="#isBasedOn" title="http://data.globalchange.gov/gcis.owl#isBasedOn">is based on</a><sup class="type-op" title="object property">op</sup>, <a href="#isFindingOf" title="http://data.globalchange.gov/gcis.owl#isFindingOf">is finding of</a><sup class="type-op" title="object property">op</sup>, <a href="#isSupportedBy" title="http://data.globalchange.gov/gcis.owl#isSupportedBy">is supported by</a><sup class="type-op" title="object property">op</sup>, <a href="#findingStatement" title="http://data.globalchange.gov/gcis.owl#findingStatement">key finding</a><sup class="type-dp" title="data property">dp</sup>, <a href="#newInformationAndRemainingUncertainties" title="http://data.globalchange.gov/gcis.owl#newInformationAndRemainingUncertainties">new information and remaining uncertainties</a><sup class="type-dp" title="data property">dp</sup>
+<a href="#assessmentOfConfidenceBasedOnEvidence" title="http://data.globalchange.gov/gcis.owl#assessmentOfConfidenceBasedOnEvidence">assessment of confidence based on evidence</a><sup class="type-dp" title="data property">dp</sup>, <a href="#descriptionOfEvidenceBase" title="http://data.globalchange.gov/gcis.owl#descriptionOfEvidenceBase">description of evidence base</a><sup class="type-dp" title="data property">dp</sup>, <a href="#FindingNumber" title="http://data.globalchange.gov/gcis.owl#FindingNumber">finding number</a><sup class="type-dp" title="data property">dp</sup>, <a href="#findingProcess" title="http://data.globalchange.gov/gcis.owl#findingProcess">finding process</a><sup class="type-dp" title="data property">dp</sup>, <a href="#confidence" title="http://data.globalchange.gov/gcis.owl#confidence">has confidence</a><sup class="type-op" title="object property">op</sup>, <a href="#hasTraceableAccount" title="http://data.globalchange.gov/gcis.owl#hasTraceableAccount">has traceable account</a><sup class="type-op" title="object property">op</sup>, <a href="#isFindingOf" title="http://data.globalchange.gov/gcis.owl#isFindingOf">is finding of</a><sup class="type-op" title="object property">op</sup>, <a href="#isSupportedBy" title="http://data.globalchange.gov/gcis.owl#isSupportedBy">is supported by</a><sup class="type-op" title="object property">op</sup>, <a href="#findingStatement" title="http://data.globalchange.gov/gcis.owl#findingStatement">key finding</a><sup class="type-dp" title="data property">dp</sup>, <a href="#newInformationAndRemainingUncertainties" title="http://data.globalchange.gov/gcis.owl#newInformationAndRemainingUncertainties">new information and remaining uncertainties</a><sup class="type-dp" title="data property">dp</sup>
 </dd>
 <dt>is in range of</dt>
 <dd>
-<a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">Has Finding</a><sup class="type-op" title="object property">op</sup>, <a href="#isBasedOn" title="http://data.globalchange.gov/gcis.owl#isBasedOn">is based on</a><sup class="type-op" title="object property">op</sup>, <a href="#isTraceableAccountOf" title="http://data.globalchange.gov/gcis.owl#isTraceableAccountOf">is traceable account of</a><sup class="type-op" title="object property">op</sup>
+<a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">has finding</a><sup class="type-op" title="object property">op</sup>, <a href="#isTraceableAccountOf" title="http://data.globalchange.gov/gcis.owl#isTraceableAccountOf">is traceable account of</a><sup class="type-op" title="object property">op</sup>
 </dd>
 </dl>
 </div>
@@ -646,18 +649,6 @@
 </dd>
 </dl>
 </div>
-<div class="entity" id="ModelRun">
-<a name="http://data.globalchange.gov/gcis.owl#ModelRun"></a><h3>Model Run<sup class="type-c" title="class">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
-</h3>
-<p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#ModelRun</p>
-<div class="comment"><p>An activity of running a model.</p></div>
-<dl class="description">
-<dt>has super-classes</dt>
-<dd>
-<span class="dotted" title="http://www.w3.org/ns/prov#Activity">activity</span><sup class="type-c" title="class">c</sup>
-</dd>
-</dl>
-</div>
 <div class="entity" id="ModelRunOutput">
 <a name="http://data.globalchange.gov/gcis.owl#ModelRunOutput"></a><h3>Model Run Output<sup class="type-c" title="class">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
@@ -669,7 +660,7 @@
 <a href="#Dataset" title="http://data.globalchange.gov/gcis.owl#Dataset">Dataset</a><sup class="type-c" title="class">c</sup>
 </dd>
 <dd>
-<span class="dotted" title="http://www.w3.org/ns/prov#Activity">activity</span><sup class="type-c" title="class">c</sup>
+<span class="dotted" title="http://www.w3.org/ns/prov#Entity">entity</span><sup class="type-c" title="class">c</sup>
 </dd>
 </dl>
 </div>
@@ -807,7 +798,7 @@
 </dd>
 <dt>is in domain of</dt>
 <dd>
-<a href="#hasFigure" title="http://data.globalchange.gov/gcis.owl#hasFigure">has figure</a><sup class="type-op" title="object property">op</sup>, <a href="#hasPublisher" title="http://data.globalchange.gov/gcis.owl#hasPublisher">has publisher</a><sup class="type-op" title="object property">op</sup>, <a href="#hasTable" title="http://data.globalchange.gov/gcis.owl#hasTable">has table</a><sup class="type-op" title="object property">op</sup>, <a href="#publicationStatus" title="http://data.globalchange.gov/gcis.owl#publicationStatus">publication status</a><sup class="type-dp" title="data property">dp</sup>, <a href="#relatedProject" title="http://data.globalchange.gov/gcis.owl#relatedProject">related project</a><sup class="type-op" title="object property">op</sup>, <a href="#wasPreparedBy" title="http://data.globalchange.gov/gcis.owl#wasPreparedBy">was prepared by</a><sup class="type-op" title="object property">op</sup>
+<a href="#hasFigure" title="http://data.globalchange.gov/gcis.owl#hasFigure">has figure</a><sup class="type-op" title="object property">op</sup>, <a href="#hasPublisher" title="http://data.globalchange.gov/gcis.owl#hasPublisher">has publisher</a><sup class="type-op" title="object property">op</sup>, <a href="#hasTable" title="http://data.globalchange.gov/gcis.owl#hasTable">has table</a><sup class="type-op" title="object property">op</sup>, <a href="#publicationStatus" title="http://data.globalchange.gov/gcis.owl#publicationStatus">publication status</a><sup class="type-dp" title="data property">dp</sup>, <a href="#wasPreparedBy" title="http://data.globalchange.gov/gcis.owl#wasPreparedBy">was prepared by</a><sup class="type-op" title="object property">op</sup>
 </dd>
 <dt>is in range of</dt>
 <dd>
@@ -1024,7 +1015,7 @@
 </dl>
 </div>
 <div class="entity" id="TemporalExtent">
-<a name="http://data.globalchange.gov/gcis.owl#TemporalExtent"></a><h3>Temporal Extents<sup class="type-c" title="class">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
+<a name="http://data.globalchange.gov/gcis.owl#TemporalExtent"></a><h3>Temporal Extent<sup class="type-c" title="class">c</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#classes">Class ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#TemporalExtent</p>
 <div class="comment"><p>An interval of time defined by its start and end dates or datetimes.</p></div>
@@ -1132,7 +1123,6 @@
 <h2>Object Properties</h2>
 <ul class="hlist">
 <li><a href="#atLocation" title="http://data.globalchange.gov/gcis.owl#atLocation">at location</a></li>
-<li><a href="#cites" title="http://data.globalchange.gov/gcis.owl#cites">cites</a></li>
 <li><a href="#contactPoint" title="http://data.globalchange.gov/gcis.owl#contactPoint">contact point</a></li>
 <li><a href="#cryptographicHash" title="http://data.globalchange.gov/gcis.owl#cryptographicHash">cryptographic hash</a></li>
 <li><a href="#dataCenter" title="http://data.globalchange.gov/gcis.owl#dataCenter">data center</a></li>
@@ -1143,7 +1133,7 @@
 <li><a href="#hasCommittee" title="http://data.globalchange.gov/gcis.owl#hasCommittee">has committee</a></li>
 <li><a href="#confidence" title="http://data.globalchange.gov/gcis.owl#confidence">has confidence</a></li>
 <li><a href="#hasFigure" title="http://data.globalchange.gov/gcis.owl#hasFigure">has figure</a></li>
-<li><a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">Has Finding</a></li>
+<li><a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">has finding</a></li>
 <li><a href="#hasFundingAgency" title="http://data.globalchange.gov/gcis.owl#hasFundingAgency">has funding agency</a></li>
 <li><a href="#hasGoverningOrganization" title="http://data.globalchange.gov/gcis.owl#hasGoverningOrganization">has governing organization</a></li>
 <li><a href="#hasImage" title="http://data.globalchange.gov/gcis.owl#hasImage">has image</a></li>
@@ -1167,7 +1157,6 @@
 <li><a href="#instrumentType" title="http://data.globalchange.gov/gcis.owl#instrumentType">instrument type</a></li>
 <li><a href="#isArrayOf" title="http://data.globalchange.gov/gcis.owl#isArrayOf">is array of</a></li>
 <li><a href="#isAuthorOf" title="http://data.globalchange.gov/gcis.owl#isAuthorOf">is author of</a></li>
-<li><a href="#isBasedOn" title="http://data.globalchange.gov/gcis.owl#isBasedOn">is based on</a></li>
 <li><a href="#isChapterOf" title="http://data.globalchange.gov/gcis.owl#isChapterOf">is chapter of</a></li>
 <li><a href="#scenarioDescribedIn" title="http://data.globalchange.gov/gcis.owl#scenarioDescribedIn">is described in</a></li>
 <li><a href="#isFigureOf" title="http://data.globalchange.gov/gcis.owl#isFigureOf">is figure of</a></li>
@@ -1209,21 +1198,6 @@
 <dt>has range</dt>
 <dd>
 <a href="#Location" title="http://data.globalchange.gov/gcis.owl#Location">Location</a><sup class="type-c" title="class">c</sup>
-</dd>
-</dl></div>
-</div>
-<div class="entity" id="cites">
-<a name="http://data.globalchange.gov/gcis.owl#cites"></a><h3>cites<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
-</h3>
-<p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#cites</p>
-<div class="comment"><p>A person or a publication mentions another publication or person as a reason or an example, or in order to support the statement of itself.</p></div>
-<div class="description"><dl>
-<dt>has super-properties</dt>
-<dd>
-<span class="dotted" title="http://purl.org/dc/terms/references">references</span><sup class="type-op" title="object property">op</sup>
-</dd>
-<dd>
-<span class="dotted" title="http://purl.org/ontology/bibo/cites">cites</span><sup class="type-op" title="object property">op</sup>
 </dd>
 </dl></div>
 </div>
@@ -1298,7 +1272,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasArray"></a><h3>has array<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasArray</p>
-<div class="comment"><p>A table may consist of one or more arrays.</p></div>
+<div class="comment"><p>A table contains one more arrays.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1398,7 +1372,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasFigure"></a><h3>has figure<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasFigure</p>
-<div class="comment"><p>A publication contains one or more graphical components which most times but not necessarily contain a title and caption .</p></div>
+<div class="comment"><p>A publication contains one or more graphical components which most times but not necessarily are numbered and contain titles and captions .</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1419,7 +1393,7 @@
 </dl></div>
 </div>
 <div class="entity" id="hasFinding">
-<a name="http://data.globalchange.gov/gcis.owl#hasFinding"></a><h3>Has Finding<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
+<a name="http://data.globalchange.gov/gcis.owl#hasFinding"></a><h3>has finding<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasFinding</p>
 <div class="comment"><p>A publication may contain findings.</p></div>
@@ -1466,7 +1440,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#hasImage"></a><h3>has image<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#hasImage</p>
-<div class="comment"><p>The graphical component of a Figure.</p></div>
+<div class="comment"><p>A figure contains a graphical component.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1808,7 +1782,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isArrayOf"></a><h3>is array of<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isArrayOf</p>
-<div class="comment"><p>An array is in one or more tables.</p></div>
+<div class="comment"><p>An array appears in one or more tables.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1845,26 +1819,6 @@
 <dt>is inverse of</dt>
 <dd>
 <a href="#hasAuthor" title="http://data.globalchange.gov/gcis.owl#hasAuthor">has author</a><sup class="type-op" title="object property">op</sup>
-</dd>
-</dl></div>
-</div>
-<div class="entity" id="isBasedOn">
-<a name="http://data.globalchange.gov/gcis.owl#isBasedOn"></a><h3>is based on<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
-</h3>
-<p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isBasedOn</p>
-<div class="comment"><p>A key finding is based on one or more chapters.</p></div>
-<div class="description"><dl>
-<dt>has super-properties</dt>
-<dd>
-<span class="dotted" title="http://www.w3.org/ns/prov#wasDerivedFrom">was derived from</span><sup class="type-op" title="object property">op</sup>
-</dd>
-<dt>has domain</dt>
-<dd>
-<a href="#Finding" title="http://data.globalchange.gov/gcis.owl#Finding">Finding</a><sup class="type-c" title="class">c</sup>
-</dd>
-<dt>has range</dt>
-<dd>
-<a href="#Finding" title="http://data.globalchange.gov/gcis.owl#Finding">Finding</a><sup class="type-c" title="class">c</sup>
 </dd>
 </dl></div>
 </div>
@@ -1908,7 +1862,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isFigureOf"></a><h3>is figure of<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isFigureOf</p>
-<div class="comment"><p>A figure is in a publication.</p></div>
+<div class="comment"><p>A figure appears in a publication.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1932,7 +1886,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isFindingOf"></a><h3>is finding of<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isFindingOf</p>
-<div class="comment"><p>A finding is described by a publication.</p></div>
+<div class="comment"><p>A finding is described and emphasized in a publication.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -1944,7 +1898,7 @@
 </dd>
 <dt>is inverse of</dt>
 <dd>
-<a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">Has Finding</a><sup class="type-op" title="object property">op</sup>
+<a href="#hasFinding" title="http://data.globalchange.gov/gcis.owl#hasFinding">has finding</a><sup class="type-op" title="object property">op</sup>
 </dd>
 </dl></div>
 </div>
@@ -1952,7 +1906,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isImageOf"></a><h3>is image of<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isImageOf</p>
-<div class="comment"><p>An image is in one or more figures or other images.</p></div>
+<div class="comment"><p>An image appears in one or more figures.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -2012,7 +1966,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isSupportedBy"></a><h3>is supported by<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isSupportedBy</p>
-<div class="comment"><p>A finding is supported by data, models, model runs, software, etc.</p></div>
+<div class="comment"><p>A finding may be supported by or depicted in a few resources, such as data, figures, models, and software, etc.</p></div>
 <div class="description"><dl>
 <dt>has domain</dt>
 <dd>
@@ -2024,7 +1978,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#isTableOf"></a><h3>is table of<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#isTableOf</p>
-<div class="comment"><p>A table is in a publication.</p></div>
+<div class="comment"><p>A table appears in a publication.</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -2084,7 +2038,7 @@
 <a name="http://data.globalchange.gov/gcis.owl#relatedProject"></a><h3>related project<sup class="type-op" title="object property">op</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#objectproperties">Object Property ToC</a></span>
 </h3>
 <p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#relatedProject</p>
-<div class="comment"><p>A publication or dataset may be the result of one or more projects.</p></div>
+<div class="comment"><p>An entity ascribed to a project through an unspecified activity</p></div>
 <div class="description"><dl>
 <dt>has super-properties</dt>
 <dd>
@@ -2092,10 +2046,7 @@
 </dd>
 <dt>has domain</dt>
 <dd>
-<a href="#Dataset" title="http://data.globalchange.gov/gcis.owl#Dataset">Dataset</a><sup class="type-c" title="class">c</sup>
-</dd>
-<dd>
-<a href="#Publication" title="http://data.globalchange.gov/gcis.owl#Publication">Publication</a><sup class="type-c" title="class">c</sup>
+<span class="dotted" title="http://www.w3.org/ns/prov#Entity">entity</span><sup class="type-c" title="class">c</sup>
 </dd>
 <dt>has range</dt>
 <dd>
@@ -2389,6 +2340,7 @@
 <li><a href="#newInformationAndRemainingUncertainties" title="http://data.globalchange.gov/gcis.owl#newInformationAndRemainingUncertainties">new information and remaining uncertainties</a></li>
 <li><a href="#northBoundLatitude" title="http://data.globalchange.gov/gcis.owl#northBoundLatitude">north bound latitude</a></li>
 <li><a href="#publicationStatus" title="http://data.globalchange.gov/gcis.owl#publicationStatus">publication status</a></li>
+<li><a href="#recommendedCitation" title="http://data.globalchange.gov/gcis.owl#recommendedCitation">recommended citation</a></li>
 <li><a href="#resolution" title="http://data.globalchange.gov/gcis.owl#resolution">resolution</a></li>
 <li><a href="#southBoundLatitude" title="http://data.globalchange.gov/gcis.owl#southBoundLatitude">south bound latitude</a></li>
 <li><a href="#startDate" title="http://data.globalchange.gov/gcis.owl#startDate">start date</a></li>
@@ -2665,6 +2617,20 @@
 <dt>has domain</dt>
 <dd>
 <a href="#Publication" title="http://data.globalchange.gov/gcis.owl#Publication">Publication</a><sup class="type-c" title="class">c</sup>
+</dd>
+<dt>has range</dt>
+<dd><span class="dotted" title="http://www.w3.org/2001/XMLSchema#string">string</span></dd>
+</dl></div>
+</div>
+<div class="entity" id="recommendedCitation">
+<a name="http://data.globalchange.gov/gcis.owl#recommendedCitation"></a><h3>recommended citation<sup class="type-dp" title="data property">dp</sup><span class="backlink"> back to <a href="#toc">ToC</a> or <a href="#dataproperties">Data Property ToC</a></span>
+</h3>
+<p><strong>IRI:</strong> http://data.globalchange.gov/gcis.owl#recommendedCitation</p>
+<div class="comment"><p>when citing this resource please use this recommended citation</p></div>
+<div class="description"><dl>
+<dt>has domain</dt>
+<dd>
+<span class="dotted" title="http://www.w3.org/ns/prov#Entity">entity</span><sup class="type-c" title="class">c</sup>
 </dd>
 <dt>has range</dt>
 <dd><span class="dotted" title="http://www.w3.org/2001/XMLSchema#string">string</span></dd>
@@ -3478,7 +3444,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#SpatialExtents">spatial extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1434">data property</a></dd>
+<dd><a href="#d4e1385">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="editoralNote">
@@ -3500,7 +3466,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#TemporalExtents">temporal extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1447">data property</a></dd>
+<dd><a href="#d4e1399">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="endedAt">
@@ -3512,7 +3478,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#TemporalExtents">temporal extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1461">data property</a></dd>
+<dd><a href="#d4e1412">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="extentTypeCode">
@@ -3524,7 +3490,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#SpatialExtents">spatial extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1489">data property</a></dd>
+<dd><a href="#d4e1441">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="mbox">
@@ -3546,7 +3512,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#SpatialExtents">spatial extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1598">data property</a></dd>
+<dd><a href="#d4e1549">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="southBoundLatitude">
@@ -3558,7 +3524,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#SpatialExtents">spatial extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1642">data property</a></dd>
+<dd><a href="#d4e1608">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="startDate">
@@ -3570,7 +3536,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#TemporalExtents">temporal extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1655">data property</a></dd>
+<dd><a href="#d4e1622">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="startedAt">
@@ -3582,7 +3548,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#TemporalExtents">temporal extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1668">data property</a></dd>
+<dd><a href="#d4e1635">data property</a></dd>
 </dl></div>
 </div>
 <div class="entity" id="westBoundLongitude">
@@ -3594,7 +3560,7 @@
 <dt>has domain</dt>
 <dd><span class="dotted" title="http://data.globalchange.gov/gcis.owl#SpatialExtents">spatial extents</span></dd>
 <dt>is also defined as</dt>
-<dd><a href="#d4e1707">data property</a></dd>
+<dd><a href="#d4e1674">data property</a></dd>
 </dl></div>
 </div>
 </div>
