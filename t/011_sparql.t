@@ -200,6 +200,8 @@ $t->post_ok(
 $t->post_ok("/report/trees/chapter/contributors/the-larch" => json =>
     { person_id => $person_identifier, organization_identifier => $org_identifier, role => $role_identifier })->status_is(200);
 
+$t->get_ok("/report/trees/chapter/the-larch")->json_is("/contributors/0/person/id" => $person_identifier);
+
 #
 # Parse them into the model
 #
