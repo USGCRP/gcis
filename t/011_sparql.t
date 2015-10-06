@@ -185,11 +185,20 @@ $t->post_ok( "/role_type" => json => { identifier => $role_identifier, label => 
 
 # add a person
 my $person_identifier = "101";
-$t->post_ok( "/person" => json => { identifier => $person_identifier, first_name  => "John", last_name   => "Doe", } )->status_is(200);
+$t->post_ok( "/person" => json => { id => $person_identifier, first_name  => "John", last_name   => "Doe", } )->status_is(200);
+
+# add an organization
+my $org_identifier = "acme";
+$t->post_ok(
+  "/organization" => json => {
+    identifier  => $org_identifier,
+    name        => "Acme Inc.",
+  }
+)->status_is(200);
 
 # The chapter was attributed to that author
 $t->post_ok("/report/trees/chapter/contributors/the-larch" => json =>
-    { person_id => $person_identifier, organization_identifier => 'test', role => $role_identifier })->status_is(200);
+    { person_id => $person_identifier, organization_identifier => $org_identifier, role => $role_identifier })->status_is(200);
 
 #
 # Parse them into the model
@@ -204,6 +213,7 @@ add_to_model("/platform/$platform_identifier");
 add_to_model("/instrument/$instrument_identifier");
 add_to_model("/role_type/$role_identifier");
 add_to_model("/person/$person_identifier");
+add_to_model("/organization/$org_identifier");
 add_to_model("/report/trees/chapter/contributors/the-larch");
 
 #
