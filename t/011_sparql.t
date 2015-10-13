@@ -214,7 +214,7 @@ add_to_model("/instrument/$instrument_identifier");
 add_to_model("/role_type/$role_identifier");
 add_to_model("/person/$person_identifier");
 add_to_model("/organization/$org_identifier");
-add_to_model("/report/trees/chapter/contributors/the-larch");
+#add_to_model("/report/trees/chapter/contributors/the-larch");
 
 #
 # Okay, now let's do some sparql.
