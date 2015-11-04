@@ -28,9 +28,9 @@ dcterms:spatial [
    gcis:spatialResolution "<%= $dataset->spatial_res %>"^^xsd:string;
 dcterms:temporal [
     a dcterms:PeriodOfTime, gcis:TemporalExtent;
-    gcis:startDate "<%= $dataset->start_time %>"^^xsd:dateTime;
-    gcis:endDate "<%= $dataset->end_time %>"^^xsd:dateTime;
-  ] ;
+    gcis:startDate "<%= $dataset->start_time %>"^^xsd:date;
+    gcis:endDate "<%= $dataset->end_time %>"^^xsd:date;
+    ] ;
    dcterms:verticalExtents "<%= $dataset->vertical_extent %>";
 
 ## Attributes and keywords
