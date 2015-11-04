@@ -20,7 +20,7 @@ before_install :
 
 script :
    - perl Build.PL && ./Build
-   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine ./Build test
+   - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine prove ./Build test
    - cover
 
 cache:
