@@ -7,7 +7,7 @@
    dcterms:description "<%= $project->description %>";
    gcis:hasURL "<%= $project->website %>"^^xsd:anyURI;
 % for my $model ($project->models) {
-   gcis:Model <<%= uri($model) %>>;
+   gcis:contributedModel <<%= uri($model) %>>;
 % }
    a gcis:Project .
 % end
