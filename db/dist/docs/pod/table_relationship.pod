@@ -1,0 +1,33 @@
+
+=head1 NAME
+
+relationship
+
+=head1 DESCRIPTION
+
+The blessed semantic web relationships.
+
+=head1 FIELDS
+
+ relationship (character varying) - A fully qualified semantic web relationship.
+ description (character varying) - A description of the relationship.
+
+
+=head1 SCHEMA
+
+                                           Table "gcis_metadata.relationship"
+     Column    |       Type        | Modifiers | Storage  | Stats target |                 Description                  
+ --------------+-------------------+-----------+----------+--------------+----------------------------------------------
+  relationship | character varying | not null  | extended |              | A fully qualified semantic web relationship.
+  description  | character varying |           | extended |              | A description of the relationship.
+ Indexes:
+     "relationship_pkey" PRIMARY KEY, btree (relationship)
+ Referenced by:
+     TABLE "term_map" CONSTRAINT "term_map_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
+     TABLE "term_rel" CONSTRAINT "term_rel_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
+ Has OIDs: no
+ 
+
+=cut
+
+

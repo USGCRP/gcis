@@ -381,6 +381,42 @@ COMMENT ON COLUMN chapter.doi IS 'A digital object identifier for this chapter.'
 
 
 
+CREATE TABLE context (
+    lexicon_identifier character varying NOT NULL,
+    identifier character varying NOT NULL,
+    version character varying DEFAULT ''::character varying NOT NULL,
+    description character varying,
+    url character varying,
+    CONSTRAINT context_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-zA-Z0-9:_-]+'::text, NULL::text))),
+    CONSTRAINT context_version_check CHECK (((version)::text ~ similar_escape('[a-z0-9_\.-]*'::text, NULL::text)))
+);
+
+
+
+COMMENT ON TABLE context IS 'A context is a subset of terms within a lexicon.';
+
+
+
+COMMENT ON COLUMN context.lexicon_identifier IS 'The lexicon associated with this context.';
+
+
+
+COMMENT ON COLUMN context.identifier IS 'A brief descriptive identifier for this context.';
+
+
+
+COMMENT ON COLUMN context.version IS 'The version of this context (optional).';
+
+
+
+COMMENT ON COLUMN context.description IS 'A description of the context.';
+
+
+
+COMMENT ON COLUMN context.url IS 'A url for further information.';
+
+
+
 CREATE TABLE contributor (
     id integer NOT NULL,
     person_id integer,
@@ -1782,6 +1818,25 @@ COMMENT ON COLUMN region.description IS 'A description.';
 
 
 
+CREATE TABLE relationship (
+    relationship character varying NOT NULL,
+    description character varying
+);
+
+
+
+COMMENT ON TABLE relationship IS 'The blessed semantic web relationships.';
+
+
+
+COMMENT ON COLUMN relationship.relationship IS 'A fully qualified semantic web relationship.';
+
+
+
+COMMENT ON COLUMN relationship.description IS 'A description of the relationship.';
+
+
+
 CREATE TABLE report (
     identifier character varying NOT NULL,
     title character varying NOT NULL,
@@ -1974,6 +2029,110 @@ COMMENT ON COLUMN "table".caption IS 'The caption for the table.';
 
 
 COMMENT ON COLUMN "table".url IS 'A URL for a landing page for this table.';
+
+
+
+CREATE TABLE term (
+    id uuid DEFAULT uuid_generate_v1() NOT NULL,
+    lexicon_identifier character varying NOT NULL,
+    context_identifier character varying NOT NULL,
+    context_version character varying DEFAULT ''::character varying,
+    term character varying NOT NULL,
+    is_root boolean DEFAULT false,
+    description character varying,
+    url character varying
+);
+
+
+
+COMMENT ON TABLE term IS 'External terms that have a specific lexicon and context.';
+
+
+
+COMMENT ON COLUMN term.id IS 'A globally unique identifier for this term (a UUID).';
+
+
+
+COMMENT ON COLUMN term.lexicon_identifier IS 'The lexicon associated with this term.';
+
+
+
+COMMENT ON COLUMN term.context_identifier IS 'The context associated with this term.';
+
+
+
+COMMENT ON COLUMN term.context_version IS 'The version of the context associated with this term (optional).';
+
+
+
+COMMENT ON COLUMN term.term IS 'The term itself.';
+
+
+
+COMMENT ON COLUMN term.is_root IS 'A flag indicating the term is at the top level (eg, no broader term).';
+
+
+
+COMMENT ON COLUMN term.description IS 'A description of the term.';
+
+
+
+COMMENT ON COLUMN term.url IS 'A url for further information.';
+
+
+
+CREATE TABLE term_map (
+    term_id uuid NOT NULL,
+    relationship character varying NOT NULL,
+    gcid character varying NOT NULL,
+    "timestamp" timestamp(3) without time zone DEFAULT now(),
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0)),
+    CONSTRAINT term_gcid_check CHECK (((gcid)::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text)))
+);
+
+
+
+COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identifiers via a relationship.';
+
+
+
+COMMENT ON COLUMN term_map.term_id IS 'The UUID of the term.';
+
+
+
+COMMENT ON COLUMN term_map.relationship IS 'The relationship between the term and the gcid.';
+
+
+
+COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
+
+
+
+COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was asserted.';
+
+
+
+CREATE TABLE term_rel (
+    term_subject uuid NOT NULL,
+    relationship character varying NOT NULL,
+    term_object uuid NOT NULL
+);
+
+
+
+COMMENT ON TABLE term_rel IS 'Expresses how a term is related to another term.';
+
+
+
+COMMENT ON COLUMN term_rel.term_subject IS 'The subject term.';
+
+
+
+COMMENT ON COLUMN term_rel.relationship IS 'The relationship of subject to object.';
+
+
+
+COMMENT ON COLUMN term_rel.term_object IS 'The object term.';
 
 
 
@@ -2178,6 +2337,11 @@ ALTER TABLE ONLY book
 
 ALTER TABLE ONLY chapter
     ADD CONSTRAINT chapter_pkey PRIMARY KEY (identifier, report_identifier);
+
+
+
+ALTER TABLE ONLY context
+    ADD CONSTRAINT context_pkey PRIMARY KEY (lexicon_identifier, identifier, version);
 
 
 
@@ -2431,6 +2595,11 @@ ALTER TABLE ONLY region
 
 
 
+ALTER TABLE ONLY relationship
+    ADD CONSTRAINT relationship_pkey PRIMARY KEY (relationship);
+
+
+
 ALTER TABLE ONLY report
     ADD CONSTRAINT report_doi_unique UNIQUE (doi);
 
@@ -2473,6 +2642,26 @@ ALTER TABLE ONLY "table"
 
 ALTER TABLE ONLY "table"
     ADD CONSTRAINT table_report_identifier_chapter_identifier_ordinal_key UNIQUE (report_identifier, chapter_identifier, ordinal);
+
+
+
+ALTER TABLE ONLY term_map
+    ADD CONSTRAINT term_map_pkey PRIMARY KEY (term_id, relationship, gcid);
+
+
+
+ALTER TABLE ONLY term
+    ADD CONSTRAINT term_pkey PRIMARY KEY (id);
+
+
+
+ALTER TABLE ONLY term_rel
+    ADD CONSTRAINT term_rel_pkey PRIMARY KEY (term_subject, relationship, term_object);
+
+
+
+ALTER TABLE ONLY term
+    ADD CONSTRAINT term_unique UNIQUE (lexicon_identifier, context_identifier, context_version, term);
 
 
 
@@ -3017,6 +3206,11 @@ ALTER TABLE ONLY chapter
 
 
 
+ALTER TABLE ONLY context
+    ADD CONSTRAINT context_lexicon_identifier_fkey FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
 ALTER TABLE ONLY contributor
     ADD CONSTRAINT contributor_ibfk_1 FOREIGN KEY (person_id) REFERENCES person(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
@@ -3259,6 +3453,36 @@ ALTER TABLE ONLY "table"
 
 ALTER TABLE ONLY "table"
     ADD CONSTRAINT table_report_identifier_fkey FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY term
+    ADD CONSTRAINT term_lexicon_context_version_fkey FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY term_map
+    ADD CONSTRAINT term_map_relationship_fkey FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+
+ALTER TABLE ONLY term_map
+    ADD CONSTRAINT term_map_term_fkey FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY term_rel
+    ADD CONSTRAINT term_rel_obj_fkey FOREIGN KEY (term_object) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY term_rel
+    ADD CONSTRAINT term_rel_relationship_fkey FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+
+ALTER TABLE ONLY term_rel
+    ADD CONSTRAINT term_rel_subj_fkey FOREIGN KEY (term_subject) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

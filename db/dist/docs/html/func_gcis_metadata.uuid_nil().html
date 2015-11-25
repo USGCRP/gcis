@@ -115,18 +115,12 @@
 
 
         <h2>Function:
-            <a href="#gcis-metadata.schema"><a name="gcis-metadata.function.update-publication">update_publication()</a>
+            <a href="#gcis-metadata.schema"><a name="gcis-metadata.function.uuid-nil">uuid_nil()</a>
         </h2>
-<h3>Returns: trigger</h3>
-<h3>Language: PLPGSQL</h3>
+<h3>Returns: uuid</h3>
+<h3>Language: C</h3>
         
-        <pre>
-BEGIN
-    update publication set fk = slice(hstore(NEW.*),akeys(fk))
-         where publication_type_identifier = TG_TABLE_NAME::text and
-            fk = slice(hstore(OLD.*),akeys(fk));
-     RETURN NEW;
-END; </pre>
+        <pre>uuid_nil</pre>
 
 </body></html>
 

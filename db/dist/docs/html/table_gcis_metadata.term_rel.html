@@ -115,15 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.lexicon">lexicon</a>
+            <a name="gcis-metadata.table.term-rel">term_rel</a>
         </h2>
         
-         <p>A lexicon is a list of terms which correspond to GCIS identifiers.</p>
+         <p>Expresses how a term is related to another term.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>lexicon Structure</caption>
+                <caption>term_rel Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -136,10 +136,80 @@
                 
                   
                 
+                  
+                  <a href="table_gcis_metadata.term.html#gcis-metadata.table.term">term.id</a>
+                  
+                
                 </td>
-                <td>identifier</td>
+                <td>term_subject</td>
+                <td>uuid</td>
+                <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>The subject term.
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                  
+                  <a href="table_gcis_metadata.relationship.html#gcis-metadata.table.relationship">relationship.relationship</a>
+                  
+                
+                </td>
+                <td>relationship</td>
                 <td>character varying</td>
                 <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>The relationship of subject to object.
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                  <a href="table_gcis_metadata.term.html#gcis-metadata.table.term">term.id</a>
+                  
+                
+                  
+                
+                </td>
+                <td>term_object</td>
+                <td>uuid</td>
+                <td><i>
+                
+                    
+
+                    
                 
                     PRIMARY KEY
                     
@@ -150,39 +220,7 @@
                 
                 
                 </i>
-                <br><br>A brief descriptive identifier for this lexicon.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                </td>
-                <td>description</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>A description of the lexicon, possibly including the organization associated with it.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                </td>
-                <td>url</td>
-                <td>character varying</td>
-                <td><i>
-                
-
-                
-                
-                </i>
-                <br><br>A url for further information.
+                <br><br>The object term.
                 </td>
              </tr>
             
@@ -193,30 +231,8 @@
 
         <!-- Constraint List -->
         
-        <p>&nbsp;</p>
-        <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>lexicon Constraints</caption>
-            <tr>
-                <th>Name</th>
-                <th>Constraint</th>
-            </tr>
-            
-            <tr class="tr0">
-                <td>lexicon_identifier_check</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-        </table>
-        
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.context.html">context</a><br>
-        
-                <a href="table_gcis_metadata.exterm.html">exterm</a><br>
-        
         
 
     <!-- Indexes -->

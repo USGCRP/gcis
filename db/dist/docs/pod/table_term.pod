@@ -1,0 +1,49 @@
+
+=head1 NAME
+
+term
+
+=head1 DESCRIPTION
+
+External terms that have a specific lexicon and context.
+
+=head1 FIELDS
+
+ id (uuid) - A globally unique identifier for this term (a UUID).
+ lexicon_identifier (character varying) - The lexicon associated with this term.
+ context_identifier (character varying) - The context associated with this term.
+ context_version (character varying) - The version of the context associated with this term (optional).
+ term (character varying) - The term itself.
+ is_root (boolean) - A flag indicating the term is at the top level (eg, no broader term).
+ description (character varying) - A description of the term.
+ url (character varying) - A url for further information.
+
+
+=head1 SCHEMA
+
+                                                                            Table "gcis_metadata.term"
+        Column       |       Type        |              Modifiers              | Storage  | Stats target |                              Description                              
+ --------------------+-------------------+-------------------------------------+----------+--------------+-----------------------------------------------------------------------
+  id                 | uuid              | not null default uuid_generate_v1() | plain    |              | A globally unique identifier for this term (a UUID).
+  lexicon_identifier | character varying | not null                            | extended |              | The lexicon associated with this term.
+  context_identifier | character varying | not null                            | extended |              | The context associated with this term.
+  context_version    | character varying | default ''::character varying       | extended |              | The version of the context associated with this term (optional).
+  term               | character varying | not null                            | extended |              | The term itself.
+  is_root            | boolean           | default false                       | plain    |              | A flag indicating the term is at the top level (eg, no broader term).
+  description        | character varying |                                     | extended |              | A description of the term.
+  url                | character varying |                                     | extended |              | A url for further information.
+ Indexes:
+     "term_pkey" PRIMARY KEY, btree (id)
+     "term_unique" UNIQUE CONSTRAINT, btree (lexicon_identifier, context_identifier, context_version, term)
+ Foreign-key constraints:
+     "term_lexicon_context_version_fkey" FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE
+ Referenced by:
+     TABLE "term_map" CONSTRAINT "term_map_term_fkey" FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "term_rel" CONSTRAINT "term_rel_obj_fkey" FOREIGN KEY (term_object) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "term_rel" CONSTRAINT "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+

@@ -1,0 +1,40 @@
+
+=head1 NAME
+
+term_map
+
+=head1 DESCRIPTION
+
+External terms which can be mapped to GCIS identifiers via a relationship.
+
+=head1 FIELDS
+
+ term_id (uuid) - The UUID of the term.
+ relationship (character varying) - The relationship between the term and the gcid.
+ gcid (character varying) - The GCIS identifier (URI) to which this term is mapped.
+ timestamp (timestamp(3) without time zone) - The timestamp this relationship was asserted.
+
+
+=head1 SCHEMA
+
+                                                           Table "gcis_metadata.term_map"
+     Column    |              Type              |   Modifiers   | Storage  | Stats target |                       Description                       
+ --------------+--------------------------------+---------------+----------+--------------+---------------------------------------------------------
+  term_id      | uuid                           | not null      | plain    |              | The UUID of the term.
+  relationship | character varying              | not null      | extended |              | The relationship between the term and the gcid.
+  gcid         | character varying              | not null      | extended |              | The GCIS identifier (URI) to which this term is mapped.
+  timestamp    | timestamp(3) without time zone | default now() | plain    |              | The timestamp this relationship was asserted.
+ Indexes:
+     "term_map_pkey" PRIMARY KEY, btree (term_id, relationship, gcid)
+ Check constraints:
+     "ck_gcid" CHECK (length(gcid::text) > 0)
+     "term_gcid_check" CHECK (gcid::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text))
+ Foreign-key constraints:
+     "term_map_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
+     "term_map_term_fkey" FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
+ 
+
+=cut
+
+
