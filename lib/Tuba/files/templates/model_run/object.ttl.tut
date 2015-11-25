@@ -5,7 +5,7 @@
    dcterms:identifier "<%= $model_run->stringify %>";
    bibo:doi "<%= $model_run->doi %>";
    gcis:sourceModel <<%= uri($model_run->model) %>>;
-   gcis:Scenario <<%= uri($model_run->scenario) %>>;
+   gcis:derivedFromScenario <<%= uri($model_run->scenario) %>>;
    gcis:relatedProject <<%= uri($model_run->project) %>>;
    gcis:hasSpatialResolution "<%= $model_run->spatial_resolution %>";
    gcis:hasTemporalResolution "<%= human_duration($model_run->time_resolution) %>";
