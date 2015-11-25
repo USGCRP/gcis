@@ -32,6 +32,7 @@ An instrument instance is the association of an instrument with a platform.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON instrument_instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut
