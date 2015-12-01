@@ -197,7 +197,7 @@ $t->post_ok(
 )->status_is(200);
 
 # The chapter was attributed to that author
-$t->post_ok("/report/trees/chapter/contributors/the-larch" => json =>
+$t->post_ok("/report/contributors/trees/chapter/the-larch" => json =>
     { person_id => $person_identifier, organization_identifier => $org_identifier, role => $role_identifier })->status_is(200);
 
 #
