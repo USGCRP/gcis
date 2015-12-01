@@ -380,7 +380,7 @@ WHERE {
     $chapter prov:qualifiedAttribution $attribution .
     $attribution prov:hadRole $role .
     $attribution prov:agent $author .
-    $author rdf:type <http://xmlns.com/foaf/0.1/Person> .
+    $author rdf:type gcis:Person .
 }
 SPARQL
   { author => uri("/person/$person_identifier"),
