@@ -214,7 +214,6 @@ add_to_model("/instrument/$instrument_identifier");
 add_to_model("/role_type/$role_identifier");
 add_to_model("/person/$person_identifier");
 add_to_model("/organization/$org_identifier");
-add_to_model("/report/trees/chapter/contributors/the-larch");
 
 #
 # Okay, now let's do some sparql.
@@ -372,16 +371,16 @@ for my $example (@$examples) {
 # The chapter was attributed to a person
 sparql_ok(
   <<'SPARQL',
-SELECT ?author ?role
+SELECT $author $role
 FROM <http://test.data.globalchange.gov>
 WHERE {
-    ?report rdf:type gcis:Report .
-    ?chapter rdf:type gcis:Chapter .
-    ?chapter gcis:isChapterOf ?report .
-    ?chapter prov:qualifiedAttribution ?attribution .
-    ?attribution prov:hadRole ?role .
-    ?attribution prov:agent ?author .
-    ?author rdf:type <http://xmlns.com/foaf/0.1/Person> .
+    $report rdf:type gcis:Report .
+    $chapter rdf:type gcis:Chapter .
+    $chapter gcis:isChapterOf $report .
+    $chapter prov:qualifiedAttribution $attribution .
+    $attribution prov:hadRole $role .
+    $attribution prov:agent $author .
+    $author rdf:type <http://xmlns.com/foaf/0.1/Person> .
 }
 SPARQL
   { author => uri("/person/$person_identifier"),
