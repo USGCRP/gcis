@@ -1,4 +1,4 @@
-% my $max_children = 20;
+% my $max_children = 4000;
 % my @parents;
 % my @parents_with_references;
 % my @children_with_references;
