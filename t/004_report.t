@@ -6,6 +6,7 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use strict;
 
 use_ok "Tuba";
 
@@ -37,7 +38,7 @@ $t->post_ok("/file" => json => { identifier => 'testfile', file => "fake", mime_
 $t->post_ok("/report/files/test-report" => json =>
     {add_existing_file => "/file/testfile"} )->status_is(200);
 
-my $title = "Chapter one & two";
+my $title = "Chapter one ± two";
 $t->post_ok("/report/test-report/chapter" => form => { identifier => "test-chapter", title => $title, number => 1 } )->status_is(200);
 $t->get_ok("/report/test-report/chapter/form/update/test-chapter.json")
   ->status_is(200)->json_is(
