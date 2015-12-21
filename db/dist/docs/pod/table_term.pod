@@ -5,7 +5,7 @@ term
 
 =head1 DESCRIPTION
 
-External terms that have a specific lexicon and context.
+Terms that have a specific lexicon and context.
 
 =head1 FIELDS
 
@@ -41,6 +41,9 @@ External terms that have a specific lexicon and context.
      TABLE "term_map" CONSTRAINT "term_map_term_fkey" FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "term_rel" CONSTRAINT "term_rel_obj_fkey" FOREIGN KEY (term_object) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "term_rel" CONSTRAINT "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON term FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

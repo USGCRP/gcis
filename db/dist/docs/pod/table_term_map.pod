@@ -9,7 +9,7 @@ External terms which can be mapped to GCIS identifiers via a relationship.
 
 =head1 FIELDS
 
- term_id (uuid) - The UUID of the term.
+ term_id (uuid) - The term ID (UUID).
  relationship (character varying) - The relationship between the term and the gcid.
  gcid (character varying) - The GCIS identifier (URI) to which this term is mapped.
  timestamp (timestamp(3) without time zone) - The timestamp this relationship was asserted.
@@ -20,7 +20,7 @@ External terms which can be mapped to GCIS identifiers via a relationship.
                                                            Table "gcis_metadata.term_map"
      Column    |              Type              |   Modifiers   | Storage  | Stats target |                       Description                       
  --------------+--------------------------------+---------------+----------+--------------+---------------------------------------------------------
-  term_id      | uuid                           | not null      | plain    |              | The UUID of the term.
+  term_id      | uuid                           | not null      | plain    |              | The term ID (UUID).
   relationship | character varying              | not null      | extended |              | The relationship between the term and the gcid.
   gcid         | character varying              | not null      | extended |              | The GCIS identifier (URI) to which this term is mapped.
   timestamp    | timestamp(3) without time zone | default now() | plain    |              | The timestamp this relationship was asserted.
@@ -32,6 +32,9 @@ External terms which can be mapped to GCIS identifiers via a relationship.
  Foreign-key constraints:
      "term_map_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
      "term_map_term_fkey" FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON term_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

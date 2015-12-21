@@ -38,7 +38,7 @@ CREATE TABLE term (
     CONSTRAINT term_lexicon_context_version_fkey FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-COMMENT ON TABLE term IS 'External terms that have a specific lexicon and context.';
+COMMENT ON TABLE term IS 'Terms that have a specific lexicon and context.';
 COMMENT ON COLUMN term.id IS 'A globally unique identifier for this term (a UUID).';
 COMMENT ON COLUMN term.lexicon_identifier IS 'The lexicon associated with this term.';
 COMMENT ON COLUMN term.context_identifier IS 'The context associated with this term.';
@@ -71,7 +71,7 @@ CREATE TABLE term_map (
 );
 
 COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identifiers via a relationship.';
-COMMENT ON COLUMN term_map.term_id IS 'The UUID of the term.';
+COMMENT ON COLUMN term_map.term_id IS 'The term ID (UUID).';
 COMMENT ON COLUMN term_map.relationship IS 'The relationship between the term and the gcid.';
 COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
 COMMENT ON COLUMN term_map.timestamp IS 'The timestamp this relationship was asserted.';
@@ -88,10 +88,16 @@ CREATE TABLE term_rel (
 );
 
 COMMENT ON TABLE term_rel IS 'Expresses how a term is related to another term.';
-COMMENT ON COLUMN term_rel.term_subject IS 'The subject term.';
+COMMENT ON COLUMN term_rel.term_subject IS 'The subject term (UUID).';
 COMMENT ON COLUMN term_rel.relationship IS 'The relationship of subject to object.';
-COMMENT ON COLUMN term_rel.term_object IS 'The object term.';
+COMMENT ON COLUMN term_rel.term_object IS 'The object term (UUID).';
 
+-- add auditing triggers for all tables
+SELECT audit.audit_table('context');
+SELECT audit.audit_table('term');
+SELECT audit.audit_table('relationship');
+SELECT audit.audit_table('term_map');
+SELECT audit.audit_table('term_rel');
 
 -- since this is to replace exterm, insert existing values in exterm into the new tables (except for term_rel)
 INSERT INTO context (lexicon_identifier, identifier) (select distinct lexicon_identifier, context FROM exterm);
@@ -103,3 +109,33 @@ INSERT INTO term_map (term_id, relationship, gcid) (SELECT t.id, 'owl:sameAs', x
                                                          AND t.context_identifier = x.context
                                                          AND t.term = x.term
                                                       );
+
+CREATE OR REPLACE FUNCTION copy_exterm_inserts_to_term() RETURNS TRIGGER AS $$
+BEGIN
+    --populate context
+    IF NOT EXISTS (SELECT * FROM context c
+                   WHERE c.identifier = NEW.context)
+    THEN INSERT INTO context (lexicon_identifier, identifier, version)
+                VALUES (NEW.lexicon_identifier, NEW.context, '');
+    END IF;
+    --populate term
+    INSERT INTO term (lexicon_identifier, context_identifier, term)
+           VALUES (NEW.lexicon_identifier, NEW.context, NEW.term);
+    --populate term_map
+    INSERT INTO term_map (term_id, relationship, gcid)
+           (SELECT t.id, 'owl:sameAs', NEW.gcid
+            FROM term AS t
+            WHERE t.term = NEW.term
+           );
+    RETURN NEW;
+END; $$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION copy_exterm_inserts_to_term() IS $body$
+Populate fields in tables 'context', 'term', and 'term_map' for new entries in
+'exterm' table.
+This is to keep these new tables in sync with any new data entered into exterm
+during the transition to using the new tables in the perl code.
+$body$;
+
+CREATE TRIGGER copy_exterm_inserts_to_term BEFORE INSERT ON exterm
+               FOR EACH ROW EXECUTE PROCEDURE copy_exterm_inserts_to_term();

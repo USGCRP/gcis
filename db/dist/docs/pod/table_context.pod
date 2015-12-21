@@ -35,6 +35,9 @@ A context is a subset of terms within a lexicon.
      "context_lexicon_identifier_fkey" FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Referenced by:
      TABLE "term" CONSTRAINT "term_lexicon_context_version_fkey" FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON context FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON context FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

@@ -10,6 +10,39 @@ SET client_min_messages = warning;
 
 
 
+CREATE FUNCTION copy_exterm_inserts_to_term() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+    --populate context
+    IF NOT EXISTS (SELECT * FROM context c
+                   WHERE c.identifier = NEW.context)
+    THEN INSERT INTO context (lexicon_identifier, identifier, version)
+                VALUES (NEW.lexicon_identifier, NEW.context, '');
+    END IF;
+    --populate term
+    INSERT INTO term (lexicon_identifier, context_identifier, term)
+           VALUES (NEW.lexicon_identifier, NEW.context, NEW.term);
+    --populate term_map
+    INSERT INTO term_map (term_id, relationship, gcid)
+           (SELECT t.id, 'owl:sameAs', NEW.gcid
+            FROM term AS t
+            WHERE t.term = NEW.term
+           );
+    RETURN NEW;
+END; $$;
+
+
+
+COMMENT ON FUNCTION copy_exterm_inserts_to_term() IS '
+Populate fields in tables ''context'', ''term'', and ''term_map'' for new entries in
+''exterm'' table.
+This is to keep these new tables in sync with any new data entered into exterm
+during the transition to using the new tables in the perl code.
+';
+
+
+
 CREATE FUNCTION delete_publication() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
@@ -2045,7 +2078,7 @@ CREATE TABLE term (
 
 
 
-COMMENT ON TABLE term IS 'External terms that have a specific lexicon and context.';
+COMMENT ON TABLE term IS 'Terms that have a specific lexicon and context.';
 
 
 
@@ -2096,7 +2129,7 @@ COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identif
 
 
 
-COMMENT ON COLUMN term_map.term_id IS 'The UUID of the term.';
+COMMENT ON COLUMN term_map.term_id IS 'The term ID (UUID).';
 
 
 
@@ -2124,7 +2157,7 @@ COMMENT ON TABLE term_rel IS 'Expresses how a term is related to another term.';
 
 
 
-COMMENT ON COLUMN term_rel.term_subject IS 'The subject term.';
+COMMENT ON COLUMN term_rel.term_subject IS 'The subject term (UUID).';
 
 
 
@@ -2132,7 +2165,7 @@ COMMENT ON COLUMN term_rel.relationship IS 'The relationship of subject to objec
 
 
 
-COMMENT ON COLUMN term_rel.term_object IS 'The object term.';
+COMMENT ON COLUMN term_rel.term_object IS 'The object term (UUID).';
 
 
 
@@ -2868,6 +2901,26 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON model_run F
 
 
 
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON context FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_rel FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
@@ -3037,6 +3090,30 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON model FOR EACH STATEMENT EXEC
 
 
 CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON model_run FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON context FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term_rel FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+
+
+
+CREATE TRIGGER copy_exterm_inserts_to_term BEFORE INSERT ON exterm FOR EACH ROW EXECUTE PROCEDURE copy_exterm_inserts_to_term();
 
 
 
