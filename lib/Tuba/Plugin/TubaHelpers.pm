@@ -98,6 +98,7 @@ sub register {
                 return $cached;
             }
             my $str = $c->req->url->clone->to_abs;
+            $str =~ s/\?show_all.*$//;
             for my $format (@$supported_formats) {
                 $str =~ s/\.$format$// and last;
             }

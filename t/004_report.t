@@ -6,6 +6,7 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use strict;
 
 use_ok "Tuba";
 
