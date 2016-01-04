@@ -485,7 +485,7 @@ gcis:wasWrittenBy a owl:ObjectProperty ;
 
 gcis:wasPreparedBy a owl:ObjectProperty ;
 	rdfs:label "was prepared by" ;
-	rdfs:comment "A publication was prepared by an activitiy of publication preparation." ;
+	rdfs:comment "A publication was prepared by an activity of publication preparation." ;
 	rdfs:domain gcis:Publication ;
 	rdfs:range gcis:PublicationPreparation ;
 	rdfs:subPropertyOf prov:wasGeneratedBy .
@@ -925,11 +925,11 @@ gcis:Journal a owl:Class ;
 	rdfs:label "Journal" ;
 	rdfs:comment "A periodical of scholarly journal Articles." .
 
-gcis:Article a owl:Class ;
-	rdfs:subClassOf gcis:Publication , bibo:Article , prov:Entity ;
-	rdfs:label "Article" ;
-	rdfs:comment "A written composition in prose, usually nonfiction, on a specific topic, forming an independent part of a book or other publication, as a newspaper or magazine." .	
-
+gcis:AcademicArticle a owl:Class ;
+	rdfs:subClassOf gcis:Publication , bibo:AcademicArticle , prov:Entity ;
+ 	rdfs:label "Academic Article" ;
+ 	rdfs:comment "A scholarly article, typically published in a journal." .	
+ 
 gcis:Indicator a owl:Class ;
         rdfs:subClassOf gcis:Report ;
         rdfs:label "Indicator" ;
