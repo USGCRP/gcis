@@ -13,7 +13,7 @@
  % my $obj = $map->publication->to_object;
 % if (obj_uri_for($ctr->person) ne "") {
 <<%= uri($obj) %>>
-   a gcis:<%= ucfirst($obj->meta->table) %>;
+##   a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= uri($ctr->person) %>>;
@@ -25,7 +25,7 @@
 % } else {
 % my $pub = $object->get_publication;
 <<%= uri($obj) %>>
-   a gcis:<%= ucfirst($obj->meta->table) %>;
+##   a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
