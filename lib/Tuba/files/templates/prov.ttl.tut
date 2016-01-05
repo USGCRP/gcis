@@ -53,7 +53,7 @@
        % my $type = $child->publication->publication_type_identifier;
        % my $rel = $child->relationship;
 <<%= uri($child->publication->to_object) %>>
-   a gcis:<%= ucfirst($child->publication->publication_type_identifier) %>;
+##   a gcis:<%= ucfirst($child->publication->publication_type_identifier) %>;
    prov:wasDerivedFrom <<%= current_resource %>>.
 
     % }
