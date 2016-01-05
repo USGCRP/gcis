@@ -56,7 +56,7 @@
 %# per syntax per Example 4 on PROV-O primer:
    % for my $map (@maps) {
 <<%= uri($map->child_publication->to_object) %>>
-##   a gcis:<%= ucfirst($map->child_publication->to_object->meta->table) %>;
+%#   a gcis:<%= ucfirst($map->child_publication->to_object->meta->table) %>;
    prov:wasDerivedFrom <<%= uri($map->parent_publication->to_object) %>>;
    prov:wasGeneratedBy <<%= current_resource %>>.
    % }
