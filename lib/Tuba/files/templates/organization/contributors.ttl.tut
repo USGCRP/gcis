@@ -25,7 +25,7 @@
 % } else {
 % my $pub = $object->get_publication;
 <<%= uri($obj) %>>
-##   a gcis:<%= ucfirst($obj->meta->table) %>;
+%#   a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
