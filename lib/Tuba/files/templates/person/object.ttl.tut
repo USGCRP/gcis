@@ -18,7 +18,7 @@
      % for my $map (@{ $ctr->publication_contributor_maps }) {
      % my $obj = $map->publication->to_object;
 <<%= uri($obj) %>>
-   a gcis:<%= ucfirst($obj->meta->table) %>;
+%#   a gcis:<%= ucfirst($obj->meta->table) %>;
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
