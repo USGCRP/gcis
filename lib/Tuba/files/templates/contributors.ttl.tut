@@ -12,7 +12,7 @@
       prov:agent <<%= uri($con->{person}) %>>;
       prov:hadRole <<%= (uri($row->{role})) %>>;
                 % for my $org (@{ $con->{orgs} }) {
-                    % if $org { 
+                    % if ($org) { 
       prov:actedOnBehalfOf <<%= uri($org) =%>>;
                     % }
                 % }
