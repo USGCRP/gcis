@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo dbpprop gcis fabio cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo dbpprop gcis prov fabio cito biro/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>   
