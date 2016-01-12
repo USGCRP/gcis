@@ -24,8 +24,7 @@
       prov:agent <<%= current_resource %>>;
       prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
       prov:hadRole <<%= uri($ctr->role_type) %>>;
-   ] 
-.
+   ] .
 
    % }
      % }
