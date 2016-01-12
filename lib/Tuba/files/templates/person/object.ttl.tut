@@ -22,7 +22,9 @@
    prov:qualifiedAttribution [
       a prov:Attribution;
       prov:agent <<%= current_resource %>>;
+         % if ($ctr->organization) { 
       prov:actedOnBehalfOf <<%= uri($ctr->organization) %>>;
+         % }
       prov:hadRole <<%= uri($ctr->role_type) %>>;
    ] .
 
