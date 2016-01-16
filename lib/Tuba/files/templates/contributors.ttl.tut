@@ -11,7 +11,7 @@
       a prov:Attribution;
                     % if ($con->{person}) {
       prov:agent <<%= uri($con->{person}) =%>>;
-                   % }
+                    % }
       prov:hadRole <<%= (uri($row->{role})) %>>;
                 % for my $org (@{ $con->{orgs} }) {
                     % if ($org) { 
