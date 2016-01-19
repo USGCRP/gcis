@@ -42,7 +42,7 @@
 % }
 
 ## Region(s):
-% if (my $pub = $report->get_publication) {
+% for my $pub ($report->get_publication) {
    % if ($pub->regions) {
    dcterms:spatial <<%= uri($pub->regions) %>>;
   % }
