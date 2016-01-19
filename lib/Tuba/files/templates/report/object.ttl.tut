@@ -43,12 +43,13 @@
 
 ## Region(s):
 % for my $pub ($report->get_publication) {
-   % if ($pub->regions) {
-   dcterms:spatial <<%= uri($pub->regions) %>>;
-  % }
+   % for my $reg ($pub->regions) {
+      % if ($reg) {
+   dcterms:spatial <<%= uri($reg) %>>;
+      % }
+   % }
 % }
   
-
    a gcis:Report, fabio:Report .
 
 % end
