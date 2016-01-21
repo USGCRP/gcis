@@ -7,6 +7,7 @@
 %= include 'edit_buttons', object => $object;
 
 <div itemscope itemtype="http://schema.org/Dataset">
+    %= include 'h/contributors_short', object => $webpage, role_regex => '(editor|author|distributor|data_producer|data_archive|contributing_agency|publisher|host)';
     <div class='row well'>
     
         %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;
