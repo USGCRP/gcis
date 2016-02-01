@@ -458,6 +458,18 @@ sub startup {
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
     }
 
+    # simple test route -RS
+    $r->get('/testing' => sub {
+        my $c=shift;
+        $c->render(text=>'testing');
+    });
+
+    # simple test resource -RS
+    $r->resource('test');
+
+    # terms
+    $r->resource('term');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
