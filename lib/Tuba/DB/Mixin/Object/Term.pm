@@ -3,7 +3,7 @@ use strict;
 
 sub stringify {
     my $c = shift;
-    return $c->label;
+    return $c->term;
 }
 
 1;

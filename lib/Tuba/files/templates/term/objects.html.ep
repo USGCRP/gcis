@@ -30,9 +30,13 @@
        </td>
        <td><%= $term->lexicon_identifier %></td>
        <td><%= $term->context_identifier %></td>
-       <td><%= $term->term %></tdt>
-       <td><%= $term->description %></tdt>
-       <td><%= $term->url %></tdt>
+       <td>
+           %= link_to $term->uri($self) => begin
+           <%= $term->term %>
+           %= end
+       </td>
+       <td><%= $term->description %></td>
+       <td><%= $term->url %></td>
     </tr>
 % }
 </table>
