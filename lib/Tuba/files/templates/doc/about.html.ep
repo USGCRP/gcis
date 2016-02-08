@@ -54,17 +54,22 @@ and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
 It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
 a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
 
-<p class='linebreaks'>GCIS Visionary : Curt Tilmes
-System Engineer : Brian Duggan
-
-Also thanks to :
+<p class='linebreaks'>Contributions from :
+Robert Wolfe : Technical Lead
+Justin Goldstein : Data Curator
 Andrew Buddenberg : Client development
-Steve Aulenbach : Data Curator
-Justin Goldstein : Researcher
-Robert Wolfe : Project Manager
-Amanda McQueen, Brent Newman : GCIS Interns
-Tania Sizer : Web Designer
+Brent Newman : Data Coordinator
+Bradley Akamine : Chief Information Officer
 Xiagoang (Marshall) Ma, Stephan Zednik, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+
+Prior contributions from : 
+Curt Tilmes : Visionary
+Brian Duggan : System Engineer
+Steve Aulenbach : Data Curator
+Tania Sizer : Web Designer
+Rudy Estrada : System Administrator
+Travis Kuennen : System Administrator
+Amanda McQueen : Student Assistant
 
 <h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
