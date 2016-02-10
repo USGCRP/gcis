@@ -54,13 +54,15 @@ and uses many fine modules from the <a href="http://metacpan.org">CPAN</a>.
 It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, and populates
 a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
 
-<p class='linebreaks'>Contributions from :
+<p class='linebreaks'>USGCRP contributions from :
 Robert Wolfe : Technical Lead
 Justin Goldstein : Data Curator
 Andrew Buddenberg : Client development
 Brent Newman : Data Coordinator
-Bradley Akamine : USGCRP Chief Digital Officer
-Xiagoang (Marshall) Ma, Stephan Zednik, Peter Fox and the team at the <a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> : Ontology Engineering.</p>
+Bradley Akamine : Chief Digital Officer
+
+<a href="http://tw.rpi.edu/web/project/gcis-imsap">Tetherless World Constellation</a> Ontology Engineering contributions from : 
+Xiagoang (Marshall) Ma, Stephan Zednik, Peter Fox (and other team members)
 
 Prior contributions from : 
 Curt Tilmes : Visionary
@@ -69,7 +71,7 @@ Steve Aulenbach : Data Curator
 Tania Sizer : Web Designer
 Rudy Estrada : System Administrator
 Travis Kuennen : System Administrator
-Amanda McQueen : Student Assistant
+Amanda McQueen : Student Assistant</p>
 
 <h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
