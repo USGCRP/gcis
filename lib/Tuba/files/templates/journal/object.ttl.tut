@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd bibo gcis fabio/];
+% layout 'default', namespaces => [qw/dcterms xsd bibo gcis fabio prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -16,3 +16,5 @@
    a gcis:Journal, fabio:Journal .
 
 % end
+
+%= include 'contributors';
