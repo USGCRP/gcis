@@ -14,7 +14,7 @@
 % }
 
    a gcis:Journal, fabio:Journal .
-
 % end
+
 
 %= include 'contributors';
