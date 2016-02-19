@@ -57,7 +57,7 @@ some of the ones below.</p>
 % }
 
 <h3>Other semantic resources</h3>
-<p><a href="http://yasgui.data2semantics.org/?outputFormat=table&query=PREFIX+gcis%3A+%3Chttp%3A%2F%2Fdata.globalchange.gov%2Fgcis.owl%23%3E%0ASELECT+*+WHERE+%7B%0A++%3Fx+a+gcis%3AFigure%0A%7D%0ALIMIT+100&contentTypeConstruct=text%2Fturtle&contentTypeSelect=application%2Fsparql-results%2Bjson&endpoint=http%3A%2F%2Fdata.globalchange.gov%2Fsparql&requestMethod=POST&tabTitle=GCIS"
+<p><a href="hhttp://yasgui.org/short/4koHOIxil"
     target="_blank">Yasgui</a> is a modern SPARQL query editor.
 </p>
 <p>
@@ -67,5 +67,5 @@ is a tool for visually exploring semantic relationships.</p>
 <h3>Applications</h3>
 <p>The website for the Third National Climate Assessment, <a href="http://nca2014.globalchange.gov">http://nca2014.globalchange.gov</a>,
 uses JQuery to call the GCIS API for the figure and image metadata.</p>
-<p>The web page for the USGCRP, <a href="http://www.globalchange.gov">http://www.globalchange.gov</a>, uses GCIS data on the server side.</p>
+<p>The USGCRP webpage <a href="http://www.globalchange.gov">http://www.globalchange.gov</a> uses GCIS data on the server side.</p>
 
