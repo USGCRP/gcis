@@ -2066,7 +2066,7 @@ COMMENT ON COLUMN "table".url IS 'A URL for a landing page for this table.';
 
 
 CREATE TABLE term (
-    id uuid DEFAULT uuid_generate_v1() NOT NULL,
+    identifier character varying DEFAULT uuid_generate_v1() NOT NULL,
     lexicon_identifier character varying NOT NULL,
     context_identifier character varying NOT NULL,
     context_version character varying DEFAULT ''::character varying,
@@ -2082,7 +2082,7 @@ COMMENT ON TABLE term IS 'Terms that have a specific lexicon and context.';
 
 
 
-COMMENT ON COLUMN term.id IS 'A globally unique identifier for this term (a UUID).';
+COMMENT ON COLUMN term.identifier IS 'A globally unique identifier for this term (a UUID).';
 
 
 
@@ -2115,7 +2115,7 @@ COMMENT ON COLUMN term.url IS 'A url for further information.';
 
 
 CREATE TABLE term_map (
-    term_id uuid NOT NULL,
+    term_identifier character varying NOT NULL,
     relationship character varying NOT NULL,
     gcid character varying NOT NULL,
     "timestamp" timestamp(3) without time zone DEFAULT now(),
@@ -2129,7 +2129,7 @@ COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identif
 
 
 
-COMMENT ON COLUMN term_map.term_id IS 'The term ID (UUID).';
+COMMENT ON COLUMN term_map.term_identifier IS 'The term ID (UUID).';
 
 
 
@@ -2146,9 +2146,9 @@ COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was a
 
 
 CREATE TABLE term_rel (
-    term_subject uuid NOT NULL,
+    term_subject character varying NOT NULL,
     relationship character varying NOT NULL,
-    term_object uuid NOT NULL
+    term_object character varying NOT NULL
 );
 
 
@@ -2679,12 +2679,12 @@ ALTER TABLE ONLY "table"
 
 
 ALTER TABLE ONLY term_map
-    ADD CONSTRAINT term_map_pkey PRIMARY KEY (term_id, relationship, gcid);
+    ADD CONSTRAINT term_map_pkey PRIMARY KEY (term_identifier, relationship, gcid);
 
 
 
 ALTER TABLE ONLY term
-    ADD CONSTRAINT term_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT term_pkey PRIMARY KEY (identifier);
 
 
 
@@ -3544,12 +3544,12 @@ ALTER TABLE ONLY term_map
 
 
 ALTER TABLE ONLY term_map
-    ADD CONSTRAINT term_map_term_fkey FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT term_map_term_fkey FOREIGN KEY (term_identifier) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
 ALTER TABLE ONLY term_rel
-    ADD CONSTRAINT term_rel_obj_fkey FOREIGN KEY (term_object) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT term_rel_obj_fkey FOREIGN KEY (term_object) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
@@ -3559,7 +3559,7 @@ ALTER TABLE ONLY term_rel
 
 
 ALTER TABLE ONLY term_rel
-    ADD CONSTRAINT term_rel_subj_fkey FOREIGN KEY (term_subject) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT term_rel_subj_fkey FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

@@ -480,7 +480,7 @@ owl:sameAs	An alias
 -- Data for Name: term; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term (id, lexicon_identifier, context_identifier, context_version, term, is_root, description, url) FROM stdin;
+COPY term (identifier, lexicon_identifier, context_identifier, context_version, term, is_root, description, url) FROM stdin;
 \.
 
 
@@ -488,7 +488,7 @@ COPY term (id, lexicon_identifier, context_identifier, context_version, term, is
 -- Data for Name: term_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term_map (term_id, relationship, gcid, "timestamp") FROM stdin;
+COPY term_map (term_identifier, relationship, gcid, "timestamp") FROM stdin;
 \.
 
 
