@@ -7,7 +7,7 @@ build_requires:
   Mojolicious::Plugin::InstallablePaths: '0'
   Test::More: '0'
 configure_requires:
-  Module::Build: '0.38'
+  Module::Build: '0.39'
   Module::Build::Database: '0'
   Module::Build::Mojolicious: '0'
   Mojolicious::Plugin::InstallablePaths: '0'
@@ -21,7 +21,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.39'
+    version: '1.40'
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -243,4 +243,4 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.39'
+version: '1.40'
