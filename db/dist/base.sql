@@ -24,10 +24,12 @@ BEGIN
     INSERT INTO term (lexicon_identifier, context_identifier, term)
            VALUES (NEW.lexicon_identifier, NEW.context, NEW.term);
     --populate term_map
-    INSERT INTO term_map (term_id, relationship, gcid)
-           (SELECT t.id, 'owl:sameAs', NEW.gcid
+    INSERT INTO term_map (term_identifier, relationship, gcid)
+           (SELECT t.identifier, 'owl:sameAs', NEW.gcid
             FROM term AS t
             WHERE t.term = NEW.term
+              AND t.lexicon_identifier = NEW.lexicon_identifier
+              AND t.context_identifier = NEW.context
            );
     RETURN NEW;
 END; $$;
