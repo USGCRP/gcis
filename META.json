@@ -23,7 +23,7 @@
       },
       "configure" : {
          "requires" : {
-            "Module::Build" : "0.38",
+            "Module::Build" : "0.39",
             "Module::Build::Database" : "0",
             "Module::Build::Mojolicious" : "0",
             "Mojolicious::Plugin::InstallablePaths" : "0"
@@ -79,7 +79,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.39"
+         "version" : "1.40"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -350,5 +350,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.39"
+   "version" : "1.40"
 }

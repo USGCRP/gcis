@@ -590,6 +590,8 @@ db/patches/2150_image_url.sql
 db/patches/2160_issn.sql
 db/patches/2170_report_types.sql
 db/patches/2180_role_comment.sql
+db/patches/2210_unitof.sql
+db/patches/2220_centerof.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -1006,6 +1008,7 @@ META.json
 META.yml
 README.md
 README.osx
+release-ci
 t/001_start_db.t
 t/002_basic.t
 t/002_objects.t
