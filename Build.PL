@@ -40,9 +40,10 @@ my $builder = Module::Build::Database->new(
     dist_abstract       => "The Useful Backend API",
     release_status      => 'stable',
     configure_requires => {
-        'Module::Build' => 0.39,
+        'Module::Build' => '0.39',
         'Module::Build::Mojolicious' => 0,
         'Module::Build::Database' => 0,
+        'Mojolicious' => '>= 6.08, <= 6.24',
         'Mojolicious::Plugin::InstallablePaths' => 0,
     },
     build_requires => {
@@ -54,7 +55,7 @@ my $builder = Module::Build::Database->new(
         'LWP::UserAgent' => 0,
         'Number::Bytes::Human' => 0,
         'Mojolicious::Plugin::YamlConfig' => 0,
-        'Mojolicious' => '6.08',
+        'Mojolicious' => '>= 6.08, <= 6.24',
         'Number::Format' => 0,
         'YAML::Syck'  => 0,
         'YAML::XS'    => 0,
