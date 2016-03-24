@@ -25,9 +25,7 @@
          "requires" : {
             "Module::Build" : "0.39",
             "Module::Build::Database" : "0",
-            "Module::Build::Mojolicious" : "0",
-            "Mojolicious" : ">= 6.08, <= 6.24",
-            "Mojolicious::Plugin::InstallablePaths" : "0"
+            "Mojolicious" : ">= 6.08, <= 6.24"
          }
       },
       "runtime" : {
@@ -352,5 +350,5 @@
    },
    "release_status" : "stable",
    "version" : "1.40",
-   "x_serialization_backend" : "JSON::PP version 2.27300"
+   "x_serialization_backend" : "JSON::PP version 2.27203"
 }

@@ -41,10 +41,10 @@ my $builder = Module::Build::Database->new(
     release_status      => 'stable',
     configure_requires => {
         'Module::Build' => '0.39',
-        'Module::Build::Mojolicious' => 0,
+        #'Module::Build::Mojolicious' => 0,  #commented out, dependency inteferes with Mojolicous version -rs
         'Module::Build::Database' => 0,
         'Mojolicious' => '>= 6.08, <= 6.24',
-        'Mojolicious::Plugin::InstallablePaths' => 0,
+        #'Mojolicious::Plugin::InstallablePaths' => 0, #commented out, dependency inteferes with Mojolicous version
     },
     build_requires => {
         'Test::More' => 0,
