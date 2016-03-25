@@ -1854,7 +1854,7 @@ COMMENT ON COLUMN region.description IS 'A description.';
 
 
 CREATE TABLE relationship (
-    relationship character varying NOT NULL,
+    identifier character varying NOT NULL,
     description character varying
 );
 
@@ -1864,7 +1864,7 @@ COMMENT ON TABLE relationship IS 'The blessed semantic web relationships.';
 
 
 
-COMMENT ON COLUMN relationship.relationship IS 'A fully qualified semantic web relationship.';
+COMMENT ON COLUMN relationship.identifier IS 'A fully qualified semantic web relationship.';
 
 
 
@@ -2118,7 +2118,7 @@ COMMENT ON COLUMN term.url IS 'A url for further information.';
 
 CREATE TABLE term_map (
     term_identifier character varying NOT NULL,
-    relationship character varying NOT NULL,
+    relationship_identifier character varying NOT NULL,
     gcid character varying NOT NULL,
     description character varying,
     "timestamp" timestamp(3) without time zone DEFAULT now(),
@@ -2135,7 +2135,7 @@ COMMENT ON COLUMN term_map.term_identifier IS 'The term ID (UUID).';
 
 
 
-COMMENT ON COLUMN term_map.relationship IS 'The relationship between the term and the gcid.';
+COMMENT ON COLUMN term_map.relationship_identifier IS 'The relationship between the term and the gcid.';
 
 
 
@@ -2153,7 +2153,7 @@ COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was a
 
 CREATE TABLE term_rel (
     term_subject character varying NOT NULL,
-    relationship character varying NOT NULL,
+    relationship_identifier character varying NOT NULL,
     term_object character varying NOT NULL
 );
 
@@ -2167,7 +2167,7 @@ COMMENT ON COLUMN term_rel.term_subject IS 'The subject term (UUID).';
 
 
 
-COMMENT ON COLUMN term_rel.relationship IS 'The relationship of subject to object.';
+COMMENT ON COLUMN term_rel.relationship_identifier IS 'The relationship of subject to object.';
 
 
 
@@ -2635,7 +2635,7 @@ ALTER TABLE ONLY region
 
 
 ALTER TABLE ONLY relationship
-    ADD CONSTRAINT relationship_pkey PRIMARY KEY (relationship);
+    ADD CONSTRAINT relationship_pkey PRIMARY KEY (identifier);
 
 
 
@@ -2685,7 +2685,7 @@ ALTER TABLE ONLY "table"
 
 
 ALTER TABLE ONLY term_map
-    ADD CONSTRAINT term_map_pkey PRIMARY KEY (term_identifier, relationship, gcid);
+    ADD CONSTRAINT term_map_pkey PRIMARY KEY (term_identifier, relationship_identifier, gcid);
 
 
 
@@ -2695,7 +2695,7 @@ ALTER TABLE ONLY term
 
 
 ALTER TABLE ONLY term_rel
-    ADD CONSTRAINT term_rel_pkey PRIMARY KEY (term_subject, relationship, term_object);
+    ADD CONSTRAINT term_rel_pkey PRIMARY KEY (term_subject, relationship_identifier, term_object);
 
 
 
@@ -3545,7 +3545,7 @@ ALTER TABLE ONLY term
 
 
 ALTER TABLE ONLY term_map
-    ADD CONSTRAINT term_map_relationship_fkey FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT term_map_relationship_fkey FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 
@@ -3560,7 +3560,7 @@ ALTER TABLE ONLY term_rel
 
 
 ALTER TABLE ONLY term_rel
-    ADD CONSTRAINT term_rel_relationship_fkey FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT;
+    ADD CONSTRAINT term_rel_relationship_fkey FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 

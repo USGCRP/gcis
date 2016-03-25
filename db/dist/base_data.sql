@@ -378,6 +378,8 @@ COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_
 COPY organization_relationship (identifier, label) FROM stdin;
 managed_by	managed by
 operated_by	operated by
+unit_of	unit of
+center_of	center of
 \.
 
 
@@ -471,7 +473,7 @@ COPY publication_region_map (publication_id, region_identifier) FROM stdin;
 -- Data for Name: relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY relationship (relationship, description) FROM stdin;
+COPY relationship (identifier, description) FROM stdin;
 owl:sameAs	An alias
 \.
 
@@ -488,7 +490,7 @@ COPY term (identifier, lexicon_identifier, context_identifier, context_version, 
 -- Data for Name: term_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term_map (term_identifier, relationship, gcid, description, "timestamp") FROM stdin;
+COPY term_map (term_identifier, relationship_identifier, gcid, description, "timestamp") FROM stdin;
 \.
 
 
@@ -496,7 +498,7 @@ COPY term_map (term_identifier, relationship, gcid, description, "timestamp") FR
 -- Data for Name: term_rel; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term_rel (term_subject, relationship, term_object) FROM stdin;
+COPY term_rel (term_subject, relationship_identifier, term_object) FROM stdin;
 \.
 
 

@@ -10,23 +10,23 @@ Expresses how a term is related to another term.
 =head1 FIELDS
 
  term_subject (character varying) - The subject term (UUID).
- relationship (character varying) - The relationship of subject to object.
+ relationship_identifier (character varying) - The relationship of subject to object.
  term_object (character varying) - The object term (UUID).
 
 
 =head1 SCHEMA
 
-                                          Table "gcis_metadata.term_rel"
-     Column    |       Type        | Modifiers | Storage  | Stats target |              Description               
- --------------+-------------------+-----------+----------+--------------+----------------------------------------
-  term_subject | character varying | not null  | extended |              | The subject term (UUID).
-  relationship | character varying | not null  | extended |              | The relationship of subject to object.
-  term_object  | character varying | not null  | extended |              | The object term (UUID).
+                                                Table "gcis_metadata.term_rel"
+          Column          |       Type        | Modifiers | Storage  | Stats target |              Description               
+ -------------------------+-------------------+-----------+----------+--------------+----------------------------------------
+  term_subject            | character varying | not null  | extended |              | The subject term (UUID).
+  relationship_identifier | character varying | not null  | extended |              | The relationship of subject to object.
+  term_object             | character varying | not null  | extended |              | The object term (UUID).
  Indexes:
-     "term_rel_pkey" PRIMARY KEY, btree (term_subject, relationship, term_object)
+     "term_rel_pkey" PRIMARY KEY, btree (term_subject, relationship_identifier, term_object)
  Foreign-key constraints:
      "term_rel_obj_fkey" FOREIGN KEY (term_object) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
-     "term_rel_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
+     "term_rel_relationship_fkey" FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT
      "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_rel FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
