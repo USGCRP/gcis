@@ -488,7 +488,7 @@ COPY term (identifier, lexicon_identifier, context_identifier, context_version, 
 -- Data for Name: term_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term_map (term_identifier, relationship, gcid, "timestamp") FROM stdin;
+COPY term_map (term_identifier, relationship, gcid, description, "timestamp") FROM stdin;
 \.
 
 

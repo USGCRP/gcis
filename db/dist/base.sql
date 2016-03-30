@@ -2120,9 +2120,9 @@ CREATE TABLE term_map (
     term_identifier character varying NOT NULL,
     relationship character varying NOT NULL,
     gcid character varying NOT NULL,
+    description character varying,
     "timestamp" timestamp(3) without time zone DEFAULT now(),
-    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0)),
-    CONSTRAINT term_gcid_check CHECK (((gcid)::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text)))
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
 );
 
 
@@ -2140,6 +2140,10 @@ COMMENT ON COLUMN term_map.relationship IS 'The relationship between the term an
 
 
 COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
+
+
+
+COMMENT ON COLUMN term_map.description IS 'A description for the GCID (optional).';
 
 
 
