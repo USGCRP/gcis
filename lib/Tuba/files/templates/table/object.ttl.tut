@@ -1,4 +1,4 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
@@ -27,10 +27,5 @@
 % end
 
 
-## This table cites the following entities:
 %= include 'prov';
-%#
-%# % for my $keyword ($table->keywords) {
-%# ## Keywords associated with table
-%#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
-%# % }
+%= include 'contributors';
