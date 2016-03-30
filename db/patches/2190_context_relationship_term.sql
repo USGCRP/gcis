@@ -62,18 +62,19 @@ CREATE TABLE term_map (
     term_id uuid NOT NULL,
     relationship character varying NOT NULL,
     gcid character varying NOT NULL,
+    description character varying,
     timestamp timestamp(3) without time zone DEFAULT now(),
     CONSTRAINT term_map_pkey PRIMARY KEY (term_id, relationship, gcid),
     CONSTRAINT term_map_term_fkey FOREIGN KEY (term_id) REFERENCES term(id) ON UPDATE CASCADE ON DELETE CASCADE,
     CONSTRAINT term_map_relationship_fkey FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0)),
-    CONSTRAINT term_gcid_check CHECK (((gcid)::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text)))
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
 );
 
 COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identifiers via a relationship.';
 COMMENT ON COLUMN term_map.term_id IS 'The term ID (UUID).';
 COMMENT ON COLUMN term_map.relationship IS 'The relationship between the term and the gcid.';
 COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
+COMMENT ON COLUMN term_map.description IS 'A description for the GCID (optional).';
 COMMENT ON COLUMN term_map.timestamp IS 'The timestamp this relationship was asserted.';
 
 CREATE TABLE term_rel (

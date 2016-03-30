@@ -12,6 +12,7 @@ External terms which can be mapped to GCIS identifiers via a relationship.
  term_identifier (character varying) - The term ID (UUID).
  relationship (character varying) - The relationship between the term and the gcid.
  gcid (character varying) - The GCIS identifier (URI) to which this term is mapped.
+ description (character varying) - A description for the GCID (optional).
  timestamp (timestamp(3) without time zone) - The timestamp this relationship was asserted.
 
 
@@ -23,12 +24,12 @@ External terms which can be mapped to GCIS identifiers via a relationship.
   term_identifier | character varying              | not null      | extended |              | The term ID (UUID).
   relationship    | character varying              | not null      | extended |              | The relationship between the term and the gcid.
   gcid            | character varying              | not null      | extended |              | The GCIS identifier (URI) to which this term is mapped.
+  description     | character varying              |               | extended |              | A description for the GCID (optional).
   timestamp       | timestamp(3) without time zone | default now() | plain    |              | The timestamp this relationship was asserted.
  Indexes:
      "term_map_pkey" PRIMARY KEY, btree (term_identifier, relationship, gcid)
  Check constraints:
      "ck_gcid" CHECK (length(gcid::text) > 0)
-     "term_gcid_check" CHECK (gcid::text ~ similar_escape('[a-z0-9_/-]+'::text, NULL::text))
  Foreign-key constraints:
      "term_map_relationship_fkey" FOREIGN KEY (relationship) REFERENCES relationship(relationship) ON UPDATE CASCADE ON DELETE RESTRICT
      "term_map_term_fkey" FOREIGN KEY (term_identifier) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE

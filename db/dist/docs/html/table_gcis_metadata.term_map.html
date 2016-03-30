@@ -220,6 +220,22 @@
                 <td>
                 
                 </td>
+                <td>description</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A description for the GCID (optional).
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
                 <td>timestamp</td>
                 <td>timestamp(3) without time zone</td>
                 <td><i>
@@ -250,11 +266,6 @@
             <tr class="tr0">
                 <td>ck_gcid</td>
                 <td>CHECK ((length((gcid)::text) &gt; 0))</td>
-            </tr>
-            
-            <tr class="tr1">
-                <td>term_gcid_check</td>
-                <td>CHECK (((gcid)::text ~ similar_escape(&#39;[a-z0-9_/-]+&#39;::text, NULL::text)))</td>
             </tr>
             
         </table>
