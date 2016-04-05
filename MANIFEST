@@ -1008,7 +1008,6 @@ META.json
 META.yml
 README.md
 README.osx
-release-ci
 t/001_start_db.t
 t/002_basic.t
 t/002_objects.t
