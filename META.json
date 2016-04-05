@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.421",
+   "generated_by" : "Module::Build version 0.4216",
    "license" : [
       "agpl_3"
    ],
@@ -25,8 +25,7 @@
          "requires" : {
             "Module::Build" : "0.39",
             "Module::Build::Database" : "0",
-            "Module::Build::Mojolicious" : "0",
-            "Mojolicious::Plugin::InstallablePaths" : "0"
+            "Mojolicious" : ">= 6.08, <= 6.24"
          }
       },
       "runtime" : {
@@ -48,7 +47,7 @@
             "JSON::XS" : "0",
             "LWP::UserAgent" : "0",
             "Lingua::EN::Inflect" : "0",
-            "Mojolicious" : "6.08",
+            "Mojolicious" : ">= 6.08, <= 6.24",
             "Mojolicious::Plugin::InstallablePaths" : "0",
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
@@ -350,5 +349,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.40"
+   "version" : "1.40",
+   "x_serialization_backend" : "JSON::PP version 2.27203"
 }
