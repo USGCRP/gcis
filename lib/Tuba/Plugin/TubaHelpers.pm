@@ -435,7 +435,7 @@ sub register {
             while (@pieces) {
                 my $next = shift @pieces;
                 $next =~  s[<sup>,</sup>][ ];
-                $out .= b($next)->xml_escape;
+                $out .= $next;
                 my $tbib = shift @pieces;
                 next unless $tbib;
                 $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
