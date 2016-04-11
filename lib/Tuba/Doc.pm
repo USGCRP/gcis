@@ -25,10 +25,9 @@ limit 10",
 }
 SPARQL,
         },
-        { desc = Find all articles cited by both the Third National Climate Assessment and the Human Health Assessment.",
-        code => <<'SPARQL',
-        
-PREFIX dcterms: <http://purl.org/dc/terms/>
+        { desc = "Find all articles cited by both the Third National Climate Assessment and the Human Health Assessment.",
+        code =>
+"PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX cito: <http://purl.org/spar/cito/>
 PREFIX dbpprop: <http://dbpedia.org/property/>
 
@@ -37,7 +36,7 @@ select ?s FROM <http://data.globalchange.gov> where {
    ?s cito:isCitedBy ?nca3 .
    ?nca3 dcterms:identifier "nca3" .
    ?s cito:isCitedBy ?health_assessment .
-   ?health_assessment dcterms:identifier "usgcrp-climate-human-health-assessment-2016"
+   ?health_assessment dcterms:identifier "usgcrp-climate-human-health-assessment-2016",
 }
 SPARQL
         },
