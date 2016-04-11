@@ -24,7 +24,7 @@ where { ?s a gcis:Figure }
 limit 10"
         },
         { desc = "Find all articles cited by both the Third National Climate Assessment and the Human Health Assessment.",
-        code => <<'SPARQL1', 
+          code => <<'SPARQL1', 
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX cito: <http://purl.org/spar/cito/>
@@ -40,7 +40,7 @@ select ?s FROM <http://data.globalchange.gov> where {
 SPARQL1
         },
         { desc => "Identify the year of the earliest publication cited in the Third National Climate Assessment.",
-         code => <<'SPARQL2',
+          code => <<'SPARQL2',
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX cito: <http://purl.org/spar/cito/>
