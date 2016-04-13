@@ -1,6 +1,6 @@
 % my $pub = $object->get_publication;
 % if ($pub) {
-    % my $nest = $pub->contributors_nested;
+    % my $nest = $pub->contributors_nested(role_exclude => scalar stash 'role_exclude');
     <dl>
     % for my $row (@$nest) {
     <dt><%= pl($row->{role}->label, @{ $row->{people} ||[] } + @{ $row->{orgs}||[] }, 1) %></dt>

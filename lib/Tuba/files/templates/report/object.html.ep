@@ -30,7 +30,7 @@
         <h5><span itemprop="copyrightYear"><%= $report->publication_year %></span>
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
-        %= include 'h/contributors', object => $report;
+        %= include 'h/contributors', object => $report, role_exclude => 'advisor';
         <p itemprop="description" class='linebreaks'><%= $report->summary %></p>
         % my ($chp, $fig, $fin,$tab, $ref, $img) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count, $report->count_images);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {
