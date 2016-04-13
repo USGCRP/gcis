@@ -12,7 +12,7 @@
         % if ($article->year) {
         <h4><%= $article->year %></h4>
         % }
-        %= include 'h/contributors_short', object => $article;
+        %= include 'h/contributors', object => $article;
         <%= obj_link($article->journal) %>
         % if ($article->journal_vol) {
         volume <%= $article->journal_vol %>
