@@ -10,7 +10,7 @@
     <div class='row well'>
 
 
-%= include 'h/contributors_short', object => $dataset, role_regex => '(editor|author|distributor|data_producer|contributing_agency|publisher|data_archive|host)';
+%= include 'h/contributors_short', object => $dataset;
     
         %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;
         <h4><%= $dataset->identifier %></h4>
