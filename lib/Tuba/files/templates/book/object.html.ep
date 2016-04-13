@@ -13,7 +13,7 @@
         % if ($book->year) {
         <h5> <%= $book->year %> </h5>
         % }
-        %= include 'h/contributors_short', object => $book;
+        %= include 'h/contributors', object => $book;
 
         % if ($book->number_of_pages) {
         <p>This book has <%= $book->number_of_pages %> pages.</p>
