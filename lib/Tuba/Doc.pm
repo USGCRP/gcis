@@ -21,9 +21,9 @@ sub examples {
           code => 
 "select * FROM <http://data.globalchange.gov>
 where { ?s a gcis:Figure }
-limit 10"
+limit 10",
         },
-        { desc = "Find all articles cited by both the Third National Climate Assessment and the Human Health Assessment.",
+        { desc => "Find all articles cited by both the Third National Climate Assessment and the Human Health Assessment.",
           code => <<'SPARQL1', 
 
 PREFIX dcterms: <http://purl.org/dc/terms/>
