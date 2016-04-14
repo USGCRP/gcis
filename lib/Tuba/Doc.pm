@@ -35,7 +35,7 @@ select ?s FROM <http://data.globalchange.gov> where {
    ?s cito:isCitedBy ?nca3 .
    ?nca3 dcterms:identifier "nca3" .
    ?s cito:isCitedBy ?health_assessment .
-   ?health_assessment dcterms:identifier "usgcrp-climate-human-health-assessment-2016",
+   ?health_assessment dcterms:identifier "usgcrp-climate-human-health-assessment-2016"
 }
 SPARQL1
         },
