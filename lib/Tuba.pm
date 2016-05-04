@@ -470,6 +470,9 @@ sub startup {
     # terms
     $r->resource('term');
 
+    # relationships (the predicates used between terms, and from terms to gcids)
+    $r->resource('relationship');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
