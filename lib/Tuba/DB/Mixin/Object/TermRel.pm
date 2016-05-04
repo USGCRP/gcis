@@ -19,7 +19,10 @@ sub stringify {
     $subject = $c->term_obj;
     $predicate = $c->relationship;
     $object = $c->term;
-    return sprintf('%s %s %s', $subject->stringify, $predicate->stringify, $object->stringify);
+    return b(sprintf('<a href=/term/%s>%s</a> <i><a href=/relationship/%s>%s</a></i> <a href=/term/%s>%s</a>', 
+                       $subject->identifier, $subject->stringify, 
+                       $predicate->stringify, $predicate->stringify, 
+                       $object->identifier, $object->stringify));
 =begin comment
     return b(sprintf("
 \$c is a %s  <br> 
