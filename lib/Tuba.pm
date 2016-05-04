@@ -473,6 +473,9 @@ sub startup {
     # relationships (the predicates used between terms, and from terms to gcids)
     $r->resource('relationship');
 
+    # term_rel (how terms are related to each other)
+    $r->resource('term_rel');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
