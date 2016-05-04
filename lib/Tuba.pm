@@ -476,6 +476,9 @@ sub startup {
     # term_rel (how terms are related to each other)
     $r->resource('term_rel');
 
+    # term_map (how terms are mapped to gcids)
+    $r->resource('term_map');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
