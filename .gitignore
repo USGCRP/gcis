@@ -12,3 +12,4 @@ client_secrets.json
 Tuba.conf
 Makefile
 *.DS_Store
+release-ci*
