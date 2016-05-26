@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-term_rel
+term_relationship
 
 =head1 DESCRIPTION
 
@@ -16,7 +16,7 @@ Expresses how a term is related to another term.
 
 =head1 SCHEMA
 
-                                                Table "gcis_metadata.term_rel"
+                                           Table "gcis_metadata.term_relationship"
           Column          |       Type        | Modifiers | Storage  | Stats target |              Description               
  -------------------------+-------------------+-----------+----------+--------------+----------------------------------------
   term_subject            | character varying | not null  | extended |              | The subject term (UUID).
@@ -29,8 +29,8 @@ Expresses how a term is related to another term.
      "term_rel_relationship_fkey" FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT
      "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
-     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_rel FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
-     audit_trigger_stm AFTER TRUNCATE ON term_rel FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON term_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 

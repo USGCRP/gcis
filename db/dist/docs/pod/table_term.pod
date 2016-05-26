@@ -39,8 +39,8 @@ Terms that have a specific lexicon and context.
      "term_lexicon_context_version_fkey" FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE
  Referenced by:
      TABLE "term_map" CONSTRAINT "term_map_term_fkey" FOREIGN KEY (term_identifier) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
-     TABLE "term_rel" CONSTRAINT "term_rel_obj_fkey" FOREIGN KEY (term_object) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
-     TABLE "term_rel" CONSTRAINT "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "term_relationship" CONSTRAINT "term_rel_obj_fkey" FOREIGN KEY (term_object) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+     TABLE "term_relationship" CONSTRAINT "term_rel_subj_fkey" FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON term FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')

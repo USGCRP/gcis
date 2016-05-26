@@ -1,10 +1,10 @@
 =head1 NAME
 
-Tuba::TermRel : Controller class for term subject-predicate-object relationships
+Tuba::TermRelationship : Controller class for term subject-predicate-object relationships in term_relationship
 
 =cut
 
-package Tuba::TermRel;
+package Tuba::TermRelationship;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
 

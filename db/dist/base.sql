@@ -2151,7 +2151,7 @@ COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was a
 
 
 
-CREATE TABLE term_rel (
+CREATE TABLE term_relationship (
     term_subject character varying NOT NULL,
     relationship_identifier character varying NOT NULL,
     term_object character varying NOT NULL
@@ -2159,19 +2159,19 @@ CREATE TABLE term_rel (
 
 
 
-COMMENT ON TABLE term_rel IS 'Expresses how a term is related to another term.';
+COMMENT ON TABLE term_relationship IS 'Expresses how a term is related to another term.';
 
 
 
-COMMENT ON COLUMN term_rel.term_subject IS 'The subject term (UUID).';
+COMMENT ON COLUMN term_relationship.term_subject IS 'The subject term (UUID).';
 
 
 
-COMMENT ON COLUMN term_rel.relationship_identifier IS 'The relationship of subject to object.';
+COMMENT ON COLUMN term_relationship.relationship_identifier IS 'The relationship of subject to object.';
 
 
 
-COMMENT ON COLUMN term_rel.term_object IS 'The object term (UUID).';
+COMMENT ON COLUMN term_relationship.term_object IS 'The object term (UUID).';
 
 
 
@@ -2694,7 +2694,7 @@ ALTER TABLE ONLY term
 
 
 
-ALTER TABLE ONLY term_rel
+ALTER TABLE ONLY term_relationship
     ADD CONSTRAINT term_rel_pkey PRIMARY KEY (term_subject, relationship_identifier, term_object);
 
 
@@ -2923,7 +2923,7 @@ CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_map FO
 
 
 
-CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_rel FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_relationship FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -3115,7 +3115,7 @@ CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term_map FOR EACH STATEMENT E
 
 
 
-CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term_rel FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
+CREATE TRIGGER audit_trigger_stm AFTER TRUNCATE ON term_relationship FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true');
 
 
 
@@ -3554,17 +3554,17 @@ ALTER TABLE ONLY term_map
 
 
 
-ALTER TABLE ONLY term_rel
+ALTER TABLE ONLY term_relationship
     ADD CONSTRAINT term_rel_obj_fkey FOREIGN KEY (term_object) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 
-ALTER TABLE ONLY term_rel
+ALTER TABLE ONLY term_relationship
     ADD CONSTRAINT term_rel_relationship_fkey FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 
 
-ALTER TABLE ONLY term_rel
+ALTER TABLE ONLY term_relationship
     ADD CONSTRAINT term_rel_subj_fkey FOREIGN KEY (term_subject) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 

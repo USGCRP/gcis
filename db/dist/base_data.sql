@@ -495,10 +495,10 @@ COPY term_map (term_identifier, relationship_identifier, gcid, description, "tim
 
 
 --
--- Data for Name: term_rel; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+-- Data for Name: term_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY term_rel (term_subject, relationship_identifier, term_object) FROM stdin;
+COPY term_relationship (term_subject, relationship_identifier, term_object) FROM stdin;
 \.
 
 

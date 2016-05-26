@@ -473,8 +473,8 @@ sub startup {
     # relationships (the predicates used between terms, and from terms to gcids)
     $r->resource('relationship');
 
-    # term_rel (how terms are related to each other)
-    $r->resource('term_rel');
+    # term_relationship (how terms are related to each other)
+    $r->resource('term_relationship');
 
     # term_map (how terms are mapped to gcids)
     $r->resource('term_map');

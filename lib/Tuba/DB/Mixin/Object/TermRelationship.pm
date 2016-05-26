@@ -1,4 +1,11 @@
-package Tuba::DB::Object::TermRel;
+=head1 NAME
+
+Tuba::DB:Object::TermRelationship : Rose-DB Mixin Object for term subject-predicate-object relationships in term_relationship
+
+=cut
+
+
+package Tuba::DB::Object::TermRelationship;
 use strict;
 use Mojo::ByteStream qw/b/;
 

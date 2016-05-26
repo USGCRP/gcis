@@ -165,3 +165,4 @@
 2210_unitof.sql	b30e11ebe496a669ba93597a3ed429c4
 2220_centerof.sql	aa8559e90d302f9fb9051ec0d6310134
 2230_tweak_term_tables.sql	f58dc909f7894282de909a9965a3bd62
+2240_rename_term_rel.sql	63f66bb4ef6052e62e828c62338ae1de
