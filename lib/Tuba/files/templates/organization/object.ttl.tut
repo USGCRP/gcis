@@ -55,9 +55,9 @@
      org:unitOf <<%= current_resource %>> .
         % } else {
      org:linkedTo <<%= current_resource %>> .
-   % }
-     %}
-  % }
+     % }
+  %}
+% }
 
 % end
 
