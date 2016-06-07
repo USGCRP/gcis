@@ -26,6 +26,7 @@
         % ||  ($map->organization_relationship_identifier eq "center_of")
         % ||  ($map->organization_relationship_identifier eq "program_of")
         % ||  ($map->organization_relationship_identifier eq "office_of")
+        % ||  ($map->organization_relationship_identifier eq "unit_of")
         % ||  ($map->organization_relationship_identifier eq "council_of")
         % ||  ($map->organization_relationship_identifier eq "commission_of")) {
      org:unitOf <<%= uri($map->other_organization) %>> .
@@ -50,6 +51,7 @@
         % ||  ($map->organization_relationship_identifier eq "center_of")
         % ||  ($map->organization_relationship_identifier eq "program_of")
         % ||  ($map->organization_relationship_identifier eq "office_of")
+        % ||  ($map->organization_relationship_identifier eq "unit_of")
         % ||  ($map->organization_relationship_identifier eq "council_of")
         % ||  ($map->organization_relationship_identifier eq "commission_of")) {
      org:unitOf <<%= current_resource %>> .
