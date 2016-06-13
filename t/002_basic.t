@@ -14,7 +14,7 @@ my $t = Test::Mojo->new('Tuba');
 
 $t->get_ok('/')->status_is(200)->header_is('X-API-Version' => $Tuba::VERSION);
 
-$t->get_ok('/test.html')->content_is("This is the GCIS API.\n")->status_is(200);
+$t->get_ok('/about')->content_like(qr/About the Global Change Information System/)->status_is(200);
 
 $t->get_ok('/api_reference')->status_is(200);
 
