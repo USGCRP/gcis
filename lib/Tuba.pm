@@ -118,6 +118,7 @@ sub startup {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
         $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
+        $c->res->headers->header('X-Frame-Options' => 'DENY');
         if (my $id = $c->session('id')) {
             $c->res->headers->etag(qq["$id"]) if $c->req->method =~ /^(POST|PUT)$/;
         }
