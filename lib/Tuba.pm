@@ -118,6 +118,7 @@ sub startup {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
         $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
+        $c->res->headers->header('X-Frame-Options' => 'DENY');
         if (my $id = $c->session('id')) {
             $c->res->headers->etag(qq["$id"]) if $c->req->method =~ /^(POST|PUT)$/;
         }
@@ -331,7 +332,7 @@ sub startup {
 
     # Chapters.
     my $chapter = $report->resource('chapter');
-    my $ch = $r->lookup('select_chapter');
+    my $ch = $r->find('select_chapter');
 
     $ch->resource('finding');
     $ch->resource('figure');
@@ -378,7 +379,7 @@ sub startup {
     # platform (globally unique)
     $r->resource('platform');
     $r->resource('instrument');
-    $r->lookup('select_platform')->resource('instrument_instance', {
+    $r->find('select_platform')->resource('instrument_instance', {
             path_base => "instrument",
             identifier => "instrument_identifier",
         });
@@ -394,7 +395,7 @@ sub startup {
     my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
-    $r->lookup('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
+    $r->find('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
     $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 
     $r->resource('gcmd_keyword');
@@ -407,7 +408,7 @@ sub startup {
 
     # References (bibliographic entries)
     my $reference = $r->resource('reference');
-    $r->lookup('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
+    $r->find('authed_select_reference')->post('/match')->to('reference#smartmatch') unless $config->{read_only};
     $r->under('/reference/match')
       ->to(cb => sub {
               my $c = shift;
@@ -423,7 +424,7 @@ sub startup {
     # Publications with references
     for my $resource (qw/report chapter figure finding table webpage book dataset journal/) {
         # TODO: article
-        my $route = $r->lookup("select_$resource") or die "bad pub $resource";
+        my $route = $r->find("select_$resource") or die "bad pub $resource";
         $route->get("/reference")->to("reference#list_for_publication")->name("list_reference_$resource");
         $route->get("/reference/:reference_identifier")->to('reference#show_for_publication')->name("show_reference_$resource");
     }
@@ -446,13 +447,13 @@ sub startup {
 
     # Lexicons
     $r->resource('lexicon');
-    my $lex = $r->lookup('select_lexicon');
+    my $lex = $r->find('select_lexicon');
     $lex->get('/find/:context/*term')->to('exterm#find')->name('find_term');
     $lex->get('/:context/*term')
                    ->over(not_match => { 'context' => qr[list|find|update] })
                    ->to('exterm#find')->name('show_exterm');
     $lex->get('/list/:context')->to('exterm#list_context')->name('lexicon_terms');
-    if (my $lex_authed = $r->lookup('authed_select_lexicon')) {
+    if (my $lex_authed = $r->find('authed_select_lexicon')) {
         $lex_authed->post('/:lexicon_identifier/term/new')->to('exterm#create');
         $lex_authed->put('/:lexicon_identifier/:context/*term')->to('exterm#create');
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
