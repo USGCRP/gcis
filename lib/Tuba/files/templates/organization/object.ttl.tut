@@ -22,7 +22,7 @@
 <<%= current_resource %>>
         % if (($map->organization_relationship_identifier eq "department")
         % ||  ($map->organization_relationship_identifier eq "division_of")
-        % ||  ($map->organization_relationship_identifier eq "branch__of")
+        % ||  ($map->organization_relationship_identifier eq "branch_of")
         % ||  ($map->organization_relationship_identifier eq "center_of")
         % ||  ($map->organization_relationship_identifier eq "program_of")
         % ||  ($map->organization_relationship_identifier eq "office_of")
