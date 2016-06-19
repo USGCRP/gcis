@@ -35,9 +35,9 @@
         % ||  ($map->organization_relationship_identifier eq "commission_of")) {
      org:unitOf <<%= uri($map->other_organization) %>> .
         % } elsif ($map->organization_relationship_identifier eq "predecessor_of") {
-        prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
+     prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
         % } else {
-        org:linkedTo <<%= uri($map->other_organization) %>> .
+     org:linkedTo <<%= uri($map->other_organization) %>> .
         % }
       % }
   % }
