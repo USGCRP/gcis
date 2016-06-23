@@ -17,4 +17,23 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+# Overriding to add relationships in json and yaml requests
+sub make_tree_for_show {
+    my $c = shift;
+    my $term = shift;
+    #create the default tree
+    my $tree = $c->SUPER::make_tree_for_show($term);
+    #for children, this term is the subject; for parents, it is the object of the relationship
+    my $children = TermRelationships->get_objects( query => [term_subject => $term->identifier] );
+    my $parents = TermRelationships->get_objects( query => [term_object => $term->identifier] );
+    #add them to the tree
+    $tree->{children} = [ map +{ relationship => $_->relationship_identifier,
+                                 #this should work, but gets "cant locate method uri"
+                                 #object => $_->term_object->uri($c) }, @$children ];
+                                 object => "/term/" . $_->term_object }, @$children ];
+    $tree->{parents} = [ map +{ subject => "/term/" . $_->term_subject ,
+                                relationship => $_->relationship_identifier }, @$parents ];
+    return $tree;
+}
+
 1;
