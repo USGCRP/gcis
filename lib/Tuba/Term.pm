@@ -26,6 +26,7 @@ sub make_tree_for_show {
     #for children, this term is the subject; for parents, it is the object of the relationship
     my $children = TermRelationships->get_objects( query => [term_subject => $term->identifier] );
     my $parents = TermRelationships->get_objects( query => [term_object => $term->identifier] );
+    my $term_maps = TermMaps->get_objects( query => [term_identifier => $term->identifier] );
     #add them to the tree
     $tree->{children} = [ map +{ relationship => $_->relationship_identifier,
                                  #this should work, but gets "cant locate method uri"
@@ -33,6 +34,8 @@ sub make_tree_for_show {
                                  object => "/term/" . $_->term_object }, @$children ];
     $tree->{parents} = [ map +{ subject => "/term/" . $_->term_subject ,
                                 relationship => $_->relationship_identifier }, @$parents ];
+    $tree->{term_maps} = [ map +{ relationship => $_->relationship_identifier , 
+                                  object => $_->gcid } , @$term_maps ];
     return $tree;
 }
 
