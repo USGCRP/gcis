@@ -45,6 +45,18 @@ sub keyword {
     );
 }
 
+=head2 autocomplete
+
+Returns items (in JSON) matching a partial word.
+
+This is particulairly used by templates/controls/autocomplete.html.ep to provide 
+interactive search capabilities while viewing a resource.
+
+If a new table and resource is added, the table name must be inserted at the lable 
+searchable_tables.
+
+=cut
+
 sub autocomplete {
     my $c = shift;
     my $q = $c->param('q') || $c->json->{q};
@@ -56,7 +68,8 @@ sub autocomplete {
     my $restrict = $c->param('restrict');
 
     my @tables;
-    if ($want && $want=~/^(array|finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument)$/) {
+    searchable_tables: #allow only specified tables to be searched
+    if ($want && $want=~/^(array|finding|table|journal|region|gcmd_keyword|person|organization|reference|file|activity|dataset|figure|image|report|chapter|article|webpage|book|generic|platform|instrument|term)$/) {
        @tables = ( $want );
     } elsif ($want && ($want !~ /^(all|full)$/)) {
         return $c->render(json => { error => "undefined type" } );
