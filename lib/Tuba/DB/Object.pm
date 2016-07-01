@@ -348,6 +348,8 @@ sub as_tree {
         $tree->{href} //= $href;
     }
     $tree->{uri} //= $s->uri($c) if $c;
+    $tree->{display_name} = $s->stringify;
+    $tree->{type} = $s->meta->table;
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }
