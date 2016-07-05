@@ -51,6 +51,7 @@ sub find {
     $c->respond_to(
         html => { code => 303, text => qq[See <a href="$gcid">$gcid</a>.]},
         json => { code => 303, json => { gcid => $gcid } }
+        ###TODO### Why is there no yaml?
     );
 
     $c->rendered(303);
