@@ -21,9 +21,9 @@ function onOpen() {
  
 function connect_to(which) {
   var api_base = (
-      which == 'dev'  ? 'http://data.gcis-dev-front.joss.ucar.edu'
-    : which == 'test' ? 'http://data.gcis-test-front.joss.ucar.edu'
-    : which == 'prod' ? 'http://data.globalchange.gov'
+      which == 'dev'  ? 'https://dev-data.globalchange.gov'
+    : which == 'test' ? 'https://test-data.globalchange.gov'
+    : which == 'prod' ? 'https://data.globalchange.gov'
     : '' );
   var ss = SpreadsheetApp.getActive();
   ss.removeMenu('Connect to GCIS');

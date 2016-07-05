@@ -535,7 +535,7 @@ sub startup {
         $app->routes->get('/sparql' => sub {
                 my $c = shift;
                 my $url = $c->req->url->clone;
-                $url->host('gcis-dev-front.joss.ucar.edu');
+                $url->host('dev-data.globalchange.gov');
                 $c->redirect_to($url);
             });
     }
