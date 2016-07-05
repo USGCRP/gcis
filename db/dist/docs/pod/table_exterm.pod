@@ -35,6 +35,8 @@ External terms which can be mapped to GCIS identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON exterm FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON exterm FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+     copy_exterm_inserts_to_term BEFORE INSERT ON exterm FOR EACH ROW EXECUTE PROCEDURE copy_exterm_inserts_to_term()
+ Has OIDs: no
  
 
 =cut

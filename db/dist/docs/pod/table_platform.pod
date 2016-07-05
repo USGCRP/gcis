@@ -47,6 +47,7 @@ A platform may be associated with one more more instruments.
      delpub BEFORE DELETE ON platform FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/platform/')
      updatepub BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
 =cut

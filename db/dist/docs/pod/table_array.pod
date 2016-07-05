@@ -34,6 +34,7 @@ An array is an n-dimensional grid of data, and may be associated with a table.
      audit_trigger_stm AFTER TRUNCATE ON "array" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON "array" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON "array" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
 =cut

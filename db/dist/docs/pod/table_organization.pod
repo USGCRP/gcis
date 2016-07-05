@@ -42,6 +42,7 @@ An organization is an entity with which people and publications may be associate
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      update_exterms BEFORE UPDATE ON organization FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/organization/')
+ Has OIDs: no
  
 
 =cut

@@ -1,0 +1,291 @@
+
+<!-- $Header: /cvsroot/autodoc/autodoc/html.tmpl,v 1.4 2006/05/16 19:01:27 rbt Exp $ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+  <head>
+    <title>Index for </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style type="text/css">
+	BODY {
+		color:	#000000;
+		background-color: #FFFFFF;
+		font-family: Helvetica, sans-serif;
+	}
+
+	P {
+		margin-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	P.w3ref {
+		font-size: 8pt;
+		font-style: italic;
+		text-align: right;
+	}
+
+	P.detail {
+		font-size: 10pt;
+	}
+
+	.error {
+		color: #FFFFFF;
+		background-color: #FF0000;
+	}
+
+	H1, H2, H3, H4, H5, H6 {
+	}
+
+	OL {
+		list-style-type: upper-alpha;
+	}
+
+	UL.topic {
+		list-style-type: upper-alpha;
+	}
+
+	LI.topic {
+		font-weight : bold;
+	}
+
+	HR {
+		color: #00FF00;
+		background-color: #808080;
+	}
+
+	TABLE {
+		border-width: medium;
+		padding: 3px;
+		background-color: #000000;
+		width: 90%;
+	}
+
+	CAPTION {
+		text-transform: capitalize;
+		font-weight : bold;
+		font-size: 14pt;
+	}
+
+	TH {
+		color: #FFFFFF;
+		background-color: #000000;
+		text-align: left;
+	}
+
+	TR {
+		color: #000000;
+		background-color: #000000;
+		vertical-align: top;
+	}
+
+	TR.tr0 {
+		background-color: #F0F0F0;
+	}
+
+	TR.tr1 {
+		background-color: #D8D8D8;
+	}
+
+	TD {
+		font-size: 12pt;
+	}
+
+	TD.col0 {
+		font-weight : bold;
+		width: 20%;
+	}
+
+	TD.col1 {
+		font-style: italic;
+		width: 15%;
+	}
+
+	TD.col2 {
+		font-size: 12px;
+	}
+    </style>
+    <link rel="stylesheet" type="text/css" media="all" href="all.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="screen.css">
+    <link rel="stylesheet" type="text/css" media="print" href="print.css">
+    <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+  </head>
+  <body>
+
+
+
+        <h2>Table:
+            <a name="gcis-metadata.table.context">context</a>
+        </h2>
+        
+         <p>A context is a subset of terms within a lexicon.</p>
+        
+
+
+        <table width="100%" cellspacing="0" cellpadding="3">
+                <caption>context Structure</caption>
+                <tr>
+                <th>F-Key</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                  <a href="table_gcis_metadata.lexicon.html#gcis-metadata.table.lexicon">lexicon.identifier</a>
+                  
+                
+                  
+                
+                </td>
+                <td>lexicon_identifier</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>The lexicon associated with this context.
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                </td>
+                <td>identifier</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>A brief descriptive identifier for this context.
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>version</td>
+                <td>character varying</td>
+                <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+
+                
+                DEFAULT &#39;&#39;::character varying
+                </i>
+                <br><br>The version of this context (optional).
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>description</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A description of the context.
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                </td>
+                <td>url</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                <br><br>A url for further information.
+                </td>
+             </tr>
+            
+        </table>
+
+        <!-- Inherits -->
+        
+
+        <!-- Constraint List -->
+        
+        <p>&nbsp;</p>
+        <table width="100%" cellspacing="0" cellpadding="3">
+            <caption>context Constraints</caption>
+            <tr>
+                <th>Name</th>
+                <th>Constraint</th>
+            </tr>
+            
+            <tr class="tr0">
+                <td>context_identifier_check</td>
+                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-zA-Z0-9:_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>context_version_check</td>
+                <td>CHECK (((version)::text ~ similar_escape(&#39;[a-z0-9_\.-]*&#39;::text, NULL::text)))</td>
+            </tr>
+            
+        </table>
+        
+
+        <!-- Foreign Key Discovery -->
+        
+            <p>Tables referencing this one via Foreign Key Constraints:</p>
+        
+                <a href="table_gcis_metadata.term.html">term</a><br>
+        
+        
+
+    <!-- Indexes -->
+    
+
+    <!-- View Definition -->
+    
+
+    <!-- List of permissions -->
+    
+
+
+</body></html>
+
+    

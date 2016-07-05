@@ -25,6 +25,7 @@ Publications can have zero or more keywords.  And vice versa.
  Foreign-key constraints:
      "publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey" FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "publication_gcmd_keyword_map_publication_id_fkey" FOREIGN KEY (publication_id) REFERENCES publication(id) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
  
 
 =cut

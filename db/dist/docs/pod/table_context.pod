@@ -1,0 +1,46 @@
+
+=head1 NAME
+
+context
+
+=head1 DESCRIPTION
+
+A context is a subset of terms within a lexicon.
+
+=head1 FIELDS
+
+ lexicon_identifier (character varying) - The lexicon associated with this context.
+ identifier (character varying) - A brief descriptive identifier for this context.
+ version (character varying) - The version of this context (optional).
+ description (character varying) - A description of the context.
+ url (character varying) - A url for further information.
+
+
+=head1 SCHEMA
+
+                                                                 Table "gcis_metadata.context"
+        Column       |       Type        |               Modifiers                | Storage  | Stats target |                   Description                    
+ --------------------+-------------------+----------------------------------------+----------+--------------+--------------------------------------------------
+  lexicon_identifier | character varying | not null                               | extended |              | The lexicon associated with this context.
+  identifier         | character varying | not null                               | extended |              | A brief descriptive identifier for this context.
+  version            | character varying | not null default ''::character varying | extended |              | The version of this context (optional).
+  description        | character varying |                                        | extended |              | A description of the context.
+  url                | character varying |                                        | extended |              | A url for further information.
+ Indexes:
+     "context_pkey" PRIMARY KEY, btree (lexicon_identifier, identifier, version)
+ Check constraints:
+     "context_identifier_check" CHECK (identifier::text ~ similar_escape('[a-zA-Z0-9:_-]+'::text, NULL::text))
+     "context_version_check" CHECK (version::text ~ similar_escape('[a-z0-9_\.-]*'::text, NULL::text))
+ Foreign-key constraints:
+     "context_lexicon_identifier_fkey" FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Referenced by:
+     TABLE "term" CONSTRAINT "term_lexicon_context_version_fkey" FOREIGN KEY (lexicon_identifier, context_identifier, context_version) REFERENCES context(lexicon_identifier, identifier, version) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON context FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON context FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+
