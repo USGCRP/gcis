@@ -335,6 +335,11 @@ sub _pk_to_stashval {
     my $stash_name = $name;
     $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
     $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
+    if (!defined($c->stash($stash_name))) {
+        my $stashlist;
+        foreach (keys %{$c->stash}) { $stashlist .= "\n  $_ => " . $c->stash($_) }
+        logger->debug("Stash '$stash_name' not found.  Available keys are: $stashlist");
+    }
     return $c->stash($stash_name);
 }
 
