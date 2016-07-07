@@ -13,15 +13,15 @@ my $src     = "http://gcis-dev-front.joss.ucar.edu/raw";
 my $which = $ARGV[0] or die "Usage $0 [local|dev|test|prod]\n";
 my $dest = {
   local => "http://localhost:3000",
-  dev   => "https://dev-data.globalchange.gov",
-  test  => "https://test-data.globalchange.gov",
+  dev   => "https://data-dev.globalchange.gov",
+  test  => "https://data-stage.globalchange.gov",
   prod  => "https://data.globalchange.gov",
   }->{$which};
 
 say "connecting to $dest";
 
-my $which_key = $dest =~ /dev-data/               ? '.gcis_api_key.dev'
-              : $dest =~ /test-data/              ? '.gcis_api_key.test'
+my $which_key = $dest =~ /data-dev/               ? '.gcis_api_key.dev'
+              : $dest =~ /data-stage/             ? '.gcis_api_key.test'
               : $dest =~ /data.globalchange.gov$/ ? '.gcis_api_key.prod'
               :   die "don't know which key to use for $dest";
 my $keyfile = "$ENV{HOME}/".$which_key;
