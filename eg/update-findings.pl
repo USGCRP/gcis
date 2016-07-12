@@ -8,7 +8,7 @@ use strict;
 use warnings;
 
 #my $dest    = "http://localhost:3000";
-my $src     = "http://gcis-dev-front.joss.ucar.edu/raw";
+my $src     = "http://data-dev.globalchange.gov/raw";
 
 my $which = $ARGV[0] or die "Usage $0 [local|dev|test|prod]\n";
 my $dest = {
