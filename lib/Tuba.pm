@@ -66,7 +66,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.40';
+our $VERSION = '1.41';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -118,6 +118,7 @@ sub startup {
         my $c = shift;
         $c->res->headers->header('Access-Control-Allow-Origin' => '*');
         $c->res->headers->header('X-API-Version' => $Tuba::VERSION );
+        $c->res->headers->header('X-Frame-Options' => 'DENY');
         if (my $id = $c->session('id')) {
             $c->res->headers->etag(qq["$id"]) if $c->req->method =~ /^(POST|PUT)$/;
         }
