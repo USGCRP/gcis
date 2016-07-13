@@ -348,8 +348,10 @@ sub as_tree {
         $tree->{href} //= $href;
     }
     $tree->{uri} //= $s->uri($c) if $c;
-    $tree->{display_name} = $s->stringify;
+    #when used for result counts, the objects are skeletal, and do not stringify, so use eval
+    $tree->{display_name} = eval{$s->stringify} || undef;
     $tree->{type} = $s->meta->table;
+    $tree->{results_count} = $s->{results_count} if defined $s->{results_count}; #only relevant to /search
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }

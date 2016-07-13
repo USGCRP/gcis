@@ -6,6 +6,16 @@ use List::MoreUtils qw/mesh/;
 use Tuba::Log;
 use strict;
 
+=head2 keyword
+
+The engine for /search.
+
+There are 2 basic modes of operation:
+=item Returning actual results
+=item Getting a count (by type) of all objects matched by search term
+
+=cut
+
 sub keyword {
     my $c = shift;
     my $q = $c->param('q') or return $c->render(results => [], result_count_text => 'Please enter search terms');
@@ -14,6 +24,7 @@ sub keyword {
     my @tables = keys %$orm;
     my $type = $c->param('type');
     my $all = $c->param('all') ? 1 : 0;
+    my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
     @tables = ( $type ) if $type && exists($orm->{$type});
     my @results;
     my $result_count_text;
@@ -22,7 +33,7 @@ sub keyword {
         next if $table eq 'publication';
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => (@tables > 1 ? 10 : 50));
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => (@tables > 1 ? 10 : 50), count_only => $count_only);
         $hit_max = 1 if @these==10 && @tables > 1;
         push @results, @these;
     }
