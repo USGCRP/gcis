@@ -34,10 +34,12 @@
         % ||  ($map->organization_relationship_identifier eq "working_group_of")
         % ||  ($map->organization_relationship_identifier eq "commission_of")) {
      org:unitOf <<%= uri($map->other_organization) %>> .
+        % } elsif ($map->organization_relationship_identifier eq "predecessor_of") {
+     prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
         % } else {
      org:linkedTo <<%= uri($map->other_organization) %>> .
         % }
-     % }
+      % }
   % }
 % #
      % if (my @maps = $organization->organization_maps_objs) {
@@ -63,7 +65,9 @@
         % ||  ($map->organization_relationship_identifier eq "working_group_of")
         % ||  ($map->organization_relationship_identifier eq "commission_of")) {
      org:unitOf <<%= current_resource %>> .
-        % } else {
+        % } elsif ($map->organization_relationship_identifier eq "predecessor_of") {
+     prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
+      % } else {
      org:linkedTo <<%= current_resource %>> .
      % }
   %}
