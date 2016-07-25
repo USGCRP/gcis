@@ -1,0 +1,34 @@
+
+=head1 NAME
+
+vocabulary
+
+=head1 DESCRIPTION
+
+Duplicate of lexicon, to support /vocabulary resource.
+
+=head1 FIELDS
+
+ lexicon_identifier (character varying) - 
+ description (character varying) - 
+ url (character varying) - 
+
+
+=head1 SCHEMA
+
+                        View "gcis_metadata.vocabulary"
+        Column       |       Type        | Modifiers | Storage  | Description 
+ --------------------+-------------------+-----------+----------+-------------
+  lexicon_identifier | character varying |           | extended | 
+  description        | character varying |           | extended | 
+  url                | character varying |           | extended | 
+ View definition:
+  SELECT lexicon.identifier AS lexicon_identifier,
+     lexicon.description,
+     lexicon.url
+    FROM lexicon;
+ 
+
+=cut
+
+
