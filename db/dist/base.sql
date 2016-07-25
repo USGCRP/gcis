@@ -2175,6 +2175,18 @@ COMMENT ON COLUMN term_relationship.term_object IS 'The object term (UUID).';
 
 
 
+CREATE VIEW vocabulary AS
+ SELECT lexicon.identifier AS lexicon_identifier,
+    lexicon.description,
+    lexicon.url
+   FROM lexicon;
+
+
+
+COMMENT ON VIEW vocabulary IS 'Duplicate of lexicon, to support /vocabulary resource.';
+
+
+
 CREATE VIEW vw_gcmd_keyword AS
  SELECT COALESCE(level4.identifier, level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier,
     category.label AS category,

@@ -35,6 +35,7 @@ use Tuba::DB;
 use Tuba::DB::Object::Manager;
 use Tuba::DB::Object::ConventionManager;
 use YAML::Syck;
+use Tuba::Log;
 
 use strict;
 use warnings;
@@ -89,6 +90,9 @@ sub init {
         base_classes => [qw/Tuba::DB::Object Rose::DB::Object::Helpers/ ],
         manager_base_classes => [qw/Tuba::DB::Object::Manager/],
         convention_manager => $cm,
+        include_views => 1,            #Added for db view 'vocabulary'
+        require_primary_key => 0,      #Added because views cannot have primary keys in postgres
+                                       # so see Tuba/DB/Mixin/Object/Vocabulary.pm for workaround
     );
 
     my @made = $loader->make_classes(
@@ -96,6 +100,7 @@ sub init {
                     ( db_class => 'Tuba::DB' )
     );
     for my $made (@made) {
+    #logger->debug("Made $made");  #uncomment to see all classes that are made from db
         my $mixin = $made;
         $mixin =~ s/Tuba::DB/Tuba::DB::Mixin/;
         eval " require $mixin";
