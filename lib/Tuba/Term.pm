@@ -65,12 +65,12 @@ sub make_tree_for_show {
     my $term_maps = TermMaps->get_objects( query => [term_identifier => $term->identifier] );
     #add them to the tree
     $tree->{children} = [ map +{ relationship => $_->relationship_identifier,
-                                 #the following gets "cant locate method uri", because a Tuba::DB::Object (term) needs to be passed, not just the column value (term_object)
-                                 #object => $_->term_object->uri($c) }, @$children ];  #<-- doesn't work
-                                 object => $_->term->uri($c) }, @$children ];
                                  object_tree => $_->term_object ? $c->make_tree_for_show($_->term) : '',
                                                                                         # Term->new (identifier => $_->term_object)-> load(speculative=>1) ) : '',
                                  #the above is an alternative to $_->term, esp. useful if get_objects for $children doesn't include with_objects
+                                 #the following gets "cant locate method uri", because a Tuba::DB::Object (term) needs to be passed, not just the column value (term_object)
+                                 #object => $_->term_object->uri($c) }, @$children ];  #<-- doesn't work
+                                 object => $_->term->uri($c) }, @$children ];
     $tree->{parents} = [ map +{ subject => $_->term_obj->uri($c) ,
                                 relationship => $_->relationship_identifier }, @$parents ];
     $tree->{term_maps} = [ map +{ relationship => $_->relationship_identifier , 
