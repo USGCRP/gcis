@@ -22,6 +22,7 @@ Platforms have a type.
      "platform_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
      TABLE "platform" CONSTRAINT "platform_platform_type_identifier_fkey" FOREIGN KEY (platform_type_identifier) REFERENCES platform_type(identifier)
+ Has OIDs: no
  
 
 =cut

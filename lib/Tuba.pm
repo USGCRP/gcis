@@ -458,6 +458,27 @@ sub startup {
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
     }
 
+    # simple test route -RS
+    $r->get('/testing' => sub {
+        my $c=shift;
+        $c->render(text=>'testing');
+    });
+
+    # simple test resource -RS
+    $r->resource('test');
+
+    # terms
+    $r->resource('term');
+
+    # relationships (the predicates used between terms, and from terms to gcids)
+    $r->resource('relationship');
+
+    # term_relationship (how terms are related to each other)
+    $r->resource('term_relationship');
+
+    # term_map (how terms are mapped to gcids)
+    $r->resource('term_map');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');

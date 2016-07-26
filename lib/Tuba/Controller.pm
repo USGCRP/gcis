@@ -65,6 +65,13 @@ sub common_tree_fields {
     );
 }
 
+=head2 _default_list_order
+
+Returns the column name used by default in sort_by of get_objects
+Override if the primary key column is not named "identifier"
+
+=cut
+
 sub _default_list_order {
     return "identifier";
 }

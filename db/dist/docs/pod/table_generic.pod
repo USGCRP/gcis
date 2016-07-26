@@ -29,6 +29,7 @@ Generic publications, not covered by other GCIS publication types.
      audit_trigger_stm AFTER TRUNCATE ON generic FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON generic FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON generic FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
 =cut

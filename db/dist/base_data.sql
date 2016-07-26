@@ -109,6 +109,26 @@ COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_li
 
 
 --
+-- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY lexicon (identifier, description, url) FROM stdin;
+ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
+podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
+echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
+gcmd	Global Change Master Directory	http://gcmd.nasa.gov
+\.
+
+
+--
+-- Data for Name: context; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY context (lexicon_identifier, identifier, version, description, url) FROM stdin;
+\.
+
+
+--
 -- Data for Name: country; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
@@ -175,18 +195,6 @@ SELECT pg_catalog.setval('contributor_id_seq', 1, false);
 --
 
 COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max, description_attribution, temporal_resolution) FROM stdin;
-\.
-
-
---
--- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY lexicon (identifier, description, url) FROM stdin;
-ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
-podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
-echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
-gcmd	Global Change Master Directory	http://gcmd.nasa.gov
 \.
 
 
@@ -370,6 +378,8 @@ COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_
 COPY organization_relationship (identifier, label) FROM stdin;
 managed_by	managed by
 operated_by	operated by
+unit_of	unit of
+center_of	center of
 \.
 
 
@@ -456,6 +466,39 @@ COPY region (identifier, label, description) FROM stdin;
 --
 
 COPY publication_region_map (publication_id, region_identifier) FROM stdin;
+\.
+
+
+--
+-- Data for Name: relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY relationship (identifier, description) FROM stdin;
+owl:sameAs	An alias
+\.
+
+
+--
+-- Data for Name: term; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term (identifier, lexicon_identifier, context_identifier, context_version, term, is_root, description, url) FROM stdin;
+\.
+
+
+--
+-- Data for Name: term_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term_map (term_identifier, relationship_identifier, gcid, description, "timestamp") FROM stdin;
+\.
+
+
+--
+-- Data for Name: term_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term_relationship (term_subject, relationship_identifier, term_object) FROM stdin;
 \.
 
 
