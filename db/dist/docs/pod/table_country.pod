@@ -24,6 +24,7 @@ A list of countries used in GCIS.
      "country_pkey" PRIMARY KEY, btree (code)
  Referenced by:
      TABLE "organization" CONSTRAINT "fk_org_country" FOREIGN KEY (country_code) REFERENCES country(code)
+ Has OIDs: no
  
 
 =cut

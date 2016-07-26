@@ -1,0 +1,45 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title');
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+<table class='table table-responsive table-condensed table-bordered table-striped'>
+<tr>
+    <th>subject</th>
+    <th>predicate</th>
+    <th>object</th>
+</th>
+% for my $term_rel (@$objects) {
+    <tr>
+       <td>
+            %# subject, even though Rose::DB names it term_obj
+            %= link_to $term_rel->term_obj->uri($self) => begin
+            <%= $term_rel->term_obj->stringify %>
+            %= end
+       </td>
+       <td>
+            %= link_to $term_rel->relationship->uri($self) => begin
+            <%= $term_rel->relationship_identifier %></td>
+            %= end
+       <td>
+            %= link_to $term_rel->term->uri($self) => begin
+            <%= $term_rel->term->stringify %>
+            %=end
+       </td>
+    </tr>
+% }
+</table>
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

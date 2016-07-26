@@ -56,14 +56,14 @@ sub dbgrep {
     my $self = shift;
     my %a = @_;
 
-    my $limit = $a{limit} || 10;
+    my $per_page = $a{per_page} || $a{limit} || 10;  #previously implemented as a limit;
     my $query_string = $a{query_string} or return;
     chomp $query_string;
     $query_string =~ s/^\s+//;
     $query_string =~ s/\s+$//;
 
     my @query = $self->_make_query($query_string) or return;
-    my $found = $self->get_objects( query => [ or => \@query ], limit => $limit, );
+    my $found = $self->get_objects( query => [ or => \@query ], $a{all} ? () : (page => $a{page}, per_page => $per_page), );
     return @$found;
 }
 

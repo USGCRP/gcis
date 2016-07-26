@@ -19,6 +19,7 @@ close $fp;
 
 $audit_sql .= <<MORE;
 create extension if not exists isn with schema gcis_metadata;
+create extension if not exists "uuid-ossp" with schema gcis_metadata; 
 MORE
 
 my $builder = Module::Build::Database->new(

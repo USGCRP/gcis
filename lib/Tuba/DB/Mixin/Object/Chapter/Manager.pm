@@ -9,7 +9,7 @@ sub dbgrep {
     my %a = @_;
 
     my $query_string = $a{query_string} or return;
-    my $limit = $a{limit} || 10;
+    my $per_page = $a{per_page} || $a{limit} || 10;  #previously implemented as a limit;
     my $user = $a{user};
 
     my @query = $self->_make_query($query_string);
@@ -29,7 +29,7 @@ sub dbgrep {
              or => \@viewable
         ],
         with_objects => \@with,
-        limit => $limit );
+        $a{all} ? () : (page => $a{page}, per_page => $per_page), );
 
     return @$found;
 }
