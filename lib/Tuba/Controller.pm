@@ -61,6 +61,7 @@ sub common_tree_fields {
         $href .= ".$fmt";
     }
     return ( uri => $uri, href => $href,
+             display_name => $obj->stringify(display_name=>1),
         $c->maybe_include_generic_pub_rels($obj), # keywords, regions
     );
 }

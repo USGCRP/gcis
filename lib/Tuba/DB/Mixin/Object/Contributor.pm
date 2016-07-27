@@ -54,6 +54,7 @@ sub as_tree {
     }
 
     my %h = (
+            display_name => $s->stringify(display_name=>1),
             organization => $s->organization ? $s->organization->as_tree : undef,
             organization_uri => $s->organization ? $s->organization->uri($c) : undef,
             person_uri   => $p ? $p->uri($c) : undef,
