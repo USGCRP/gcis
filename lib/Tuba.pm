@@ -501,6 +501,10 @@ sub startup {
     # term_map (how terms are mapped to gcids)
     $r->resource('term_map');
 
+    $r->resource('toolkit');
+
+    $r->resource('case_study');
+
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');
     $r->get('/gcid_lookup')->to('search#gcid')->name('gcid_lookup');
