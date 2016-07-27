@@ -6,6 +6,16 @@ use List::MoreUtils qw/mesh/;
 use Tuba::Log;
 use strict;
 
+=head2 keyword
+
+The engine for /search.
+
+There are 2 basic modes of operation:
+=item Returning actual results
+=item Getting a count (by type) of all objects matched by search term
+
+=cut
+
 sub keyword {
     my $c = shift;
     my $q = $c->param('q') or return $c->render(results => [], result_count_text => 'Please enter search terms');
@@ -13,8 +23,10 @@ sub keyword {
     my $orm = $c->orm;
     my @tables = keys %$orm;
     my $type = $c->param('type');
-    my $all = $c->param('all') ? 1 : 0;
     @tables = ( $type ) if $type && exists($orm->{$type});
+    my $per_page = $c->param('per_page') || (@tables > 1 ? 10 : 50); # default to 10 per type if multiple types
+    my $all = $c->param('all') ? 1 : 0;
+    my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
     my @results;
     my $result_count_text;
     my $hit_max = 0;
@@ -22,14 +34,14 @@ sub keyword {
         next if $table eq 'publication';
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => (@tables > 1 ? 10 : 50));
-        $hit_max = 1 if @these==10 && @tables > 1;
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => $per_page, count_only => $count_only);
+        $hit_max = 1 if @these==$per_page && @tables > 1;
         push @results, @these;
     }
 
     $result_count_text = scalar @results;
-    if (@tables == 1 && $result_count_text == 50) {
-        $result_count_text = "more than 50 results.  Only showing 50 in this page.";
+    if (@tables == 1 && $result_count_text == $per_page) {
+        $result_count_text = "more than $per_page results.  Only showing $per_page in this page.";
         $result_count_text .= " (Page ".$c->page.")" if $c->page > 1;
     } else {
         $result_count_text = "$result_count_text result";
@@ -37,7 +49,7 @@ sub keyword {
         if (!$hit_max or $all) {
             $result_count_text .= '.';
         } else {
-            $result_count_text .= " on this page. (Only up to 10 results of each type are shown). ".
+            $result_count_text .= " on this page. (Only up to $per_page results of each type are shown). ".
                 "To see more, chose a type in the form above."; 
         }
     }

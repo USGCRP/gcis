@@ -459,6 +459,28 @@ sub startup {
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
     }
 
+    # Vocabulary
+    #Since vocabulary is a view in postgres, and context and term tables use the column name lexicon_identifier,
+    #it works best to force the vocabulary's identifier to also be lexicon_identifier.  Otherwise, for those other
+    #tables, we need to make sure lexicon_identifier gets populated everywhere they need it.
+    $r->resource('vocabulary', {identifier => 'lexicon_identifier'});
+    my $vocab = $r->lookup('select_vocabulary');
+
+    # This will create the path /vocabulary/{lexicon_identifier}/context/{context_identifier}
+    my $context = $vocab->resource('context_with_extended_path', { controller => 'Tuba::Context', identifier => 'context_identifier', path_base => 'context'});
+
+    # This creates the path /vocabulary/{lexicon_identifier}/context/{context_identifier}/term/{term_identifier}
+    $context->resource('term_with_extended_path', {identifier => 'term', wildcard => 1, controller => 'Tuba::Term', path_base => 'term'});
+
+    # Creates the path /vocabulary/{lexicon_identifier}/{context_identifer} - the canonical way to access context
+    my $context2 = $vocab->route->to('context#');  #using this contstruct, modification to shortcut should be possible to do it through there.
+    $context2->get(':context_identifier')->to('#list')->name('show_context');
+
+    # Creates the path //vocabulary/{lexicon_identifier}/{context_identifer}/{term_identifier} - canonical way to access term
+    #Using :term instead of *term allows .json to work, but breaks terms with a '/' in them
+    #leaving it as is for now, as a known bug.  Use context2 construct to modify shortcut to take an 'abridge' option.
+    $vocab->get(':context_identifier/:term')->to('term#show')->name('show_term');
+
     # simple test route -RS
     $r->get('/testing' => sub {
         my $c=shift;
@@ -468,8 +490,8 @@ sub startup {
     # simple test resource -RS
     $r->resource('test');
 
-    # terms
-    $r->resource('term');
+    # terms (by uuid, not through /vocabulary), ie, NOT the canonical way
+    $r->resource('term_by_uuid', { controller => 'Tuba::Term', identifier => 'term_identifier', path_base => 'term'});
 
     # relationships (the predicates used between terms, and from terms to gcids)
     $r->resource('relationship');

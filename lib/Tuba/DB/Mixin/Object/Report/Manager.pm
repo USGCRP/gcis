@@ -23,14 +23,26 @@ sub dbgrep {
         @viewable = ( _public => 't' );
     }
 
-    my $found= $self->get_objects(
-        query => [
-             or => \@query,
-             or => \@viewable
-        ],
-        @with,
-        $a{all} ? () : (page => $a{page}, per_page => $per_page), );
-
+    my $found;
+    if ($a{count_only}) {
+        my $count = $self->get_objects_count(
+            query => [
+                 or => \@query,
+                 or => \@viewable
+            ],
+            @with, );
+        #bless the hash, so that rendering works (mostly) the same as full-fledged results
+        my @count = $count ? (bless { results_count => $count } , $self->object_class ) : ();
+        $found = \@count;
+    } else {
+       $found = $self->get_objects(
+            query => [
+                 or => \@query,
+                 or => \@viewable
+            ],
+            @with,
+            $a{all} ? () : (page => $a{page}, per_page => $per_page), );
+    } 
     return @$found;
 }
 
