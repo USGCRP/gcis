@@ -8,6 +8,9 @@
    bibo:volume "<%= $article->journal_vol %>";
    bibo:pages "<%= $article->journal_pages %>";
    dbpprop:pubYear "<%= $article->year %>"^^xsd:gYear;
+% if ($article->description) {
+   dcterms:description "<%= $article->description %>";
+% }
 % if ($article->doi) {
    bibo:doi "<%= $article->doi %>";
 % } else {
