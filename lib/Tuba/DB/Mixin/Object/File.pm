@@ -36,11 +36,7 @@ sub as_tree {
     $tree->{url} = $s->asset_location;
     $tree->{href} = $c->url_for($tree->{url})->to_abs;
     if (my $thumb = $tree->{thumbnail}) {
-        my $path = get_config->{asset_path};
-        my $url = $c->req->url->clone;
-        $url->query(Mojo::Parameters->new());
-        $url->path("$path/$thumb");
-        $tree->{thumbnail_href} = $url->to_abs;
+        $tree->{thumbnail_href} = $s->thumbnail_path;
     } else {
         $tree->{thumbnail_href} = undef;
     }
@@ -53,7 +49,9 @@ sub thumbnail_path {
         return join '/', get_config->{asset_path},"$thumb";
     } elsif (my $remote = get_config->{asset_remote_fallback}) {
         # e.g. "http://data.globalchange.gov/assets"
-        return join '/', $remote, $s->thumbnail.'?gcis_remote=1';
+        # For slightly better performance, gcis_remote=1 fetches images in greyscale
+        my $gcis_remote = get_config->{with_color_images} ? '' : '?gcis_remote=1';
+        return join '/', $remote, $s->thumbnail.$gcis_remote;
     } else {
         return '/blank.png';
     }
