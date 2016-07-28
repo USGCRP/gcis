@@ -35,6 +35,7 @@ sub make_tree_for_show {
     $tree->{instrument_measurements} = [
         map $_->as_tree, $dataset->instrument_measurements
     ];
+    $tree->{title} = $tree->{name};
     return $tree;
 }
 
