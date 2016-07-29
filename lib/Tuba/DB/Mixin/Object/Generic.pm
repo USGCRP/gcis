@@ -77,7 +77,7 @@ sub stringify {
         return $long_name if length $long_name;
     }
 
-    $title = $s->attrs->{Title};
+    my $title = $s->attrs->{Title};
     return $title ? $title : $uuid;
 }
 
