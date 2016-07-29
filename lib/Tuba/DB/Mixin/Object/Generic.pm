@@ -39,7 +39,7 @@ sub new_from_reference {
 sub as_tree {
     my $s = shift;
     my $tree = $s->SUPER::as_tree(@_, deflate => 0);
-    $tree->{description} = $s->stringify;
+    $tree->{description} = $s->stringify(long => 1);
     return $tree;
 }
 
@@ -55,25 +55,30 @@ sub stringify {
         }
     }
 
-    my $long_name = '';
-    my $type = $s->attrs->{reftype};
-    if ($type)
-    {
-        $long_name .= $type . '. ';
+    if($args{long}){
+        my $long_name = '';
+        my $type = $s->attrs->{reftype};
+        if ($type)
+        {
+            $long_name .= $type . '. ';
+        }
+        my $date = $s->attrs->{Date};
+        if ($date)
+        {
+            $long_name .= $date . '. ';
+        }
+        my $author = $s->attrs->{Author};
+        if ($author) {
+            my @list = split /\x{d}/, $author;
+            $long_name .= $list[0];
+            $long_name =~ s/,.*$//;
+            $long_name .= ' et al.' if @list > 1;
+        }
+        return $long_name if length $long_name;
     }
-    my $date = $s->attrs->{Date};
-    if ($date)
-    {
-        $long_name .= $date . '. ';
-    }
-    my $author = $s->attrs->{Author};
-    if ($author) {
-        my @list = split /\x{d}/, $author;
-        $long_name .= $list[0];
-        $long_name =~ s/,.*$//;
-        $long_name .= ' et al.' if @list > 1;
-    }
-    return length $long_name ? $long_name : $uuid;
+
+    $title = $s->attrs->{Title};
+    return $title ? $title : $uuid;
 }
 
 
