@@ -754,7 +754,6 @@ lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
 lib/Tuba/files/public/sitemap.xml
-lib/Tuba/files/public/test.html
 lib/Tuba/files/public/usgcrp-200.png
 lib/Tuba/files/public/usgcrp-220.png
 lib/Tuba/files/public/usgcrp-240.png
@@ -1008,7 +1007,6 @@ META.json
 META.yml
 README.md
 README.osx
-release-ci
 t/001_start_db.t
 t/002_basic.t
 t/002_objects.t

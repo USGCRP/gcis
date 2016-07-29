@@ -1,47 +1,78 @@
 % layout 'default', namespaces => [qw/dcterms skos xsd gcis dbpprop org place prov owl/];
 %= filter_lines_with empty_predicate() => begin
-%#
 <<%= current_resource %>>
    dcterms:identifier "<%= $organization->identifier %>";
    skos:prefLabel "<%= $organization->name %>"^^xsd:string;
    gcis:hasURL "<%= $organization->url %>"^^xsd:anyURI;
-%#
-% if (my $type = $organization->organization_type) {
+     % if (my $type = $organization->organization_type) {
    dbpprop:organizationType "<%= $type->identifier %>";
-% }
-%#
+     % }
+% #
 
    a gcis:Organization .
 
 %# We now explore relationships between organizations:
-   % if (my @maps = $organization->organization_maps) {
-     % my $first = 1;
-     % for my $map (@maps) {
-         % if ($first) {
+     % if (my @maps = $organization->organization_maps) {
+       % my $first = 1;
+        % for my $map (@maps) {
+            % if ($first) {
             % $first = 0;
-
 ## This organization is related to one or more others as follows:
-         % }
+            % }
 <<%= current_resource %>>
-   org:linkedto <<%= uri($map->other_organization) %>>.
+        % if (($map->organization_relationship_identifier eq "department")
+        % ||  ($map->organization_relationship_identifier eq "division_of")
+        % ||  ($map->organization_relationship_identifier eq "branch_of")
+        % ||  ($map->organization_relationship_identifier eq "center_of")
+        % ||  ($map->organization_relationship_identifier eq "program_of")
+        % ||  ($map->organization_relationship_identifier eq "office_of")
+        % ||  ($map->organization_relationship_identifier eq "unit_of")
+        % ||  ($map->organization_relationship_identifier eq "council_of")
+        % ||  ($map->organization_relationship_identifier eq "agency_of")
+        % ||  ($map->organization_relationship_identifier eq "bureau_of")
+        % ||  ($map->organization_relationship_identifier eq "task_force_of")
+        % ||  ($map->organization_relationship_identifier eq "working_group_of")
+        % ||  ($map->organization_relationship_identifier eq "commission_of")) {
+     org:unitOf <<%= uri($map->other_organization) %>> .
+        % } elsif ($map->organization_relationship_identifier eq "predecessor_of") {
+     prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
+        % } else {
+     org:linkedTo <<%= uri($map->other_organization) %>> .
+        % }
+      % }
+  % }
+% #
+     % if (my @maps = $organization->organization_maps_objs) {
+       % my $first = 1;
+        % for my $map (@maps) {
+            % if ($first) {
+              % $first = 0;
 
-    % }
-   % }
-%#
-   % if (my @maps = $organization->organization_maps_objs) {
-     % my $first = 1;
-     % for my $map (@maps) {
-         % if ($first) {
-            % $first = 0;
-
-## Other organizations are related to this one as follows: 
-         % }
-<<%= uri($map->organization) %>>   
-   org:linkedto <<%= current_resource %>>.
-
+## Other organizations are related to this one as follows:
+              % }
+<<%= uri($map->organization) %>>
+        % if (($map->organization_relationship_identifier eq "department")
+        % ||  ($map->organization_relationship_identifier eq "division_of")
+        % ||  ($map->organization_relationship_identifier eq "branch_of")
+        % ||  ($map->organization_relationship_identifier eq "center_of")
+        % ||  ($map->organization_relationship_identifier eq "program_of")
+        % ||  ($map->organization_relationship_identifier eq "office_of")
+        % ||  ($map->organization_relationship_identifier eq "unit_of")
+        % ||  ($map->organization_relationship_identifier eq "council_of")
+        % ||  ($map->organization_relationship_identifier eq "agency_of")
+        % ||  ($map->organization_relationship_identifier eq "bureau_of")
+        % ||  ($map->organization_relationship_identifier eq "task_force_of")
+        % ||  ($map->organization_relationship_identifier eq "working_group_of")
+        % ||  ($map->organization_relationship_identifier eq "commission_of")) {
+     org:unitOf <<%= current_resource %>> .
+        % } elsif ($map->organization_relationship_identifier eq "predecessor_of") {
+     prov:wasDerivedFrom <<%= uri($map->other_organization) %>> .
+      % } else {
+     org:linkedTo <<%= current_resource %>> .
      % }
-   % }
- 
+  %}
+% }
+
 % end
 
 %= include 'organization/contributors';

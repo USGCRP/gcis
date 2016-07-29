@@ -94,6 +94,10 @@
                 %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
                 <%= $val %>
                 %= end
+            % } elsif ($k =~ /^pmid$/i && $val) {
+                %= link_to "http://www.ncbi.nlm.nih.gov/pubmed/$val" => target => "_blank" => begin
+                <%= $val %>
+                %= end
             % } elsif ($k =~ /urls?/i) {
                 % if (my $to = fix_url($val)) {
                     %= link_to $to => target => "_blank" => begin

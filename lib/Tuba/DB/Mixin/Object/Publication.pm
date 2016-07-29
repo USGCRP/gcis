@@ -285,6 +285,12 @@ sub _cons_with_role {
 
 sub contributors_nested {
     my $object = shift;
+    my %args = @_;
+    my $role_exclude = $args{role_exclude};
+    my @role_ex;
+    if ($role_exclude) {
+        @role_ex = split /\|/, $role_exclude;
+    }
     my @cons = @{ Tuba::DB::Object::Contributor::Manager->get_objects(
         query => [ publication_id => $object->id ],
         with_objects => [ qw/publication_contributor_maps role_type/ ],
@@ -294,6 +300,7 @@ sub contributors_nested {
     my @nested;
     my %seen;
     for my $row (@cons) {
+        next if grep $row->role_type_identifier eq $_, @role_ex;
         next if $seen{$row->role_type_identifier}++;
         push @nested, { role => $row->role_type, people => $object->_cons_with_role($row->role_type, \@cons) };
     }

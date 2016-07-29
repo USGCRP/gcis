@@ -63,6 +63,7 @@ $t->get_ok("/journal/nurture.json")->json_is(
 my %a = (
  identifier         => '10.123/456',
  title              => 'nature vs nurture',
+ description        => 'nature vs nurture abstract here',
  doi                => '10.123/456',
  year               => '2001',
  journal_identifier => 'nature',

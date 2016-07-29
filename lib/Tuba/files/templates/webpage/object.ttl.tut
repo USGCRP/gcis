@@ -1,11 +1,11 @@
-% layout 'default', namespaces => [qw/dcterms xsd gcis cito biro prov/];
+% layout 'default', namespaces => [qw/dcterms xsd gcis fabio cito biro prov/];
 %= filter_lines_with empty_predicate() => begin
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $webpage->identifier %>";
    dcterms:title "<%= $webpage->title %>"^^xsd:string;
    gcis:hasURL "<%= $webpage->url %>"^^xsd:anyURI;
-   dcterms:date "<%= $webpage->access_date %>"^^xsd:dateTime;
+   fabio:hasAccessDate "<%= $webpage->access_date %>"^^xsd:dateTime;
 
    a gcis:Webpage.
 

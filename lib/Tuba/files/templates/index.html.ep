@@ -75,10 +75,16 @@
 <p class="text-center"><%= link_to "metrics" => { format => 'json' } => class => 'label label-primary' => begin %>JSON<%= end %>
         <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-primary' => begin %>YAML<%= end %>
         </p>
-<p class="lead centered">Featured report : <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
-The Third National Climate Assessment<%= end %></p>
+<div class='row'>
+<div class="col-md-7 col-md-offset-3 centered">
+<h2>Featured reports : <br /><br />
+    <%= link_to 'show_report', { report_identifier => 'usgcrp-climate-human-health-assessment-2016' } => begin %>
+    The Impacts of Climate Change on Human Health in the United States: A Scientific Assessment - 2016<%= end %><br /><br />
 
-
+    <%= link_to 'show_report', { report_identifier => 'nca3' } => begin %>
+    The Third National Climate Assessment - 2014<%= end %>
+</div>
+</div>
 
 <div class='row'>
 <div class="col-md-7 col-md-offset-3 ">
