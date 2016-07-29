@@ -41,6 +41,40 @@ sub as_tree {
     return $s->SUPER::as_tree(@_, deflate => 0);
 }
 
+
+sub stringify {
+    my $s = shift;
+    my %args = @_;
+
+    my $uuid = $s->identifier;
+    if ($args{short}) {
+        if ($uuid =~ /^(\w+)-(\w+)-(\w+)-(\w+)-(\w+)$/) {
+            return $1;
+        }
+    }
+
+    my $long_name = '';
+    my $type = $s->attrs->{reftype};
+    if ($type)
+    {
+        $long_name .= $type . '. ';
+    }
+    my $date = $s->attrs->{Date};
+    if ($date)
+    {
+        $long_name .= $date . '. ';
+    }
+    my $author = $s->attrs->{Author};
+    if ($author) {
+        my @list = split /\x{d}/, $author;
+        $long_name .= $list[0];
+        $long_name =~ s/,.*$//;
+        $long_name .= ' et al.' if @list > 1;
+    }
+    return length $long_name ? $long_name :: $uuid;
+}
+
+
 sub type {
     return shift->attrs->{reftype};
 }
