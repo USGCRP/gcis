@@ -38,7 +38,9 @@ sub new_from_reference {
 
 sub as_tree {
     my $s = shift;
-    return $s->SUPER::as_tree(@_, deflate => 0);
+    $tree = $s->SUPER::as_tree(@_, deflate => 0);
+    $tree->{description} = $s->stringify;
+    return $tree;
 }
 
 
