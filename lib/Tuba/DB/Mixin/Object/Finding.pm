@@ -2,6 +2,15 @@ package Tuba::DB::Object::Finding;
 # Tuba::DB::Mixin::Object::Finding;
 use strict;
 
+
+sub as_tree {
+    my $s = shift;
+    my $tree = $s->SUPER::as_tree(@_, deflate => 0);
+    $tree->{description} = $s->{statement};
+    return $tree;
+}
+
+
 sub numeric {
     my $s = shift;
     if (my $chapter = $s->chapter) {

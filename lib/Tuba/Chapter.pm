@@ -92,6 +92,7 @@ sub make_tree_for_show {
       url               => $chapter->url,
       doi               => $chapter->doi,
       title             => $chapter->title,
+      description       => $chapter->description,
       $c->common_tree_fields($chapter),
     };
 }
