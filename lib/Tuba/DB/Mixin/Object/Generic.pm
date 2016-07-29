@@ -73,7 +73,7 @@ sub stringify {
         $long_name =~ s/,.*$//;
         $long_name .= ' et al.' if @list > 1;
     }
-    return length $long_name ? $long_name :: $uuid;
+    return length $long_name ? $long_name : $uuid;
 }
 
 
