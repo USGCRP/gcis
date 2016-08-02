@@ -27,14 +27,16 @@ sub keyword {
     my $per_page = $c->param('per_page') || (@tables > 1 ? 10 : 50); # default to 10 per type if multiple types
     my $all = $c->param('all') ? 1 : 0;
     my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
+    my $featured_only = $c->param('featured_only') ? 1 : 0; #only return featured publications
     my @results;
     my $result_count_text;
     my $hit_max = 0;
     for my $table (@tables) {
         next if $table eq 'publication';
+        next if $featured_only and $table ne 'report';  #ugly hack, only reports are currently featured
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => $per_page, count_only => $count_only);
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => $per_page, count_only => $count_only, featured_only => $featured_only);
         $hit_max = 1 if @these==$per_page && @tables > 1;
         push @results, @these;
     }
