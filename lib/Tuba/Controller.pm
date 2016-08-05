@@ -220,8 +220,12 @@ sub make_tree_for_show {
                     publication_type => $_->{publication_type_identifier},
                 }, @pubs
             ];
+            my @parents;
+            push @parents, $pub->get_parents_with_references(uniq => 1, for_export => 1, c => $c);
+            $ret->{parents} = \@parents;
         } else {
             $ret->{cited_by} = [];
+            $ret->{parents} = [];
         }
     }
     $ret;
