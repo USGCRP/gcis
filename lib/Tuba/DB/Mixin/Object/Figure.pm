@@ -92,6 +92,7 @@ sub as_tree {
     my $c = $a{c};
     my $tree = $s->SUPER::as_tree(@_);
     $tree->{kindred_figures} = [ map $_->uri($c), $s->kindred_figures ] unless $a{bonsai};
+    $tree->{description} = $tree->{caption};
     return $tree;
 }
 

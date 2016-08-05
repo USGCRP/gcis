@@ -85,14 +85,6 @@ sub show {
     $c->SUPER::show(@_);
 }
 
-sub make_tree_for_show {
-    my $c = shift;
-    my $figure = shift;
-    my $tree = $c->SUPER::make_tree_for_show($figure, @_ );
-    $tree->{description} = $tree->{caption};
-    return $tree;
-}
-
 
 sub update_form {
     my $c = shift;
