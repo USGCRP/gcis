@@ -28,6 +28,7 @@ sub keyword {
     my $all = $c->param('all') ? 1 : 0;
     my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
     my $featured_only = $c->param('featured_only') ? 1 : 0; #only return featured publications
+    my $bonsai = ($c->param('format') // '') eq 'detailed' ? 0 : 1; #default to bonsai=1 unless &format=detailed
     my @results;
     my $result_count_text;
     my $hit_max = 0;
@@ -58,8 +59,8 @@ sub keyword {
     $c->stash(result_count_text => $result_count_text);
     $c->respond_to(
         any => sub { shift->render(results => \@results); },
-        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
-        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
+        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => $bonsai), @results ]); },
+        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => $bonsai), @results ]); },
     );
 }
 
