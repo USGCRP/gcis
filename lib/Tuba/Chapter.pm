@@ -74,6 +74,7 @@ sub make_tree_for_list {
         uri        => $uri,
         identifier => $chapter->identifier,
         href       => $href,
+        display_name => $chapter->stringify(display_name => 1, short => 1),
     };
 }
 

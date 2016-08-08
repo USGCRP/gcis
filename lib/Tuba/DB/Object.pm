@@ -349,7 +349,7 @@ sub as_tree {
     }
     $tree->{uri} //= $s->uri($c) if $c;
     #when used for result counts, the objects are skeletal, and do not stringify, so use eval
-    $tree->{display_name} = eval{$s->stringify} || undef;
+    $tree->{display_name} = eval{$s->stringify(display_name => 1)} || undef;
     $tree->{type} = $s->meta->table;
     $tree->{results_count} = $s->{results_count} if defined $s->{results_count}; #only relevant to /search
     for my $k (keys %$tree) {
