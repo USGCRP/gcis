@@ -357,7 +357,11 @@ sub as_tree {
     }
     if ($c && !$bonsai && $tree->{contributors}) {
         for my $t (@{ $tree->{contributors} }) {
-            $t->{publications} = [ map {uri => $_->to_object->uri($c)}, Tuba::DB::Object::Contributor->new(id => $t->{id})->load->publications ];
+            my $contributor = Tuba::DB::Object::Contributor->new(id => $t->{id})->load;
+            $t->{publications} = [ map {uri => $_->to_object->uri($c),
+                                        display_name => $_->to_object->stringify(display_name => 1),
+                                       }, $contributor->publications ];
+            $t->{display_name} = $contributor->stringify;
         }
     }
     if ($c && !$bonsai) {
