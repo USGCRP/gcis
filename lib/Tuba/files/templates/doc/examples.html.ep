@@ -20,19 +20,19 @@ using command line tools such as curl.
 </p>
 <h4>See the structure of the third national climate assessment.</h4>
 <pre>
-$ curl http://data.globalchange.gov/report/nca3.yaml
+$ curl https://data.globalchange.gov/report/nca3.yaml
 </pre>
 
 <h4>Get a list of chapters in the third national climate assessment.</h4>
 <pre>
-$ curl http://data.globalchange.gov/report/nca3/chapter.json
+$ curl https://data.globalchange.gov/report/nca3/chapter.json
 </pre>
 
 <p>Requests can be made either using the suffix or using content negotiation.</p>
 
 <h4>Get the first 20 figures in the third national climate assessment.</h4>
 <pre>
-$ curl -H 'Accept: application/json' http://data.globalchange.gov/report/nca3/figure
+$ curl -H 'Accept: application/json' https://data.globalchange.gov/report/nca3/figure
 </pre>
 
 <p>For the complete list of endpoints, as well as the valid Accept headers, please
@@ -61,7 +61,7 @@ some of the ones below.</p>
     target="_blank">Yasgui</a> is a modern SPARQL query editor.
 </p>
 <p>
-<a target="_blank" href="http://en.lodlive.it/?http://data.globalchange.gov/report/nca3/chapter/our-changing-climate/figure/past-and-projected-changes-in-global-sea-level-rise">LOD live</a>
+<a target="_blank" href="http://en.lodlive.it/?https://data.globalchange.gov/report/nca3/chapter/our-changing-climate/figure/past-and-projected-changes-in-global-sea-level-rise">LOD live</a>
 is a tool for visually exploring semantic relationships.</p>
 
 <h3>Applications</h3>
