@@ -474,7 +474,7 @@ sub startup {
 
     # Creates the path /vocabulary/{lexicon_identifier}/{context_identifer} - the canonical way to access context
     my $context2 = $vocab->route->to('context#');  #using this contstruct, modification to shortcut should be possible to do it through there.
-    $context2->get(':context_identifier')->to('#list')->name('show_context');
+    $context2->get(':context_identifier')->to('#show')->name('show_context');
 
     # Creates the path //vocabulary/{lexicon_identifier}/{context_identifer}/{term_identifier} - canonical way to access term
     #Using :term instead of *term allows .json to work, but breaks terms with a '/' in them
