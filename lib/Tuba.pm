@@ -209,6 +209,7 @@ sub startup {
       #    controller -- controller class
       #    identifier -- name of the stash key for the identifier (tablename + '_identifier')
       #    path_base -- initial path for urls (/tablename)
+      #    no_list -- do not create the 'list_$name' route
       #
       my $identifier = $opts->{identifier} || join '_', $name, 'identifier';
       my $controller = $opts->{controller} || 'Tuba::'.b($name)->camelize;
