@@ -491,13 +491,11 @@ sub startup {
     $context->resource('term_with_extended_path', {identifier => 'term', wildcard => 1, controller => 'Tuba::Term', path_base => 'term'});
 
     # Creates the path /vocabulary/{lexicon_identifier}/{context_identifer} - the canonical way to access context
-    my $context2 = $vocab->route->to('context#');  #using this contstruct, modification to shortcut should be possible to do it through there.
-    $context2->get(':context_identifier')->to('#show')->name('show_context');
+    my $context2 = $vocab->resource('context', {abridged => 1, no_list => 1});
 
-    # Creates the path //vocabulary/{lexicon_identifier}/{context_identifer}/{term_identifier} - canonical way to access term
-    #Using :term instead of *term allows .json to work, but breaks terms with a '/' in them
-    #leaving it as is for now, as a known bug.  Use context2 construct to modify shortcut to take an 'abridge' option.
-    $vocab->get(':context_identifier/:term')->to('term#show')->name('show_term');
+    # Creates the path //vocabulary/{lexicon_identifier}/{context_identifer}/{term_identifier} - the 
+    # canonical way to access term
+    $context2->resource('term', {abridged =>1, no_list => 1, wildcard => 1, identifier => 'term'});
 
     # simple test route -RS
     $r->get('/testing' => sub {
