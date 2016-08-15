@@ -210,6 +210,7 @@ sub startup {
       #    identifier -- name of the stash key for the identifier (tablename + '_identifier')
       #    path_base -- initial path for urls (/tablename)
       #    no_list -- do not create the 'list_$name' route
+      #    abridged -- create a shorter route by omitting the path_base (useful for nested resources)
       #
       my $identifier = $opts->{identifier} || join '_', $name, 'identifier';
       my $controller = $opts->{controller} || 'Tuba::'.b($name)->camelize;
@@ -228,7 +229,17 @@ sub startup {
       $cname = b($cname)->decamelize;
 
       # Build bridges and routes.
-      my $resource = $r->route("$path_base")->to("$cname#");
+      my $resource;
+      unless ($opts->{abridged}) { #not an abridged route by default
+          $resource = $r->route("$path_base")->to("$cname#");
+      } else {
+          $resource = $r->route->to("$cname#");
+          if ($opts->{path_base}) {
+              $app->log->warn("opt path_base=>$opts->{path_base} was provided, but ignored because opt abridged" .
+                              " is in effect for resource $name");
+          }
+      }
+      # If using opts->{abridged}, you probably want to use opt->{no_list} as well, but it is not enforced
       $resource->get->to('#list')->name("list_$name") unless $opts->{no_list};
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
@@ -257,7 +268,13 @@ sub startup {
 
       return $select if $config->{read_only};
 
-      my $authed = $r->under("/$path_base")->to(cb => sub {
+      my $authed;
+      unless ($opts->{abridged}) {
+          $authed = $r->under("/$path_base");
+      } else {
+          $authed = $r->under;
+      }
+      $authed->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
               return 1;
