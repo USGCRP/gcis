@@ -93,6 +93,7 @@ sub as_tree {
     my $tree = $s->SUPER::as_tree(@_);
     $tree->{kindred_figures} = [ map $_->uri($c), $s->kindred_figures ] unless $a{bonsai};
     $tree->{description} = $tree->{caption};
+    $tree->{chapter}->{display_name} = $s->chapter->stringify(display_name => 1);
     return $tree;
 }
 
