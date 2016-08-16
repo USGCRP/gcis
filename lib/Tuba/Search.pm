@@ -23,7 +23,7 @@ sub keyword {
     my $orm = $c->orm;
     my @tables = keys %$orm;
     my $types = $c->every_param('type');  #array ref to multiple values
-    @tables = @$types unless grep {$_ eq 'all'} @$types;
+    @tables = @$types unless !@$types or grep {$_ eq 'all'} @$types;
     my $per_page = $c->param('per_page') || (@tables > 1 ? 10 : 50); # default to 10 per type if multiple types
     my $all = $c->param('all') ? 1 : 0;
     my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
