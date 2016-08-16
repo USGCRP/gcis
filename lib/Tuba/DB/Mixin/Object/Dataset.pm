@@ -3,7 +3,7 @@ use strict;
 
 sub stringify {
     my $c = shift;
-    return $c->name;
+    return $c->name || $c->SUPER::stringify(@_);
 }
 
 1;
