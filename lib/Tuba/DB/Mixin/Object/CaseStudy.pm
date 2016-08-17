@@ -18,6 +18,7 @@ sub as_tree {
              title => $self->stringify,
              access_date => $self->timestamp,
              uri => '/case_study/',
+             description => $self->gcid,  #overwrite description in JSON, since title is also description
                 );
     my @keys_not_in_webpage = qw/relationship_identifier lexicon_identifier term context_identifier term_identifier
                                  timestamp gcid/ ;
