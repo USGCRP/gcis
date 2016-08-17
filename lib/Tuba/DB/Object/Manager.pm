@@ -65,14 +65,13 @@ sub dbgrep {
     my @query = $self->_make_query($query_string) or return;
     my $found;
     if ($a{count_only}) {
-        my $count = $self->get_objects_count( query => [ or => \@query ], distinct=>1 );
+        my $count = $self->get_objects_count( query => [ or => \@query ]);
         #bless the hash, so that rendering works (mostly) the same as full-fledged results
         my @count = $count ? (bless { results_count => $count } , $self->object_class ) : (); 
         $found = \@count;
     } else {
         $found = $self->get_objects( query => [ or => \@query ],
                                      $a{all} ? () : (page => $a{page}, per_page => $per_page),
-                                     distinct => 1,
                                      #debug => 1,  #dump raw SQL to stderr (in morbo output, not devel log)
                                    );
     } 
