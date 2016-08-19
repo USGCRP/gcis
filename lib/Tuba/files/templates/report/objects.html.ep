@@ -9,9 +9,7 @@
 %= include 'list_formats';
 
 % my $numeric_link = begin
-%   my ($count,$what,$list_page,$report) = @_;
-    % my $method = $what.'s';
-    % $list_page ||= 'list_all_'.$method;
+%   my ($count, $method, $list_page, $report) = @_;
     % if ($count==1) {
     <%= obj_link_to $report->$method->[0] => 'show' => class => "btn btn-default squeezevert" => begin =%><%= $count =%><%= end =%>
     % } else {
@@ -41,19 +39,19 @@
     <td><%= $report->report_type_identifier // '' %></td>
     <td>
 
-        %== $numeric_link->($report->count_chapters => 'chapter', undef, $report)
+        %== $numeric_link->($report->count_chapters, 'chapters', 'list_chapter', $report)
     </td>
     <td>
-        %== $numeric_link->($report->count_figures => 'figure', undef, $report)
+        %== $numeric_link->($report->count_figures, 'figures', 'list_all_figures', $report)
     </td>
     <td>
-        %== $numeric_link->($report->count_findings => 'finding', undef, $report)
+        %== $numeric_link->($report->count_findings, 'findings', 'list_all_findings', $report)
     </td>
     <td>
-        %== $numeric_link->($report->count_tables => 'table', undef, $report)
+        %== $numeric_link->($report->count_tables, 'tables', 'list_all_tables', $report)
     </td>
     <td>
-        %== $numeric_link->($report->reference_count => 'reference', 'list_report_references', $report)
+        %== $numeric_link->($report->reference_count, 'references', 'list_reference_report', $report)
     </td>
     <td>
         % if (my $to = fix_url($report->url)) {
