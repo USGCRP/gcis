@@ -56,9 +56,7 @@ a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
 
 <p class='linebreaks'>USGCRP contributions from :
 Robert Wolfe : Technical Lead
-Justin Goldstein : Data Curator
 Andrew Buddenberg : Client development
-Brent Newman : Data Coordinator
 Bradley Akamine : Chief Digital Officer
 Kathryn Tipton : Software Engineer
 Amrutha Elamparuthy : Data Manager
@@ -77,7 +75,10 @@ Steve Aulenbach : Data Curator
 Tania Sizer : Web Designer
 Rudy Estrada : System Administrator
 Travis Kuennen : System Administrator
-Amanda McQueen : Student Assistant</p>
+Amanda McQueen : Student Assistant
+Justin Goldstein : Data Curator
+Brent Newman : Data Coordinator
+</p>
 
 <h4>GCIS Version</h4>
 <p><%= $Tuba::VERSION %></p>
