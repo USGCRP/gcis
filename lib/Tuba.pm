@@ -51,8 +51,8 @@ Tuba provides a RESTful API to GCIS data.
 
     authz :
         update :
-            bduggan2@gmail.com : 0
-            bduggan@usgcrp.gov : 1
+            jsmith2@gmail.com : 0
+            jsmith@usgcrp.gov : 1
 
 =cut
 

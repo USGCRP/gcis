@@ -4,10 +4,10 @@
    <Description>Search data.globalchange.gov.</Description>
    <Tags>global climate change science data</Tags>
 % if (config('google_site_search')) {
-   <Contact>bduggan@usgcrp.gov</Contact>
+   <Contact>digital@usgcrp.gov</Contact>
    <Url type="text/html" template="https://www.google.com/cse?q={searchTerms}&amp;cx=003035990453873541456%3Atojcob4zaam&amp;ie=UTF-8" />
 % } else {
-   <Contact>bduggan@usgcrp.gov</Contact>
+   <Contact>digital@usgcrp.gov</Contact>
    <Url type="text/html" template="<%= url_for('search')->to_abs %>?q={searchTerms}" />
 % }
 </OpenSearchDescription>
