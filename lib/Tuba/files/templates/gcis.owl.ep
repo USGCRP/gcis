@@ -9,7 +9,10 @@
 <link href="/owl/rec.css" rel="stylesheet" type="text/css"/>
 <link href="/owl/extra.css" rel="stylesheet" type="text/css"/>
 <link href="/owl/favicon.ico" rel="shortcut icon"/>
-<script src="/owl/jquery.js"></script><script src="http://eelst.cs.unibo.it/apps/LODE/jquery.scrollTo.js"></script><script src="/static/js/marked.min.js"></script><script>
+<script src="/owl/jquery.js"></script>
+<script src="http://eelst.cs.unibo.it/apps/LODE/jquery.scrollTo.js"></script>
+<script src="/static/js/marked.min.js"></script>
+<script>
                 $(document).ready(
                     function () {
                     	jQuery(".markdown").each(function(el){
@@ -21,6 +24,19 @@
                         }
                     });
         </script>
+% if (my $ga = config('google_analytics')) {
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', '<%= $ga->{id} %>', '<%= $ga->{domain} %>');
+  ga('send', 'pageview');
+</script>
+% } else {
+<!-- Analytics Off -->
+% }
 </head>
 <body>
 <div class="head">
@@ -38,7 +54,7 @@
 <dd>2.0</dd>
 </dl>
 <dl>
-<dt>Authors:</dt>
+<dt>Authors bar templated:</dt>
 <dd><a href="http://data.globalchange.gov/gcis.owl#curt_tilmes">http://data.globalchange.gov/gcis.owl#curt_tilmes</a></dd>
 <dd><a href="http://data.globalchange.gov/gcis.owl#peter_fox">http://data.globalchange.gov/gcis.owl#peter_fox</a></dd>
 <dd><a href="http://data.globalchange.gov/gcis.owl#robert_e_wolfe">http://data.globalchange.gov/gcis.owl#robert_e_wolfe</a></dd>

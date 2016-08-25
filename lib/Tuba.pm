@@ -133,6 +133,7 @@ sub startup {
         return 1 unless $c->req->url->path eq '/gcis.owl';
         if ($c->accepts('html')) {
             $c->res->headers->content_type("text/html");
+             $c->render( template => 'gcis', format => 'owl' );
             return 1;
         }
         $c->respond_to(
