@@ -2,6 +2,7 @@
 % my $lat_max = ( (stash 'lat_max') || $object->lat_max);
 % my $lon_min = ( (stash 'lon_min') || $object->lon_min);
 % my $lon_max = ( (stash 'lon_max') || $object->lon_max);
+% if (my $asset_token = config('mapbox_access_token')) {
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
 <link rel="stylesheet" href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.4/leaflet.fullscreen.css' />
@@ -9,7 +10,7 @@
 <style>
   .map {
     width: 300px;
-    height: 250px;
+    height: 350px;
     border:1px solid #A9A9A9;
     border-radius:5px;
     -moz-border-radius:5px;
@@ -23,10 +24,21 @@
     var map = L.map('map', { worldCopyJump: true, center: [0,0], zoom: 0, 
                              zoomControl: true, crs: L.CRS.EPSG3395,
                              fullscreenControl: true, zoomAnimation: false });
-    L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-      subdomains: '1234',
+    L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{style}/tiles/256/{z}/{x}/{y}?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
       maxZoom: 18,
+      accessToken: '<%= $asset_token %>',
+      style: 'outdoors-v9'
     }).addTo(map);
+
+    var clickPopUp = L.popup();
+    function onMapClick(e) {
+      clickPopUp
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString())
+        .openOn(mymap);
+    }
+
     var geojson = {
       'type': 'Feature',
       'geometry': {
@@ -54,3 +66,6 @@
     }).bindPopup().addTo(map));
   });
 </script> 
+% } else {
+<!-- No Embedded Map Token Found -->
+% }
