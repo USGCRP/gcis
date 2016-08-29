@@ -31,14 +31,6 @@
       style: 'outdoors-v9'
     }).addTo(map);
 
-    var clickPopUp = L.popup();
-    function onMapClick(e) {
-      clickPopUp
-        .setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
-        .openOn(mymap);
-    }
-
     var geojson = {
       'type': 'Feature',
       'geometry': {
