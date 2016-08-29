@@ -51,8 +51,8 @@ Tuba provides a RESTful API to GCIS data.
 
     authz :
         update :
-            bduggan2@gmail.com : 0
-            bduggan@usgcrp.gov : 1
+            jsmith2@gmail.com : 0
+            jsmith@usgcrp.gov : 1
 
 =cut
 
@@ -133,6 +133,7 @@ sub startup {
         return 1 unless $c->req->url->path eq '/gcis.owl';
         if ($c->accepts('html')) {
             $c->res->headers->content_type("text/html");
+             $c->render( template => 'gcis', format => 'owl' );
             return 1;
         }
         $c->respond_to(

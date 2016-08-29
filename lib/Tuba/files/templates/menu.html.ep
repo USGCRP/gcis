@@ -71,7 +71,7 @@
                     <li>
                     % if(config('no_search')) {
                     % } elsif (config('google_site_search')) {
-                       <form action="http://google.com/cse" target="_blank" class="form navbar-form" role="search">
+                       <form action="https://google.com/cse" target="_blank" class="form navbar-form" role="search">
                            <input name="cx" type="hidden" value="003035990453873541456:tojcob4zaam">
                            <input name="ie" type="hidden" value="UTF-8">
                            <input name="q" class="form-control" placeholder="Search" type="search">
