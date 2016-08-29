@@ -55,7 +55,7 @@ It relies on <a href="http://postgresql.org">PostgreSQL</a> for data storage, an
 a <a href="http://virtuoso.openlinksw.com">Virtuoso</a> triple store.</p>
 
 <p class='linebreaks'>USGCRP contributions from :
-Robert Wolfe : Technical Lead
+Reid Sherman : Technical Lead
 Andrew Buddenberg : Client development
 Bradley Akamine : Chief Digital Officer
 Kathryn Tipton : Software Engineer
@@ -68,8 +68,9 @@ Jet Propulsion Laboratory Contributions from :
 Hook Hua, Gerald Manipon, and Brian Wilson (Caltech)
 Dexter Tan (Raytheon)
 
-Prior contributions from : 
+Prior contributions from :
 Curt Tilmes : Visionary
+Robert Wolfe : Technical Lead
 Brian Duggan : System Engineer
 Steve Aulenbach : Data Curator
 Tania Sizer : Web Designer
