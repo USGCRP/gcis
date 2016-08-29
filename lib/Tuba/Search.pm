@@ -24,6 +24,8 @@ sub keyword {
     my @tables = keys %$orm;
     my $types = $c->every_param('type');  #array ref to multiple values
     @tables = @$types unless !@$types or grep {$_ eq 'all'} @$types;
+    my $with = $c->every_param('with');       #with may have multiple values
+    my $with_files = grep {/files/} @$with;  #only considering with=files (for now)
     my $per_page = $c->param('per_page') || (@tables > 1 ? 10 : 50); # default to 10 per type if multiple types
     my $all = $c->param('all') ? 1 : 0;
     my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
@@ -59,8 +61,14 @@ sub keyword {
     $c->stash(result_count_text => $result_count_text);
     $c->respond_to(
         any => sub { shift->render(results => \@results); },
-        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => $bonsai), @results ]); },
-        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => $bonsai), @results ]); },
+        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, 
+                                                                          bonsai => $bonsai,
+                                                                          with_files => $with_files,
+                                                                         ), @results ]); },
+        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, 
+                                                                       bonsai => $bonsai,
+                                                                       with_files => $with_files,
+                                                                      ), @results ]); },
     );
 }
 
