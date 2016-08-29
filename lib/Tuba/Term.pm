@@ -57,6 +57,12 @@ sub show {
 sub make_tree_for_show {
     my $c = shift;
     my $term = shift;
+    my $seen_terms = shift; #hash to detect recursion
+    if ($seen_terms->{$term->identifier}) {
+        logger->info("Recursive relationship detected for " . $term->uri($c) );
+        return {};
+    }
+    $seen_terms->{$term->identifier} = 1;
     #create the default tree
     my $tree = $c->SUPER::make_tree_for_show($term);
     #for children, this term is the subject; for parents, it is the object of the relationship
@@ -65,7 +71,7 @@ sub make_tree_for_show {
     my $term_maps = TermMaps->get_objects( query => [term_identifier => $term->identifier] );
     #add them to the tree
     $tree->{children} = [ map +{ relationship => $_->relationship_identifier,
-                                 object_tree => $_->term_object ? $c->make_tree_for_show($_->term) : '',
+                                 object_tree => $_->term_object ? $c->make_tree_for_show($_->term, $seen_terms) : '',
                                                                                         # Term->new (identifier => $_->term_object)-> load(speculative=>1) ) : '',
                                  #the above is an alternative to $_->term, esp. useful if get_objects for $children doesn't include with_objects
                                  #the following gets "cant locate method uri", because a Tuba::DB::Object (term) needs to be passed, not just the column value (term_object)
