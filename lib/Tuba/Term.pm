@@ -57,10 +57,11 @@ sub show {
 sub make_tree_for_show {
     my $c = shift;
     my $term = shift;
-    my $seen_terms = shift; #hash to detect recursion
+    my $seen_terms_hashref = shift // {};    #hash to detect recursion, but don't use the same hash reference
+    my $seen_terms = {%$seen_terms_hashref}; #Using a unique hash reference tracks just *this* branch of the tree
     if ($seen_terms->{$term->identifier}) {
-        logger->info("Recursive relationship detected for " . $term->uri($c) );
-        return {};
+        logger->info("Recursive relationship detected for " . $term->uri($c) );   #This should be rare
+        return {};       #This might be pruning too high, perhaps may at least want the display_name
     }
     $seen_terms->{$term->identifier} = 1;
     #create the default tree
