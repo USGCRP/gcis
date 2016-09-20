@@ -724,7 +724,6 @@ lib/Tuba/files/public/css/jquery.sidr.dark.css
 lib/Tuba/files/public/css/jquery.sidr.light.css
 lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis-logo-100.png
-lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/bootstrap3-typeahead.js
 lib/Tuba/files/public/js/gcis.js
 lib/Tuba/files/public/js/jquery.sidr.min.js
@@ -835,6 +834,7 @@ lib/Tuba/files/templates/finding/object.html.ep
 lib/Tuba/files/templates/finding/object.ttl.tut
 lib/Tuba/files/templates/finding/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
+lib/Tuba/files/templates/gcis.owl.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.ttl.tut
