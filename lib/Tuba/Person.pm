@@ -195,6 +195,7 @@ sub contributions {
     $c->respond_to(
         json => { json => [ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ] },
         yaml => sub { shift->render_yaml([ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ]) },
+        csv => sub { shift->render_csv([ map $_->publication->to_object->as_tree(c => $c, bonsai => 1), @$maps ]) },
         any => sub {
             shift->render,
         }
