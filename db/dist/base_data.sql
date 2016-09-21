@@ -24,7 +24,7 @@ conference_paper
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email, _featured_priority) FROM stdin;
 \.
 
 
@@ -64,7 +64,7 @@ COPY "array" (identifier, rows_in_header, rows) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi) FROM stdin;
+COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi, description) FROM stdin;
 \.
 
 
@@ -88,7 +88,7 @@ COPY array_table_map (array_identifier, table_identifier, report_identifier) FRO
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY journal (identifier, title, publisher, country, url, notes, print_issn, online_issn) FROM stdin;
+COPY journal (identifier, title, publisher, country, url, notes, print_issn, online_issn, description) FROM stdin;
 \.
 
 
@@ -96,7 +96,7 @@ COPY journal (identifier, title, publisher, country, url, notes, print_issn, onl
 -- Data for Name: article; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes) FROM stdin;
+COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes, description) FROM stdin;
 \.
 
 
@@ -104,7 +104,7 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 -- Data for Name: book; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic) FROM stdin;
+COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic, description) FROM stdin;
 \.
 
 
@@ -506,7 +506,7 @@ COPY term_relationship (term_subject, relationship_identifier, term_object) FROM
 -- Data for Name: webpage; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY webpage (identifier, url, title, access_date) FROM stdin;
+COPY webpage (identifier, url, title, access_date, description) FROM stdin;
 \.
 
 

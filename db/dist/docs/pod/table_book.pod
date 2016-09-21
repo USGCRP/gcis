@@ -18,6 +18,7 @@ Entries in this table are publications classified as books.  They should have IS
  url (character varying) - A url for a landing page for this book, or for the book itself, if it is available online.
  in_library (boolean) - Whether or not this book is available in the USGCRP resources library.
  topic (character varying) - A brief free form comma-separated list of topics associated with this book.
+ description (character varying) - A brief description of the book.
 
 
 =head1 SCHEMA
@@ -34,6 +35,7 @@ Entries in this table are publications classified as books.  They should have IS
   url             | character varying |           | extended |              | A url for a landing page for this book, or for the book itself, if it is available online.
   in_library      | boolean           |           | plain    |              | Whether or not this book is available in the USGCRP resources library.
   topic           | character varying |           | extended |              | A brief free form comma-separated list of topics associated with this book.
+  description     | character varying |           | extended |              | A brief description of the book.
  Indexes:
      "book_pkey" PRIMARY KEY, btree (identifier)
      "book_isbn_key" UNIQUE CONSTRAINT, btree (isbn)

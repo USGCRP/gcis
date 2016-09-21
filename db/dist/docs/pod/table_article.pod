@@ -18,6 +18,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
  journal_pages (character varying) - The pages of the journal on which the article appears (source: crossref.org)
  url (character varying) - A URL for the article (not necessary if there is a DOI).
  notes (character varying) - Notes about this entry.
+ description (character varying) - The abstract of the article, or a similar brief description.
 
 
 =head1 SCHEMA
@@ -34,6 +35,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
   journal_pages      | character varying |           | extended |              | The pages of the journal on which the article appears (source: crossref.org)
   url                | character varying |           | extended |              | A URL for the article (not necessary if there is a DOI).
   notes              | character varying |           | extended |              | Notes about this entry.
+  description        | character varying |           | extended |              | The abstract of the article, or a similar brief description.
  Indexes:
      "article_pkey" PRIMARY KEY, btree (identifier)
      "article_doi_key" UNIQUE CONSTRAINT, btree (doi)

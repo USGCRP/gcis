@@ -17,6 +17,7 @@ A journal is a peer reviewed publication which contains articles.
  notes (character varying) - 
  print_issn (issn) - 
  online_issn (issn) - 
+ description (character varying) - A brief description of the journal.
 
 
 =head1 SCHEMA
@@ -32,6 +33,7 @@ A journal is a peer reviewed publication which contains articles.
   notes       | character varying |           | extended |              | 
   print_issn  | issn              |           | plain    |              | 
   online_issn | issn              |           | plain    |              | 
+  description | character varying |           | extended |              | A brief description of the journal.
  Indexes:
      "journal_pkey" PRIMARY KEY, btree (identifier)
      "journal_new_online_issn_key" UNIQUE CONSTRAINT, btree (online_issn)
