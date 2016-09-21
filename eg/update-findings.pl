@@ -8,20 +8,20 @@ use strict;
 use warnings;
 
 #my $dest    = "http://localhost:3000";
-my $src     = "http://gcis-dev-front.joss.ucar.edu/raw";
+my $src     = "http://data-dev.globalchange.gov/raw";
 
 my $which = $ARGV[0] or die "Usage $0 [local|dev|test|prod]\n";
 my $dest = {
   local => "http://localhost:3000",
-  dev   => "https://data.gcis-dev-front.joss.ucar.edu",
-  test  => "https://data.gcis-test-front.joss.ucar.edu",
+  dev   => "https://data-dev.globalchange.gov",
+  test  => "https://data-stage.globalchange.gov",
   prod  => "https://data.globalchange.gov",
   }->{$which};
 
 say "connecting to $dest";
 
-my $which_key = $dest =~ /gcis-dev/                ? '.gcis_api_key.dev'
-              : $dest =~ /gcis-test/               ? '.gcis_api_key.test'
+my $which_key = $dest =~ /data-dev/               ? '.gcis_api_key.dev'
+              : $dest =~ /data-stage/             ? '.gcis_api_key.test'
               : $dest =~ /data.globalchange.gov$/ ? '.gcis_api_key.prod'
               :   die "don't know which key to use for $dest";
 my $keyfile = "$ENV{HOME}/".$which_key;

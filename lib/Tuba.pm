@@ -51,8 +51,8 @@ Tuba provides a RESTful API to GCIS data.
 
     authz :
         update :
-            bduggan2@gmail.com : 0
-            bduggan@usgcrp.gov : 1
+            jsmith2@gmail.com : 0
+            jsmith@usgcrp.gov : 1
 
 =cut
 
@@ -66,7 +66,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.42';
+our $VERSION = '1.44';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -133,6 +133,7 @@ sub startup {
         return 1 unless $c->req->url->path eq '/gcis.owl';
         if ($c->accepts('html')) {
             $c->res->headers->content_type("text/html");
+             $c->render( template => 'gcis', format => 'owl' );
             return 1;
         }
         $c->respond_to(
@@ -578,7 +579,7 @@ sub startup {
         $app->routes->get('/sparql' => sub {
                 my $c = shift;
                 my $url = $c->req->url->clone;
-                $url->host('gcis-dev-front.joss.ucar.edu');
+                $url->host('data-dev.globalchange.gov');
                 $c->redirect_to($url);
             });
     }

@@ -31,6 +31,6 @@ auth :
     google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
 authz :
     update :
-        bduggan2@gmail.com : 0
-        bduggan@usgcrp.gov : 1
+        jsmith2@gmail.com : 0
+        jsmith@usgcrp.gov : 1
 

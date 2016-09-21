@@ -19,7 +19,7 @@ sub examples {
     my $sparql = [
         { desc => "List URLs for 10 figures.",
           code => 
-"select * FROM <http://data.globalchange.gov>
+"select * FROM <https://data.globalchange.gov>
 where { ?s a gcis:Figure }
 limit 10",
         },
@@ -30,7 +30,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX cito: <http://purl.org/spar/cito/>
 PREFIX dbpprop: <http://dbpedia.org/property/>
 
-select ?s FROM <http://data.globalchange.gov> where {
+select ?s FROM <https://data.globalchange.gov> where {
    ?s a gcis:AcademicArticle .
    ?s cito:isCitedBy ?nca3 .
    ?nca3 dcterms:identifier "nca3" .
@@ -46,7 +46,7 @@ PREFIX dcterms: <http://purl.org/dc/terms/>
 PREFIX cito: <http://purl.org/spar/cito/>
 PREFIX dbpprop: <http://dbpedia.org/property/>
 
-select min(?pubYear as ?Publication_Year) FROM <http://data.globalchange.gov> where { 
+select min(?pubYear as ?Publication_Year) FROM <https://data.globalchange.gov> where { 
    ?s cito:isCitedBy ?nca3 .
    ?nca3 dcterms:identifier "nca3" .
    ?s dbpprop:pubYear ?pubYear
@@ -55,7 +55,7 @@ SPARQL2
         },
         { desc => "List 10 figures and datasets from which they were derived.",
           code =>
-"select ?figure ?dataset FROM <http://data.globalchange.gov>
+"select ?figure ?dataset FROM <https://data.globalchange.gov>
 where {
  ?figure gcis:hasImage ?img .
  ?img prov:wasDerivedFrom ?dataset
