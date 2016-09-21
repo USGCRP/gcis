@@ -28,7 +28,11 @@ $t->get_ok("/relationship/owl:sameAs# second time" => {Accept => 'application/js
                    cited_by =>  [ ],
                    uri => "/relationship/owl:sameAs",
      	           description =>  "An alias",
-                   href => "$base/relationship/owl:sameAs.json"}, "owl:sameAs json check");
+                   href => "$base/relationship/owl:sameAs.json",
+                   type => "relationship",
+                   display_name => "owl:sameAs",
+                   parents => [],
+                  }, "owl:sameAs json check");
 
 #Extra comments below are from experimenting with using a hash vs a hashref  -Randall
 #my %test_rel = (identifier => 'test:roughlyEquivalent',    #hash
@@ -48,7 +52,11 @@ $t->get_ok("/relationship/test:roughlyEquivalent.json")
     ->json_is('', {%$test_rel,                              #hashref, dereferenced 
                    cited_by =>  [ ],
                    uri => "/relationship/test:roughlyEquivalent",
-                   href => "$base/relationship/test:roughlyEquivalent.json"},  "test:roughlyEquivalent json check");
+                   href => "$base/relationship/test:roughlyEquivalent.json",
+                   type => "relationship",
+                   display_name => $$test_rel{identifier},  #deref'd hash lookup
+                   parents => [],
+                  },  "test:roughlyEquivalent json check");
 
 $t->delete_ok("/relationship/test:roughlyEquivalent")->status_is(200, "Deleted test:roughlyEquivalent");
 

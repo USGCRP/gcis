@@ -42,8 +42,9 @@ $t->get_ok("/report/test-report.json")->json_is(
       report_figures => [],
       report_findings => [],
       parents => [],
+      display_name => 'Test Report',
   }
-);
+)->or(sub { diag explain $t->tx->res->json });
 
 $t->get_ok("/report/test-report.txt")->content_is(" 2000: Test Report, <doi : 10.123/45>");
 
