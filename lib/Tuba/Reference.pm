@@ -12,22 +12,6 @@ use Tuba::Log qw/logger/;;
 use Tuba::Util qw[new_uuid];
 use Data::Dumper;
 
-sub list {
-    my $c = shift;
-    my $pub;
-    my $all = $c->param('all');
-    my $obj = $c->current_report;
-    return $c->redirect_to(
-      $c->url_for(
-        'list_reference_report',
-        {
-          report_identifier => $obj->identifier,
-          format            => $c->stash('format') || ""
-        }
-      )->query($c->req->url->query)
-    );
-}
-
 sub show {
     my $c = shift;
     my $identifier = $c->stash('reference_identifier');

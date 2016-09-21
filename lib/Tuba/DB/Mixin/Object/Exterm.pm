@@ -45,6 +45,14 @@ sub native_url {
                 q[http://pubs.er.usgs.gov/service/search/xml/advance?report_number=].shift
             }
         },
+        datagov => {
+            dataset => sub {
+                q[http://catalog.data.gov/dataset/].shift
+            },
+            identifier => sub {
+                q[http://catalog.data.gov/dataset/].shift
+            },
+        },
     };
     my $lex = $lookup->{ $s->lexicon_identifier } or return;
     my $ctx = $lex->{ $s->context } or return;
