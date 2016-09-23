@@ -13,6 +13,7 @@ use Tuba::Log;
 use Tuba::Util qw/elide_str human_duration/;
 use Mojo::JSON qw/encode_json/;
 use Tuba::DB::Object::Metadata;
+use Data::Dumper;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -61,6 +62,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
+    logger->debug ("---In sub 'Controller::uri' for route_name '$route_name'---");
 
     return $c->url_for($route_name) unless ref $s;
 
@@ -75,7 +77,14 @@ sub uri {
         $param_name = $param_name.'_identifier' if $column_name !~ /identifier/;
         $url_params{$param_name} = $pk{$column_name};
     }
-    return $c->url_for( $route_name, \%url_params );
+    my $url_for = $c->url_for($route_name, \%url_params );
+    if ($url_for =~ /show/) {
+        logger->warn ("Strange URI created: $url_for\n".
+                      "Route name is '$route_name'\n" .
+                      "url_params passed to url_for were " . Dumper \%url_params
+                     );
+    }
+    return $url_for;
 }
 
 sub uri_with_format {
