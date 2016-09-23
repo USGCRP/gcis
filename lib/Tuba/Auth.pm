@@ -182,7 +182,7 @@ sub _login_ok {
     my $id = new_uuid();
     $c->app->log->info("Session id: $id");
     $c->session(id => $id);
-    my $dest = $c->param('destination') || $c->flash('destination') || 'index';
+    my $dest = $c->param('destination') || $c->flash('destination') || '/';
     $dest =~ s/^http(s)?://;
     return $c->redirect_to($dest);
 }
