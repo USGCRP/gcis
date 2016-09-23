@@ -114,16 +114,14 @@
 
 
 
-        <h2>Table:
-            <a name="gcis-metadata.table.chapter">chapter</a>
+        <h2>View:
+            <a name="gcis-metadata.view.case-study">case_study</a>
         </h2>
-        
-         <p>A chapter is part of a report.</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>chapter Structure</caption>
+                <caption>case_study Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -134,23 +132,16 @@
             <tr class="tr0">
                 <td>
                 
-                  
-                
                 </td>
-                <td>identifier</td>
+                <td>lexicon_identifier</td>
                 <td>character varying</td>
                 <td><i>
-                
-                    PRIMARY KEY
-                    
-
-                    
                 
 
                 
                 
                 </i>
-                <br><br>A descriptive identifier for this chapter
+                
                 </td>
              </tr>
             
@@ -158,7 +149,7 @@
                 <td>
                 
                 </td>
-                <td>title</td>
+                <td>context_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -166,70 +157,7 @@
                 
                 
                 </i>
-                <br><br>The title.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
                 
-                  
-                  <a href="table_gcis_metadata.report.html#gcis-metadata.table.report">report.identifier</a>
-                  
-                
-                  
-                
-                  
-                
-                </td>
-                <td>report_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-                    PRIMARY KEY
-                    
-
-                    
-                
-                    
-
-                    
-                       UNIQUE#1
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The report containing this chapter.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                
-                </td>
-                <td>number</td>
-                <td>integer</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE#1
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The numeric chapter number.
                 </td>
              </tr>
             
@@ -237,7 +165,7 @@
                 <td>
                 
                 </td>
-                <td>url</td>
+                <td>term</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -245,7 +173,7 @@
                 
                 
                 </i>
-                <br><br>The URL for a landing page for this chapter.
+                
                 </td>
              </tr>
             
@@ -253,15 +181,15 @@
                 <td>
                 
                 </td>
-                <td>sort_key</td>
-                <td>integer</td>
+                <td>term_identifier</td>
+                <td>character varying</td>
                 <td><i>
                 
 
                 
                 
                 </i>
-                <br><br>A key used to order this chapter within a report.
+                
                 </td>
              </tr>
             
@@ -269,7 +197,7 @@
                 <td>
                 
                 </td>
-                <td>doi</td>
+                <td>relationship_identifier</td>
                 <td>character varying</td>
                 <td><i>
                 
@@ -277,11 +205,27 @@
                 
                 
                 </i>
-                <br><br>A digital object identifier for this chapter.
+                
                 </td>
              </tr>
             
             <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>gcid</td>
+                <td>character varying</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
+                </td>
+             </tr>
+            
+            <tr class="tr0">
                 <td>
                 
                 </td>
@@ -293,7 +237,23 @@
                 
                 
                 </i>
-                <br><br>A brief description of the chapter.
+                
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                </td>
+                <td>timestamp</td>
+                <td>timestamp(3) without time zone</td>
+                <td><i>
+                
+
+                
+                
+                </i>
+                
                 </td>
              </tr>
             
@@ -304,38 +264,45 @@
 
         <!-- Constraint List -->
         
-        <p>&nbsp;</p>
-        <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>chapter Constraints</caption>
-            <tr>
-                <th>Name</th>
-                <th>Constraint</th>
-            </tr>
-            
-            <tr class="tr0">
-                <td>ck_chapter_identifier</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
-            </tr>
-            
-        </table>
-        
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.figure.html">figure</a><br>
-        
-                <a href="table_gcis_metadata.finding.html">finding</a><br>
-        
-                <a href="table_gcis_metadata.table.html">table</a><br>
-        
         
 
     <!-- Indexes -->
     
 
     <!-- View Definition -->
+    
+    <pre>
+SELECT t.lexicon_identifier
+,
+    t.context_identifier
+,
+    t.term
+,
+    m.term_identifier
+,
+    m.relationship_identifier
+,
+    m.gcid
+,
+    m.description
+,
+    m.&quot;timestamp&quot;
+   
+FROM term t
+,
+    term_map m
+  
+WHERE (
+     (
+           (t.identifier)::text = 
+           (m.term_identifier)::text
+     )
+   AND (
+           (m.relationship_identifier)::text ~~ &#39;%hasCaseStudy&#39;::text
+     )
+);</pre>
     
 
     <!-- List of permissions -->

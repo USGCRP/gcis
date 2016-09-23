@@ -69,7 +69,9 @@ $t->get_ok("/report/vegetables/table/veggietable.json")->status_is(200)
    'report_identifier' => 'vegetables',
    'title' => 'veggie table',
    'uri' => '/report/vegetables/table/veggietable',
-   'url' => 'http://example.com/veggies'
+   'url' => 'http://example.com/veggies',
+   'display_name' => 'veggie table',
+   'type' => 'table',
  }
 );
 
@@ -93,6 +95,9 @@ $t->get_ok("/array/simple.json")->json_is({
                      }
                    ],
                    cited_by => [],
+           display_name => 'simple',
+                   type => 'array',
+                parents => [],
     });
 
 #diag explain $t->tx->res->json;
@@ -117,6 +122,9 @@ $t->get_ok("/array/multirow-csv.json")->json_is({
                     uri => '/array/multirow-csv',
                    href => "$base/array/multirow-csv.json",
                    cited_by => [],
+                   type => 'array',
+                   display_name => 'multirow-csv',
+                   parents => [],
     });
 
 # update multiple row data via editable grid
@@ -138,6 +146,9 @@ $t->get_ok("/array/multirow-csv.json")->json_is({
                     uri => '/array/multirow-csv',
                    href => "$base/array/multirow-csv.json",
                    cited_by => [],
+                   type => 'array',
+                   display_name => 'multirow-csv',
+                   parents => [], 
     });
 
 $t->delete_ok("/array/multirow-csv");

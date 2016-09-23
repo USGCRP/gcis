@@ -74,6 +74,7 @@ sub make_tree_for_list {
         uri        => $uri,
         identifier => $chapter->identifier,
         href       => $href,
+        display_name => $chapter->stringify(display_name => 1, short => 1),
     };
 }
 
@@ -84,7 +85,7 @@ sub make_tree_for_show {
       number            => $chapter->number,
       files             => [map $_->as_tree(c => $c), $pub->files],
       figures           => [map +{$c->Tuba::Figure::common_tree_fields($_)}, $chapter->figures],
-      findings          => [map +{$c->Tuba::Finding::common_tree_fields($_)}, $chapter->findings],
+      findings          => [map +{$c->Tuba::Finding::common_tree_fields($_, short=>1)}, $chapter->findings],
       tables            => [map +{$c->Tuba::Table::common_tree_fields($_)}, $chapter->tables],
       report_identifier => $chapter->report_identifier,
       identifier        => $chapter->identifier,

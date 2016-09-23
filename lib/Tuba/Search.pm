@@ -22,19 +22,24 @@ sub keyword {
 
     my $orm = $c->orm;
     my @tables = keys %$orm;
-    my $type = $c->param('type');
-    @tables = ( $type ) if $type && exists($orm->{$type});
+    my $types = $c->every_param('type');  #array ref to multiple values
+    @tables = @$types unless !@$types or grep {$_ eq 'all'} @$types;
+    my $with = $c->every_param('with');       #with may have multiple values
+    my $with_files = grep {/files/} @$with;  #only considering with=files (for now)
     my $per_page = $c->param('per_page') || (@tables > 1 ? 10 : 50); # default to 10 per type if multiple types
     my $all = $c->param('all') ? 1 : 0;
     my $count_only = $c->param('count_only') ? 1 : 0;  #to only return count of each type
+    my $featured_only = $c->param('featured_only') ? 1 : 0; #only return featured publications
+    my $bonsai = ($c->param('format') // '') eq 'detailed' ? 0 : 1; #default to bonsai=1 unless &format=detailed
     my @results;
     my $result_count_text;
     my $hit_max = 0;
     for my $table (@tables) {
         next if $table eq 'publication';
+        next if $featured_only and $table ne 'report';  #ugly hack, only reports are currently featured
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => $per_page, count_only => $count_only);
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, all  => $all, page => $c->page, per_page => $per_page, count_only => $count_only, featured_only => $featured_only);
         $hit_max = 1 if @these==$per_page && @tables > 1;
         push @results, @these;
     }
@@ -56,8 +61,14 @@ sub keyword {
     $c->stash(result_count_text => $result_count_text);
     $c->respond_to(
         any => sub { shift->render(results => \@results); },
-        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
-        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, bonsai => 1), @results ]); },
+        json => sub { my $c = shift; $c->render(json => [ map $_->as_tree(c => $c, 
+                                                                          bonsai => $bonsai,
+                                                                          with_files => $with_files,
+                                                                         ), @results ]); },
+        yaml => sub { my $c = shift; $c->render_yaml([ map $_->as_tree(c => $c, 
+                                                                       bonsai => $bonsai,
+                                                                       with_files => $with_files,
+                                                                      ), @results ]); },
     );
 }
 

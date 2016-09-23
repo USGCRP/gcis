@@ -61,11 +61,14 @@ $dataset->{href} = "$base/dataset/my-temps.json";
 $dataset->{uri} = "/dataset/my-temps";
 $dataset->{instrument_measurements} = [];
 $dataset->{cited_by} = [];
+$dataset->{display_name} = $dataset->{name};
+$dataset->{parents} = [];
+$dataset->{type} = 'dataset'; #overriding
 
-$t->get_ok( "/dataset/my-temps.json" )->status_is(200)->json_is($dataset);
+$t->get_ok( "/dataset/my-temps.json" )->status_is(200)->json_is($dataset)->or(sub {diag explain $t->tx->res->json});
 my $cb = sub { pop->req->headers->header(Accept => 'application/json') };
 $t->ua->on(start => $cb);
-$t->get_ok( "/dataset/lookup/10.123/123")->status_is(200)->json_is($dataset);
+$t->get_ok( "/dataset/lookup/10.123/123")->status_is(200)->json_is($dataset)->or(sub {diag explain $t->tx->res->json});
 $t->ua->unsubscribe(start => $cb);
 
 # A platform.
@@ -83,8 +86,13 @@ $t->post_ok( "/platform" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";
 $platform->{href} = "$base/platform/house.json";
 $platform->{cited_by} = [];
+$platform->{display_name} = $platform->{identifier};
+$platform->{parents} = [];
+$platform->{type} = 'platform';
 
-$t->get_ok( "/platform/house.json" )->status_is(200)->json_is({ %$platform, instruments => [] });
+
+$t->get_ok( "/platform/house.json" )->status_is(200)->json_is({ %$platform, instruments => [] })
+    ->or(sub {diag explain $t->tx->res->json});
 $t->get_ok( "/platform/house.ttl" )->status_is(200)->turtle_ok->content_like(qr/house/);
 
 # An instrument.
@@ -98,8 +106,12 @@ $t->post_ok( "/instrument" => json => $instrument )->status_is(200);
 $instrument->{uri} = "/instrument/mercury-in-glass-thermometer";
 $instrument->{href} = "$base/instrument/mercury-in-glass-thermometer.json";
 $instrument->{cited_by} = [];
+$instrument->{display_name} = $instrument->{identifier};
+$instrument->{parents} = [];
+$instrument->{type} = 'instrument';
 
-$t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->json_is({%$instrument, platforms => []});
+$t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->json_is({%$instrument, platforms => []})
+    ->or(sub {diag explain $t->tx->res->json}); 
 $t->get_ok("/instrument/mercury-in-glass-thermometer.ttl")->status_is(200)->turtle_ok->content_like(qr/thermo/);
 
 # One of these instruments is on the house.
@@ -118,7 +130,10 @@ $t->get_ok( "/platform/house/instrument/mercury-in-glass-thermometer.json" )->st
                  href => "$base/platform/house/instrument/mercury-in-glass-thermometer.json",
                  datasets => [],
                  cited_by => [],
-             } );
+                 display_name => 'house/mercury-in-glass-thermometer',
+                 parents => [],
+                 type => 'instrument_instance',
+             } )->or(sub {diag explain $t->tx->res->json});
 
 # Reading the thermometer on the house generates the dataset.
 $t->post_ok("/dataset/rel/my-temps", json => {
@@ -132,10 +147,12 @@ $dataset->{instrument_measurements} = [
      {
        'dataset_identifier' => 'my-temps',
        'instrument_identifier' => 'mercury-in-glass-thermometer',
-       'platform_identifier' => 'house'
+       'platform_identifier' => 'house',
+       'display_name' => 'house/mercury-in-glass-thermometer/my-temps',
+       'type' => 'instrument_measurement',
      }
    ];
-$t->get_ok("/dataset/my-temps.json")->json_is($dataset);
+$t->get_ok("/dataset/my-temps.json")->json_is($dataset)->or(sub {diag explain $t->tx->res->json});
 
 # clean up
 $t->delete_ok('/instrument/mercury-in-glass-thermometer');

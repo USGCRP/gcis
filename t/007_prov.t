@@ -6,6 +6,7 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use Data::Dumper;
 
 use_ok "Tuba";
 
@@ -69,7 +70,7 @@ $t->get_ok("/report/pizzabrain/chapter/uno/figure/pizza.json")->json_is(
       note => "This pizza was baked from high quality gluten-free dough."
     }
   ]
-);
+)->or(sub {diag "Full JSON is\n" . Dumper $t->tx->res->json});
 
 # Remove the association between this dataset and that figure.
 $t->post_ok(

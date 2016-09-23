@@ -108,7 +108,8 @@ $t->get_ok("/report/dos")->json_is("/contributors/0/person/id" => $id);
 # Also both reports are listed for that person.
 $t->get_ok("/person/$id")->status_is(200)
   ->json_is("/contributors/0/publications" =>
-    [ { uri => "/report/uno" }, { uri => "/report/dos" } ]);
+    [ { uri => "/report/uno", display_name => 'Report Uno' }, 
+      { uri => "/report/dos", display_name => 'Report Dos' } ]);
 
 # And redirect works.
 $t->get_ok("/person/$id2")->status_is(302)->header_is("Location" => "/person/$id");

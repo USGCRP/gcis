@@ -1,6 +1,7 @@
 package Tuba::DB::Object::Figure;
 # Tuba::DB::Mixin::Object::Figure;
 use strict;
+use Tuba::Log;
 
 sub numeric {
     my $c = shift;
@@ -93,6 +94,17 @@ sub as_tree {
     my $tree = $s->SUPER::as_tree(@_);
     $tree->{kindred_figures} = [ map $_->uri($c), $s->kindred_figures ] unless $a{bonsai};
     $tree->{description} = $tree->{caption};
+    if (my $chapter_obj = $s->chapter) {
+        $tree->{chapter}->{display_name} = $chapter_obj->stringify(display_name => 1, short => 1);
+    } else {
+        logger->debug($tree->{identifier} . " has no chapter");
+        #$tree->{chapter} = {};  #TODO: uncomment to return an empty chapter subtree (it may be useful)
+    }
+    if (my $report_obj = $s->report) {
+        $tree->{report}->{display_name} = $report_obj->stringify(display_name => 1);
+    } else {
+        logger->warn($tree->{identifier} . " has no report - All figures should be attached to Report!");
+    }
     return $tree;
 }
 

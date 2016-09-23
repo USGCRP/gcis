@@ -270,6 +270,7 @@ CREATE TABLE article (
     journal_pages character varying,
     url character varying,
     notes character varying,
+    description character varying,
     CONSTRAINT article_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)),
     CONSTRAINT article_identifier_check CHECK ((((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)) OR ((identifier)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text)))
 );
@@ -316,6 +317,10 @@ COMMENT ON COLUMN article.notes IS 'Notes about this entry.';
 
 
 
+COMMENT ON COLUMN article.description IS 'The abstract of the article, or a similar brief description.';
+
+
+
 CREATE TABLE book (
     identifier character varying NOT NULL,
     title character varying NOT NULL,
@@ -326,6 +331,7 @@ CREATE TABLE book (
     url character varying,
     in_library boolean,
     topic character varying,
+    description character varying,
     CONSTRAINT ck_book_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -371,6 +377,109 @@ COMMENT ON COLUMN book.topic IS 'A brief free form comma-separated list of topic
 
 
 
+COMMENT ON COLUMN book.description IS 'A brief description of the book.';
+
+
+
+CREATE TABLE term (
+    identifier character varying DEFAULT uuid_generate_v1() NOT NULL,
+    lexicon_identifier character varying NOT NULL,
+    context_identifier character varying NOT NULL,
+    context_version character varying DEFAULT ''::character varying,
+    term character varying NOT NULL,
+    is_root boolean DEFAULT false,
+    description character varying,
+    url character varying
+);
+
+
+
+COMMENT ON TABLE term IS 'Terms that have a specific lexicon and context.';
+
+
+
+COMMENT ON COLUMN term.identifier IS 'A globally unique identifier for this term (a UUID).';
+
+
+
+COMMENT ON COLUMN term.lexicon_identifier IS 'The lexicon associated with this term.';
+
+
+
+COMMENT ON COLUMN term.context_identifier IS 'The context associated with this term.';
+
+
+
+COMMENT ON COLUMN term.context_version IS 'The version of the context associated with this term (optional).';
+
+
+
+COMMENT ON COLUMN term.term IS 'The term itself.';
+
+
+
+COMMENT ON COLUMN term.is_root IS 'A flag indicating the term is at the top level (eg, no broader term).';
+
+
+
+COMMENT ON COLUMN term.description IS 'A description of the term.';
+
+
+
+COMMENT ON COLUMN term.url IS 'A url for further information.';
+
+
+
+CREATE TABLE term_map (
+    term_identifier character varying NOT NULL,
+    relationship_identifier character varying NOT NULL,
+    gcid character varying NOT NULL,
+    description character varying,
+    "timestamp" timestamp(3) without time zone DEFAULT now(),
+    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
+);
+
+
+
+COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identifiers via a relationship.';
+
+
+
+COMMENT ON COLUMN term_map.term_identifier IS 'The term ID (UUID).';
+
+
+
+COMMENT ON COLUMN term_map.relationship_identifier IS 'The relationship between the term and the gcid.';
+
+
+
+COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
+
+
+
+COMMENT ON COLUMN term_map.description IS 'A description for the GCID (optional).';
+
+
+
+COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was asserted.';
+
+
+
+CREATE VIEW case_study AS
+ SELECT t.lexicon_identifier,
+    t.context_identifier,
+    t.term,
+    m.term_identifier,
+    m.relationship_identifier,
+    m.gcid,
+    m.description,
+    m."timestamp"
+   FROM term t,
+    term_map m
+  WHERE (((t.identifier)::text = (m.term_identifier)::text) AND ((m.relationship_identifier)::text ~~ '%hasCaseStudy'::text));
+
+
+
 CREATE TABLE chapter (
     identifier character varying NOT NULL,
     title character varying,
@@ -379,6 +488,7 @@ CREATE TABLE chapter (
     url character varying,
     sort_key integer,
     doi character varying,
+    description character varying,
     CONSTRAINT ck_chapter_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -413,6 +523,10 @@ COMMENT ON COLUMN chapter.sort_key IS 'A key used to order this chapter within a
 
 
 COMMENT ON COLUMN chapter.doi IS 'A digital object identifier for this chapter.';
+
+
+
+COMMENT ON COLUMN chapter.description IS 'A brief description of the chapter.';
 
 
 
@@ -1172,6 +1286,7 @@ CREATE TABLE journal (
     notes character varying,
     print_issn issn,
     online_issn issn,
+    description character varying,
     CONSTRAINT ck_journal_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT has_issn CHECK (((print_issn IS NOT NULL) OR (online_issn IS NOT NULL)))
 );
@@ -1199,6 +1314,10 @@ COMMENT ON COLUMN journal.country IS 'The country of publication.';
 
 
 COMMENT ON COLUMN journal.url IS 'A URL for the landing page for this journal.';
+
+
+
+COMMENT ON COLUMN journal.description IS 'A brief description of the journal.';
 
 
 
@@ -1886,6 +2005,7 @@ CREATE TABLE report (
     in_library boolean,
     contact_note character varying,
     contact_email character varying,
+    _featured_priority integer,
     CONSTRAINT ck_report_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT ck_report_pubyear CHECK (((publication_year > 0) AND (publication_year < 9999))),
     CONSTRAINT report_doi_check CHECK (((doi)::text ~ '^10.[[:print:]]+/[[:print:]]+$'::text))
@@ -2067,90 +2187,6 @@ COMMENT ON COLUMN "table".url IS 'A URL for a landing page for this table.';
 
 
 
-CREATE TABLE term (
-    identifier character varying DEFAULT uuid_generate_v1() NOT NULL,
-    lexicon_identifier character varying NOT NULL,
-    context_identifier character varying NOT NULL,
-    context_version character varying DEFAULT ''::character varying,
-    term character varying NOT NULL,
-    is_root boolean DEFAULT false,
-    description character varying,
-    url character varying
-);
-
-
-
-COMMENT ON TABLE term IS 'Terms that have a specific lexicon and context.';
-
-
-
-COMMENT ON COLUMN term.identifier IS 'A globally unique identifier for this term (a UUID).';
-
-
-
-COMMENT ON COLUMN term.lexicon_identifier IS 'The lexicon associated with this term.';
-
-
-
-COMMENT ON COLUMN term.context_identifier IS 'The context associated with this term.';
-
-
-
-COMMENT ON COLUMN term.context_version IS 'The version of the context associated with this term (optional).';
-
-
-
-COMMENT ON COLUMN term.term IS 'The term itself.';
-
-
-
-COMMENT ON COLUMN term.is_root IS 'A flag indicating the term is at the top level (eg, no broader term).';
-
-
-
-COMMENT ON COLUMN term.description IS 'A description of the term.';
-
-
-
-COMMENT ON COLUMN term.url IS 'A url for further information.';
-
-
-
-CREATE TABLE term_map (
-    term_identifier character varying NOT NULL,
-    relationship_identifier character varying NOT NULL,
-    gcid character varying NOT NULL,
-    description character varying,
-    "timestamp" timestamp(3) without time zone DEFAULT now(),
-    CONSTRAINT ck_gcid CHECK ((length((gcid)::text) > 0))
-);
-
-
-
-COMMENT ON TABLE term_map IS 'External terms which can be mapped to GCIS identifiers via a relationship.';
-
-
-
-COMMENT ON COLUMN term_map.term_identifier IS 'The term ID (UUID).';
-
-
-
-COMMENT ON COLUMN term_map.relationship_identifier IS 'The relationship between the term and the gcid.';
-
-
-
-COMMENT ON COLUMN term_map.gcid IS 'The GCIS identifier (URI) to which this term is mapped.';
-
-
-
-COMMENT ON COLUMN term_map.description IS 'A description for the GCID (optional).';
-
-
-
-COMMENT ON COLUMN term_map."timestamp" IS 'The timestamp this relationship was asserted.';
-
-
-
 CREATE TABLE term_relationship (
     term_subject character varying NOT NULL,
     relationship_identifier character varying NOT NULL,
@@ -2172,6 +2208,21 @@ COMMENT ON COLUMN term_relationship.relationship_identifier IS 'The relationship
 
 
 COMMENT ON COLUMN term_relationship.term_object IS 'The object term (UUID).';
+
+
+
+CREATE VIEW toolkit AS
+ SELECT t.lexicon_identifier,
+    t.context_identifier,
+    t.term,
+    m.term_identifier,
+    m.relationship_identifier,
+    m.gcid,
+    m.description,
+    m."timestamp"
+   FROM term t,
+    term_map m
+  WHERE (((t.identifier)::text = (m.term_identifier)::text) AND ((m.relationship_identifier)::text ~~ '%hasAnalysisTool'::text));
 
 
 
@@ -2300,6 +2351,7 @@ CREATE TABLE webpage (
     url character varying NOT NULL,
     title character varying,
     access_date timestamp without time zone,
+    description character varying,
     CONSTRAINT ck_webpage_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -2322,6 +2374,10 @@ COMMENT ON COLUMN webpage.title IS 'The title of the webpage.';
 
 
 COMMENT ON COLUMN webpage.access_date IS 'The date on which this webpage was accessed.';
+
+
+
+COMMENT ON COLUMN webpage.description IS 'A brief description of the web page.';
 
 
 

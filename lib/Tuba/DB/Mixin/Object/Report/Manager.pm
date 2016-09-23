@@ -3,6 +3,7 @@ package Tuba::DB::Object::Report::Manager;
 
 use strict;
 use warnings;
+use Tuba::Log;
 
 sub dbgrep {
     my $self = shift;
@@ -35,11 +36,14 @@ sub dbgrep {
         my @count = $count ? (bless { results_count => $count } , $self->object_class ) : ();
         $found = \@count;
     } else {
+       my @featured_only = $a{featured_only} ? ( _featured_priority => { gt => 0 } ) : ();
        $found = $self->get_objects(
             query => [
                  or => \@query,
-                 or => \@viewable
+                 or => \@viewable,
+                 or => \@featured_only
             ],
+            debug => 1,
             @with,
             $a{all} ? () : (page => $a{page}, per_page => $per_page), );
     } 
