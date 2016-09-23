@@ -55,13 +55,14 @@ sub make_tree_for_list {
 sub common_tree_fields {
     my $c = shift;
     my $obj = shift;
+    my %args = @_;
     my $uri = $obj->uri($c);
     my $href = $uri->clone->to_abs;
     if (my $fmt = $c->stash('format')) {
         $href .= ".$fmt";
     }
     return ( uri => $uri, href => $href,
-             display_name => $obj->stringify(display_name=>1),
+             display_name => $obj->stringify(display_name=>1, short=>$args{short}),
         $c->maybe_include_generic_pub_rels($obj), # keywords, regions
     );
 }
@@ -220,8 +221,14 @@ sub make_tree_for_show {
                     publication_type => $_->{publication_type_identifier},
                 }, @pubs
             ];
+            #Parents array added as alternative to cited_by array (because Reports already use
+            #a parents array with cito:isCitedBy)
+            my @parents = @{$ret->{parents}};
+            push @parents, $pub->get_parents_with_references(uniq => 1, for_export => 1, c => $c);
+            $ret->{parents} = \@parents;
         } else {
             $ret->{cited_by} = [];
+            $ret->{parents} //= [];
         }
     }
     $ret;

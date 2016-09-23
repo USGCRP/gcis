@@ -29,7 +29,11 @@ $t->get_ok("/project/cmip12.json")->status_is(200)
   ->json_is( { %project,
     uri       => "/project/cmip12",
     cited_by  => [],
-    href => "$base/project/cmip12.json" });
+    href => "$base/project/cmip12.json",
+    display_name => $project{identifier},
+    parents => [],
+    type => 'project',
+  })->or(sub { diag explain $t->tx->res->json });
 $t->get_ok("/project")->status_is(200)->content_like(qr/cmip12/);
 
 # Model
@@ -48,7 +52,11 @@ $t->get_ok("/model/ccsm3.json")->status_is(200)
   ->json_is( { %model,
     uri       => "/model/ccsm3",
     cited_by  => [],
-    href => "$base/model/ccsm3.json" });
+    href => "$base/model/ccsm3.json",
+    display_name => $model{identifier},
+    parents => [],
+    type => 'model',
+  })->or(sub { diag explain $t->tx->res->json });
 $t->get_ok("/model")->status_is(200)->content_like(qr/ccsm3/);
 
 # Scenario
@@ -63,7 +71,11 @@ $t->get_ok("/scenario/sres_a2.json")->status_is(200)
   ->json_is( { %scenario,
     cited_by => [],
     uri       => "/scenario/sres_a2",
-    href => "$base/scenario/sres_a2.json" });
+    href => "$base/scenario/sres_a2.json",
+    display_name => $scenario{identifier},
+    parents => [],
+    type => 'scenario',
+  })->or(sub { diag explain $t->tx->res->json });
 $t->get_ok("/scenario")->status_is(200)->content_like(qr[sres_a2]);
 
 # Model run
@@ -88,7 +100,10 @@ $t->get_ok("/model_run/012345.json")->status_is(200)
         href => "$base/model_run/012345.json",
         sequence => 1,
         cited_by => [],
-    });
+        display_name => $run{identifier},
+        parents => [],
+        type => 'model_run',
+    })->or(sub { diag explain $t->tx->res->json });
 $t->get_ok("/model_run")->status_is(200)->content_like(qr[012345]);
 $t->get_ok("/model/ccsm3/run")->status_is(200)->content_like(qr[012345]);
 $t->get_ok("/model_run/ccsm3/sres_a2/2000-01-01/2020-01-01/1 mile/10 minutes/1.json")

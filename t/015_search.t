@@ -39,6 +39,10 @@ $t->get_ok("/journal/minecraft.json")->json_is(
         href => "${base}journal/minecraft.json",
         articles  => [],
         cited_by => [],
+        description => undef,
+        display_name => $j{title},
+        parents => [],
+        type => 'journal',
     }
 );
 

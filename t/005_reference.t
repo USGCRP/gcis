@@ -65,6 +65,9 @@ for my $uri ("/reference/$reference_identifier",
             ],
             identifier => $reference_identifier,
             attrs => { description => "$desc" },
+            description => $reference_identifier,
+            display_name => $reference_identifier,
+            type => 'reference',
         });
 }
 

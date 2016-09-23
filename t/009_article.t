@@ -6,6 +6,7 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use Data::Dumper;
 
 use_ok "Tuba";
 
@@ -39,8 +40,12 @@ $t->get_ok("/journal/nature.json")->json_is(
         href => "${base}journal/nature.json",
         articles  => [],
         cited_by => [],
+        description => undef,
+        display_name => 'Nature',
+        type => 'journal',
+        parents => [],
     }
-);
+)->or(sub { diag Dumper $t->tx->res->json});
 
 my %k = %j;
 $k{identifier} = 'nurture';
@@ -57,8 +62,12 @@ $t->get_ok("/journal/nurture.json")->json_is(
         href => "${base}journal/nurture.json",
         articles  => [],
         cited_by => [],
+        description => undef,
+        display_name => 'Nurture',
+        type => 'journal',
+        parents => [],
     }
-);
+)->or(sub { diag Dumper $t->tx->res->json});
 
 my %a = (
  identifier         => '10.123/456',
@@ -73,9 +82,16 @@ my %a = (
  notes              => 'an important article',
  );
 
+my %added_tags = (
+        display_name => 'nature vs nurture',
+        type => 'article',
+        parents => [],
+);
+
 $t->post_ok("/article" => json => \%a )->status_is(200);
 $t->get_ok("/article/10.123/456.json")
-  ->json_is({%a, uri => "/article/10.123/456", href => "${base}article/10.123/456.json", cited_by => []});
+  ->json_is({%a, uri => "/article/10.123/456", href => "${base}article/10.123/456.json", cited_by => [], %added_tags})
+    ->or(sub { diag Dumper $t->tx->res->json});
 
 my %b = %a;
 $b{doi} = '10.223/333';
@@ -83,7 +99,8 @@ $b{identifier} = $b{doi};
 $b{url} = "http://nurture.com/nvn.pdf";
 $t->post_ok("/article" => form => \%b )->status_is(200);
 $t->get_ok("/article/10.223/333.json")
-  ->json_is({%b, uri => "/article/10.223/333", href => "${base}article/10.223/333.json", cited_by => []});
+  ->json_is({%b, uri => "/article/10.223/333", href => "${base}article/10.223/333.json", cited_by => [], %added_tags})
+    ->or(sub { diag Dumper $t->tx->res->json});
 
 $t->delete_ok("/article/10.223/333");
 $t->delete_ok("/article/10.123/456");
