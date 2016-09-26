@@ -36,10 +36,16 @@ sub uri {
     }
     my $url_for = $c->url_for($route_name, \%url_params );
     if ($url_for =~ /show/) {
-        logger->warn ("Strange URI created: $url_for\n".
+        logger->debug ("Strange URI created: $url_for\n".
                       "Route name is '$route_name'\n" .
                       "url_params passed to url_for were " . Dumper \%url_params
                      );
+        #Brute-force construction of uri, since Mojo 7.0 changes broke something
+        ###TODO It'd be nice to figure out why it broke (known good under 6.24) -RS
+        $url_for = $c->url_for(join "/", "/vocabulary",$s->lexicon_identifier,$s->context_identifier,$s->term);
+        logger->debug ("Sending back value:  $url_for instead");
+    } else {
+        logger->debug ("Happy surprise: URI looks good: $url_for");
     }
     return $url_for;
 }
