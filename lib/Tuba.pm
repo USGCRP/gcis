@@ -515,9 +515,19 @@ sub startup {
 
     # term_relationship (how terms are related to each other)
     $r->resource('term_relationship');
+    if (my $term_relationship_authed = $r->find('authed_select_term_relationship')) {
+        $term_relationship_authed
+            ->delete('/:term_subject_identifier/:relationship_identifier/:term_object_identifier')
+                ->to('term_relationship#remove');
+    }
 
     # term_map (how terms are mapped to gcids)
     $r->resource('term_map');
+    if (my $term_map_authed = $r->find('authed_select_term_map')) {
+        $term_map_authed
+            ->delete('/:term_identifier/:relationship_identifier/*gcid_identifier')
+                ->to('term_map#remove');
+    }
 
     $r->resource('toolkit');
 
