@@ -62,7 +62,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
-    logger->debug ("---In sub 'Controller::uri' for route_name '$route_name'---");
+    logger->debug ("---In sub 'Tuba::DB::Object::uri' for route_name '$route_name'---");
 
     return $c->url_for($route_name) unless ref $s;
 

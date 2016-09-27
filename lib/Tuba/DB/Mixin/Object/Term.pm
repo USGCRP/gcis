@@ -1,6 +1,7 @@
 package Tuba::DB::Object::Term;
 use strict;
 use Tuba::Log;
+use Data::Dumper;
 
 sub stringify {
     my $c = shift;
@@ -14,7 +15,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
-#    logger->debug("sub uri using route_name=$route_name");
+    logger->debug("--- In sub 'Tuba::DB::Object::Term::uri for route_name=$route_name---");
     return $c->url_for($route_name) unless ref $s;
 #    logger->debug("still in sub uri");
     my $table = $s->meta->table;
@@ -33,7 +34,20 @@ sub uri {
         #also add a param with the unmodified column name, specifically needed for 'term'
         $url_params{$column_name} = $pk{$column_name} unless exists $url_params{$column_name};
     }
-    return $c->url_for( $route_name, \%url_params );
+    my $url_for = $c->url_for($route_name, \%url_params );
+    if ($url_for =~ /show/) {
+        logger->debug ("Strange URI created: $url_for\n".
+                      "Route name is '$route_name'\n" .
+                      "url_params passed to url_for were " . Dumper \%url_params
+                     );
+        #Brute-force construction of uri, since Mojo 7.0 changes broke something
+        ###TODO It'd be nice to figure out why it broke (known good under 6.24) -RS
+        $url_for = $c->url_for(join "/", "/vocabulary",$s->lexicon_identifier,$s->context_identifier,$s->term);
+        logger->debug ("Sending back value:  $url_for instead");
+    } else {
+        logger->debug ("Happy surprise: URI looks good: $url_for");
+    }
+    return $url_for;
 }
 
 
