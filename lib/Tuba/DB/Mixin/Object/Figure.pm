@@ -4,9 +4,10 @@ use strict;
 
 sub numeric {
     my $c = shift;
-    my $chapter = $c->chapter or return "";
-    return $c->ordinal unless defined($chapter->number);
-    return join '.', $chapter->number, $c->ordinal // '';
+    my $chapter = $c->chapter or return "-";
+    my $chapter_num = $chapter->number // '-';
+    my $figure_ord = $c->ordinal // '-';
+    return join '.', $chapter_num, $figure_ord;
 }
 
 sub stringify {
