@@ -30,7 +30,7 @@
             <%= $val %>
             %= end
         </td>
-% for my $c (@cols[1..$#cols]) {
+    % for my $c (@cols[1..$#cols]) {
         % my $got = $o->can($c) ? $o->$c : "error, cannot call $c";
         <td>
             % if (ref($got) eq 'ARRAY') {
@@ -43,24 +43,24 @@
                 %= $got
             % }
         </td>
-% }
-
-<td class='thumbnails row'>
-<div >
-   % if (my $pub = $o->get_publication) {
-        % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail col-md-3 col-sm-3 col-lg-3" => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail thumbnail img-responsive'
-            %= end
-        % }
     % }
-</div>
-</td>
-% if (user_can('update')) {
-<td class='row'>
-%= include 'obj_thumbnails', objs => $o->images || [];
-</td>
-% }
+
+    <td class='thumbnails row'>
+    <div >
+       % if (my $pub = $o->get_publication) {
+            % for my $file ($pub->files) {
+                %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => "thumbnail col-md-3 col-sm-3 col-lg-3" => begin
+                    %= image $file->thumbnail_path, class => 'img-thumbnail thumbnail img-responsive'
+                %= end
+            % }
+        % }
+    </div>
+    </td>
+    % if (user_can('update')) {
+        <td class='row'>
+        %= include 'obj_thumbnails', objs => $o->images || [];
+        </td>
+    % }
 
     % if (user_can('update')) {
     <td>
