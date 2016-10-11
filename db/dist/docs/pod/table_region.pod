@@ -31,6 +31,7 @@ A region is a geographical area.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON region FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON region FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut

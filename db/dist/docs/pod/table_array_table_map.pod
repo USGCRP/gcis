@@ -30,6 +30,7 @@ Arrays and tables have a many-to-many relationship.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut

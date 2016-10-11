@@ -12,20 +12,22 @@ An organization is an entity with which people and publications may be associate
  identifier (character varying) - A descriptive identifier.
  name (character varying) - The name.
  url (character varying) - The URL for the organization.
- country_code (character varying) - The country with which this organizaion is affiliated.
+ country_code (character varying) - The country with where the organization's primary HQ is located.
  organization_type_identifier (character varying) - The type of organization.
+ international (boolean) - Flag indicating an multinational organization with HQs in multiple countries.
 
 
 =head1 SCHEMA
 
-                                                        Table "gcis_metadata.organization"
-             Column            |       Type        | Modifiers | Storage  | Stats target |                      Description                       
- ------------------------------+-------------------+-----------+----------+--------------+--------------------------------------------------------
+                                                                    Table "gcis_metadata.organization"
+             Column            |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
+ ------------------------------+-------------------+-----------+----------+--------------+-------------------------------------------------------------------------------
   identifier                   | character varying | not null  | extended |              | A descriptive identifier.
   name                         | character varying |           | extended |              | The name.
   url                          | character varying |           | extended |              | The URL for the organization.
-  country_code                 | character varying |           | extended |              | The country with which this organizaion is affiliated.
+  country_code                 | character varying |           | extended |              | The country with where the organization's primary HQ is located.
   organization_type_identifier | character varying |           | extended |              | The type of organization.
+  international                | boolean           |           | plain    |              | Flag indicating an multinational organization with HQs in multiple countries.
  Indexes:
      "organization_pkey" PRIMARY KEY, btree (identifier)
      "organization_name_key" UNIQUE CONSTRAINT, btree (name)
@@ -42,6 +44,7 @@ An organization is an entity with which people and publications may be associate
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      update_exterms BEFORE UPDATE ON organization FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/organization/')
+ Has OIDs: no
  
 
 =cut

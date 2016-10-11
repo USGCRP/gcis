@@ -24,6 +24,7 @@ Users who have permission to view non-public reports.
      "_report_viewer_pkey" PRIMARY KEY, btree (report, username)
  Foreign-key constraints:
      "_report_viewer_report_fkey" FOREIGN KEY (report) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Has OIDs: no
  
 
 =cut

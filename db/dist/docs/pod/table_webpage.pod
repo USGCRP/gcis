@@ -34,6 +34,7 @@ A webpage is a type of publication.
      audit_trigger_stm AFTER TRUNCATE ON webpage FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON webpage FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON webpage FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
 =cut

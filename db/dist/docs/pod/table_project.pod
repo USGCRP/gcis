@@ -34,6 +34,7 @@ A project may be associated with a collection of models.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON project FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON project FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut

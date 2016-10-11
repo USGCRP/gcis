@@ -50,6 +50,7 @@ An activity is a process that occurs over a period of time, and may be associate
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON activity FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON activity FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut

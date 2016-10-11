@@ -31,6 +31,7 @@ A lexicon is a list of terms which correspond to GCIS identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON lexicon FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON lexicon FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
 =cut

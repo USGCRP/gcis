@@ -37,6 +37,7 @@ An instrument is used for measurement.
      delpub BEFORE DELETE ON instrument FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/instrument/')
      updatepub BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
 =cut
