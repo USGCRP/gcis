@@ -3,11 +3,11 @@ package Tuba::DB::Object::Figure;
 use strict;
 
 sub numeric {
-    my $c = shift;
-    my $chapter = $c->chapter or return "-";
-    my $chapter_num = $chapter->number // '-';
-    my $figure_ord = $c->ordinal // '-';
-    return join '.', $chapter_num, $figure_ord;
+    my $s = shift;
+    if (my $chapter = $s->chapter) {
+        return sprintf('%s.%s',$chapter->number // '-',$s->ordinal // '-');
+    }
+    return $s->ordinal // '-';
 }
 
 sub stringify {
