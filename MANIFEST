@@ -602,8 +602,8 @@ db/patches/2170_report_types.sql
 db/patches/2180_role_comment.sql
 db/patches/2210_unitof.sql
 db/patches/2220_centerof.sql
-db/patches/2230_alphanumeric_chapter_number.sql
-db/patches/2240_alter_org_add_intl_flag.sql
+db/patches/2280_alphanumeric_chapter_number.sql
+db/patches/2290_alter_org_add_intl_flag.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
