@@ -70,7 +70,7 @@ $t->get_ok("/report/vegetables/table/veggietable.json")->status_is(200)
    'title' => 'veggie table',
    'uri' => '/report/vegetables/table/veggietable',
    'url' => 'http://example.com/veggies',
-   'display_name' => 'veggie table',
+   'display_name' => '1: veggie table',
    'type' => 'table',
  }
 );
