@@ -14,6 +14,9 @@
         % if (my $country = $organization->country) {
         <%= $country->name %>
         % }
+        % if ($organization->international) {
+            - International Organization
+        % }
         </p>
         % if (my $url = $organization->url) {
             <p>

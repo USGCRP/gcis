@@ -4,10 +4,11 @@ use strict;
 use Tuba::Log;
 
 sub numeric {
-    my $c = shift;
-    my $chapter = $c->chapter or return "";
-    return $c->ordinal unless defined($chapter->number);
-    return join '.', $chapter->number, $c->ordinal // '';
+    my $s = shift;
+    if (my $chapter = $s->chapter) {
+        return sprintf('%s.%s',$chapter->number // '-',$s->ordinal // '-');
+    }
+    return $s->ordinal // '-';
 }
 
 sub stringify {

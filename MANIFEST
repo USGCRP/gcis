@@ -319,6 +319,16 @@ db/dist/docs/html/func_gcis_metadata.upc(gcis_metadata.ean13).html
 db/dist/docs/html/func_gcis_metadata.upc_in(cstring).html
 db/dist/docs/html/func_gcis_metadata.update_exterms().html
 db/dist/docs/html/func_gcis_metadata.update_publication().html
+db/dist/docs/html/func_gcis_metadata.uuid_generate_v1().html
+db/dist/docs/html/func_gcis_metadata.uuid_generate_v1mc().html
+'db/dist/docs/html/func_gcis_metadata.uuid_generate_v3(name uuid, namespace text).html'
+db/dist/docs/html/func_gcis_metadata.uuid_generate_v4().html
+'db/dist/docs/html/func_gcis_metadata.uuid_generate_v5(name uuid, namespace text).html'
+db/dist/docs/html/func_gcis_metadata.uuid_nil().html
+db/dist/docs/html/func_gcis_metadata.uuid_ns_dns().html
+db/dist/docs/html/func_gcis_metadata.uuid_ns_oid().html
+db/dist/docs/html/func_gcis_metadata.uuid_ns_url().html
+db/dist/docs/html/func_gcis_metadata.uuid_ns_x500().html
 db/dist/docs/html/index.html
 db/dist/docs/html/table_gcis_metadata._report_editor.html
 db/dist/docs/html/table_gcis_metadata._report_viewer.html
@@ -592,6 +602,8 @@ db/patches/2170_report_types.sql
 db/patches/2180_role_comment.sql
 db/patches/2210_unitof.sql
 db/patches/2220_centerof.sql
+db/patches/2280_alphanumeric_chapter_number.sql
+db/patches/2290_alter_org_add_intl_flag.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -623,6 +635,7 @@ lib/Tuba/DB/Mixin/Object/Chapter.pm
 lib/Tuba/DB/Mixin/Object/Chapter/Manager.pm
 lib/Tuba/DB/Mixin/Object/Contributor.pm
 lib/Tuba/DB/Mixin/Object/Country.pm
+lib/Tuba/DB/Mixin/Object/Dataset.pm
 lib/Tuba/DB/Mixin/Object/Exterm.pm
 lib/Tuba/DB/Mixin/Object/Figure.pm
 lib/Tuba/DB/Mixin/Object/Figure/Manager.pm
@@ -724,7 +737,6 @@ lib/Tuba/files/public/css/jquery.sidr.dark.css
 lib/Tuba/files/public/css/jquery.sidr.light.css
 lib/Tuba/files/public/favicon.ico
 lib/Tuba/files/public/gcis-logo-100.png
-lib/Tuba/files/public/gcis.owl
 lib/Tuba/files/public/js/bootstrap3-typeahead.js
 lib/Tuba/files/public/js/gcis.js
 lib/Tuba/files/public/js/jquery.sidr.min.js
@@ -753,7 +765,6 @@ lib/Tuba/files/public/owl/jquery_002.js
 lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
-lib/Tuba/files/public/sitemap.xml
 lib/Tuba/files/public/usgcrp-200.png
 lib/Tuba/files/public/usgcrp-220.png
 lib/Tuba/files/public/usgcrp-240.png
@@ -835,6 +846,7 @@ lib/Tuba/files/templates/finding/object.html.ep
 lib/Tuba/files/templates/finding/object.ttl.tut
 lib/Tuba/files/templates/finding/objects.html.ep
 lib/Tuba/files/templates/forms.html.ep
+lib/Tuba/files/templates/gcis.owl.ep
 lib/Tuba/files/templates/gcmd_keyword/fields.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.ttl.tut
@@ -846,6 +858,7 @@ lib/Tuba/files/templates/h/contributors.html.ep
 lib/Tuba/files/templates/h/contributors_short.html.ep
 lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/desc.html.ep
+lib/Tuba/files/templates/h/featured_reports.html.ep
 lib/Tuba/files/templates/h/leaflet.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep

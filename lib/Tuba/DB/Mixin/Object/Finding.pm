@@ -14,9 +14,9 @@ sub as_tree {
 sub numeric {
     my $s = shift;
     if (my $chapter = $s->chapter) {
-        return sprintf('%s.%s',$chapter->number // '',$s->ordinal // '');
+        return sprintf('%s.%s',$chapter->number // '-',$s->ordinal // '-');
     }
-    return $s->ordinal // '';
+    return $s->ordinal // '-';
 }
 
 sub stringify {

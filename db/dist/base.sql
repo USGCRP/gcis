@@ -484,7 +484,7 @@ CREATE TABLE chapter (
     identifier character varying NOT NULL,
     title character varying,
     report_identifier character varying NOT NULL,
-    number integer,
+    number character varying(3),
     url character varying,
     sort_key integer,
     doi character varying,
@@ -510,7 +510,7 @@ COMMENT ON COLUMN chapter.report_identifier IS 'The report containing this chapt
 
 
 
-COMMENT ON COLUMN chapter.number IS 'The numeric chapter number.';
+COMMENT ON COLUMN chapter.number IS 'The alphanumeric chapter number.';
 
 
 
@@ -1490,6 +1490,7 @@ CREATE TABLE organization (
     url character varying,
     country_code character varying,
     organization_type_identifier character varying,
+    international boolean,
     CONSTRAINT organization_identifier_check CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
 );
 
@@ -1511,11 +1512,15 @@ COMMENT ON COLUMN organization.url IS 'The URL for the organization.';
 
 
 
-COMMENT ON COLUMN organization.country_code IS 'The country with which this organizaion is affiliated.';
+COMMENT ON COLUMN organization.country_code IS 'The country with where the organization''s primary HQ is located.';
 
 
 
 COMMENT ON COLUMN organization.organization_type_identifier IS 'The type of organization.';
+
+
+
+COMMENT ON COLUMN organization.international IS 'Flag indicating an multinational organization with HQs in multiple countries.';
 
 
 

@@ -153,7 +153,7 @@ consortium
 -- Data for Name: organization; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY organization (identifier, name, url, country_code, organization_type_identifier) FROM stdin;
+COPY organization (identifier, name, url, country_code, organization_type_identifier, international) FROM stdin;
 \.
 
 

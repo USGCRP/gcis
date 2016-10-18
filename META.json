@@ -78,7 +78,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.44"
+         "version" : "1.45"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -139,6 +139,9 @@
       },
       "Tuba::DB::Object::Country" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Country.pm"
+      },
+      "Tuba::DB::Object::Dataset" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/Dataset.pm"
       },
       "Tuba::DB::Object::Exterm" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Exterm.pm"
@@ -349,6 +352,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.44",
+   "version" : "1.45",
    "x_serialization_backend" : "JSON::PP version 2.27400"
 }

@@ -179,7 +179,7 @@ sub watch {
         }
         $c->stash(change_log => $change_log);
     } else {
-        my $cutoff = $c->param('cutoff') || '2 weeks';
+        my $cutoff = $c->param('cutoff') || '1 weeks';
         $c->param(cutoff => $cutoff);
         $cutoff = $c->dbc->dbh->quote($cutoff);
         my $result = $c->dbc->select(

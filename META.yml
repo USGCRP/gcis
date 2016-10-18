@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.44'
+    version: '1.45'
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -61,6 +61,8 @@ provides:
     file: lib/Tuba/DB/Object/ConventionManager.pm
   Tuba::DB::Object::Country:
     file: lib/Tuba/DB/Mixin/Object/Country.pm
+  Tuba::DB::Object::Dataset:
+    file: lib/Tuba/DB/Mixin/Object/Dataset.pm
   Tuba::DB::Object::Exterm:
     file: lib/Tuba/DB/Mixin/Object/Exterm.pm
   Tuba::DB::Object::Figure:
@@ -242,5 +244,5 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.44'
+version: '1.45'
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'
