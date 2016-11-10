@@ -1,15 +1,76 @@
-% my @pubs = $pub ? $pub->get_parents_with_references(uniq => 1) : ();
-% if (@pubs) {
-% my %refs;
-<p>Cited by
-% for my $i (0..$#pubs) {
-% my $p = $pubs[$i];
-% $refs{$p->{reference}->identifier} = $p->{reference};
-% my $text = $p->{parent}->stringify(tiny => 1);
-% my $title = $p->{parent}->stringify(long => 1);
-<%= link_to 'show_publication', { publication_identifier => $p->{parent}->id }, alt => $title, title => $title, begin %><%= $text =%><%= end =%><%=
-  $i==$#pubs - 1 ? ", and "
-  : $i==$#pubs ? ""
-  : "," =%><% } %>. (<%= pl('reference', scalar values %refs, 1 ) %>: <%= include 'commify', objs => [ values %refs ], short => 1; =%>)
+% my @ref_with_parent_and_self_pubs = $pub ? $pub->get_parents_with_references(uniq => 1) : ();
+% # Given this publication, find all references where it is the child and return a structure 
+% # {
+% # ref => $ref_obj,
+% # parent => $parent_pub_obj,
+% # child => $child_pub_obj, # the original object
+% # }
+% if (@ref_with_parent_and_self_pubs) {
+% my %publication_references;
+% my %sub_publication_references;
+<p><h5>This work is referenced by: </h5>
+% for my $ref_with_pubs (@ref_with_parent_and_self_pubs) {
+    % my $reference = $ref_with_pubs->{reference};
+    % my $parent_pub = $ref_with_pubs->{parent};
+    % my $publication = $ref_with_pubs->{child};
+
+    % my $text = $ref_with_pubs->{parent}->stringify(tiny => 1);
+    % my $title = $ref_with_pubs->{parent}->stringify(long => 1);
+    % my $pub_type =  $parent_pub->publication_type_identifier;
+
+    % if ( $pub_type eq "chapter" || $pub_type eq "finding" || $pub_type eq "table" || $pub_type eq "figure" || $pub_type eq 'dataset' || $pub_type eq 'image' ) {
+    %    my $report_identifier = $parent_pub->to_object->report_identifier;
+    %    push @{$sub_publication_references{$report_identifier}->{$pub_type}}, {
+    %        publication_identifier => $parent_pub->id,
+    %        title                  => $parent_pub->stringify(long => 1),
+    %        text                   => $parent_pub->stringify(tiny => 1),
+    %        pub_type       => $pub_type,
+    %        reference_identifier   => $reference->identifier,
+    %    }
+    % } else {
+    %     my $report_identifier = $parent_pub->to_object->identifier;
+    %     $publication_references{$report_identifier} = {
+    %        publication_identifier => $parent_pub->id,
+    %        title                  => $parent_pub->stringify(long => 1),
+    %        text                   => $parent_pub->stringify(tiny => 1),
+    %        pub_type       => $pub_type,
+    %        reference_identifier   => $reference->identifier,
+    %     }
+    % }
+% }
+<table class='table-condensed'>
+% for my $report_id ( keys %publication_references ) {
+% my $pub_ref = $publication_references{$report_id};
+<tr>
+<td>
+  The <%= " " . $pub_ref->{pub_type} . " " =%> 
+</td>
+<td></td>
+<td>
+  <%= link_to 'show_publication', { publication_identifier => $pub_ref->{publication_identifier} }, alt => $pub_ref->{title}, title => $pub_ref->{title}, begin %><%= $pub_ref->{title} . " " =%><%= end =%>
+  (<%= link_to 'show_reference' => { reference_identifier => $pub_ref->{reference_identifier} } => begin %>reference<%= end =%>)
+</td>
+</tr>
+% if ( exists $sub_publication_references{$report_id} ) {
+    % my @sub_types = ( 'chapter', 'finding', 'figure', 'table', 'dataset', 'image' );
+    % for my $sub_pub_type ( @sub_types ) { #keys %{$sub_publication_references{$report_id}} ) {
+        % next unless exists $sub_publication_references{$report_id}->{$sub_pub_type};
+        % # sort the array
+        % my @sub_pubs = sort { $a->{text} cmp $b->{text} } @{$sub_publication_references{$report_id}->{$sub_pub_type}};
+        % for my $sub_pub ( @sub_pubs ) {
+            <tr>
+            <td></td>
+            <td> <%= " " . $sub_pub_type =%>: </td>
+            <td>
+              <%= link_to 'show_publication', { publication_identifier => $sub_pub->{publication_identifier} }, alt => $sub_pub->{title}, title => $sub_pub->{title}, begin %><%= $sub_pub->{text} . "      " =%><%= end =%>
+              (<%= link_to 'show_reference' => { reference_identifier => $sub_pub->{reference_identifier} } => begin %>reference<%= end =%>)
+            </td>
+            </tr>
+        % }
+    % }
+% }
+% }
+</table>
 </p>
+<hr>
 % }
