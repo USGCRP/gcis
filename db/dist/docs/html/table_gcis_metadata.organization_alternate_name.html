@@ -115,15 +115,15 @@
 
 
         <h2>Table:
-            <a name="gcis-metadata.table.organization">organization</a>
+            <a name="gcis-metadata.table.organization-alternate-name">organization_alternate_name</a>
         </h2>
         
-         <p>An organization is an entity with which people and publications may be associated.</p>
+         <p>Alternate names for organizations either multilingual or defunct</p>
         
 
 
         <table width="100%" cellspacing="0" cellpadding="3">
-                <caption>organization Structure</caption>
+                <caption>organization_alternate_name Structure</caption>
                 <tr>
                 <th>F-Key</th>
                 <th>Name</th>
@@ -135,10 +135,41 @@
                 <td>
                 
                   
+                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
+                  
+                
+                  
                 
                 </td>
-                <td>identifier</td>
+                <td>organization_identifier</td>
                 <td>character varying</td>
+                <td><i>
+                
+                    
+
+                    
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>The organization identifier this name belongs to.
+                </td>
+             </tr>
+            
+            <tr class="tr1">
+                <td>
+                
+                  
+                
+                </td>
+                <td>alternate_name</td>
+                <td>text</td>
                 <td><i>
                 
                     PRIMARY KEY
@@ -150,31 +181,7 @@
                 
                 
                 </i>
-                <br><br>A descriptive identifier.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                
-                </td>
-                <td>name</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                       UNIQUE
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The organization as referred to in English.
+                <br><br>The alternate name of the organization.
                 </td>
              </tr>
             
@@ -182,63 +189,15 @@
                 <td>
                 
                 </td>
-                <td>url</td>
-                <td>character varying</td>
+                <td>language</td>
+                <td>character varying(3)</td>
                 <td><i>
                 
 
-                
-                
-                </i>
-                <br><br>The URL for the organization.
-                </td>
-             </tr>
-            
-            <tr class="tr1">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.country.html#gcis-metadata.table.country">country.code</a>
-                  
-                
-                </td>
-                <td>country_code</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-
-                
+                NOT NULL
                 
                 </i>
-                <br><br>The country with where the organization&#39;s primary HQ is located.
-                </td>
-             </tr>
-            
-            <tr class="tr0">
-                <td>
-                
-                  
-                  <a href="table_gcis_metadata.organization_type.html#gcis-metadata.table.organization-type">organization_type.identifier</a>
-                  
-                
-                </td>
-                <td>organization_type_identifier</td>
-                <td>character varying</td>
-                <td><i>
-                
-                    
-
-                    
-                
-
-                
-                
-                </i>
-                <br><br>The type of organization.
+                <br><br>The language used for this alternate name. Format ISO-639-1, fallback ISO-639-2T
                 </td>
              </tr>
             
@@ -246,15 +205,15 @@
                 <td>
                 
                 </td>
-                <td>international</td>
+                <td>deprecated</td>
                 <td>boolean</td>
                 <td><i>
                 
 
-                
-                
+                NOT NULL
+                DEFAULT false
                 </i>
-                <br><br>Flag indicating an multinational organization with HQs in multiple countries.
+                <br><br>If the name is historical and no longer used. Default False
                 </td>
              </tr>
             
@@ -267,30 +226,21 @@
         
         <p>&nbsp;</p>
         <table width="100%" cellspacing="0" cellpadding="3">
-            <caption>organization Constraints</caption>
+            <caption>organization_alternate_name Constraints</caption>
             <tr>
                 <th>Name</th>
                 <th>Constraint</th>
             </tr>
             
             <tr class="tr0">
-                <td>organization_identifier_check</td>
-                <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+                <td>iso_lang_length</td>
+                <td>CHECK ((char_length((language)::text) &gt;= 2))</td>
             </tr>
             
         </table>
         
 
         <!-- Foreign Key Discovery -->
-        
-            <p>Tables referencing this one via Foreign Key Constraints:</p>
-        
-                <a href="table_gcis_metadata.contributor.html">contributor</a><br>
-        
-                <a href="table_gcis_metadata.organization_alternate_name.html">organization_alternate_name</a><br>
-        
-                <a href="table_gcis_metadata.organization_map.html">organization_map</a><br>
-        
         
 
     <!-- Indexes -->

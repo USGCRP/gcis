@@ -364,6 +364,14 @@ COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_
 
 
 --
+-- Data for Name: organization_alternate_name; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY organization_alternate_name (organization_identifier, alternate_name, language, deprecated) FROM stdin;
+\.
+
+
+--
 -- Data for Name: organization_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 

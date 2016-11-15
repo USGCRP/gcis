@@ -1314,7 +1314,7 @@ COMMENT ON COLUMN organization.identifier IS 'A descriptive identifier.';
 
 
 
-COMMENT ON COLUMN organization.name IS 'The name.';
+COMMENT ON COLUMN organization.name IS 'The organization as referred to in English.';
 
 
 
@@ -1331,6 +1331,36 @@ COMMENT ON COLUMN organization.organization_type_identifier IS 'The type of orga
 
 
 COMMENT ON COLUMN organization.international IS 'Flag indicating an multinational organization with HQs in multiple countries.';
+
+
+
+CREATE TABLE organization_alternate_name (
+    organization_identifier character varying NOT NULL,
+    alternate_name text NOT NULL,
+    language character varying(3) NOT NULL,
+    deprecated boolean DEFAULT false NOT NULL,
+    CONSTRAINT iso_lang_length CHECK ((char_length((language)::text) >= 2))
+);
+
+
+
+COMMENT ON TABLE organization_alternate_name IS 'Alternate names for organizations either multilingual or defunct';
+
+
+
+COMMENT ON COLUMN organization_alternate_name.organization_identifier IS 'The organization identifier this name belongs to.';
+
+
+
+COMMENT ON COLUMN organization_alternate_name.alternate_name IS 'The alternate name of the organization.';
+
+
+
+COMMENT ON COLUMN organization_alternate_name.language IS 'The language used for this alternate name. Format ISO-639-1, fallback ISO-639-2T';
+
+
+
+COMMENT ON COLUMN organization_alternate_name.deprecated IS 'If the name is historical and no longer used. Default False';
 
 
 
@@ -2331,6 +2361,11 @@ ALTER TABLE ONLY model_run
 
 
 
+ALTER TABLE ONLY organization_alternate_name
+    ADD CONSTRAINT organization_alternate_name_pkey PRIMARY KEY (organization_identifier, alternate_name);
+
+
+
 ALTER TABLE ONLY organization_map
     ADD CONSTRAINT organization_map_pkey PRIMARY KEY (organization_identifier, other_organization_identifier, organization_relationship_identifier);
 
@@ -3144,6 +3179,11 @@ ALTER TABLE ONLY model_run
 
 ALTER TABLE ONLY model_run
     ADD CONSTRAINT model_run_scenario_identifier_fkey FOREIGN KEY (scenario_identifier) REFERENCES scenario(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+
+ALTER TABLE ONLY organization_alternate_name
+    ADD CONSTRAINT organization_alternate_name_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
 
 
 
