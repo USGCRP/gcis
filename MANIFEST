@@ -358,6 +358,7 @@ db/dist/docs/html/table_gcis_metadata.methodology.html
 db/dist/docs/html/table_gcis_metadata.model.html
 db/dist/docs/html/table_gcis_metadata.model_run.html
 db/dist/docs/html/table_gcis_metadata.organization.html
+db/dist/docs/html/table_gcis_metadata.organization_alternate_name.html
 db/dist/docs/html/table_gcis_metadata.organization_map.html
 db/dist/docs/html/table_gcis_metadata.organization_relationship.html
 db/dist/docs/html/table_gcis_metadata.organization_type.html
@@ -411,6 +412,7 @@ db/dist/docs/pod/table_methodology.pod
 db/dist/docs/pod/table_model.pod
 db/dist/docs/pod/table_model_run.pod
 db/dist/docs/pod/table_organization.pod
+db/dist/docs/pod/table_organization_alternate_name.pod
 db/dist/docs/pod/table_organization_map.pod
 db/dist/docs/pod/table_organization_relationship.pod
 db/dist/docs/pod/table_organization_type.pod
@@ -604,6 +606,8 @@ db/patches/2210_unitof.sql
 db/patches/2220_centerof.sql
 db/patches/2280_alphanumeric_chapter_number.sql
 db/patches/2290_alter_org_add_intl_flag.sql
+db/patches/2300_remove_internation_org_type.sql
+db/patches/2310_organization_alt_name.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -765,6 +769,7 @@ lib/Tuba/files/public/owl/jquery_002.js
 lib/Tuba/files/public/owl/owl.css
 lib/Tuba/files/public/owl/Primer.css
 lib/Tuba/files/public/owl/rec.css
+lib/Tuba/files/public/sitemap.xml
 lib/Tuba/files/public/usgcrp-200.png
 lib/Tuba/files/public/usgcrp-220.png
 lib/Tuba/files/public/usgcrp-240.png
