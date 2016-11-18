@@ -1,0 +1,15 @@
+version: '2'
+services:
+  gcis:
+    image: gcis
+    depends_on: 
+      - postgres
+    environment:
+      - PGHOST=postgres
+      - PGUSER=postgres
+#    volumes:
+#      - ./eg/Tuba.conf.sample:/home/gcis/Tuba.conf
+#    command: /bin/bash
+
+  postgres:
+    image: postgres:9.4
