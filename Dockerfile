@@ -1,4 +1,4 @@
-FROM perl:5.22
+FROM perl:5.20
 
 MAINTAINER Andrew Buddenberg
 
@@ -8,7 +8,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-contrib-9.4 \
     libpg-hstore-perl \
     postgresql \
-    libpg-hstore-perl \
     uuid-dev \
     graphviz \ 
     raptor2-utils \
@@ -29,6 +28,6 @@ RUN cp eg/Tuba.conf.sample ./Tuba.conf && mkdir /var/local/projects
 
 EXPOSE 8080
 
-CMD hypnotoad bin/tuba
+CMD hypnotoad -f bin/tuba
 
 
