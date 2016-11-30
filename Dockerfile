@@ -1,4 +1,4 @@
-FROM perl:5.20
+FROM perl:5.22
 
 MAINTAINER Andrew Buddenberg
 
@@ -16,7 +16,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN useradd --create-home -s /bin/bash gcis
 
-COPY . /home/gcis/
+COPY *.PL MANIFEST* META.* .travis.yml *.md README.osx /home/gcis/
+
+COPY bin /home/gcis/bin
+
+COPY db /home/gcis/db
+
+COPY eg /home/gcis/eg
+
+COPY lib /home/gcis/lib
+
+COPY t /home/gcis/t
 
 WORKDIR /home/gcis/
 
@@ -28,6 +38,6 @@ RUN cp eg/Tuba.conf.sample ./Tuba.conf && mkdir /var/local/projects
 
 EXPOSE 8080
 
-CMD hypnotoad -f bin/tuba
+ENTRYPOINT ["hypnotoad", "-f", "bin/tuba"]
 
 
