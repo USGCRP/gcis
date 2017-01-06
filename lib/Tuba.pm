@@ -399,6 +399,8 @@ sub startup {
     $r->find('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
     $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 
+    $r->resource('organization_alternate_name');
+
     $r->resource('gcmd_keyword');
     $r->resource('region');
     $r->resource('dataset');
