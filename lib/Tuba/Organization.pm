@@ -13,7 +13,7 @@ sub show {
     my $c = shift;
     my $meta = Organization->meta;
     my $identifier = $c->stash('organization_identifier');
-    my $object = Organization->new( identifier => $identifier )->load( speculative => 1 )
+    my $object = Organization->new( identifier => $identifier )->load( speculative => 1, with_objects => [qw/organization_alternate_name/] )
       or return $c->render_not_found_or_redirect;
     $c->stash(object => $object);
     return $c->SUPER::show(@_);
@@ -107,6 +107,15 @@ sub update_rel {
         $map->load(speculative => 1) or return $c->update_error("relationship not found");
         $map->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($map->error);
         $c->stash(info => "Saved changes.");
+    }
+
+    if ( my $delete_alt_name = $c->param('delete_alternate_name') ) {
+        my $alt_name = OrganizationAlternateName->new(
+                organization_identifier => $org->identifier,
+                alternate_name => $delete_alt_name
+            )->load(speculative => 1) or return $c->update_error("alternate name not found");
+        $alt_name->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($alt_name->error);
+        $c->stash(info => "Alternate Name Removed.");
     }
 
     $c->redirect_to($next);

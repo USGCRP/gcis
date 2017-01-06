@@ -18,6 +18,15 @@
             - International Organization
         % }
         </p>
+        % if ( @{$organization->organization_alternate_names} ) {
+            <p> <i> Also known as: </i><br/>
+            % for my $alt_name ( @{$organization->organization_alternate_names} ){
+                % my $name =  $alt_name->alternate_name;
+                % $name .= ' (defunct)' if $alt_name->deprecated; 
+                <%= $name %> <br/>
+            % }
+            </p>
+        % }
         % if (my $url = $organization->url) {
             <p>
             %= link_to $organization->url, target => "_blank" => begin

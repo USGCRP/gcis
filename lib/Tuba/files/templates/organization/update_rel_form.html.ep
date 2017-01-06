@@ -111,6 +111,52 @@
     </tr>
 </table>
 
+%= hidden_field 'delete_alternate_name';
+%= hidden_field 'delete_alternate_name_org';
+
+<table class='table table-responsive table-condensed table-bordered table-striped'>
+    <caption>Alternate Organization Names<caption>
+    <tr>
+        <td colspan=4>
+            <center>Add New Alternate Name</center>
+            <div class='form-group row'>
+                <div  class='col-lg-2 col-md-2 col-sm-2 control-label'>
+                    %= label_for 'organization_alternate_name', class => '' => begin
+                    Alternate Name
+                    %= end
+                </div>
+                <div  class='col-lg-2 col-md-2 col-sm-2 text-left'>
+                    <a href="#create_organization_alternate_name" role="button" class="btn btn-default" data-toggle="modal">Create Alternate Name</a>
+                    %= include 'modal', url => url_for('create_form_organization_alternate_name'), id => 'create_organization_alternate_name'
+                </div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan=4>Current Alternate Names</td>
+    </tr>
+    <tr><td>Language</td><td>Alternate Name</td><td>Defunct Name?</td><td></td></tr>
+    % for my $names ($object->organization_alternate_names) {
+    % my $name = $names->alternate_name;
+    % my $lang = $names->language;
+    % my $defunct = $names->deprecated;
+    <tr>
+        <td><%= $lang %>
+        <td><%= $name %></td>
+        <td><%= $defunct %></td>
+        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
+            onClick => qq[{this.form.elements["delete_alternate_name"].value = '].$name.
+            qq[';this.form.elements["delete_alternate_name_org"].value = '].$object->identifier.
+            qq[';this.form.submit(); }] => begin %>remove alternate name<%= end %>
+        </td>
+    </tr>
+    % }
+
+
+</table>
+
 <div class="row">
 	<div class="col-lg-4 col-lg-offset-2 col-md-4 col-md-offset-2 col-sm-4 col-sm-offset-1">
     <button type="submit" class="btn btn-primary">Save changes</button>
