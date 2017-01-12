@@ -13,19 +13,22 @@ Alternate names for organizations either multilingual or defunct
  alternate_name (text) - The alternate name of the organization.
  language (character varying(3)) - The language used for this alternate name. Format ISO-639-1, fallback ISO-639-2T
  deprecated (boolean) - If the name is historical and no longer used. Default False
+ identifier (serial) - An automatically-generated unique numeric identifier.
 
 
 =head1 SCHEMA
 
-                                                                   Table "gcis_metadata.organization_alternate_name"
-          Column          |         Type         |       Modifiers        | Storage  | Stats target |                                   Description                                    
- -------------------------+----------------------+------------------------+----------+--------------+----------------------------------------------------------------------------------
-  organization_identifier | character varying    | not null               | extended |              | The organization identifier this name belongs to.
-  alternate_name          | text                 | not null               | extended |              | The alternate name of the organization.
-  language                | character varying(3) | not null               | extended |              | The language used for this alternate name. Format ISO-639-1, fallback ISO-639-2T
-  deprecated              | boolean              | not null default false | plain    |              | If the name is historical and no longer used. Default False
+                                                                                                Table "gcis_metadata.organization_alternate_name"
+          Column          |         Type         |                                    Modifiers                                     | Storage  | Stats target |                                   Description                                    
+ -------------------------+----------------------+----------------------------------------------------------------------------------+----------+--------------+----------------------------------------------------------------------------------
+  organization_identifier | character varying    | not null                                                                         | extended |              | The organization identifier this name belongs to.
+  alternate_name          | text                 | not null                                                                         | extended |              | The alternate name of the organization.
+  language                | character varying(3) | not null                                                                         | extended |              | The language used for this alternate name. Format ISO-639-1, fallback ISO-639-2T
+  deprecated              | boolean              | not null default false                                                           | plain    |              | If the name is historical and no longer used. Default False
+  identifier              | integer              | not null default nextval('organization_alternate_name_identifier_seq'::regclass) | plain    |              | An automatically-generated unique numeric identifier.
  Indexes:
-     "organization_alternate_name_pkey" PRIMARY KEY, btree (organization_identifier, alternate_name)
+     "organization_alternate_name_pkey" PRIMARY KEY, btree (identifier)
+     "organization_alternate_name_organization_identifier_alterna_key" UNIQUE CONSTRAINT, btree (organization_identifier, alternate_name)
  Check constraints:
      "iso_lang_length" CHECK (char_length(language::text) >= 2)
  Foreign-key constraints:

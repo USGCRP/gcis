@@ -135,9 +135,9 @@
                 <td>
                 
                   
-                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
-                  
                 
+                  
+                  <a href="table_gcis_metadata.organization.html#gcis-metadata.table.organization">organization.identifier</a>
                   
                 
                 </td>
@@ -148,14 +148,15 @@
                     
 
                     
+                       UNIQUE#1
+                    
                 
-                    PRIMARY KEY
                     
 
                     
                 
 
-                
+                NOT NULL
                 
                 </i>
                 <br><br>The organization identifier this name belongs to.
@@ -172,13 +173,14 @@
                 <td>text</td>
                 <td><i>
                 
-                    PRIMARY KEY
                     
 
                     
+                       UNIQUE#1
+                    
                 
 
-                
+                NOT NULL
                 
                 </i>
                 <br><br>The alternate name of the organization.
@@ -214,6 +216,29 @@
                 DEFAULT false
                 </i>
                 <br><br>If the name is historical and no longer used. Default False
+                </td>
+             </tr>
+            
+            <tr class="tr0">
+                <td>
+                
+                  
+                
+                </td>
+                <td>identifier</td>
+                <td>serial</td>
+                <td><i>
+                
+                    PRIMARY KEY
+                    
+
+                    
+                
+
+                
+                
+                </i>
+                <br><br>An automatically-generated unique numeric identifier.
                 </td>
              </tr>
             
