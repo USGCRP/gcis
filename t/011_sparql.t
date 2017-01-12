@@ -118,7 +118,7 @@ $t->post_ok(
     chapter_identifier => "the-larch",
     identifier         => "larch-trees-are-tall",
     statement          => "Larch trees are tall.",
-    ordinal            => 1,
+    ordinal            => "1.5_b",
   })->status_is(200);
 
 my $image_identifier = "99285d0f-ea9b-4bf2-80aa-3b968420c8b0";

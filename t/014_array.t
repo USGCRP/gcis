@@ -27,7 +27,7 @@ $t->post_ok("/report/vegetables/table" =>
       identifier => 'veggietable',
       report_identifier => 'vegetables',
       title => 'veggie table',
-      ordinal => 1,
+      ordinal => '1-b',
       caption => 'numbers of veggies',
       url => 'http://example.com/veggies'
 })->status_is(200);
@@ -62,7 +62,7 @@ $t->get_ok("/report/vegetables/table/veggietable.json")->status_is(200)
    'files' => [],
    'href' => "$base/report/vegetables/table/veggietable.json",
    'identifier' => 'veggietable',
-   'ordinal' => 1,
+   'ordinal' => '1-b',
    'parents' => [],
    'references' => [],
    'cited_by' => [],
@@ -86,7 +86,7 @@ $t->get_ok("/array/simple.json")->json_is({
                        'caption' => 'numbers of veggies',
                        'chapter_identifier' => undef,
                        'identifier' => 'veggietable',
-                       'ordinal' => 1,
+                       'ordinal' => '1-b',
                        'report_identifier' => 'vegetables',
                        'title' => 'veggie table',
                        'url' => 'http://example.com/veggies'

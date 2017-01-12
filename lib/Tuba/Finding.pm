@@ -68,7 +68,7 @@ sub show {
     my $report_identifier = $c->stash('report_identifier');
     my $object = $c->_this_object();
 
-    if (!$object && $identifier =~ /^[0-9]+$/ && $c->stash('chapter') ) {
+    if (!$object && $identifier =~ /^[0-9]+[0-9a-zA-Z._-]*$/ && $c->stash('chapter') ) {
         my $chapter = $c->stash('chapter');
         $object = Finding->new(
           report_identifier  => $c->stash('report_identifier'),

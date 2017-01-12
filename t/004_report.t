@@ -66,6 +66,21 @@ for my $i (1..10) {
     )->json_is('/statement' => "Test Chapter Finding number $i.");
 }
 
+my $id_num = 11;
+for my $s ( @{[ '1a', '2b-1', '3_a', '4.2' ]} ) {
+    $t->post_ok(
+      "/report/test-report/chapter/test-chapter/finding.json" => form => {
+        identifier => "test-chapter-finding-$id_num",
+        ordinal => $s,
+        statement  => "Test Chapter Finding number $s."
+      }
+    )->status_is(200);
+    $t->get_ok(
+      "/report/test-report/chapter/test-chapter/finding/test-chapter-finding-$id_num.json"
+    )->json_is('/statement' => "Test Chapter Finding number $s.");
+    $id_num++;
+}
+
 $t->post_ok("/report" => json => { identifier => "test-report2", title => "test 2 report" } )->status_is(200);
 $t->post_ok("/report" => { Accept => "application/json" } => json => { identifier => "test-report2", title => "test 2 report" } )->status_is(409);
 

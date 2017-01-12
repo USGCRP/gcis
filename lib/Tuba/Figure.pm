@@ -64,7 +64,7 @@ sub show {
       report_identifier => $c->stash('report_identifier')
       )->load(speculative => 1, with => [qw/chapter images/]);
 
-    if (!$object && $identifier =~ /^[0-9]+$/ && $c->stash('chapter') ) {
+    if (!$object && $identifier =~ /^[0-9]+[0-9a-zA-Z._-]*$/ && $c->stash('chapter') ) {
         my $chapter = $c->stash('chapter');
         $object = Figure->new(
           report_identifier  => $c->stash('report_identifier'),

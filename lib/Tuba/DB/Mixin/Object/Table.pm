@@ -30,7 +30,7 @@ sub sortkey {
         $chapter_number = $chapter->number || 0;
     }
     my $ordinal = $s->ordinal || 0;
-    $s->{_sortkey} = sprintf('%10d%10d',$chapter_number,$ordinal);
+    $s->{_sortkey} = sprintf('%s%s',$chapter_number,$ordinal);
     return $s->{_sortkey};
 }
 

@@ -54,7 +54,7 @@ sub show {
     my $meta = Table->meta;
     my $object = Table->new(identifier => $identifier, report_identifier => $report_identifier)
         ->load(speculative => 1, with => [qw/chapter arrays/]);
-    if (!$object && ($identifier =~ /^[0-9]+$/) && $c->stash('chapter') ) {
+    if (!$object && ($identifier =~ /^[0-9]+[0-9a-zA-Z._-]*$/) && $c->stash('chapter') ) {
         my $chapter = $c->stash('chapter');
         $object = Table->new(
           report_identifier  => $c->stash('report_identifier'),
