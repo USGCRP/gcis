@@ -11,7 +11,7 @@ configure_requires:
   Module::Build::Database: '0'
   Mojolicious: '6.08'
 dynamic_config: 1
-generated_by: 'Module::Build version 0.4218, CPAN::Meta::Converter version 2.150005'
+generated_by: 'Module::Build version 0.4216, CPAN::Meta::Converter version 2.150005'
 license: open_source
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: '1.46.0'
+    version: v1.47.0
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -101,6 +101,8 @@ provides:
     file: lib/Tuba/DB/Mixin/Object/ModelRun.pm
   Tuba::DB::Object::Organization:
     file: lib/Tuba/DB/Mixin/Object/Organization.pm
+  Tuba::DB::Object::OrganizationAlternateName:
+    file: lib/Tuba/DB/Mixin/Object/OrganizationAlternateName.pm
   Tuba::DB::Object::Person:
     file: lib/Tuba/DB/Mixin/Object/Person.pm
   Tuba::DB::Object::Person::Manager:
@@ -165,6 +167,8 @@ provides:
     file: lib/Tuba/ModelRun.pm
   Tuba::Organization:
     file: lib/Tuba/Organization.pm
+  Tuba::OrganizationAlternateName:
+    file: lib/Tuba/OrganizationAlternateName.pm
   Tuba::Person:
     file: lib/Tuba/Person.pm
   Tuba::Platform:
@@ -244,5 +248,5 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: '1.46.0'
+version: v1.47.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

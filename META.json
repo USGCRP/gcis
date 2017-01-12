@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4218",
+   "generated_by" : "Module::Build version 0.4216",
    "license" : [
       "agpl_3"
    ],
@@ -78,7 +78,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "1.46.0"
+         "version" : "v1.47.0"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -200,6 +200,9 @@
       "Tuba::DB::Object::Organization" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Organization.pm"
       },
+      "Tuba::DB::Object::OrganizationAlternateName" : {
+         "file" : "lib/Tuba/DB/Mixin/Object/OrganizationAlternateName.pm"
+      },
       "Tuba::DB::Object::Person" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Person.pm"
       },
@@ -296,6 +299,9 @@
       "Tuba::Organization" : {
          "file" : "lib/Tuba/Organization.pm"
       },
+      "Tuba::OrganizationAlternateName" : {
+         "file" : "lib/Tuba/OrganizationAlternateName.pm"
+      },
       "Tuba::Person" : {
          "file" : "lib/Tuba/Person.pm"
       },
@@ -352,6 +358,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "1.46.0",
-   "x_serialization_backend" : "JSON::PP version 2.27400"
+   "version" : "v1.47.0",
+   "x_serialization_backend" : "JSON::PP version 2.27300"
 }
