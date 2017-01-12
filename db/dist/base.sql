@@ -657,10 +657,11 @@ CREATE TABLE figure (
     submission_dt timestamp(3) without time zone,
     create_dt timestamp(3) without time zone,
     source_citation character varying,
-    ordinal integer,
+    ordinal character varying,
     report_identifier character varying NOT NULL,
     url character varying,
-    CONSTRAINT ck_figure_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    CONSTRAINT ck_figure_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT figure_mostly_numeric_ordinal CHECK (((ordinal)::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text))
 );
 
 
@@ -729,7 +730,7 @@ COMMENT ON COLUMN figure.source_citation IS 'Text describing the source of this 
 
 
 
-COMMENT ON COLUMN figure.ordinal IS 'The numeric position of this figure within a chapter.';
+COMMENT ON COLUMN figure.ordinal IS 'The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores';
 
 
 
@@ -808,14 +809,15 @@ CREATE TABLE finding (
     identifier character varying NOT NULL,
     chapter_identifier character varying,
     statement character varying,
-    ordinal integer,
+    ordinal character varying,
     report_identifier character varying NOT NULL,
     process character varying,
     evidence character varying,
     uncertainties character varying,
     confidence character varying,
     url character varying,
-    CONSTRAINT ck_finding_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    CONSTRAINT ck_finding_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT finding_mostly_numeric_ordinal CHECK (((ordinal)::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text))
 );
 
 
@@ -836,7 +838,7 @@ COMMENT ON COLUMN finding.statement IS 'The statement of the finding.';
 
 
 
-COMMENT ON COLUMN finding.ordinal IS 'The numeric position of this finding with a chapter (or report).';
+COMMENT ON COLUMN finding.ordinal IS 'The numeric position of this finding within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores';
 
 
 
@@ -1339,6 +1341,7 @@ CREATE TABLE organization_alternate_name (
     alternate_name text NOT NULL,
     language character varying(3) NOT NULL,
     deprecated boolean DEFAULT false NOT NULL,
+    identifier integer NOT NULL,
     CONSTRAINT iso_lang_length CHECK ((char_length((language)::text) >= 2))
 );
 
@@ -1361,6 +1364,23 @@ COMMENT ON COLUMN organization_alternate_name.language IS 'The language used for
 
 
 COMMENT ON COLUMN organization_alternate_name.deprecated IS 'If the name is historical and no longer used. Default False';
+
+
+
+COMMENT ON COLUMN organization_alternate_name.identifier IS 'An automatically-generated unique numeric identifier.';
+
+
+
+CREATE SEQUENCE organization_alternate_name_identifier_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+
+ALTER SEQUENCE organization_alternate_name_identifier_seq OWNED BY organization_alternate_name.identifier;
 
 
 
@@ -1971,11 +1991,12 @@ CREATE TABLE "table" (
     identifier character varying NOT NULL,
     report_identifier character varying NOT NULL,
     chapter_identifier character varying,
-    ordinal integer,
+    ordinal character varying,
     title character varying,
     caption character varying,
     url character varying,
-    CONSTRAINT ck_table_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text)))
+    CONSTRAINT ck_table_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
+    CONSTRAINT table_mostly_numeric_ordinal CHECK (((ordinal)::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text))
 );
 
 
@@ -1996,7 +2017,7 @@ COMMENT ON COLUMN "table".chapter_identifier IS 'The chapter containing this tab
 
 
 
-COMMENT ON COLUMN "table".ordinal IS 'The numeric postiion of this table within the chapter.';
+COMMENT ON COLUMN "table".ordinal IS 'The numeric position of this table within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores';
 
 
 
@@ -2155,6 +2176,10 @@ ALTER TABLE ONLY contributor ALTER COLUMN id SET DEFAULT nextval('contributor_id
 
 
 ALTER TABLE ONLY file ALTER COLUMN identifier SET DEFAULT nextval('file_id_seq'::regclass);
+
+
+
+ALTER TABLE ONLY organization_alternate_name ALTER COLUMN identifier SET DEFAULT nextval('organization_alternate_name_identifier_seq'::regclass);
 
 
 
@@ -2362,7 +2387,12 @@ ALTER TABLE ONLY model_run
 
 
 ALTER TABLE ONLY organization_alternate_name
-    ADD CONSTRAINT organization_alternate_name_pkey PRIMARY KEY (organization_identifier, alternate_name);
+    ADD CONSTRAINT organization_alternate_name_organization_identifier_alterna_key UNIQUE (organization_identifier, alternate_name);
+
+
+
+ALTER TABLE ONLY organization_alternate_name
+    ADD CONSTRAINT organization_alternate_name_pkey PRIMARY KEY (identifier);
 
 
 

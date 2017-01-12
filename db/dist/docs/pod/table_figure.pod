@@ -24,16 +24,16 @@ A figure appears in a report and may consist of one or more images.
  submission_dt (timestamp(3) without time zone) - The date on which this image was submitted.
  create_dt (timestamp(3) without time zone) - The date on which this image was created.
  source_citation (character varying) - Text describing the source of this figure.
- ordinal (integer) - The numeric position of this figure within a chapter.
+ ordinal (character varying) - The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
  report_identifier (character varying) - The report associated with this figure
  url (character varying) - A URL for a landing page for this figure.
 
 
 =head1 SCHEMA
 
-                                                                 Table "gcis_metadata.figure"
-        Column       |              Type              | Modifiers | Storage  | Stats target |                          Description                           
- --------------------+--------------------------------+-----------+----------+--------------+----------------------------------------------------------------
+                                                                                                       Table "gcis_metadata.figure"
+        Column       |              Type              | Modifiers | Storage  | Stats target |                                                                Description                                                                 
+ --------------------+--------------------------------+-----------+----------+--------------+--------------------------------------------------------------------------------------------------------------------------------------------
   identifier         | character varying              | not null  | extended |              | A descriptive identifier for this figure.
   chapter_identifier | character varying              |           | extended |              | The chapter in which this figure appears.
   title              | character varying              |           | extended |              | The short title, if any.
@@ -49,7 +49,7 @@ A figure appears in a report and may consist of one or more images.
   submission_dt      | timestamp(3) without time zone |           | plain    |              | The date on which this image was submitted.
   create_dt          | timestamp(3) without time zone |           | plain    |              | The date on which this image was created.
   source_citation    | character varying              |           | extended |              | Text describing the source of this figure.
-  ordinal            | integer                        |           | plain    |              | The numeric position of this figure within a chapter.
+  ordinal            | character varying              |           | extended |              | The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
   report_identifier  | character varying              | not null  | extended |              | The report associated with this figure
   url                | character varying              |           | extended |              | A URL for a landing page for this figure.
  Indexes:
@@ -57,6 +57,7 @@ A figure appears in a report and may consist of one or more images.
      "figure_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
  Check constraints:
      "ck_figure_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+     "figure_mostly_numeric_ordinal" CHECK (ordinal::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text)
  Foreign-key constraints:
      "figure_chapter_report" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "figure_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE

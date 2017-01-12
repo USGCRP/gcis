@@ -12,7 +12,7 @@ A table is in a report, and may contain one or more arrays.
  identifier (character varying) - A desciptive identifier.
  report_identifier (character varying) - The report.
  chapter_identifier (character varying) - The chapter containing this table.
- ordinal (integer) - The numeric postiion of this table within the chapter.
+ ordinal (character varying) - The numeric position of this table within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
  title (character varying) - The title of the table.
  caption (character varying) - The caption for the table.
  url (character varying) - A URL for a landing page for this table.
@@ -20,13 +20,13 @@ A table is in a report, and may contain one or more arrays.
 
 =head1 SCHEMA
 
-                                                       Table "gcis_metadata.table"
-        Column       |       Type        | Modifiers | Storage  | Stats target |                      Description                       
- --------------------+-------------------+-----------+----------+--------------+--------------------------------------------------------
+                                                                                                Table "gcis_metadata.table"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                                                                Description                                                                
+ --------------------+-------------------+-----------+----------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------
   identifier         | character varying | not null  | extended |              | A desciptive identifier.
   report_identifier  | character varying | not null  | extended |              | The report.
   chapter_identifier | character varying |           | extended |              | The chapter containing this table.
-  ordinal            | integer           |           | plain    |              | The numeric postiion of this table within the chapter.
+  ordinal            | character varying |           | extended |              | The numeric position of this table within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
   title              | character varying |           | extended |              | The title of the table.
   caption            | character varying |           | extended |              | The caption for the table.
   url                | character varying |           | extended |              | A URL for a landing page for this table.
@@ -35,6 +35,7 @@ A table is in a report, and may contain one or more arrays.
      "table_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
  Check constraints:
      "ck_table_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+     "table_mostly_numeric_ordinal" CHECK (ordinal::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text)
  Foreign-key constraints:
      "table_chapter_identifier_fkey" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "table_report_identifier_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE

@@ -367,8 +367,15 @@ COPY model_run (identifier, doi, model_identifier, scenario_identifier, spatial_
 -- Data for Name: organization_alternate_name; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY organization_alternate_name (organization_identifier, alternate_name, language, deprecated) FROM stdin;
+COPY organization_alternate_name (organization_identifier, alternate_name, language, deprecated, identifier) FROM stdin;
 \.
+
+
+--
+-- Name: organization_alternate_name_identifier_seq; Type: SEQUENCE SET; Schema: gcis_metadata; Owner: -
+--
+
+SELECT pg_catalog.setval('organization_alternate_name_identifier_seq', 1, false);
 
 
 --

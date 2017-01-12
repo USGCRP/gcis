@@ -401,7 +401,7 @@
                 
                 </td>
                 <td>ordinal</td>
-                <td>integer</td>
+                <td>character varying</td>
                 <td><i>
                 
                     
@@ -414,7 +414,7 @@
                 
                 
                 </i>
-                <br><br>The numeric position of this figure within a chapter.
+                <br><br>The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
                 </td>
              </tr>
             
@@ -499,6 +499,11 @@
             <tr class="tr0">
                 <td>ck_figure_identifier</td>
                 <td>CHECK (((identifier)::text ~ similar_escape(&#39;[a-z0-9_-]+&#39;::text, NULL::text)))</td>
+            </tr>
+            
+            <tr class="tr1">
+                <td>figure_mostly_numeric_ordinal</td>
+                <td>CHECK (((ordinal)::text ~ &#39;^[0-9]+[0-9a-zA-Z._-]*$&#39;::text))</td>
             </tr>
             
         </table>

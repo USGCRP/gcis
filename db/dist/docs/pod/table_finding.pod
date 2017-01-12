@@ -12,7 +12,7 @@ A finding is associated with a report and optionally a chapter.
  identifier (character varying) - A descriptive identifier for this finding.
  chapter_identifier (character varying) - The chapter containing this finding.
  statement (character varying) - The statement of the finding.
- ordinal (integer) - The numeric position of this finding with a chapter (or report).
+ ordinal (character varying) - The numeric position of this finding within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
  report_identifier (character varying) - The report associated with this finding.
  process (character varying) - The process for developing this finding.
  evidence (character varying) - A description of the evidence base.
@@ -23,13 +23,13 @@ A finding is associated with a report and optionally a chapter.
 
 =head1 SCHEMA
 
-                                                              Table "gcis_metadata.finding"
-        Column       |       Type        | Modifiers | Storage  | Stats target |                              Description                               
- --------------------+-------------------+-----------+----------+--------------+------------------------------------------------------------------------
+                                                                                                Table "gcis_metadata.finding"
+        Column       |       Type        | Modifiers | Storage  | Stats target |                                                                 Description                                                                 
+ --------------------+-------------------+-----------+----------+--------------+---------------------------------------------------------------------------------------------------------------------------------------------
   identifier         | character varying | not null  | extended |              | A descriptive identifier for this finding.
   chapter_identifier | character varying |           | extended |              | The chapter containing this finding.
   statement          | character varying |           | extended |              | The statement of the finding.
-  ordinal            | integer           |           | plain    |              | The numeric position of this finding with a chapter (or report).
+  ordinal            | character varying |           | extended |              | The numeric position of this finding within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
   report_identifier  | character varying | not null  | extended |              | The report associated with this finding.
   process            | character varying |           | extended |              | The process for developing this finding.
   evidence           | character varying |           | extended |              | A description of the evidence base.
@@ -41,6 +41,7 @@ A finding is associated with a report and optionally a chapter.
      "finding_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
  Check constraints:
      "ck_finding_identifier" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
+     "finding_mostly_numeric_ordinal" CHECK (ordinal::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text)
  Foreign-key constraints:
      "finding_chapter_fkey" FOREIGN KEY (chapter_identifier, report_identifier) REFERENCES chapter(identifier, report_identifier) ON UPDATE CASCADE ON DELETE CASCADE
      "finding_report_fkey" FOREIGN KEY (report_identifier) REFERENCES report(identifier) ON UPDATE CASCADE ON DELETE CASCADE
