@@ -34,6 +34,13 @@ sub sortkey {
     return $s->{_sortkey};
 }
 
+sub get_origination {
+    my $s = shift;
+    my $origination = $s->{_origination};
+    $origination = "{}" if ( ! $origination );
+    return $origination;
+}
+
 sub uri {
     my $s = shift;
     my $c = shift;

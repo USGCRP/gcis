@@ -56,6 +56,33 @@ sub set_title {
     }
 }
 
+sub show_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+    my $object = Figure->new(
+      identifier        => $identifier,
+      report_identifier => $c->stash('report_identifier')
+      )->load(speculative => 1);
+
+    if (!$object && $identifier =~ /^[0-9]+[0-9a-zA-Z._-]*$/ && $c->stash('chapter') ) {
+        my $chapter = $c->stash('chapter');
+        $object = Figure->new(
+          report_identifier  => $c->stash('report_identifier'),
+          chapter_identifier => $chapter->identifier,
+          ordinal            => $identifier,
+        )->load(speculative => 1);
+    };
+    return $c->render_not_found_or_redirect unless $object;
+
+    my $origination = $object->get_origination();
+    $c->respond_to(
+        json => sub { my $c = shift;
+            $c->render(text => $origination, format => 'json' ); },
+        any => sub { my $c = shift;
+            $c->render(text => $origination, format => 'json' ); },
+    );
+}
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('figure_identifier');

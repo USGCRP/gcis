@@ -339,6 +339,10 @@ sub startup {
     $ch->resource('figure');
     $ch->resource('table');
 
+    # Figure Origination
+    my $fig = $r->find('select_figure');
+    $fig->get('/original')->to('figure#show_origination')->name('show_figure_origination');
+
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');
     $report->get('/figure') ->to('figure#list') ->name('list_all_figures');
