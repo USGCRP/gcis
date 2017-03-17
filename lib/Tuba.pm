@@ -342,6 +342,16 @@ sub startup {
     # Figure Origination
     my $fig = $r->find('select_figure');
     $fig->get('/original')->to('figure#show_origination')->name('show_figure_origination');
+    unless ($config->{read_only}) {
+        my $origination_authed = $fig->under->to(
+          cb => sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          }
+        );
+        $origination_authed->post('/original.json')->to('figure#update_origination')->name('update_figure_origination');
+    };
 
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');

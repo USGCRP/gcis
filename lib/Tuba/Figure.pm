@@ -81,6 +81,25 @@ sub show_origination {
     );
 }
 
+sub update_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+
+    logger->warn("YO! I made it to the post function");
+
+    my $figure = $c->_this_object or return $c->reply->not_found;
+
+    my $json = $c->req->json;
+    if ( ! $json ) {
+       return $c->render(json => { success => 0, error => "invalid JSON" } );
+    }
+    my $json_string = $c->req->text;
+
+    #$figure->{_origination} = $json_string;
+
+    $c->render(json => $json_string );
+}
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('figure_identifier');
