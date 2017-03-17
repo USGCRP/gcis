@@ -78,8 +78,6 @@ sub show_origination {
     $c->respond_to(
         json => sub { my $c = shift;
             $c->render(text => $origination, format => 'json' ); },
-        any => sub { my $c = shift;
-            $c->render(text => $origination, format => 'json' ); },
     );
 }
 
