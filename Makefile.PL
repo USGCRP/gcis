@@ -18,7 +18,6 @@ WriteMakefile
                    'Test::More' => 0,
                    'JSON::XS' => 0,
                    'DBIx::Custom' => 0,
-                   'Swagger2' => 0,
                    'Mojolicious' => '6.08',
                    'Scalar::Util' => 0,
                    'Algorithm::Permute' => 0,
