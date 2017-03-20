@@ -45,6 +45,30 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+# To avoid breaking the current API, Figure has it's own make_tree_for_list
+# which strips out its private keys (_keys), letting all the other objects continue
+# to include them :\
+sub make_tree_for_list {
+    my $c = shift;
+    my $obj = shift;
+    my %t;
+    for my $method (@{ $obj->meta->column_accessor_method_names }) {
+        my $val = $obj->$method;
+        $t{$method} =
+             ref($val) && ref($val) eq 'DateTime::Duration' ?
+                human_duration($val) : $val;
+    }
+    my $uri = $obj->uri($c);
+    my $href = $uri->clone->to_abs;
+    $href .= '.'.$c->stash('format') if $c->stash('format');
+    $t{uri} = $uri;
+    $t{href} = $href;
+    for my $k (keys %t) {
+        delete $t{$k} if $k =~ /^_/;
+    }
+    return \%t;
+}
+
 sub set_title {
     my $c = shift;
     if (my $ch = $c->stash('chapter')) {
@@ -84,8 +108,6 @@ sub show_origination {
 sub update_origination {
     my $c = shift;
     my $identifier = $c->stash('figure_identifier');
-
-    logger->warn("YO! I made it to the post function");
 
     my $figure = $c->_this_object or return $c->reply->not_found;
 
