@@ -95,9 +95,10 @@ sub update_origination {
     }
     my $json_string = $c->req->text;
 
-    #$figure->{_origination} = $json_string;
+    $figure->set_origination($json_string);
+    $figure->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($figure->error);
 
-    $c->render(json => $json_string );
+    $c->render(json => { success => 1 } );
 }
 
 sub show {

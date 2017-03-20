@@ -339,7 +339,7 @@ sub startup {
     $ch->resource('figure');
     $ch->resource('table');
 
-    # Figure Origination
+    # Figure Origination API, only intended for TSU as a temporary option
     my $fig = $r->find('select_figure');
     $fig->get('/original')->to('figure#show_origination')->name('show_figure_origination');
     unless ($config->{read_only}) {
