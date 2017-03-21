@@ -202,7 +202,7 @@ COPY exterm (term, context, lexicon_identifier, gcid) FROM stdin;
 -- Data for Name: figure; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY figure (identifier, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier, url) FROM stdin;
+COPY figure (identifier, chapter_identifier, title, caption, attributes, time_start, time_end, lat_max, lat_min, lon_max, lon_min, usage_limits, submission_dt, create_dt, source_citation, ordinal, report_identifier, url, _origination) FROM stdin;
 \.
 
 

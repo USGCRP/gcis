@@ -1,5 +1,4 @@
 .travis.yml
-bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
@@ -1051,7 +1050,6 @@ t/016_turtle_syntax.t
 t/017_person.t
 t/017_person_api.t
 t/018_contributor.t
-t/019_swagger.t
 t/020_ontology.t
 t/999_stop_db.t
 t/tinit.pm

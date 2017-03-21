@@ -660,6 +660,7 @@ CREATE TABLE figure (
     ordinal character varying,
     report_identifier character varying NOT NULL,
     url character varying,
+    _origination json,
     CONSTRAINT ck_figure_identifier CHECK (((identifier)::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))),
     CONSTRAINT figure_mostly_numeric_ordinal CHECK (((ordinal)::text ~ '^[0-9]+[0-9a-zA-Z._-]*$'::text))
 );
@@ -739,6 +740,10 @@ COMMENT ON COLUMN figure.report_identifier IS 'The report associated with this f
 
 
 COMMENT ON COLUMN figure.url IS 'A URL for a landing page for this figure.';
+
+
+
+COMMENT ON COLUMN figure._origination IS 'origination metadata collected by TSU, should eventually be mapped to an Activity';
 
 
 
