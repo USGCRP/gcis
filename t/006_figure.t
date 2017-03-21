@@ -160,6 +160,7 @@ $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
 $t->delete_ok("/gcmd_keyword/001f18d3-7e61-430b-9883-1960c6256fe5");
 $t->delete_ok("/report/vegetables")->status_is(200);
 $t->delete_ok("/image/$uuid")->status_is(200);
+$t->delete_ok("/region/bermuda_triangle")->status_is(200);
 
 done_testing();
 
