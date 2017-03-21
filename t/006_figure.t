@@ -157,6 +157,15 @@ $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
 $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => undef );
 
+# Create a _origination on the figure
+my %origination = ( identifier => "test_info", foo => "bar", fee => 1 );
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/orange/original.json" => json => \%origination
+)->status_is(200);
+$t->get_ok(
+  "/report/vegetables/chapter/carrots/figure/orange/original.json"
+)->status_is(200)->json_is(\%origination) or diag explain($t->tx->res->json);
+
 $t->delete_ok("/gcmd_keyword/001f18d3-7e61-430b-9883-1960c6256fe5");
 $t->delete_ok("/report/vegetables")->status_is(200);
 $t->delete_ok("/image/$uuid")->status_is(200);
