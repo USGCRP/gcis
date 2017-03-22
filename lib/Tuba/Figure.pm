@@ -113,7 +113,7 @@ sub update_origination {
 
     my $json = $c->req->json;
     if ( ! $json ) {
-       return $c->render(json => { success => 0, error => "invalid JSON" } );
+       return $c->render(json => { success => 0, error => "invalid JSON" }, status => 422 );
     }
     my $json_string = $c->req->text;
 

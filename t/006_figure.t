@@ -158,6 +158,9 @@ $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => undef );
 
 # Create a _origination on the figure
+$t->post_ok(
+  "/report/vegetables/chapter/carrots/figure/orange/original.json" => "{Not Valid JSON"
+)->status_is(422);
 my %origination = ( identifier => "test_info", foo => "bar", fee => 1 );
 $t->post_ok(
   "/report/vegetables/chapter/carrots/figure/orange/original.json" => json => \%origination
