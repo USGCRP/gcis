@@ -168,6 +168,11 @@ $t->post_ok(
 $t->get_ok(
   "/report/vegetables/chapter/carrots/figure/orange/original.json"
 )->status_is(200)->json_is(\%origination) or diag explain($t->tx->res->json);
+$t->delete_ok("/report/vegetables/chapter/carrots/figure/orange/original.json");
+$t->delete_ok("/report/vegetables/chapter/carrots/figure/osrange/original.json")->status_is(404);
+$t->get_ok(
+  "/report/vegetables/chapter/carrots/figure/orange/original.json"
+)->status_is(200)->content_is("{}");
 
 $t->delete_ok("/gcmd_keyword/001f18d3-7e61-430b-9883-1960c6256fe5");
 $t->delete_ok("/report/vegetables")->status_is(200);

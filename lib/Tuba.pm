@@ -351,6 +351,7 @@ sub startup {
           }
         );
         $origination_authed->post('/original.json')->to('figure#update_origination')->name('update_figure_origination');
+        $origination_authed->delete('/original.json')->to('figure#remove_origination')->name('remove_figure_origination');
     };
 
     # Report (finding|figure|table)s have no chapter.

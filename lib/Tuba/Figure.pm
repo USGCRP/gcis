@@ -123,6 +123,18 @@ sub update_origination {
     $c->render(json => { success => 1 } );
 }
 
+sub remove_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+
+    my $figure = $c->_this_object or return $c->reply->not_found;
+
+    $figure->set_origination("{}");
+    $figure->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($figure->error);
+
+    $c->render(json => { success => 1 } );
+}
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('figure_identifier');
