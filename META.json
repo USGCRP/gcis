@@ -4,7 +4,7 @@
       "unknown"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4216",
+   "generated_by" : "Module::Build version 0.422",
    "license" : [
       "agpl_3"
    ],
@@ -63,7 +63,6 @@
             "Scalar::Util" : "0",
             "Sort::Key" : "0",
             "String::Diff" : "0",
-            "Swagger2" : "0",
             "Text::CSV_XS" : "0",
             "Text::Format" : "0",
             "Time::Duration" : "0",
@@ -78,7 +77,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "v1.47.0"
+         "version" : "v1.48.0"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -358,6 +357,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v1.47.0",
-   "x_serialization_backend" : "JSON::PP version 2.27300"
+   "version" : "v1.48.0",
+   "x_serialization_backend" : "JSON::PP version 2.27400"
 }

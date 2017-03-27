@@ -66,7 +66,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.47.0';
+our $VERSION = '1.48.0';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -338,6 +338,21 @@ sub startup {
     $ch->resource('finding');
     $ch->resource('figure');
     $ch->resource('table');
+
+    # Figure Origination API, only intended for TSU as a temporary option
+    my $fig = $r->find('select_figure');
+    $fig->get('/original')->to('figure#show_origination')->name('show_figure_origination');
+    unless ($config->{read_only}) {
+        my $origination_authed = $fig->under->to(
+          cb => sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          }
+        );
+        $origination_authed->post('/original.json')->to('figure#update_origination')->name('update_figure_origination');
+        $origination_authed->delete('/original.json')->to('figure#remove_origination')->name('remove_figure_origination');
+    };
 
     # Report (finding|figure|table)s have no chapter.
     $report->get('/finding')->to('finding#list')->name('list_all_findings');

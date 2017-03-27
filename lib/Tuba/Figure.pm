@@ -45,6 +45,30 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+# To avoid breaking the current API, Figure has it's own make_tree_for_list
+# which strips out its private keys (_keys), letting all the other objects continue
+# to include them :\
+sub make_tree_for_list {
+    my $c = shift;
+    my $obj = shift;
+    my %t;
+    for my $method (@{ $obj->meta->column_accessor_method_names }) {
+        my $val = $obj->$method;
+        $t{$method} =
+             ref($val) && ref($val) eq 'DateTime::Duration' ?
+                human_duration($val) : $val;
+    }
+    my $uri = $obj->uri($c);
+    my $href = $uri->clone->to_abs;
+    $href .= '.'.$c->stash('format') if $c->stash('format');
+    $t{uri} = $uri;
+    $t{href} = $href;
+    for my $k (keys %t) {
+        delete $t{$k} if $k =~ /^_/;
+    }
+    return \%t;
+}
+
 sub set_title {
     my $c = shift;
     if (my $ch = $c->stash('chapter')) {
@@ -54,6 +78,61 @@ sub set_title {
     } else {
         $c->stash(title => "All figures");
     }
+}
+
+sub show_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+    my $object = Figure->new(
+      identifier        => $identifier,
+      report_identifier => $c->stash('report_identifier')
+      )->load(speculative => 1);
+
+    if (!$object && $identifier =~ /^[0-9]+[0-9a-zA-Z._-]*$/ && $c->stash('chapter') ) {
+        my $chapter = $c->stash('chapter');
+        $object = Figure->new(
+          report_identifier  => $c->stash('report_identifier'),
+          chapter_identifier => $chapter->identifier,
+          ordinal            => $identifier,
+        )->load(speculative => 1);
+    };
+    return $c->render_not_found_or_redirect unless $object;
+
+    my $origination = $object->get_origination();
+    $c->respond_to(
+        json => sub { my $c = shift;
+            $c->render(text => $origination, format => 'json' ); },
+    );
+}
+
+sub update_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+
+    my $figure = $c->_this_object or return $c->reply->not_found;
+
+    my $json = $c->req->json;
+    if ( ! $json ) {
+       return $c->render(json => { success => 0, error => "invalid JSON" }, status => 422 );
+    }
+    my $json_string = $c->req->text;
+
+    $figure->set_origination($json_string);
+    $figure->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($figure->error);
+
+    $c->render(json => { success => 1 } );
+}
+
+sub remove_origination {
+    my $c = shift;
+    my $identifier = $c->stash('figure_identifier');
+
+    my $figure = $c->_this_object or return $c->reply->not_found;
+
+    $figure->set_origination("{}");
+    $figure->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($figure->error);
+
+    $c->render(json => { success => 1 } );
 }
 
 sub show {

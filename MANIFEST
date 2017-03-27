@@ -1,5 +1,4 @@
 .travis.yml
-bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
@@ -611,6 +610,8 @@ db/patches/2300_remove_internation_org_type.sql
 db/patches/2310_organization_alt_name.sql
 db/patches/2320_organization_alt_name_alterations.sql
 db/patches/2330_update_ordinals_type.sql
+db/patches/2340_correct_table_owner.sql
+db/patches/2350_add_figure_origination.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -1051,7 +1052,6 @@ t/016_turtle_syntax.t
 t/017_person.t
 t/017_person_api.t
 t/018_contributor.t
-t/019_swagger.t
 t/020_ontology.t
 t/999_stop_db.t
 t/tinit.pm

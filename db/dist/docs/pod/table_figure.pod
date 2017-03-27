@@ -27,6 +27,7 @@ A figure appears in a report and may consist of one or more images.
  ordinal (character varying) - The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
  report_identifier (character varying) - The report associated with this figure
  url (character varying) - A URL for a landing page for this figure.
+ _origination (json) - origination metadata collected by TSU, should eventually be mapped to an Activity
 
 
 =head1 SCHEMA
@@ -52,6 +53,7 @@ A figure appears in a report and may consist of one or more images.
   ordinal            | character varying              |           | extended |              | The numeric position of this figure within a chapter. Must start with a number, may contain numbers, letters, dashes, dots and underscores
   report_identifier  | character varying              | not null  | extended |              | The report associated with this figure
   url                | character varying              |           | extended |              | A URL for a landing page for this figure.
+  _origination       | json                           |           | extended |              | origination metadata collected by TSU, should eventually be mapped to an Activity
  Indexes:
      "figure_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "figure_report_identifier_chapter_identifier_ordinal_key" UNIQUE CONSTRAINT, btree (report_identifier, chapter_identifier, ordinal)
