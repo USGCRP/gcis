@@ -612,6 +612,7 @@ db/patches/2320_organization_alt_name_alterations.sql
 db/patches/2330_update_ordinals_type.sql
 db/patches/2340_correct_table_owner.sql
 db/patches/2350_add_figure_origination.sql
+db/patches/2360_organization_alt_name_update_cascade.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
