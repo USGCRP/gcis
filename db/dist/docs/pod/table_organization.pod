@@ -38,7 +38,7 @@ An organization is an entity with which people and publications may be associate
      "organization_organization_type_identifier_fkey" FOREIGN KEY (organization_type_identifier) REFERENCES organization_type(identifier)
  Referenced by:
      TABLE "contributor" CONSTRAINT "contributor_organization_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
-     TABLE "organization_alternate_name" CONSTRAINT "organization_alternate_name_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE
+     TABLE "organization_alternate_name" CONSTRAINT "organization_alternate_name_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "organization_map" CONSTRAINT "organization_map_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "organization_map" CONSTRAINT "organization_map_other_organization_identifier_fkey" FOREIGN KEY (other_organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
