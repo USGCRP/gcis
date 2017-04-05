@@ -133,14 +133,22 @@ sub list_indicators {
     my %query;
 
     $query{report_type_identifier} = 'indicator';
-    if ($_ = $c->param('publication_year')) {
-        $query{publication_year} = $_ if /^[0-9]{4}$/;
+    $query{_public} = 't';
+
+    if (my $year = $c->param('publication_year')) {
+        if ($year =~ /^[0-9]{4}$/) {
+            $query{publication_year} = $year;
+        }
     }
+    unless ($_ = $c->param('and_outdated') ) {
+        $query{url} = { 'ne' => undef };
+    }
+
 
     my $objects = Reports->get_objects(
         query => [
             %query,
-            or => [ and => [_public => 't'],
+            or => [
                     and => [username => $user]
                   ]
         ],
@@ -153,7 +161,7 @@ sub list_indicators {
     my $count = Reports->get_objects_count(
         query => [
             %query,
-            or => [ and => [_public => 't'],
+            or => [
                     and => [username => $user]
                   ]
         ],
