@@ -496,7 +496,7 @@ sub startup {
     $r->get('/metrics')->to('controller#index')->name('metrics');
     $r->get('/api_reference')->to('doc#api_reference')->name('api_reference');
 
-    $r->get('/indicator')->to(controller => 'report', action => 'list_indicators');
+    $r->get('/indicator')->to(controller => 'report', action => 'list_indicators')->name('list_indicator');
 
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');

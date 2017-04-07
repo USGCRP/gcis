@@ -6,7 +6,10 @@
 </h2>
 </center>
 
-%= include 'list_formats';
+<div class="row">
+    <div class="col-lg-12 well squeezevert">
+%= include 'h/filter_by';
+</div></div>
 
 % my $numeric_link = begin
 %   my ($count, $method, $list_page, $report) = @_;
@@ -21,6 +24,8 @@
 % if (my $page = stash 'page') {
 %= include 'pager', page => $page;
 % }
+
+
 <table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">Title</th>

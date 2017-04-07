@@ -140,8 +140,8 @@ sub list_indicators {
             $query{publication_year} = $year;
         }
     }
-    unless ($_ = $c->param('and_outdated') ) {
-        $query{url} = { 'ne' => undef };
+    if ($_ = $c->param('current') ) {
+        $query{url} =  { 'ne' => undef };
     }
 
 
@@ -176,7 +176,7 @@ sub list_indicators {
     my %tree;
     $c->set_title(table => 'Indicator');
 
-    my $template = 'report/indicators';
+    my $template = $c->param('thumbs') ? 'thumbs' : 'report/indicators';
     $c->respond_to(
         yaml => sub {
             my $c = shift;
