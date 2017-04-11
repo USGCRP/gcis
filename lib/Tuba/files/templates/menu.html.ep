@@ -27,6 +27,7 @@
             <ul>
                 <li><%= link_to 'show_report'                 => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->identifier %><%= end %></li>
                 <li><%= link_to 'list_report'                 => begin %>reports<%= end %></li>
+                <li><%= link_to 'list_indicator'              => begin %>indicators<%= end %></li>
                 <li><%= link_to 'list_figures_across_reports' => begin %>figures<%= end %></li>
                 <li><%= link_to 'list_image'                  => begin %>images<%= end %></li>
                 <li><%= link_to 'list_book'                   => begin %>books<%= end %></li>

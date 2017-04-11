@@ -125,6 +125,89 @@ sub list {
     $c->SUPER::list(@_);
 };
 
+sub list_indicators {
+    my $c = shift;
+    logger->debug("Made it into Report#indicators");
+    my $user = $c->user;
+
+    my %query;
+
+    $query{report_type_identifier} = 'indicator';
+    $query{_public} = 't';
+
+    if (my $year = $c->param('publication_year')) {
+        if ($year =~ /^[0-9]{4}$/) {
+            $query{publication_year} = $year;
+        }
+    }
+    if ($_ = $c->param('current') ) {
+        $query{url} =  { 'ne' => undef };
+    }
+
+
+    my $objects = Reports->get_objects(
+        query => [
+            %query,
+            or => [
+                    and => [username => $user]
+                  ]
+        ],
+        with_objects => [qw/_report_viewers/],
+        ($c->param('all')
+          ? ()
+          : (page => $c->page, per_page => $c->per_page)),
+        sort_by => 'publication_year DESC, title',
+    );
+    my $count = Reports->get_objects_count(
+        query => [
+            %query,
+            or => [
+                    and => [username => $user]
+                  ]
+        ],
+        with_objects => [qw/_report_viewers/],
+    );
+    $c->set_pages($count);
+    $c->stash(favorite_ok => 1 );
+
+    my $object_class = $c->stash('object_class') || $c->_guess_object_class;
+    my $meta = $object_class->meta;
+    my $table = $meta->table;
+    my %tree;
+    $c->set_title(table => 'Indicator');
+
+    my $template = $c->param('thumbs') ? 'thumbs' : 'report/indicators';
+    $c->respond_to(
+        yaml => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            $c->render_yaml([ map $c->make_tree_for_list($_), @$objects ]) },
+        csv => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            $c->render_csv([ map $c->make_tree_for_list($_), @$objects ]);
+        },
+        json => sub {
+            my $c = shift;
+            if (my $page = $c->stash('page')) {
+                $c->res->headers->accept_ranges('page');
+                $c->res->headers->content_range(sprintf('page %d/%d',$page,$c->stash('pages')));
+            }
+            $c->render(json => [ map $c->make_tree_for_list($_), @$objects ]);
+        },
+        html => sub {
+             my $c = shift;
+             $c->render($template, meta => $meta, objects => $objects );
+         }
+    );
+};
+
 sub select {
     my $c = shift;
     my $identifier = $c->stash('report_identifier');

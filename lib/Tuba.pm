@@ -66,7 +66,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.48.0';
+our $VERSION = '1.48.1';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -495,6 +495,8 @@ sub startup {
     $r->get('/')->to('controller#index')->name('index');
     $r->get('/metrics')->to('controller#index')->name('metrics');
     $r->get('/api_reference')->to('doc#api_reference')->name('api_reference');
+
+    $r->get('/indicator')->to(controller => 'report', action => 'list_indicators')->name('list_indicator');
 
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');
