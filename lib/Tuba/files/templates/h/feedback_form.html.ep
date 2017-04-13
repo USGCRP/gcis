@@ -1,0 +1,73 @@
+%= form_for '/feedback' => (method => 'POST') => ( class => 'form-horizontal well' ) => begin
+<fieldset>
+
+<!-- Form Name -->
+<h4><legend>Feedback</legend></h4>
+
+<!-- Name input-->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="name">Name</label>
+  <div class="col-sm-8">
+  <input id="name" name="name" class="form-control input-md" required="" type="text" placeholder="Your Name">
+  </div>
+</div>
+
+<!-- Email input-->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="email">Email</label>
+  <div class="col-sm-8">
+  <input id="email" name="email" class="form-control input-md" required="" type="email" placeholder="jsmith@agency.gov">
+
+  </div>
+</div>
+
+<!-- Optional Organization input-->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="organization">Organization</label>
+  <div class="col-sm-8">
+  <input id="organization" name="organization" placeholder="Optional" class="form-control input-md" type="text">
+
+  </div>
+</div>
+
+<!-- Select Issue Type -->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="issue_type">Issue Type</label>
+  <div class="col-sm-8">
+    <select id="issue_type" name="issue_type" class="form-control">
+      <option value="general">General</option>
+      <option value="broken_link">Broken Link</option>
+      <option value="tech_issue">Technical Issue</option>
+      <option value="suggestion">Suggestion</option>
+      <option value="question">Question</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+</div>
+
+<!-- Message Textarea -->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="message">Message</label>
+  <div class="col-sm-8">
+    <textarea class="form-control" required="" rows="5" id="message" name="message" placeholder="Your comments"></textarea>
+  </div>
+</div>
+
+<!-- ReCaptcha -->
+<div class="form-group col-sm-12">
+  <label class="col-sm-3 control-label" for="message">Human?</label>
+  <div class="col-sm-8">
+  %== captcha_form
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-sm-3 control-label" for="submit"></label>
+  <div class="col-sm-8">
+    <button id="submit" name="submit" class="btn btn-success">Submit</button>
+  </div>
+</div>
+
+</fieldset>
+%= end

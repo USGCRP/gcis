@@ -11,11 +11,10 @@ hypnotoad :
     workers : 5
     listen :
        - http://*:8080
-image_upload_dir : /var/local/www/assets
+image_upload_dir : /var/local/www/assets-back
 asset_path : /assets
+mapbox_access_token : replace_with_mapbox_token
 asset_remote_fallback : http://data.globalchange.gov/assets
-faceted_search :
-    url : http://gcis-search.jpl.net/search
 database :
     dbname   : gcis
     schema   : gcis_metadata
@@ -23,14 +22,21 @@ database :
     port     :
     username :
     password :
+%# Configuration allowing the feedback form to function.
+feedback :
+    user        : replace_with_from_email
+    private_key : replace_with_recaptcha_private_key
+    public_key  : replace_with_recaptcha_public_key
+    to          : replace_with_to_email
 auth :
-    secret : this_should_be_replaced_with_a_server_secret
+    secret : replace_with_google_secret
+    google_secrets_file : /usr/local/etc/secrets.json
+%# Insecure dev-mode only auth
     valid_users :
-        brian : tuba
-        andrew : tuba
-    google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
+        dev_mode_kat : utterly_insecure_dev_login
+%# production mode auth, relies on google oauth
 authz :
+    root :
+        user@globalchange.gov : 1
     update :
-        jsmith2@gmail.com : 0
-        jsmith@usgcrp.gov : 1
-
+        user@globalchange.gov : 1

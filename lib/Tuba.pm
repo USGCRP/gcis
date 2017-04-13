@@ -96,6 +96,12 @@ sub startup {
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
 
+    $app->plugin('Feedback' => $app->config('feedback'));
+    $app->plugin(mail => {
+        from => $app->config->{feedback}->{user},
+        type => 'text/html',
+    });
+
     # Renderers
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
             my $str = shift;
@@ -306,6 +312,22 @@ sub startup {
     });
 
     my $r = $app->routes;
+
+    # Feedback Form
+    $r->post( '/feedback' => sub {
+            my $c = shift;
+            my $feedback_sent = $c->process_feedback();
+
+            my $message = '';
+            if ( $feedback_sent ) {
+                $message = 'Feedback sent. Thank you!';
+            }
+            else {
+                $message = 'Feedback could not be sent. Please try again later.';
+            }
+            $c->flash( message => $message );
+            $c->redirect_to('about');
+    });
 
     # API
     $r->get(

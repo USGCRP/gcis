@@ -88,12 +88,10 @@ Randall Sindlinger : CDI Lead Programmer (SSAI)
 <h3>Contacting us and contributing</h3>
 <p>If you're interested in contributing to the
 development and evolution of the Global Change Information System, please subscribe 
-to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.<br>
-If you have comments, questions, or feedback about the contents of the GCIS, please mention GCIS in the subject,
-and use the USGCRP <%= link_to 'http://www.globalchange.gov/contact' => begin %>contact form<%= end %>.
-</br>
-
+to our <%= link_to 'http://groups.google.com/a/usgcrp.gov/group/gcis-api-users-group' => begin %>mailing list<%= end %>.<br/>
 GCIS is also on <a href="https://github.com/USGCRP/gcis">GitHub</a>, and we welcome
 <a href="https://github.com/USGCRP/gcis/blob/master/CONTRIBUTING.md">contributions</a>
-to the source code.
+to the source code. <br/><br/>
+If you have other comments, questions, or feedback about the GCIS please use the form below.
+<%= include 'h/feedback_form'; =%>
 </p>
