@@ -98,7 +98,7 @@ my $builder = Module::Build::Database->new(
         'Mojolicious::Plugin::Mail' => 1.5, # supports feedback form - mailing
         'Captcha::reCAPTCHA' => 0.99,       # supports feedback form - captcha
         'LWP::Protocol::https' => 6.07,     # supports feedback form - captcha, hidden dep.
-        'HTML::Restrict' => 2.2.4,          # support feedback form  - sanitizing input
+        'HTML::Restrict' => '2.2.4',          # support feedback form  - sanitizing input
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',
