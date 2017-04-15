@@ -179,6 +179,27 @@ my $dbpedia_platform_identifier = "Three-pod";
 $t->post_ok( "/lexicon/dbpedia/term/new" => json => {
         term => $dbpedia_platform_identifier, context => 'resource', gcid => "/platform/$platform_identifier" } );
 
+# add a role
+my $role_identifier = "lead_author";
+$t->post_ok( "/role_type" => json => { identifier => $role_identifier, label => "Lead Author" } )->status_is(200);
+
+# add a person
+my $person_identifier = "101";
+$t->post_ok( "/person" => json => { id => $person_identifier, first_name  => "John", last_name   => "Doe", } )->status_is(200);
+
+# add an organization
+my $org_identifier = "acme";
+$t->post_ok(
+  "/organization" => json => {
+    identifier  => $org_identifier,
+    name        => "Acme Inc.",
+  }
+)->status_is(200);
+
+# The chapter was attributed to that author
+$t->post_ok("/report/trees/chapter/contributors/the-larch" => json =>
+    { person_id => $person_identifier, organization_identifier => "/organization/$org_identifier", role => $role_identifier })->status_is(200);
+
 #
 # Parse them into the model
 #
@@ -190,6 +211,9 @@ add_to_model("/image/$image_identifier");
 add_to_model("/dataset/$dataset_identifier");
 add_to_model("/platform/$platform_identifier");
 add_to_model("/instrument/$instrument_identifier");
+add_to_model("/role_type/$role_identifier");
+add_to_model("/person/$person_identifier");
+add_to_model("/organization/$org_identifier");
 
 #
 # Okay, now let's do some sparql.
@@ -343,6 +367,26 @@ for my $example (@$examples) {
         ok @rows, $example->{desc} or diag "no rows for \n".$example->{code};
     }
 }
+
+# The chapter was attributed to a person
+sparql_ok(
+  <<'SPARQL',
+SELECT $author $role
+FROM <http://test.data.globalchange.gov>
+WHERE {
+    $report rdf:type gcis:Report .
+    $chapter rdf:type gcis:Chapter .
+    $chapter gcis:isChapterOf $report .
+    $chapter prov:qualifiedAttribution $attribution .
+    $attribution prov:hadRole $role .
+    $attribution prov:agent $author .
+    $author rdf:type gcis:Person .
+}
+SPARQL
+  { author => uri("/person/$person_identifier"),
+    role => uri("/role_type/$role_identifier")
+  }, "The chapter was attributed to a person"
+);
 
 #
 # Cleanup.
