@@ -1,0 +1,170 @@
+Here's a quick guide to installing and running GCIS on Linux Ubunto starting from the basics.
+
+Either perform these commands as root, or in Ubunto use the command prefix sudo.
+
+Do the setup in an gcis specific account (say "gcis1" in the following example).
+
+0. Make sure the language is set up correctly : 
+
+    export LANGUAGE=en_US.UTF-8
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+    locale-gen en_US.UTF-8
+    dpkg-reconfigure locales
+
+    Make sure LANG="en_US.utf8" is in /etc/enviornment
+
+1. Install a few prerequistes :
+
+    apt-get install git
+    apt-get install libuuid1
+    apt-get install uuid-dev
+    apt-get install libssl-dev
+    apt-get install postgresql postgresql-contrib
+    apt-get install postgresql postgresql-client
+    apt-get install postgresql-server-dev-9.3
+    apt-get install graphicsmagick
+
+2. Make sure postgresql is installed okay : 
+
+    psql
+
+    response should be : "psql: FATAL:  role "gcis1" does not exist"
+
+3. Configure and start postgres :
+
+    Set up user accounts (in postgress) -- see the wiki 
+
+        https://wiki.ucar.edu/display/GCIS/Database+Configuration
+
+        sudo -u postgres createuser gcis1
+        sudo -u postgres psql postgres -c 'alter user gcis1 with superuser';
+
+    Then
+
+        echo "audit.username = 'unknown'" >> /etc/postgresql/9.3/main/postgresql.conf
+        echo "audit.note = ''" >> /etc/postgresql/9.3/main/postgresql.conf
+
+
+4. (recommended) add git to your command prompt :
+
+    Edit ~/.bash_profile, and add these lines :
+
+    . /etc/bash_completion.d/git-prompt
+    export PS1='[\u@\h`__git_ps1` \W]\$ '
+
+5. Install perlbrew
+
+    Add this to .bash_profile : 
+
+        export PERLBREW_ROOT=/opt/perl5
+
+    The change the directory permission : 
+
+        cd /opt
+        mkdir perl5
+        sudo mkdir perl5
+        sudo chown gcis1:gcis1 perl5
+
+    Install perlbrew : 
+
+        curl -kL http://install.perlbrew.pl | bash
+
+    Then
+
+        perlbrew init
+
+    Append the following piece of code to the end of your ~/.bash_profile and start 
+    a new shell, perlbrew should be up and fully functional from there:
+
+        export PERLBREW_HOME=/opt/perl5/common
+        source /opt/perl5/etc/bashrc
+
+    At this point .bash_profile should be: 
+
+        . /etc/bash_completion.d/git-prompt
+        export PS1='[\u@\h`__git_ps1` \W]\$ '
+
+        export PERLBREW_ROOT=/opt/perl5
+        export PERLBREW_HOME=/opt/perl5/common
+        source /opt/perl5/etc/bashrc
+
+6. Install perl-5.20.1 and cpanm
+
+    perlbrew install-cpanm
+    perlbrew install perl-5.20.1
+    # (this takes a while)
+
+    perlbrew switch perl-5.20.1
+    perlbrew lib create gcis
+    perlbrew switch perl-5.20.1@gcis
+
+    Verify you are using perl 5.20 by typing :
+
+        perl -v
+
+7. Download GCIS
+
+    git clone -o github https://github.com/usgcrp/gcis
+    cd gcis
+
+8. Install a few dependencies individually :
+
+    *** skip this step unless needed --- should be covered by step 9 ***
+
+    cpanm File::Find::Rule
+    cpanm -f Data::UUID::LibUUID
+
+9. Install the rest :
+
+    cpanm --installdeps .
+
+    If Mojo fails, do:
+
+        cpanm Mojolicious@5.65
+
+10. Install raptor :
+
+    sudo apt-get install raptor2-utils
+
+11. Test :
+
+    perl Build.PL
+    ./Build
+    ./Build test
+
+If all goes well :
+
+12. Configure Tuba :
+
+    cp eg/Tuba.conf.basic Tuba.conf
+
+    Then modify Tuba.conf as follows :
+
+        replace 'brian' with your name
+        replace 'easy_pass' with an easy password
+        replace random_stuff with a string of random characters
+
+13. Install the database :
+
+    perl Build.PL
+    ./Build
+    ./Build dbinstall
+
+    To check do: 
+
+        dpkg --listfiles postgresql-9.3 | grep conf
+
+14. Start tuba
+
+    morbo ./bin/tuba
+
+15. Restart postgresql
+
+    sudo service postgresql restart
+
+16. Open a web browser to http://localhost:3000
+
+Done!
+
+Next, clone the data from an instance of GCIS.
