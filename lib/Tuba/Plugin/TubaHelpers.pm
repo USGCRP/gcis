@@ -101,6 +101,7 @@ sub register {
             $str =~ s/\?show_all.*$//;
             for my $format (@$supported_formats) {
                 $str =~ s/\.$format$// and last;
+                $str =~ s/\.$format\?show_all.*$// and last;
             }
             $c->stash('_current_resource' => $str);
             $str;
