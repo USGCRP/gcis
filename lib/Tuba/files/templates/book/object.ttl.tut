@@ -21,3 +21,4 @@
 %# ## Keywords for book
 %#   gcis:subject "<%== $keyword->stringify %>"^^xsd:string;
 %# % }
+TEST
