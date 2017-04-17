@@ -45,6 +45,7 @@
 <div class='form-group' style='margin-bottom:0px;'>
     <%= label_for 'role_type', class => 'col-md-2 control-label' => begin %>Role<%= end %>
     <div class='col-md-8'>
+        % param role_type => 'author' unless param 'role_type';
         %= select_field 'role_type', db_labels('role_type'), class => 'form-control';
     </div>
 </div>
