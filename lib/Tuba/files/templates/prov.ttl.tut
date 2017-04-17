@@ -44,7 +44,7 @@
    prov:wasGeneratedBy <<%= uri($parent->{activity}) %>>;
           % }
           % if ($parent->{publication}) {
-   prov:wasDerivedFrom <<%= uri($parent->{publication}->to_object) %>>.
+   cito:cites <<%= uri($parent->{publication}->to_object) %>>.
           % }
 
     % }
