@@ -96,7 +96,7 @@ sub startup {
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
 
-    $app->plugin('Feedback' => $app->config('feedback'));
+    $app->plugin('Feedback' => ( $app->config('feedback') || die "no feedback config" ));
     $app->plugin(mail => {
         from => $app->config->{feedback}->{user},
         type => 'text/html',
