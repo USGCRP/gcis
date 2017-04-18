@@ -35,7 +35,7 @@ sub register {
             my $response = $c->param('g-recaptcha-response') ? $c->param('g-recaptcha-response') : ' ';
             my $result = $captcha->check_answer_v2($private_key, $response, $ENV{REMOTE_ADDR});
 
-            if ( $result->{is_valid} ) {
+            if ( ! $result->{is_valid} ) {
                logger->debug("Captcha failure: " . $result->{error});
                return 0;
             }
