@@ -127,7 +127,6 @@ sub list {
 
 sub list_indicators {
     my $c = shift;
-    logger->debug("Made it into Report#indicators");
     my $user = $c->user;
 
     my %query;

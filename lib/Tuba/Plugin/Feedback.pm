@@ -36,10 +36,7 @@ sub register {
             my $result = $captcha->check_answer_v2($private_key, $response, $ENV{REMOTE_ADDR});
 
             if ( $result->{is_valid} ) {
-               logger->warn("I totally passed my captcha.");
-            }
-            else {
-               logger->warn("I totally failed my captcha: " . $result->{error});
+               logger->debug("Captcha failure: " . $result->{error});
                return 0;
             }
 
