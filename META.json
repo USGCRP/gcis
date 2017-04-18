@@ -31,6 +31,7 @@
       "runtime" : {
          "requires" : {
             "Algorithm::Permute" : "0",
+            "Captcha::reCAPTCHA" : "0.99",
             "Crypt::OpenSSL::RSA" : "0",
             "DBD::Pg" : "3.003",
             "DBIx::Connector" : "0",
@@ -41,14 +42,17 @@
             "DateTime::Format::Human::Duration" : "0",
             "Digest::SHA1" : "0",
             "File::ShareDir" : "1.00",
+            "HTML::Restrict" : "2.002004",
             "Hash::Flatten" : "0",
             "IO::Socket::SSL" : "2",
             "JSON::WebToken" : "0",
             "JSON::XS" : "0",
+            "LWP::Protocol::https" : "6.07",
             "LWP::UserAgent" : "0",
             "Lingua::EN::Inflect" : "0",
             "Mojolicious" : "6.08",
             "Mojolicious::Plugin::InstallablePaths" : "0",
+            "Mojolicious::Plugin::Mail" : "1.5",
             "Mojolicious::Plugin::YamlConfig" : "0",
             "Number::Bytes::Human" : "0",
             "Number::Format" : "0",
@@ -77,7 +81,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "v1.48.1"
+         "version" : "v1.49.0"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -189,6 +193,9 @@
       },
       "Tuba::DB::Object::Metadata::Column::ISSN" : {
          "file" : "lib/Tuba/DB/Object/Metadata/Column/ISSN.pm"
+      },
+      "Tuba::DB::Object::Metadata::Column::JSON" : {
+         "file" : "lib/Tuba/DB/Object/Metadata/Column/JSON.pm"
       },
       "Tuba::DB::Object::Methodology" : {
          "file" : "lib/Tuba/DB/Mixin/Object/Methodology.pm"
@@ -313,6 +320,9 @@
       "Tuba::Plugin::Db" : {
          "file" : "lib/Tuba/Plugin/Db.pm"
       },
+      "Tuba::Plugin::Feedback" : {
+         "file" : "lib/Tuba/Plugin/Feedback.pm"
+      },
       "Tuba::Plugin::TubaHelpers" : {
          "file" : "lib/Tuba/Plugin/TubaHelpers.pm"
       },
@@ -357,6 +367,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v1.48.1",
+   "version" : "v1.49.0",
    "x_serialization_backend" : "JSON::PP version 2.27400"
 }

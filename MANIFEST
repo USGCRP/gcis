@@ -1,3 +1,4 @@
+.gitattributes
 .travis.yml
 bin/tuba
 bin/tuba_generate_sitemap
@@ -680,6 +681,7 @@ lib/Tuba/DB/Object/ConventionManager.pm
 lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Object/Metadata.pm
 lib/Tuba/DB/Object/Metadata/Column/ISSN.pm
+lib/Tuba/DB/Object/Metadata/Column/JSON.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
 lib/Tuba/DocManager.pm
@@ -869,6 +871,8 @@ lib/Tuba/files/templates/h/contributors_short.html.ep
 lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/desc.html.ep
 lib/Tuba/files/templates/h/featured_reports.html.ep
+lib/Tuba/files/templates/h/feedback_form.html.ep
+lib/Tuba/files/templates/h/filter_by.html.ep
 lib/Tuba/files/templates/h/leaflet.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
@@ -963,6 +967,7 @@ lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/region/object.ttl.tut
 lib/Tuba/files/templates/regions.html.ep
 lib/Tuba/files/templates/relationships.html.ep
+lib/Tuba/files/templates/report/indicators.html.ep
 lib/Tuba/files/templates/report/long/object.html.ep
 lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.tut
@@ -1011,6 +1016,7 @@ lib/Tuba/Person.pm
 lib/Tuba/Platform.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
+lib/Tuba/Plugin/Feedback.pm
 lib/Tuba/Plugin/TubaHelpers.pm
 lib/Tuba/Project.pm
 lib/Tuba/Publication.pm
