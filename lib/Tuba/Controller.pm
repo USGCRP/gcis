@@ -975,10 +975,25 @@ sub update_contributors {
     my $json = $c->req->json || {};
 
     if (my $id = $json->{delete_contributor} || $c->param('delete_contributor')) {
-        PublicationContributorMaps->delete_objects({
-                contributor_id => $id,
-                publication_id => $pub->id,
-            }) or return $c->update_error("Failed to remove contributor");
+        my $contributor = Contributor->new( id => $id )->load( speculative => 1 )
+          or return $c->update_error("Failed to find contributor to remove");
+
+        my @pubs = $contributor->publications;
+        if (@pubs==1) {
+            # Only publication, remove contributor record and cascade.
+            $contributor->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                or return $c->update_error($contributor->error);
+        } else {
+            # Just remove the map.
+            my $map =  PublicationContributorMap->new(
+                publication_id       => $pub->id,
+                contributor_id       => $id,
+            );
+            $map->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                or return $c->update_error($map->error);
+
+        }
+
         $c->flash(info => "Saved changes.");
     }
     if (my $role_identifier = $json->{remove_others_with_role}) {
