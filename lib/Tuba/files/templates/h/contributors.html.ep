@@ -12,7 +12,9 @@
                 <ul>
             % }
             % for my $org (@{ $con->{orgs} }) {
-                <li> <i><%= obj_link($org, short => 1) =%></i> </li>
+                % if ( $org ne '' ) {
+                   <li> <i><%= obj_link($org, short => 1) =%></i> </li>
+                % }
             % }
             % if ( $con->{person} ne '' ) {
                 </ul>
