@@ -69,6 +69,17 @@
     </div>
 </div>
 
+<div class='form-group'>
+	<div  class='col-lg-2 col-md-2 col-sm-2 control-label'>
+	%= label_for 'new_sort_key', class => '' => begin
+	Sort Key
+	%= end
+	</div>
+	<div class='col-lg-6 col-md-6 col-sm-6'>
+    %= text_field 'new_sort_key', class => "form-control input-small squeezevert";
+    </div>
+</div>
+
 
 
 
