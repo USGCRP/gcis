@@ -1066,6 +1066,7 @@ sub update_contributors {
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
 
     my $role = $c->param('role') || $json->{role} or return $c->update_error("missing role");
+    my $sort_key = $c->param('sort_key') || $json->{sort_key};
 
     my $contributor = Contributor->new(role_type => $role);
     $contributor->organization_identifier($organization->identifier) if $organization;
@@ -1085,7 +1086,7 @@ sub update_contributors {
     );
     $map->load(speculative => 1);
     $map->reference_identifier($reference_identifier);
-    $map->sort_key($json->{sort_key}) if defined($json->{sort_key});
+    $map->sort_key($sort_key) if defined($sort_key);
     $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
