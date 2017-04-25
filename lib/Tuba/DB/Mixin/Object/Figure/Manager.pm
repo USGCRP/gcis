@@ -8,7 +8,7 @@ sub dbgrep {
     my $self = shift;
     my %a = @_;
     my $query_string = $a{query_string} or return;
-    my $limit = $a{limit} || 10;
+    my $per_page = $a{per_page} || $a{limit} || 10;  #previously implemented as a limit;
     my $user = $a{user};
     my $restrict = $a{restrict};
 
@@ -26,15 +26,28 @@ sub dbgrep {
         @restrict = ( and => [ report_identifier => $report ] );
     }
 
-    my $found = $self->get_objects(
-        query => [
-             or => \@query,
-             or => \@viewable,
-             @restrict,
-        ],
-        with_objects => \@with,
-        limit => $limit );
-
+    my $found;
+    if ($a{count_only}) {
+        my $count = $self->get_objects_count(
+            query => [
+                 or => \@query,
+                 or => \@viewable,
+                 @restrict,
+            ],
+            with_objects => \@with, );
+        #bless the hash, so that rendering works (mostly) the same as full-fledged results
+        my @count = $count ? (bless { results_count => $count } , $self->object_class ) : ();
+        $found = \@count;
+    } else {
+        $found = $self->get_objects(
+            query => [
+                 or => \@query,
+                 or => \@viewable,
+                 @restrict,
+            ],
+            with_objects => \@with,
+            $a{all} ? () : (page => $a{page}, per_page => $per_page), );
+    }
     return @$found;
 }
 

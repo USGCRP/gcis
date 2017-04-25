@@ -27,6 +27,7 @@ A lexicon is a list of terms which correspond to GCIS identifiers.
  Check constraints:
      "lexicon_identifier_check" CHECK (identifier::text ~ similar_escape('[a-z0-9_-]+'::text, NULL::text))
  Referenced by:
+     TABLE "context" CONSTRAINT "context_lexicon_identifier_fkey" FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE
      TABLE "exterm" CONSTRAINT "exterm_lexicon_identifier_fkey" FOREIGN KEY (lexicon_identifier) REFERENCES lexicon(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON lexicon FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')

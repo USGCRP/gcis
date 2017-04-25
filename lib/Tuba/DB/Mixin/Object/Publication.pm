@@ -127,6 +127,7 @@ SQL
             my $parent = (ref $s)->new(id => $_->{parent_publication_id})->load->to_object;
             my $record = { reference => "/reference/$_->{reference_identifier}",
                            relationship => "cito:isCitedBy",
+                           display_name => $parent->stringify(display_name => 1),
                            uri => $parent->uri($c) };
             push @serialized, $record;
         }

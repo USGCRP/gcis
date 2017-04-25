@@ -3,13 +3,14 @@ package Tuba::DB::Object::Report::Manager;
 
 use strict;
 use warnings;
+use Tuba::Log;
 
 sub dbgrep {
     my $self = shift;
     my %a = @_;
 
     my $query_string = $a{query_string} or return;
-    my $limit = $a{limit} || 10;
+    my $per_page = $a{per_page} || $a{limit} || 10;  #previously implemented as a limit;
     my $user = $a{user};
 
     my @query = $self->_make_query($query_string);
@@ -23,14 +24,29 @@ sub dbgrep {
         @viewable = ( _public => 't' );
     }
 
-    my $found= $self->get_objects(
-        query => [
-             or => \@query,
-             or => \@viewable
-        ],
-        @with,
-        limit => $limit );
-
+    my $found;
+    if ($a{count_only}) {
+        my $count = $self->get_objects_count(
+            query => [
+                 or => \@query,
+                 or => \@viewable
+            ],
+            @with, );
+        #bless the hash, so that rendering works (mostly) the same as full-fledged results
+        my @count = $count ? (bless { results_count => $count } , $self->object_class ) : ();
+        $found = \@count;
+    } else {
+       my @featured_only = $a{featured_only} ? ( _featured_priority => { gt => 0 } ) : ();
+       $found = $self->get_objects(
+            query => [
+                 or => \@query,
+                 or => \@viewable,
+                 or => \@featured_only
+            ],
+            debug => 1,
+            @with,
+            $a{all} ? () : (page => $a{page}, per_page => $per_page), );
+    } 
     return @$found;
 }
 

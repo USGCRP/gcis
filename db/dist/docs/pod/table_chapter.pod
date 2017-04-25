@@ -16,6 +16,7 @@ A chapter is part of a report.
  url (character varying) - The URL for a landing page for this chapter.
  sort_key (integer) - A key used to order this chapter within a report.
  doi (character varying) - A digital object identifier for this chapter.
+ description (character varying) - A brief description of the chapter.
 
 
 =head1 SCHEMA
@@ -30,6 +31,7 @@ A chapter is part of a report.
   url               | character varying    |           | extended |              | The URL for a landing page for this chapter.
   sort_key          | integer              |           | plain    |              | A key used to order this chapter within a report.
   doi               | character varying    |           | extended |              | A digital object identifier for this chapter.
+  description       | character varying    |           | extended |              | A brief description of the chapter.
  Indexes:
      "chapter_pkey" PRIMARY KEY, btree (identifier, report_identifier)
      "uk_number_report" UNIQUE CONSTRAINT, btree (number, report_identifier)

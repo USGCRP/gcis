@@ -50,6 +50,9 @@ $t->get_ok("/report/test-report/chapter/form/update/test-chapter.json")
     url               => undef,
     sort_key          => undef,
     doi               => undef,
+    description       => undef,
+    display_name      => 'TEST-REPORT Chapter 1: Chapter one ± two',
+    type              => 'chapter',
   }
   );
 

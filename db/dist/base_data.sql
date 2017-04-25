@@ -24,7 +24,7 @@ conference_paper
 -- Data for Name: report; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email) FROM stdin;
+COPY report (identifier, title, url, doi, _public, report_type_identifier, summary, frequency, publication_year, topic, in_library, contact_note, contact_email, _featured_priority) FROM stdin;
 \.
 
 
@@ -64,7 +64,7 @@ COPY "array" (identifier, rows_in_header, rows) FROM stdin;
 -- Data for Name: chapter; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi) FROM stdin;
+COPY chapter (identifier, title, report_identifier, number, url, sort_key, doi, description) FROM stdin;
 \.
 
 
@@ -88,7 +88,7 @@ COPY array_table_map (array_identifier, table_identifier, report_identifier) FRO
 -- Data for Name: journal; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY journal (identifier, title, publisher, country, url, notes, print_issn, online_issn) FROM stdin;
+COPY journal (identifier, title, publisher, country, url, notes, print_issn, online_issn, description) FROM stdin;
 \.
 
 
@@ -96,7 +96,7 @@ COPY journal (identifier, title, publisher, country, url, notes, print_issn, onl
 -- Data for Name: article; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes) FROM stdin;
+COPY article (identifier, title, doi, year, journal_identifier, journal_vol, journal_pages, url, notes, description) FROM stdin;
 \.
 
 
@@ -104,7 +104,27 @@ COPY article (identifier, title, doi, year, journal_identifier, journal_vol, jou
 -- Data for Name: book; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic) FROM stdin;
+COPY book (identifier, title, isbn, year, publisher, number_of_pages, url, in_library, topic, description) FROM stdin;
+\.
+
+
+--
+-- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY lexicon (identifier, description, url) FROM stdin;
+ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
+podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
+echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
+gcmd	Global Change Master Directory	http://gcmd.nasa.gov
+\.
+
+
+--
+-- Data for Name: context; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY context (lexicon_identifier, identifier, version, description, url) FROM stdin;
 \.
 
 
@@ -175,18 +195,6 @@ SELECT pg_catalog.setval('contributor_id_seq', 1, false);
 --
 
 COPY dataset (identifier, name, type, version, description, native_id, access_dt, url, data_qualifier, scale, spatial_ref_sys, cite_metadata, scope, spatial_extent, temporal_extent, vertical_extent, processing_level, spatial_res, doi, release_dt, publication_year, attributes, variables, start_time, end_time, lat_min, lat_max, lon_min, lon_max, description_attribution, temporal_resolution) FROM stdin;
-\.
-
-
---
--- Data for Name: lexicon; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
---
-
-COPY lexicon (identifier, description, url) FROM stdin;
-ceos	Committee on Earth Observation Satellites	http://database.eohandbook.com
-podaac	Physical Oceanography DAAC	http://podaac.jpl.nasa.gov
-echo	Earth Observing System Clearing House	http://reverb.echo.nasa.gov
-gcmd	Global Change Master Directory	http://gcmd.nasa.gov
 \.
 
 
@@ -477,10 +485,43 @@ COPY publication_region_map (publication_id, region_identifier) FROM stdin;
 
 
 --
+-- Data for Name: relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY relationship (identifier, description) FROM stdin;
+owl:sameAs	An alias
+\.
+
+
+--
+-- Data for Name: term; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term (identifier, lexicon_identifier, context_identifier, context_version, term, is_root, description, url) FROM stdin;
+\.
+
+
+--
+-- Data for Name: term_map; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term_map (term_identifier, relationship_identifier, gcid, description, "timestamp") FROM stdin;
+\.
+
+
+--
+-- Data for Name: term_relationship; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
+--
+
+COPY term_relationship (term_subject, relationship_identifier, term_object) FROM stdin;
+\.
+
+
+--
 -- Data for Name: webpage; Type: TABLE DATA; Schema: gcis_metadata; Owner: -
 --
 
-COPY webpage (identifier, url, title, access_date) FROM stdin;
+COPY webpage (identifier, url, title, access_date, description) FROM stdin;
 \.
 
 

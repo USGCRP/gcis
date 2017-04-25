@@ -25,16 +25,20 @@ Please enter some search terms above.
 <%= link_to url_with(format => 'yaml') => class => 'label label-primary' => begin %>YAML<%= end %> \
 </pre>
 
-% if ( ( (param 'format') // '') eq 'detailed') {
+% if ( ( (param 'format') // '') eq 'detailed' or ( (param 'count_only') // '') eq '1') {
     % for my $obj (@clone) {
     <div class='row'>
         <div class="col-lg-11 col-md-11 col-sm-11 col-xs-11">
             <h4>
             <%= obj_link_to $obj, 'show'  => begin %>
-            <%= $obj->meta->table %> <%= $obj->stringify(brief => 1) %>
+            <%= $obj->meta->table %> <%= param 'count_only' ? '' : $obj->stringify(brief => 1) %>
             <%= end %><br>
             </h4>
-            <p><%= $obj->as_text %></p>
+            % if (param 'count_only') {
+                <p> Count of results = <%= $obj->{results_count} %></p>
+            % } else {
+                <p><%= $obj->as_text %></p>
+            % }
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1">
             % if (my $pub = $obj->get_publication) {

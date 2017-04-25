@@ -75,3 +75,4 @@ Starting in dev mode :
 
     morbo -l http://0.0.0.0:3000 bin/tuba    
 
+    **NOTE**: morbo conflicts with `./Build test`, and is best to be shut down if re-running tests.

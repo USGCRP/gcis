@@ -13,6 +13,7 @@ use Tuba::Log;
 use Tuba::Util qw/elide_str human_duration/;
 use Mojo::JSON qw/encode_json/;
 use Tuba::DB::Object::Metadata;
+use Data::Dumper;
 use base 'Rose::DB::Object';
 
 use strict;
@@ -61,6 +62,7 @@ sub uri {
     my $opts = shift || {};
     my $route_name = $opts->{tab} || 'show';
     $route_name .= '_'.$s->meta->table;
+    logger->debug ("---In sub 'Tuba::DB::Object::uri' for route_name '$route_name'---");
 
     return $c->url_for($route_name) unless ref $s;
 
@@ -75,7 +77,14 @@ sub uri {
         $param_name = $param_name.'_identifier' if $column_name !~ /identifier/;
         $url_params{$param_name} = $pk{$column_name};
     }
-    return $c->url_for( $route_name, \%url_params );
+    my $url_for = $c->url_for($route_name, \%url_params );
+    if ($url_for =~ /show/) {
+        logger->warn ("Strange URI created: $url_for\n".
+                      "Route name is '$route_name'\n" .
+                      "url_params passed to url_for were " . Dumper \%url_params
+                     );
+    }
+    return $url_for;
 }
 
 sub uri_with_format {
@@ -317,43 +326,57 @@ sub as_tree {
     my $bonsai = delete $a{bonsai}; # a small tree
     my $with_gcmd = delete $a{with_gcmd}; # a large tree
     my $with_regions = delete $a{with_regions}; # a large tree
+    my %with; $with{files} = delete $a{with_files};    # using hash to mirror Search.pm syntax
     $a{deflate} = 0 unless exists($a{deflate});
 
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
-    if ($c && !$bonsai) {
+    if ($c) {
         if (my $pub = $s->get_publication) {
-            $tree->{parents} = [];
-            for my $parent ($pub->get_parents) {
-                my $pub = $parent->{publication};
-                my $activity = $parent->{activity};
-                push @{ $tree->{parents} }, {
-                    relationship => $parent->{relationship},
-                    publication_type_identifier => $pub->{publication_type_identifier},
-                    activity_uri => ($activity ? $activity->uri($c) : undef ),
-                    label => $pub->stringify,
-                    url   => $pub->to_object->uri($c),
-                    note  => $parent->{note},
-                };
+            if (!$bonsai) {
+                $tree->{parents} = [];
+                for my $parent ($pub->get_parents) {
+                    my $pub = $parent->{publication};
+                    my $activity = $parent->{activity};
+                    push @{ $tree->{parents} }, {
+                        relationship => $parent->{relationship},
+                        publication_type_identifier => $pub->{publication_type_identifier},
+                        activity_uri => ($activity ? $activity->uri($c) : undef ),
+                        label => $pub->stringify,
+                        url   => $pub->to_object->uri($c),
+                        note  => $parent->{note},
+                    };
+                }
             }
-            $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
-            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $with_gcmd;
-            $tree->{regions} = [ map $_->as_tree(@_), $pub->regions] if $with_regions;
+            $tree->{files} = [ map $_->as_tree(@_), $pub->files ] if (!$bonsai or $with{files});
+            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $with_gcmd && !$bonsai;
+            $tree->{regions} = [ map $_->as_tree(@_), $pub->regions] if $with_regions && !$bonsai;
         }
-        my $uri = $s->uri($c);
-        my $href = $uri->clone->to_abs;
-        if (my $fmt = $c->stash('format')) {
-            $href .= ".$fmt";
+        if (!$bonsai) {  #This perhaps should be provided regardless of $bonsai, but preserving previous
+                         #behavior that only ran for a large tree
+            my $uri = $s->uri($c);
+            my $href = $uri->clone->to_abs;
+            if (my $fmt = $c->stash('format')) {
+                $href .= ".$fmt";
+            }
+            $tree->{uri} //= $uri;
+            $tree->{href} //= $href;
         }
-        $tree->{uri} //= $uri;
-        $tree->{href} //= $href;
     }
     $tree->{uri} //= $s->uri($c) if $c;
+    #when used for result counts, the objects are skeletal, and do not stringify, so use eval
+    $tree->{display_name} = eval{$s->stringify(display_name => 1)} || undef;
+    $tree->{type} = $s->meta->table;
+    $tree->{results_count} = $s->{results_count} if defined $s->{results_count}; #only relevant to /search
     for my $k (keys %$tree) {
         delete $tree->{$k} if $k =~ /^_/;
     }
     if ($c && !$bonsai && $tree->{contributors}) {
         for my $t (@{ $tree->{contributors} }) {
-            $t->{publications} = [ map {uri => $_->to_object->uri($c)}, Tuba::DB::Object::Contributor->new(id => $t->{id})->load->publications ];
+            my $contributor = Tuba::DB::Object::Contributor->new(id => $t->{id})->load;
+            $t->{publications} = [ map {uri => $_->to_object->uri($c),
+                                        display_name => $_->to_object->stringify(display_name => 1),
+                                       }, $contributor->publications ];
+            $t->{display_name} = $contributor->stringify;
         }
     }
     if ($c && !$bonsai) {

@@ -52,6 +52,13 @@ sub as_text {
     );
 }
 
+sub as_tree {
+    my $s = shift;
+    my $tree = $s->SUPER::as_tree(@_, deflate => 0);
+    $tree->{description} = $s->{summary};
+    return $tree;
+}
+
 sub count_figures {
     my $s = shift;
     return Tuba::DB::Object::Figure::Manager->get_objects_count({ report_identifier => $s->identifier});

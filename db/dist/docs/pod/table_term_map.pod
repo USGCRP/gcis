@@ -1,0 +1,44 @@
+
+=head1 NAME
+
+term_map
+
+=head1 DESCRIPTION
+
+External terms which can be mapped to GCIS identifiers via a relationship.
+
+=head1 FIELDS
+
+ term_identifier (character varying) - The term ID (UUID).
+ relationship_identifier (character varying) - The relationship between the term and the gcid.
+ gcid (character varying) - The GCIS identifier (URI) to which this term is mapped.
+ description (character varying) - A description for the GCID (optional).
+ timestamp (timestamp(3) without time zone) - The timestamp this relationship was asserted.
+
+
+=head1 SCHEMA
+
+                                                                 Table "gcis_metadata.term_map"
+          Column          |              Type              |   Modifiers   | Storage  | Stats target |                       Description                       
+ -------------------------+--------------------------------+---------------+----------+--------------+---------------------------------------------------------
+  term_identifier         | character varying              | not null      | extended |              | The term ID (UUID).
+  relationship_identifier | character varying              | not null      | extended |              | The relationship between the term and the gcid.
+  gcid                    | character varying              | not null      | extended |              | The GCIS identifier (URI) to which this term is mapped.
+  description             | character varying              |               | extended |              | A description for the GCID (optional).
+  timestamp               | timestamp(3) without time zone | default now() | plain    |              | The timestamp this relationship was asserted.
+ Indexes:
+     "term_map_pkey" PRIMARY KEY, btree (term_identifier, relationship_identifier, gcid)
+ Check constraints:
+     "ck_gcid" CHECK (length(gcid::text) > 0)
+ Foreign-key constraints:
+     "term_map_relationship_fkey" FOREIGN KEY (relationship_identifier) REFERENCES relationship(identifier) ON UPDATE CASCADE ON DELETE RESTRICT
+     "term_map_term_fkey" FOREIGN KEY (term_identifier) REFERENCES term(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON term_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON term_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
+ 
+
+=cut
+
+

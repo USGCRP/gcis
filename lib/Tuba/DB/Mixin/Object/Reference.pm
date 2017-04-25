@@ -40,6 +40,7 @@ sub as_tree {
             } $s->publications
         ];
     }
+    $t->{description} = $s->stringify;
     return $t;
 }
 

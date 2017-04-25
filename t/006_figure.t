@@ -6,6 +6,7 @@ use tinit;
 use Test::More;
 use Test::MBD qw/-autostart/;
 use Test::Mojo;
+use Data::Dumper;
 
 use_ok "Tuba";
 
@@ -85,11 +86,22 @@ my %o = (
    usage_limits      => undef,
 );
 
+my %added_tags = (   #JSON tags added by the API
+   chapter      => {display_name => 'Carrots'},
+   description  => undef,
+   display_name => '-.-: Orange Carrots!',
+   report       => {display_name => 'Veggies'},
+   type         => 'figure',
+);
+
 # successful update
 $t->post_ok(
   "/report/vegetables/chapter/carrots/figure/orange" =>
   { Accept => "application/json" } => json => \%o
-)->status_is(200)->json_is(\%o);
+)->status_is(200)->json_is({%o,
+                            %added_tags,
+                          })
+->or(sub { diag "Full JSON is\n" . Dumper $t->tx->res->json });
 
 my $uuid = "77285d0f-ea9b-4bf2-80aa-3b968420c8b9";
 
@@ -102,8 +114,12 @@ $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
 $t->get_ok("/report/vegetables/chapter/carrots/figure/orange.json")->json_is(
     "/images/0/identifier" => $uuid );
 
-$t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")->json_is(\%o
- ) or diag explain($t->tx->res->json);
+$t->get_ok("/report/vegetables/chapter/carrots/figure/form/update/orange.json")->
+            json_is({%o,
+                     %added_tags,
+                    }
+ )-> or (sub {diag "Full JSON is\n"; diag Dumper($t->tx->res->json)});
+#I prefer Data::Dumper to explain() since Dumper shows hash in the order json_is evaluated it
 
 # List figures across reports
 $t->get_ok("/figure.json")->json_is(

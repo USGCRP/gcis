@@ -1,0 +1,76 @@
+
+
+% use Mojo::URL;
+% my $lexicon = $vocabulary;
+% layout 'default', title => $lexicon->lexicon_identifier.' - '.$lexicon->lexicon_identifier,
+%   description => $lexicon->description;
+
+<center>
+<h2>Lexicon : <%= $lexicon->stringify %></h2>
+</center>
+
+%= include 'edit_buttons';
+
+<div class='row'>
+<div class='col-lg-1 col-md-1 col-sm-1 col-xs-1'>
+<%= link_to 'list_vocabulary' => begin %>&larr;lexicons/vocabularies<%= end %>
+</div>
+    <div class='col-lg-10 col-md-10 col-sm-10 col-xs-10'>
+
+        <h5><%= $lexicon->lexicon_identifier %> : <%= $lexicon->description %>
+        (<%= external_link($lexicon->url) %>)</h5>
+        % my @contexts = $lexicon->contexts;
+
+        % my $index = 0;
+        <ul class="nav nav-tabs" id="tabby" data-toggle="tabs">
+            % for my $context (sort @contexts) {
+            <li <%== !$index++ ? q[class="active"] : ""%>><a href="#<%= gen_id($context) %>"><%= $context %></a></li>
+            % }
+        </ul>
+        <div class="tab-content">
+        % $index = 0;
+        % for my $context (sort @contexts) {
+            % my $terms = orm->{term}{mng}->get_objects(query => [lexicon_identifier => $lexicon->lexicon_identifier, context_identifier => $context], sort_by => 'term' );
+            <div class="tab-pane<%== !$index++ ? " active" : ""%>" id="<%= gen_id($context) %>">
+                <span class='pull-right'>
+                <%= link_to
+                url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->lexicon_identifier }).'.json'
+                => class => 'label label-primary'
+                => begin %>json<%= end %>
+
+                <%= link_to
+                url_for('lexicon_terms', { context => $context, lexicon_identifier => $lexicon->lexicon_identifier }).'.yaml'
+                => class => 'label label-primary'
+                => begin %>yaml<%= end %>
+            </span>
+
+            % for my $term (@$terms) {
+                <li>
+                <span style='display:inline-block;min-width:160pt;'>
+                % if (my $target = $term->same_as) {
+                    <a target="_blank" href="<%= $target %>"><i class='glyphicon glyphicon-star'></i></a>
+                % }
+                % if (my $target = $term->native_url) {
+                <a target="_blank" href="<%= $target %>"><%= $term->term %></a>
+                % } else  {
+                %= $term->term;
+                % }
+                </span>
+                <a href="<%= $term->gcid %>"><%= $term->gcid %></a>
+                </li>
+            % }
+            </div>
+        % }
+        </div>
+
+    </div>
+</div>
+<br />
+%= include 'h/other_formats';
+<br />
+%= javascript begin
+    $('#tabby a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+    })
+%= end

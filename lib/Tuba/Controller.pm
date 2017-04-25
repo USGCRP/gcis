@@ -55,15 +55,24 @@ sub make_tree_for_list {
 sub common_tree_fields {
     my $c = shift;
     my $obj = shift;
+    my %args = @_;
     my $uri = $obj->uri($c);
     my $href = $uri->clone->to_abs;
     if (my $fmt = $c->stash('format')) {
         $href .= ".$fmt";
     }
     return ( uri => $uri, href => $href,
+             display_name => $obj->stringify(display_name=>1, short=>$args{short}),
         $c->maybe_include_generic_pub_rels($obj), # keywords, regions
     );
 }
+
+=head2 _default_list_order
+
+Returns the column name used by default in sort_by of get_objects
+Override if the primary key column is not named "identifier"
+
+=cut
 
 sub _default_list_order {
     return "identifier";
@@ -212,8 +221,14 @@ sub make_tree_for_show {
                     publication_type => $_->{publication_type_identifier},
                 }, @pubs
             ];
+            #Parents array added as alternative to cited_by array (because Reports already use
+            #a parents array with cito:isCitedBy)
+            my @parents = @{$ret->{parents}};
+            push @parents, $pub->get_parents_with_references(uniq => 1, for_export => 1, c => $c);
+            $ret->{parents} = \@parents;
         } else {
             $ret->{cited_by} = [];
+            $ret->{parents} //= [];
         }
     }
     $ret;
@@ -250,14 +265,16 @@ sub set_title {
 sub show {
     my $c = shift;
 
-    my $object = $c->stash('object') or return $c->reply->not_found;
+    my $object = $c->stash('object') or do {
+        logger->warn("No object given to Controller::show"); 
+        return $c->reply->not_found;
+    };
     my $meta  = $c->stash('meta') || $object->meta;
     $c->stash(meta => $meta) unless $c->stash('meta');
     my $table = $meta->table;
     $c->stash(relationships => $c->_order_relationships(meta => $meta));
     $c->stash(cols => $c->_order_columns(meta => $object->meta));
     $c->set_title(object => $object);
-
     $c->respond_to(
         yaml => sub { my $c = shift;
           $c->render_maybe("$table/object") or $c->render_yaml($c->make_tree_for_show($object)); },
@@ -328,6 +345,11 @@ sub _pk_to_stashval {
     my $stash_name = $name;
     $stash_name = $meta->table.'_'.$name if $name eq 'identifier';
     $stash_name .= '_identifier' unless $stash_name =~ /identifier/;
+    if (!defined($c->stash($stash_name))) {
+        my $stashlist;
+        foreach (keys %{$c->stash}) { $stashlist .= "\n  $_ => " . $c->stash($_) }
+        logger->debug("Stash '$stash_name' not found.  Available keys are: $stashlist");
+    }
     return $c->stash($stash_name);
 }
 
@@ -354,7 +376,11 @@ sub render_not_found_or_redirect {
     my $identifier;
     my $identifier_column;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
-        my $val = $c->_pk_to_stashval($meta,$name) or next;
+        my $val = $c->_pk_to_stashval($meta,$name) or do { 
+            logger->debug("Tried to lookup pk '$name' for table '$table_name', " .
+                          "but it didn't exist, or was false (0 or '')");
+            next;
+        };
         if ($name =~ /^id(entifier)?$/) {
             $identifier = $val;
             $identifier_column = $name;
@@ -547,7 +573,10 @@ sub _this_object {
     my %pk;
     for my $name ($meta->primary_key_column_names) { ; # e.g. identifier, report_identifier
         my $val = $c->_pk_to_stashval($meta,$name);
-        return unless defined($val);
+        unless (defined($val)) {
+            logger->debug("Could not find _this_object. Returning to " . caller) ;
+            return;
+        }
         $pk{$name} = $val;
     }
 

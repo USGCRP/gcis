@@ -1,0 +1,51 @@
+
+=head1 NAME
+
+case_study
+
+=head1 DESCRIPTION
+
+
+
+=head1 FIELDS
+
+ lexicon_identifier (character varying) - 
+ context_identifier (character varying) - 
+ term (character varying) - 
+ term_identifier (character varying) - 
+ relationship_identifier (character varying) - 
+ gcid (character varying) - 
+ description (character varying) - 
+ timestamp (timestamp(3) without time zone) - 
+
+
+=head1 SCHEMA
+
+                                 View "gcis_metadata.case_study"
+          Column          |              Type              | Modifiers | Storage  | Description 
+ -------------------------+--------------------------------+-----------+----------+-------------
+  lexicon_identifier      | character varying              |           | extended | 
+  context_identifier      | character varying              |           | extended | 
+  term                    | character varying              |           | extended | 
+  term_identifier         | character varying              |           | extended | 
+  relationship_identifier | character varying              |           | extended | 
+  gcid                    | character varying              |           | extended | 
+  description             | character varying              |           | extended | 
+  timestamp               | timestamp(3) without time zone |           | plain    | 
+ View definition:
+  SELECT t.lexicon_identifier,
+     t.context_identifier,
+     t.term,
+     m.term_identifier,
+     m.relationship_identifier,
+     m.gcid,
+     m.description,
+     m."timestamp"
+    FROM term t,
+     term_map m
+   WHERE t.identifier::text = m.term_identifier::text AND m.relationship_identifier::text ~~ '%hasCaseStudy'::text;
+ 
+
+=cut
+
+

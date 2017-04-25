@@ -216,6 +216,8 @@ sub startup {
       #    controller -- controller class
       #    identifier -- name of the stash key for the identifier (tablename + '_identifier')
       #    path_base -- initial path for urls (/tablename)
+      #    no_list -- do not create the 'list_$name' route
+      #    abridged -- create a shorter route by omitting the path_base (useful for nested resources)
       #
       my $identifier = $opts->{identifier} || join '_', $name, 'identifier';
       my $controller = $opts->{controller} || 'Tuba::'.b($name)->camelize;
@@ -234,7 +236,17 @@ sub startup {
       $cname = b($cname)->decamelize;
 
       # Build bridges and routes.
-      my $resource = $r->route("$path_base")->to("$cname#");
+      my $resource;
+      unless ($opts->{abridged}) { #not an abridged route by default
+          $resource = $r->route("$path_base")->to("$cname#");
+      } else {
+          $resource = $r->route->to("$cname#");
+          if ($opts->{path_base}) {
+              $app->log->warn("opt path_base=>$opts->{path_base} was provided, but ignored because opt abridged" .
+                              " is in effect for resource $name");
+          }
+      }
+      # If using opts->{abridged}, you probably want to use opt->{no_list} as well, but it is not enforced
       $resource->get->to('#list')->name("list_$name") unless $opts->{no_list};
       my $select;
       my @restrict = $opts->{restrict_identifier} ? ( $identifier => $opts->{restrict_identifier} ) : ();
@@ -263,7 +275,13 @@ sub startup {
 
       return $select if $config->{read_only};
 
-      my $authed = $r->under("/$path_base")->to(cb => sub {
+      my $authed;
+      unless ($opts->{abridged}) {
+          $authed = $r->under("/$path_base");
+      } else {
+          $authed = $r->under;
+      }
+      $authed->to(cb => sub {
               my $c = shift;
               return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
               return 1;
@@ -499,6 +517,61 @@ sub startup {
         $lex_authed->put('/:lexicon_identifier/:context/*term')->to('exterm#create');
         $lex_authed->delete('/:lexicon_identifier/:context/*term')->to('exterm#remove');
     }
+
+    # Vocabulary
+    #Since vocabulary is a view in postgres, and context and term tables use the column name lexicon_identifier,
+    #it works best to force the vocabulary's identifier to also be lexicon_identifier.  Otherwise, for those other
+    #tables, we need to make sure lexicon_identifier gets populated everywhere they need it.
+    $r->resource('vocabulary', {identifier => 'lexicon_identifier'});
+    my $vocab = $r->lookup('select_vocabulary');
+
+    # This will create the path /vocabulary/{lexicon_identifier}/context/{context_identifier}
+    my $context = $vocab->resource('context_with_extended_path', { controller => 'Tuba::Context', identifier => 'context_identifier', path_base => 'context'});
+
+    # This creates the path /vocabulary/{lexicon_identifier}/context/{context_identifier}/term/{term_identifier}
+    $context->resource('term_with_extended_path', {identifier => 'term', wildcard => 1, controller => 'Tuba::Term', path_base => 'term'});
+
+    # Creates the path /vocabulary/{lexicon_identifier}/{context_identifer} - the canonical way to access context
+    my $context2 = $vocab->resource('context', {abridged => 1, no_list => 1});
+
+    # Creates the path //vocabulary/{lexicon_identifier}/{context_identifer}/{term_identifier} - the 
+    # canonical way to access term
+    $context2->resource('term', {abridged =>1, no_list => 1, wildcard => 1, identifier => 'term'});
+
+    # simple test route -RS
+    $r->get('/testing' => sub {
+        my $c=shift;
+        $c->render(text=>'testing');
+    });
+
+    # simple test resource -RS
+    $r->resource('test');
+
+    # terms (by uuid, not through /vocabulary), ie, NOT the canonical way
+    $r->resource('term_by_uuid', { controller => 'Tuba::Term', identifier => 'term_identifier', path_base => 'term'});
+
+    # relationships (the predicates used between terms, and from terms to gcids)
+    $r->resource('relationship');
+
+    # term_relationship (how terms are related to each other)
+    $r->resource('term_relationship');
+    if (my $term_relationship_authed = $r->find('authed_select_term_relationship')) {
+        $term_relationship_authed
+            ->delete('/:term_subject_identifier/:relationship_identifier/:term_object_identifier')
+                ->to('term_relationship#remove');
+    }
+
+    # term_map (how terms are mapped to gcids)
+    $r->resource('term_map');
+    if (my $term_map_authed = $r->find('authed_select_term_map')) {
+        $term_map_authed
+            ->delete('/:term_identifier/:relationship_identifier/*gcid_identifier')
+                ->to('term_map#remove');
+    }
+
+    $r->resource('toolkit');
+
+    $r->resource('case_study');
 
     # Search route.
     $r->get('/search')->to('search#keyword')->name('search');

@@ -13,6 +13,7 @@ A webpage is a type of publication.
  url (character varying) - The URL.
  title (character varying) - The title of the webpage.
  access_date (timestamp without time zone) - The date on which this webpage was accessed.
+ description (character varying) - A brief description of the web page.
 
 
 =head1 SCHEMA
@@ -24,6 +25,7 @@ A webpage is a type of publication.
   url         | character varying           | not null  | extended |              | The URL.
   title       | character varying           |           | extended |              | The title of the webpage.
   access_date | timestamp without time zone |           | plain    |              | The date on which this webpage was accessed.
+  description | character varying           |           | extended |              | A brief description of the web page.
  Indexes:
      "webpage_pkey" PRIMARY KEY, btree (identifier)
      "webpage_url_key" UNIQUE CONSTRAINT, btree (url)
