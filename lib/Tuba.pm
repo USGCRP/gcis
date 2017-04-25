@@ -440,6 +440,7 @@ sub startup {
 
     $r->resource('gcmd_keyword');
     $r->resource('region');
+    $report->get('/region')->to('region#list')->name('list_report_regions');
     $r->resource('dataset');
     $r->get("/dataset/lookup/*doi" => [ doi => qr[10\..*$] ])->to('dataset#lookup_doi')->name('dataset_doi');
 
