@@ -462,6 +462,15 @@ sub reference_count {
     return $count;
 }
 
+sub region_count {
+    my $obj = shift;
+    my $pub = $obj->get_publication or return 0;
+    my $sql = q[select count(1) from publication_region_map where publication_id = ?];
+    my $dbs = DBIx::Simple->new($obj->db->dbh);
+    my ($count) = $dbs->query($sql, $pub->id)->flat;
+    return $count;
+}
+
 sub as_autocomplete_str {
     my $obj = shift;
     my $elide = shift || 80;
