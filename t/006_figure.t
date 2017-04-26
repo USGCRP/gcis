@@ -89,7 +89,7 @@ my %o = (
 my %added_tags = (   #JSON tags added by the API
    chapter      => {display_name => 'Carrots'},
    description  => undef,
-   display_name => '-.-: Orange Carrots!',
+   display_name => "-.41-b: Orange Carrots!",
    report       => {display_name => 'Veggies'},
    type         => 'figure',
 );
