@@ -43,3 +43,53 @@
 </div>
 %= end
 
+%= hidden_field 'delete_pub_attr';
+%= form_for obj_uri_for($object,'update_attr') => class => 'form-horizontal' => method => 'POST' => begin
+<div class="well">
+    <p><strong>Note:</strong> Reference Attributes should not be updated to reflect new information. They are intended to be correct as of the time of the reference. Updating should only be done if there is incorrect data.</p>
+<table class='table table-responsive table-condensed table-bordered densetable'>
+    <caption>Attributes</caption>
+    <tr>
+      <th>Delete</th>
+      <th>Key</th>
+      <th>Current Value</th>
+      <th>Replace Value</th>
+    </tr>
+    % for my $k (sort keys %{ $reference->attrs }) {
+    <tr>
+        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_pub_attr"].value = '].$k.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        <td><%= $k %></td>
+        <td><%= $reference->attrs->{$k} %></td>
+        <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
+    </tr>
+    % }
+</table>
+<h4>New Attribute</h4>
+<div class='form-group row'>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_key', class => 'required' => begin
+      Key
+    %= end
+  </div>
+  <div class='col-lg-2 col-md-2 col-sm-2'>
+    <%= text_field 'new_attr_key', class => "form-control input-small squeezevert" %>
+  </div>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_value', class => 'required' => begin
+      Value
+    %= end
+  </div>
+  <div class='col-lg-4 col-md-4 col-sm-4'>
+    <%= text_field 'new_attr_value', class => "form-control input-small squeezevert" %>
+  </div>
+</div>  <!--- End new attr div --->
+
+<div class="row">
+	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</div>
+</div>
+
+%= end
+

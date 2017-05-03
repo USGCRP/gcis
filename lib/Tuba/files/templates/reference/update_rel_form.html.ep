@@ -73,14 +73,5 @@
 
 %= end
 <br />
-<table class='table table-responsive table-striped table-bordered squeeze'>
-    <caption>Attributes</caption>
-    % for my $k (sort keys %{ $reference->attrs }) {
-    <tr>
-        <td><%= $k %></td>
-        <td><%= $reference->attrs->{$k} %></td>
-    </tr>
-    % }
-</table>
 </div>
 
