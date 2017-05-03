@@ -44,7 +44,7 @@
 %= end
 
 %= hidden_field 'delete_pub_attr';
-%= form_for obj_uri_for($object,'update_attr') => class => 'form-horizontal' => method => 'POST' => begin
+%= form_for obj_uri_for($object, 'update') => class => 'form-horizontal' => method => 'POST' => begin
 <div class="well">
     <p><strong>Note:</strong> Reference Attributes should not be updated to reflect new information. They are intended to be correct as of the time of the reference. Updating should only be done if there is incorrect data.</p>
 <table class='table table-responsive table-condensed table-bordered densetable'>
