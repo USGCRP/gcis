@@ -121,8 +121,44 @@ sub update {
         $c->stash(object_json => $json);
         $c->stash(publication_update_category => delete $json->{publication_update_category});
     }
-    $c->SUPER::update(@_);
+    if (my $params = $c->req->params->to_hash ) {
+        if ( $params->{delete_pub_attr} ) {
+          $reference->delete_attr( { del_attr => $params->{delete_pub_attr}, audit_user => $c->user, audit_note => "Setting attributes" });
+          $c->redirect_without_error('update_form');
+        }
+        elsif ( exists $params->{new_attr_key} ) {
+          my $new_attributes = _collect_attributes($params);
+          $reference->set_attr( { new_attrs => $new_attributes, audit_user => $c->user, audit_note => "Setting attributes" });
+          $c->redirect_without_error('update_form');
+        }
+        else {
+            $c->SUPER::update(@_);
+        }
+    }
 }
+
+sub _collect_attributes {
+    my ( $params ) = @_;
+    my $attrs;
+
+    # any newly entered key should overwrite existing of that name.
+    my $new_attr_flag = 0;
+    foreach my $key ( keys %$params ) {
+        next if $key eq 'new_attr_value';
+        if ( $key eq 'new_attr_key') {
+            $new_attr_flag = 1;
+        }
+        if ( $key =~ /^attribute_(.*)/ && $params->{ $key } ) {
+            $attrs->{"$1"} = $params->{$key};
+        }
+    }
+    if ( $new_attr_flag ) {
+        $attrs->{ $params->{'new_attr_key'} } = $params->{'new_attr_value'}
+    }
+
+    return $attrs;
+}
+
 sub post_update {
   my $c         = shift;
   my $reference = shift;
