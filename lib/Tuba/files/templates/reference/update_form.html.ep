@@ -43,7 +43,7 @@
     </tr>
     % for my $k (sort keys %{ $reference->attrs }) {
     <tr>
-        <td><%= tag 'button' => class => 'btn btn-danger squeezevert' => tabindex => "-1", onClick => qq[{this.form.elements["delete_pub_attr"].value = '].$k.qq['; this.form.submit(); }] => begin %>delete<%= end %></td>
+        <td><button type="button" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
         <td><%= $k %></td>
         <td><%= $reference->attrs->{$k} %></td>
         <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
@@ -85,7 +85,7 @@
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class='input-group'>
     <span class="input-group-btn">
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    <button type="button" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     </span>
     %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
     </div>
