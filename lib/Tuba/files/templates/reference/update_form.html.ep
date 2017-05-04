@@ -29,20 +29,6 @@
     <p>To edit this reference, please choose a valid tab from above.</p>
 </div>
 
-%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
-%= include 'messages';
-<div class="row">
-	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-    <div class='input-group'>
-    <span class="input-group-btn">
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
-    </span>
-    %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
-    </div>
-    </div>
-</div>
-%= end
-
 %= hidden_field 'delete_pub_attr';
 %= form_for obj_uri_for($object, 'update') => class => 'form-horizontal' => method => 'POST' => begin
 <div class="well">
@@ -92,4 +78,19 @@
 </div>
 
 %= end
+
+%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
+%= include 'messages';
+<div class="row">
+	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <div class='input-group'>
+    <span class="input-group-btn">
+    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    </span>
+    %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
+    </div>
+    </div>
+</div>
+%= end
+
 
