@@ -126,6 +126,7 @@ non-profit
 professional society/organization
 foundation
 consortium
+public-private partnership
 \.
 
 
