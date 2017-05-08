@@ -81,7 +81,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "v1.49.1"
+         "version" : "v1.50.0"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -367,6 +367,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v1.49.1",
+   "version" : "v1.50.0",
    "x_serialization_backend" : "JSON::PP version 2.27400"
 }
