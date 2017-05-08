@@ -7,7 +7,6 @@ addons:
             - raptor2-utils
 
 perl:
-  - "5.16"
   - "5.20"
 
 env:
