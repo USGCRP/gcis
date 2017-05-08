@@ -12,6 +12,8 @@ use Tuba::Log qw/logger/;;
 use Tuba::Util qw[new_uuid];
 use Data::Dumper;
 
+no warnings qw(experimental::smartmatch);
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('reference_identifier');
