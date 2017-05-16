@@ -1,0 +1,29 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - gcis
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./eg/nginx.conf:/etc/nginx/nginx.conf
+      - ./eg/ssl:/etc/certificates  
+  gcis:
+    image: gcis:small
+    depends_on: 
+      - postgres
+    environment:
+      - PGHOST=postgres
+      - PGUSER=bduggan
+      - MOJO_MODE=development
+    volumes:
+      - ./Tuba.conf:/home/gcis/Tuba.conf
+
+  postgres:
+    image: postgres:9.4
+    environment:
+      - POSTGRES_USER=bduggan
+#    volumes:
+#      - ./db:/docker-entrypoint-initdb.d
