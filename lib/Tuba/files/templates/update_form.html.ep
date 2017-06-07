@@ -75,23 +75,24 @@ $('.control-label').popover({trigger : 'hover'});
     <button type="reset" class="btn btn-default">Reset</button>
     <div class='input-group'>
     <span class="input-group-btn">
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     </span>
     % if ($self->can_set_replacement) {
+    Merge this <%= $object->meta->table %> into on deletion:
     %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control col-lg-3 col-md-3', style=>'height:auto;';
     %= javascript begin
     $('#replacement').typeahead({
         minLength : 1,
         items : 15,
         source : function(query,process) {
-            return $.get('/autocomplete', { q : query, items : 15, type : 'person' }, function(data) {
+            return $.get('/autocomplete', { q : query, items : 15, type : '<%= $object->meta->table %>' }, function(data) {
                  return process(data);
             });
         }
       });
     %= end
-
+    <br/>
     % }
+    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     </div>
     </div>
 </div>
