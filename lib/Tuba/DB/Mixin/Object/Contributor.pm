@@ -109,7 +109,7 @@ sub merge_into {
         my $pc_maps = Tuba::DB::Object::PublicationContributorMap::Manager->get_objects(
             query => [ contributor_id => $s->id ]);
         for my $pub_contr_map (@$pc_maps) {
-            $pub_contr_map->merge_into( { new => $target->id } );
+            $pub_contr_map->merge_into( new => $target->id, audit_user => $audit_user, audit_note => $audit_note );
         }
         $s->delete(audit_user => $audit_user, audit_note => $audit_note) or die $s->error;
     } else {
