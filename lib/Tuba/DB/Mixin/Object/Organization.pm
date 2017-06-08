@@ -79,7 +79,7 @@ sub merge_into {
     my $audit_note = $args{audit_note};
 
     # ids for other contributors
-    my $contributors = Tuba::DB::Object::Contributor::Manager->get_objects( query => [ organization_id => $s->id ] );
+    my $contributors = Tuba::DB::Object::Contributor::Manager->get_objects( query => [ organization_identifier => $s->id ] );
     for my $contributor ( @$contributors ) {
         my $success = $contributor->merge_into({
                 new => $new,
