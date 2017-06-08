@@ -72,7 +72,7 @@ sub merge_into {
     my $s = shift;
     my %args = @_;
     my $new = $args{new};
-    my $merge_on = $args{merge_on} // 0;
+    my $merge_on = $args{merge_on} ? $args{merge_on} :  0;
     my $audit_user = $args{audit_user};
     my $audit_note = $args{audit_note};
 
