@@ -1231,6 +1231,9 @@ Override in each object controller if we can _actually_ use the replacement merg
 =cut
 
 sub can_set_replacement {
+    my $c = shift;
+    my $object_class = $c->_guess_object_class;
+    return 1 if $object_class->can('merge_into');
     return 0;
 }
 
