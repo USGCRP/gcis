@@ -176,6 +176,7 @@ sub lookup_name {
     return $c->reply->not_found;
 }
 
+# TODO DELTE ME
 sub merge {
     my $c = shift;
     my $org = $c->_this_object;
