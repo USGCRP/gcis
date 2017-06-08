@@ -59,7 +59,7 @@ $t->post_ok("/report/contributors/dos" => json =>
     {person_id => $id, organization_identifier => 'earth-2020', role => 'engineer' })->status_is(200);
 
 $t->get_ok("/report/uno")->json_is("/contributors/0/organization/identifier" => earth);
-$t->get_ok("/report/dos")->json_is("/contributors/0/organization/identifier" => earth-2020);
+$t->get_ok("/report/dos")->json_is("/contributors/0/organization/identifier" => 'earth-2020');
 
 $t->ua->max_redirects(0);
 
@@ -88,7 +88,7 @@ $t->get_ok("/organization/history/earth")
     ->json_is("/change_log/0/row_data/identifier" => earth)
     ->json_is("/change_log/1/action" => "D")
     ->json_is("/change_log/1/row_data/name" => "Earth 2020")
-    ->json_is("/change_log/1/row_data/identifier" => earth-2020);
+    ->json_is("/change_log/1/row_data/identifier" => 'earth-2020');
 
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);
