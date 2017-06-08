@@ -17,7 +17,7 @@ sub merge_into {
 
     my $target_map = Tuba::DB::Object::PublicationContributorMap->new(
         publication_id => $s->publication_id, 
-        contributor_id => $new->id
+        contributor_id => $new
     );
     if ( $target_map->load(speculative => 1) ) {
         # Case 1a: there is already a publication_contributor_map
