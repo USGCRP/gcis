@@ -122,7 +122,7 @@ sub merge_into {
         if ( $merge_on eq 'person' ) {
             $s->person_id($new->id);
         } elsif ( $merge_on eq 'organization' ) {
-            $s->organization_id($new->id);
+            $s->organization_id($new->identifier);
         }
         $s->save(audit_user => $audit_user, audit_note => $audit_note) or die $s->error;
     }
