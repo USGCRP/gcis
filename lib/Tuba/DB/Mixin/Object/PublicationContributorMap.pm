@@ -23,15 +23,15 @@ sub merge_into {
         # Case 1a: there is already a publication_contributor_map
         # for this publication on both contributors.
         # Compare reference linked on map
-        if ( $s->reference_id ) {
-            if ( $target_map->reference_id ) {
-                # merge process cannot handle conflicting reference_ids!
+        if ( $s->reference_identifier ) {
+            if ( $target_map->reference_identifier ) {
+                # merge process cannot handle conflicting reference_identifiers!
                 die "Cannot merge Publication Contributor Maps with differing references"
-                    if $s->reference_id ne $target_map->reference_id;
+                    if $s->reference_identifier ne $target_map->reference_identifier;
             }
             else {
-                # move over the reference_id
-                $target_map->reference_id( $s->reference_id );
+                # move over the reference_identifier
+                $target_map->reference_identifier( $s->reference_identifier );
             }
         }
         $target_map->save(audit_user => $audit_user, audit_note => $audit_note)
