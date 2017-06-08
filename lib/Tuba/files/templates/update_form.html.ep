@@ -78,7 +78,7 @@ $('.control-label').popover({trigger : 'hover'});
     </span>
     % if ($self->can_set_replacement) {
     If you would like this <%= $object->meta->table %> object's data merged into another <%= $object->meta->table %> upon deletion, select it here: <br/>
-    < %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control col-lg-3 col-md-3', style=>'height:auto;'; %>
+    %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control col-lg-3 col-md-3', style=>'height:auto;'; %
     %= javascript begin
     $('#replacement').typeahead({
         minLength : 2,
