@@ -81,13 +81,12 @@ sub merge_into {
     # ids for other contributors
     my $contributors = Tuba::DB::Object::Contributor::Manager->get_objects( query => [ organization_identifier => $s->identifier ] );
     for my $contributor ( @$contributors ) {
-        my $success = $contributor->merge_into(
+        $contributor->merge_into(
                 new => $new,
                 merge_on => 'organization',
                 audit_user => $audit_user,
                 audit_note => $audit_note,
         );
-        die "Cannot merge Organizations" unless $success;
     }
     return 1;
 }

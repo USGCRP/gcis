@@ -201,17 +201,5 @@ sub contributions {
         }
     );
 }
-
-=head2 can_set_replacement
-
-Person objects know how to merge_into, so they are allowed to set replacements.
-
-=cut
-
-sub can_set_replacement {
-    return 1;
-}
-
-
 1;
 
