@@ -80,15 +80,15 @@ sub merge_into {
     my $target;
     if ($merge_on eq 'person' ) {
         $target = Tuba::DB::Object::Contributor->new(
-            role_type_identifier    => $contributor->role_type_identifier,
-            organization_identifier => $contributor->organization_identifier,
+            role_type_identifier    => $s->role_type_identifier,
+            organization_identifier => $s->organization_identifier,
             person_id               => $new->id,
         );
     } elsif ($merge_on eq 'organization' ) {
         $target = Tuba::DB::Object::Contributor->new(
-            role_type_identifier    => $contributor->role_type_identifier,
+            role_type_identifier    => $s->role_type_identifier,
             organization_identifier => $new->id,
-            person_id               => $contributor->person_id,
+            person_id               => $s->person_id,
         );
     } else {
         die "Contributor must be merged based on Person or Organization";
