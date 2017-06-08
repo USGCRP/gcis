@@ -33,8 +33,6 @@ sub merge_into {
     my $audit_user = $args{audit_user};
     my $audit_note = $args{audit_note};
 
-
-    # TODO investigate importance
     die "Not replacing person with orcid : ".$new->id." vs ".$s->id if $s->orcid;
 
     # ids for other contributors

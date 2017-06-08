@@ -1226,7 +1226,7 @@ sub normalize_form_parameter {
 
 =head2 can_set_replacement
 
-Override in each object controller if we can _actually_ use the replacement merge.
+Objects with the function 'merge_into' are capable of replacement.
 
 =cut
 
