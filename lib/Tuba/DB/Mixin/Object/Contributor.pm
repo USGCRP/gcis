@@ -87,7 +87,7 @@ sub merge_into {
     } elsif ($merge_on eq 'organization' ) {
         $target = Tuba::DB::Object::Contributor->new(
             role_type_identifier    => $s->role_type_identifier,
-            organization_identifier => $new->id,
+            organization_identifier => $new->identifier,
             person_id               => $s->person_id,
         );
     } else {
