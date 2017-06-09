@@ -50,6 +50,23 @@ $t->get_ok("/person/$id2")
    ->json_is("/first_name" => "John")
    ->json_is("/last_name" => "Smyth");
 
+# Add another one just like that one.
+$t->post_ok(
+  "/person" => json => {
+    url         => 'http://example.com/j_smyth',
+    last_name   => "Smyth",
+    middle_name => "T",
+    first_name  => "J",
+  }
+)->status_is(302);
+my $uri = $t->tx->res->headers->location;
+like $uri, qr[/person/(\d+)$], "made a GCID";
+my ($id3) = $uri =~ qr[/person/(\d+)$];
+$t->get_ok("/person/$id3")
+   ->status_is(200)
+   ->json_is("/first_name" => "J")
+   ->json_is("/last_name" => "Smyth");
+
 $t->ua->max_redirects(1);
 
 # Also make an org.
@@ -65,9 +82,12 @@ $t->post_ok("/report/contributors/uno" => json =>
     {person_id => $id, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
 $t->post_ok("/report/contributors/dos" => json =>
     {person_id => $id2, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
+$t->post_ok("/report/contributors/dos" => json =>
+    {person_id => $id3, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
 
 $t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
 $t->get_ok("/report/dos")->json_is("/contributors/0/person/id" => $id2);
+$t->get_ok("/report/dos")->json_is("/contributors/1/person/id" => $id3);
 
 # test lookups
 $t->post_ok(
@@ -92,14 +112,20 @@ $t->delete_ok($person_uri)->status_is(200);
 
 $t->ua->max_redirects(0);
 
-# What, these are the same person?  Okay merge them.
+# What, these are all the same person?  Okay merge them.
 # Delete person2, merging into person1
-$t->ua->unsubscribe($event_id); # not JSON
+$t->ua->unsubscribe($event_id); # via form
 $t->post_ok("/person/$id2" => form => {
         delete => 1,
         replacement_identifier => "[person] {$id} John Smith",
     })->status_is(302)
 ->header_is(Location => "/person/form/update/$id");
+
+# Delete person3, merging into person1
+$t->delete_ok("/person/$id3" => json => { # via JSON
+        replacement => "/person/$id"
+    })->status_is(200);
+
 
 # There is now one person for both reports
 $t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
@@ -112,6 +138,21 @@ $t->get_ok("/person/$id")->status_is(200)
 
 # And redirect works.
 $t->get_ok("/person/$id2")->status_is(302)->header_is("Location" => "/person/$id");
+$t->get_ok("/person/$id3")->status_is(302)->header_is("Location" => "/person/$id");
+
+# Audit log for new person has both deleted people.
+# For some reason, the deleted persons order id reversed in the log
+$t->get_ok("/person/history/$id")
+    ->status_is(200)
+    ->json_is("/change_log/0/action" => "I")
+    ->json_is("/change_log/0/row_data/last_name" => "Smith")
+    ->json_is("/change_log/0/row_data/id" => $id)
+    ->json_is("/change_log/1/action" => "D")
+    ->json_is("/change_log/1/row_data/first_name" => "J")
+    ->json_is("/change_log/1/row_data/id" => $id3)
+    ->json_is("/change_log/2/action" => "D")
+    ->json_is("/change_log/2/row_data/last_name" => "Smyth")
+    ->json_is("/change_log/2/row_data/id" => $id2);
 
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);
