@@ -144,15 +144,17 @@ sub update_rel {
         $obj = $c->str_to_obj($obj) or return $c->update_error("No match for $obj");
         my $pub = $obj->get_publication(autocreate => 1);
         $pub->save(audit_user => $c->audit_user, audit_note => $c->audit_note) unless $pub->id;
-        my $role_type = $c->param('role_type');
-        my $ctr = Contributor->new(
-          role_type_identifier    => $role_type,
-          person_id               => $person->id,
-          organization_identifier => $organization->identifier
-        );
-        $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error); 
-        $ctr->add_publications($pub);
-        $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error);
+        my $role_types = $c->every_param('role_type');
+        for my $role_type ( @$role_types ) {
+            my $ctr = Contributor->new(
+              role_type_identifier    => $role_type,
+              person_id               => $person->id,
+              organization_identifier => $organization->identifier
+            );
+            $ctr->load(speculative => 1) or $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error); 
+            $ctr->add_publications($pub);
+            $ctr->save(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($ctr->error);
+        }
     }
 
     $c->redirect_to($next);
@@ -183,7 +185,7 @@ sub contributions {
     );
     my @pubs = map $_->publication, @$maps;
     my %id;
-    @pubs = grep { !$id{$_->id}++} @pubs; 
+    @pubs = grep { !$id{$_->id}++} @pubs;
     my @objs = map $_->to_object, @pubs;
     @objs = map $_->[1],
             sort { $a->[0] cmp $b->[0] }
