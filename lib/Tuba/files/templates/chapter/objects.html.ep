@@ -49,7 +49,7 @@
         %= end
     </td>
     <td>
-        %= link_to 'list_chapter_references', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn btn-default squeezevert' => begin
+        %= link_to 'list_reference_chapter', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => class => 'btn btn-default squeezevert' => begin
         %= $chapter->reference_count;
         %= end
     </td>

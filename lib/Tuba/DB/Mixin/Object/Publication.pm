@@ -325,7 +325,7 @@ sub references_url {
         /chapter/ and do {
             my $chapter = $pub->to_object;
             my $url = $c->url_for(
-              'list_chapter_references',
+              'list_reference_chapter',
               {
                 report_identifier  => $chapter->report->identifier,
                 chapter_identifier => $chapter->identifier
