@@ -30,6 +30,14 @@ $t->get_ok("/organization/earth-2020")
    ->status_is(200)
    ->json_is("/name" => "Earth 2020");
 
+# Make one more org.
+$t->post_ok("/organization" => json => { identifier => "earth-2021", name => "Earthy 2021" })
+    ->status_is(302);
+$t->get_ok("/organization/earth-2021")
+   ->status_is(200)
+   ->json_is("/name" => "Earthy 2021");
+
+
 # Add a person
 $t->post_ok(
   "/person" => json => {
@@ -89,6 +97,14 @@ $t->get_ok("/organization/history/earth")
     ->json_is("/change_log/1/action" => "D")
     ->json_is("/change_log/1/row_data/name" => "Earth 2020")
     ->json_is("/change_log/1/row_data/identifier" => 'earth-2020');
+
+# Confirm the deprecated merge method is still functional
+$t->post_ok("/organization/earth-2021/merge" => form => {
+        merge_organization => "[organization] {earth} Early Adopters of Real Technological Harmonicas",
+    })->status_is(302)
+->header_is(Location => "/organization/form/update/earth");
+$t->get_ok("/organization/earth-2021")->status_is(302)->header_is("Location" => "/organization/earth");
+
 
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);

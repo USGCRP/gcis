@@ -433,6 +433,7 @@ sub startup {
     my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
+    # deprecated merge method. Use deletion path instead.
     $r->find('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
     $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 

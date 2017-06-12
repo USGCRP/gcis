@@ -225,5 +225,20 @@ sub make_tree_for_show {
     return $obj;
 }
 
+# deprecated merge method
+sub merge {
+    my $c = shift;
+    my $org = $c->_this_object;
+    $c->stash(tab => "update_form");
+    $c->stash->{template} = 'update_form';
+
+    return $c->update_error("Missing other organization") unless $c->param('merge_organization');
+
+    $c->param(delete => 1);
+    $c->param(replacement_identifier => $c->param('merge_organization'));
+    $c->update();
+}
+
 1;
+
 
