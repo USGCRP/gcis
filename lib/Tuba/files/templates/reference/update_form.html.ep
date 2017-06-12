@@ -43,7 +43,7 @@
     </tr>
     % for my $k (sort keys %{ $reference->attrs }) {
     <tr>
-        <td><button type="button" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
+        <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
         <td><%= $k %></td>
         <td><%= $reference->attrs->{$k} %></td>
         <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>

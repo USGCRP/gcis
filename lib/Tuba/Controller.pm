@@ -1226,16 +1226,15 @@ sub normalize_form_parameter {
 
 =head2 can_set_replacement
 
-See above.
+Objects with the function 'merge_into' are capable of replacement.
 
 =cut
 
 sub can_set_replacement {
     my $c = shift;
-    my $meta = $c->_guess_object_class->meta;
-    my @cols = $meta->primary_key_column_names;
-    return 0 if @cols > 1;
-    return 1;
+    my $object_class = $c->_guess_object_class;
+    return 1 if $object_class->can('merge_into');
+    return 0;
 }
 
 sub update {
