@@ -935,7 +935,6 @@ lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.tut
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/organization/relationships.html.ep
-lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/organization_alternate_name/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
@@ -1057,8 +1056,8 @@ t/013_model.t
 t/014_array.t
 t/015_search.t
 t/016_turtle_syntax.t
+t/017_organization.t
 t/017_person.t
-t/017_person_api.t
 t/018_contributor.t
 t/020_ontology.t
 t/999_stop_db.t
