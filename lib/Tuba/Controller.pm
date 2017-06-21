@@ -1065,29 +1065,33 @@ sub update_contributors {
 
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
 
-    my $role = $c->param('role') || $json->{role} or return $c->update_error("missing role");
-    my $sort_key = $c->param('sort_key') || $json->{sort_key};
+    my $role_types = $c->every_param('role_type') || [ $json->{role} ] or return $c->update_error("missing role");
 
-    my $contributor = Contributor->new(role_type => $role);
-    $contributor->organization_identifier($organization->identifier) if $organization;
-    $contributor->person_id($person->id) if $person;
-    if ( $contributor->load(speculative => 1)) {
-            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
-            logger->debug("json : ".Dumper($json));
-    } else {
-            $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
-                or return $c->update_error($contributor->error);
-    };
+    for my $role ( @$role_types ) {
+        my $sort_key = $c->param('sort_key') || $json->{sort_key};
 
-    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
-    my $map = Tuba::DB::Object::PublicationContributorMap->new(
-        publication_id => $pub->id,
-        contributor_id => $contributor->id,
-    );
-    $map->load(speculative => 1);
-    $map->reference_identifier($reference_identifier);
-    $map->sort_key($sort_key) if defined($sort_key);
-    $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
+        my $contributor = Contributor->new(role_type => $role);
+        $contributor->organization_identifier($organization->identifier) if $organization;
+        $contributor->person_id($person->id) if $person;
+        if ( $contributor->load(speculative => 1)) {
+                logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
+                logger->debug("json : ".Dumper($json));
+        } else {
+                $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($contributor->error);
+        };
+
+        $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
+        my $map = Tuba::DB::Object::PublicationContributorMap->new(
+            publication_id => $pub->id,
+            contributor_id => $contributor->id,
+        );
+        $map->load(speculative => 1);
+        $map->reference_identifier($reference_identifier);
+        $map->sort_key($sort_key) if defined($sort_key);
+        $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
+    }
+
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
 }

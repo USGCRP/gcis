@@ -64,8 +64,8 @@
 	%= end
 	</div>
 	<div class='col-lg-6 col-md-6 col-sm-6'>
-    % param role => 'author' unless param 'role';
-    %= select_field 'role', db_labels('role_type'), class => 'form-control';
+    % param role => 'author' unless param 'role_type';
+    %= select_field 'role_type', db_labels('role_type'), class => 'form-control', multiple => 'multiple';
     </div>
 </div>
 
