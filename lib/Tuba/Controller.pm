@@ -1035,7 +1035,7 @@ sub update_contributors {
         }
     }
 
-    my ($person,$organization);
+    my ($person,$organization,$role_types);
 
     my $reference_identifier;
     if ($c->req->json) {
@@ -1055,17 +1055,18 @@ sub update_contributors {
                 or return $c->update_error("invalid organization $organization");
             $organization = $obj;
         }
+        $role_types = [ $json->{role} ];
     } else {
         $person = $c->param('person');
         $organization = $c->param('organization');
         $reference_identifier = $c->param('reference_identifier') || undef;
         $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
         $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
+        $role_types = $c->every_param('role_type');
     }
 
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
-
-    my $role_types = $c->every_param('role_type') || [ $json->{role} ] or return $c->update_error("missing role");
+    return $c->update_error("missing role") unless $role_types;
 
     for my $role ( @$role_types ) {
         my $sort_key = $c->param('sort_key') || $json->{sort_key};
