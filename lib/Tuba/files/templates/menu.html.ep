@@ -50,7 +50,7 @@
                 <li><%= link_to 'list_organization' => begin %>organizations<%= end %></li>
             </ul>
         </li>
-        % if (user_can('update')) {
+        % if (user_can('update') || user_can('watch')) {
         <li><%= link_to 'admin' => begin %>admin<%= end %></li>
         % }
     </ul>

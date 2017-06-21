@@ -36,7 +36,12 @@ auth :
         dev_mode_kat : utterly_insecure_dev_login
 %# production mode auth, relies on google oauth
 authz :
+    # might not be used?
     root :
         user@globalchange.gov : 1
+    # allows editing of objects
     update :
+        user@globalchange.gov : 1
+    # allows access to see changelog
+    watch :
         user@globalchange.gov : 1
