@@ -13,3 +13,5 @@ authz :
         brian : 1
     update :
         brian : 1
+    watch :
+        brian : 1

@@ -50,9 +50,15 @@ Tuba provides a RESTful API to GCIS data.
         google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
 
     authz :
+        # Can submit POSTs, update data
         update :
-            jsmith2@gmail.com : 0
+            jsmith2@gmail.com : 1
             jsmith@usgcrp.gov : 1
+        # Can view the audit logs
+        watch :
+            jsmith2@gmail.com : 1
+            jsmith@usgcrp.gov : 1
+            aadams@usgcrp.gov : 1
 
 =cut
 
@@ -66,7 +72,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.50.1';
+our $VERSION = '1.50.2';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -532,7 +538,7 @@ sub startup {
         my $authed = $r->under->to(
           cb => sub {
               my $c = shift;
-              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return $c->deny_auth unless $c->auth && ( $c->authz(role => 'update') || $c->authz(role => 'watch') );
               return 1;
           }
         );

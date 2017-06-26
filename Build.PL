@@ -35,7 +35,7 @@ my $builder = Module::Build::Database->new(
         ],
     },
     module_name         => 'Tuba',
-    license             => 'agpl_3',
+    license             => 'CC0_1_0',
     dist_version_from   => 'lib/Tuba.pm',
     dist_abstract       => "The Useful Backend API",
     release_status      => 'stable',
