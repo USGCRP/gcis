@@ -12,10 +12,6 @@
         %= include 'h/thumbnail', pub => $pub, no_link => 1;
         <h2><%= $journal->title %></h2>
 
-        % if ($journal->publisher) {
-        <p><%= $journal->publisher %></p>
-        % }
-
         %= include 'h/contributors_short', object => $journal;
         % if ($journal->url) {
         <p><%= link_to $journal->url => target => "_blank" => begin %><%= $journal->url %><%= end %></p>

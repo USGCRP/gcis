@@ -6,7 +6,6 @@
    dcterms:title "<%= $journal->title %>"^^xsd:string;
    bibo:eissn "<%= $journal->online_issn %>";
    bibo:issn "<%= $journal->print_issn %>";
-   gcis:hasPublisher "<%= $journal->publisher %>"^^xsd:string;
    gcis:hasURL "<%= $journal->url %>"^^xsd:anyURI;
 
 % for my $article ($journal->articles) {
