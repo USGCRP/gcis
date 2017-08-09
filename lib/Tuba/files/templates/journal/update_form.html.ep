@@ -1,0 +1,110 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+% my $controls = stash 'controls' || {};
+
+% my $textfield = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <input type="text" class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= to_textfield_value($object->$accessor) %>">
+% end
+
+% my $textarea = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= to_textfield_value($object->$accessor) %></textarea>
+% end
+
+%= include 'update_tabs', active => 'fields';
+
+<div class='tab-content'>
+<p>Hover over a field name for help about that field.</p>
+%= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
+%= include 'messages';
+
+% my $cols = (stash 'cols') || [ sort { $a->name cmp $b->name } $meta->columns ];
+% for my $column (@$cols) {
+% $column = $meta->column($column) unless ref $column;
+% my $required = $column->not_null ? ' required' : "";
+<div class="form-group">
+<label class="<%= $required %> col-lg-2 col-md-2 col-sm-4 col-xs-12 control-label" for="<%= $column->name %>" data-title="<%= labelize($column->name) %>" data-content="<%= $column->remarks // "" %>"><%= labelize($column->name) %></label>
+        
+            % my $accessor = $column->accessor_method_name;
+            % my $val = $object->$accessor;
+            % my $name = $column->name;
+            % if ($name && $name eq 'report_identifier' && (stash 'report_identifier')) {
+            	<div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
+                %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
+                </div>
+                
+            % } elsif ($name && $name eq 'publisher') {
+            	<div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
+                <input class="form-control" id="<%= $name %>" type="text" placeholder="DEPRECATED - see hovertext" name="<%= $name %>" />
+                </div>
+                
+            % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
+            	<div class="col-lg-1 col-md-1 col-sm-1">
+                <input class="form-control" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
+                </div>
+                
+            % } elsif (my $entry = $controls->{$column->name}) {
+            	<div class="col-lg-10 col-md-10 col-sm-8 col-xs-12">
+                % $entry = $self->$entry($object) if ref($entry) eq 'CODE';
+                %= include 'controls/'.$entry->{template}, object => $object, column => $column, %{ $entry->{params} || {} }, value => $val;
+                </div>
+            % } else {
+                % if ($val && length($val) > 50) {
+                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
+                %= $textarea->($column,$object), class => "form-control";
+                % } else {
+                <div class="col-lg-10 col-md-10 col-sm-8 col-xs-12 ">
+                %= $textfield->($column,$object), class => "form-control";
+                % }
+                </div>
+            % }
+</div>
+% }
+
+%= javascript begin
+$('.control-label').popover({trigger : 'hover'});
+%= end
+<div class='required_note clearfix'>required</div>
+
+<div class="form-group clear-both">
+	<div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-12">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    <button type="reset" class="btn btn-default">Reset</button>
+    <div class='input-group'>
+    <span class="input-group-btn">
+    </span>
+    % if ($self->can_set_replacement) {
+    If you would like this <%= $object->meta->table %> object's data merged into another <%= $object->meta->table %> upon deletion, select it here: <br/>
+    %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control col-lg-3 col-md-3', style=>'height:auto;';
+    %= javascript begin
+    $('#replacement').typeahead({
+        minLength : 2,
+        items : 15,
+        source : function(query,process) {
+            return $.get('/autocomplete', { q : query, items : 15, type : '<%= $object->meta->table %>' }, function(data) {
+                 return process(data);
+            });
+        }
+      });
+    %= end
+    % }
+    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    </div>
+    </div>
+</div>
+</div>
+
+%= end
+
+% if (my $footer = stash 'embed_footer') {
+%= $footer->();
+% }
+</div>
