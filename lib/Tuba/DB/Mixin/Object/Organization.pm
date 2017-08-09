@@ -13,7 +13,8 @@ sub insert {
         tr/a-zA-Z0-9-//dc for @words;
         $_ = lc $_ for @words;
         my $identifier = @words ?  (join '-', @words) : "unknown-".rand;
-        $identifier =~ s/--/-/g;
+        $identifier =~ s/-+/-/g;  # strip multiple dashes in a row
+        $identifier =~ s/^-+//g;  # strip starting dashes
         $s->identifier($identifier);
     }
     return $s->SUPER::insert(@_);

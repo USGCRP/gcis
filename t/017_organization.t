@@ -105,6 +105,13 @@ $t->post_ok("/organization/earth-2021/merge" => form => {
 ->header_is(Location => "/organization/form/update/earth");
 $t->get_ok("/organization/earth-2021")->status_is(302)->header_is("Location" => "/organization/earth");
 
+# Make an org with leading spaces. Confirm the ID has no starting dash
+$t->post_ok("/organization" => json => {name => "    Space 2020" })
+    ->status_is(302);
+$t->get_ok("/organization/space-2020")
+   ->status_is(200)
+   ->json_is("/name" => "    Space 2020");
+
 
 $t->delete_ok("/person/$id")->status_is(200);
 $t->delete_ok("/report/uno")->status_is(200);
