@@ -147,11 +147,7 @@ sub list_indicators {
     my $objects = Reports->get_objects(
         query => [
             %query,
-            or => [
-                    and => [username => $user]
-                  ]
         ],
-        with_objects => [qw/_report_viewers/],
         ($c->param('all')
           ? ()
           : (page => $c->page, per_page => $c->per_page)),
@@ -160,14 +156,9 @@ sub list_indicators {
     my $count = Reports->get_objects_count(
         query => [
             %query,
-            or => [
-                    and => [username => $user]
-                  ]
         ],
-        with_objects => [qw/_report_viewers/],
     );
     $c->set_pages($count);
-    $c->stash(favorite_ok => 1 );
 
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
