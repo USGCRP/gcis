@@ -141,6 +141,7 @@
     <tr><td>Language</td><td>Alternate Name</td><td>Defunct Name?</td><td></td></tr>
     % for my $names ($object->organization_alternate_names) {
     % my $name = $names->alternate_name;
+    % my $identifier = $names->identifier;
     % my $lang = $names->language;
     % my $defunct = $names->deprecated;
     <tr>
@@ -148,7 +149,7 @@
         <td><%= $name %></td>
         <td><%= $defunct %></td>
         <td><%= tag 'button' => class => 'btn btn-danger squeezevert' =>
-            onClick => qq[{this.form.elements["delete_alternate_name"].value = '].$name.
+            onClick => qq[{this.form.elements["delete_alternate_name"].value = '].$identifier.
             qq[';this.form.elements["delete_alternate_name_org"].value = '].$object->identifier.
             qq[';this.form.submit(); }] => begin %>remove alternate name<%= end %>
         </td>

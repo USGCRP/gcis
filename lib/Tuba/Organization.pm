@@ -112,7 +112,7 @@ sub update_rel {
     if ( my $delete_alt_name = $c->param('delete_alternate_name') ) {
         my $alt_name = OrganizationAlternateName->new(
                 organization_identifier => $org->identifier,
-                alternate_name => $delete_alt_name
+                identifier => $delete_alt_name
             )->load(speculative => 1) or return $c->update_error("alternate name not found");
         $alt_name->delete(audit_user => $c->audit_user, audit_note => $c->audit_note) or return $c->update_error($alt_name->error);
         $c->stash(info => "Alternate Name Removed.");
