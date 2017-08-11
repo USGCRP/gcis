@@ -18,8 +18,6 @@ services:
       - PGHOST=postgres
       - PGUSER=gcisops
       - MOJO_MODE=development
-    volumes:
-      - .eg/docker/Tuba.conf:/home/gcis/Tuba.conf
 
   postgres:
     image: postgres:9.4
