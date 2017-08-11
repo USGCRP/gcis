@@ -13,6 +13,16 @@ Prerequisites :
     - uuid-dev package
     - A recent raptor (<http://librdf.org/raptor>)
 
+## Docker installation
+
+[See Docker Readme](./README.docker.md)
+
+## Mac installation
+
+[See MacOS Readme](./README.osx)
+
+## Linux installation
+
 On Ubuntu 14.04, they can be installed with:
 
     - sudo apt-get install postgresql-contrib-9.3 libpg-hstore-perl \
