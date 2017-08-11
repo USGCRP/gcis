@@ -31,6 +31,7 @@ sub _make_query {
         next if $col->type =~ /boolean/;
         next if $col->type =~ /hstore/;
         next if $col->type =~ /date/;
+        next if $col->type =~ /json/;
         my $name = $col->accessor_method_name;
         if ($col->type =~ /array/) {
             my $q = $s->object_class->meta->db->dbh->quote('%'.$query_string.'%');

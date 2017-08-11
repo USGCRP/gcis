@@ -975,10 +975,25 @@ sub update_contributors {
     my $json = $c->req->json || {};
 
     if (my $id = $json->{delete_contributor} || $c->param('delete_contributor')) {
-        PublicationContributorMaps->delete_objects({
-                contributor_id => $id,
-                publication_id => $pub->id,
-            }) or return $c->update_error("Failed to remove contributor");
+        my $contributor = Contributor->new( id => $id )->load( speculative => 1 )
+          or return $c->update_error("Failed to find contributor to remove");
+
+        my @pubs = $contributor->publications;
+        if (@pubs==1) {
+            # Only publication, remove contributor record and cascade.
+            $contributor->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                or return $c->update_error($contributor->error);
+        } else {
+            # Just remove the map.
+            my $map =  PublicationContributorMap->new(
+                publication_id       => $pub->id,
+                contributor_id       => $id,
+            );
+            $map->delete(audit_user => $c->user, audit_note => $c->audit_note)
+                or return $c->update_error($map->error);
+
+        }
+
         $c->flash(info => "Saved changes.");
     }
     if (my $role_identifier = $json->{remove_others_with_role}) {
@@ -1020,7 +1035,7 @@ sub update_contributors {
         }
     }
 
-    my ($person,$organization);
+    my ($person,$organization,$role_types);
 
     my $reference_identifier;
     if ($c->req->json) {
@@ -1040,38 +1055,44 @@ sub update_contributors {
                 or return $c->update_error("invalid organization $organization");
             $organization = $obj;
         }
+        $role_types = [ $json->{role} ];
     } else {
         $person = $c->param('person');
         $organization = $c->param('organization');
         $reference_identifier = $c->param('reference_identifier') || undef;
         $person &&= do { Person->new_from_autocomplete($person) or return $c->update_error("Failed to match $person"); };
         $organization &&= do { Organization->new_from_autocomplete($organization) or return $c->update_error("Failed to match $organization"); };
+        $role_types = $c->every_param('role_type');
     }
 
     return $c->redirect_without_error('update_contributors_form') unless $person || $organization;
+    return $c->update_error("missing role") unless $role_types;
 
-    my $role = $c->param('role') || $json->{role} or return $c->update_error("missing role");
+    for my $role ( @$role_types ) {
+        my $sort_key = $c->param('sort_key') || $json->{sort_key};
 
-    my $contributor = Contributor->new(role_type => $role);
-    $contributor->organization_identifier($organization->identifier) if $organization;
-    $contributor->person_id($person->id) if $person;
-    if ( $contributor->load(speculative => 1)) {
-            logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
-            logger->debug("json : ".Dumper($json));
-    } else {
-            $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
-                or return $c->update_error($contributor->error);
-    };
+        my $contributor = Contributor->new(role_type => $role);
+        $contributor->organization_identifier($organization->identifier) if $organization;
+        $contributor->person_id($person->id) if $person;
+        if ( $contributor->load(speculative => 1)) {
+                logger->debug("Found contributor person ".($person // 'undef').' org '.($organization // 'undef'));
+                logger->debug("json : ".Dumper($json));
+        } else {
+                $contributor->save(audit_user => $c->user, audit_note => $c->audit_note)
+                    or return $c->update_error($contributor->error);
+        };
 
-    $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
-    my $map = Tuba::DB::Object::PublicationContributorMap->new(
-        publication_id => $pub->id,
-        contributor_id => $contributor->id,
-    );
-    $map->load(speculative => 1);
-    $map->reference_identifier($reference_identifier);
-    $map->sort_key($json->{sort_key}) if defined($json->{sort_key});
-    $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
+        $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($contributor->error);
+        my $map = Tuba::DB::Object::PublicationContributorMap->new(
+            publication_id => $pub->id,
+            contributor_id => $contributor->id,
+        );
+        $map->load(speculative => 1);
+        $map->reference_identifier($reference_identifier);
+        $map->sort_key($sort_key) if defined($sort_key);
+        $map->save(audit_user => $c->user, audit_note => $c->audit_note) or return $c->update_error($map->error);
+    }
+
     $c->flash(info => "Saved changes.");
     return $c->redirect_without_error('update_contributors_form');
 }
@@ -1210,16 +1231,15 @@ sub normalize_form_parameter {
 
 =head2 can_set_replacement
 
-See above.
+Objects with the function 'merge_into' are capable of replacement.
 
 =cut
 
 sub can_set_replacement {
     my $c = shift;
-    my $meta = $c->_guess_object_class->meta;
-    my @cols = $meta->primary_key_column_names;
-    return 0 if @cols > 1;
-    return 1;
+    my $object_class = $c->_guess_object_class;
+    return 1 if $object_class->can('merge_into');
+    return 0;
 }
 
 sub update {

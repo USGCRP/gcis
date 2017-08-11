@@ -17,14 +17,8 @@ sub dbgrep {
     my $q = $dbh->quote('%'.$query_string.'%');
     push @query, \(qq[t2.number::text || '.' || ordinal::text like $q]);
 
-    my @viewable;
+    my @viewable = ( _public => 't' );
     my @with = ( 'chapter', 'report' );
-    if ($user) {
-        @viewable = ( or => [ _public => 't', username => $user ] );
-        push @with, 'report._report_viewers';
-    } else {
-        @viewable = ( _public => 't' );
-    }
 
     my @restrict;
     if ($restrict) {

@@ -1,0 +1,74 @@
+% layout 'default';
+
+<center>
+<h2>
+    Indicators
+</h2>
+</center>
+
+<div class="row">
+    <div class="col-lg-12 well squeezevert">
+%= include 'h/filter_by';
+</div></div>
+
+% my $numeric_link = begin
+%   my ($count, $method, $list_page, $report) = @_;
+    % if ($count==1) {
+    <%= obj_link_to $report->$method->[0] => 'show' => class => "btn btn-default squeezevert" => begin =%><%= $count =%><%= end =%>
+    % } else {
+    <%= link_to $list_page, { report_identifier => $report->identifier } => class => "btn btn-default squeezevert" => begin =%><%= $count =%><%= end =%>
+    % }
+% end
+
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page;
+% }
+
+
+<table class='table table-responsive table-condensed table-bordered table-striped'>
+<tr>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">Title</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Year</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Figure</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">Table</th>
+    <th class="col-lg-1 col-md-1 col-sm-1 col-xs-1">References</th>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">Url</th>
+    <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">Files</th>
+</tr>
+% for my $report (@$objects) {
+    <tr>
+    <td><%= link_to $report->uri($self) => begin %><%= $report->title %><%= end %></td>
+    <td><%= $report->publication_year // '' %></td>
+    <td>
+        %== $numeric_link->($report->count_figures, 'figures', 'list_all_figures', $report)
+    </td>
+   <td>
+        %== $numeric_link->($report->count_tables, 'tables', 'list_all_tables', $report)
+    </td>
+    <td>
+        %== $numeric_link->($report->reference_count, 'references', 'list_reference_report', $report)
+    </td>
+    <td>
+        % if (my $to = fix_url($report->url)) {
+        %= link_to $to => target => '_blank' => begin
+        <%= Mojo::URL->new($to)->host %>
+        %= end
+        % }
+    </td>
+
+    <td class="thumbnails">
+    
+       % if (my $pub = $report->get_publication) {
+       %= include 'pub_thumbnails', pub => $pub, simple => 1;
+       % }
+       
+    </td>
+
+    </tr>
+% }
+</table>
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

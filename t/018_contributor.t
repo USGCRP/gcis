@@ -85,8 +85,6 @@ $t->post_ok("/dataset/contributors/big_dataset" => json =>
 $t->get_ok("/dataset/contributors/big_dataset")->json_is("/contributors/0/organization/identifier" => $id);
 
 # Replace baits with baits_too
-# What, these are the same person?  Okay merge them.
-
 $t->post_ok("/dataset/contributors/big_dataset" => json =>
     {organization_identifier => 'baits_too', role => 'data_archive', remove_others_with_role => 'data_archive' })->status_is(200);
 

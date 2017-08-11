@@ -50,9 +50,15 @@ Tuba provides a RESTful API to GCIS data.
         google_secrets_file : <%= $ENV{HOME} %>/gcis/tuba/client_secrets.json
 
     authz :
+        # Can submit POSTs, update data
         update :
-            jsmith2@gmail.com : 0
+            jsmith2@gmail.com : 1
             jsmith@usgcrp.gov : 1
+        # Can view the audit logs
+        watch :
+            jsmith2@gmail.com : 1
+            jsmith@usgcrp.gov : 1
+            aadams@usgcrp.gov : 1
 
 =cut
 
@@ -66,7 +72,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.48.0';
+our $VERSION = '1.50.2';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -95,6 +101,12 @@ sub startup {
     }
     $app->plugin('Auth' => $app->config('auth'));
     $app->plugin('TubaHelpers' => { supported_formats => \@supported_formats });
+
+    $app->plugin('Feedback' => ( $app->config('feedback') || die "no feedback config" ));
+    $app->plugin(mail => {
+        from => $app->config->{feedback}->{user},
+        type => 'text/html',
+    });
 
     # Renderers
     $app->plugin(EPRenderer => {name => 'tut', template => {escape => sub {
@@ -307,6 +319,22 @@ sub startup {
 
     my $r = $app->routes;
 
+    # Feedback Form
+    $r->post( '/feedback' => sub {
+            my $c = shift;
+            my $feedback_sent = $c->process_feedback();
+
+            my $message = '';
+            if ( $feedback_sent ) {
+                $message = 'Feedback sent. Thank you!';
+            }
+            else {
+                $message = 'Feedback could not be sent. Please try again later.';
+            }
+            $c->flash( message => $message );
+            $c->redirect_to('about');
+    });
+
     # API
     $r->get(
       '/uuid' => sub {
@@ -411,6 +439,7 @@ sub startup {
     my $organization = $r->resource('organization');
     $r->post('/organization/lookup/name')->to('organization#lookup_name');
     $r->post('/person/lookup/name')->to('person#lookup_name');
+    # deprecated merge method. Use deletion path instead.
     $r->find('select_organization')->post('/merge')->to('organization#merge')->name('merge_organization');
     $organization->get('/contributions/:role_type_identifier/:resource')->to('organization#contributions')->name('organization_contributions');
 
@@ -418,6 +447,7 @@ sub startup {
 
     $r->resource('gcmd_keyword');
     $r->resource('region');
+    $report->get('/region')->to('region#list')->name('list_report_regions');
     $r->resource('dataset');
     $r->get("/dataset/lookup/*doi" => [ doi => qr[10\..*$] ])->to('dataset#lookup_doi')->name('dataset_doi');
 
@@ -496,6 +526,8 @@ sub startup {
     $r->get('/metrics')->to('controller#index')->name('metrics');
     $r->get('/api_reference')->to('doc#api_reference')->name('api_reference');
 
+    $r->get('/indicator')->to(controller => 'report', action => 'list_indicators')->name('list_indicator');
+
     $r->get('/resources')->to('doc#resources')->name('resources');
     $r->get('/examples')->to('doc#examples')->name('examples');
     $r->get('/about')->to('doc#about')->name('about');
@@ -506,7 +538,7 @@ sub startup {
         my $authed = $r->under->to(
           cb => sub {
               my $c = shift;
-              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return $c->deny_auth unless $c->auth && ( $c->authz(role => 'update') || $c->authz(role => 'watch') );
               return 1;
           }
         );

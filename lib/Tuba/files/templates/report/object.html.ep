@@ -32,10 +32,13 @@
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
         %= include 'h/contributors', object => $report, role_exclude => 'advisor';
         <p itemprop="description" class='linebreaks'><%= $report->summary %></p>
-        % my ($chp, $fig, $fin,$tab, $ref, $img) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count, $report->count_images);
+        % my ($chp, $fig, $fin,$tab, $ref, $img, $reg) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count, $report->count_images, $report->region_count);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {
         <p>This report has <%== $numeric_link->($fig,'figure') %>
-        <% if ($img > 0) { =%> (<%= $numeric_link->($img => 'image', 'list_report_images'); %>)<% } =%>.
+        <% if ($img > 0) { =%>
+            (<%= $numeric_link->($img => 'image', 'list_report_images'); %>).
+        <% } =%>
+        <br/>
         % } elsif ($chp + $fig + $fin + $ref + $tab > 0) {
    <p>
         This report has
@@ -43,11 +46,15 @@
         <%== $numeric_link->($fig => 'figure') %> <% if ($img > 0) { %> (<%= $numeric_link->($img => 'image', 'list_report_images'); =%>)<% } %>,
         <%== $numeric_link->($fin => 'finding') %>,
         <%== $numeric_link->($tab => 'table') %>
-    and
-    <%== $numeric_link->($ref => 'reference' => 'list_reference_report' ) %>
-   </p>
+        and
+        <%== $numeric_link->($ref => 'reference' => 'list_reference_report' ) %>.
+        <br/>
+        % }
+        % if ($reg > 0 ) {
+        This report covers <%== $numeric_link->($reg => 'region', 'list_report_regions') %>.
         % }
 
+   </p>
         % if (my $to = fix_url($report->url)) {
         <p><%= link_to $to => target => "_blank" => begin %><%= $report->url %><%= end %></p>
         % }

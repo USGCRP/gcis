@@ -9,7 +9,7 @@ This portion of the GCIS is called Tuba.
 Prerequisites :
 
     - PostgreSQL
-    - Perl 5.10 or later
+    - Perl 5.20
     - uuid-dev package
     - A recent raptor (<http://librdf.org/raptor>)
 

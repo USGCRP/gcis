@@ -3218,7 +3218,7 @@ ALTER TABLE ONLY model_run
 
 
 ALTER TABLE ONLY organization_alternate_name
-    ADD CONSTRAINT organization_alternate_name_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE;
+    ADD CONSTRAINT organization_alternate_name_organization_identifier_fkey FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 

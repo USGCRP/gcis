@@ -29,17 +29,68 @@
     <p>To edit this reference, please choose a valid tab from above.</p>
 </div>
 
+%= hidden_field 'delete_pub_attr';
+%= form_for obj_uri_for($object, 'update') => class => 'form-horizontal' => method => 'POST' => begin
+<div class="well">
+    <p><strong>Note:</strong> Reference Attributes should not be updated to reflect new information. They are intended to be correct as of the time of the reference. Updating should only be done if there is incorrect data.</p>
+<table class='table table-responsive table-condensed table-bordered densetable'>
+    <caption>Attributes</caption>
+    <tr>
+      <th>Delete</th>
+      <th>Key</th>
+      <th>Current Value</th>
+      <th>Replace Value</th>
+    </tr>
+    % for my $k (sort keys %{ $reference->attrs }) {
+    <tr>
+        <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
+        <td><%= $k %></td>
+        <td><%= $reference->attrs->{$k} %></td>
+        <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
+    </tr>
+    % }
+</table>
+<h4>New Attribute</h4>
+<div class='form-group row'>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_key', class => 'required' => begin
+      Key
+    %= end
+  </div>
+  <div class='col-lg-2 col-md-2 col-sm-2'>
+    <%= text_field 'new_attr_key', class => "form-control input-small squeezevert" %>
+  </div>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_value', class => 'required' => begin
+      Value
+    %= end
+  </div>
+  <div class='col-lg-4 col-md-4 col-sm-4'>
+    <%= text_field 'new_attr_value', class => "form-control input-small squeezevert" %>
+  </div>
+</div>  <!--- End new attr div --->
+
+<div class="row">
+	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</div>
+</div>
+
+%= end
+
 %= form_for obj_uri_for($object, 'update') => method => 'POST', class => 'form-horizontal well', enctype => 'multipart/form-data' => begin
 %= include 'messages';
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class='input-group'>
     <span class="input-group-btn">
-    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    <button type="button" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     </span>
     %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
     </div>
     </div>
 </div>
 %= end
+
 

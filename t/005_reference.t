@@ -107,6 +107,26 @@ $t->get_ok( "/report/test-book" )->status_is(200);
 $t->get_ok( "/reference/newrefid.json" )->status_is(200)->json_is(
     "/attrs" => { testattr => "testvalue" } );
 
+# Add a reference attribute
+$t->post_ok("/reference/$reference_identifier" => form => {
+        new_attr_key   => 'test_attribute_key',
+        new_attr_value => 'test_attribute_value'
+    })->status_is(200);
+$t->get_ok( "/reference/$reference_identifier" => { Accept => "application/json" })->status_is(200)->json_has( '/attrs', { test_attribute_key => "test_attribute_value" });
+
+# Update the reference attributes
+$t->post_ok("/reference/$reference_identifier" => form => {
+        attribute_test_attribute_key => 'replacement_test_attr_value',
+    })->status_is(200);
+$t->get_ok( "/reference/$reference_identifier" => { Accept => "application/json" })->status_is(200)->json_has( '/attrs', { test_attribute_key => "replacement_test_attr_value" });
+
+# Delete a reference attribute
+$t->post_ok("/reference/$reference_identifier" => form => {
+        delete_pub_attr => "test_attribute_key",
+    })->status_is(200);
+$t->get_ok( "/reference/$reference_identifier" => { Accept => "application/json" })->status_is(200)->json_is( '/attrs', { description => "$desc" } );
+
+
 # Cleanup
 $t->delete_ok("/reference/newrefid")->status_is(200);
 $t->delete_ok("/report/test-book")->status_is(200);

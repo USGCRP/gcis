@@ -1,3 +1,4 @@
+.gitattributes
 .travis.yml
 bin/tuba
 bin/tuba_generate_sitemap
@@ -612,6 +613,8 @@ db/patches/2320_organization_alt_name_alterations.sql
 db/patches/2330_update_ordinals_type.sql
 db/patches/2340_correct_table_owner.sql
 db/patches/2350_add_figure_origination.sql
+db/patches/2360_organization_alt_name_update_cascade.sql
+db/patches/2370_org_type_public_private.sql
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
@@ -679,6 +682,7 @@ lib/Tuba/DB/Object/ConventionManager.pm
 lib/Tuba/DB/Object/Manager.pm
 lib/Tuba/DB/Object/Metadata.pm
 lib/Tuba/DB/Object/Metadata/Column/ISSN.pm
+lib/Tuba/DB/Object/Metadata/Column/JSON.pm
 lib/Tuba/DB/Objects.pm
 lib/Tuba/Doc.pm
 lib/Tuba/DocManager.pm
@@ -868,6 +872,8 @@ lib/Tuba/files/templates/h/contributors_short.html.ep
 lib/Tuba/files/templates/h/date_range.html.ep
 lib/Tuba/files/templates/h/desc.html.ep
 lib/Tuba/files/templates/h/featured_reports.html.ep
+lib/Tuba/files/templates/h/feedback_form.html.ep
+lib/Tuba/files/templates/h/filter_by.html.ep
 lib/Tuba/files/templates/h/leaflet.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
@@ -929,7 +935,6 @@ lib/Tuba/files/templates/organization/object.html.ep
 lib/Tuba/files/templates/organization/object.ttl.tut
 lib/Tuba/files/templates/organization/objects.html.ep
 lib/Tuba/files/templates/organization/relationships.html.ep
-lib/Tuba/files/templates/organization/update_form.html.ep
 lib/Tuba/files/templates/organization/update_rel_form.html.ep
 lib/Tuba/files/templates/organization_alternate_name/objects.html.ep
 lib/Tuba/files/templates/other_formats.html.ep
@@ -962,6 +967,7 @@ lib/Tuba/files/templates/reference/update_rel_form.html.ep
 lib/Tuba/files/templates/region/object.ttl.tut
 lib/Tuba/files/templates/regions.html.ep
 lib/Tuba/files/templates/relationships.html.ep
+lib/Tuba/files/templates/report/indicators.html.ep
 lib/Tuba/files/templates/report/long/object.html.ep
 lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.tut
@@ -1010,6 +1016,7 @@ lib/Tuba/Person.pm
 lib/Tuba/Platform.pm
 lib/Tuba/Plugin/Auth.pm
 lib/Tuba/Plugin/Db.pm
+lib/Tuba/Plugin/Feedback.pm
 lib/Tuba/Plugin/TubaHelpers.pm
 lib/Tuba/Project.pm
 lib/Tuba/Publication.pm
@@ -1049,8 +1056,8 @@ t/013_model.t
 t/014_array.t
 t/015_search.t
 t/016_turtle_syntax.t
+t/017_organization.t
 t/017_person.t
-t/017_person_api.t
 t/018_contributor.t
 t/020_ontology.t
 t/999_stop_db.t

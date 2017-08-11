@@ -64,7 +64,21 @@
 	%= end
 	</div>
 	<div class='col-lg-6 col-md-6 col-sm-6'>
-    %= select_field 'role', db_labels('role_type'), class => 'form-control';
+    % param role_type => 'author' unless param 'role_type';
+    %= select_field 'role_type', db_labels('role_type'), class => 'form-control', multiple => 'multiple';
+    </div>
+</div>
+
+
+
+<div class='form-group'>
+	<div  class='col-lg-2 col-md-2 col-sm-2 control-label'>
+	%= label_for 'sort_key', class => '' => begin
+	Sort Key
+	%= end
+	</div>
+	<div class='col-lg-6 col-md-6 col-sm-6'>
+    %= text_field 'sort_key', class => "form-control input-small squeezevert";
     </div>
 </div>
 

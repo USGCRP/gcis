@@ -35,7 +35,7 @@ my $builder = Module::Build::Database->new(
         ],
     },
     module_name         => 'Tuba',
-    license             => 'agpl_3',
+    license             => 'CC0_1_0',
     dist_version_from   => 'lib/Tuba.pm',
     dist_abstract       => "The Useful Backend API",
     release_status      => 'stable',
@@ -95,6 +95,10 @@ my $builder = Module::Build::Database->new(
         'Lingua::EN::Inflect' => 0,
         'Path::Class' => 0,
         'Scalar::Util' => 0,
+        'Mojolicious::Plugin::Mail' => 1.5, # supports feedback form - mailing
+        'Captcha::reCAPTCHA' => 0.99,       # supports feedback form - captcha
+        'LWP::Protocol::https' => 6.07,     # supports feedback form - captcha, hidden dep.
+        'HTML::Restrict' => '2.2.4',          # support feedback form  - sanitizing input
     },
     add_to_cleanup     => [ 'Tuba-*' ],
     create_makefile_pl => 'traditional',

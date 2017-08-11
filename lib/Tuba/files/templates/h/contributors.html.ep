@@ -6,15 +6,17 @@
     <dt><%= pl($row->{role}->label, @{ $row->{people} ||[] } + @{ $row->{orgs}||[] }, 1) %></dt>
     <dd><ul>
         % for my $con (@{ $row->{people} }) {
-            % if ( $con->{person} ne '' ) {
+            % if ( $con->{person} ) {
                 <li>
                 <%= obj_link($con->{person}, short => 1) %>
                 <ul>
             % }
             % for my $org (@{ $con->{orgs} }) {
-                <li> <i><%= obj_link($org, short => 1) =%></i> </li>
+                % if ( $org ) {
+                   <li> <i><%= obj_link($org, short => 1) =%></i> </li>
+                % }
             % }
-            % if ( $con->{person} ne '' ) {
+            % if ( $con->{person} ) {
                 </ul>
                 </li>
             % }

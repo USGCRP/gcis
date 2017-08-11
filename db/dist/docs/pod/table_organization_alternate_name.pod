@@ -32,7 +32,7 @@ Alternate names for organizations either multilingual or defunct
  Check constraints:
      "iso_lang_length" CHECK (char_length(language::text) >= 2)
  Foreign-key constraints:
-     "organization_alternate_name_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON DELETE CASCADE
+     "organization_alternate_name_organization_identifier_fkey" FOREIGN KEY (organization_identifier) REFERENCES organization(identifier) ON UPDATE CASCADE ON DELETE CASCADE
  Has OIDs: no
  
 

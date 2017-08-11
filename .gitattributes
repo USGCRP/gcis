@@ -1,0 +1,3 @@
+db/dist/* linguist-documentation
+*.pm linguist-language=Perl
+lib/Tuba/files/public/api/* linguist-vendored

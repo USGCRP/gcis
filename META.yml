@@ -12,7 +12,7 @@ configure_requires:
   Mojolicious: '6.08'
 dynamic_config: 1
 generated_by: 'Module::Build version 0.422, CPAN::Meta::Converter version 2.150010'
-license: open_source
+license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: '1.4'
@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: v1.48.0
+    version: v1.50.2
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -95,6 +95,8 @@ provides:
     file: lib/Tuba/DB/Object/Metadata.pm
   Tuba::DB::Object::Metadata::Column::ISSN:
     file: lib/Tuba/DB/Object/Metadata/Column/ISSN.pm
+  Tuba::DB::Object::Metadata::Column::JSON:
+    file: lib/Tuba/DB/Object/Metadata/Column/JSON.pm
   Tuba::DB::Object::Methodology:
     file: lib/Tuba/DB/Mixin/Object/Methodology.pm
   Tuba::DB::Object::ModelRun:
@@ -177,6 +179,8 @@ provides:
     file: lib/Tuba/Plugin/Auth.pm
   Tuba::Plugin::Db:
     file: lib/Tuba/Plugin/Db.pm
+  Tuba::Plugin::Feedback:
+    file: lib/Tuba/Plugin/Feedback.pm
   Tuba::Plugin::TubaHelpers:
     file: lib/Tuba/Plugin/TubaHelpers.pm
   Tuba::Project:
@@ -207,6 +211,7 @@ provides:
     file: lib/Tuba/Webpage.pm
 requires:
   Algorithm::Permute: '0'
+  Captcha::reCAPTCHA: '0.99'
   Crypt::OpenSSL::RSA: '0'
   DBD::Pg: '3.003'
   DBIx::Connector: '0'
@@ -217,14 +222,17 @@ requires:
   DateTime::Format::Human::Duration: '0'
   Digest::SHA1: '0'
   File::ShareDir: '1.00'
+  HTML::Restrict: '2.002004'
   Hash::Flatten: '0'
   IO::Socket::SSL: '2'
   JSON::WebToken: '0'
   JSON::XS: '0'
+  LWP::Protocol::https: '6.07'
   LWP::UserAgent: '0'
   Lingua::EN::Inflect: '0'
   Mojolicious: '6.08'
   Mojolicious::Plugin::InstallablePaths: '0'
+  Mojolicious::Plugin::Mail: '1.5'
   Mojolicious::Plugin::YamlConfig: '0'
   Number::Bytes::Human: '0'
   Number::Format: '0'
@@ -247,5 +255,5 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: v1.48.0
+version: v1.50.2
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

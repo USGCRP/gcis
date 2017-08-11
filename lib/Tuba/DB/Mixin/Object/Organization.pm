@@ -71,5 +71,25 @@ sub reports {
     return @reports;
 }
 
+sub merge_into {
+    my $s = shift;
+    my %args = @_;
+    my $new = $args{new};
+    my $audit_user = $args{audit_user};
+    my $audit_note = $args{audit_note};
+
+    # ids for other contributors
+    my $contributors = Tuba::DB::Object::Contributor::Manager->get_objects( query => [ organization_identifier => $s->identifier ] );
+    for my $contributor ( @$contributors ) {
+        $contributor->merge_into(
+                new => $new,
+                merge_on => 'organization',
+                audit_user => $audit_user,
+                audit_note => $audit_note,
+        );
+    }
+    return 1;
+}
+
 1;
 

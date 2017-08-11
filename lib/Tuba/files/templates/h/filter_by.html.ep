@@ -1,0 +1,34 @@
+    <div class="col-lg-6 squeezevert">
+<% if (user_can('update') && (stash 'meta')) { %>
+<%= include 'create_link'%>
+<% } %>
+% my $base = $self->req->url->clone;
+% my $query = $base->query->clone;
+% $base->query(Mojo::Parameters->new);
+% $base->path->parts->[-1] =~ s/.html$//;
+% $query = "?$query" if $query;
+<%= link_to "$base.json".$query => class => 'label label-primary' => begin %>JSON<%= end %> \
+<%= link_to "$base.yaml".$query => class => 'label label-primary' => begin %>YAML<%= end %> \
+<% unless (stash 'no_csv') { %><%= link_to "$base.csv".$query => class => 'label label-primary' => begin %>CSV<%= end %> <% } %>
+<%= link_to "$base.html".$query => class => 'label label-primary' => begin %>HTML<%= end %>
+% if ($ENV{TUBA_DEBUG}) {
+% if (my $meta = stash 'meta') {
+Primary key : <%= $meta->primary_key %>
+Unique keys : <%= join ',', $meta->unique_keys %>
+Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relationships } %>
+% }
+% }
+</div>
+
+    <div class="col-lg-6 squeezevert">
+% my $base_url = $self->req->url->clone;
+% $base_url->query(Mojo::Parameters->new);
+% $base_url->path->parts->[-1] =~ s/.html$//;
+<span>Filter Indicators:</span>
+<%= link_to "$base_url"."?current=1"=> class => 'label label-info' => begin %>Current<%= end %> \
+<%= link_to "$base_url"."?publication_year=2015"=> class => 'label label-info' => begin %>2015<%= end %> \
+<%= link_to "$base_url"."?publication_year=2016"=> class => 'label label-info' => begin %>2016<%= end %> \
+<%= link_to "$base_url" => class => 'label label-info' => begin %>All<%= end %> \
+</div>
+
+

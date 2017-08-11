@@ -36,43 +36,14 @@ sub merge_into {
     die "Not replacing person with orcid : ".$new->id." vs ".$s->id if $s->orcid;
 
     # ids for other contributors
-    for my $contributor (@{ Tuba::DB::Object::Contributor::Manager->get_objects(
-            query => [ person_id => $s->id ]) }) {
-        my $record = Tuba::DB::Object::Contributor->new(
-          role_type_identifier    => $contributor->role_type_identifier,
-          organization_identifier => $contributor->organization_identifier,
-          person_id               => $new->id
+    my $contributors = Tuba::DB::Object::Contributor::Manager->get_objects( query => [ person_id => $s->id ] );
+    for my $contributor ( @$contributors ) {
+        $contributor->merge_into(
+                new => $new,
+                merge_on => 'person',
+                audit_user => $audit_user,
+                audit_note => $audit_note,
         );
-        if ($record->load(speculative => 1)) {
-            # Case 1:
-            # Already a contributor record for this role + org?
-            # Assign all publication maps for '$contributor' to '$record' and remove '$contributor'
-            #
-            # before:
-            #     person 1 -- contributor 1 -- map entry -- publication 1
-            #     person 2 -- contributor 2 -- map entry -- publication 2
-            # after:
-            #     person 1 --\                    /--- map entry -- publication 1  
-            #                 --- contributor 3 --
-            #     person 2 --/                    \--- map entry -- publication 2
-            #
-            for my $pm (@{ Tuba::DB::Object::PublicationContributorMap::Manager->get_objects(query => [ contributor_id => $contributor->id ]) }) {
-                    my $map = Tuba::DB::Object::PublicationContributorMap->new(publication_id => $pm->publication_id, contributor_id => $record->id);
-                    $map->load(speculative => 1) and next;
-                    $map->save(audit_user => $audit_user, audit_note => $audit_note) or die $map->error;
-            }
-            $contributor->delete(audit_user => $audit_user, audit_note => $audit_note) or die $contributor->error;
-        } else {
-            # Case 2:
-            # Easier, just use existing contributor record but our person id.
-            # before:
-            #      person 1 -- contributor 1 --- map entries -- publications
-            # after:
-            #      person 2 -- contributor 1 --- map entries -- publications
-            #
-            $contributor->person_id($new->id);
-            $contributor->save(audit_user => $audit_user, audit_note => $audit_note) or die $contributor->error;
-        }
     }
     return 1;
 }
