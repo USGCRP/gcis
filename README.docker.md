@@ -19,10 +19,10 @@ used for production instances.
         1. the `content_1` file should be moved to `./db/docker/3_content_1.sql`
         1. the `content_2` file should be moved to `./db/docker/4_content_2.sql`
            - if you want an empty GCIS instance, only copy the schema & content 1.
-     1. run `docker compose up postgres` 
+     1. run `docker-compose up postgres` 
         - Refresh your tea.
      1. after the previous command finishes loading, exit the command
   1. Start the full docker set
-     1. run `docker compose up`
+     1. run `docker-compose up`
      1. GCIS should be available at `127.0.0.1` with all content available
      1. Login via the `password` option. Credentials are `docker@example.com`/`docker`

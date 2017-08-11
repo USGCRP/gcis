@@ -1,6 +1,7 @@
 FROM perl:5.22
 
-MAINTAINER Andrew Buddenberg
+LABEL authors="Andrew Buddenberg, Kathryn Tipton"
+LABEL version="1.0.0"
 
 ENV PERL5LIB /usr/share/perl5
 
