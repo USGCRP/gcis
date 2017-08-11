@@ -1,0 +1,49 @@
+---
+
+%# This is a sample config file for Tuba optimized for docker.
+%# It will be mounted as the Tuba.conf in the gcis docker container.
+
+%# This file is a Mojo::Template of a YAML document.
+%# (see 'perldoc Mojo::Template' for more info)
+
+hypnotoad :
+    workers : 5
+    listen :
+       - http://*:8080
+image_upload_dir : /var/local/www/assets-back
+asset_path : /assets
+mapbox_access_token : replace_with_mapbox_token
+asset_remote_fallback : http://data.globalchange.gov/assets
+database :
+    dbname   : gcis
+    schema   : gcis_metadata
+    host     : 
+    port     :
+    username :
+    password :
+%# Configuration allowing the feedback form to function.
+feedback :
+    user        : replace_with_from_email
+    private_key : replace_with_recaptcha_private_key
+    public_key  : replace_with_recaptcha_public_key
+    to          : replace_with_to_email
+auth :
+    secret : replace_with_google_secret
+    google_secrets_file : /usr/local/etc/secrets.json
+%# Insecure dev-mode only auth
+    valid_users :
+        dev_mode_kat       : utterly_insecure_dev_login
+        docker@example.com : docker
+%# production mode auth, relies on google oauth
+authz :
+    # might not be used?
+    root :
+        user@globalchange.gov : 1
+        docker@example.com    : 1
+    # allows editing of objects
+    update :
+        user@globalchange.gov : 1
+        docker@example.com    : 1
+    # allows access to see changelog
+    watch :
+        user@globalchange.gov : 1
