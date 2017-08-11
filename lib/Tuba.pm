@@ -94,6 +94,7 @@ sub startup {
     $ENV{MOJO_INACTIVITY_TIMEOUT} = 300 unless $config->{read_only};
     set_config($app->config);
     unshift @{$app->plugins->namespaces}, 'Tuba::Plugin';
+    $app->log->info("Starting up GCIS version $VERSION");
     $app->plugin( 'db', ( $app->config('database') || die "no database config" ) );
     if (my $path = $app->config('log_path')) {
         $app->log->info("logging to $path");

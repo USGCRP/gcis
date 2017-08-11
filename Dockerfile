@@ -34,7 +34,7 @@ RUN cpanm --installdeps --notest .
 
 RUN perl Build.PL && ./Build && ./Build install
 
-RUN cp eg/Tuba.conf.sample ./Tuba.conf && mkdir /var/local/projects 
+RUN mkdir /var/local/projects 
 
 EXPOSE 8080
 

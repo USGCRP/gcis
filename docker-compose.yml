@@ -11,7 +11,7 @@ services:
       - ./eg/docker/nginx.conf:/etc/nginx/nginx.conf
       - ./eg/docker/ssl:/etc/certificates
   gcis:
-    image: gcis:small
+    image: gcis:latest
     depends_on:
       - postgres
     environment:
@@ -19,7 +19,7 @@ services:
       - PGUSER=gcisops
       - MOJO_MODE=development
     volumes:
-      - ./Tuba.conf:/home/gcis/Tuba.conf
+      - .eg/docker/Tuba.conf:/home/gcis/Tuba.conf
 
   postgres:
     image: postgres:9.4
@@ -27,4 +27,4 @@ services:
       - POSTGRES_USER=gcisops
       - POSTGRES_DB=gcis
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
+      - ./db/docker:/docker-entrypoint-initdb.d
