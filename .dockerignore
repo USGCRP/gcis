@@ -1,1 +1,1 @@
-db/*.sql
+db/docker-initialize/*.sql
