@@ -25,5 +25,6 @@ services:
     image: postgres:9.4
     environment:
       - POSTGRES_USER=gcisops
-#    volumes:
-#      - ./db:/docker-entrypoint-initdb.d
+      - POSTGRES_DB=gcis
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
