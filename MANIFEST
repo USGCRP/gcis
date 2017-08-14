@@ -1,5 +1,7 @@
+.dockerignore
 .gitattributes
 .travis.yml
+bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
@@ -308,7 +310,9 @@ db/dist/docs/html/func_gcis_metadata.make_valid(gcis_metadata.ismn13).html
 db/dist/docs/html/func_gcis_metadata.make_valid(gcis_metadata.issn).html
 db/dist/docs/html/func_gcis_metadata.make_valid(gcis_metadata.issn13).html
 db/dist/docs/html/func_gcis_metadata.make_valid(gcis_metadata.upc).html
+'db/dist/docs/html/func_gcis_metadata.name_hash(first_name text, last_name text).html'
 'db/dist/docs/html/func_gcis_metadata.name_hash(last_name text, first_name text).html'
+'db/dist/docs/html/func_gcis_metadata.name_unique_hash(first_name text, last_name text, orcid text).html'
 'db/dist/docs/html/func_gcis_metadata.name_unique_hash(orcid text, last_name text, first_name text).html'
 'db/dist/docs/html/func_gcis_metadata.populate_record(anyelement, gcis_metadata.hstore).html'
 db/dist/docs/html/func_gcis_metadata.skeys(gcis_metadata.hstore).html
@@ -440,6 +444,7 @@ db/dist/docs/pod/table_table.pod
 db/dist/docs/pod/table_webpage.pod
 db/dist/docs/pod/view_vw_gcmd_keyword.pod
 db/dist/patches_applied.txt
+db/docker/1_add_gcisops.sql
 db/extra/audit.sql
 db/patches/0010_start.sql
 db/patches/0030_chapter.sql
@@ -615,9 +620,16 @@ db/patches/2340_correct_table_owner.sql
 db/patches/2350_add_figure_origination.sql
 db/patches/2360_organization_alt_name_update_cascade.sql
 db/patches/2370_org_type_public_private.sql
+db/patches/2380_deprecate_journal_publisher.sql
+docker-compose.yml
+Dockerfile
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
+eg/docker/nginx.conf
+eg/docker/ssl/gcis.crt
+eg/docker/ssl/gcis.csr
+eg/docker/ssl/gcis.key
 eg/import_countries.pl
 eg/import_gcmd_keywords
 eg/import_keywords
@@ -901,6 +913,7 @@ lib/Tuba/files/templates/instrument_instance/relationships.html.ep
 lib/Tuba/files/templates/journal/object.html.ep
 lib/Tuba/files/templates/journal/object.ttl.tut
 lib/Tuba/files/templates/journal/objects.html.ep
+lib/Tuba/files/templates/journal/update_form.html.ep
 lib/Tuba/files/templates/keywords.html.ep
 lib/Tuba/files/templates/layouts/default.html.ep
 lib/Tuba/files/templates/layouts/default.ttl.tut
@@ -1036,6 +1049,7 @@ Makefile.PL
 MANIFEST			This list of files
 META.json
 META.yml
+README.docker.md
 README.md
 README.osx
 t/001_start_db.t
