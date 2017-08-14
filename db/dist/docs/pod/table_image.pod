@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 image
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An image may be associated with multiple figures, may have provenance and other attributes distinct from that of a parent figure.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier (UUID).
  position (character varying) - A description of where this image is within other figures.
@@ -26,7 +26,7 @@ An image may be associated with multiple figures, may have provenance and other 
  url (character varying) - A landing page for this image.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                               Table "gcis_metadata.image"
      Column     |              Type              | Modifiers | Storage  | Stats target |                          Description                          
@@ -61,6 +61,6 @@ An image may be associated with multiple figures, may have provenance and other 
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

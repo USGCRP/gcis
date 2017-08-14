@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_type
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications have types which correspond to database tables.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive type.
  table (character varying) - The database table.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                             Table "gcis_metadata.publication_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |     Description     
@@ -30,6 +30,6 @@ Publications have types which correspond to database tables.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

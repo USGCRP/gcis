@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 organization
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An organization is an entity with which people and publications may be associated.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  name (character varying) - The organization as referred to in English.
@@ -17,7 +17,7 @@ An organization is an entity with which people and publications may be associate
  international (boolean) - Flag indicating an multinational organization with HQs in multiple countries.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                     Table "gcis_metadata.organization"
              Column            |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
@@ -48,6 +48,6 @@ An organization is an entity with which people and publications may be associate
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

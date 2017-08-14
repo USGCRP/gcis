@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 generic
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Generic publications, not covered by other GCIS publication types.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier (UUID)
  attrs (hstore) - Arbitray attributes and values for this generic publication.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                      Table "gcis_metadata.generic"
     Column   |       Type        | Modifiers | Storage  | Stats target |                         Description                          
@@ -32,6 +32,6 @@ Generic publications, not covered by other GCIS publication types.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

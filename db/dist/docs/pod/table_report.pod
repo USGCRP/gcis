@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 report
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A report is a publication that may have chapters, figures, findings, and tables.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  title (character varying) - The title.
@@ -24,7 +24,7 @@ A report is a publication that may have chapters, figures, findings, and tables.
  contact_email (character varying) - A contact email address for this report.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                                               Table "gcis_metadata.report"
           Column         |       Type        |                  Modifiers                   | Storage  | Stats target |                                                          Description                                                           
@@ -67,6 +67,6 @@ A report is a publication that may have chapters, figures, findings, and tables.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

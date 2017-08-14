@@ -1,18 +1,18 @@
 
-=head1 NAME
+\=head1 NAME
 
 report_type
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A list of report types.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifer.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                  Table "gcis_metadata.report_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |       Description        
@@ -25,6 +25,6 @@ A list of report types.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

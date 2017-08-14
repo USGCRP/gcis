@@ -1,17 +1,17 @@
 
-=head1 NAME
+\=head1 NAME
 
 journal
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A journal is a peer reviewed publication which contains articles.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this journal.
  title (character varying) - The title of the journal (source: crossref.org)
- publisher (character varying) - The publisher of the journal.
+ publisher (character varying) - DEPRECATED - use Contributor relationship, role Publisher, to the publisher Organization
  country (character varying) - The country of publication.
  url (character varying) - A URL for the landing page for this journal.
  notes (character varying) - 
@@ -19,14 +19,14 @@ A journal is a peer reviewed publication which contains articles.
  online_issn (issn) - 
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
-                                               Table "gcis_metadata.journal"
-    Column    |       Type        | Modifiers | Storage  | Stats target |                   Description                   
- -------------+-------------------+-----------+----------+--------------+-------------------------------------------------
+                                                                   Table "gcis_metadata.journal"
+    Column    |       Type        | Modifiers | Storage  | Stats target |                                       Description                                        
+ -------------+-------------------+-----------+----------+--------------+------------------------------------------------------------------------------------------
   identifier  | character varying | not null  | extended |              | A descriptive identifier for this journal.
   title       | character varying |           | extended |              | The title of the journal (source: crossref.org)
-  publisher   | character varying |           | extended |              | The publisher of the journal.
+  publisher   | character varying |           | extended |              | DEPRECATED - use Contributor relationship, role Publisher, to the publisher Organization
   country     | character varying |           | extended |              | The country of publication.
   url         | character varying |           | extended |              | A URL for the landing page for this journal.
   notes       | character varying |           | extended |              | 
@@ -49,6 +49,6 @@ A journal is a peer reviewed publication which contains articles.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 file
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Files are distinct downloadable entities which may be associated with publications.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  file (character varying) - The URI for this file (relative to /assets/ or to the location)
  identifier (character varying) - A globally unique identifier for this file (a UUID).
@@ -19,7 +19,7 @@ Files are distinct downloadable entities which may be associated with publicatio
  landing_page (character varying) - A URL for the landing page for this file.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                  Table "gcis_metadata.file"
      Column    |       Type        |                     Modifiers                     | Storage  | Stats target |                               Description                               
@@ -45,6 +45,6 @@ Files are distinct downloadable entities which may be associated with publicatio
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,18 +1,18 @@
 
-=head1 NAME
+\=head1 NAME
 
 platform_type
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Platforms have a type.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this type.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                        Table "gcis_metadata.platform_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |               Description               
@@ -25,6 +25,6 @@ Platforms have a type.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

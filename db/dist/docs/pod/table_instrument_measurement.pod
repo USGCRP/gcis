@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 instrument_measurement
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An instrument measurement is a way of associating an instrument instance with a dataset.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  platform_identifier (character varying) - The platform of the instrument.
  instrument_identifier (character varying) - The instrument.
  dataset_identifier (character varying) - The dataset.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                     Table "gcis_metadata.instrument_measurement"
          Column         |       Type        | Modifiers | Storage  | Stats target |           Description           
@@ -35,6 +35,6 @@ An instrument measurement is a way of associating an instrument instance with a 
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_region_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications can have many regions and vice versa.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  publication_id (integer) - A publication.
  region_identifier (character varying) - A region.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                           Table "gcis_metadata.publication_region_map"
        Column       |       Type        | Modifiers | Storage  | Stats target |  Description   
@@ -31,6 +31,6 @@ Publications can have many regions and vice versa.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

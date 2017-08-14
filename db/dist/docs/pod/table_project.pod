@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 project
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A project may be associated with a collection of models.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  name (character varying) - A short name.
@@ -16,7 +16,7 @@ A project may be associated with a collection of models.
  website (character varying) - A website officially assocaited with this project.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                       Table "gcis_metadata.project"
           Column          |       Type        | Modifiers | Storage  | Stats target |                    Description                     
@@ -37,6 +37,6 @@ A project may be associated with a collection of models.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

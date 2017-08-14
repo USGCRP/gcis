@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 activity
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An activity is a process that occurs over a period of time, and may be associated with a pair of publications.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier for this activity.
  data_usage (character varying) - A description of the way in which input data were used for this activity.
@@ -22,7 +22,7 @@ An activity is a process that occurs over a period of time, and may be associate
  notes (character varying) - Other information about this activity which might be useful for traceability or reproducability.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                  Table "gcis_metadata.activity"
           Column         |            Type             | Modifiers | Storage  | Stats target |                                           Description                                            
@@ -53,6 +53,6 @@ An activity is a process that occurs over a period of time, and may be associate
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

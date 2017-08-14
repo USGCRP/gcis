@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 region
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A region is a geographical area.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  label (character varying) - A human readable label.
  description (character varying) - A description.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                     Table "gcis_metadata.region"
     Column    |       Type        | Modifiers | Storage  | Stats target |        Description        
@@ -34,6 +34,6 @@ A region is a geographical area.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

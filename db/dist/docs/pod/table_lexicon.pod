@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 lexicon
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A lexicon is a list of terms which correspond to GCIS identifiers.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A brief descriptive identifier for this lexicon.
  description (character varying) - A description of the lexicon, possibly including the organization associated with it.
  url (character varying) - A url for further information.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                   Table "gcis_metadata.lexicon"
     Column    |       Type        | Modifiers | Storage  | Stats target |                                      Description                                      
@@ -34,6 +34,6 @@ A lexicon is a list of terms which correspond to GCIS identifiers.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

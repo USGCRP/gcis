@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications can be related to other publications.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  child (integer) - The child publication.
  relationship (character varying) - The relationship, in the form ontology:term.
@@ -16,7 +16,7 @@ Publications can be related to other publications.
  activity_identifier (character varying) - XXX
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                              Table "gcis_metadata.publication_map"
         Column        |       Type        | Modifiers | Storage  | Stats target |                 Description                  
@@ -38,6 +38,6 @@ Publications can be related to other publications.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_reference_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A map from publications to references.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  publication_id (integer) - The publication.
  reference_identifier (character varying) - The reference.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                            Table "gcis_metadata.publication_reference_map"
          Column        |       Type        | Modifiers | Storage  | Stats target |   Description    
@@ -31,6 +31,6 @@ A map from publications to references.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

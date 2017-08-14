@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_file_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications may have zero or more files.  And vice versa.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  publication_id (integer) - A publication.
  file_identifier (character varying) - A file.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                           Table "gcis_metadata.publication_file_map"
       Column      |       Type        | Modifiers | Storage  | Stats target |  Description   
@@ -31,6 +31,6 @@ Publications may have zero or more files.  And vice versa.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

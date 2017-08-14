@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 _report_viewer
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Users who have permission to view non-public reports.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  report (character varying) - The identifier of the report.
  username (character varying) - The name of the user.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                  Table "gcis_metadata._report_viewer"
    Column  |       Type        | Modifiers | Storage  | Stats target |          Description          
@@ -27,6 +27,6 @@ Users who have permission to view non-public reports.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

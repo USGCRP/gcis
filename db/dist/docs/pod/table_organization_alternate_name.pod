@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 organization_alternate_name
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Alternate names for organizations either multilingual or defunct
 
-=head1 FIELDS
+\=head1 FIELDS
 
  organization_identifier (character varying) - The organization identifier this name belongs to.
  alternate_name (text) - The alternate name of the organization.
@@ -16,7 +16,7 @@ Alternate names for organizations either multilingual or defunct
  identifier (serial) - An automatically-generated unique numeric identifier.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                                 Table "gcis_metadata.organization_alternate_name"
           Column          |         Type         |                                    Modifiers                                     | Storage  | Stats target |                                   Description                                    
@@ -36,6 +36,6 @@ Alternate names for organizations either multilingual or defunct
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

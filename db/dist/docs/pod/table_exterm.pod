@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 exterm
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 External terms which can be mapped to GCIS identifiers.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  term (character varying) - The term itself.
  context (character varying) - A brief identifier for the context of this term.
@@ -15,7 +15,7 @@ External terms which can be mapped to GCIS identifiers.
  gcid (character varying) - The GCIS identifier (URI) to which this term is mapped.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                        Table "gcis_metadata.exterm"
         Column       |       Type        | Modifiers | Storage  | Stats target |                       Description                       
@@ -38,6 +38,6 @@ External terms which can be mapped to GCIS identifiers.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

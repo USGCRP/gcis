@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 table
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A table is in a report, and may contain one or more arrays.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A desciptive identifier.
  report_identifier (character varying) - The report.
@@ -18,7 +18,7 @@ A table is in a report, and may contain one or more arrays.
  url (character varying) - A URL for a landing page for this table.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                                 Table "gcis_metadata.table"
         Column       |       Type        | Modifiers | Storage  | Stats target |                                                                Description                                                                
@@ -49,6 +49,6 @@ A table is in a report, and may contain one or more arrays.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

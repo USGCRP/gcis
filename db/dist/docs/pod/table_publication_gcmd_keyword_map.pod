@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_gcmd_keyword_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications can have zero or more keywords.  And vice versa.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  publication_id (integer) - A publication.
  gcmd_keyword_identifier (character varying) - A keyword.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                           Table "gcis_metadata.publication_gcmd_keyword_map"
           Column          |       Type        | Modifiers | Storage  | Stats target |  Description   
@@ -28,6 +28,6 @@ Publications can have zero or more keywords.  And vice versa.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 

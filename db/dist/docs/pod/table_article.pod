@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 article
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Articles are publications in peer reviewed journals, and generally have DOIs.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - The identifier : this should be the DOI, if there is one.
  title (character varying) - The title of the article (source: crossref.org).
@@ -20,7 +20,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
  notes (character varying) - Notes about this entry.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                  Table "gcis_metadata.article"
         Column       |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
@@ -50,6 +50,6 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
  Has OIDs: no
  
 
-=cut
+\=cut
 
 
