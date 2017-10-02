@@ -1,14 +1,14 @@
-FROM perl:5.22
+FROM perl:5.22.2
 
 LABEL authors="Andrew Buddenberg, Kathryn Tipton"
-LABEL version="1.0.0"
+LABEL version="1.0.1"
 
 ENV PERL5LIB /usr/share/perl5
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-contrib-9.4 \
     libpg-hstore-perl \
-    postgresql \
+    postgresql-9.4 \
     uuid-dev \
     graphviz \ 
     raptor2-utils \
