@@ -59,10 +59,8 @@ Software installation :
 
 Database configuration :
 
-You may need to add these directives to postgresql.conf, under "CUSTOMIZED
-OPTIONS" for some versions of postgreSQL :
+Add these directives to postgresql.conf, under "CUSTOMIZED OPTIONS" :
 
-    custom_variable_classes = 'audit'   # list of custom variable class names
     audit.username = 'unknown'
     audit.note = ''
 
