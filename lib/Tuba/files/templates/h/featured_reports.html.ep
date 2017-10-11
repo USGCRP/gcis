@@ -1,16 +1,24 @@
 %# Whenever we want to feature a report on the main page under Featured Reports, add the identifier and a text here 
 % my $featured_reports = [
-%    {
+%   {
+%        identifier   => 'climate-science-special-report',
+%        display_text => 'Climate Science Special Report',
+%        year         => '2017',
+%   },
+%   {
 %        identifier   => 'usgcrp-climate-human-health-assessment-2016',
-%        display_text => 'The Impacts of Climate Change on Human Health in the United States: A Scientific Assessment - 2016',
+%        display_text => 'The Impacts of Climate Change on Human Health in the United States',
+%        year         => '2016',
 %   },
 %   {
 %       identifier   => 'nca3',
-%       display_text => 'The Third National Climate Assessment - 2014',
+%       display_text => 'The Third National Climate Assessment',
+%       year         => '2014',
 %   },
 %];
 
 % foreach my $report ( @$featured_reports ) {
     <%= link_to 'show_report', { report_identifier => $report->{identifier} } => begin %>
-    <%= $report->{display_text} %> <%= end %><br /><br />
+    <%= $report->{year} =%> : <%= $report->{display_text} %>
+    <%= end %><br /><br />
 % }

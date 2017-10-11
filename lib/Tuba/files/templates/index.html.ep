@@ -77,7 +77,7 @@
         </p>
 <div class='row'>
 <div class="col-md-7 col-md-offset-3 centered">
-<h2>Featured reports : <br /><br />
+<h2>Featured USGCRP reports : <br /><br />
 %= include 'h/featured_reports'
 </div>
 </div>
