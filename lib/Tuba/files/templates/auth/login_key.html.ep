@@ -6,6 +6,7 @@
 % if (user_can('update')) {
   <p>
     <br />Below is a key which may be sent as an HTTP Basic Authentication password for <b><%= user %></b> to connect to the GCIS API.
+    <br />This is the key for use with the Resources Metadata tool.
   </p>
   <div class="row">
     <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
