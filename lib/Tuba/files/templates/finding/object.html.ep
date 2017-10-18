@@ -19,7 +19,7 @@
 %= include 'edit_buttons';
 <div class='row well'>
         % my $pub = $report->get_publication;
-        <p class='lead'><%= $finding->statement %></p>
+        <p class='lead'><%= tbibs_to_links($finding->statement) %></p>
         %= include 'h/contributors_short', object => $finding;
         % if ($finding->chapter) {
         <p>This finding is from chapter <%= obj_link($finding->chapter, tiny => 1) %> of <%= obj_link_to $finding->report, 'show' => begin %>
