@@ -2,7 +2,7 @@
 % my $featured_reports = [
 %   {
 %        identifier   => 'climate-science-special-report',
-%        display_text => 'Climate Science Special Report',
+%        display_text => 'Climate Science Special Report: The Fourth National Climate Assessment: Volume I',
 %        year         => '2017',
 %   },
 %   {
@@ -12,7 +12,7 @@
 %   },
 %   {
 %       identifier   => 'nca3',
-%       display_text => 'The Third National Climate Assessment',
+%       display_text => 'Climate Change Impacts in the United States: The Third National Climate Assessment',
 %       year         => '2014',
 %   },
 %];

@@ -127,18 +127,18 @@ sub register {
     $app->helper(default_report => sub {
             my $c = shift;
             my $obj;
-            $obj = Tuba::DB::Object::Report->new(identifier => 'nca3')->load(speculative => 1) and return $obj;
-            $obj = Tuba::DB::Object::Report->new(identifier => 'nca3draft')->load(speculative => 1) and return $obj;
-            return Tuba::DB::Object::Report->new(identifier => 'no default report');
+            $obj = Tuba::DB::Object::Report->new(identifier => 'climate-science-special-report')->load(speculative => 1) and return $obj;
+            $obj = Tuba::DB::Object::Report->new(identifier => 'usgcrp-climate-human-health-assessment-2016')->load(speculative => 1) and return $obj;
+            return Tuba::DB::Object::Report->new(identifier => 'nca3');
         });
     $app->helper(current_report => sub {
             my $c = shift;
-            my $identifier = shift || $c->stash('report_identifier') || 'nca3';
+            my $identifier = shift || $c->stash('report_identifier') || 'climate-science-special-report';
             my $obj = Tuba::DB::Object::Report->new(identifier => $identifier);
             $obj->load(speculative => 1) and $obj->_public and return $obj;
-            $obj = Tuba::DB::Object::Report->new(identifier => 'nca3draft');
+            $obj = Tuba::DB::Object::Report->new(identifier => 'usgcrp-climate-human-health-assessment-2016');
             $obj->load(speculative => 1) and $obj->_public and return $obj;
-            return Tuba::DB::Object::Report->new(identifier => 'no report');
+            return Tuba::DB::Object::Report->new(identifier => 'nca3');
         });
     $app->helper(current_chapter => sub {
             my $c = shift;

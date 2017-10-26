@@ -12,9 +12,9 @@
         </ul>
         </li>
         <li>
-                <span class='elidden'><%= $report_identifier %> report </span>
+                <span class='elidden'><%= current_report->title %></span>
          <ul>
-            <li><%= link_to 'show_report'  => { report_identifier => $report_identifier } => class => "elidden" => begin %>report : <%= current_report->identifier %><%= end %></li>
+            <li><%= link_to 'show_report'  => { report_identifier => $report_identifier } => class => "elidden" => begin %>report : <%= current_report->title %><%= end %></li>
             <li><%= link_to 'list_chapter' => { report_identifier => $report_identifier } => begin %>chapters<%= end %></li>
             <li><%= link_to 'list_all_figures'  => { report_identifier => $report_identifier } => begin %>figures<%= end %></li>
             <li><%= link_to 'list_all_tables'  => { report_identifier => $report_identifier } => begin %>tables<%= end %></li>
@@ -23,9 +23,16 @@
          </ul>
         </li>
         <li>
-            <span>publications</span>
+            <span>Featured Publications</span>
             <ul>
-                <li><%= link_to 'show_report'                 => { report_identifier => default_report->identifier } => begin %>report : <%= default_report->identifier %><%= end %></li>
+                <li><%= link_to 'show_report' => { report_identifier => 'climate-science-special-report' } => begin %>Climate Science Special Report<%= end %></li>
+                <li><%= link_to 'show_report' => { report_identifier => 'usgcrp-climate-human-health-assessment-2016' } => begin %>Impacts of Climate Change on Human Health<%= end %></li>
+                <li><%= link_to 'show_report' => { report_identifier => 'nca3' } => begin %>The Third National Climate Assessment <%= end %></li>
+            </ul>
+        </li>
+        <li>
+            <span>All Publications</span>
+            <ul>
                 <li><%= link_to 'list_report'                 => begin %>reports<%= end %></li>
                 <li><%= link_to 'list_indicator'              => begin %>indicators<%= end %></li>
                 <li><%= link_to 'list_figures_across_reports' => begin %>figures<%= end %></li>
