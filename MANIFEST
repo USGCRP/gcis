@@ -1,7 +1,6 @@
 .dockerignore
 .gitattributes
 .travis.yml
-bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
