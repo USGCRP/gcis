@@ -40,6 +40,9 @@
             <%= link_to 'list_reference_chapter', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
            </p>
         % }
+
+        %= include 'h/cited_by', pub => $pub;
+        %= include 'h/prov', pub => $pub;
   </div>
 </div>
 
