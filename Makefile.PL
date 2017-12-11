@@ -5,7 +5,7 @@ WriteMakefile
   'PREREQ_PM' => {
                    'Pg::hstore' => 0,
                    'Mojolicious::Plugin::YamlConfig' => 0,
-                   'List::MoreUtils' => '0.427',
+                   'List::MoreUtils' => '0.427_001',
                    'LWP::UserAgent' => 0,
                    'YAML::XS' => 0,
                    'String::Diff' => 0,

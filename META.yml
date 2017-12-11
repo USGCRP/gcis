@@ -230,7 +230,7 @@ requires:
   LWP::Protocol::https: '6.07'
   LWP::UserAgent: '0'
   Lingua::EN::Inflect: '0'
-  List::MoreUtils: '0.427',
+  List::MoreUtils: '0.427_001',
   Mojolicious: '6.08'
   Mojolicious::Plugin::InstallablePaths: '0'
   Mojolicious::Plugin::Mail: '1.5'
