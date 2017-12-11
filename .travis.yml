@@ -13,6 +13,7 @@ env:
     - PERL_CPANM_OPT=-n
 
 before_install :
+    - cpanm http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-0.427_001.tar.gz
     - cpanm App::cpanoutdated
     - cpan-outdated | cpanm
     - cpanm Devel::Cover Devel::Cover::Report::Coveralls
