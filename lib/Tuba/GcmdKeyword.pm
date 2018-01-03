@@ -10,7 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    $c->stash(objects => GcmdKeywords->get_objects(with_objects => 'publications', page => $c->page));
+    $c->stash(objects => GcmdKeywords->get_objects(with_objects => 'publications', page => $c->page, $c->per_page));
     my $count = GcmdKeywords->get_objects_count;
     $c->stash(extra_cols => [qw/label/]);
     $c->set_pages($count);
