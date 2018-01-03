@@ -95,6 +95,7 @@ my $builder = Module::Build::Database->new(
         'Lingua::EN::Inflect' => 0,
         'Path::Class' => 0,
         'Scalar::Util' => 0,
+        'List::MoreUtils' => '0.427',
         'Mojolicious::Plugin::Mail' => 1.5, # supports feedback form - mailing
         'Captcha::reCAPTCHA' => 0.99,       # supports feedback form - captcha
         'LWP::Protocol::https' => 6.07,     # supports feedback form - captcha, hidden dep.
