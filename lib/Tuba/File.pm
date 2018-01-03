@@ -11,7 +11,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     return $c->reply->not_found;
-    $c->stash(objects => Files->get_objects(with_objects => 'publications', page => $c->page));
+    $c->stash(objects => Files->get_objects(with_objects => 'publications', page => $c->page, per_page => $c->per_page));
     my $count = Files->get_objects_count;
     $c->set_pages($count);
     $c->SUPER::list(@_);

@@ -21,7 +21,7 @@ sub list {
     if ($c->param('all')) {
         $c->stash(objects => Persons->get_objects(@q));
     } else {
-        $c->stash(objects => scalar Persons->get_objects(@q, sort_by => 'last_name, first_name', page => $c->page));
+        $c->stash(objects => scalar Persons->get_objects(@q, sort_by => 'last_name, first_name', page => $c->page, per_page => $c->per_page));
         $c->set_pages(Persons->get_objects_count(@q));
     }
     $c->SUPER::list(@_);
