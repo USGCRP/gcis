@@ -1538,6 +1538,7 @@ sub page {
 sub per_page {
     my $c = shift;
     return undef if $c->param('all');
+    return $c->param('per_page') if $c->param('per_page');
     return 24 if $c->param('thumbs');
     return 20;
 }
