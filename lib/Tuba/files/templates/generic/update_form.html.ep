@@ -1,0 +1,81 @@
+% layout 'default';
+<center>
+<h2><%= $object->meta->table %> : <%= $object->stringify %></h2>
+</center>
+
+% my $controls = stash 'controls' || {};
+
+% my $textfield = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <input type="text" class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>" value="<%= $object->$accessor %>">
+    </div>
+% end
+
+% my $textarea = begin
+    % my $column = shift;
+    % my $object = shift;
+    % my $accessor = $column->accessor_method_name;
+    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+    <textarea rows=7 class="form-control" id="<%= $column->name %>" name="<%= $column->name %>" placeholder="<%= $column->type %>"><%= $object->$accessor %></textarea>
+    </div>
+% end
+
+%= include 'update_tabs', active => 'fields';
+<br />
+<div class='tab-content'>
+    <p>To edit this generic publication, please choose a valid tab from above.</p>
+</div>
+
+%= hidden_field 'delete_pub_attr';
+%= form_for obj_uri_for($object, 'update') => class => 'form-horizontal' => method => 'POST' => begin
+
+<div class="well">
+<table class='table table-responsive table-condensed table-bordered densetable'>
+    <caption>Attributes</caption>
+    <tr>
+      <th>Delete</th>
+      <th>Key</th>
+      <th>Current Value</th>
+      <th>Replace Value</th>
+    </tr>
+    % for my $k (sort keys %{ $object->attrs }) {
+    <tr>
+        <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $object->attrs->{$k} %> )?")}'>Delete</button></td>
+        <td><%= $k %></td>
+        <td><%= $object->attrs->{$k} %></td>
+        <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
+    </tr>
+    % }
+</table>
+<h4>New Attribute</h4>
+<div class='form-group row'>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_key', class => 'required' => begin
+      Key
+    %= end
+  </div>
+  <div class='col-lg-2 col-md-2 col-sm-2'>
+    <%= text_field 'new_attr_key', class => "form-control input-small squeezevert" %>
+  </div>
+  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+    %= label_for 'new_attr_value', class => 'required' => begin
+      Value
+    %= end
+  </div>
+  <div class='col-lg-4 col-md-4 col-sm-4'>
+    <%= text_field 'new_attr_value', class => "form-control input-small squeezevert" %>
+  </div>
+</div>  <!--- End new attr div --->
+
+<div class="row">
+	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
+    <button type="submit" class="btn btn-primary">Save changes</button>
+    </div>
+</div>
+</div>
+
+%= end
+
