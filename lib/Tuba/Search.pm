@@ -51,7 +51,7 @@ sub autocomplete {
     return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
     my $want = $c->param('type') || 'all';  # all == all publications, full = orgs, people too
-    my $elide = $c->param('elide') || 80;
+    my $elide = $c->param('elide');
     my $gcids = $c->param('gcids');
     my $restrict = $c->param('restrict');
 
