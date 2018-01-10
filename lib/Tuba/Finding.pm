@@ -14,7 +14,7 @@ sub list {
     my $meta = Finding->meta;
     my $report_identifier = $c->stash('report_identifier');
     my $all = $c->param('all');
-    my @page = $all ? () : (page => $c->page);
+    my @page = $all ? () : (page => $c->page, per_page => $c->per_page);
 
     if (my $chapter = $c->stash('chapter')) {
         $objects = Findings->get_objects(

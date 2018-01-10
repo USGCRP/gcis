@@ -19,7 +19,8 @@ sub list {
         $objects = Regions->get_objects(
             query => [ publication_id => $publication->id ],
             with_objects => [qw/publications/],
-            page => $c->page
+            page => $c->page,
+            per_page => $c->per_page
         );
         $count = Regions->get_objects_count(
             query => [ publication_id => $publication->id ],
@@ -27,7 +28,11 @@ sub list {
         );
     }
     else {
-        $objects = Regions->get_objects(with_objects => 'publications', page => $c->page);
+        $objects = Regions->get_objects(
+            with_objects => 'publications',
+            page => $c->page,
+            per_page => $c->per_page
+        );
         $count = Regions->get_objects_count;
     }
     $c->stash(objects => $objects);
