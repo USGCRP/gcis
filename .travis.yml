@@ -5,6 +5,7 @@ addons:
     apt:
         packages:
             - raptor2-utils
+            - postgresql
 
 perl:
   - "5.20"
