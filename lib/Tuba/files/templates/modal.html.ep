@@ -2,7 +2,7 @@
 %# params : url
      
 <div id="<%= $id %>"
-    data-remote='<%= $url->clone->query(as_modal => 1, modalbody => "$id\_modalbody") %>'
+    data-remote='<%= $url->clone->query([as_modal => 1, modalbody => "$id\_modalbody"]) %>'
     class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
     	<div class="modal-content">

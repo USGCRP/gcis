@@ -29,6 +29,10 @@
                 %= text_field '_report', class => 'form-control', value => current_report->title, disabled => 1
                 </div>
                 
+            % } elsif ($name && $name eq 'organization_identifier' && (stash 'organization_identifier')) {
+            	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                %= text_field 'organization_identifier', class => 'form-control', value => 'organization_identifier', disabled => 1
+                </div>
             % } elsif ($name && $name eq 'rows_in_header' && $controls->{"rows"}) {
             	<div class="col-md-1 col-sm-1">
                 <input class="form-control" id="<%= $name %>" type="number" min="1" name="<%= $name %>" />
