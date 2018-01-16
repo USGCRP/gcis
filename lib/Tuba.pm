@@ -72,7 +72,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.51.1';
+our $VERSION = '1.51.2';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {

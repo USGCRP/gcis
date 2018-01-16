@@ -876,6 +876,7 @@ lib/Tuba/files/templates/gcmd_keyword/object.html.ep
 lib/Tuba/files/templates/gcmd_keyword/object.ttl.tut
 lib/Tuba/files/templates/generic/object.html.ep
 lib/Tuba/files/templates/generic/object.ttl.tut
+lib/Tuba/files/templates/generic/update_form.html.ep
 lib/Tuba/files/templates/h/cited_by.html.ep
 lib/Tuba/files/templates/h/cites.html.ep
 lib/Tuba/files/templates/h/contributors.html.ep
