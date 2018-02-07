@@ -163,6 +163,7 @@ sub list_indicators {
     my $object_class = $c->stash('object_class') || $c->_guess_object_class;
     my $meta = $object_class->meta;
     my $table = $meta->table;
+    my $pub_years = Reports->indicator_publication_years();
     my %tree;
     $c->set_title(table => 'Indicator');
 
@@ -193,7 +194,7 @@ sub list_indicators {
         },
         html => sub {
              my $c = shift;
-             $c->render($template, meta => $meta, objects => $objects );
+             $c->render($template, meta => $meta, objects => $objects, pub_years => $pub_years );
          }
     );
 };
