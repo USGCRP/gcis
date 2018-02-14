@@ -18,10 +18,13 @@ sub _make_query {
             $attr_pair =~ s/"//g;
             if ( $attr_pair =~ /:/ ) {
                 my ($key,$value) = split /:/, $attr_pair;
-                push @query, \(qq[attrs->'$key' = '$value' ]);
+                $key = $dbh->quote($key);
+                $value = $dbh->quote($value);
+                push @query, \(qq[attrs->$key = $value ]);
             }
             else {
-                push @query, \(qq[attrs->'Title' ilike '$attr_pair' ]);
+                $attr_pair = $dbh->quote($attr_pair);
+                push @query, \(qq[attrs->'Title' ilike $attr_pair ]);
             }
         }
     }
@@ -31,13 +34,13 @@ sub _make_query {
         my $year = $1;
         $str =~ s/^\s+//g;
         $str =~ s/\s+$//g;
+        $str = $dbh->quote($str);
         push @query, \(qq[attrs->'Author' ilike '%$str%' and attrs->'Year' = '$year']);
         push @query, \(qq{array_to_string(avals(attrs),';') ilike $q});
     }
     # Search checking identifier, Author, other
     else {
         push @query, ( identifier => { like => "%$str%" } );
-        my $q = $dbh->quote('%'.$str.'%');
         push @query, \(qq[attrs->'Author' ilike $q]);
         push @query, \(qq{array_to_string(avals(attrs),';') ilike $q});
     }
