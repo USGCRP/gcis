@@ -12,7 +12,7 @@ sub _make_query {
 
     my @query;
     # Search Attr:Value, leftovers as title
-    if ($str =~ /".*:.*"/){
+    if ($str =~ /".*[:~].*"/){
         my @attr_pairs = split /", */, $str;
         foreach my $attr_pair (@attr_pairs) {
             $attr_pair =~ s/"//g;
@@ -22,8 +22,14 @@ sub _make_query {
                 $value = $dbh->quote($value);
                 push @query, \(qq[attrs->$key = $value ]);
             }
+            elsif ( $attr_pair =~ /~/ ) {
+                my ($key,$value) = split /~/, $attr_pair;
+                $key = $dbh->quote($key);
+                $value = $dbh->quote('%'.$value.'%');
+                push @query, \(qq[attrs->$key ilike $value ]);
+            }
             else {
-                $attr_pair = $dbh->quote($attr_pair);
+                $attr_pair = $dbh->quote('%'.$attr_pair.'%');
                 push @query, \(qq[attrs->'Title' ilike $attr_pair ]);
             }
         }
