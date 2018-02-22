@@ -40,8 +40,8 @@ sub _make_query {
         my $year = $1;
         $str =~ s/^\s+//g;
         $str =~ s/\s+$//g;
-        $str = $dbh->quote($str);
-        push @query, \(qq[attrs->'Author' ilike '%$str%' and attrs->'Year' = '$year']);
+        $str = $dbh->quote('%'.$str.'%');
+        push @query, \(qq[attrs->'Author' ilike $str and attrs->'Year' = '$year']);
         push @query, \(qq{array_to_string(avals(attrs),';') ilike $q});
     }
     # Search checking identifier, Author, other
