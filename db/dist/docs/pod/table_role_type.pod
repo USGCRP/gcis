@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 role_type
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A list of roles that contributors may have.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  label (character varying) - A human readable label.
@@ -15,7 +15,7 @@ A list of roles that contributors may have.
  comment (character varying) - A description of this role.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                             Table "gcis_metadata.role_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |                 Description                  
@@ -28,9 +28,8 @@ A list of roles that contributors may have.
      "role_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
      TABLE "contributor" CONSTRAINT "fk_role_type" FOREIGN KEY (role_type_identifier) REFERENCES role_type(identifier)
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

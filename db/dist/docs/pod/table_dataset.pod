@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 dataset
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 Datasets are arbitrary collections of data.  They are a type of publication and may be associated with other publications.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier for this dataset.  This may be a composite identifier derived from external identifier or publications associated with this dataset.
  name (character varying) - A brief descriptive name.
@@ -42,7 +42,7 @@ Datasets are arbitrary collections of data.  They are a type of publication and 
  temporal_resolution (character varying) - The temporal resolution (daily, monthly, etc.).
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                                                                     Table "gcis_metadata.dataset"
           Column          |              Type              | Modifiers | Storage  | Stats target |                                                                            Description                                                                            
@@ -93,9 +93,8 @@ Datasets are arbitrary collections of data.  They are a type of publication and 
      delpub BEFORE DELETE ON dataset FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON dataset FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/dataset/')
      updatepub BEFORE UPDATE ON dataset FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

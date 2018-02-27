@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 person
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 People are stored using opaque numeric identifiers.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  id (serial) - A unique numeric identifier.
  url (character varying) - A URL with information about this person.
@@ -17,7 +17,7 @@ People are stored using opaque numeric identifiers.
  middle_name (character varying) - The middle name of the person.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                     Table "gcis_metadata.person"
     Column    |       Type        |                      Modifiers                      | Storage  | Stats target |                  Description                   
@@ -41,9 +41,8 @@ People are stored using opaque numeric identifiers.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON person FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON person FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

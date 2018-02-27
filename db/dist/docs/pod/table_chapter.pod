@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 chapter
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A chapter is part of a report.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this chapter
  title (character varying) - The title.
@@ -18,7 +18,7 @@ A chapter is part of a report.
  doi (character varying) - A digital object identifier for this chapter.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                     Table "gcis_metadata.chapter"
        Column       |         Type         | Modifiers | Storage  | Stats target |                    Description                    
@@ -46,9 +46,8 @@ A chapter is part of a report.
      audit_trigger_stm AFTER TRUNCATE ON chapter FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON chapter FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON chapter FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 model
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 Models may be associated with scenarios, model runs, and projects.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A unique descriptive identifier.
  project_identifier (character varying) - A project associated with this model.
@@ -19,7 +19,7 @@ Models may be associated with scenarios, model runs, and projects.
  description_attribution (character varying) - A URL containing the description of this model.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                               Table "gcis_metadata.model"
           Column          |       Type        | Modifiers | Storage  | Stats target |                           Description                           
@@ -41,9 +41,8 @@ Models may be associated with scenarios, model runs, and projects.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON model FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON model FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

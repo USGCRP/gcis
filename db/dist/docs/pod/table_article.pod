@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 article
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 Articles are publications in peer reviewed journals, and generally have DOIs.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - The identifier : this should be the DOI, if there is one.
  title (character varying) - The title of the article (source: crossref.org).
@@ -20,7 +20,7 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
  notes (character varying) - Notes about this entry.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                  Table "gcis_metadata.article"
         Column       |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
@@ -47,9 +47,8 @@ Articles are publications in peer reviewed journals, and generally have DOIs.
      audit_trigger_stm AFTER TRUNCATE ON article FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON article FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON article FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

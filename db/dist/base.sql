@@ -1,9 +1,12 @@
 
+
 SET statement_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 
 
@@ -2039,7 +2042,110 @@ COMMENT ON COLUMN "table".url IS 'A URL for a landing page for this table.';
 
 
 CREATE VIEW vw_gcmd_keyword AS
-    (((((SELECT COALESCE(level4.identifier, level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, level3.label AS level3, level4.label AS level4 FROM (((((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text))) JOIN gcmd_keyword level4 ON (((level4.parent_identifier)::text = (level3.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text)) UNION SELECT COALESCE(level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, level3.label AS level3, NULL::character varying AS level4 FROM ((((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, level2.label AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, level1.label AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM ((((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(term.identifier, topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, term.label AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(topic.identifier, category.identifier) AS identifier, category.label AS category, topic.label AS topic, NULL::character varying AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM ((gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))) UNION SELECT COALESCE(category.identifier) AS identifier, category.label AS category, NULL::character varying AS topic, NULL::character varying AS term, NULL::character varying AS level1, NULL::character varying AS level2, NULL::character varying AS level3, NULL::character varying AS level4 FROM (gcmd_keyword wrapper JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text))) WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text));
+ SELECT COALESCE(level4.identifier, level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    term.label AS term,
+    level1.label AS level1,
+    level2.label AS level2,
+    level3.label AS level3,
+    level4.label AS level4
+   FROM (((((((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+     JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text)))
+     JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text)))
+     JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text)))
+     JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text)))
+     JOIN gcmd_keyword level4 ON (((level4.parent_identifier)::text = (level3.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(level3.identifier, level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    term.label AS term,
+    level1.label AS level1,
+    level2.label AS level2,
+    level3.label AS level3,
+    NULL::character varying AS level4
+   FROM ((((((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+     JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text)))
+     JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text)))
+     JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text)))
+     JOIN gcmd_keyword level3 ON (((level3.parent_identifier)::text = (level2.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(level2.identifier, level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    term.label AS term,
+    level1.label AS level1,
+    level2.label AS level2,
+    NULL::character varying AS level3,
+    NULL::character varying AS level4
+   FROM (((((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+     JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text)))
+     JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text)))
+     JOIN gcmd_keyword level2 ON (((level2.parent_identifier)::text = (level1.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(level1.identifier, term.identifier, topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    term.label AS term,
+    level1.label AS level1,
+    NULL::character varying AS level2,
+    NULL::character varying AS level3,
+    NULL::character varying AS level4
+   FROM ((((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+     JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text)))
+     JOIN gcmd_keyword level1 ON (((level1.parent_identifier)::text = (term.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(term.identifier, topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    term.label AS term,
+    NULL::character varying AS level1,
+    NULL::character varying AS level2,
+    NULL::character varying AS level3,
+    NULL::character varying AS level4
+   FROM (((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+     JOIN gcmd_keyword term ON (((term.parent_identifier)::text = (topic.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(topic.identifier, category.identifier) AS identifier,
+    category.label AS category,
+    topic.label AS topic,
+    NULL::character varying AS term,
+    NULL::character varying AS level1,
+    NULL::character varying AS level2,
+    NULL::character varying AS level3,
+    NULL::character varying AS level4
+   FROM ((gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+     JOIN gcmd_keyword topic ON (((topic.parent_identifier)::text = (category.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text))
+UNION
+ SELECT COALESCE(category.identifier) AS identifier,
+    category.label AS category,
+    NULL::character varying AS topic,
+    NULL::character varying AS term,
+    NULL::character varying AS level1,
+    NULL::character varying AS level2,
+    NULL::character varying AS level3,
+    NULL::character varying AS level4
+   FROM (gcmd_keyword wrapper
+     JOIN gcmd_keyword category ON (((category.parent_identifier)::text = (wrapper.identifier)::text)))
+  WHERE (((wrapper.identifier)::text = '1eb0ea0a-312c-4d74-8d42-6f1ad758f999'::text) AND ((wrapper.label)::text = 'Science Keywords'::text));
 
 
 

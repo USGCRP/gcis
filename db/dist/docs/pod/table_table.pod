@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 table
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A table is in a report, and may contain one or more arrays.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A desciptive identifier.
  report_identifier (character varying) - The report.
@@ -18,7 +18,7 @@ A table is in a report, and may contain one or more arrays.
  url (character varying) - A URL for a landing page for this table.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                                                 Table "gcis_metadata.table"
         Column       |       Type        | Modifiers | Storage  | Stats target |                                                                Description                                                                
@@ -46,9 +46,8 @@ A table is in a report, and may contain one or more arrays.
      audit_trigger_stm AFTER TRUNCATE ON "table" FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON "table" FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON "table" FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 webpage
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A webpage is a type of publication.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A globally identifier (UUID)
  url (character varying) - The URL.
@@ -15,7 +15,7 @@ A webpage is a type of publication.
  access_date (timestamp without time zone) - The date on which this webpage was accessed.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                   Table "gcis_metadata.webpage"
     Column    |            Type             | Modifiers | Storage  | Stats target |                 Description                  
@@ -34,10 +34,9 @@ A webpage is a type of publication.
      audit_trigger_stm AFTER TRUNCATE ON webpage FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON webpage FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON webpage FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 
 

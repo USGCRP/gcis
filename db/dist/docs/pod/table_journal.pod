@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 journal
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A journal is a peer reviewed publication which contains articles.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this journal.
  title (character varying) - The title of the journal (source: crossref.org)
@@ -19,7 +19,7 @@ A journal is a peer reviewed publication which contains articles.
  online_issn (issn) - 
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                    Table "gcis_metadata.journal"
     Column    |       Type        | Modifiers | Storage  | Stats target |                                       Description                                        
@@ -46,9 +46,8 @@ A journal is a peer reviewed publication which contains articles.
      audit_trigger_stm AFTER TRUNCATE ON journal FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON journal FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON journal FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

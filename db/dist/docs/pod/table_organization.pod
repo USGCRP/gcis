@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 organization
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 An organization is an entity with which people and publications may be associated.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  name (character varying) - The organization as referred to in English.
@@ -17,7 +17,7 @@ An organization is an entity with which people and publications may be associate
  international (boolean) - Flag indicating an multinational organization with HQs in multiple countries.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                     Table "gcis_metadata.organization"
              Column            |       Type        | Modifiers | Storage  | Stats target |                                  Description                                  
@@ -45,9 +45,8 @@ An organization is an entity with which people and publications may be associate
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON organization FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON organization FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      update_exterms BEFORE UPDATE ON organization FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/organization/')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 
