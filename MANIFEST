@@ -60,16 +60,21 @@ db/dist/docs/html/func_gcis_metadata.ean13_out(gcis_metadata.issn13).html
 'db/dist/docs/html/func_gcis_metadata.exists_any(gcis_metadata.hstore, text[]).html'
 'db/dist/docs/html/func_gcis_metadata.fetchval(gcis_metadata.hstore, text).html'
 db/dist/docs/html/func_gcis_metadata.ghstore_compress(internal).html
+'db/dist/docs/html/func_gcis_metadata.ghstore_consistent(internal, gcis_metadata.hstore, smallint, oid, internal).html'
 'db/dist/docs/html/func_gcis_metadata.ghstore_consistent(internal, internal, integer, oid, internal).html'
 db/dist/docs/html/func_gcis_metadata.ghstore_decompress(internal).html
 db/dist/docs/html/func_gcis_metadata.ghstore_in(cstring).html
 db/dist/docs/html/func_gcis_metadata.ghstore_out(gcis_metadata.ghstore).html
 'db/dist/docs/html/func_gcis_metadata.ghstore_penalty(internal, internal, internal).html'
 'db/dist/docs/html/func_gcis_metadata.ghstore_picksplit(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.ghstore_same(gcis_metadata.ghstore, gcis_metadata.ghstore, internal).html'
 'db/dist/docs/html/func_gcis_metadata.ghstore_same(internal, internal, internal).html'
 'db/dist/docs/html/func_gcis_metadata.ghstore_union(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_consistent_hstore(internal, smallint, gcis_metadata.hstore, integer, internal, internal).html'
 'db/dist/docs/html/func_gcis_metadata.gin_consistent_hstore(internal, smallint, internal, integer, internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore(gcis_metadata.hstore, internal).html'
 'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore(internal, internal).html'
+'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore_query(gcis_metadata.hstore, internal, smallint, internal, internal).html'
 'db/dist/docs/html/func_gcis_metadata.gin_extract_hstore_query(internal, internal, smallint, internal, internal).html'
 db/dist/docs/html/func_gcis_metadata.hashean13(gcis_metadata.ean13).html
 db/dist/docs/html/func_gcis_metadata.hashisbn(gcis_metadata.isbn).html
@@ -620,6 +625,7 @@ db/patches/2350_add_figure_origination.sql
 db/patches/2360_organization_alt_name_update_cascade.sql
 db/patches/2370_org_type_public_private.sql
 db/patches/2380_deprecate_journal_publisher.sql
+db/patches/2390_article_doi_case_insensitive.sql
 docker-compose.yml
 Dockerfile
 eg/check_dois.pl
