@@ -24,6 +24,19 @@ sub show {
     $c->SUPER::show(@_);
 }
 
+sub children {
+    my $c = shift;
+    my $gcmd_keyword = $c->stash('gcmd_keyword');
+
+    my $obj = GcmdKeyword->new(
+      identifier        => $gcmd_keyword,
+      )->load(speculative => 1) or return $c->reply->not_found;
+    my $keywords = $obj->gcmd_keywords;
+    $c->stash(objects => $keywords);
+    $c->stash(extra_cols => [qw/label/]);
+    $c->SUPER::list();
+}
+
 sub _guess_object_class {
     return 'Tuba::DB::Object::GcmdKeyword';
 }

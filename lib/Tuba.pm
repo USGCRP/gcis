@@ -447,6 +447,7 @@ sub startup {
     $r->resource('organization_alternate_name');
 
     $r->resource('gcmd_keyword');
+    $r->get('/gcmd_keyword/:gcmd_keyword/children')->to('gcmd_keyword#children');
     $r->resource('region');
     $report->get('/region')->to('region#list')->name('list_report_regions');
     $r->resource('dataset');
