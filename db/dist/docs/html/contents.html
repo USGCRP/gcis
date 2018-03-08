@@ -274,7 +274,7 @@ gcis_metadata
 <a target="data" href="#gcis-metadata.function.delete-publication">delete_publication()</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.each-value-gcis-metadata.hstore">each(value gcis_metadata.hstore)</a>
+<a target="data" href="#gcis-metadata.function.each-hs-gcis-metadata.hstore">each(hs gcis_metadata.hstore)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.ean13-in-cstring">ean13_in(cstring)</a>
@@ -307,7 +307,7 @@ gcis_metadata
 <a target="data" href="#gcis-metadata.function.ghstore-compress-internal">ghstore_compress(internal)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.ghstore-consistent-internal-gcis-metadata.hstore-smallint-oid-internal">ghstore_consistent(internal, gcis_metadata.hstore, smallint, oid, internal)</a>
+<a target="data" href="#gcis-metadata.function.ghstore-consistent-internal-internal-integer-oid-internal">ghstore_consistent(internal, internal, integer, oid, internal)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.ghstore-decompress-internal">ghstore_decompress(internal)</a>
@@ -325,19 +325,19 @@ gcis_metadata
 <a target="data" href="#gcis-metadata.function.ghstore-picksplit-internal-internal">ghstore_picksplit(internal, internal)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.ghstore-same-gcis-metadata.ghstore-gcis-metadata.ghstore-internal">ghstore_same(gcis_metadata.ghstore, gcis_metadata.ghstore, internal)</a>
+<a target="data" href="#gcis-metadata.function.ghstore-same-internal-internal-internal">ghstore_same(internal, internal, internal)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.ghstore-union-internal-internal">ghstore_union(internal, internal)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.gin-consistent-hstore-internal-smallint-gcis-metadata.hstore-integer-internal-internal">gin_consistent_hstore(internal, smallint, gcis_metadata.hstore, integer, internal, internal)</a>
+<a target="data" href="#gcis-metadata.function.gin-consistent-hstore-internal-smallint-internal-integer-internal-internal">gin_consistent_hstore(internal, smallint, internal, integer, internal, internal)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.gin-extract-hstore-gcis-metadata.hstore-internal">gin_extract_hstore(gcis_metadata.hstore, internal)</a>
+<a target="data" href="#gcis-metadata.function.gin-extract-hstore-internal-internal">gin_extract_hstore(internal, internal)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.gin-extract-hstore-query-gcis-metadata.hstore-internal-smallint-internal-internal">gin_extract_hstore_query(gcis_metadata.hstore, internal, smallint, internal, internal)</a>
+<a target="data" href="#gcis-metadata.function.gin-extract-hstore-query-internal-internal-smallint-internal-internal">gin_extract_hstore_query(internal, internal, smallint, internal, internal)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.hashean13-gcis-metadata.ean13">hashean13(gcis_metadata.ean13)</a>
@@ -422,18 +422,6 @@ gcis_metadata
 <br>
 
 <a target="data" href="#gcis-metadata.function.hstore-to-array-gcis-metadata.hstore">hstore_to_array(gcis_metadata.hstore)</a>
-<br>
-
-<a target="data" href="#gcis-metadata.function.hstore-to-json-gcis-metadata.hstore">hstore_to_json(gcis_metadata.hstore)</a>
-<br>
-
-<a target="data" href="#gcis-metadata.function.hstore-to-json-loose-gcis-metadata.hstore">hstore_to_json_loose(gcis_metadata.hstore)</a>
-<br>
-
-<a target="data" href="#gcis-metadata.function.hstore-to-jsonb-gcis-metadata.hstore">hstore_to_jsonb(gcis_metadata.hstore)</a>
-<br>
-
-<a target="data" href="#gcis-metadata.function.hstore-to-jsonb-loose-gcis-metadata.hstore">hstore_to_jsonb_loose(gcis_metadata.hstore)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.hstore-to-matrix-gcis-metadata.hstore">hstore_to_matrix(gcis_metadata.hstore)</a>
@@ -1054,10 +1042,10 @@ gcis_metadata
 <a target="data" href="#gcis-metadata.function.make-valid-gcis-metadata.upc">make_valid(gcis_metadata.upc)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.name-hash-last-name-text-first-name-text">name_hash(last_name text, first_name text)</a>
+<a target="data" href="#gcis-metadata.function.name-hash-first-name-text-last-name-text">name_hash(first_name text, last_name text)</a>
 <br>
 
-<a target="data" href="#gcis-metadata.function.name-unique-hash-orcid-text-last-name-text-first-name-text">name_unique_hash(orcid text, last_name text, first_name text)</a>
+<a target="data" href="#gcis-metadata.function.name-unique-hash-first-name-text-last-name-text-orcid-text">name_unique_hash(first_name text, last_name text, orcid text)</a>
 <br>
 
 <a target="data" href="#gcis-metadata.function.populate-record-anyelement-gcis-metadata.hstore">populate_record(anyelement, gcis_metadata.hstore)</a>
@@ -1091,7 +1079,7 @@ gcis_metadata
 <br>
 
 
-2018-02-27
+2018-03-08
 </html>
 
 <!-- ------------------------------------------------------------------------- -->

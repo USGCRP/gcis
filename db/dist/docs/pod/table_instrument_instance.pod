@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 instrument_instance
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An instrument instance is the association of an instrument with a platform.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  platform_identifier (character varying) - The platform.
  instrument_identifier (character varying) - The instrument.
  location (character varying) - The location of the instrument on the platform.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                               Table "gcis_metadata.instrument_instance"
          Column         |       Type        | Modifiers | Storage  | Stats target |                   Description                   
@@ -32,8 +32,9 @@ An instrument instance is the association of an instrument with a platform.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON instrument_instance FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON instrument_instance FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 publication_type
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Publications have types which correspond to database tables.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive type.
  table (character varying) - The database table.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                             Table "gcis_metadata.publication_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |     Description     
@@ -27,8 +27,9 @@ Publications have types which correspond to database tables.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication_type FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication_type FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

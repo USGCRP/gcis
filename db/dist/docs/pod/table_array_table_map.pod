@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 array_table_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Arrays and tables have a many-to-many relationship.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  array_identifier (character varying) - The array.
  table_identifier (character varying) - The table.
  report_identifier (character varying) - The report associated with the table.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                          Table "gcis_metadata.array_table_map"
        Column       |       Type        | Modifiers | Storage  | Stats target |              Description              
@@ -30,8 +30,9 @@ Arrays and tables have a many-to-many relationship.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON array_table_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON array_table_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

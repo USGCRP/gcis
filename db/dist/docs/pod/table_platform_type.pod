@@ -1,18 +1,18 @@
 
-=head1 NAME
+\=head1 NAME
 
 platform_type
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Platforms have a type.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this type.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                        Table "gcis_metadata.platform_type"
     Column   |       Type        | Modifiers | Storage  | Stats target |               Description               
@@ -22,8 +22,9 @@ Platforms have a type.
      "platform_type_pkey" PRIMARY KEY, btree (identifier)
  Referenced by:
      TABLE "platform" CONSTRAINT "platform_platform_type_identifier_fkey" FOREIGN KEY (platform_type_identifier) REFERENCES platform_type(identifier)
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

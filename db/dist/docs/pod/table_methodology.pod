@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 methodology
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A methodology is a publication associated with an activity
 
-=head1 FIELDS
+\=head1 FIELDS
 
  activity_identifier (character varying) - The activity.
  publication_id (integer) - The publication.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                  Table "gcis_metadata.methodology"
         Column        |       Type        | Modifiers | Storage  | Stats target |   Description    
@@ -28,8 +28,9 @@ A methodology is a publication associated with an activity
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON methodology FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON methodology FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

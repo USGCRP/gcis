@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 contributor
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A contributor is an organization, a role, and optionally a person.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  id (serial) - An opaque numeric identifier for this contributor.
  person_id (integer) - The person (optional).
@@ -15,7 +15,7 @@ A contributor is an organization, a role, and optionally a person.
  organization_identifier (character varying) - The organization.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                             Table "gcis_metadata.contributor"
           Column          |       Type        |                        Modifiers                         | Storage  | Stats target |                    Description                     
@@ -38,8 +38,9 @@ A contributor is an organization, a role, and optionally a person.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON contributor FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON contributor FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 
