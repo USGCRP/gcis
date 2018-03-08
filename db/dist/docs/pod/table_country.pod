@@ -1,19 +1,19 @@
 
-=head1 NAME
+\=head1 NAME
 
 country
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A list of countries used in GCIS.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  code (character varying(2)) - Two letter code (ISO 3166-1 alpha-2)
  name (character varying) - Country name.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                         Table "gcis_metadata.country"
   Column |         Type         | Modifiers | Storage  | Stats target |             Description              
@@ -24,8 +24,9 @@ A list of countries used in GCIS.
      "country_pkey" PRIMARY KEY, btree (code)
  Referenced by:
      TABLE "organization" CONSTRAINT "fk_org_country" FOREIGN KEY (country_code) REFERENCES country(code)
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 figure
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A figure appears in a report and may consist of one or more images.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this figure.
  chapter_identifier (character varying) - The chapter in which this figure appears.
@@ -30,7 +30,7 @@ A figure appears in a report and may consist of one or more images.
  _origination (json) - origination metadata collected by TSU, should eventually be mapped to an Activity
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                                                        Table "gcis_metadata.figure"
         Column       |              Type              | Modifiers | Storage  | Stats target |                                                                Description                                                                 
@@ -70,8 +70,9 @@ A figure appears in a report and may consist of one or more images.
      audit_trigger_stm AFTER TRUNCATE ON figure FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON figure FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON figure FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

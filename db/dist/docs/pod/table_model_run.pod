@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 model_run
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A model run associates a model with a scenario and a project.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A unique identifier for this model run.
  doi (character varying) - A digital object identifier.
@@ -23,7 +23,7 @@ A model run associates a model with a scenario and a project.
  time_resolution (interval) - The temporal resolution of this run.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                     Table "gcis_metadata.model_run"
          Column        |       Type        |     Modifiers      | Storage  | Stats target |                                Description                                 
@@ -54,8 +54,9 @@ A model run associates a model with a scenario and a project.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON model_run FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON model_run FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

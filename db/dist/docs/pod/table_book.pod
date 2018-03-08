@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 book
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 Entries in this table are publications classified as books.  They should have ISBN numbers. 
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier for this book.
  title (character varying) - The title of the book
@@ -20,7 +20,7 @@ Entries in this table are publications classified as books.  They should have IS
  topic (character varying) - A brief free form comma-separated list of topics associated with this book.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                                         Table "gcis_metadata.book"
       Column      |       Type        | Modifiers | Storage  | Stats target |                                        Description                                         
@@ -44,8 +44,9 @@ Entries in this table are publications classified as books.  They should have IS
      audit_trigger_stm AFTER TRUNCATE ON book FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON book FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON book FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

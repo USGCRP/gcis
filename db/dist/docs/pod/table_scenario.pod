@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 scenario
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A scenario may be associated with a model via a model run.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A desciptive identifier.
  name (character varying) - A brief name.
@@ -15,7 +15,7 @@ A scenario may be associated with a model via a model run.
  description_attribution (character varying) - A URL containing the description.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                              Table "gcis_metadata.scenario"
           Column          |       Type        | Modifiers | Storage  | Stats target |            Description            
@@ -33,8 +33,9 @@ A scenario may be associated with a model via a model run.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON scenario FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON scenario FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

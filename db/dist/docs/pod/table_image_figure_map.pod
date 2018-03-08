@@ -1,20 +1,20 @@
 
-=head1 NAME
+\=head1 NAME
 
 image_figure_map
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A figure can have many images and vice versa.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  image_identifier (character varying) - The image.
  figure_identifier (character varying) - The figure.
  report_identifier (character varying) - The report containing the figure.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                       Table "gcis_metadata.image_figure_map"
        Column       |       Type        | Modifiers | Storage  | Stats target |            Description            
@@ -30,8 +30,9 @@ A figure can have many images and vice versa.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON image_figure_map FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON image_figure_map FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

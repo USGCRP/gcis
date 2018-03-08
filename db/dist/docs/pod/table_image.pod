@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 image
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 An image may be associated with multiple figures, may have provenance and other attributes distinct from that of a parent figure.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A globally unique identifier (UUID).
  position (character varying) - A description of where this image is within other figures.
@@ -26,7 +26,7 @@ An image may be associated with multiple figures, may have provenance and other 
  url (character varying) - A landing page for this image.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                               Table "gcis_metadata.image"
      Column     |              Type              | Modifiers | Storage  | Stats target |                          Description                          
@@ -58,8 +58,9 @@ An image may be associated with multiple figures, may have provenance and other 
      audit_trigger_stm AFTER TRUNCATE ON image FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON image FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON image FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 

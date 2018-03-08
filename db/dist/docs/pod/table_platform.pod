@@ -1,13 +1,13 @@
 
-=head1 NAME
+\=head1 NAME
 
 platform
 
-=head1 DESCRIPTION
+\=head1 DESCRIPTION
 
 A platform may be associated with one more more instruments.
 
-=head1 FIELDS
+\=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this platform.
  name (character varying) - A brief name.
@@ -19,7 +19,7 @@ A platform may be associated with one more more instruments.
  end_date (timestamp without time zone) - The date on which this platform ceased operations.
 
 
-=head1 SCHEMA
+\=head1 SCHEMA
 
                                                              Table "gcis_metadata.platform"
            Column          |            Type             | Modifiers | Storage  | Stats target |                      Description                       
@@ -47,8 +47,9 @@ A platform may be associated with one more more instruments.
      delpub BEFORE DELETE ON platform FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/platform/')
      updatepub BEFORE UPDATE ON platform FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
+ Has OIDs: no
  
 
-=cut
+\=cut
 
 
