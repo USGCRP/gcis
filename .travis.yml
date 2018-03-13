@@ -5,7 +5,15 @@ addons:
     apt:
         packages:
             - raptor2-utils
-            - postgresql
+            - postgresql-9.3
+            - postgresql-contrib-9.3
+            - postgresql-server-dev-9.3
+            - libuuid1
+            - uuid-dev
+            - openssl
+            - libssl-dev
+            - libpq-dev
+            - libxml2
 
 perl:
   - "5.20"
