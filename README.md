@@ -8,7 +8,7 @@ This portion of the GCIS is called Tuba.
 
 Prerequisites :
 
-    - PostgreSQL
+    - PostgreSQL 9.3
     - Perl 5.20
     - uuid-dev package
     - A recent raptor (<http://librdf.org/raptor>)
@@ -26,16 +26,21 @@ Prerequisites :
 On Ubuntu 14.04, they can be installed with:
 
     - sudo apt-get install postgresql-contrib-9.3 libpg-hstore-perl \
-      postgresql libuuid1 uuid-dev make openssl libssl-dev libpq-dev \
-      graphviz libxml2 raptor2-utils curl perlbrew
+      postgresql-9.3 postgresql-server-dev-9.3 libuuid1 uuid-dev make \
+      openssl libssl-dev libpq-dev graphviz libxml2 raptor2-utils curl \
+      perlbrew
 
 Instantiate Perlbrew environment:
 
-    perlbrew init
+    perlbrew init                 # complete the init instructions
     perlbrew install perl-5.20.0
     perlbrew install-cpanm
     perlbrew install-patchperl
     perlbrew switch perl-5.20.0
+
+Clone the Repository :
+
+    git clone https://github.com/USGCRP/gcis
 
 Install of Perl prerequisites :
 
@@ -52,7 +57,7 @@ Customize install_base (optional) :
 
 Software installation :
 
-    perl Build.PL --install_base=(see above)
+    perl Build.PL # --install_base=(see above) if using custom
     ./Build
     ./Build test
     ./Build install
