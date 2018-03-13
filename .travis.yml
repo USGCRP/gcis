@@ -7,7 +7,6 @@ addons:
             - raptor2-utils
             - postgresql-9.3
             - postgresql-contrib-9.3
-            - postgresql-dev-9.3
             - libuuid1
             - uuid-dev
             - openssl
