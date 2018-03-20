@@ -76,7 +76,7 @@
         <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-primary' => begin %>YAML<%= end %>
         </p>
 <div class='row'>
-<div class="centered">
+<div class="well centered">
 <h2>Featured USGCRP reports : <br /><br />
 %= include 'h/featured_reports'
 </div>
