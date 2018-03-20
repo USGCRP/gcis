@@ -1,5 +1,12 @@
 body {
 	padding-top: 0 !important;
+
+}
+a {
+        color: #0F9EFB;
+}
+.label-primary {
+      background-color: #096BA3;
 }
 html, body {
 	height: 100%;
@@ -26,7 +33,7 @@ table.squeeze tr th {
     padding-bottom:0px;
 }
 form label.required:after {
-    color: #e32;
+    color: #CA2C3A;
     content: '*';
     display:inline;
 }
@@ -39,7 +46,7 @@ form label.required:after {
 	margin-right: 0;
 }
 div.required_note:before {
-    color: #e32;
+    color: #CA2C3A;
     content: '*';
     display:inline;
 }
@@ -62,7 +69,7 @@ body.front-page p.lead {
      font-size: 22px;
 }
 h3.sub-title {
-	color: #626e7c;
+	color: #3D4044;
 	font-weight: normal;
 }
 .centered {
@@ -289,4 +296,6 @@ table tr td.non_numeric {
     left:40%;
     right:40%;
     white-space:nowrap;
+    background-color: #FF9405;
+    border-color: #FF9405;
 }

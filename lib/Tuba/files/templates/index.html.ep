@@ -24,7 +24,7 @@
       .jumbotron h1 {
         font-size: 50px;
         line-height: 1;
-        color: #013d87;
+        color: #096BA3;
       }
       .lead {
         font-size: 24px;
@@ -41,10 +41,14 @@
       	  margin: 30px 0 30px;
       }
       #svgwrap a text {
-        fill: #0088cc;
+        fill: #0F9EFB;
       }
       h2 {
       	font-size: 20px;
+        color: #10252A;
+      }
+      h3 {
+        color: #10252A;
       }
       .row .front-footer {
       	  text-align: center;
@@ -76,7 +80,7 @@
         <%= link_to "metrics" => { format => 'yaml' } => class => 'label label-primary' => begin %>YAML<%= end %>
         </p>
 <div class='row'>
-<div class="col-md-7 col-md-offset-3 centered">
+<div class="well centered">
 <h2>Featured USGCRP reports : <br /><br />
 %= include 'h/featured_reports'
 </div>
