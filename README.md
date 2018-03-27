@@ -6,13 +6,6 @@ This is the HTML front end and API for the [Global Change Information System](ht
 
 This portion of the GCIS is called Tuba.
 
-Prerequisites :
-
-    - PostgreSQL 9.3
-    - Perl 5.20
-    - uuid-dev package
-    - A recent raptor (<http://librdf.org/raptor>)
-
 ## Docker installation
 
 [See Docker Readme](./README.docker.md)
@@ -23,12 +16,27 @@ Prerequisites :
 
 ## Linux installation
 
+Prerequisites :
+
+    - PostgreSQL 9.3+, 
+      - requires addtional dev, contrib, and server packages
+    - Perl 5.20
+    - uuid dev package
+    - OpenSSL dev package
+    - A recent raptor (<http://librdf.org/raptor>)
+
 On Ubuntu 14.04, they can be installed with:
 
     - sudo apt-get install postgresql-contrib-9.3 libpg-hstore-perl \
       postgresql-9.3 postgresql-server-dev-9.3 libuuid1 uuid-dev make \
       openssl libssl-dev libpq-dev graphviz libxml2 raptor2-utils curl \
       perlbrew
+      
+For CentOS, they can be installed with: 
+ 
+    - sudo yum install openssl-devel uuid-devel make postgresql93-devel \
+      postgresql93-contrib postgresql93-server postgresql93 graphviz \
+      libxml2 raptor2-utils curl perlbrew
 
 Instantiate Perlbrew environment:
 
