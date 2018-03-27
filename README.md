@@ -36,7 +36,7 @@ For CentOS, they can be installed with:
  
     - sudo yum install openssl-devel uuid-devel make postgresql93-devel \
       postgresql93-contrib postgresql93-server postgresql93 graphviz \
-      libxml2 raptor2-utils curl perlbrew
+      libxml2 raptor2-utils curl perlbrew gcc git
 
 Instantiate Perlbrew environment:
 
