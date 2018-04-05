@@ -1164,6 +1164,7 @@ Update the relationships.
 sub update_rel {
     my $c = shift;
     my $object = $c->_this_object;
+    my $json = ($c->stash('object_json') || $c->req->json);
 
     my $pub = $object->get_publication(autocreate => 1);
     $pub->save(audit_user => $c->user, audit_note => $c->audit_note) unless $pub->id;
@@ -1174,8 +1175,15 @@ sub update_rel {
         my $dwhat = decamelize($what);
         my $mwhat = "Tuba::DB::Object::Publication${what}Map::Manager";
 
-        if (my $new = $c->param("new_$dwhat")) {
-            my $kwd = $cwhat->new_from_autocomplete($new);
+        my $new;
+        if ($new = $c->param("new_$dwhat") || $json->{"new_$dwhat"} ) {
+            my $kwd;
+            if ( $new =~ /^\[$dwhat\]/ ) {
+                $kwd = $cwhat->new_from_autocomplete($new);
+            }
+            else {
+                $kwd = $cwhat->new( identifier => $new)->load( speculative => 1);
+            }
             my $add_method = "add_${dwhat}s";
             $pub->$add_method($kwd);
             $pub->save(audit_user => $c->user, audit_note => $c->audit_note) or do {
