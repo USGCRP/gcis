@@ -1,0 +1,27 @@
+% layout 'default';
+
+<center>
+<h2><%= $person->name %></h2>
+</center>
+
+% my $base = $self->req->url->clone;
+
+%= include 'list_formats';
+
+<p>
+% if ( $role ) {
+<%= obj_link($person)%>
+has served as <b><%= obj_link_to $role, 'show' => begin %><%= A(lc $role->label) %><%= end %></b> with
+the following <b><%= pl((stash 'resource'),0+@$objs) %> organizations</b> :</p>
+% } else {
+<%= obj_link($person)%>
+has worked with 
+the following <b><%= pl((stash 'resource'),0+@$objs) %> organizations</b> :</p>
+% }
+
+% while (my @next = splice @$objs, 0, 6) {
+<div class='row'>
+    %= include 'obj_thumbnails', objs => \@next, no_table => 1;
+</div>
+% }
+

@@ -435,6 +435,8 @@ sub startup {
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
     $person->get('/contributions/:role_type_identifier/:resource')->to('person#contributions')->name('person_contributions');
+    $person->get('/organizations')->to('person#organizations')->name('person_organizations');
+    $person->get('/organizations/:role_type_identifier')->to('person#organizations')->name('person_role_organizations');
 
     # Organization
     my $organization = $r->resource('organization');

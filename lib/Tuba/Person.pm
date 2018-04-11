@@ -203,5 +203,46 @@ sub contributions {
         }
     );
 }
+
+sub organizations {
+    my $c = shift;
+    my $identifier = $c->stash('person_identifier');
+    my $role_type_identifier = $c->stash('role_type_identifier');
+    my $roletype;
+    if ( $role_type_identifier ) {
+        $roletype = RoleType->new(identifier => $role_type_identifier)->load(speculative => 1) or return $c->reply->not_found;
+    }
+
+    my $person =
+      Person->new( id => $identifier )
+      ->load( speculative => 1, with => [qw/contributors/] )
+      or return $c->render_not_found_or_redirect;
+
+    # get the orgs
+    my @orgs = ();
+    foreach my $contrib ( @{$person->contributors} ) {
+        if ( $role_type_identifier &&
+             $contrib->role_type_identifier ne $role_type_identifier ) {
+            next;
+        }
+        my $org =
+            Organization->new( identifier => $contrib->organization_identifier )
+            ->load( speculative => 1 );
+        push @orgs, $org;
+    }
+
+    $c->stash(role => $roletype );
+    $c->stash(objs => \@orgs);
+    $c->respond_to(
+        json => sub { shift->render(json => [ map $_->as_tree, @orgs ] ) },
+        yaml => sub { shift->render_yaml([ map $_->as_tree, @orgs ]) },
+        csv => sub { shift->render_csv([ map $_->as_tree, @orgs ]) },
+        any => sub {
+            shift->render,
+        }
+    );
+}
+
+
 1;
 
