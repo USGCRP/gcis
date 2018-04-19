@@ -1234,6 +1234,7 @@ sub normalize_form_parameter {
         my $org = Organization->new_from_autocomplete($value);
         return $org->identifier if $org;
     }
+    $value =~ s/^\s+|\s+$//g; #trim whitespaces from beginning and end
     return $value;
 }
 
