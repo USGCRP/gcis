@@ -17,12 +17,14 @@ $t->ua->max_redirects(0);
 my $event_id = $t->ua->on(start => sub { pop->req->headers->header("Accept" => "application/json")});
 
 # Add a person
+my $orcid1 = "0000-0002-1825-0097";
 $t->post_ok(
   "/person" => json => {
     url         => 'http://example.com/john_smith',
     last_name   => "Smith",
     middle_name => "T",
     first_name  => "John",
+    orcid       => $orcid1,
   }
 )->status_is(302);
 my $uri = $t->tx->res->headers->location;
@@ -31,7 +33,12 @@ my ($id) = $uri =~ qr[/person/(\d+)$];
 $t->get_ok("/person/$id")
    ->status_is(200)
    ->json_is("/first_name" => "John")
+   ->json_is("/orcid" => "$orcid1")
    ->json_is("/last_name" => "Smith");
+$t->get_ok("/person/$orcid1")
+   ->status_is(302);
+my $uri = $t->tx->res->headers->location;
+like $uri, qr[/person/$id1], 'orcid redirects to person';
 
 # Add another one just like that one.
 $t->post_ok(
@@ -66,6 +73,36 @@ $t->get_ok("/person/$id3")
    ->status_is(200)
    ->json_is("/first_name" => "J")
    ->json_is("/last_name" => "Smyth");
+
+# A person with a x orcid
+my $orcid4_lc = "0000-0002-1694-233x";
+my $orcid4_uc = uc $orcid4_lc;
+$t->post_ok(
+  "/person" => json => {
+    url         => 'http://example.com/j_smyth',
+    last_name   => "Smyth",
+    middle_name => "",
+    first_name  => "Jay",
+    orcid       => $orcid4_lc,
+  }
+)->status_is(302);
+my $uri = $t->tx->res->headers->location;
+like $uri, qr[/person/(\d+)$], "made a GCID";
+my ($id4) = $uri =~ qr[/person/(\d+)$];
+$t->get_ok("/person/$id4")
+   ->status_is(200)
+   ->json_is("/first_name" => "Jay")
+   ->json_is("/last_name" => "Smyth")
+   ->json_is("/orcid" => "$orcid4_uc");
+$t->get_ok("/person/$orcid4_uc")
+   ->status_is(302);
+my $uri = $t->tx->res->headers->location;
+like $uri, qr[/person/$id4], 'orcid redirects to person';
+$t->get_ok("/person/$orcid4_lc")
+   ->status_is(302);
+my $uri = $t->tx->res->headers->location;
+like $uri, qr[/person/$id4], 'misformatted orcid redirects to person';
+
 
 $t->ua->max_redirects(1);
 
@@ -112,7 +149,7 @@ $t->delete_ok($person_uri)->status_is(200);
 
 $t->ua->max_redirects(0);
 
-# What, these are all the same person?  Okay merge them.
+# What, some of these are all the same person?  Okay merge them.
 # Delete person2, merging into person1
 $t->ua->unsubscribe($event_id); # via form
 $t->post_ok("/person/$id2" => form => {

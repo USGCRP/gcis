@@ -431,7 +431,7 @@ sub startup {
 
     # Person.
     my $person = $r->resource(person => { restrict_identifier => qr/\d+/ } );
-    $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{4})])
+    $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{3}[0-9Xx])])
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
     $person->get('/contributions/:role_type_identifier/:resource')->to('person#contributions')->name('person_contributions');

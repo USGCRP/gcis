@@ -27,6 +27,22 @@ sub list {
     $c->SUPER::list(@_);
 }
 
+sub create {
+    my $c = shift;
+
+    my $orcid;
+    if ( $orcid = $c->param('orcid') ) {
+        $c->stash(computed_params => { orcid => uc $orcid });
+    }
+    elsif ( $orcid = $c->req->json->{'orcid'} ) {
+        $c->req->json->{'orcid'} = uc $orcid;
+    }
+
+    $c->SUPER::create(@_);
+}
+
+
+
 sub show {
     my $c = shift;
     my $identifier = $c->stash('person_identifier');
@@ -78,7 +94,8 @@ sub redirect_by_name {
 
 sub redirect_by_orcid {
     my $c = shift;
-    my $person = Person->new(orcid => $c->stash('orcid'))->load(speculative => 1) or return $c->reply->not_found;
+    my $orcid = uc $c->stash('orcid');
+    my $person = Person->new(orcid => $orcid)->load(speculative => 1) or return $c->reply->not_found;
     return $c->redirect_to('show_person', { person_identifier => $person->id } );
 }
 
