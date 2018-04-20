@@ -118,11 +118,34 @@ $t->get_ok("/figure.json")->json_is(
 $t->post_ok(
   '/gcmd_keyword', json =>
     {
+      identifier => "457883c4-b30c-4d26-bed8-6c2887ebbc90",
+      label      => "OCEAN OPTICS",
+      definition => "Scientific field of study of light in the oceans. Variables include measurable characteristics of underwater light."
+    }
+);
+
+# Create a keyword.
+$t->post_ok(
+  '/gcmd_keyword', json =>
+    {
       identifier => "001f18d3-7e61-430b-9883-1960c6256fe5",
       label      => "OPTICAL DEPTH",
+      parent_identifier => "457883c4-b30c-4d26-bed8-6c2887ebbc90",
       definition => "The degree to which the ocean absorbs light, assuming vertical separation between light source and light receiver. "
     }
 );
+
+# List keywords
+$t->get_ok("/gcmd_keyword.json")
+  ->status_is(200)
+  ->json_is( "/1/identifier", "457883c4-b30c-4d26-bed8-6c2887ebbc90" )
+  ->json_is( "/0/identifier", "001f18d3-7e61-430b-9883-1960c6256fe5" );
+
+# Get the children of a keyword
+$t->get_ok("/gcmd_keyword/457883c4-b30c-4d26-bed8-6c2887ebbc90/children.json")
+  ->status_is(200)
+  ->json_is( "/0/identifier", "001f18d3-7e61-430b-9883-1960c6256fe5" )
+  ->json_is( "/0/parent_identifier", "457883c4-b30c-4d26-bed8-6c2887ebbc90" );
 
 # Assign it to the figure.
 $t->post_ok(
