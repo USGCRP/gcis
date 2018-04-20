@@ -254,14 +254,34 @@ sub watch {
         $c->stash(change_log => $change_log);
     } else {
         my $cutoff = $c->param('cutoff') || '1 weeks';
-        $c->param(cutoff => $cutoff);
-        $cutoff = $c->dbc->dbh->quote($cutoff);
-        my $result = $c->dbc->select(
-            [ 'audit_username', 'table_name', 'count(1) as num' ],
-            table => "audit.logged_actions",
-            where => "action_tstamp_tx > (now() - interval $cutoff)",
-            append => "group by 1,2 order by 1,2"
-        );
+        my $start = $c->param('start');
+        my $end = $c->param('end');
+
+        my $result;
+        if ( $start && $end ) {
+            $c->param(start => $start);
+            $c->param(end => $end);
+            $start = $c->dbc->dbh->quote($start);
+            $end = $c->dbc->dbh->quote($end);
+            logger->warn("In start & end");
+            $result = $c->dbc->select(
+                [ 'audit_username', 'table_name', 'count(1) as num' ],
+                table => "audit.logged_actions",
+                where => "action_tstamp_tx BETWEEN $start AND $end",
+                append => "group by 1,2 order by 1,2"
+            );
+        }
+        else {
+            $c->param(cutoff => $cutoff);
+            $cutoff = $c->dbc->dbh->quote($cutoff);
+            logger->warn("In cutoff");
+            $result = $c->dbc->select(
+                [ 'audit_username', 'table_name', 'count(1) as num' ],
+                table => "audit.logged_actions",
+                where => "action_tstamp_tx > (now() - interval $cutoff)",
+                append => "group by 1,2 order by 1,2"
+            );
+        }
         my $hashes = $result->fetch_hash_all;
         my $grid;
         do { $grid->{$_->{audit_username}}{$_->{table_name}} = $_->{num} } for @$hashes;

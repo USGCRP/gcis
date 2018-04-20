@@ -11,8 +11,8 @@
 <br>
 %= include 'list_formats', no_csv => 1;
 <div>
-%= form_for current_route() => class => 'form form-inline summary' => begin
-<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+%= form_for current_route() => class => 'form summary' => begin
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
 changes since
 </div>
 <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
@@ -20,8 +20,22 @@ changes since
 </div>
 <div class="col-lg-1 col-md-1 col-sm-1">
 ago
-
 </div>
+<br/><br/>
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+or start
+</div>
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+<%= date_field 'start', class => 'form-control'; %>
+</div>
+<div class="col-lg-1 col-md-1 col-sm-1 col-xs-12">
+and end
+</div>
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+<%= date_field 'end', class => 'form-control'; %>
+</div>
+<br /><br />
+<table class='table table-responsive table-condensed table-bordered'>
 <div class="col-lg-1 col-md-1 col-sm-1">
 %= submit_button 'show', class => 'btn btn-default';
 </div>
