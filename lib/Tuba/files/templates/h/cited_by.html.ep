@@ -38,39 +38,32 @@
     %     }
     % }
 % }
-<table class='table-condensed'>
+<ul>
 % for my $report_id ( keys %publication_references ) {
 % my $pub_ref = $publication_references{$report_id};
-<tr>
-<td>
-  The <%= " " . $pub_ref->{pub_type} . " " =%> 
-</td>
-<td></td>
-<td>
+<li>
   <%= link_to 'show_publication', { publication_identifier => $pub_ref->{publication_identifier} }, alt => $pub_ref->{title}, title => $pub_ref->{title}, begin %><%= $pub_ref->{title} . " " =%><%= end =%>
   (<%= link_to 'show_reference' => { reference_identifier => $pub_ref->{reference_identifier} } => begin %>reference<%= end =%>)
-</td>
-</tr>
+</li>
 % if ( exists $sub_publication_references{$report_id} ) {
     % my @sub_types = ( 'chapter', 'finding', 'figure', 'table', 'dataset', 'image' );
-    % for my $sub_pub_type ( @sub_types ) { #keys %{$sub_publication_references{$report_id}} ) {
+    <ul>
+    % for my $sub_pub_type ( @sub_types ) {
+    % #keys %{$sub_publication_references{$report_id} } ) {
         % next unless exists $sub_publication_references{$report_id}->{$sub_pub_type};
         % # sort the array
         % my @sub_pubs = sort { $a->{text} cmp $b->{text} } @{$sub_publication_references{$report_id}->{$sub_pub_type}};
         % for my $sub_pub ( @sub_pubs ) {
-            <tr>
-            <td></td>
-            <td> <%= " " . $sub_pub_type =%>: </td>
-            <td>
+            <li>
               <%= link_to 'show_publication', { publication_identifier => $sub_pub->{publication_identifier} }, alt => $sub_pub->{title}, title => $sub_pub->{title}, begin %><%= $sub_pub->{text} . "      " =%><%= end =%>
               (<%= link_to 'show_reference' => { reference_identifier => $sub_pub->{reference_identifier} } => begin %>reference<%= end =%>)
-            </td>
-            </tr>
+            </li>
         % }
     % }
+</ul> 
 % }
 % }
-</table>
 </p>
 <hr>
 % }
+</ul>

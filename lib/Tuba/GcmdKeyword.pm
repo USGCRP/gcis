@@ -10,7 +10,7 @@ use Tuba::DB::Objects qw/-nicknames/;
 
 sub list {
     my $c = shift;
-    $c->stash(objects => GcmdKeywords->get_objects(with_objects => 'publications', page => $c->page));
+    $c->stash(objects => GcmdKeywords->get_objects(with_objects => 'publications', page => $c->page, per_page => $c->per_page));
     my $count = GcmdKeywords->get_objects_count;
     $c->stash(extra_cols => [qw/label/]);
     $c->set_pages($count);
@@ -22,6 +22,19 @@ sub show {
     my $kw = $c->_this_object or $c->reply->not_found;
     $c->stash(object => $kw);
     $c->SUPER::show(@_);
+}
+
+sub children {
+    my $c = shift;
+    my $gcmd_keyword = $c->stash('gcmd_keyword');
+
+    my $obj = GcmdKeyword->new(
+      identifier        => $gcmd_keyword,
+      )->load(speculative => 1) or return $c->reply->not_found;
+    my $keywords = $obj->gcmd_keywords;
+    $c->stash(objects => $keywords);
+    $c->stash(extra_cols => [qw/label/]);
+    $c->SUPER::list();
 }
 
 sub _guess_object_class {

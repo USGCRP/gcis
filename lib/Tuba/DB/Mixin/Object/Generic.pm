@@ -45,5 +45,37 @@ sub type {
     return shift->attrs->{reftype};
 }
 
+sub set_attr {
+    my $self = shift;
+    my $args = shift;
+    my $new_attrs = $args->{new_attrs};
+    my $audit_user = $args->{audit_user};
+    my $audit_note = $args->{audit_note};
+    my $attr = $self->attrs;
+    foreach my $key ( keys %$new_attrs ) {
+        $attr->{ $key } = $new_attrs->{$key};
+    }
+    $self->attrs( $attr );
+    $self->save(audit_user => $audit_user, audit_note => $audit_note);
+    return 1;
+}
+
+sub delete_attr {
+    my $self = shift;
+    my $args = shift;
+    my $del_attr = $args->{del_attr};
+    my $audit_user = $args->{audit_user};
+    my $audit_note = $args->{audit_note};
+
+    my $attr = $self->attrs;
+    delete $attr->{ $del_attr };
+    $self->attrs( $attr );
+    $self->save(audit_user => $audit_user, audit_note => $audit_note);
+
+    return 1;
+}
+
+
+
 1;
 

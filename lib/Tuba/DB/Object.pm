@@ -473,17 +473,27 @@ sub region_count {
 
 sub as_autocomplete_str {
     my $obj = shift;
-    my $elide = shift || 80;
+    my $elide = shift;
     my $table = shift || $obj->meta->table;
-    return join ' ', "[".$table."]", ( map "{".$_."}", $obj->pk_values ), elide_str($obj->stringify,$elide);
+    if ( $elide ) {
+        return join ' ', "[".$table."]", ( map "{".$_."}", $obj->pk_values ), elide_str($obj->stringify,$elide);
+    }
+    else {
+        return join ' ', "[".$table."]", ( map "{".$_."}", $obj->pk_values ), $obj->stringify;
+    }
 }
 
 sub as_gcid_str {
     my $obj = shift;
     my $c = shift;
-    my $elide = shift || 80;
+    my $elide = shift;
     my $table = shift || $obj->meta->table;
-    return sprintf('%s : %s',$obj->uri($c), elide_str($obj->stringify,$elide));
+    if ( $elide ) {
+        return sprintf('%s : %s',$obj->uri($c), elide_str($obj->stringify,$elide));
+    }
+    else {
+        return sprintf('%s : %s',$obj->uri($c), $obj->stringify);
+    }
 }
 
 sub new_from_flat {

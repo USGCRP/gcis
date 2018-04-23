@@ -1,13 +1,53 @@
 % layout 'default';
 
+<style>
+.help {
+    display:  inline-block;
+    position: relative;
+}
+
+.info-box {
+    width:    400px;
+    position: absolute;
+    right:    -600px;
+    background-color: #F8F8F8;
+}
+</style>
+<script>
+jQuery(document).ready(function($){
+  $('.help-button').on('click', function(e){
+    e.preventDefault();
+    $(this).siblings('.info-box').show();
+  });
+
+  $('.close-button').on('click', function(e){
+    e.preventDefault();
+    $(this).parents('.info-box').hide();
+  });
+});
+</script>
 %= form_for 'search' => class => "form form-inline well" => begin
 <label>Search for </label>
 %= text_field 'q', class => "form-control"
 <label> in</label>
-%= select_field 'type' => [ 'all', sort ('organization','person', db_identifiers('publication_type'))];
+%= select_field 'type' => [ 'all', sort ('organization','person', db_identifiers('publication_type'), 'reference')];
 and show
 %= select_field 'format' => [ 'detailed', 'brief'];
 match results.
+<div class="help">
+    <div class="info-box" style="display: none;">
+         <a href="#" class="close-button">&times;</a>
+         <b>Search Information</b>
+         <ul>
+           <li>Regular searches look for matching identifiers and other key fields.</li>
+           <li>Reference Search</li>
+           <ul>
+             <li>Searching '"Year:2002", "Author:NRC" Word foo' will attempt to find a Reference with exact attribute Year 2002, exact attribute Author NRC, and Title like 'Word foo'.</li>
+             <li> Replacing the ':' with '~' in the previous query searches for like instead of exact. ("Year~200" searches Year ilike %200%)</li>
+           </ul>
+    </div>
+    <a class='help-button' href='#' title="Click to know more">[?]</a>
+</div>
 %= submit_button 'search', class => "btn btn-search btn-primary"
 %= end
 

@@ -50,6 +50,7 @@
             "LWP::Protocol::https" : "6.07",
             "LWP::UserAgent" : "0",
             "Lingua::EN::Inflect" : "0",
+            "List::MoreUtils" : "0.427",
             "Mojolicious" : "6.08",
             "Mojolicious::Plugin::InstallablePaths" : "0",
             "Mojolicious::Plugin::Mail" : "1.5",
@@ -81,7 +82,11 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
+<<<<<<< HEAD
          "version" : "v1.51.1"
+=======
+         "version" : "v1.52.2"
+>>>>>>> 95896d8a4d1a4c60f23ec725acd75e60e97d54be
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -367,5 +372,5 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v1.51.1"
+   "version" : "v1.52.2"
 }

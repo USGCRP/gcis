@@ -128,7 +128,7 @@
                 </div>
                 <div  class='col-lg-2 col-md-2 col-sm-2 text-left'>
                     <a href="#create_organization_alternate_name" role="button" class="btn btn-default" data-toggle="modal">Create Alternate Name</a>
-                    %= include 'modal', url => url_for('create_form_organization_alternate_name'), id => 'create_organization_alternate_name'
+                    %= include 'modal', url => url_for('create_form_organization_alternate_name')->query(organization_identifier => $object->identifier), id => 'create_organization_alternate_name'
                 </div>
             </div>
 

@@ -72,7 +72,7 @@ use Path::Class qw/file/;
 use Data::Rmap qw/rmap_all/;
 use strict;
 
-our $VERSION = '1.51.1';
+our $VERSION = '1.52.2';
 our @supported_formats = qw/json yaml ttl html nt rdfxml dot rdfjson jsontriples svg txt thtml csv/;
 
 sub startup {
@@ -431,7 +431,7 @@ sub startup {
 
     # Person.
     my $person = $r->resource(person => { restrict_identifier => qr/\d+/ } );
-    $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{4})])
+    $r->get('/person/:orcid' => [orcid => qr(\d{4}-\d{4}-\d{4}-\d{3}[0-9Xx])])
       ->to('person#redirect_by_orcid');
     $r->get('/person/:name')->to('person#redirect_by_name');
     $person->get('/contributions/:role_type_identifier/:resource')->to('person#contributions')->name('person_contributions');
@@ -447,6 +447,7 @@ sub startup {
     $r->resource('organization_alternate_name');
 
     $r->resource('gcmd_keyword');
+    $r->get('/gcmd_keyword/:gcmd_keyword/children')->to('gcmd_keyword#children');
     $r->resource('region');
     $report->get('/region')->to('region#list')->name('list_report_regions');
     $r->resource('dataset');

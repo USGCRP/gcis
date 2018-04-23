@@ -13,15 +13,24 @@ sub keyword {
     my $orm = $c->orm;
     my @tables = keys %$orm;
     my $type = $c->param('type');
+    my $count = $c->param('count') || -1;
     @tables = ( $type ) if $type && exists($orm->{$type});
     my @results;
     my $result_count_text;
     my $hit_max = 0;
+    my $limit;
+    if ( @tables > 1 ) {
+        $limit = 10;
+    } elsif ( $count > 0 && $count < 50 ) {
+        $limit = $count;
+    } else {
+        $limit = 50;
+    }
     for my $table (@tables) {
         next if $table eq 'publication';
         my $manager = $orm->{$table}->{mng};
         next unless $manager->has_urls($c);
-        my @these = $manager->dbgrep(query_string => $q, user => $c->user, limit => (@tables > 1 ? 10 : 50));
+        my @these = $manager->dbgrep(query_string => $q, user => $c->user, limit => $limit );
         $hit_max = 1 if @these==10 && @tables > 1;
         push @results, @these;
     }
@@ -51,7 +60,7 @@ sub autocomplete {
     return $c->render(json => []) unless $q && length($q) >= 1;
     my $max = $c->param('items') || 20;
     my $want = $c->param('type') || 'all';  # all == all publications, full = orgs, people too
-    my $elide = $c->param('elide') || 80;
+    my $elide = $c->param('elide');
     my $gcids = $c->param('gcids');
     my $restrict = $c->param('restrict');
 

@@ -84,6 +84,12 @@
                            <input name="ie" type="hidden" value="UTF-8">
                            <input name="q" class="form-control" placeholder="Search" type="search">
                        </form>
+                    % } elsif (config('search_gov_site_search')) {
+                      <form accept-charset="UTF-8" action="https://search.usa.gov/search" id="search_form" class="form navbar-form" method="get" role="search">
+                        <input name="utf8" type="hidden" value="&#x2713;" />
+                        <input id="affiliate" name="affiliate" type="hidden" value="gcis" />
+                        <input autocomplete="off" class="usagov-search-autocomplete form-control" id="query" name="query" type="search" placeholder="Search" />
+                      </form>
                     <% } else { %>
                     <%= form_for 'search' => class => "form navbar-form" => begin %><%= text_field 'q', class => 'input-small form-control search-query', placeholder => "search" %><%= end %>
                     <% } %>

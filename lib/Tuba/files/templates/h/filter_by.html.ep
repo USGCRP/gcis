@@ -26,8 +26,11 @@ Relationships : <%= join ',', grep { $_ !~ /^_/} map $_->name, @{ $meta->relatio
 % $base_url->path->parts->[-1] =~ s/.html$//;
 <span>Filter Indicators:</span>
 <%= link_to "$base_url"."?current=1"=> class => 'label label-info' => begin %>Current<%= end %> \
-<%= link_to "$base_url"."?publication_year=2015"=> class => 'label label-info' => begin %>2015<%= end %> \
-<%= link_to "$base_url"."?publication_year=2016"=> class => 'label label-info' => begin %>2016<%= end %> \
+
+% for my $year (@$pub_years) {
+<%= link_to "$base_url"."?publication_year=$year"=> class => 'label label-info' => begin %><%= $year %><%= end %> \
+% }
+
 <%= link_to "$base_url" => class => 'label label-info' => begin %>All<%= end %> \
 </div>
 

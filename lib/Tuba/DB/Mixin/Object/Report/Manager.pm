@@ -34,5 +34,29 @@ sub dbgrep {
     return @$found;
 }
 
+sub indicator_publication_years {
+    my $self = shift;
+    my %a = @_;
+
+    my $user = $a{user};
+
+    my %query;
+    my $found= $self->get_objects(
+        select => [ 'publication_year' ],
+        query => [
+            report_type_identifier => 'indicator',
+            _public => 't',
+        ],
+        distinct => 1,
+    );
+
+    my $years;
+    foreach my $object ( @$found ) {
+        push @$years, $object->publication_year;
+    }
+
+    return $years;
+}
+
 1;
 
