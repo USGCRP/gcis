@@ -622,6 +622,7 @@ db/patches/2360_organization_alt_name_update_cascade.sql
 db/patches/2370_org_type_public_private.sql
 db/patches/2380_deprecate_journal_publisher.sql
 db/patches/2390_article_doi_case_insensitive.sql
+db/patches/2400_gcmd_keywords_audit.sql
 docker-compose.yml
 Dockerfile
 eg/check_dois.pl
