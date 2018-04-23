@@ -31,6 +31,9 @@ Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/key
  Referenced by:
      TABLE "gcmd_keyword" CONSTRAINT "fk_parent" FOREIGN KEY (parent_identifier) REFERENCES gcmd_keyword(identifier) DEFERRABLE INITIALLY DEFERRED
      TABLE "publication_gcmd_keyword_map" CONSTRAINT "publication_gcmd_keyword_map_gcmd_keyword_identifier_fkey" FOREIGN KEY (gcmd_keyword_identifier) REFERENCES gcmd_keyword(identifier) ON UPDATE CASCADE ON DELETE CASCADE
+ Triggers:
+     audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON gcmd_keyword FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
+     audit_trigger_stm AFTER TRUNCATE ON gcmd_keyword FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
  Has OIDs: no
  
 
