@@ -141,6 +141,30 @@ sub render_yaml {
     $c->rendered;
 }
 
+sub render_obj_csv {
+    my $c = shift;
+    my $table = shift;
+    my $array = shift;
+
+    # Only arrays support csv type
+    if ( $table ne "array" ) {
+        $c->redirect_with_error('', 'CSV type unsupported for this object');
+    }
+
+    my $out = "";
+    my $csv = Text::CSV_XS->new({ auto_diag => 1 });
+    for my $row (@{ $array->{rows} }) {
+        $csv->combine(@$row) or $c->reply->error($csv->error);
+        $out .= $csv->string."\n";
+    }
+    $c->res->headers->content_type('text/csv');
+    my $filename = "gcis-array-" . $array->identifier;
+    $filename .= ".csv";
+    $c->res->headers->content_disposition(qq[attachment;filename="$filename"]);
+    $c->render(text => $out);
+}
+
+
 sub render_csv {
     my $c = shift;
     my $thing = shift;
@@ -276,6 +300,8 @@ sub show {
         html  => sub { my $c = shift;
             $c->param('long') and $c->render_maybe("$table/long/object") and return;
             $c->render_maybe("$table/object") or $c->render("object") },
+        csv   => sub { my $c = shift;
+            $c->render_obj_csv($table, $object); },
         nt    => sub { my $c = shift;
             $c->res->headers->content_type("text/plain");
             $c->render_partial_ttl_as($table,'ntriples'); },
