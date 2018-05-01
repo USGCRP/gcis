@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: v1.53.0
+    version: v1.54.0
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -256,4 +256,4 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: v1.53.0
+version: v1.54.0
