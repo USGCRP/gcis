@@ -979,10 +979,11 @@ sub put_files {
     $file->filename($c->stash("filename") ||  'asset');
     my $obj = $c->_this_object or return $c->reply->not_found;
     my $pub = $obj->get_publication(autocreate => 1);
-    $pub->upload_file(c => $c, upload => $file) or do {
+    my $tfile = $pub->upload_file(c => $c, upload => $file) or do {
         return $c->render(status => 500, text => $pub->error);
     };
-    $c->render(text => "ok");
+    my $file_identifier = $tfile->identifier;
+    $c->render(status => 200, text => $file_identifier);
 }
 
 =head2 update_contributors
