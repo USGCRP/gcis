@@ -982,8 +982,7 @@ sub put_files {
     my $tfile = $pub->upload_file(c => $c, upload => $file) or do {
         return $c->render(status => 500, text => $pub->error);
     };
-    my $file_identifier = $tfile->identifier;
-    $c->render(status => 200, text => $file_identifier);
+    $c->render(status => 200, json => { identifier => $tfile->identifier });
 }
 
 =head2 update_contributors
