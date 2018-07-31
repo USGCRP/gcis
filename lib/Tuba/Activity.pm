@@ -54,8 +54,30 @@ sub normalize_form_parameter {
 
 sub _default_order {
     my $c = shift;
-    return ( $c->SUPER::_default_order(), qw/methodology_publication_id methodology_contributor_id/ );
-
+    return ( qw/
+        identifier
+        methodology
+        visualization_methodology
+        methodology_citation
+        methodology_contact
+        activity_duration
+        source_access_date
+        source_modifications
+        modified_source_location
+        interim_artifacts
+        output_artifacts
+        computing_environment
+        software
+        visualization_software
+        start_time
+        end_time
+        database_variables
+        data_usage
+        notes
+        methodology_publication_id
+        methodology_contributor_id/
+    );
+    # TODO spatial_extent
 }
 
 sub update_rel_form {
