@@ -39,11 +39,11 @@
         <h5>Processes</h5>
 
         % if ($activity->source_modifications) {
-        <p class='linebreaks'><%= $activity->source_modifications // '' %></p>
+        <p class='linebreaks'>How the source was modified: <%= $activity->source_modifications // '' %></p>
         % }
 
         % if ($activity->modified_source_location) {
-        <p> Modified Source Location: $activity->modified_source_location </p>
+        <p> Modified Source Location: <%= $activity->modified_source_location %></p>
         % }
 
         % if ($activity->activity_duration) {

@@ -7,6 +7,7 @@ Tuba::Activity : Controller class for books
 package Tuba::Activity;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use JSON::XS;
 
 sub list {
     my $c = shift;
@@ -17,6 +18,20 @@ sub show {
     my $c = shift;
     $c->stash('object', $c->_this_object);
     $c->SUPER::show(@_);
+}
+
+sub create {
+    my $c = shift;
+    my $valid = 1; # TODO _check_valid_geojson($c) if $c->param('spatial_extent'); # or JSON TODO
+    return $c->redirect_to(Activity->uri($c,{tab => 'create_form'})) unless $valid;
+    $c->SUPER::create(@_);
+}
+
+sub update {
+    my $c = shift;
+    my $valid = 1; # TODO _check_valid_geojson($c) if $c->param('spatial_extent'); # or JSON TODO
+    return $c->redirect_to(Activity->uri($c,{tab => 'create_form'})) unless $valid;
+    $c->SUPER::update(@_);
 }
 
 sub make_tree_for_show {
@@ -129,6 +144,46 @@ sub update_rel {
             return shift->redirect_without_error('update_rel_form');
         },
     );
+}
+
+# TODO finalize the feedback based on JSON vs Param.
+# maybe do distinct wrappers for JSON/param?
+sub _check_valid_geojson {
+    my $c = shift;
+    my $valid_geojson_types = {
+        Point              => 1,
+        MultiPoint         => 1,
+        LineString         => 1,
+        MultiLineString    => 1,
+        Polygon            => 1,
+        MultiPolygon       => 1,
+        GeometryCollection => 1,
+    };
+    my $spatial_param = $c->param('spatial_extent'); # or JSON TODO
+    # parse valid JSON
+    my $error;
+    my $geojson = eval { JSON::XS->new->decode($c->param('spatial_extent')); };
+    my $ary = eval { JSON::XS->new->decode($content); };
+    if ($@ || (ref $ary ne 'ARRAY')) {
+        $c->flash(error => "could not parse json :".($@ || ref $ary));
+        return -1;
+    }
+    # check the field type exists
+    if ( !$error && $geojson->{'type'} ) {
+        # check the type value is valid
+        unless ( $valid_geojson_types->{ $geojson->{'type'} } ) {
+            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', or 'GeometryCollection'";
+        }
+    }
+    else {
+        $error = "Invalid geoJSON: missing type field";
+    }
+
+    if ( $error ) {
+        $c->flash(error => $error);
+        return;
+    }
+    return 1;
 }
 
 1;
