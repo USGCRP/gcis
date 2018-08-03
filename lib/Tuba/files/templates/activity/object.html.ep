@@ -18,7 +18,8 @@
     %      $activity->visualization_methodology ||
     %      $activity->methodology_citation ||
     %      $activity->methodology_contact ||
-    %      $activity->database_variables #TODO $activity->spatial_extent
+    %      $activity->database_variables ||
+    %      $activity->spatial_extent
     %   ) {
         <h5> Methodology: </h5>
         <p class='linebreaks'><%= $activity->methodology // '' %></p>
@@ -84,15 +85,18 @@
 
         <h5>Data Bounding </h5>
         % if ($object->start_time) {
-        <p>The input object was time bounded starting from <%= $object->start_time->strftime('%B %d, %Y (%H:%M %p)') %>
+        <p>The input object was time bounded starting from <%= $object->start_time->strftime('%B %d, %Y (%H:%M %p)') %></p>
         % }
         % if ($object->end_time) {
-        <p>The input object was time bounded ending at <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %>
+        <p>The input object was time bounded ending at <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %></p>
         % }
         % if ($object->database_variables) {
-        <p>The input object was bounded by the database variables <%= $object->database_variables %>
+        <p>The input object was bounded by the database variables <%= $object->database_variables %></p>
         % }
-        %# TODO spatial extent
+        % if (my $box = $object->bounding_box) {
+        <p>The input object was bounded spatially:</p>
+            %= include 'h/leaflet', lon_max => $box->[0], lat_min => $box->[1], lon_min => $box->[2], lat_max => $box->[3],
+        % }
 
 
     % } else {

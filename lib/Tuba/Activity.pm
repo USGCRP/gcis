@@ -72,12 +72,12 @@ sub _default_order {
         start_time
         end_time
         database_variables
+        spatial_extent
         data_usage
         notes
         methodology_publication_id
         methodology_contributor_id/
     );
-    # TODO spatial_extent
 }
 
 sub update_rel_form {
