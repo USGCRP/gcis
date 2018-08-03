@@ -290,7 +290,13 @@ $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
 
 # Modern Activity
 
-# todo - spatial extent
+my $spatial_extent = do {
+    local $/ = undef;
+    open my $fh, "<", "./t/va_spatial_extent.geojson"
+        or die "could not open va_spatial_extent.geojson: $!";
+    <$fh>;
+};
+
 my $activity = {
     identifier => "temperature_in_virginia_in_2000",
     computing_environment => "Ubuntu Trusty, R 3.5.1",
@@ -309,7 +315,7 @@ my $activity = {
     database_variables => "Temperature",
     start_time => '2000-01-01',
     end_time => '2000-01-01',
-    # spatial_extent => geoJSON of VA?
+    spatial_extent => $spatial_extent,
 };
 
 $t->post_ok( "/activity" => json => $activity )->status_is(200);
