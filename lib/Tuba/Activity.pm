@@ -163,7 +163,7 @@ sub _check_valid_geojson {
     # parse valid JSON
     my $error;
     my $geojson = eval { JSON::XS->new->decode($c->param('spatial_extent')); };
-    my $ary = eval { JSON::XS->new->decode($content); };
+    my $ary = eval { JSON::XS->new->decode($geojson); };
     if ($@ || (ref $ary ne 'ARRAY')) {
         $c->flash(error => "could not parse json :".($@ || ref $ary));
         return -1;

@@ -95,7 +95,7 @@
         % }
         % if (my $box = $object->bounding_box) {
         <p>The input object was bounded spatially:</p>
-            %= include 'h/leaflet', lon_max => $box->[0], lat_min => $box->[1], lon_min => $box->[2], lat_max => $box->[3],
+            %= include 'h/leaflet', lon_min => $box->[0], lat_min => $box->[1], lon_max => $box->[2], lat_max => $box->[3],
         % }
 
 
