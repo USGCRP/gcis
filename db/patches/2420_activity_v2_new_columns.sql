@@ -15,7 +15,7 @@ COMMENT ON COLUMN activity.activity_duration
 COMMENT ON COLUMN activity.source_access_date
   IS 'The date the parent resource was accessed.';
 COMMENT ON COLUMN activity.interim_artifacts
-  IS 'The files created along the way to create the final product.';
+  IS 'Deprecated outside of NCO assessment activities. The names of files created along the way to create the final product.';
 COMMENT ON COLUMN activity.source_modifications
   IS 'A written description of modifications done to the source object.';
 COMMENT ON COLUMN activity.modified_source_location
