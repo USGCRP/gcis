@@ -3,11 +3,6 @@
 %#
 <<%= current_resource %>>
    dcterms:identifier "<%= $activity->identifier %>";
-   dcterms:description "<%= no_tbibs($activity->data_usage) %>"^^xsd:string;
-
-## The activity began and ended at the following times
-   prov:startedAtTime "<%= $activity->start_time %>"^^xsd:dateTime;
-   prov:endedAtTime "<%= $activity->end_time %>"^^xsd:dateTime;
 
 ## Duration of the activity
    dcterms:extent [ rdf:value "<%= human_duration ($activity->duration) %>"^^xsd:string ] ;

@@ -136,6 +136,37 @@ my $activity = {
 };
 
 $t->post_ok( "/activity" => json => $activity )->status_is(200);
+
+my $spatial_extent = do {
+    local $/ = undef;
+    open my $fh, "<", "./t/va_spatial_extent.geojson"
+        or die "could not open va_spatial_extent.geojson: $!";
+    <$fh>;
+};
+
+my $new_activity = {
+    identifier => "temperature_in_virginia_in_2000",
+    computing_environment => "Ubuntu Trusty, R 3.5.1",
+    software => "my-r-script.r",
+    visualization_software => "that-one-vis-program v1.0.3",
+    activity_duration => '1 hours',
+    source_access_date => '2018-01-01',
+    interim_artifacts => 'va_data_subset.csv',
+    output_artifacts => "temperature_in_va_2000.png",
+    source_modifications => "Subset to the date 2000-01-01 and the region of Virginia",
+    modified_source_location => "github.com/example_scientist/usgcrp_work/va_data_subset.csv",
+    methodology => "subset the US dataset via the temporal and spatial restrictions\nrun the r script on it\nput it into that one vis program\noutput the graph",
+    visualization_methodology => "Used the viz program and did art things",
+    methodology_citation => "Author, A et al This is a citation to a standard documented methodology",
+    methodology_contact => "Author, A",
+    database_variables => "Temperature",
+    start_time => '2000-01-01',
+    end_time => '2000-01-01',
+    spatial_extent => $spatial_extent,
+};
+
+$t->post_ok( "/activity" => json => $new_activity )->status_is(200);
+
 my $project = {
     identifier => "worm",
     name => "Noctural\nanimal",
@@ -197,6 +228,7 @@ $t->get_ok("/organization/aa.ttl")->turtle_ok;
 $t->get_ok("/reference/ref-ref-ref.ttl")->turtle_ok;
 $t->get_ok("/dataset/cmip3.ttl")->turtle_ok;
 $t->get_ok('/activity/teeth-brush.ttl')->turtle_ok;
+$t->get_ok('/activity/temperature_in_virginia_in_2000.ttl')->turtle_ok;
 $t->get_ok('/project/worm.ttl')->turtle_ok;
 $t->get_ok('/scenario/chimp.ttl')->turtle_ok;
 $t->get_ok('/model/tiger.ttl')->turtle_ok;
@@ -214,6 +246,7 @@ $t->delete_ok("/report/animals")->status_is(200);
 $t->delete_ok("/dataset/cmip3")->status_is(200);
 $t->delete_ok("/model_run/bat")->status_is(200);
 $t->delete_ok("/activity/teeth-brush")->status_is(200);
+$t->delete_ok("/activity/temperature_in_virginia_in_2000")->status_is(200);
 $t->delete_ok("/article/gatorade")->status_is(200);
 $t->delete_ok("/journal/gators")->status_is(200);
 $t->delete_ok("/scenario/chimp")->status_is(200);

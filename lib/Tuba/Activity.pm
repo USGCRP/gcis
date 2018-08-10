@@ -7,6 +7,7 @@ Tuba::Activity : Controller class for books
 package Tuba::Activity;
 use Mojo::Base qw/Tuba::Controller/;
 use Tuba::DB::Objects qw/-nicknames/;
+use JSON::XS;
 
 sub list {
     my $c = shift;
@@ -17,6 +18,22 @@ sub show {
     my $c = shift;
     $c->stash('object', $c->_this_object);
     $c->SUPER::show(@_);
+}
+
+sub create {
+    my $c = shift;
+    my $spatial_extent = $c->_spatial_extent;
+    my $error = _check_valid_geojson($spatial_extent) if $spatial_extent;
+    return $c->create_error($error) if $error;
+    $c->SUPER::create(@_);
+}
+
+sub update {
+    my $c = shift;
+    my $spatial_extent = $c->_spatial_extent;
+    my $error = _check_valid_geojson($spatial_extent) if $spatial_extent;
+    return $c->update_error($error) if $error;
+    $c->SUPER::update(@_);
 }
 
 sub make_tree_for_show {
@@ -54,8 +71,30 @@ sub normalize_form_parameter {
 
 sub _default_order {
     my $c = shift;
-    return ( $c->SUPER::_default_order(), qw/methodology_publication_id methodology_contributor_id/ );
-
+    return ( qw/
+        identifier
+        methodology
+        visualization_methodology
+        methodology_citation
+        methodology_contact
+        activity_duration
+        source_access_date
+        source_modifications
+        modified_source_location
+        interim_artifacts
+        output_artifacts
+        computing_environment
+        software
+        visualization_software
+        start_time
+        end_time
+        database_variables
+        spatial_extent
+        data_usage
+        notes
+        methodology_publication_id
+        methodology_contributor_id/
+    );
 }
 
 sub update_rel_form {
@@ -107,6 +146,49 @@ sub update_rel {
             return shift->redirect_without_error('update_rel_form');
         },
     );
+}
+
+sub _spatial_extent {
+    my $c = shift;
+    return $c->param('spatial_extent') if $c->param('spatial_extent');
+
+    my $json = $c->req->json;
+    return unless $json;
+    return $json->{spatial_extent};
+
+}
+
+sub _check_valid_geojson {
+    my $spatial_param = shift;
+    my $valid_geojson_types = {
+        Point              => 1,
+        MultiPoint         => 1,
+        LineString         => 1,
+        MultiLineString    => 1,
+        Polygon            => 1,
+        MultiPolygon       => 1,
+        GeometryCollection => 1,
+        Feature            => 1,
+        FeatureCollection  => 1,
+    };
+    # parse valid JSON
+    my $error;
+    my $geojson = eval { JSON::XS->new->decode($spatial_param); };
+    if ($@ || (ref $geojson ne 'HASH')) {
+        $error = "Invalid geoJSON: could not parse json :".($@ || ref $geojson);
+    }
+    # check the field type exists
+    if ( !$error && $geojson->{'type'} ) {
+        # check the type value is valid
+        unless ( $valid_geojson_types->{ $geojson->{'type'} } ) {
+            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of: " . join(', ', keys %$valid_geojson_types);
+        }
+    }
+    else {
+        $error = "Invalid geoJSON: missing type field" unless $error;
+    }
+
+    return $error;
 }
 
 1;

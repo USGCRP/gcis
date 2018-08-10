@@ -267,9 +267,9 @@ $t->post_ok( "/dataset" => json => $dataset )->status_is(200);
 $t->get_ok("/dataset/cmip3.ttl")->status_is(200);
 $t->get_ok("/dataset/cmip3.nt")->status_is(200);
 
-# Activity
+# Old Activity
 
-my $activity = {
+my $old_activity = {
     identifier => "teeth-brush",
     data_usage => "a little\ntooth paste",
     methodology => "back and forth\nside to side",
@@ -283,9 +283,63 @@ my $activity = {
     notes => "every day\n is a good to brush your teeth",
 };
 
-$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->post_ok( "/activity" => json => $old_activity )->status_is(200);
 $t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
 $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
+
+
+# Modern Activity
+
+my $spatial_extent = do {
+    local $/ = undef;
+    open my $fh, "<", "./t/va_spatial_extent.geojson"
+        or die "could not open va_spatial_extent.geojson: $!";
+    <$fh>;
+};
+
+my $activity = {
+    identifier => "temperature_in_virginia_in_2000",
+    computing_environment => "Ubuntu Trusty, R 3.5.1",
+    software => "my-r-script.r",
+    visualization_software => "that-one-vis-program v1.0.3",
+    activity_duration => '1 hours',
+    source_access_date => '2018-01-01',
+    interim_artifacts => 'va_data_subset.csv',
+    output_artifacts => "temperature_in_va_2000.png",
+    source_modifications => "Subset to the date 2000-01-01 and the region of Virginia",
+    modified_source_location => "github.com/example_scientist/usgcrp_work/va_data_subset.csv",
+    methodology => "subset the US dataset via the temporal and spatial restrictions. run the r script on it. put it into that one vis program. output the graph",
+    visualization_methodology => "Used the viz program and did art things",
+    methodology_citation => "Author, A et al This is a citation to a standard documented methodology",
+    methodology_contact => "Author, A",
+    database_variables => "Temperature",
+    start_time => '2000-01-01',
+    end_time => '2000-01-01',
+};
+
+# Activity without spatial extent is fine:
+$t->post_ok( "/activity" => json => $activity) ->status_is(200);
+$t->delete_ok("/activity/temperature_in_virginia_in_2000")->status_is(200);
+
+$activity->{spatial_extent} = $spatial_extent;
+
+$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->get_ok('/activity/temperature_in_virginia_in_2000.ttl')->status_is(200);
+$t->get_ok('/activity/temperature_in_virginia_in_2000.nt')->status_is(200);
+
+# Bad activities
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_1", spatial_extent => '{ "type: "Feature", "Note": "Bad JSON" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: could not parse json] );
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_2", spatial_extent => '{ "tye": "Feature", "Note": "No Type field" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: missing type field] );
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_3", spatial_extent => '{ "type": "Feathure", "Note": "Invalid type" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: Bad type] );
 
 my $project = {
     identifier => "worm",
@@ -361,6 +415,7 @@ $t->delete_ok("/report/animals")->status_is(200);
 $t->delete_ok("/dataset/cmip3")->status_is(200);
 $t->delete_ok("/model_run/bat")->status_is(200);
 $t->delete_ok("/activity/teeth-brush")->status_is(200);
+$t->delete_ok("/activity/temperature_in_virginia_in_2000")->status_is(200);
 $t->delete_ok("/article/gatorade")->status_is(200);
 $t->delete_ok("/journal/gators")->status_is(200);
 $t->delete_ok("/scenario/chimp")->status_is(200);

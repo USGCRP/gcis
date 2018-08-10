@@ -258,7 +258,7 @@ sub startup {
                            )
                          ]x;
         for my $format (@supported_formats) {
-                $resource->get("(*$identifier).$format" => \@restrict => { format => $format } )
+                $resource->get("<*$identifier>.$format" => \@restrict => { format => $format } )
                          ->over(not_match => { $identifier => $reserved })
                          ->to('#show')->name("_show_${name}_$format");
         }

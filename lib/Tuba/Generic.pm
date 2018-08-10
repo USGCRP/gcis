@@ -39,7 +39,8 @@ sub update {
             $generic->delete_attr( { del_attr => $params->{delete_pub_attr}, audit_user => $c->user, audit_note => "Setting attributes" });
             $c->redirect_without_error('update_form');
         }
-        elsif ( exists $params->{new_attr_key} || /^attribute/ ~~ %$params ) {
+        # find any new attr keys or attribute_* keys
+        elsif ( exists $params->{new_attr_key} || grep { /^attribute/ } keys %$params ) {
             my $new_attributes = _collect_attributes($params);
             $generic->set_attr( { new_attrs => $new_attributes, audit_user => $c->user, audit_note => "Setting attributes" });
             $c->redirect_without_error('update_form');
