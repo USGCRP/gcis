@@ -158,8 +158,6 @@ sub _spatial_extent {
 
 }
 
-# TODO finalize the feedback based on JSON vs Param.
-# maybe do distinct wrappers for JSON/param?
 sub _check_valid_geojson {
     my $spatial_param = shift;
     my $valid_geojson_types = {
@@ -183,7 +181,7 @@ sub _check_valid_geojson {
     if ( !$error && $geojson->{'type'} ) {
         # check the type value is valid
         unless ( $valid_geojson_types->{ $geojson->{'type'} } ) {
-            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', or 'GeometryCollection'";
+            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of 'Feature', 'FeatureCollection', 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', or 'GeometryCollection'";
         }
     }
     else {
