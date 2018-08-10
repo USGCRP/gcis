@@ -181,7 +181,7 @@ sub _check_valid_geojson {
     if ( !$error && $geojson->{'type'} ) {
         # check the type value is valid
         unless ( $valid_geojson_types->{ $geojson->{'type'} } ) {
-            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of 'Feature', 'FeatureCollection', 'Point', 'MultiPoint', 'LineString', 'MultiLineString', 'Polygon', 'MultiPolygon', or 'GeometryCollection'";
+            $error = "Invalid geoJSON: Bad type '$geojson->{type}' not one of: " . join(', ', keys %$valid_geojson_types);
         }
     }
     else {

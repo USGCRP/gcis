@@ -1,5 +1,6 @@
 % layout 'default';
 % my $table = $object->meta->table;
+% use Mojo::ByteStream qw/b/;
 
 <center>
     <h2>activity : <%= $activity->stringify %>
@@ -22,28 +23,28 @@
     %      $activity->spatial_extent
     %   ) {
         <h5> Methodology: </h5>
-        <p class='linebreaks'><%= $activity->methodology // '' %></p>
+        <p><%= b($activity->methodology) // '' %></p>
         %= include 'h/thumbnail';
 
         % if ($activity->visualization_methodology) {
-        <p class='linebreaks'><%= $activity->visualization_methodology // '' %></p>
+        <p><%= b($activity->visualization_methodology) // '' %></p>
         % }
 
         % if ($activity->methodology_citation) {
-        <p>Methodology Citation: <%= $activity->methodology_citation // '' %></p>
+        <p>Methodology Citation: <%= b($activity->methodology_citation) // '' %></p>
         % }
         % if ($activity->methodology_contact) {
-        <p>Methodology Contact: <%= $activity->methodology_contact // '' %></p>
+        <p>Methodology Contact: <%= b($activity->methodology_contact) // '' %></p>
         % }
 
         <h5>Processes</h5>
 
         % if ($activity->source_modifications) {
-        <p class='linebreaks'>How the source was modified: <%= $activity->source_modifications // '' %></p>
+        <p class='linebreaks'>How the source was modified: <%= b($activity->source_modifications) // '' %></p>
         % }
 
         % if ($activity->modified_source_location) {
-        <p> Modified Source Location: <%= $activity->modified_source_location %></p>
+        <p> Modified Source Location: <%= b($activity->modified_source_location) %></p>
         % }
 
         % if ($activity->activity_duration) {
@@ -67,19 +68,19 @@
         <h5>Tools</h5>
         % if ($activity->computing_environment) {
         <p>
-        Computing environment : <%= $activity->computing_environment %>
+        Computing environment : <%= b($activity->computing_environment) %>
         </p>
         % }
 
         % if (my $software = $activity->software) {
         <p>
-        Software used : <%= $software %>
+        Software used : <%= b($software) %>
         </p>
         % }
 
         % if (my $visualization_software = $activity->visualization_software) {
         <p>
-        Visualization software used : <%= $visualization_software %>
+        Visualization software used : <%= b($visualization_software) %>
         </p>
         % }
 
@@ -91,7 +92,7 @@
         <p>The input object was time bounded ending at <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %></p>
         % }
         % if ($object->database_variables) {
-        <p>The input object was bounded by the database variables <%= $object->database_variables %></p>
+        <p>The input object was bounded by the database variables <%= b($object->database_variables) %></p>
         % }
         % if (my $box = $object->bounding_box) {
         <p>The input object was bounded spatially:</p>
