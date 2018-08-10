@@ -315,12 +315,31 @@ my $activity = {
     database_variables => "Temperature",
     start_time => '2000-01-01',
     end_time => '2000-01-01',
-    spatial_extent => $spatial_extent,
 };
+
+# Activity without spatial extent is fine:
+$t->post_ok( "/activity" => json => $activity) ->status_is(200);
+$t->delete_ok("/activity/temperature_in_virginia_in_2000")->status_is(200);
+
+$activity->{spatial_extent} = $spatial_extent;
 
 $t->post_ok( "/activity" => json => $activity )->status_is(200);
 $t->get_ok('/activity/temperature_in_virginia_in_2000.ttl')->status_is(200);
 $t->get_ok('/activity/temperature_in_virginia_in_2000.nt')->status_is(200);
+
+# Bad activities
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_1", spatial_extent => '{ "type: "Feature", "Note": "Bad JSON" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: could not parse json] );
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_2", spatial_extent => '{ "tye": "Feature", "Note": "No Type field" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: missing type field] );
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+    json => { identifier => "bad_se_3", spatial_extent => '{ "type": "Feathure", "Note": "Invalid type" }' } )
+        ->status_is(200)
+        ->content_like( qr[Invalid geoJSON: Bad type] );
 
 my $project = {
     identifier => "worm",

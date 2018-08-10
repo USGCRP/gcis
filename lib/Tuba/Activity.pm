@@ -22,15 +22,17 @@ sub show {
 
 sub create {
     my $c = shift;
-    my $valid = 1; # TODO _check_valid_geojson($c) if $c->param('spatial_extent'); # or JSON TODO
-    return $c->redirect_to(Activity->uri($c,{tab => 'create_form'})) unless $valid;
+    my $spatial_extent = $c->_spatial_extent;
+    my $error = _check_valid_geojson($spatial_extent) if $spatial_extent;
+    return $c->create_error($error) if $error;
     $c->SUPER::create(@_);
 }
 
 sub update {
     my $c = shift;
-    my $valid = 1; # TODO _check_valid_geojson($c) if $c->param('spatial_extent'); # or JSON TODO
-    return $c->redirect_to(Activity->uri($c,{tab => 'create_form'})) unless $valid;
+    my $spatial_extent = $c->_spatial_extent;
+    my $error = _check_valid_geojson($spatial_extent) if $spatial_extent;
+    return $c->update_error($error) if $error;
     $c->SUPER::update(@_);
 }
 
@@ -146,10 +148,20 @@ sub update_rel {
     );
 }
 
+sub _spatial_extent {
+    my $c = shift;
+    return $c->param('spatial_extent') if $c->param('spatial_extent');
+
+    my $json = $c->req->json;
+    return unless $json;
+    return $json->{spatial_extent};
+
+}
+
 # TODO finalize the feedback based on JSON vs Param.
 # maybe do distinct wrappers for JSON/param?
 sub _check_valid_geojson {
-    my $c = shift;
+    my $spatial_param = shift;
     my $valid_geojson_types = {
         Point              => 1,
         MultiPoint         => 1,
@@ -158,15 +170,14 @@ sub _check_valid_geojson {
         Polygon            => 1,
         MultiPolygon       => 1,
         GeometryCollection => 1,
+        Feature            => 1,
+        FeatureCollection  => 1,
     };
-    my $spatial_param = $c->param('spatial_extent'); # or JSON TODO
     # parse valid JSON
     my $error;
-    my $geojson = eval { JSON::XS->new->decode($c->param('spatial_extent')); };
-    my $ary = eval { JSON::XS->new->decode($geojson); };
-    if ($@ || (ref $ary ne 'ARRAY')) {
-        $c->flash(error => "could not parse json :".($@ || ref $ary));
-        return -1;
+    my $geojson = eval { JSON::XS->new->decode($spatial_param); };
+    if ($@ || (ref $geojson ne 'HASH')) {
+        $error = "Invalid geoJSON: could not parse json :".($@ || ref $geojson);
     }
     # check the field type exists
     if ( !$error && $geojson->{'type'} ) {
@@ -176,14 +187,10 @@ sub _check_valid_geojson {
         }
     }
     else {
-        $error = "Invalid geoJSON: missing type field";
+        $error = "Invalid geoJSON: missing type field" unless $error;
     }
 
-    if ( $error ) {
-        $c->flash(error => $error);
-        return;
-    }
-    return 1;
+    return $error;
 }
 
 1;
