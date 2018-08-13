@@ -36,7 +36,7 @@ sub update {
 
     if (my $params = $c->req->params->to_hash ) {
         if ( $params->{delete_pub_attr} ) {
-            $generic->delete_attr( { del_attr => $params->{delete_pub_attr}, audit_user => $c->user, audit_note => "Setting attributes" });
+            $generic->delete_attr( { del_attr => $params->{delete_pub_attr}, audit_user => $c->user, audit_note => "Deleting attributes" });
             $c->redirect_without_error('update_form');
         }
         # find any new attr keys or attribute_* keys
