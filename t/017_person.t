@@ -104,16 +104,20 @@ my $uri = $t->tx->res->headers->location;
 like $uri, qr[/person/$id4], 'misformatted orcid redirects to person';
 
 # Bad OrcID checks
-$t->post_ok(
-  "/person" => json => {
-    url         => 'http://example.com/s_smyth',
-    last_name   => "Smyth",
-    middle_name => "",
-    first_name  => "Sue",
-    orcid       => "010-1231-1231-212", # bad structure
-  }
-)->status_is(422);
-
+{
+    # we're intentionally triggering this fail; I don't need the blared alarm.
+    local *STDERR;
+    open STDERR, '>/dev/null';
+    $t->post_ok(
+      "/person" => json => {
+        url         => 'http://example.com/s_smyth',
+        last_name   => "Smyth",
+        middle_name => "",
+        first_name  => "Sue",
+        orcid       => "010-1231-1231-212", # bad structure
+      }
+    )->status_is(422);
+}
 $t->ua->max_redirects(1);
 
 # Also make an org.

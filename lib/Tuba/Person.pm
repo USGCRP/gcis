@@ -30,12 +30,11 @@ sub list {
 sub create {
     my $c = shift;
 
-    my $orcid;
-    if ( $orcid = $c->param('orcid') ) {
-        $c->stash(computed_params => { orcid => uc $orcid });
+    if ( $c->param('orcid') ) {
+        $c->stash(computed_params => { orcid => uc $c->param('orcid') });
     }
-    elsif ( $orcid = $c->req->json->{'orcid'} ) {
-        $c->req->json->{'orcid'} = uc $orcid;
+    elsif ( $c->req->json && $c->req->json->{'orcid'} ) {
+        $c->req->json->{'orcid'} = uc $c->req->json->{'orcid'};
     }
 
     $c->SUPER::create(@_);
