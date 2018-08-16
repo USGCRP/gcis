@@ -5,9 +5,9 @@ addons:
     apt:
         packages:
             - raptor2-utils
-            - postgresql-9.3
-            - postgresql-contrib-9.3
-            - postgresql-server-dev-9.3
+            - postgresql-9.6
+            - postgresql-contrib-9.6
+            - postgresql-server-dev-9.6
             - libuuid1
             - uuid-dev
             - openssl
