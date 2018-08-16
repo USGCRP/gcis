@@ -283,7 +283,7 @@ my $old_activity = {
     notes => "every day\n is a good to brush your teeth",
 };
 
-$t->post_ok( "/activity" => json => $old_activity )->status_is(200);
+$t->post_ok( "/activity.json" => json => $old_activity )->status_is(200);
 $t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
 $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
 
@@ -298,7 +298,7 @@ my $spatial_extent = do {
 };
 
 my $activity = {
-    identifier => "temperature_in_virginia_in_2000",
+    identifier => "temperature_in_virginia_in_2001",
     computing_environment => "Ubuntu Trusty, R 3.5.1",
     software => "my-r-script.r",
     visualization_software => "that-one-vis-program v1.0.3",
@@ -312,18 +312,20 @@ my $activity = {
     visualization_methodology => "Used the viz program and did art things",
     methodology_citation => "Author, A et al This is a citation to a standard documented methodology",
     methodology_contact => "Author, A",
-    database_variables => "Temperature",
+    dataset_variables => "Temperature",
     start_time => '2000-01-01',
     end_time => '2000-01-01',
 };
 
 # Activity without spatial extent is fine:
-$t->post_ok( "/activity" => json => $activity) ->status_is(200);
-$t->delete_ok("/activity/temperature_in_virginia_in_2000")->status_is(200);
+$t->post_ok( "/activity.json" => json => $activity) ->status_is(200);
+$t->get_ok('/activity/temperature_in_virginia_in_2001.ttl')->status_is(200);
+$t->delete_ok("/activity/temperature_in_virginia_in_2001")->status_is(200);
 
 $activity->{spatial_extent} = $spatial_extent;
+$activity->{identifier} = "temperature_in_virginia_in_2000";
 
-$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->post_ok( "/activity.json" => json => $activity )->status_is(200);
 $t->get_ok('/activity/temperature_in_virginia_in_2000.ttl')->status_is(200);
 $t->get_ok('/activity/temperature_in_virginia_in_2000.nt')->status_is(200);
 
