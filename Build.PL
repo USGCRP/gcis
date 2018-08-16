@@ -42,7 +42,7 @@ my $builder = Module::Build::Database->new(
     configure_requires => {
         'Module::Build' => '0.39',
         #'Module::Build::Mojolicious' => 0,  #commented out, dependency inteferes with Mojolicous version -rs
-        'Module::Build::Database' => 0,
+        'Module::Build::Database' => '0.58', # No less if postgres >= v9.3.22
         'Mojolicious' => '6.08', 
         #'Mojolicious::Plugin::InstallablePaths' => 0, #commented out, dependency inteferes with Mojolicous version
     },
