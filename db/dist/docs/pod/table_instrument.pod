@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 instrument
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 An instrument is used for measurement.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this instrument.
  name (character varying) - A brief name for this instrument.
@@ -15,7 +15,7 @@ An instrument is used for measurement.
  description_attribution (character varying) - A URL which contains the description of this instrument.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                         Table "gcis_metadata.instrument"
           Column          |       Type        | Modifiers | Storage  | Stats target |                       Description                        
@@ -37,9 +37,8 @@ An instrument is used for measurement.
      delpub BEFORE DELETE ON instrument FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      update_exterms BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_exterms('/instrument/')
      updatepub BEFORE UPDATE ON instrument FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 finding
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A finding is associated with a report and optionally a chapter.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier for this finding.
  chapter_identifier (character varying) - The chapter containing this finding.
@@ -21,7 +21,7 @@ A finding is associated with a report and optionally a chapter.
  url (character varying) - A URL for a landing page for this finding.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                                                 Table "gcis_metadata.finding"
         Column       |       Type        | Modifiers | Storage  | Stats target |                                                                 Description                                                                 
@@ -50,9 +50,8 @@ A finding is associated with a report and optionally a chapter.
      audit_trigger_stm AFTER TRUNCATE ON finding FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON finding FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON finding FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text OR new.report_identifier::text <> old.report_identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

@@ -1,20 +1,20 @@
 
-\=head1 NAME
+=head1 NAME
 
 region
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A region is a geographical area.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  label (character varying) - A human readable label.
  description (character varying) - A description.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                     Table "gcis_metadata.region"
     Column    |       Type        | Modifiers | Storage  | Stats target |        Description        
@@ -31,9 +31,8 @@ A region is a geographical area.
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON region FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON region FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

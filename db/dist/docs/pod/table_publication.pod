@@ -1,20 +1,20 @@
 
-\=head1 NAME
+=head1 NAME
 
 publication
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A publication, similar to an entity, is a generic term for something that has been released to the public.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  id (serial) - An opaque numeric identifier
  publication_type_identifier (character varying) - The type
  fk (hstore) - Column column names and values of the primary key of this entitiy in its native table.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                                                 Table "gcis_metadata.publication"
             Column            |       Type        |                        Modifiers                         | Storage  | Stats target |                                      Description                                       
@@ -40,9 +40,8 @@ A publication, similar to an entity, is a generic term for something that has be
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON publication FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON publication FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

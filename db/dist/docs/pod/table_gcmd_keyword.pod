@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 gcmd_keyword
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/keyword_list.html>.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - The UUID for this keyword.
  parent_identifier (character varying) - The UUID for the parent keyword.
@@ -15,7 +15,7 @@ Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/key
  definition (character varying) - The definition.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                         Table "gcis_metadata.gcmd_keyword"
        Column       |       Type        | Modifiers | Storage  | Stats target |            Description            
@@ -34,9 +34,8 @@ Keywords from the Global Change Master Directory <http://gcmd.nasa.gov/learn/key
  Triggers:
      audit_trigger_row AFTER INSERT OR DELETE OR UPDATE ON gcmd_keyword FOR EACH ROW EXECUTE PROCEDURE audit.if_modified_func('true')
      audit_trigger_stm AFTER TRUNCATE ON gcmd_keyword FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
- Has OIDs: no
  
 
-\=cut
+=cut
 
 

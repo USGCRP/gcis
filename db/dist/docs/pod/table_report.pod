@@ -1,13 +1,13 @@
 
-\=head1 NAME
+=head1 NAME
 
 report
 
-\=head1 DESCRIPTION
+=head1 DESCRIPTION
 
 A report is a publication that may have chapters, figures, findings, and tables.
 
-\=head1 FIELDS
+=head1 FIELDS
 
  identifier (character varying) - A descriptive identifier.
  title (character varying) - The title.
@@ -24,7 +24,7 @@ A report is a publication that may have chapters, figures, findings, and tables.
  contact_email (character varying) - A contact email address for this report.
 
 
-\=head1 SCHEMA
+=head1 SCHEMA
 
                                                                                                               Table "gcis_metadata.report"
           Column         |       Type        |                  Modifiers                   | Storage  | Stats target |                                                          Description                                                           
@@ -64,9 +64,8 @@ A report is a publication that may have chapters, figures, findings, and tables.
      audit_trigger_stm AFTER TRUNCATE ON report FOR EACH STATEMENT EXECUTE PROCEDURE audit.if_modified_func('true')
      delpub BEFORE DELETE ON report FOR EACH ROW EXECUTE PROCEDURE delete_publication()
      updatepub BEFORE UPDATE ON report FOR EACH ROW WHEN (new.identifier::text <> old.identifier::text) EXECUTE PROCEDURE update_publication()
- Has OIDs: no
  
 
-\=cut
+=cut
 
 
