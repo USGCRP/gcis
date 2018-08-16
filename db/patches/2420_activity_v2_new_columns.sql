@@ -8,7 +8,7 @@ ALTER table activity ADD COLUMN modified_source_location text;
 ALTER table activity ADD COLUMN visualization_methodology text;
 ALTER table activity ADD COLUMN methodology_citation text;
 ALTER table activity ADD COLUMN methodology_contact text;
-ALTER table activity ADD COLUMN database_variables text;
+ALTER table activity ADD COLUMN dataset_variables text;
 
 COMMENT ON COLUMN activity.activity_duration
   IS 'Captures the time taken in the process to get from the source object to the final one.';
@@ -26,5 +26,5 @@ COMMENT ON COLUMN activity.methodology_citation
   IS 'The citation to the methodology, if it has been published.';
 COMMENT ON COLUMN activity.methodology_contact
   IS 'The point of contact for the methodology, if any.';
-COMMENT ON COLUMN activity.database_variables
+COMMENT ON COLUMN activity.dataset_variables
   IS 'A list of Dataset Variables applied in this activity.';
