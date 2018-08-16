@@ -8,10 +8,10 @@ build_requires:
   Test::More: '0'
 configure_requires:
   Module::Build: '0.39'
-  Module::Build::Database: '0'
+  Module::Build::Database: '0.58'
   Mojolicious: '6.08'
 dynamic_config: 1
-generated_by: 'Module::Build version 0.421, CPAN::Meta::Converter version 2.142690'
+generated_by: 'Module::Build version 0.4224, CPAN::Meta::Converter version 2.150010'
 license: unknown
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: v1.54.0
+    version: v1.55.0
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -257,4 +257,4 @@ requires:
   YAML::Syck: '0'
   YAML::XS: '0'
 version: v1.55.0
-
+x_serialization_backend: 'CPAN::Meta::YAML version 0.012'
