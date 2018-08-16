@@ -19,7 +19,7 @@
     %      $activity->visualization_methodology ||
     %      $activity->methodology_citation ||
     %      $activity->methodology_contact ||
-    %      $activity->database_variables ||
+    %      $activity->dataset_variables ||
     %      $activity->spatial_extent
     %   ) {
         <h5> Methodology: </h5>
@@ -91,8 +91,8 @@
         % if ($object->end_time) {
         <p>The input object was time bounded ending at <%= $object->end_time->strftime('%B %d, %Y (%H:%M %p)') %></p>
         % }
-        % if ($object->database_variables) {
-        <p>The input object was bounded by the database variables <%= b($object->database_variables) %></p>
+        % if ($object->dataset_variables) {
+        <p>The input object was bounded by the dataset variables <%= b($object->dataset_variables) %></p>
         % }
         % if (my $box = $object->bounding_box) {
         <p>The input object was bounded spatially:</p>

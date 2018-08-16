@@ -88,7 +88,7 @@ sub _default_order {
         visualization_software
         start_time
         end_time
-        database_variables
+        dataset_variables
         spatial_extent
         data_usage
         notes
