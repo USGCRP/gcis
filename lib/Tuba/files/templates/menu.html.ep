@@ -25,6 +25,7 @@
         <li>
             <span>Featured Publications</span>
             <ul>
+                <li><%= link_to 'show_report' => { report_identifier => 'nca4' } => begin %>The Fourth National Climate Assessment <%= end %></li>
                 <li><%= link_to 'show_report' => { report_identifier => 'climate-science-special-report' } => begin %>Climate Science Special Report<%= end %></li>
                 <li><%= link_to 'show_report' => { report_identifier => 'usgcrp-climate-human-health-assessment-2016' } => begin %>Impacts of Climate Change on Human Health<%= end %></li>
                 <li><%= link_to 'show_report' => { report_identifier => 'nca3' } => begin %>The Third National Climate Assessment <%= end %></li>

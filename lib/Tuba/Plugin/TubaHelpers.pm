@@ -133,8 +133,11 @@ sub register {
         });
     $app->helper(current_report => sub {
             my $c = shift;
-            my $identifier = shift || $c->stash('report_identifier') || 'climate-science-special-report';
+            my $identifier = shift || $c->stash('report_identifier') || 'nca4';
             my $obj = Tuba::DB::Object::Report->new(identifier => $identifier);
+            $obj->load(speculative => 1) and $obj->_public and return $obj;
+            #fallbacks
+            $obj = Tuba::DB::Object::Report->new(identifier => 'climate-science-special-report');
             $obj->load(speculative => 1) and $obj->_public and return $obj;
             $obj = Tuba::DB::Object::Report->new(identifier => 'usgcrp-climate-human-health-assessment-2016');
             $obj->load(speculative => 1) and $obj->_public and return $obj;

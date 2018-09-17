@@ -1,6 +1,11 @@
 %# Whenever we want to feature a report on the main page under Featured Reports, add the identifier and a text here 
 % my $featured_reports = [
 %   {
+%       identifier   => 'nca4',
+%       display_text => 'Fourth National Climate Assessment Volume II: Impacts, Risks, and Adaptation in the United States',
+%       year         => '2018',
+%   },
+%   {
 %        identifier   => 'climate-science-special-report',
 %        display_text => 'Climate Science Special Report: The Fourth National Climate Assessment: Volume I',
 %        year         => '2017',
