@@ -2,27 +2,29 @@
 <h2>
     <center>About the Global Change Information System</center>
 </h2>
-<p>
-  The <a href="http://www.globalchange.gov/about">US Global Change Research
-  Program</a> (USGCRP) has established the Global Change Information System
-  (GCIS) to better coordinate and integrate the use of federal information
-  products on changes in the global environment and the implications of those
-  changes for society.
+
+</p>
+  The National Climate Assessment and Development Advisory Committee (NCADAC)
+  recommended in 2013 that the NCA process “manage data to maximize utility and
+  transparency.” The report also highlighted the importance of “developing a
+  comprehensive web-based system to deploy and manage global change information
+  and present it in a way that can be used by and benefit scientists, the
+  public, and decision-makers.” To achieve these goals, the <a
+  href="http://www.globalchange.gov/about">US Global Change Research
+  Program</a> (USGCRP) established the Global Change Information System (GCIS).
+  GCIS coordinates and integrates information about changes in the global
+  environment and related societal effects, with a focus on Federal information
+  products.
 </p>
 <p itemscope itemtype="http://schema.org/WebApplication" itemprop="description">
-  The GCIS is an open-source centralized database of all materials and data
-  used for USGCRP assessments. The system acts as an advanced, multifaceted
-  bibliography, maintaining traceable provenance records of scientific
-  information and providing access to the original data and research. The GCIS
-  catalogs the cross-links among research papers, researchers, original data,
-  and more and includes links back to authoritative sources for its
-  information. GCIS serves as a key supporting resource for assessments
-  produced by the USGCRP, providing information about the data underpinning
-  them. In addition, the GCIS guides users to global change research produced
-  by the 13 USGCRP member agencies.
-</p>
-<p>
-  The GCIS is managed, integrated, and curated by USGCRP.
+  The GCIS, which continues to be managed and curated by USGCRP, is an
+  open-source, web-based resource designed for use by scientists, decision
+  makers, and the public. It links together a network of information, including
+  organizations, datasets, and research, especially those products maintained
+  and disseminated by government agencies and organizations. GCIS serves as a
+  key access point to assessments, reports, and tools produced by the USGCRP –
+  and the native data underpinning all of them. In addition, the GCIS guides
+  users to global change research produced by the 13 USGCRP member agencies.
 </p>
 
 <h3>Global Change</h3>
