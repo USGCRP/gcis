@@ -14,8 +14,10 @@
 %   my ($count,$what,$list_page) = @_;
     % my $method = $what.'s';
     % $list_page ||= 'list_all_'.$method;
-    % if ($count==1) {
-           <%= obj_link_to $report->$method->[0] => 'show' => begin =%><%= pl($what,$count) =%><%= end =%>
+    % if ($method eq 'regions') {
+         <%= link_to $list_page, { report_identifier => $report->identifier } => begin =%><%= pl($what, $count) =%><%= end =%>
+    % } elsif ($count==1) {
+          <%= obj_link_to $report->$method->[0] => 'show' => begin =%><%= pl($what,$count) =%><%= end =%>
     % } else {
          <%= link_to $list_page, { report_identifier => $report->identifier } => begin =%><%= pl($what, $count) =%><%= end =%>
     % }
