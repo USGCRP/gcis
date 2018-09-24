@@ -102,6 +102,10 @@
                 %= link_to "http://www.ncbi.nlm.nih.gov/pubmed/$val" => target => "_blank" => begin
                 <%= $val %>
                 %= end
+            % } elsif ($k =~ /^pmcid$/i && $val) {
+                %= link_to "http://www.ncbi.nlm.nih.gov/pmc/articles/$val" => target => "_blank" => begin
+                <%= $val %>
+                %= end
             % } elsif ($k =~ /urls?/i) {
                 % if (my $to = fix_url($val)) {
                     %= link_to $to => target => "_blank" => begin
