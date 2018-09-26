@@ -1417,7 +1417,7 @@ Handles / for tuba.
 sub index {
     my $c = shift;
     my %counts;
-    for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+    for my $type (qw/person table indicator finding dataset platform instrument model scenario report figure book journal article organization/) {
         $counts{$type} = $c->get_counts($type);
     }
     $c->stash(counts => \%counts);

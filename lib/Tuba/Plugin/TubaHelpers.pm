@@ -576,7 +576,20 @@ sub register {
     $app->helper(get_counts => sub {
             my $c = shift;
             my $table = shift;
-            my $count = $c->orm->{$table}->{mng}->get_objects_count;
+            my $count;
+            if ( $table eq 'indicator' ) {
+                $count = $c->orm->{'report'}->{mng}->get_objects_count(
+                    query => [
+                        and => [
+                            report_type_identifier => 'indicator',
+                            '!url' => undef
+                        ]
+                    ]
+                );
+            }
+            else {
+                $count = $c->orm->{$table}->{mng}->get_objects_count;
+            }
             return $count;
         });
     $app->helper(format_number => sub {

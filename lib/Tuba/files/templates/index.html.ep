@@ -241,7 +241,7 @@ $(function() {
     var a = svg.selectAll('a')
     .data([
         % my $i;
-        % for my $type (qw/person  dataset platform instrument model scenario report figure book journal article organization/) {
+        % for my $type (qw/organization person dataset book journal article indicator report figure finding table scenario/) {
 
         { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
 
