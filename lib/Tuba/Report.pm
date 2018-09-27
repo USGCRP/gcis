@@ -86,6 +86,17 @@ sub list {
     my $c = shift;
     my $user = $c->user;
 
+    my @required;
+    if ($_ = $c->param('has_figures')) {
+        push @required, 'figures';
+    }
+    elsif ($_ = $c->param('has_findings')) {
+        push @required, 'findings';
+    }
+    elsif ($_ = $c->param('has_tables')) {
+        push @required, 'tables';
+    }
+
     my %query;
     if ($_ = $c->param('report_type')) {
         $query{report_type_identifier} = $_
@@ -105,6 +116,7 @@ sub list {
                   ]
         ],
         with_objects => [qw/_report_viewers/],
+        require_objects => \@required,
         ($c->param('all')
           ? ()
           : (page => $c->page, per_page => $c->per_page)),
@@ -118,6 +130,7 @@ sub list {
                   ]
         ],
         with_objects => [qw/_report_viewers/],
+        require_objects => \@required,
     );
     $c->set_pages($count);
     $c->stash(objects => $objects);
