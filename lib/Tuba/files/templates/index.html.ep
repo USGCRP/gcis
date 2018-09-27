@@ -81,7 +81,7 @@
         </p>
 <div class='row'>
 <div class="well centered">
-<h2>Featured USGCRP reports : <br /><br />
+<h2>Featured USGCRP Publications <br /><br />
 %= include 'h/featured_reports'
 </div>
 </div>
@@ -243,7 +243,15 @@ $(function() {
         % my $i;
         % for my $type (qw/organization person dataset book journal article indicator report figure finding table scenario/) {
 
-        { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+        % if ( $type eq 'indicator' ) {
+            { link : '/<%= $type %>?current=1', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+        % }
+        % elsif ( $type eq 'finding' || $type eq 'figure' || $type eq 'table' ) {
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+        % }
+        % else {
+            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+        % }
 
         % }
           ])

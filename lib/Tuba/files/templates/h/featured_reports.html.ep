@@ -1,13 +1,18 @@
-%# Whenever we want to feature a report on the main page under Featured Reports, add the identifier and a text here 
-% my $featured_reports = [
+%# Whenever we want to feature a publication on the main page under Featured Publications, add the identifier and a text here 
+% my $featured_pubs = [
 %   {
 %       identifier   => 'nca4',
-%       display_text => 'Fourth National Climate Assessment Volume II: Impacts, Risks, and Adaptation in the United States',
+%       display_text => 'Impacts, Risks, and Adaptation in the United States: The Fourth National Climate Assessment, Volume II ',
+%       year         => '2018',
+%   },
+%   {
+%       identifier   => 'current_indicators',
+%       display_text => 'Latest US Global Change Research Program Indicators Set',
 %       year         => '2018',
 %   },
 %   {
 %        identifier   => 'climate-science-special-report',
-%        display_text => 'Climate Science Special Report: The Fourth National Climate Assessment: Volume I',
+%        display_text => 'Climate Science Special Report: The Fourth National Climate Assessment, Volume I',
 %        year         => '2017',
 %   },
 %   {
@@ -22,8 +27,14 @@
 %   },
 %];
 
-% foreach my $report ( @$featured_reports ) {
-    <%= link_to 'show_report', { report_identifier => $report->{identifier} } => begin %>
-    <%= $report->{year} =%> : <%= $report->{display_text} %>
-    <%= end %><br /><br />
+% foreach my $pub ( @$featured_pubs ) {
+    % if ( $pub->{identifier} eq 'current_indicators' ) {
+        <%= link_to url_for('indicator')->query([current => 1]) => begin %>
+        <%= $pub->{year} =%> : <%= $pub->{display_text} %>
+        <%= end %><br /><br />
+    % } else {
+        <%= link_to 'show_report', { report_identifier => $pub->{identifier} } => begin %>
+        <%= $pub->{year} =%> : <%= $pub->{display_text} %>
+        <%= end %><br /><br />
+    % }
 % }
