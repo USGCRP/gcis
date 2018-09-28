@@ -243,15 +243,15 @@ $(function() {
         % my $i;
         % for my $type (qw/organization person dataset book journal article indicator report figure finding table scenario/) {
 
-        % if ( $type eq 'indicator' ) {
-            { link : '/<%= $type %>?current=1', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
-        % }
-        % elsif ( $type eq 'finding' || $type eq 'figure' || $type eq 'table' ) {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
-        % }
-        % else {
-            { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
-        % }
+             % if ( $type eq 'indicator' ) {
+                 { link : '/<%= $type %>?current=1', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+             % }
+             % elsif ( $type eq 'finding' || $type eq 'figure' || $type eq 'table' ) {
+                 { link : '/report?has_<%= $type %>s=1', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+             % }
+             % else {
+                 { link : '/<%= $type %>', i : <%= $i++ %>, text : ' <%= pl($type, $counts->{$type}) %>' },
+             % }
 
         % }
           ])
