@@ -433,16 +433,26 @@ sub register {
             my $str = shift;
             return "" unless $str && length($str);
             my $out;
-            my $i = 1;
-            my @pieces = split qr[<tbib>([^<]+)</tbib>], $str;
-            while (@pieces) {
-                my $next = shift @pieces;
-                $next =~  s[<sup>,</sup>][ ];
-                $out .= $next;
-                my $tbib = shift @pieces;
-                next unless $tbib;
-                $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
-                $i++;
+            if ( $str =~ /<tbib>/ ) {
+                my @pieces = split qr[<tbib>([^<]+)</tbib>], $str;
+                while (@pieces) {
+                    my $next = shift @pieces;
+                    $next =~  s[<sup>,</sup>][ ];
+                    $out .= $next;
+                    my $tbib = shift @pieces;
+                    next unless $tbib;
+                    $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
+                }
+            } elsif ( $str =~ /{{< *tbib/ ) {
+                my @pieces = split qr/{{< *tbib '[^']+' '([^']+)' *>}}/, $str;
+                while (@pieces) {
+                    my $next = shift @pieces;
+                    $next =~  s[<sup>,</sup>][ ];
+                    $out .= $next;
+                    my $tbib = shift @pieces;
+                    next unless $tbib;
+                    $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
+                }
             }
             return b($out);
         });
