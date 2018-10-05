@@ -17,7 +17,7 @@
     % my $others= $reference->publications;
     <div class='row'>
     <div class='col-md-8 col-lg-8 col-sm-12 col-xs-12'>
-        This bibliographic record appears in :
+        Referencing Publications:
         %= include 'obj_thumbnails', objs => [ map $_->to_object, @$others ], size => 'col-md-4 col-lg-4 col-sm-4 col-xs-4'
      <br>
      Reference URIs:<br>
@@ -46,7 +46,7 @@
     </div>
     % if (my $child = $reference->child_publication) {
         <div class='col-md-6 col-lg-4 col-sm-8 col-xs-8'>
-            Publication/contributor :
+            Referenced Publication:
             %= include 'obj_thumbnails', objs => [ $child->to_object ], size => 'col-md-12'
             % for my $map (@{ $reference->publication_contributor_maps }) {
             %= include 'obj_button', obj => $map->contributor, no_table => 1
@@ -55,7 +55,7 @@
     </div>
     % } else {
         <div class='col-lg-4 col-md-4 col-sm-4 col-xs-8 alert alert-danger'>
-        <p style='text-align:center;'>This reference is not associated with a publication.
+        <p style='text-align:center;'>The referenced publication is not connected.
         % if (user_can('update')) {
         <br>
         %= link_to 'update_rel_form_reference', class => 'btn btn-default' => begin
