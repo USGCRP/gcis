@@ -33,7 +33,7 @@
             <%= labelize($report->report_type_identifier // '') %>
             <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
         %= include 'h/contributors', object => $report, role_exclude => 'advisor';
-        <p itemprop="description" class='linebreaks'><%= $report->summary %></p>
+        <p itemprop="description" class='linebreaks'><%= tbibs_to_links($report->summary) %></p>
         % my ($chp, $fig, $fin,$tab, $ref, $img, $reg) = ($report->count_chapters, $report->count_figures, $report->count_findings, $report->count_tables, $report->reference_count, $report->count_images, $report->region_count);
         % if ($fig > 0 && ($chp + $fin + $tab + $ref == 0)) {
         <p>This report has <%== $numeric_link->($fig,'figure') %>

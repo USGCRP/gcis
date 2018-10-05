@@ -432,8 +432,9 @@ sub register {
             my $c = shift;
             my $str = shift;
             return "" unless $str && length($str);
-            my $out;
+            my $out = $str;
             if ( $str =~ /<tbib>/ ) {
+                $out = "";
                 my @pieces = split qr[<tbib>([^<]+)</tbib>], $str;
                 while (@pieces) {
                     my $next = shift @pieces;
@@ -444,6 +445,7 @@ sub register {
                     $out .= qq[<a href="/reference/$tbib" data_tbib='$tbib' class="tbib badge badge-default">$tbib</a>];
                 }
             } elsif ( $str =~ /{{< *tbib/ ) {
+                $out = "";
                 my @pieces = split qr/{{< *tbib '[^']+' '([^']+)' *>}}/, $str;
                 while (@pieces) {
                     my $next = shift @pieces;
