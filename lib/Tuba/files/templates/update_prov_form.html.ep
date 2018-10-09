@@ -31,7 +31,7 @@ This publication
 Relationship
 </label>
 <div class='col-lg-9 col-md-9 col-sm-8'>
-%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:cites', 'cito:isCitedBy' ], class => 'input form-control',
+%= select_field parent_rel => [['please select',''], 'prov:wasDerivedFrom', 'prov:wasGeneratedBy', 'prov:wasInformedBy', 'cito:cites', 'cito:isCitedBy', 'dct:replaces', 'dct:isReplacedBy' ], class => 'input form-control',
 </div>
 </div>
 
