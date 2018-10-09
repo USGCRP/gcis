@@ -31,7 +31,7 @@ my %j = (
   notes       => "Minekraft"
 );
 
-$t->post_ok("/journal" => json => \%j )->status_is(200);
+$t->post_ok("/journal.json" => json => \%j )->status_is(200);
 $t->get_ok("/journal/minecraft.json")->json_is(
     {
         %j,

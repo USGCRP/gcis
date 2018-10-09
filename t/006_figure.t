@@ -20,10 +20,10 @@ my $server_url = $t->ua->server->url;
 $server_url =~ s/\/$//;
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
-$t->post_ok("/report" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
+$t->post_ok("/report.json" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
 
 $t->post_ok(
-  "/report/vegetables/chapter" => json => {
+  "/report/vegetables/chapter.json" => json => {
     report_identifier => "vegetables",
     identifier        => "carrots",
     title             => "Carrots"
@@ -31,7 +31,7 @@ $t->post_ok(
 )->status_is(200);
 
 $t->post_ok(
-  "/report/vegetables/chapter/carrots/figure" => json => {
+  "/report/vegetables/chapter/carrots/figure" => { Accept => "application/json" } => json => {
     report_identifier  => "vegetables",
     chapter_identifier => "carrots",
     identifier         => "orange",
@@ -93,9 +93,9 @@ $t->post_ok(
 
 my $uuid = "77285d0f-ea9b-4bf2-80aa-3b968420c8b9";
 
-$t->post_ok("/image" => json => { identifier => $uuid } )->status_is(200);
+$t->post_ok("/image" => { Accept => "application/json" } => json => { identifier => $uuid } )->status_is(200);
 
-$t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
+$t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => { Accept => "application/json" } => json =>
     {add_image_identifier => $uuid, title => "Orange Carrots"})
   ->status_is(200);
 
@@ -116,7 +116,7 @@ $t->get_ok("/figure.json")->json_is(
 
 # Create a keyword.
 $t->post_ok(
-  '/gcmd_keyword', json =>
+  '/gcmd_keyword', { Accept => "application/json" } => json =>
     {
       identifier => "457883c4-b30c-4d26-bed8-6c2887ebbc90",
       label      => "OCEAN OPTICS",
@@ -126,7 +126,7 @@ $t->post_ok(
 
 # Create a keyword.
 $t->post_ok(
-  '/gcmd_keyword', json =>
+  '/gcmd_keyword', { Accept => "application/json" } => json =>
     {
       identifier => "001f18d3-7e61-430b-9883-1960c6256fe5",
       label      => "OPTICAL DEPTH",
@@ -149,7 +149,7 @@ $t->get_ok("/gcmd_keyword/457883c4-b30c-4d26-bed8-6c2887ebbc90/children.json")
 
 # Assign it to the figure.
 $t->post_ok(
-  "/report/vegetables/chapter/carrots/figure/keywords/orange" => json =>
+  "/report/vegetables/chapter/carrots/figure/keywords/orange" => { Accept => "application/json" } => json =>
     {identifier => "001f18d3-7e61-430b-9883-1960c6256fe5"})->status_is(200);
 
 $t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_gcmd=1")
@@ -157,7 +157,7 @@ $t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_gcmd=1")
 
 # Create a region.
 $t->post_ok(
-  '/region', json =>
+  '/region', { Accept => "application/json" } => json =>
     {
       identifier => "bermuda_triangle",
       label      => "Bermuda Triangle",
@@ -167,13 +167,13 @@ $t->post_ok(
 
 # Assign it to the figure.
 $t->post_ok(
-  "/report/vegetables/chapter/carrots/figure/regions/orange" => json =>
+  "/report/vegetables/chapter/carrots/figure/regions/orange" => { Accept => "application/json" } => json =>
     {identifier => "bermuda_triangle"})->status_is(200);
 
 $t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_regions=1")
     ->json_is( "/regions/0/identifier", "bermuda_triangle" );
 
-$t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => json =>
+$t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => { Accept => "application/json" } => json =>
     {delete_image_identifier => $uuid, title => "Orange Carrots"})
   ->status_is(200);
 

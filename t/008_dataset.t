@@ -55,7 +55,7 @@ my $dataset = {
 };
 
 
-$t->post_ok( "/dataset" => json => $dataset )->status_is(200);
+$t->post_ok( "/dataset.json" => json => $dataset )->status_is(200);
 
 $dataset->{href} = "$base/dataset/my-temps.json";
 $dataset->{uri} = "/dataset/my-temps";
@@ -79,7 +79,7 @@ my $platform = {
   start_date => undef,
   end_date => undef
 };
-$t->post_ok( "/platform" => json => $platform )->status_is(200);
+$t->post_ok( "/platform.json" => json => $platform )->status_is(200);
 $platform->{uri} = "/platform/house";
 $platform->{href} = "$base/platform/house.json";
 $platform->{cited_by} = [];
@@ -94,7 +94,7 @@ my $instrument = {
   description => "This type of thermometer was invented in 1714 by Daniel Fahrenheit.",
   description_attribution => "http://wikipedia.com",
 };
-$t->post_ok( "/instrument" => json => $instrument )->status_is(200);
+$t->post_ok( "/instrument.json" => json => $instrument )->status_is(200);
 $instrument->{uri} = "/instrument/mercury-in-glass-thermometer";
 $instrument->{href} = "$base/instrument/mercury-in-glass-thermometer.json";
 $instrument->{cited_by} = [];
@@ -103,7 +103,7 @@ $t->get_ok("/instrument/mercury-in-glass-thermometer.json")->status_is(200)->jso
 $t->get_ok("/instrument/mercury-in-glass-thermometer.ttl")->status_is(200)->turtle_ok->content_like(qr/thermo/);
 
 # One of these instruments is on the house.
-$t->post_ok( "/platform/rel/house", json => {
+$t->post_ok( "/platform/rel/house.json", json => {
         add => { instrument_identifier => "mercury-in-glass-thermometer",
                  location => "on the north side, next to the window" }
         }
@@ -121,7 +121,7 @@ $t->get_ok( "/platform/house/instrument/mercury-in-glass-thermometer.json" )->st
              } );
 
 # Reading the thermometer on the house generates the dataset.
-$t->post_ok("/dataset/rel/my-temps", json => {
+$t->post_ok("/dataset/rel/my-temps.json", json => {
         add_instrument_measurement => {
             platform_identifier => "house",
             instrument_identifier => "mercury-in-glass-thermometer",

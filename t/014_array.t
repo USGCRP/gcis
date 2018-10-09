@@ -20,7 +20,7 @@ $base =~ s[/$][];
 $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 
-$t->post_ok("/report" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
+$t->post_ok("/report.json" => json => {identifier => "vegetables", title => "Veggies"})->status_is(200);
 
 $t->post_ok("/report/vegetables/table" =>
   { Accept => "application/json"} => json => {
@@ -42,7 +42,7 @@ $t->post_ok(
 )->status_is(200);
 
 $t->post_ok(
-  "/report/vegetables/table/rel/veggietable" => json =>
+  "/report/vegetables/table/rel/veggietable.json" => json =>
   { add_array_identifier => "simple" }
 )->status_is(200);
 

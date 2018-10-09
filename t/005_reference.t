@@ -33,7 +33,7 @@ my $reference_identifier = q[f13367d9-1e7f-40ca-a495-542d7a3faf98];
 
 # Create the reference for the first report.
 $t->post_ok(
-  "/reference" => json => {
+  "/reference" => { Accept => "application/json" } => json => {
     identifier  => $reference_identifier,
     publication => "/report/test-report",
     attrs       => { description => "$desc" },
@@ -43,7 +43,7 @@ diag $t->tx->res->body unless $t->tx->res->code==200;
 
 # Update the reference to add the second report.
 $t->post_ok(
-  "/reference/$reference_identifier" => json => {
+  "/reference/$reference_identifier" => { Accept => "application/json" } => json => {
     identifier  => $reference_identifier,
     publication => "/report/test-nother-report",
     attrs       => { description => "$desc" },
@@ -75,10 +75,10 @@ $t->get_ok("/reference/history/$reference_identifier")
 
 # Update. Associate the reference with an article.
 my $article_doi = "10.123/456.789";
-$t->post_ok("/journal" => json => { identifier => 'nature', print_issn => '1234-5679'} );
-$t->post_ok("/article" => json => { identifier => $article_doi, journal_identifier => 'nature' });
+$t->post_ok("/journal" => { Accept => "application/json" } => json => { identifier => 'nature', print_issn => '1234-5679'} );
+$t->post_ok("/article" => { Accept => "application/json" } => json => { identifier => $article_doi, journal_identifier => 'nature' });
 
-$t->post_ok("/reference/$reference_identifier" => json => {
+$t->post_ok("/reference/$reference_identifier" => { Accept => "application/json" } => json => {
         identifier => $reference_identifier,
         attrs => { description => $desc },
         child_publication => "/article/$article_doi"
@@ -89,12 +89,12 @@ $t->get_ok("/reference/$reference_identifier.json")->status_is(200)
 
 # Make a book, convert to a report, ensure reference is still connected.
 $t->post_ok("/book" => "form" => { identifier => 'test-book', title => 'some title' } );
-$t->post_ok("/reference" => json => {
+$t->post_ok("/reference" => { Accept => "application/json" } => json => {
         identifier => "newrefid",
         publication => "/report/test-report",
         attrs => { testattr => "testvalue" }
     })->status_is(200);
-$t->post_ok("/reference/newrefid" => json => {
+$t->post_ok("/reference/newrefid" => { Accept => "application/json" } => json => {
         identifier => "newrefid",
         child_publication => "/book/test-book",
         attrs => { testattr => "testvalue" }

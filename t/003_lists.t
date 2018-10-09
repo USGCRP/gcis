@@ -35,7 +35,7 @@ my @reports = map +{
      contact_email         => "note\@note.com"
     }, 1..5;
 
-$t->post_ok("/report" => json => $_)->status_is(200) for @reports;
+$t->post_ok("/report" => { Accept => "application/json" } => json => $_)->status_is(200) for @reports;
 
 $t->get_ok('/report.json')->status_is(200)->json_is(
     [

@@ -20,11 +20,11 @@ $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => {user => "unit_test", password => "anything"})->status_is(200);
 
 # Make a report
-$t->post_ok("/report" => json => {identifier => "pizzabrain", title => "Pizzabrain"})->status_is(200);
+$t->post_ok("/report.json" => json => {identifier => "pizzabrain", title => "Pizzabrain"})->status_is(200);
 
 # Make a chapter
 $t->post_ok(
-  "/report/pizzabrain/chapter" => json => {
+  "/report/pizzabrain/chapter.json" => json => {
     identifier        => "uno",
     report_identifier => "pizzabrain",
     title             => "Chapter one"
@@ -33,7 +33,7 @@ $t->post_ok(
 
 # Make a figure
 $t->post_ok(
-  "/report/pizzabrain/figure" => json => {
+  "/report/pizzabrain/figure.json" => json => {
     identifier         => "pizza",
     chapter_identifier => "uno",
     report_identifier  => "pizzabrain"
@@ -42,14 +42,14 @@ $t->post_ok(
 
 # Make a dataset
 $t->post_ok(
-  "/dataset" => json => {
+  "/dataset.json" => json => {
     identifier  => "dough",
   }
 )->status_is(200);
 
 # The figure wasBaked from that dataset
 $t->post_ok(
-  "/report/pizzabrain/figure/prov/pizza" => json => {
+  "/report/pizzabrain/figure/prov/pizza.json" => json => {
     parent_uri => "/dataset/dough",
     parent_rel => "prov:wasBaked",
     note       => "This pizza was baked from high quality gluten-free dough.",

@@ -24,7 +24,7 @@ my %project = (
     description_attribution => "http://wikipedia.com/cmip12",
     website => "http://crustacean12.com",
 );
-$t->post_ok("/project" => json => \%project )->status_is(200);
+$t->post_ok("/project.json" => json => \%project )->status_is(200);
 $t->get_ok("/project/cmip12.json")->status_is(200)
   ->json_is( { %project,
     uri       => "/project/cmip12",
@@ -43,7 +43,7 @@ my %model = (
     description => 'The Community Climate Model (CCM) was created by NCAR in 1983.',
     description_attribution => 'http://www2.cesm.ucar.edu/about',
 );
-$t->post_ok("/model" => json => \%model )->status_is(200);
+$t->post_ok("/model.json" => json => \%model )->status_is(200);
 $t->get_ok("/model/ccsm3.json")->status_is(200)
   ->json_is( { %model,
     uri       => "/model/ccsm3",
@@ -58,7 +58,7 @@ my %scenario = (
     description => "While some rain fails mainly in the plains, some rain eludes Spain",
     description_attribution => 'http://google.com',
 );
-$t->post_ok("/scenario" => json => \%scenario )->status_is(200);
+$t->post_ok("/scenario.json" => json => \%scenario )->status_is(200);
 $t->get_ok("/scenario/sres_a2.json")->status_is(200)
   ->json_is( { %scenario,
     cited_by => [],
@@ -81,7 +81,7 @@ my %run = (
     sequence => 1,
     sequence_description => undef,
 );
-$t->post_ok("/model_run" => json => \%run )->status_is(200);
+$t->post_ok("/model_run.json" => json => \%run )->status_is(200);
 $t->get_ok("/model_run/012345.json")->status_is(200)
     ->json_is( { %run,
         uri => "/model_run/012345",

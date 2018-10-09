@@ -17,21 +17,21 @@ $t->ua->max_redirects(0);
 my $event_id = $t->ua->on(start => sub { pop->req->headers->header("Accept" => "application/json")});
 
 # Make an org.
-$t->post_ok("/organization" => json => { identifier => "earth", name => "Early Adopters of Real Technological Harmonicas" })
+$t->post_ok("/organization.json" => json => { identifier => "earth", name => "Early Adopters of Real Technological Harmonicas" })
     ->status_is(302);
 $t->get_ok("/organization/earth")
    ->status_is(200)
    ->json_is("/name" => "Early Adopters of Real Technological Harmonicas");
 
 # Make an org, let it generate the identifier.
-$t->post_ok("/organization" => json => {name => "Earth 2020" })
+$t->post_ok("/organization.json" => json => {name => "Earth 2020" })
     ->status_is(302);
 $t->get_ok("/organization/earth-2020")
    ->status_is(200)
    ->json_is("/name" => "Earth 2020");
 
 # Make one more org.
-$t->post_ok("/organization" => json => { identifier => "earth-2021", name => "Earthy 2021" })
+$t->post_ok("/organization.json" => json => { identifier => "earth-2021", name => "Earthy 2021" })
     ->status_is(302);
 $t->get_ok("/organization/earth-2021")
    ->status_is(200)
@@ -40,7 +40,7 @@ $t->get_ok("/organization/earth-2021")
 
 # Add a person
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example.com/john_smith',
     last_name   => "Smith",
     middle_name => "T",
@@ -58,12 +58,12 @@ $t->get_ok("/person/$id")
 $t->ua->max_redirects(1);
 
 # Make two publications and list two organizations with same person, same role different pubs.
-$t->post_ok("/report" => json => { identifier => 'uno', title => 'Report Uno' })->status_is(200);
-$t->post_ok("/report" => json => { identifier => 'dos', title => 'Report Dos' })->status_is(200);
+$t->post_ok("/report.json" => json => { identifier => 'uno', title => 'Report Uno' })->status_is(200);
+$t->post_ok("/report.json" => json => { identifier => 'dos', title => 'Report Dos' })->status_is(200);
 
-$t->post_ok("/report/contributors/uno" => json =>
+$t->post_ok("/report/contributors/uno.json" => json =>
     {person_id => $id, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
-$t->post_ok("/report/contributors/dos" => json =>
+$t->post_ok("/report/contributors/dos.json" => json =>
     {person_id => $id, organization_identifier => 'earth-2020', role => 'engineer' })->status_is(200);
 
 $t->get_ok("/report/uno")->json_is("/contributors/0/organization/identifier" => earth);
@@ -106,7 +106,7 @@ $t->post_ok("/organization/earth-2021/merge" => form => {
 $t->get_ok("/organization/earth-2021")->status_is(302)->header_is("Location" => "/organization/earth");
 
 # Make an org with leading spaces. Confirm the ID has no starting dash
-$t->post_ok("/organization" => json => {name => "    Space 2020" })
+$t->post_ok("/organization.json" => json => {name => "    Space 2020" })
     ->status_is(302);
 $t->get_ok("/organization/space-2020")
    ->status_is(200)

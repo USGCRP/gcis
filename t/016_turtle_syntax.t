@@ -31,7 +31,7 @@ $t->post_ok("/report/animals/chapter" => form =>
     {identifier => "alligators", title => "All about alligators"})
   ->status_is(200);
 $t->post_ok(
-  "/report/animals/chapter/alligators/figure" => \%h => json => {
+  "/report/animals/chapter/alligators/figure.json" => \%h => json => {
     report_identifier  => "animals",
     chapter_identifier => "alligators",
     identifier         => "caimans",
@@ -39,47 +39,47 @@ $t->post_ok(
   }
 )->status_is(200);
 $t->post_ok(
-  "/image" => \%h => json => {
+  "/image.json" => \%h => json => {
     identifier => "be08d5f5-fac1-44a0-9bd3-a3a891c1494a",
     title      => "fakeimage"
   }
 )->status_is(200);
 $t->post_ok(
-  "/report/animals/chapter/alligators/table" => \%h => json => {
+  "/report/animals/chapter/alligators/table.json" => \%h => json => {
     report_identifier  => "animals",
     chapter_identifier => "alligators",
     identifier         => "population",
     title              => "Some numbers"
   }
 )->status_is(200);
-$t->post_ok("/array" => \%h => json =>
+$t->post_ok("/array.json" => \%h => json =>
     {identifier => "33ac71cb-b34c-4290-962b-bee1125adf7e"})->status_is(200);
 $t->post_ok(
-  "/report/animals/chapter/alligators/finding" => \%h => json => {
+  "/report/animals/chapter/alligators/finding.json" => \%h => json => {
     report_identifier  => "animals",
     chapter_identifier => "alligators",
     identifier         => "amphibians",
     statement          => "Found that they are amphibians."
   }
 )->status_is(200);
-$t->post_ok("/journal" => \%h => json =>
+$t->post_ok("/journal.json" => \%h => json =>
     {identifier => "gators", title => "fakejournal", print_issn => "1234-5679"})->status_is(200);
 $t->post_ok(
-  "/article" => \%h => json => {
+  "/article.json" => \%h => json => {
     identifier         => "gatorade",
     title              => "fakearticle",
     journal_identifier => 'gators'
   }
 )->status_is(200);
 $t->post_ok(
-  "/person" => \%h => json => {first_name => "Allie", last_name => "Gator"})
+  "/person.json" => \%h => json => {first_name => "Allie", last_name => "Gator"})
   ->status_is(200);
 my $person = $t->tx->res->json;
 ok $person->{id}, "Got an id for a person";
-$t->post_ok("/organization" => \%h => json =>
+$t->post_ok("/organization.json" => \%h => json =>
     {identifier => "aa", name => "alligators anonymous"})->status_is(200);
 $t->post_ok(
-  "/reference" => \%h => json => {
+  "/reference.json" => \%h => json => {
     identifier   => "ref-ref-ref",
     publication  => '/report/animals',
     attrs        => {end => 'note'}
@@ -119,7 +119,7 @@ my $dataset = {
     variables        => "x y z",
 };
 
-$t->post_ok( "/dataset" => json => $dataset )->status_is(200);
+$t->post_ok( "/dataset.json" => json => $dataset )->status_is(200);
 
 my $activity = {
     identifier => "teeth-brush",
@@ -135,7 +135,7 @@ my $activity = {
     notes => "every day\n is a good to brush your teeth",
 };
 
-$t->post_ok( "/activity" => json => $activity )->status_is(200);
+$t->post_ok( "/activity.json" => json => $activity )->status_is(200);
 
 my $spatial_extent = do {
     local $/ = undef;
@@ -165,7 +165,7 @@ my $new_activity = {
     spatial_extent => $spatial_extent,
 };
 
-$t->post_ok( "/activity" => json => $new_activity )->status_is(200);
+$t->post_ok( "/activity.json" => json => $new_activity )->status_is(200);
 
 my $project = {
     identifier => "worm",
@@ -175,7 +175,7 @@ my $project = {
     description_attribution => "http://example.com",
 };
 
-$t->post_ok( "/project" => json => $project )->status_is(200);
+$t->post_ok( "/project.json" => json => $project )->status_is(200);
 
 my $scenario = {
     identifier => "chimp",
@@ -184,7 +184,7 @@ my $scenario = {
     description_attribution => "http://nationalzoo.org",
 };
 
-$t->post_ok( "/scenario" => json => $scenario )->status_is(200);
+$t->post_ok( "/scenario.json" => json => $scenario )->status_is(200);
 my $model = {
     identifier => "tiger",
     name => "instance of\ncat",
@@ -195,7 +195,7 @@ my $model = {
     project_identifier => "worm",
 };
 
-$t->post_ok( "/model" => json => $model )->status_is(200);
+$t->post_ok( "/model.json" => json => $model )->status_is(200);
 my $model_run = {
     identifier => "bat",
     doi => "10.999999/9998",
@@ -212,7 +212,7 @@ my $model_run = {
 
 };
 
-$t->post_ok( "/model_run" => json => $model_run )->status_is(200);
+$t->post_ok( "/model_run.json" => json => $model_run )->status_is(200);
 
 $t->get_ok("/report/animals.ttl")->status_is(200)->turtle_ok;
 $t->get_ok("/report/animals/chapter/alligators.ttl")->turtle_ok;

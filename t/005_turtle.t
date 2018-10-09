@@ -121,8 +121,8 @@ $t->get_ok("/report/animals/chapter/alligators.nt")
     ->content_like( qr[report/animals] );
 
 # Figure
-$t->post_ok("/report/animals/chapter/alligators/figure" => \%h
-     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "caimans", title => "Little alligators" } )->status_is(200);
+$t->post_ok("/report/animals/chapter/alligators/figure.json" => \%h
+    => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "caimans", title => "Little alligators" } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/figure.json")
     ->status_is(200);
@@ -132,8 +132,8 @@ $t->get_ok("/report/animals/chapter/alligators/figure/caimans.nt")
     ->content_like( qr[Little] );
 
 
-$t->post_ok("/image" => \%h
-     => json => { identifier => "be08d5f5-fac1-44a0-9bd3-a3a891c1494a", title => "fakeimage" } )->status_is(200);
+$t->post_ok("/image.json" => \%h
+    => json => { identifier => "be08d5f5-fac1-44a0-9bd3-a3a891c1494a", title => "fakeimage" } )->status_is(200);
 
 $t->get_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a")->status_is(200);
 
@@ -142,8 +142,8 @@ $t->get_ok("/image/be08d5f5-fac1-44a0-9bd3-a3a891c1494a.nt")
     ->content_like( qr[fakeimage] );
 
 # Table
-$t->post_ok("/report/animals/chapter/alligators/table" => \%h
-     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "population", title => "Some numbers" } )->status_is(200);
+$t->post_ok("/report/animals/chapter/alligators/table.json" => \%h
+    => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "population", title => "Some numbers" } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/table.json")
     ->status_is(200);
@@ -153,16 +153,16 @@ $t->get_ok("/report/animals/chapter/alligators/table/population.nt")
     ->content_like( qr[numbers] );
 
 # Array
-$t->post_ok("/array" => \%h
-     => json => { identifier => "33ac71cb-b34c-4290-962b-bee1125adf7e" } )->status_is(200);
+$t->post_ok("/array.json" => \%h
+    => json => { identifier => "33ac71cb-b34c-4290-962b-bee1125adf7e" } )->status_is(200);
 
 $t->get_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e")->status_is(200);
 
 $t->get_ok("/array/33ac71cb-b34c-4290-962b-bee1125adf7e.nt")->status_is(200);
 
 # Finding
-$t->post_ok("/report/animals/chapter/alligators/finding" => \%h
-     => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
+$t->post_ok("/report/animals/chapter/alligators/finding.json" => \%h
+    => json => { report_identifier => "animals", chapter_identifier => "alligators", identifier => "amphibians", statement => "Found that they are amphibians." } )->status_is(200);
 
 $t->get_ok("/report/animals/chapter/alligators/finding.json")
     ->status_is(200);
@@ -172,8 +172,8 @@ $t->get_ok("/report/animals/chapter/alligators/finding/amphibians.nt")
     ->content_like( qr[amphibians] );
 
 # Journal
-$t->post_ok("/journal" => \%h
-     => json => { identifier => "gators", title => "fakejournal", print_issn => '1234-5679' } )->status_is(200);
+$t->post_ok("/journal.json" => \%h
+    => json => { identifier => "gators", title => "fakejournal", print_issn => '1234-5679' } )->status_is(200);
 
 $t->get_ok("/journal/gators")->status_is(200);
 
@@ -182,8 +182,8 @@ $t->get_ok("/journal/gators.nt")
     ->content_like( qr[fakejournal] );
 
 # Article
-$t->post_ok("/article" => \%h
-     => json => { identifier => "gatorade", title => "fakearticle", journal_identifier => 'gators' } )->status_is(200);
+$t->post_ok("/article.json" => \%h
+    => json => { identifier => "gatorade", title => "fakearticle", journal_identifier => 'gators' } )->status_is(200);
 
 $t->get_ok("/article/gatorade")->status_is(200);
 
@@ -192,8 +192,8 @@ $t->get_ok("/article/gatorade.nt")
     ->content_like( qr[fakearticle] );
 
 # Person
-$t->post_ok("/person" => \%h
-     => json => { first_name => "Allie", last_name => "Gator" } )->status_is(200);
+$t->post_ok("/person.json" => \%h
+    => json => { first_name => "Allie", last_name => "Gator" } )->status_is(200);
 
 my $person = $t->tx->res->json;
 
@@ -206,8 +206,8 @@ $t->get_ok("/person/$person->{id}.nt")
     ->content_like( qr[Allie] );
 
 # Organization
-$t->post_ok("/organization" => \%h
-     => json => { identifier => "aa", name => "alligators anonymous" } )->status_is(200);
+$t->post_ok("/organization.json" => \%h
+    => json => { identifier => "aa", name => "alligators anonymous" } )->status_is(200);
 
 $t->get_ok("/organization/aa")->status_is(200);
 
@@ -216,8 +216,8 @@ $t->get_ok("/organization/aa.nt")
     ->content_like( qr[anonymous] );
 
 # Reference
-$t->post_ok("/reference" => \%h
-     => json => { identifier => "ref-ref-ref",
+$t->post_ok("/reference.json" => \%h
+    => json => { identifier => "ref-ref-ref",
         publication => '/report/animals',
         attrs => { end => 'note' } } )->status_is(200);
 
@@ -262,7 +262,7 @@ my $dataset = {
     variables        => "x y z",
 };
 
-$t->post_ok( "/dataset" => json => $dataset )->status_is(200);
+$t->post_ok( "/dataset.json" => json => $dataset )->status_is(200);
 
 $t->get_ok("/dataset/cmip3.ttl")->status_is(200);
 $t->get_ok("/dataset/cmip3.nt")->status_is(200);
@@ -283,7 +283,7 @@ my $old_activity = {
     notes => "every day\n is a good to brush your teeth",
 };
 
-$t->post_ok( "/activity.json" => json => $old_activity )->status_is(200);
+$t->post_ok( "/activity.json" => { Accept => "application/json" } => json => $old_activity )->status_is(200);
 $t->get_ok('/activity/teeth-brush.ttl')->status_is(200);
 $t->get_ok('/activity/teeth-brush.nt')->status_is(200);
 
@@ -330,17 +330,17 @@ $t->get_ok('/activity/temperature_in_virginia_in_2000.ttl')->status_is(200);
 $t->get_ok('/activity/temperature_in_virginia_in_2000.nt')->status_is(200);
 
 # Bad activities
-$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+$t->post_ok( "/activity/temperature_in_virginia_in_2000.json" =>
     json => { identifier => "bad_se_1", spatial_extent => '{ "type: "Feature", "Note": "Bad JSON" }' } )
-        ->status_is(200)
+        ->status_is(422)
         ->content_like( qr[Invalid geoJSON: could not parse json] );
-$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" => { Accept => "application/json" } =>
     json => { identifier => "bad_se_2", spatial_extent => '{ "tye": "Feature", "Note": "No Type field" }' } )
-        ->status_is(200)
+        ->status_is(422)
         ->content_like( qr[Invalid geoJSON: missing type field] );
-$t->post_ok( "/activity/temperature_in_virginia_in_2000" =>
+$t->post_ok( "/activity/temperature_in_virginia_in_2000" => { Accept => "application/json" } =>
     json => { identifier => "bad_se_3", spatial_extent => '{ "type": "Feathure", "Note": "Invalid type" }' } )
-        ->status_is(200)
+        ->status_is(422)
         ->content_like( qr[Invalid geoJSON: Bad type] );
 
 my $project = {
@@ -351,7 +351,7 @@ my $project = {
     description_attribution => "http://example.com",
 };
 
-$t->post_ok( "/project" => json => $project )->status_is(200);
+$t->post_ok( "/project" => { Accept => "application/json" } => json => $project )->status_is(200);
 $t->get_ok('/project/worm.ttl')->status_is(200);
 $t->get_ok('/project/worm.nt')->status_is(200);
 
@@ -364,7 +364,7 @@ my $scenario = {
     description_attribution => "http://nationalzoo.org",
 };
 
-$t->post_ok( "/scenario" => json => $scenario )->status_is(200);
+$t->post_ok( "/scenario" => { Accept => "application/json" } => json => $scenario )->status_is(200);
 $t->get_ok('/scenario/chimp.ttl')->status_is(200);
 $t->get_ok('/scenario/chimp.nt')->status_is(200);
 
@@ -379,7 +379,7 @@ my $model = {
     project_identifier => "worm",
 };
 
-$t->post_ok( "/model" => json => $model )->status_is(200);
+$t->post_ok( "/model" => { Accept => "application/json" } => json => $model )->status_is(200);
 $t->get_ok('/model/tiger.ttl')->status_is(200);
 $t->get_ok('/model/tiger.nt')->status_is(200);
 
@@ -401,7 +401,7 @@ my $model_run = {
 
 };
 
-$t->post_ok( "/model_run" => json => $model_run )->status_is(200);
+$t->post_ok( "/model_run" => { Accept => "application/json" } => json => $model_run )->status_is(200);
 $t->get_ok('/model_run/bat.ttl')->status_is(200);
 $t->get_ok('/model_run/bat.nt')->status_is(200);
 

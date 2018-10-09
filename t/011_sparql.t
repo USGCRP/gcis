@@ -97,14 +97,14 @@ $t->post_ok(
   })->status_is(200);
 
 $t->post_ok(
-  "/report/trees/chapter" => json => {
+  "/report/trees/chapter.json" => json => {
     report_identifier => "trees",
     identifier        => "the-larch",
     title             => "Number one : The Larch",
   })->status_is(200);
 
 $t->post_ok(
-  "/report/trees/chapter/the-larch/figure" => json => {
+  "/report/trees/chapter/the-larch/figure.json" => json => {
     report_identifier  => "trees",
     chapter_identifier => "the-larch",
     identifier         => "tall-green-larch-tree",
@@ -113,7 +113,7 @@ $t->post_ok(
   })->status_is(200);
 
 $t->post_ok(
-  "/report/trees/chapter/the-larch/finding" => json => {
+  "/report/trees/chapter/the-larch/finding.json" => json => {
     report_identifier  => "trees",
     chapter_identifier => "the-larch",
     identifier         => "larch-trees-are-tall",
@@ -123,25 +123,25 @@ $t->post_ok(
 
 my $image_identifier = "99285d0f-ea9b-4bf2-80aa-3b968420c8b0";
 $t->post_ok(
-  "/image" => json => {
+  "/image.json" => json => {
     identifier => $image_identifier,
     title => "Larch leaves",
   }
 )->status_is(200);
-$t->post_ok("/report/trees/chapter/the-larch/figure/rel/tall-green-larch-tree" => json =>
+$t->post_ok("/report/trees/chapter/the-larch/figure/rel/tall-green-larch-tree.json" => json =>
     {add_image_identifier => $image_identifier })
   ->status_is(200);
 
 my $dataset_identifier = "r12345-larch-leaves-dataset";
 $t->post_ok(
-  "/dataset" => json => {
+  "/dataset.json" => json => {
     identifier => $dataset_identifier,
   }
 )->status_is(200);
 
 # The larch image wasDerived from that dataset.
 $t->post_ok(
-  "/image/prov/$image_identifier" => json => {
+  "/image/prov/$image_identifier.json" => json => {
     parent_uri => "/dataset/r12345-larch-leaves-dataset",
     parent_rel => "prov:wasDerivedFrom",
     note       => "Number one : the larch, was derived from this dataset",
@@ -151,20 +151,20 @@ $t->post_ok(
 my $instrument_identifier = 'leica-dlux';
 my $platform_identifier = 'tripod';
 # The leica-dlux on the tripod was used to create the dataset.
-$t->post_ok( "/platform" => json => {
+$t->post_ok( "/platform.json" => json => {
         identifier => $platform_identifier,
         name => "This is a tripod used to mount instruments and collect data."
     });
-$t->post_ok( "/instrument" => json => {
+$t->post_ok( "/instrument.json" => json => {
         identifier => $instrument_identifier,
         name => "This is a sensitive camera used to collect data."
     });
-$t->post_ok( "/platform/rel/$platform_identifier" => json => {
+$t->post_ok( "/platform/rel/$platform_identifier.json" => json => {
         add => { instrument_identifier => $instrument_identifier },
         location => "top"
     }
 );
-$t->post_ok("/dataset/rel/$dataset_identifier" => json => {
+$t->post_ok("/dataset/rel/$dataset_identifier.json" => json => {
         add_instrument_measurement => {
             platform_identifier => $platform_identifier,
             instrument_identifier => $instrument_identifier,
@@ -172,11 +172,11 @@ $t->post_ok("/dataset/rel/$dataset_identifier" => json => {
     });
 
 # Add a dbpedia lexicon
-$t->post_ok( "/lexicon", json => { identifier => 'dbpedia' } )->status_is(200);
+$t->post_ok( "/lexicon.json", json => { identifier => 'dbpedia' } )->status_is(200);
 
 # Also add a dbpedia owl:sameAs
 my $dbpedia_platform_identifier = "Three-pod";
-$t->post_ok( "/lexicon/dbpedia/term/new" => json => {
+$t->post_ok( "/lexicon/dbpedia/term/new" => { Accept => "application/json" } => json => {
         term => $dbpedia_platform_identifier, context => 'resource', gcid => "/platform/$platform_identifier" } );
 
 #

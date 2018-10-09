@@ -22,7 +22,7 @@ $t->ua->max_redirects(1);
 $t->post_ok("/login" => form => { user => "unit_test", password => "anything" })->status_is(200);
 $t->ua->max_redirects(0);
 
-$t->post_ok("/report" => json => { identifier => 'test-etags', title => 'Etag test' } )->status_is(302);
+$t->post_ok("/report" => { Accept => "application/json" } => json => { identifier => 'test-etags', title => 'Etag test' } )->status_is(302);
 like $t->tx->res->headers->etag, qr/\w+-\w+-\w+-\w+/;
 $t->delete_ok('/report/test-etags');
 
@@ -32,10 +32,10 @@ $t->post_ok("/report" => form => { identifier => "test-report", title => "Test r
 $t->post_ok("/report/test-report/finding" => form => { identifier => "test-finding", statement => "Test Finding." } )->status_is(200);
 $t->get_ok("/report/test-report/finding/test-finding.json")->json_is('/statement' => "Test Finding.");
 
-$t->post_ok("/file" => json => { identifier => 'testfile', file => "fake", mime_type => 'foo' } )
+$t->post_ok("/file" => { Accept => "application/json" } => json => { identifier => 'testfile', file => "fake", mime_type => 'foo' } )
     ->status_is(200);
 
-$t->post_ok("/report/files/test-report" => json =>
+$t->post_ok("/report/files/test-report" => { Accept => "application/json" } => json =>
     {add_existing_file => "/file/testfile"} )->status_is(200);
 
 my $title = "Chapter one ± two";
@@ -90,7 +90,7 @@ $t->get_ok("/report/test-report" => { Accept => "application/json" } )->status_i
 $t->get_ok("/report/test-report2" => { Accept => "application/json" } )->status_is(200)
   ->json_is("/identifier" => "test-report2");
 
-$t->post_ok("/report/test-report/figure" => json => { identifier => "test-figure", report_identifier => "test-report" } )->status_is(200);
+$t->post_ok("/report/test-report/figure" => { Accept => "application/json" } => json => { identifier => "test-figure", report_identifier => "test-report" } )->status_is(200);
 $t->get_ok("/report/test-report/figure/test-figure" => { Accept => "application/json" } )->status_is(200)
   ->json_is("/identifier" => "test-figure");
 

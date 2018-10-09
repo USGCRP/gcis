@@ -19,7 +19,7 @@ my $event_id = $t->ua->on(start => sub { pop->req->headers->header("Accept" => "
 # Add a person
 my $orcid1 = "0000-0002-1825-0097";
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example.com/john_smith',
     last_name   => "Smith",
     middle_name => "T",
@@ -42,7 +42,7 @@ like $uri, qr[/person/$id1], 'orcid redirects to person';
 
 # Add another one just like that one.
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example.com/john_smyth',
     last_name   => "Smyth",
     middle_name => "T",
@@ -59,7 +59,7 @@ $t->get_ok("/person/$id2")
 
 # Add another one just like that one.
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example.com/j_smyth',
     last_name   => "Smyth",
     middle_name => "T",
@@ -78,7 +78,7 @@ $t->get_ok("/person/$id3")
 my $orcid4_lc = "0000-0002-1694-233x";
 my $orcid4_uc = uc $orcid4_lc;
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example.com/j_smyth',
     last_name   => "Smyth",
     middle_name => "",
@@ -109,7 +109,7 @@ like $uri, qr[/person/$id4], 'misformatted orcid redirects to person';
     local *STDERR;
     open STDERR, '>/dev/null';
     $t->post_ok(
-      "/person" => json => {
+      "/person.json" => json => {
         url         => 'http://example.com/s_smyth',
         last_name   => "Smyth",
         middle_name => "",
@@ -121,19 +121,19 @@ like $uri, qr[/person/$id4], 'misformatted orcid redirects to person';
 $t->ua->max_redirects(1);
 
 # Also make an org.
-$t->post_ok("/organization" => json => { identifier => "earth", name => "Early Adopters of Real Technological Harmonicas" })
+$t->post_ok("/organization.json" => json => { identifier => "earth", name => "Early Adopters of Real Technological Harmonicas" })
     ->status_is(200);
 
 # Make two publications and list two people with same org, same role
 # different pubs.
-$t->post_ok("/report" => json => { identifier => 'uno', title => 'Report Uno' })->status_is(200);
-$t->post_ok("/report" => json => { identifier => 'dos', title => 'Report Dos' })->status_is(200);
+$t->post_ok("/report.json" => json => { identifier => 'uno', title => 'Report Uno' })->status_is(200);
+$t->post_ok("/report.json" => json => { identifier => 'dos', title => 'Report Dos' })->status_is(200);
 
-$t->post_ok("/report/contributors/uno" => json =>
+$t->post_ok("/report/contributors/uno.json" => json =>
     {person_id => $id, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
-$t->post_ok("/report/contributors/dos" => json =>
+$t->post_ok("/report/contributors/dos.json" => json =>
     {person_id => $id2, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
-$t->post_ok("/report/contributors/dos" => json =>
+$t->post_ok("/report/contributors/dos.json" => json =>
     {person_id => $id3, organization_identifier => 'earth', role => 'engineer' })->status_is(200);
 
 $t->get_ok("/report/uno")->json_is("/contributors/0/person/id" => $id);
@@ -142,7 +142,7 @@ $t->get_ok("/report/dos")->json_is("/contributors/1/person/id" => $id3);
 
 # test lookups
 $t->post_ok(
-  "/person" => json => {
+  "/person.json" => json => {
     url         => 'http://example2.com/john_smith',
     last_name   => "smithers",
     middle_name => undef,
@@ -150,7 +150,7 @@ $t->post_ok(
   });
 
 $t->post_ok(
-  "/person/lookup/name" => json => {
+  "/person/lookup/name" => { Accept => "application/json" } => json => {
       last_name => "SMIthERS",
       first_name => "John t",
   } => { Accept => 'application/json' }
