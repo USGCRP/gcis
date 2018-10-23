@@ -7,7 +7,7 @@
 
 %= include 'list_formats';
 
-% my @cols = qw/identifier numeric report chapter arrays/;
+% my @cols = qw/title numeric report chapter arrays/;
 
 %= include 'pager', page => $page;
 

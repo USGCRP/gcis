@@ -7,7 +7,7 @@
 
 %= include 'list_formats';
 
-% my @cols = qw/identifier numeric chapter/;
+% my @cols = qw/title numeric chapter/;
 
 %= include 'pager';
 
