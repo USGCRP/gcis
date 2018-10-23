@@ -19,8 +19,6 @@
         </div>
     % }
 
-    <div class='row'>hi<%= include 'other_formats'; =%><%= include 'db_meta'; =%></div>
-
 % }
 
 %= include 'fields';
@@ -36,4 +34,7 @@
 </div>
 
 %= include 'files';
+
+%= include 'h/other_formats';
+%= include 'db_meta';
 
