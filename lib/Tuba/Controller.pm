@@ -982,6 +982,7 @@ sub put_files {
     my $tfile = $pub->upload_file(c => $c, upload => $file) or do {
         return $c->render(status => 500, text => $pub->error);
     };
+    $tfile->generate_thumbnail(); 
     $c->render(status => 200, json => { identifier => $tfile->identifier });
 }
 
