@@ -23,6 +23,8 @@
 
      %= include 'h/other_identifiers', gcid => $scenario->uri($self);
 
+     %= include 'prov';
+
     </div>
 
 %= include 'h/other_formats';
