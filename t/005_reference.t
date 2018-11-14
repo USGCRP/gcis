@@ -122,7 +122,7 @@ $t->get_ok( "/reference/$reference_identifier" => { Accept => "application/json"
 
 # Delete a reference attribute
 $t->post_ok("/reference/$reference_identifier" => form => {
-        delete_pub_attr => "test_attribute_key",
+        delete_pub_attrtest_attribute_key => "1",
     })->status_is(200);
 $t->get_ok( "/reference/$reference_identifier" => { Accept => "application/json" })->status_is(200)->json_is( '/attrs', { description => "$desc" } );
 
