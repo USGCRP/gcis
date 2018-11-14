@@ -46,7 +46,7 @@
         <td> <%= check_box 'delete_pub_attr'.$k %> </td>
         <td><%= $k %></td>
         % if ($reference->attrs->{$k} && length($reference->attrs->{$k}) > 40) {
-            <td><%= text_area 'attribute_'.$k, value => $reference->attrs->{$k}, class => "form-control input-small squeezevert" %></td>
+            <td><%= text_area 'attribute_'.$k => $reference->attrs->{$k}, class => "form-control input-small squeezevert" %></td>
         % } else {
             <td><%= text_field 'attribute_'.$k, value => $reference->attrs->{$k}, class => "form-control input-small squeezevert" %></td>
         % }
