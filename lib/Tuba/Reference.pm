@@ -124,17 +124,28 @@ sub update {
         $c->stash(publication_update_category => delete $json->{publication_update_category});
     }
     if (my $params = $c->req->params->to_hash ) {
-        if ( $params->{delete_pub_attr} ) {
-          $reference->delete_attr( { del_attr => $params->{delete_pub_attr}, audit_user => $c->user, audit_note => "Deleting attributes" });
-          $c->redirect_without_error('update_form');
-        }
-        elsif ( exists $params->{new_attr_key} || /^attribute/ ~~ %$params ) {
-          my $new_attributes = _collect_attributes($params);
-          $reference->set_attr( { new_attrs => $new_attributes, audit_user => $c->user, audit_note => "Setting attributes" });
-          $c->redirect_without_error('update_form');
+        if ( exists $params->{new_attr_key} || /^attribute/ ~~ %$params || /^delete_pub_attr/ ~~ %$params ) {
+            if ( exists $params->{new_attr_key} || /^attribute/ ~~ %$params ) {
+                my $new_attributes = _collect_attributes($params);
+                $reference->set_attr( { new_attrs => $new_attributes, audit_user => $c->user, audit_note => "Setting attributes" });
+            }
+            if ( /^delete_pub_attr/ ~~ %$params ) {
+                _delete_pub_attrs($c, $reference, $params);
+            }
+            $c->redirect_without_error('update_form');
         }
         else {
             $c->SUPER::update(@_);
+        }
+    }
+}
+
+sub _delete_pub_attrs {
+    my ($c, $reference, $params ) = @_;
+    foreach my $key ( keys %$params ) {
+        if ( $key =~ /^delete_pub_attr(.*)$/ ) {
+            my $attr_key = $1;
+            $reference->delete_attr( { del_attr => $attr_key, audit_user => $c->user, audit_note => "Deleting attribute $attr_key" });
         }
     }
 }

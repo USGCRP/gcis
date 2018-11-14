@@ -38,17 +38,21 @@
     <tr>
       <th>Delete</th>
       <th>Key</th>
-      <th>Current Value</th>
-      <th>Replace Value</th>
+      <th>Value</th>
     </tr>
     % for my $k (sort keys %{ $reference->attrs }) {
     <tr>
-        <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
+        %#= <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $reference->attrs->{$k} %> )?")}'>Delete</button></td>
+        <td> <%= check_box 'delete_pub_attr'.$k %> </td>
         <td><%= $k %></td>
-        <td><%= $reference->attrs->{$k} %></td>
-        <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
+        % if ($reference->attrs->{$k} && length($reference->attrs->{$k}) > 40) {
+            <td><%= text_area 'attribute_'.$k, value => $reference->attrs->{$k}, class => "form-control input-small squeezevert" %></td>
+        % } else {
+            <td><%= text_field 'attribute_'.$k, value => $reference->attrs->{$k}, class => "form-control input-small squeezevert" %></td>
+        % }
     </tr>
     % }
+
 </table>
 <h4>New Attribute</h4>
 <div class='form-group row'>
