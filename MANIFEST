@@ -1,6 +1,7 @@
 .dockerignore
 .gitattributes
 .travis.yml
+bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
@@ -8,6 +9,7 @@ bin/tuba_start_httpd
 bin/tuba_stop_httpd
 Build.PL
 CONTRIBUTING.md
+CONTRIBUTORS.md
 db/dist/base.sql
 db/dist/base_data.sql
 db/dist/docs/gcis.dot
@@ -1088,4 +1090,5 @@ t/999_stop_db.t
 t/tinit.pm
 t/tlib.pm
 t/Tuba-test.conf
+t/Tuba-travis.conf
 t/va_spatial_extent.geojson
