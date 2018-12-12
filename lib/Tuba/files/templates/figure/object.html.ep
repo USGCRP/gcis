@@ -9,10 +9,10 @@
 
 %= include 'edit_buttons';
 <div class='row well' itemscope itemtype="http://schema.org/ImageObject">
-    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+    <div class='col-md-12'>
         <h2><%= $figure->title %></h2>
     </div>
-    <div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>
+    <div class='col-md-8 col-sm-12'>
         <h3>Figure <%= $figure->numeric || $figure->identifier %></h3>
         <i>
             %= include commify => objs => scalar $figure->all_orgs
@@ -59,7 +59,7 @@
             and <%= $figure->lon_min // 'unknown' %>° to <%= $figure->lon_max // 'unknown' %>° longitude.</p>
         % }
     </div>
-    <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12'>
+    <div class='pull-right col-md-4 col-sm-12'>
         <div class="row">
             % my $pub = $figure->get_publication;
             % if ($pub) {
@@ -70,22 +70,11 @@
                 % }
             % }
         </div>
-        % if ($figure->get_regions) {
-            <div class="row">
-                % my $regions = $figure->get_regions;
-                %= include 'h/regions', regions => $regions;
-            </div>
-        % }
-
-        % if ($figure->keywords) {
-            <div class="row">
-                % my $keywords = $figure->keywords;
-                %= include 'h/keywords', keywords => $keywords;
-            </div>
-        % }
+        %= include 'h/regions', obj => $figure;
+        %= include 'h/keywords', obj => $figure;
     </div>
 
-    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+    <div class='col-md-8 col-sm-12'>
         %= include 'h/prov', pub => $figure->get_publication;
         %= include 'h/cited_by', pub => $figure->get_publication;
         %= include 'h/cites', pub => $figure->get_publication;

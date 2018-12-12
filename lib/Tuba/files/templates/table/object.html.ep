@@ -7,46 +7,27 @@
 <h2>table : <%= $table->identifier %></h2>
 </center>
 
-% if (user_can('update')) {
 %= include 'history_modal';
 
-<div class='row'>
-            <div class='col-md-2 pull-right'>
-                <%= link_to $object->uri($self,{ tab => 'update_form' }) => class => "btn btn-default" => begin %>edit<%= end %>
-                <a href="#myModal" role="button" class="btn btn-default" data-toggle="modal">history</a>
-            </div>
-        </div>
-% }
-
+%= include 'edit_buttons';
 <div class='row well'>
-  
-        <div class='pull-right col-md-4' style='top:2px;text-align:right;'>
-        % my $pub = $table->get_publication;
-        % if ($pub) {
-            % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;'
-                %= end
-            % }
-        % }
-        </div>
+    <div class='col-md-12'>
         <h2><%= $table->title %></h2>
         % if ($table->numeric) {
-        <h3>table <%= $table->numeric %></h3>
+            <h3>table <%= $table->numeric %></h3>
         % }
-        <i>
-        %= include commify => objs => scalar $table->all_orgs
-        </i>
-        <br>
+    </div>
+    <div class='col-md-8 col-sm-12'>
+        <i><%= include commify => objs => scalar $table->all_orgs %></i><br>
         %= include commify => objs => scalar $table->all_people
         % if (my $chapter = $table->chapter) {
-        <p>This table appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
-        of the <%= obj_link($table->report) %> report.</p>
+            <p>This table appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
+            of the <%= obj_link($table->report) %> report.</p>
         % } else {
-        <p>This table appears in the <%= obj_link($table->report) %> report.</p>
+            <p>This table appears in the <%= obj_link($table->report) %> report.</p>
         % }
         % if (my $to = fix_url($table->url)) {
-        <p><%= link_to $to => target => "_blank" => begin %><%= $table->url %><%= end %></p>
+            <p><%= link_to $to => target => "_blank" => begin %><%= $table->url %><%= end %></p>
         % }
         <p><%= tbibs_to_links($table->caption) %></p>
 
@@ -56,7 +37,7 @@
             % for my $a (sorted_list($table,'arrays')) {
                 % my $row = 0;
                 <table class='table table-responsive table-bordered table-condensed array'>
-                    <caption><%= obj_link($a, short => 1); %></caption>
+                <caption><%= obj_link($a, short => 1); %></caption>
                 % for my $x ($a->rows) {
                     % if ($row++ < $a->rows_in_header) {
                     <tr class='header'>
@@ -76,12 +57,28 @@
             % }
             </center>
         % }
+    </div>
+    <div class='pull-right col-md-4 col-sm-12'>
+        % my $pub = $table->get_publication;
+        % if ($pub) {
+            % for my $file ($pub->files) {
+            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => 'thumbnail' => begin
+                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', style => 'padding:0px;width:300px;'
+                %= end
+            % }
+        % }
+        %= include 'h/regions', obj => $table;
+        %= include 'h/keywords', obj => $table;
 
+    </div>
+
+    <div class='col-sm-12'>
         %= include 'h/prov', pub => $table->get_publication;
         %= include 'h/cited_by', pub => $table->get_publication;
         %= include 'h/cites', pub => $table->get_publication;
+  </div>
 
 </div>
 
-<%= include 'h/other_formats'; =%>
+%= include 'h/other_formats';
 %= include 'h/tbibjs';
