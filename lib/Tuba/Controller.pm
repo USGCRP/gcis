@@ -1231,7 +1231,7 @@ sub update_rel {
             shift->render(json => { status => 'ok' })
         },
         html => sub {
-            return shift->redirect_without_error('update_form');
+            return shift->redirect_without_error('update_rel_form');
         },
     );
 }
