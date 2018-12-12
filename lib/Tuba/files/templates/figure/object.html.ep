@@ -9,77 +9,95 @@
 
 %= include 'edit_buttons';
 <div class='row well' itemscope itemtype="http://schema.org/ImageObject">
-   
-        <div class='pull-right col-lg-4 col-md-4 col-sm-8 col-xs-12'>
-        % my $pub = $figure->get_publication;
-        % if ($pub) {
-            % for my $file ($pub->files) {
-            %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => '' => itemprop => "url" => begin
-                %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', itemprop => "thumbnailUrl"
-                %= end
-            % }
-        % }
-        </div>
+    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
         <h2><%= $figure->title %></h2>
+    </div>
+    <div class='col-lg-8 col-md-8 col-sm-12 col-xs-12'>
         <h3>Figure <%= $figure->numeric || $figure->identifier %></h3>
         <i>
-        %= include commify => objs => scalar $figure->all_orgs
+            %= include commify => objs => scalar $figure->all_orgs
         </i>
         <br>
         %= include commify => objs => scalar $figure->all_people
         % if (my $chapter = $figure->chapter) {
-        <p>This figure appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
-        of the <%= obj_link($figure->report) %> report.</p>
+            <p>This figure appears in <%= obj_link_to $chapter,'show', begin %>chapter <%= $chapter->stringify(tiny => 1) %><%= end %>
+            of the <%= obj_link($figure->report) %> report.</p>
         % } else {
-        <p>This figure appears in the <%= obj_link($figure->report) %> report.</p>
+            <p>This figure appears in the <%= obj_link($figure->report) %> report.</p>
         % }
         % if (my $to = fix_url($figure->url)) {
-        <p><%= link_to $to => target => "_blank" => begin %><%= $figure->url %><%= end %></p>
+            <p><%= link_to $to => target => "_blank" => begin %><%= $figure->url %><%= end %></p>
         % }
 
         <p><%= tbibs_to_links($figure->caption) %></p>
         % if ($figure->source_citation){
-        <p>When citing this figure, please reference <%= tbibs_to_links($figure->source_citation) %>.</p>
+            <p>When citing this figure, please reference <%= tbibs_to_links($figure->source_citation) %>.</p>
         % }
         % if ($figure->usage_limits) {
-        <p><%= $figure->usage_limits %></p>
+            <p><%= $figure->usage_limits %></p>
         % }
         % if (my @figs = $figure->kindred_figures) {
-        <p>Other figures containing images in this figure : <%= include 'commify', objs => \@figs %></p>
+            <p>Other figures containing images in this figure : <%= include 'commify', objs => \@figs %></p>
         % }
         % if ($figure->time_start && $figure->time_end) {
-        <p>The time range for this figure is <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
-         to <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+            <p>The time range for this figure is <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>
+             to <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
         % } elsif ($figure->time_start) {
-        <p>The time range for this figure starts at <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+            <p>The time range for this figure starts at <%= $figure->time_start->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
         % } elsif ($figure->time_end) {
-        <p>The time range for this figure ends at <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
+            <p>The time range for this figure ends at <%= $figure->time_end->strftime('%B %d, %Y (%H:%M %p)') %>.</p>
         % }
         % if ($figure->create_dt) {
-        <p>This figure was created on <%= $figure->create_dt->strftime('%B %d, %Y') %>.</p>
+            <p>This figure was created on <%= $figure->create_dt->strftime('%B %d, %Y') %>.</p>
         % }
 
         % if ($figure->submission_dt) {
-        <p>This figure was submitted on <%= $figure->submission_dt->strftime('%B %d, %Y') %>.</p>
+            <p>This figure was submitted on <%= $figure->submission_dt->strftime('%B %d, %Y') %>.</p>
         % }
         % if ($figure->lat_min || $figure->lat_max || $figure->lon_min || $figure->lon_max) { 
-        <p>
-        The spatial range for this figure is <%= $figure->lat_min // 'unknown' %>° to <%= $figure->lat_max // 'unknown' %>° latitude,
-        and <%= $figure->lon_min // 'unknown' %>° to <%= $figure->lon_max // 'unknown' %>° longitude.
-        </p>
+            <p>The spatial range for this figure is <%= $figure->lat_min // 'unknown' %>° to <%= $figure->lat_max // 'unknown' %>° latitude,
+            and <%= $figure->lon_min // 'unknown' %>° to <%= $figure->lon_max // 'unknown' %>° longitude.</p>
         % }
+    </div>
+    <div class='pull-right col-lg-4 col-md-4 col-sm-12 col-xs-12'>
+        <div class="row">
+            % my $pub = $figure->get_publication;
+            % if ($pub) {
+                % for my $file ($pub->files) {
+                %= link_to "show_file", { 'file_identifier' => $file->identifier } => class => '' => itemprop => "url" => begin
+                    %= image $file->thumbnail_path, class => 'img-thumbnail img-responsive', itemprop => "thumbnailUrl"
+                    %= end
+                % }
+            % }
+        </div>
+        % if ($figure->get_regions) {
+            <div class="row">
+                % my $regions = $figure->get_regions;
+                %= include 'h/regions', regions => $regions;
+            </div>
+        % }
+
+        % if ($figure->keywords) {
+            <div class="row">
+                % my $keywords = $figure->keywords;
+                %= include 'h/keywords', keywords => $keywords;
+            </div>
+        % }
+    </div>
+
+    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
         %= include 'h/prov', pub => $figure->get_publication;
         %= include 'h/cited_by', pub => $figure->get_publication;
         %= include 'h/cites', pub => $figure->get_publication;
         % if (my @images = sorted_list($figure,'images')) {
-        <br>
-        This figure is composed of <%= @images==1 ? 'this image' : 'these images' %> :
-        <br />
-        %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1, tiny_captions => 1;
+            <br>
+            This figure is composed of <%= @images==1 ? 'this image' : 'these images' %> :
+            <br />
+            %= include 'obj_thumbnails', objs => [ sorted_list($figure,'images') ], no_table => 1, tiny_captions => 1;
         % }
-
+    </div>
 </div>
 
-<%= include 'h/other_formats'; =%>
+%= include 'h/other_formats';
 %= include 'h/tbibjs';
 

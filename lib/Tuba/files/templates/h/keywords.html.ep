@@ -1,0 +1,18 @@
+<h5>Related <a href="https://earthdata.nasa.gov/about/gcmd/global-change-master-directory-gcmd-keywords" target="_blank">NASA GCMD</a> keywords</h4>
+<p><ul>
+% if ( ref $keywords eq 'ARRAY' ) {
+    % for my $keyword (@$keywords) {
+       <li>
+       %= link_to "show_gcmd_keyword", { 'gcmd_keyword_identifier' => $keyword->identifier } => class => '' => itemprop => "url" => begin
+       %= $keyword->label
+       %= end
+       </li>
+    % }
+% } else {
+    <li>
+    %= link_to "show_gcmd_keyword", { 'gcmd_keyword_identifier' => $keywords->identifier } => class => '' => itemprop => "url" => begin
+    %= $keywords->label
+    %= end
+    </li>
+% }
+</ul></p>

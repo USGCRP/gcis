@@ -210,8 +210,8 @@ sub make_tree_for_show {
     my $c = shift;
     my $obj = shift;
     my %params;
-    $params{with_gcmd} = 1 if $c->param('with_gcmd');
-    $params{with_regions} = 1 if $c->param('with_regions');
+    $params{with_gcmd} = 1 unless $c->param('with_gcmd') == 0;
+    $params{with_regions} = 1 unless $c->param('with_regions' == 0);
     $params{bonsai} = 1 if $c->param('brief');
     my $ret = $obj->as_tree(c => $c, %params);
     if (my $gcid = $ret->{uri}) {
@@ -248,7 +248,7 @@ sub maybe_include_generic_pub_rels {
     my $obj = shift;
     my $pub = $obj->get_publication or return ();
     my $tree = {};
-    $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $c->param('with_gcmd');
+    $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] unless $c->param('with_gcmd') == 0;
     $tree->{regions} = [ map $_->as_tree(@_), $pub->regions] if $c->param('with_regions');
     return %$tree;
 }

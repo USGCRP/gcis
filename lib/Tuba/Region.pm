@@ -11,11 +11,17 @@ use Tuba::DB::Objects qw/-nicknames/;
 sub list {
     my $c = shift;
     my $report_id = $c->stash('report_identifier');
+    my $pub_id = $c->stash('pub_id');
     my $count;
     my $objects;
-    if ( $report_id ){
-        my $report = Report->new( identifier => $report_id );
-        my $publication = $report->get_publication();
+    if ( $report_id || $pub_id ){
+        my $publication;
+        if ( $report_id ) {
+            my $report = Report->new( identifier => $report_id );
+            $publication = $report->get_publication();
+        } elsif ( $pub_id ) {
+            $publication = Publication->new( id => $pub_id );
+        }
         $objects = Regions->get_objects(
             query => [ publication_id => $publication->id ],
             with_objects => [qw/publications/],

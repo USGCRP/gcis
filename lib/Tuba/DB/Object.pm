@@ -421,6 +421,12 @@ sub new_from_reference {
     return;
 }
 
+sub get_regions {
+    my $c = shift;
+    my $pub = $c->get_publication or return;
+    return $pub->regions;
+}
+
 sub keywords {
     my $c = shift;
     my $pub = $c->get_publication or return;

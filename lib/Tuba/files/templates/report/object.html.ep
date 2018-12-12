@@ -47,7 +47,8 @@
    <p>
         This report has
         <%== $numeric_link->($chp => 'chapter', 'list_chapter') %>,
-        <%== $numeric_link->($fig => 'figure') %> <% if ($img > 0) { %> (<%= $numeric_link->($img => 'image', 'list_report_images'); =%>)<% } %>,
+        <%== $numeric_link->($fig => 'figure') %>
+        <% if ($img > 0) { %> (<%= $numeric_link->($img => 'image', 'list_report_images'); =%>)<% } %>,
         <%== $numeric_link->($fin => 'finding') %>,
         <%== $numeric_link->($tab => 'table') %>
         and
