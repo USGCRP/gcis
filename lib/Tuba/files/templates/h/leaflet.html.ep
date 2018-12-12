@@ -1,11 +1,11 @@
 % my $lat_min = stash 'lat_min';
 % $lat_min = $object->lat_min unless defined $lat_min;
 % my $lat_max = stash 'lat_max';
-% $lat_max = $object->lat_max unless defined $lat_min;
+% $lat_max = $object->lat_max unless defined $lat_max;
 % my $lon_min = stash 'lon_min';
-% $lon_min = $object->lon_min unless defined $lat_min;
+% $lon_min = $object->lon_min unless defined $lon_min;
 % my $lon_max = stash 'lon_max';
-% $lon_max = $object->lon_max unless defined $lat_min;
+% $lon_max = $object->lon_max unless defined $lon_max;
 % if (my $asset_token = config('mapbox_access_token')) {
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
 <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
