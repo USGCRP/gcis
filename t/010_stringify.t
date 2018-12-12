@@ -39,6 +39,7 @@ $t->get_ok("/report/test-report.json")->json_is(
       href => "${base}report/test-report.json",
       report_type_identifier => 'report',
       report_tables => [],
+      regions => [],
       report_figures => [],
       report_findings => [],
       parents => [],

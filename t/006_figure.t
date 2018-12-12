@@ -152,7 +152,7 @@ $t->post_ok(
   "/report/vegetables/chapter/carrots/figure/keywords/orange" => { Accept => "application/json" } => json =>
     {identifier => "001f18d3-7e61-430b-9883-1960c6256fe5"})->status_is(200);
 
-$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_gcmd=1")
+$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json")
     ->json_is( "/gcmd_keywords/0/identifier", "001f18d3-7e61-430b-9883-1960c6256fe5" );
 
 # Create a region.
@@ -170,7 +170,7 @@ $t->post_ok(
   "/report/vegetables/chapter/carrots/figure/regions/orange" => { Accept => "application/json" } => json =>
     {identifier => "bermuda_triangle"})->status_is(200);
 
-$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json?with_regions=1")
+$t->get_ok( "/report/vegetables/chapter/carrots/figure/orange.json")
     ->json_is( "/regions/0/identifier", "bermuda_triangle" );
 
 $t->post_ok("/report/vegetables/chapter/carrots/figure/rel/orange" => { Accept => "application/json" } => json =>

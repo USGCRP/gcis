@@ -356,7 +356,7 @@ sub make_tree_for_show {
     my $format = $c->stash('format');
     $href .= ".$format" if $format;
     my %regions;
-    if ($pub && $c->param('with_regions')) {
+    if ($pub) {
         $regions{regions} = [ map $_->as_tree(c => $c), $pub->regions];
     }
     my @parents;

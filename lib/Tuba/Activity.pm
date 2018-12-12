@@ -40,8 +40,7 @@ sub make_tree_for_show {
     my $c = shift;
     my $obj = shift;
     my $tree = $obj->as_tree(c => $c,
-        ( $c->param('brief') ? (bonsai => 1) : ()),
-        ( $c->param('with_gcmd') ? (with_gcmd => 1) : ())
+        ( $c->param('brief') ? (bonsai => 1) : ())
     );
     $tree->{methodologies} = [
         map $_->as_tree(c => $c), $obj->methodologies

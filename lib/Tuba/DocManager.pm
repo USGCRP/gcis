@@ -149,8 +149,8 @@ our %RouteDoc = (
   list_scenario => { tags => [qw/model/], _list_defaults('scenario') },
   list_lexicon => { tags => [qw/lexicon/], _list_defaults('lexicon') },
 
-  show_report => { tags => [qw/report/], _show_defaults('report', withs => 1) },
-  show_chapter => {tags => [qw/report/],  _show_defaults('chapter', withs => 1) },
+  show_report => { tags => [qw/report/], _show_defaults('report') },
+  show_chapter => {tags => [qw/report/],  _show_defaults('chapter') },
   show_platform => {tags => [qw/obs/], _show_defaults('platform') },
   show_instrument => {tags => [qw/obs/], _show_defaults('instrument') },
   show_instrument_instance => {tags => [qw/obs/], _show_defaults('instrument', add => 'on a platform' ) },
@@ -161,20 +161,20 @@ our %RouteDoc = (
   model_run_lookup => {tags => [qw/model/], _show_defaults('model run') },
   show_scenario => {tags => [qw/model/], _show_defaults('scenario') },
 
-  show_figure => { tags => [qw/figure/], _show_defaults('figure', withs => 1, add => "in a chapter") },
-  show_finding => { tags => [qw/finding/], _show_defaults('finding', withs => 1, add => "in a chapter") },
-  show_table => { tags => [qw/table/], _show_defaults('table', withs => 1, add => "in a chapter") },
+  show_figure => { tags => [qw/figure/], _show_defaults('figure', add => "in a chapter") },
+  show_finding => { tags => [qw/finding/], _show_defaults('finding', add => "in a chapter") },
+  show_table => { tags => [qw/table/], _show_defaults('table', add => "in a chapter") },
 
-  show_report_figure => { tags => [qw/report figure/], _show_defaults('figure', withs => 1) },
-  show_report_finding => {tags => [qw/report finding/],  _show_defaults('finding', withs => 1) },
-  show_report_table => {tags => [qw/report table/],  _show_defaults('table', withs => 1) },
+  show_report_figure => { tags => [qw/report figure/], _show_defaults('figure') },
+  show_report_finding => {tags => [qw/report finding/],  _show_defaults('finding') },
+  show_report_table => {tags => [qw/report table/],  _show_defaults('table') },
 
-  show_article => { tags => [qw/publication/], _show_defaults('article', withs => 1) },
+  show_article => { tags => [qw/publication/], _show_defaults('article') },
   show_journal => {tags => [qw/publication/],  _show_defaults('journal') },
-  show_image => {tags => [qw/figure/], _show_defaults('image', withs => 1) },
-  show_array => {tags => [qw/table/], _show_defaults('array', withs => 1) },
-  show_webpage => {tags => [qw/publication/],  _show_defaults('web page', withs => 1) },
-  show_book => {tags => [qw/publication/],  _show_defaults('book', withs => 1) },
+  show_image => {tags => [qw/figure/], _show_defaults('image') },
+  show_array => {tags => [qw/table/], _show_defaults('array') },
+  show_webpage => {tags => [qw/publication/],  _show_defaults('web page') },
+  show_book => {tags => [qw/publication/],  _show_defaults('book') },
   show_activity => {tags => [qw/dataset/], _show_defaults('activity') },
   show_person => { tags => [qw/contributor/], _show_defaults('person') },
   show_organization => { tags => [qw/contributor/], _show_defaults('organization') },
@@ -315,15 +315,8 @@ sub _show_defaults {
           'application/json', 'application/x-turtle', 'text/turtle',
           'application/n-triples', 'text/n3', 'text/rdf+n3', 'application/ld+json',
           'application/rdf+xml', 'application/rdf+json',
-      ],
-      $a{withs} ? 
-      (
-          params => [
-            { name => "with_regions", type => "boolean", description => "Include regions associated with the $what." },
-            { name => "with_gcmd",    type => "boolean", description => "Include GCMD keywords associated with the $what." },
-          ]
-      ) : ()
-      )
+      ]
+    )
 }
  
 sub _route_to_path {

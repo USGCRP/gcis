@@ -297,8 +297,8 @@ information :
 
     - a list of parent publications
     - a list of files
-    - a list of gcmd keywords (iff with_gcmd is sent)
-    - a list of regions (iff with_regions is sent)
+    - a list of gcmd keywords
+    - a list of regions
     - a list of contributors (if this is a publication)
     - a list of publications for each contributor record (if this is a contributor)
 
@@ -315,8 +315,6 @@ sub as_tree {
     my %a = @_;
     my $c = $a{c}; # controller object
     my $bonsai = delete $a{bonsai}; # a small tree
-    my $with_gcmd = delete $a{with_gcmd}; # a large tree
-    my $with_regions = delete $a{with_regions}; # a large tree
     $a{deflate} = 0 unless exists($a{deflate});
 
     my $tree = $s->Rose::DB::Object::Helpers::as_tree(%a);
@@ -336,8 +334,8 @@ sub as_tree {
                 };
             }
             $tree->{files} = [ map $_->as_tree(@_), $pub->files ];
-            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ] if $with_gcmd;
-            $tree->{regions} = [ map $_->as_tree(@_), $pub->regions] if $with_regions;
+            $tree->{gcmd_keywords} = [ map $_->as_tree(@_), $pub->gcmd_keywords ];
+            $tree->{regions} = [ map $_->as_tree(@_), $pub->regions];
         }
         my $uri = $s->uri($c);
         my $href = $uri->clone->to_abs;
