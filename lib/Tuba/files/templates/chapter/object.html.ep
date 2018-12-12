@@ -8,42 +8,48 @@
 
 % my $pub = $chapter->get_publication;
 <div class='row well'>
-    
-        %= include 'h/thumbnail', pub => $pub;
-        <div class="col-md-8 col-lg-8 col-sm-8 col-xs-12">
+    <div class="col-md-8 col-sm-12">
         % if ($chapter->number) {
-        <h2>Chapter <%= $chapter->number %> : <%= $chapter->title %></h2>
+            <h2>Chapter <%= $chapter->number %> : <%= $chapter->title %></h2>
         % } else {
-        <h2><%= $chapter->title %></h2>
+            <h2><%= $chapter->title %></h2>
         % }
         <h4><%= obj_link_to $chapter->report, 'show' => begin %><%= $chapter->report->title %><%= end %></h4>
         % if ($chapter->url) {
-        <p><%= link_to $chapter->url, target => "_blank" => begin %><%= $chapter->url %><%= end %>
+            <p><%= link_to $chapter->url, target => "_blank" => begin %><%= $chapter->url %><%= end %>
         % }
         % if (my $doi = $chapter->doi) {
-        <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
+            <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
         % }
 
         %= include 'h/contributors', object => $chapter;
+    </div>
+
+    %= include 'h/thumbnail', pub => $pub;
+
+    <div class="col-md-8 col-sm-12">
         % my ($fig, $fin,$tab, $ref) = ($chapter->count_figures, $chapter->count_findings, $chapter->count_tables, $chapter->reference_count);
         % if ($fig > 0 && ($fin + $tab + $ref == 0)) {
             <p>This chapter has
             <%= link_to 'list_figure', { report_identifier => $report->identifier, chapter_identifier => $chapter->identifier } => begin%><%= pl('figure',$fig) %><%= end =%>.
-           </p>
-          % } elsif ($fig + $fin + $ref + $tab > 0) {
-           <p>
-          This chapter has
-             <%= link_to 'list_figure',  { chapter_identifier => $chapter->identifier } => begin%><%= pl('figure', $fig) %><%= end =%>,
-             <%= link_to 'list_finding', { chapter_identifier => $chapter->identifier } => begin%><%= pl('finding', $fin) %><%= end =%>,
-             <%= link_to 'list_table',   { chapter_identifier => $chapter->identifier } => begin %> <%= pl('table', $tab) %><%= end =%>,
-            and
-            <%= link_to 'list_reference_chapter', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
-           </p>
+            </p>
+        % } elsif ($fig + $fin + $ref + $tab > 0) {
+            <p>
+                This chapter has
+                <%= link_to 'list_figure',  { chapter_identifier => $chapter->identifier } => begin%><%= pl('figure', $fig) %><%= end =%>,
+                <%= link_to 'list_finding', { chapter_identifier => $chapter->identifier } => begin%><%= pl('finding', $fin) %><%= end =%>,
+                <%= link_to 'list_table',   { chapter_identifier => $chapter->identifier } => begin %> <%= pl('table', $tab) %><%= end =%>,
+                and
+                <%= link_to 'list_reference_chapter', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
+            </p>
         % }
+
+        %= include 'h/keywords', obj => $chapter;
+        %= include 'h/regions', obj => $chapter;
 
         %= include 'h/cited_by', pub => $pub;
         %= include 'h/prov', pub => $pub;
-  </div>
+    </div>
 </div>
 
 %= include 'h/other_formats';

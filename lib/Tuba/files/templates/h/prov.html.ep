@@ -2,7 +2,7 @@
 % my @children = $pub ? $pub->children : ();
 
 % if (@parents || @children) {
-<p>
+<p><h5>Provenance</h5>
     % for my $parent (@parents) {
         % my $parent_pub = $parent->{publication};
         This <%= $object->meta->table %>

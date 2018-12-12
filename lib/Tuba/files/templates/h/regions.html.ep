@@ -1,8 +1,8 @@
 % if ( $obj->get_regions ) {
     % my $regions = $obj->get_regions;
-    <h5>Regions Covered</h4>
-    <p><ul>
-    % if ( ref $regions eq 'ARRAY' ) {
+    % if ( @$regions ) {
+        <h5>Regions Covered</h4>
+        <p><ul>
         % for my $region (@$regions) {
             <li>
             %= link_to "show_region", { 'region_identifier' => $region->identifier } => class => '' => itemprop => "url" => begin
@@ -10,12 +10,6 @@
             %= end
             </li>
         % }
-    % } else {
-        <li>
-        %= link_to "show_region", { 'region_identifier' => $regions->identifier } => class => '' => itemprop => "url" => begin
-        %= $regions->label
-        %= end
-        </li>
+        </ul></p>
     % }
-    </ul></p>
 % }
