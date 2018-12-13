@@ -9,7 +9,9 @@
 
 <div class='row well'>
    
-        %= include 'h/thumbnail', pub => $project->get_publication;
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail', pub => $project->get_publication;
+        </div>
         <h2><%= $project->name %></h2>
         %= include commify => objs => scalar $project->all_orgs
         %= include 'h/desc', obj => $project

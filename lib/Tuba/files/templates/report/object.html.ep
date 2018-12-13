@@ -27,13 +27,21 @@
 
 <div itemscope itemtype="http://schema.org/CreativeWork" class='row well'>
     % my $pub = $report->get_publication;
-    %= include 'h/thumbnail', pub => $pub;
-    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-12">
+    <div class="col-md-12">
         <h2 itemprop="name"><%= $report->title %></h2>
         <h5><span itemprop="copyrightYear"><%= $report->publication_year %></span>
         <%= labelize($report->report_type_identifier // '') %>
         <small><%= $report->frequency ? "published every ".human_duration($report->frequency) : "" %></small></h5>
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
         %= include 'h/contributors', object => $report, role_exclude => 'advisor';
+    </div>
+    <div class='pull-right col-lg-3 col-md-4 col-sm-12 col-xs-12' style='top:2px;'>
+        %= include 'h/thumbnail', pub => $pub;
+        %= include 'h/regions', obj => $report;
+        %= include 'h/keywords', obj => $report;
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
         <p itemprop="description" class='linebreaks'><%= tbibs_to_links($report->summary) %></p>
         % my ($chp, $fig, $fin,$tab, $ref, $img, $reg) = (
         %    $report->count_chapters,
@@ -76,8 +84,6 @@
             <p>DOI : <%= link_to "http://dx.doi.org/$doi" => target => "_blank" => begin %><%= $doi %><%= end %></p>
         % }
 
-        %= include 'h/regions', obj => $report;
-        %= include 'h/keywords', obj => $report;
         %= include 'h/cited_by', pub => $pub;
         %= include 'h/prov', pub => $pub;
         % if (my $contact_note = $object->contact_note) {

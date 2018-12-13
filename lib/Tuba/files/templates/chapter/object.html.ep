@@ -25,7 +25,9 @@
         %= include 'h/contributors', object => $chapter;
     </div>
 
-    %= include 'h/thumbnail', pub => $pub;
+    <div class='pull-right col-lg-3 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:right;'>
+        %= include 'h/thumbnail', pub => $pub;
+    </div>
 
     <div class="col-md-8 col-sm-12">
         % my ($fig, $fin,$tab, $ref) = ($chapter->count_figures, $chapter->count_findings, $chapter->count_tables, $chapter->reference_count);

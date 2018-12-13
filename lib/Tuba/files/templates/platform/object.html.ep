@@ -11,7 +11,9 @@
 
     <div class='row well'>
         % my $pub = $platform->get_publication;
-        %= include 'h/thumbnail', pub => $pub;
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail', pub => $pub;
+        </div>
         <h2><%= $platform->name %></h2>
         %= include commify => objs => scalar $platform->all_orgs
         <br>

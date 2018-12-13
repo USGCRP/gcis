@@ -24,7 +24,9 @@
     %   ) {
         <h5> Methodology: </h5>
         <p><%= b($activity->methodology) // '' %></p>
-        %= include 'h/thumbnail';
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail';
+        </div>
 
         % if ($activity->visualization_methodology) {
         <p><%= b($activity->visualization_methodology) // '' %></p>
@@ -105,7 +107,9 @@
         <p class='linebreaks'><%= $activity->data_usage %></p>
         % }
         <p class='linebreaks'><%= $activity->methodology // '' %></p>
-        %= include 'h/thumbnail';
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail';
+        </div>
 
         % if ($object->start_time) {
         <p>This activity started at <%= $object->start_time->strftime('%B %d, %Y (%H:%M %p)') %>

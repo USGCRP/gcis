@@ -12,7 +12,9 @@
 
 %= include 'h/contributors_short', object => $dataset;
     
-        %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail', pub => $dataset->get_publication(autocreate => 1), embed_leaflet => 1;
+        </div>
         <h4><%= $dataset->identifier %></h4>
         <h5 itemprop="name"><%= $dataset->name // '' %></h5>
         % if ($dataset->publication_year) {

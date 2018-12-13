@@ -9,7 +9,9 @@
 %= include 'edit_buttons';
     <div class='row well'>
         % my $pub = $instrument->get_publication;
-        %= include 'h/thumbnail', pub => $pub;
+        <div class='pull-right col-lg-3 col-md-4 col-sm-4 col-xs-6' style='top:2px;text-align:right;'>
+            %= include 'h/thumbnail', pub => $pub;
+        </div>
         <h2><%= $instrument->name %></h2>
         %= include commify => objs => scalar $instrument->all_orgs
         % if (my $url = $instrument->description_attribution) {
