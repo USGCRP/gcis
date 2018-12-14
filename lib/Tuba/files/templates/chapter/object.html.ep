@@ -25,8 +25,11 @@
         %= include 'h/contributors', object => $chapter;
     </div>
 
-    <div class='pull-right col-lg-3 col-md-4 col-sm-12 col-xs-12' style='top:2px;text-align:right;'>
+    <div class='pull-right col-lg-3 col-md-4 col-sm-12 col-xs-12' style='top:2px;'>
         %= include 'h/thumbnail', pub => $pub;
+        %= include 'h/keywords', obj => $chapter;
+        %= include 'h/regions', obj => $chapter;
+
     </div>
 
     <div class="col-md-8 col-sm-12">
@@ -45,9 +48,6 @@
                 <%= link_to 'list_reference_chapter', { chapter_identifier => $chapter->identifier } => begin %><%= pl('reference', $ref) %><%= end =%>.
             </p>
         % }
-
-        %= include 'h/keywords', obj => $chapter;
-        %= include 'h/regions', obj => $chapter;
 
         %= include 'h/cited_by', pub => $pub;
         %= include 'h/prov', pub => $pub;
