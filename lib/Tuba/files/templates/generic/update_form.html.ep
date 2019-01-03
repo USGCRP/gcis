@@ -33,7 +33,7 @@
 %= form_for obj_uri_for($object, 'update') => class => 'form-horizontal' => method => 'POST' => begin
 
 <div class="well">
-<table class='table table-responsive table-condensed table-bordered densetable'>
+  <table class='table table-responsive table-condensed table-bordered densetable'>
     <caption>Attributes</caption>
     <tr>
       <th>Delete</th>
@@ -43,39 +43,64 @@
     </tr>
     % for my $k (sort keys %{ $object->attrs }) {
     <tr>
-        <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $object->attrs->{$k} %> )?")}'>Delete</button></td>
-        <td><%= $k %></td>
-        <td><%= $object->attrs->{$k} %></td>
-        <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
+      <td><button type="submit" name='delete_pub_attr' value='<%= $k %>' class="btn btn-danger squeezevert" onclick='{return confirm("Are you sure you want to delete the attribute <%= $k %> (Value: <%= $object->attrs->{$k} %> )?")}'>Delete</button></td>
+      <td><%= $k %></td>
+      <td><%= $object->attrs->{$k} %></td>
+      <td><%= text_field 'attribute_'.$k, class => "form-control input-small squeezevert" %></td>
     </tr>
     % }
-</table>
-<h4>New Attribute</h4>
-<div class='form-group row'>
-  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
-    %= label_for 'new_attr_key', class => 'required' => begin
-      Key
-    %= end
-  </div>
-  <div class='col-lg-2 col-md-2 col-sm-2'>
-    <%= text_field 'new_attr_key', class => "form-control input-small squeezevert" %>
-  </div>
-  <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
-    %= label_for 'new_attr_value', class => 'required' => begin
-      Value
-    %= end
-  </div>
-  <div class='col-lg-4 col-md-4 col-sm-4'>
-    <%= text_field 'new_attr_value', class => "form-control input-small squeezevert" %>
-  </div>
-</div>  <!--- End new attr div --->
-
-<div class="row">
-	<div class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-sm-4 col-sm-offset-2">
-    <button type="submit" class="btn btn-primary">Save changes</button>
+  </table>
+  <h4>New Attribute</h4>
+  <div class='form-group row'>
+    <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+      %= label_for 'new_attr_key', class => 'required' => begin
+        Key
+      %= end
     </div>
+    <div class='col-lg-2 col-md-2 col-sm-2'>
+      <%= text_field 'new_attr_key', class => "form-control input-small squeezevert" %>
+    </div>
+    <div  class='col-lg-1 col-md-1 col-sm-1 control-label'>
+      %= label_for 'new_attr_value', class => 'required' => begin
+        Value
+      %= end
+    </div>
+    <div class='col-lg-4 col-md-4 col-sm-4'>
+      <%= text_field 'new_attr_value', class => "form-control input-small squeezevert" %>
+    </div>
+  </div>  <!--- End new attr div --->
+
+  <div class="row">
+    <div class="form-group clear-both">
+      <div class="col-lg-10 col-lg-offset-2 col-md-10 col-md-offset-2 col-sm-10 col-sm-offset-2 col-xs-12">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="reset" class="btn btn-default">Reset</button>
+        <div class='input-group'>
+          <span class="input-group-btn">
+          </span>
+          % if ($self->can_set_replacement) {
+          If you would like this <%= $object->meta->table %> object's data merged into another <%= $object->meta->table %> upon deletion, select it here: <br/>
+          %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control col-lg-3 col-md-3', style=>'height:auto;';
+          %= javascript begin
+          $('#replacement').typeahead({
+              minLength : 2,
+              items : 15,
+              source : function(query,process) {
+                  return $.get('/autocomplete', { q : query, items : 15, type : '<%= $object->meta->table %>' }, function(data) {
+                       return process(data);
+                  });
+              }
+            });
+          %= end
+          % }
+          <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>  <!--- End button row div --->
 </div>
-</div>
+
+
 
 %= end
 

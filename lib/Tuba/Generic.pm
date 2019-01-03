@@ -40,7 +40,7 @@ sub update {
             $c->redirect_without_error('update_form');
         }
         # find any new attr keys or attribute_* keys
-        elsif ( exists $params->{new_attr_key} || grep { /^attribute/ } keys %$params ) {
+        elsif ( my $new_attributes = _collect_attributes($params) ) {
             my $new_attributes = _collect_attributes($params);
             $generic->set_attr( { new_attrs => $new_attributes, audit_user => $c->user, audit_note => "Setting attributes" });
             $c->redirect_without_error('update_form');
@@ -59,7 +59,7 @@ sub _collect_attributes {
     my $new_attr_flag = 0;
     foreach my $key ( keys %$params ) {
         next if $key eq 'new_attr_value';
-        if ( $key eq 'new_attr_key') {
+        if ( $key eq 'new_attr_key' && $params->{'new_attr_key'} ne '') {
             $new_attr_flag = 1;
         }
         if ( $key =~ /^attribute_(.*)/ && $params->{ $key } ) {
