@@ -1296,19 +1296,24 @@ sub update {
         }
     }
 
+    my $audit_note = $c->stash('audit_note');
+    $audit_note ||= (delete $json->{audit_note}) if $json;
+    $audit_note ||= $c->param('audit_note');
+    $audit_note = $c->audit_note($audit_note);
+
     if ($c->param('delete')) {
         if (my $new = $c->param('replacement_identifier')) {
             my $rpl = $c->str_to_obj($new) or return $c->update_error("Replacement '$new' not found");
             $rpl->same_as($object) and return $c->update_error("Replacement must be a different ".$rpl->meta->table);
             my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
             my $new_ids = $rpl->meta->table.' '.join '/', $rpl->pk_values;
-            $object->delete(audit_user => $c->user, replacement => $rpl) and do {
+            $object->delete(audit_user => $c->user, audit_note => $audit_note, replacement => $rpl) and do {
                 $c->flash(message => "Deleted $old_str, replaced with $new_ids");
                 return $c->redirect_to($rpl->uri($c, { tab => 'update_form'}));
             };
         } else {
             my $old_str = $object->meta->table.' '.(join '/', $object->pk_values).': '.$object->stringify;
-            $object->delete(audit_user => $c->user) and do {
+            $object->delete(audit_user => $c->user, audit_note => $audit_note) and do {
                 $c->flash(message => "Deleted $old_str");
                 return $c->redirect_to('list_'.$table);
             };
@@ -1318,10 +1323,6 @@ sub update {
 
     my $ok = 1;
     $ok = 0 if $error;
-    my $audit_note = $c->stash('audit_note');
-    $audit_note ||= (delete $json->{audit_note}) if $json;
-    $audit_note ||= $c->param('audit_note');
-    $audit_note = $c->audit_note($audit_note);
     for my $col ($object->meta->columns) {
         my $param = $json ? $json->{$col->name} : $c->req->param($col->name);
         $param = $computed->{$col->name} if exists($computed->{$col->name});

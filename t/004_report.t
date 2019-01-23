@@ -115,7 +115,7 @@ $t->ua->max_redirects(1);
 
 $t->delete_ok("/file/testfile" => { Accept => "application/json" } )->status_is(200);
 $t->delete_ok("/report/test-report-changed" => { Accept => "application/json" })->status_is(200);
-$t->delete_ok("/report/test-report2" => { Accept => "application/json" })->status_is(200);
+$t->delete_ok("/report/test-report2")->status_is(200);
 
 $t->get_ok("/report/test-report" => { Accept => "application/json" } )->status_is(404);
 $t->get_ok("/report/test-report2" => { Accept => "application/json" } )->status_is(404);
