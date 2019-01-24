@@ -495,6 +495,9 @@ sub startup {
     # Roles
     $r->resource('role_type');
 
+    # Report Type
+    $r->resource('report_type');
+
     # Lexicons
     $r->resource('lexicon');
     my $lex = $r->find('select_lexicon');
