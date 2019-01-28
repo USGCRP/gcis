@@ -1,109 +1,119 @@
 
 % my $search_table = $meta->table;
 % my $show_search_box = ($search_table && !(stash 'no_search') && !(stash 'bottom'));
+% my $show_filter_box = stash 'show_filter';
 % my $page = stash 'page';
 % my $pages = stash 'pages';
 % my $count = stash 'count';
 % my $per_page = stash 'per_page';
 
+%# Pager Start
 <div class='row pagers'>
-   <form class="form-inline" action="#">
-%# Whole Row
-   <div class="row">
-%# Page selector button group Start
+  %# Whole Row Start
+  <div class="row">
+    <form class="form-inline" action="#">
       % if ($page && $pages > 1) {
-         <div class="btn-group <%= (stash 'bottom') ? ' dropup' : '' %>">
-
-%# Back button
-            % if ($page==1) {
-               <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-backward'></i></span>
-            % } else {
-               <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-backward'></i><%= end %>
+        %# Page selector button group Start
+        <div class="btn-group <%= (stash 'bottom') ? ' dropup' : '' %>" style ='float: left; padding: 5px;'>
+          %# Back button
+          % if ($page==1) {
+             <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-backward'></i></span>
+          % } else {
+             <%= link_to url_with->query([page => ( $page - 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-backward'></i><%= end %>
+          % }
+          %# Page display & select button
+          <button class='btn btn-default btn-sm dropdown-toggle' data-toggle='dropdown'>
+             <small>page <%= $page %></small> <span class='caret'></span>
+          </button>
+          %# Forward button
+          % if ($page==$pages) {
+             <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-forward'></i></span>
+          % } else {
+             <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-forward'></i><%= end %>
+          % }
+          %# X to Y of Z "button"
+          <span class="btn btn-default btn-sm">
+             <%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
+          </span>
+          %# Per page selection
+          <span class="btn btn-default btn-sm">Per page:</span>
+          <%= link_to url_with->query([per_page => 25]) => class => 'btn btn-default btn-sm' => begin %>20<%= end %>
+          <%= link_to url_with->query([per_page => 50]) => class => 'btn btn-default btn-sm' => begin %>50<%= end %>
+          <%= link_to url_with->query([per_page => 100]) => class => 'btn btn-default btn-sm' => begin %>100<%= end %>
+          %# Dropdown list page selection
+          <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>
+            % if (stash 'favorite_ok') {
+              <li><%= link_to url_with->query([page => '♥']) => begin %><i class='glyphicon glyphicon-heart'></i><%= end %></li>
             % }
-
-%# Page display & select button
-            <button class='btn btn-default btn-sm dropdown-toggle' data-toggle='dropdown'>
-               <small>page <%= $page %></small> <span class='caret'></span>
-            </button>
-
-%# Forward button
-            % if ($page==$pages) {
-               <span class='btn btn-default btn-sm disabled'><i class='glyphicon glyphicon-forward'></i></span>
-            % } else {
-               <%= link_to url_with->query([page => ( $page + 1)]) => class => 'btn btn-default btn-sm' => begin %><i class='glyphicon glyphicon-forward'></i><%= end %>
+            % my $i = 1;
+            % while ($i <= $pages) {
+              <li><%= link_to url_with->query([page => $i]) => begin %>page <%= $i %><%= end %></li>
+              % $i++;
+              % if (($i > 10) && ($i < ($pages - 10)) && ($pages > 20)) {
+                <li><%= link_to url_with->query([page => int($pages/2)]) => begin %>...<%= end %></li>
+                % $i = $pages - 10;
+              % }
             % }
-
-%# X to Y of Z "button"
-            <span class="btn btn-default btn-sm">
-               <%= ( $page - 1) * $per_page + 1 %> to <%= min($page * $per_page,$count) %> of <%= $count %>
-            </span>
-
-%# Per page selection
-            <span class="btn btn-default btn-sm">Per page:</span>
-            <%= link_to url_with->query([per_page => 25]) => class => 'btn btn-default btn-sm' => begin %>20<%= end %>
-            <%= link_to url_with->query([per_page => 50]) => class => 'btn btn-default btn-sm' => begin %>50<%= end %>
-            <%= link_to url_with->query([per_page => 100]) => class => 'btn btn-default btn-sm' => begin %>100<%= end %>
-
-%# Dropdown list page selection
-            <ul class='dropdown-menu' role='menu' aria-labelledby='dLabel'>
-               % if (stash 'favorite_ok') {
-                  <li><%= link_to url_with->query([page => '♥']) => begin %><i class='glyphicon glyphicon-heart'></i><%= end %></li>
-               % }
-               % my $i = 1;
-               % while ($i <= $pages) {
-                  <li><%= link_to url_with->query([page => $i]) => begin %>page <%= $i %><%= end %></li>
-                  % $i++;
-                  % if (($i > 10) && ($i < ($pages - 10)) && ($pages > 20)) {
-                     <li><%= link_to url_with->query([page => int($pages/2)]) => begin %>...<%= end %></li>
-                     % $i = $pages - 10;
-                  % }
-               % }
-            </ul>
-
-         </div>
+          </ul>
+        </div>
+        %# Page selector button group End
       % }
-%# Page selector button group End
-%# Search Box Start
       % if ($show_search_box) {
-         <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'form-control input-sm', placeholder => 'search', style => "width:50%;"; %>
+        <div style ='float: left; width:30%; padding: 5px;'>
+          <%= text_field 'search_obj', autocomplete => 'off', id => 'search_obj', class => 'form-control input-sm', placeholder => 'search', style => "width:80%;"; %>
+        </div>
       % }
-%# Search Box End
-%# List/Thumbs Section Start
-      <div class='pull-right text-right'>
-         <div class='btn-group'>
-            % if (param 'thumbs') {
-%# List selection, thumb display
-               <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>
-               <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th'></i></div>
-            % } else {
-%# List display, thumb selector
-               <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th-list'></i></div>
-               <%= link_to url_with->query([thumbs => 1]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th'></i><%= end %>
-            % }
-         </div>
+    </form>
+    % if ($show_filter_box) {
+      <div style ='float: left; padding: 5px;'>
+        <form class="form-inline" action="#">
+          <%= label_for 'report_type', class => 'control-label' => begin %>Filter By Type:<%= end %>
+          %= select_field 'report_type', db_labelize('report_type'), class => 'form-control';
+          <button class='btn btn-default btn-sm'>filter</button>
+        </form>
       </div>
-%# List/Thumbs Section End
-   </div>
+      <div style ='float: left; padding: 5px;'>
+        <form class="form-inline" action="#">
+          <button class='btn btn-default btn-sm'>none</button>
+        </form>
+      </div>
+    % }
+    %# List/Thumbs Section Start
+    <div class='pull-right text-right'>
+      <div class='btn-group'>
+        % if (param 'thumbs') {
+          %# List selection, thumb display
+          <%= link_to url_with->query([thumbs => 0]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th-list'></i><%= end %>
+          <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th'></i></div>
+        % } else {
+          %# List display, thumb selector
+          <div class='btn btn-default btn-sm active'><i class='glyphicon glyphicon-th-list'></i></div>
+          <%= link_to url_with->query([thumbs => 1]) => class => 'btn  btn-default btn-sm' => begin %><i class='glyphicon glyphicon-th'></i><%= end %>
+        % }
+      </div>
+    </div>
+    %# List/Thumbs Section End
+  </div>
+  %# Whole Row End
 </div>
-</form>
+%# Pager End
 <br>
-
 % if ($show_search_box) {
-   %= javascript begin
-      % my $restrict = ( (stash 'report_identifier') ? "report_identifier:".(stash 'report_identifier') : "");
-      $('#search_obj').typeahead({
-         minLength : 1,
-         items : 30,
-         updater: function(str) {
-            var pieces = str.split(' ');
-            window.location.href = pieces[0];
-         },
-         source : function(query,process) {
-            return $.get('/autocomplete', { q : query, items : 30, type : '<%= $search_table %>', restrict : '<%= $restrict %>', gcids : 1 }, function(data) {
-               return process(data);
-            });
-         }
-      });
-   %= end
+  %= javascript begin
+    % my $restrict = ( (stash 'report_identifier') ? "report_identifier:".(stash 'report_identifier') : "");
+    $('#search_obj').typeahead({
+      minLength : 1,
+      items : 30,
+      updater: function(str) {
+        var pieces = str.split(' ');
+        window.location.href = pieces[0];
+      },
+      source : function(query,process) {
+        return $.get('/autocomplete', { q : query, items : 30, type : '<%= $search_table %>', restrict : '<%= $restrict %>', gcids : 1 }, function(data) {
+          return process(data);
+        });
+      }
+    });
+  %= end
 % }
 

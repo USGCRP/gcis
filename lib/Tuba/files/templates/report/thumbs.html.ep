@@ -1,0 +1,26 @@
+% layout 'default';
+
+<center>
+<h2>
+    %= (stash 'title') || (stash 'plural') || ucfirst($meta->table) .'s'
+</h2>
+</center>
+
+%= include 'list_formats';
+
+% my @clone = @$objects;
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, show_filter => 1;
+% }
+
+% while (my @next = splice(@clone, 0, 6)) {
+    <div class='row'>
+        %= include 'obj_thumbnails', objs => \@next, blanks => 1;
+    </div>
+% }
+
+% if (my $page = stash 'page') {
+%= include 'pager', page => $page, bottom => 1;
+% }
+

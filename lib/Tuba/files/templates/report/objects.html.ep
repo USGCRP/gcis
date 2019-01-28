@@ -19,8 +19,9 @@
 
 
 % if (my $page = stash 'page') {
-%= include 'pager', page => $page;
+%= include 'pager', page => $page, show_filter => 1;
 % }
+
 <table class='table table-responsive table-condensed table-bordered table-striped'>
 <tr>
     <th class="col-lg-2 col-md-2 col-sm-1 col-xs-1">identifier</th>

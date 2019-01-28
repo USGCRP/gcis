@@ -334,6 +334,21 @@ sub register {
             $pub->save(audit_user => $c->user) unless $pub->id;
             return $pub;
         });
+    $app->helper(db_labelize => sub {
+            my $c = shift;
+            my $table = shift;
+            my $objs = $c->orm->{$table}->{mng}->get_objects(all => 1);
+            my $label_pairs;
+            foreach my $obj ( @$objs ) {
+                my $label = $obj->identifier;
+                $label =~ s/_identifier//;
+                $label =~ s/_dt$/_date/;
+                $label =~ s/_code//;
+                $label =~ s/_/ /g;
+                push @$label_pairs, [$label, $obj->identifier];
+            }
+            return $label_pairs;
+        });
     $app->helper(db_labels => sub {
             my $c = shift;
             my $table = shift;
