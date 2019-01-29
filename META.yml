@@ -20,7 +20,7 @@ name: Tuba
 provides:
   Tuba:
     file: lib/Tuba.pm
-    version: v1.55.2
+    version: v1.56.0
   Tuba::Activity:
     file: lib/Tuba/Activity.pm
   Tuba::Array:
@@ -193,6 +193,8 @@ provides:
     file: lib/Tuba/Region.pm
   Tuba::Report:
     file: lib/Tuba/Report.pm
+  Tuba::ReportType:
+    file: lib/Tuba/ReportType.pm
   Tuba::RoleType:
     file: lib/Tuba/RoleType.pm
   Tuba::RouteDoc:
@@ -256,5 +258,5 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: v1.55.2
+version: v1.56.0
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'

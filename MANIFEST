@@ -898,11 +898,13 @@ lib/Tuba/files/templates/h/desc.html.ep
 lib/Tuba/files/templates/h/featured_reports.html.ep
 lib/Tuba/files/templates/h/feedback_form.html.ep
 lib/Tuba/files/templates/h/filter_by.html.ep
+lib/Tuba/files/templates/h/keywords.html.ep
 lib/Tuba/files/templates/h/leaflet.html.ep
 lib/Tuba/files/templates/h/other_formats.html.ep
 lib/Tuba/files/templates/h/other_formats.thtml.ep
 lib/Tuba/files/templates/h/other_identifiers.html.ep
 lib/Tuba/files/templates/h/prov.html.ep
+lib/Tuba/files/templates/h/regions.html.ep
 lib/Tuba/files/templates/h/tbibjs.html.ep
 lib/Tuba/files/templates/h/thumbnail.html.ep
 lib/Tuba/files/templates/h/times.html.ep
@@ -998,6 +1000,7 @@ lib/Tuba/files/templates/report/object.html.ep
 lib/Tuba/files/templates/report/object.ttl.tut
 lib/Tuba/files/templates/report/objects.html.ep
 lib/Tuba/files/templates/report/relationships.html.ep
+lib/Tuba/files/templates/report/thumbs.html.ep
 lib/Tuba/files/templates/representation.ttl.tut
 lib/Tuba/files/templates/role_type/object.html.ep
 lib/Tuba/files/templates/role_type/object.ttl.tut
@@ -1048,6 +1051,7 @@ lib/Tuba/Publication.pm
 lib/Tuba/Reference.pm
 lib/Tuba/Region.pm
 lib/Tuba/Report.pm
+lib/Tuba/ReportType.pm
 lib/Tuba/RoleType.pm
 lib/Tuba/RouteDoc.pm
 lib/Tuba/RouteParam.pm

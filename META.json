@@ -82,7 +82,7 @@
    "provides" : {
       "Tuba" : {
          "file" : "lib/Tuba.pm",
-         "version" : "v1.55.2"
+         "version" : "v1.56.0"
       },
       "Tuba::Activity" : {
          "file" : "lib/Tuba/Activity.pm"
@@ -342,6 +342,9 @@
       "Tuba::Report" : {
          "file" : "lib/Tuba/Report.pm"
       },
+      "Tuba::ReportType" : {
+         "file" : "lib/Tuba/ReportType.pm"
+      },
       "Tuba::RoleType" : {
          "file" : "lib/Tuba/RoleType.pm"
       },
@@ -368,6 +371,6 @@
       }
    },
    "release_status" : "stable",
-   "version" : "v1.55.2",
+   "version" : "v1.56.0",
    "x_serialization_backend" : "JSON::PP version 2.97001"
 }
