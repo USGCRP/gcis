@@ -53,8 +53,14 @@
 % }
 <link rel="search" type="application/opensearchdescription+xml" href="<%= url_for('open-search.xml')->to_abs %>" title="Search" />
 <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta property="og:type" content="website" />
+<meta property="og:title" content="<%= title %> - GCIS" />
+<meta property="og:url" content="<%= $self->req->url->to_abs %>" />
+<meta property="og:image" content="https://data.globalchange.gov/usgcrp-220.png" />
+<meta name="og:image:alt" content="US Global Research Program's Global Change Information System Logo" />
+<meta property="og:site_name" content="US Global Change Research Program" />
 <title><%= title %> - GCIS</title>
 <style>
     .hideme { display:none; }
