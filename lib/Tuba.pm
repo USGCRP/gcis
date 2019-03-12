@@ -392,6 +392,20 @@ sub startup {
     $report->resource('report_table',   { controller => 'Tuba::Table',   identifier => 'table_identifier',   path_base => 'table', no_list => 1 });
     $r->get("/figure")->to("figure#list")->name("list_figures_across_reports");
 
+    my $report_fig = $r->find('select_report_figure');
+    $report_fig->get('/original')->to('figure#show_origination')->name('show_figure_origination');
+    unless ($config->{read_only}) {
+        my $origination_authed = $report_fig->under->to(
+          cb => sub {
+              my $c = shift;
+              return $c->deny_auth unless $c->auth && $c->authz(role => 'update');
+              return 1;
+          }
+        );
+        $origination_authed->post('/original.json')->to('figure#update_origination')->name('update_figure_origination');
+        $origination_authed->delete('/original.json')->to('figure#remove_origination')->name('remove_figure_origination');
+    };
+
     # Redirect from generics to specifics.
     $r->get('/publication/:publication_identifier')->to('publication#show')->name('show_publication'); # redirect based on type.
     $r->get('/contributor/:contributor_identifier')->to('contributor#show')->name('show_contributor'); # redirect based on type.
