@@ -1,0 +1,37 @@
+<td>
+  % if (!defined($val)) {
+  foo
+
+  % } elsif ($k =~ /^doi$/i) {
+    %= link_to "http://dx.doi.org/$val" => target => "_blank" => begin
+      <%= $val %>
+    %= end
+  % } elsif ($k =~ /isbn/i && $val) {
+    %= link_to "http://www.worldcat.org/isbn/$val" => target => "_blank" => begin
+      <%= $val %>
+    %= end
+  % } elsif ($k =~ /issn/i && $val) {
+    %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
+      <%= $val %>
+    %= end
+  % } elsif ($k =~ /^pmid$/i && $val) {
+    %= link_to "http://www.ncbi.nlm.nih.gov/pubmed/$val" => target => "_blank" => begin
+      <%= $val %>
+    %= end
+  % } elsif ($k =~ /^pmcid$/i && $val) {
+    %= link_to "http://www.ncbi.nlm.nih.gov/pmc/articles/$val" => target => "_blank" => begin
+      <%= $val %>
+    %= end
+  % } elsif ($k =~ /urls?/i) {
+    % if (my $to = fix_url($val)) {
+      %= link_to $to => target => "_blank" => begin
+        <%= $val %>
+      %= end
+    % } else {
+      <%= $val %>
+    % }
+  % } else {
+    <%= $val %>
+  % }
+</td>
+

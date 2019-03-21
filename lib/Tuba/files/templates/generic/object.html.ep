@@ -43,25 +43,7 @@
 % my $val = $attrs->{$k};
     <tr>
         <td><%= $k %></td>
-        <td>
-            % if (!$val) {
-
-            % } elsif ($k eq 'doi') {
-                %= link_to "http://dx.doi.org/$val" => target => "_blank" => begin
-                <%= $val %>
-                %= end
-            % } elsif ($k =~ /issn/ && $val) {
-                %= link_to "http://www.worldcat.org/issn/$val" => target => "_blank" => begin
-                <%= $val %>
-                %= end
-            % } elsif ($k =~ /urls?/) {
-                %= link_to $val => target => "_blank" => begin
-                <%= $val %>
-                %= end
-            % } else {
-            <%= $val %>
-            % }
-         </td>
+        %= include 'attribute_display', k => $k, val => $val;
     </tr>
 % }
 
