@@ -89,9 +89,11 @@
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
     <div class='input-group'>
     <span class="input-group-btn">
-    <button type="button" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
+    <button type="submit" name='delete' value='delete' class="btn btn-danger" onclick='{return confirm("Are you sure?")}'>Delete</button>
     </span>
-    %= text_field 'replacement_identifier', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
+    % if ($self->can_set_replacement) {
+      %= text_field 'replacement_identifier', autocomplete => 'off', id => 'replacement', placeholder => 'replacement', class => 'form-control',  style=>'height:auto;';
+    % }
     </div>
     </div>
 </div>
