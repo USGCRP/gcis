@@ -6,6 +6,11 @@
 %       year         => '2018',
 %   },
 %   {
+%       identifier   => 'second-state-carbon-cycle-report-soccr2-sustained-assessment-report',
+%       display_text => 'Second State of the Carbon Cycle Report: A Sustained Assessment Report',
+%       year         => '2018',
+%   },
+%   {
 %       identifier   => 'current_indicators',
 %       display_text => 'Latest US Global Change Research Program Indicators Set',
 %       year         => '2018',
