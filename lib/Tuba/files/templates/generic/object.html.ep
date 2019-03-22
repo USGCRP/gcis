@@ -23,7 +23,20 @@
 % if (my $pub = $object->get_publication) {
 <center>Files</center>
 <div class='row well'>
-%= include 'pub_thumbnails', pub => $pub, files => 1;
+  <div class="col-md-12">
+    % if ($object->attrs->{'Title'}) {
+      <h2 itemprop="name"><%= $object->{'attrs'}->{'Title'} %></h2>
+    % }
+    % if ($object->attrs->{'Year'}) {
+      <h5><span itemprop="copyrightYear"><%= $object->{'attrs'}->{'Year'} %></span>
+    % }
+  </div>
+  <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+    %= include 'h/contributors', object => $object;
+  </div>
+  %= include 'pub_thumbnails', pub => $pub, files => 1;
+  <div class="col-md-12">
+  </div>
 </div>
 % }
 
