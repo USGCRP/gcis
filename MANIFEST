@@ -819,6 +819,7 @@ lib/Tuba/files/templates/array/objects.html.ep
 lib/Tuba/files/templates/article/object.html.ep
 lib/Tuba/files/templates/article/object.ttl.tut
 lib/Tuba/files/templates/article/objects.html.ep
+lib/Tuba/files/templates/attribute_display.html.ep
 lib/Tuba/files/templates/auth/login.html.ep
 lib/Tuba/files/templates/auth/login.json.ep
 lib/Tuba/files/templates/auth/login_key.html.ep
