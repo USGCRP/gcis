@@ -258,5 +258,6 @@ requires:
   YAML: '0'
   YAML::Syck: '0'
   YAML::XS: '0'
-version: v1.57.0
+version: v1.57.1
+
 x_serialization_backend: 'CPAN::Meta::YAML version 0.012'
