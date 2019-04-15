@@ -1,6 +1,5 @@
 <td>
   % if (!defined($val)) {
-  foo
 
   % } elsif ($k =~ /^doi$/i) {
     %= link_to "http://dx.doi.org/$val" => target => "_blank" => begin
