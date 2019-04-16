@@ -6,9 +6,8 @@
 
 [Bradley Akamine](https://www.globalchange.gov/staff/bradley-akamine) : Chief Digital Officer
 [Reid Sherman](https://www.globalchange.gov/staff/dr-reid-sherman) : Technical Lead
-[Kathryn Tipton](https://www.globalchange.gov/staff/kathryn-tipton) : Software Engineer
 [Amrutha Elamparuthy](https://www.globalchange.gov/staff/amrutha-elamparuthy) : Data Manager
-Reuben Aniekwu : Intern
+[Reuben Aniekwu](https://www.globalchange.gov/staff/reuben-aniekwu) : Research Coordinator
 
 ### NOAA NCEI Staff
 
@@ -39,5 +38,6 @@ Amanda McQueen : Student Assistant
 Justin Goldstein : Data Curator
 Brent Newman : Data Coordinator
 Randall Sindlinger : CDI Lead Programmer (SSAI)
+Kathryn Tipton : Software Engineer
 
 
