@@ -16,7 +16,7 @@ addons:
             - libxml2
 
 perl:
-  - "5.22.2"
+  - "5.22.1"
 
 env:
     - PERL_CPANM_OPT=-n
@@ -34,8 +34,8 @@ script :
 
 cache:
     directories :
-        - /home/travis/perl5/perlbrew/perls/5.22.2/lib/site_perl
-        - /home/travis/perl5/perlbrew/perls/5.22.2/bin
+        - /home/travis/perl5/perlbrew/perls/5.22.1/lib/site_perl
+        - /home/travis/perl5/perlbrew/perls/5.22.1/bin
 
 after_success :
      - cover -report coveralls
