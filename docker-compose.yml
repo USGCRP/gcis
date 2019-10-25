@@ -20,7 +20,7 @@ services:
       - MOJO_MODE=development
 
   postgres:
-    image: postgres:9.4
+    image: postgres:9.6
     environment:
       - POSTGRES_USER=gcisops
       - POSTGRES_DB=gcis

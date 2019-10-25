@@ -1,7 +1,4 @@
-.dockerignore
-.gitattributes
 .travis.yml
-bin/hypnotoad.pid
 bin/tuba
 bin/tuba_generate_sitemap
 bin/tuba_get_ontology
@@ -632,8 +629,6 @@ db/patches/2400_gcmd_keywords_audit.sql
 db/patches/2410_activity_v2_deprecations.sql
 db/patches/2420_activity_v2_new_columns.sql
 db/patches/2430_activity_v2_spatial_extent.sql
-docker-compose.yml
-Dockerfile
 eg/check_dois.pl
 eg/compare-images.pl
 eg/compare.pl
