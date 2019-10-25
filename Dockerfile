@@ -1,4 +1,4 @@
-FROM perl:5.22.2
+FROM perl:5.20.3
 
 LABEL authors="Andrew Buddenberg, Kathryn Tipton"
 LABEL version="1.0.1"
@@ -31,7 +31,7 @@ COPY t /home/gcis/t
 
 WORKDIR /home/gcis/
 
-RUN cpanm --installdeps --notest .
+RUN sudo cpanm --installdeps --notest .
 
 RUN perl Build.PL && ./Build && ./Build install
 

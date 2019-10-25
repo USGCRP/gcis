@@ -5,9 +5,9 @@ addons:
     apt:
         packages:
             - raptor2-utils
-            - postgresql-9.6
-            - postgresql-contrib-9.6
-            - postgresql-server-dev-9.6
+            - postgresql-9.4
+            - postgresql-contrib-9.4
+            - postgresql-server-dev-9.4
             - libuuid1
             - uuid-dev
             - openssl
@@ -16,12 +16,13 @@ addons:
             - libxml2
 
 perl:
-  - "5.20"
+  - "5.20.3"
 
 env:
     - PERL_CPANM_OPT=-n
 
 before_install :
+    - sudo apt-get update
     - cpanm http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-0.427_001.tar.gz
     - cpanm App::cpanoutdated
     - cpan-outdated | cpanm
