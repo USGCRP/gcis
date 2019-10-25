@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 RUN useradd --create-home -s /bin/bash gcis
 
-COPY *.PL MANIFEST* META.* .travis.yml *.md README.osx /home/gcis/
+COPY cpanfile *.PL MANIFEST* META.* .travis.yml *.md README.osx /home/gcis/
 
 COPY bin /home/gcis/bin
 
