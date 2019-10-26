@@ -19,8 +19,7 @@ perl:
   - "5.22"
 
 env:
-    - PERL_CPANM_OPT=-n
-    - PERL5LIB=~/perl5/lib/perl5
+    - PERL_CPANM_OPT=-n PERL5LIB=~/perl5/lib/perl5
 
 before_install :
     - cpanm http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-0.427_001.tar.gz
