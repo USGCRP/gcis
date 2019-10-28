@@ -1,4 +1,4 @@
-use 5.006;
+use 5.22.2;
 use strict;
 use warnings FATAL => 'all';
 use Module::Build::Database 0.47;

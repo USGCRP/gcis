@@ -16,10 +16,10 @@ addons:
             - libxml2
 
 perl:
-  - "5.20"
+  - "5.22"
 
 env:
-    - PERL_CPANM_OPT=-n
+    - PERL_CPANM_OPT=-n PERL5LIB=~/perl5/lib/perl5
 
 before_install :
     - cpanm http://search.cpan.org/CPAN/authors/id/R/RE/REHSACK/List-MoreUtils-0.427_001.tar.gz
@@ -34,8 +34,7 @@ script :
 
 cache:
     directories :
-        - /home/travis/perl5/perlbrew/perls/5.20/lib/site_perl
-        - /home/travis/perl5/perlbrew/perls/5.20/bin
+        - ~/perl5
 
 after_success :
      - cover -report coveralls
