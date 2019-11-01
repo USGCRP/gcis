@@ -6,8 +6,9 @@
 
 [Bradley Akamine](https://www.globalchange.gov/staff/bradley-akamine) : Chief Digital Officer
 [Reid Sherman](https://www.globalchange.gov/staff/dr-reid-sherman) : Technical Lead
+[Zachary Landes](https://www.globalchange.gov/staff/zach-landes) : Software Engineer
 [Amrutha Elamparuthy](https://www.globalchange.gov/staff/amrutha-elamparuthy) : Data Manager
-[Reuben Aniekwu](https://www.globalchange.gov/staff/reuben-aniekwu) : Research Coordinator
+Reuben Aniekwu : Program Coordinator
 
 ### NOAA NCEI Staff
 
