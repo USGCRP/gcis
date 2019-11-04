@@ -13,3 +13,6 @@ Tuba.conf
 Makefile
 *.DS_Store
 release-ci*
+db/docker/2_schema.sql
+db/docker/3_content_1.sql
+db/docker/4_content_2.sql
