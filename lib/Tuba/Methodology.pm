@@ -79,8 +79,8 @@ sub update_rel {
     for my $id ($c->param('delete_publication')) {
         next unless $id;
         Methodology->delete_objects(
-            { activity_identifier => $activity->identifier,
-              publication_id => $id });
+            where => [{activity_identifier => $activity->identifier, publication_id => $id}],
+            audit_user => $c->audit_user, audit_note => $c->audit_note);
         $c->flash(message => 'Saved changes');
     }
 

@@ -207,13 +207,23 @@ sub update_rel {
     }
 
     my $report_identifier = $c->stash('report_identifier');
-    my @delete_images = $c->param('delete_image');
+
+    my @delete_images;
+
+    @delete_images = $c->param('delete_image') if $c->param('delete_image');
+
     if (my $nother = $json->{delete_image_identifier}) {
         push @delete_images, $nother;
     }
-    for my $id (@delete_images) {
-        ImageFigureMaps->delete_objects({ image_identifier => $id, figure_identifier => $object->identifier, report_identifier => $report_identifier });
-        $c->flash(message => 'Saved changes');
+
+    if (0 < scalar @delete_images) {
+        for my $id (@delete_images) {
+            ImageFigureMaps->delete_objects(
+                where => [{figure_identifier => $object->identifier,
+                          report_identifier => $report_identifier}],
+                audit_user => $c->audit_user, audit_note => $c->audit_note);
+            $c->flash(message => 'Saved changes');
+        }
     }
 
     return $c->SUPER::update_rel(@_);

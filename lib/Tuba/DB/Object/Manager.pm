@@ -69,5 +69,53 @@ sub dbgrep {
 }
 
 
+sub delete_objects
+{
+  # Get the arguments.
+  #
+  my $object = shift;
+  my %args = @_;
+
+  # Get the database and database handle objects.
+  #
+  my $db  = $object->object_class->init_db;
+  my $dbh = $db->retain_dbh;
+
+  # Add the database and database handle to the args.
+  #
+  $args{db}  = $db;
+  $args{dbh} = $dbh;
+
+  # Remove the audit user and audit note arguments. Throw an error if there is
+  # no audit user argument.
+  #
+  my $audit_user = delete $args{audit_user} or die "missing audit_user for $object";
+  my $audit_note = delete $args{audit_note};
+  
+  # Do the database transaction.
+  #
+  my $count= 0;
+
+  $db->do_transaction( sub {
+      # Add the audit user and audit note.
+      #
+      $dbh->do("set local audit.username = ?",{},$audit_user);
+      $dbh->do("set local audit.note = ?",{},$audit_note) if $audit_note;
+
+      # Call the super-class delete_objects method with the arguments.
+      #
+      $count = $object->SUPER::delete_objects(%args);
+    }
+  ) or do {
+    # Record an error if the transaction didn't succeed.
+    #
+    $object->error($db->error) unless $object->error;
+  };
+
+  # Return the object count result from the parent delete_objects method.
+  #
+  return $count;
+}
+
 
 1;
