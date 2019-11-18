@@ -64,7 +64,9 @@ sub update_rel {
     }
 
     for my $id ($c->param('delete_table')) {
-        ArrayTableMaps->delete_objects({ table_identifier => $id, array_identifier => $object->identifier });
+        ArrayTableMaps->delete_objects(
+            where => [{table_identifier => $id, array_identifier => $object->identifier}],
+            audit_user => $c->audit_user, audit_note => $c->audit_note);
         $c->flash(message => 'Saved changes');
     }
 

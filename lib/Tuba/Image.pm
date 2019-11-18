@@ -63,7 +63,9 @@ sub update_rel {
     }
 
     for my $id ($c->param('delete_figure')) {
-        ImageFigureMaps->delete_objects({ figure_identifier => $id, image_identifier => $object->identifier });
+        ImageFigureMaps->delete_objects(
+            where => [{figure_identifier => $id, image_identifier => $object->identifier}],
+            audit_user => $c->audit_user, audit_note => $c->audit_note);
         $c->flash(message => 'Saved changes');
     }
 

@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   nginx:
     image: nginx:latest
@@ -18,6 +18,8 @@ services:
       - PGHOST=postgres
       - PGUSER=gcisops
       - MOJO_MODE=development
+    volumes:
+      - ./files:/var/local/www
 
   postgres:
     image: postgres:9.6

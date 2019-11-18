@@ -47,14 +47,16 @@ sub update_rel {
     if (my $pub_id = $json->{delete_publication} || $c->param('delete_publication')) {
         my $con_id = $json->{contributor_id} || $c->param('contributor_id');
         die "person does not match contributor" unless Contributor->new(id => $con_id)->load->organization_identifier eq $org->identifier;
-        PublicationContributorMaps->delete_objects({
-                contributor_id => $con_id,
-                publication_id => $pub_id,
-            }) or return $c->update_error("Failed to remove publication");
+        PublicationContributorMaps->delete_objects(
+            where => [{ contributor_id => $con_id, publication_id => $pub_id }],
+            audit_user => $c->audit_user, audit_note => $c->audit_note)
+        or return $c->update_error("Failed to remove publication");
     } elsif (my $id = $json->{delete_contributor} || $c->param('delete_contributor')) {
         die "person does not match contributor" unless Contributor->new(id => $id)->load->organization_identifier eq $org->identifier;
-        Contributors->delete_objects({ id => $id })
-            or return $c->update_error("Failed to remove contributor");
+        Contributors->delete_objects(
+            where => [{ id => $id }],
+            audit_user => $c->audit_user, audit_note => $c->audit_note)
+        or return $c->update_error("Failed to remove contributor");
         $c->flash(info => "Saved changes.");
     }
 

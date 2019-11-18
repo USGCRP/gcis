@@ -138,7 +138,11 @@ sub update_rel {
 
     my $report_identifier = $c->stash('report_identifier');
     for my $id (grep { defined && length } $c->param('delete_array')) {
-        ArrayTableMaps->delete_objects({ array_identifier => $id, table_identifier => $object->identifier, report_identifier => $report_identifier });
+        ArrayTableMaps->delete_objects(
+            where => [{array_identifier => $id,
+                       table_identifier => $object->identifier,
+                       report_identifier => $report_identifier}],
+            audit_user => $c->audit_user, audit_note => $c->audit_note);
         my $array = Array->new(identifier => $id);
         $array->load;
         if (!@{ $array->tables }) {

@@ -974,11 +974,13 @@ PUT files.
 
 sub put_files {
     my $c = shift;
+
     my $file = Mojo::Upload->new(asset => Mojo::Asset::File->new->add_chunk($c->req->body));
     $file->filename($c->stash("filename") ||  'asset');
     my $obj = $c->_this_object or return $c->reply->not_found;
     my $pub = $obj->get_publication(autocreate => 1);
-    my $tfile = $pub->upload_file(c => $c, upload => $file) or do {
+
+    my $tfile = $pub->upload_file(c => $c, upload => $file, audit_user => $c->user, audit_note => $c->audit_note) or do {
         return $c->render(status => 500, text => $pub->error);
     };
     $tfile->generate_thumbnail(); 
@@ -1219,8 +1221,8 @@ sub update_rel {
         for my $id ($c->param("delete_$dwhat")) {
             next unless $id;
             $mwhat->delete_objects(
-                { "${dwhat}_identifier" => $id,
-                  publication_id => $pub->id });
+                where => [{"${dwhat}_identifier" => $id, publication_id => $pub->id}],
+                audit_user => $c->user, audit_note => $c->audit_note);
             $c->flash(message => 'Saved changes');
         }
     }
@@ -1404,7 +1406,7 @@ sub remove {
           or return $c->redirect_with_error('update_form',"couldn't find $json->{replacement}");
         @replacement = (replacement => $rpl);
     }
-    $object->delete(audit_user => $c->user, @replacement)
+    $object->delete(audit_user => $c->user, audit_note => $c->audit_note, @replacement)
       or return $c->redirect_with_error('update_form', $object->error);
     return $c->render(text => 'ok');
 }

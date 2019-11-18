@@ -219,9 +219,9 @@ sub upload_file {
     };
     $tfile->size($file->size);
     $pub->add_files($tfile);
-    $pub->save(audit_user => $c->user);
+    $pub->save(audit_user => $c->user, audit_note => $c->audit_note);
     $tfile->meta->error_mode('return');
-    $tfile->save(audit_user => $c->user) or do {
+    $tfile->save(audit_user => $c->user, audit_note => $c->audit_note) or do {
         $pub->error($tfile->error);
         return;
     };
