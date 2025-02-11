@@ -7,7 +7,7 @@
 [Bradley Akamine](https://www.globalchange.gov/staff/bradley-akamine) : USGCRP Chief Digital Officer <br>
 [Amrutha Riley](https://www.globalchange.gov/staff/amrutha-elamparuthy) : GCIS Team Lead  <br>
 [Zachary Landes](https://www.globalchange.gov/staff/zach-landes) : Software Engineer <br>
-
+Shamel Wilson:  Data Management Intern <br>
 ### NOAA NCEI Staff
 
 [Kate Johnson](https://ncics.org/people/kate-johnson/) : Web Developer and GIS Specialist <br>
