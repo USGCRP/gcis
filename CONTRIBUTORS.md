@@ -5,10 +5,8 @@
 ### USGCRP Staff
 
 [Bradley Akamine](https://www.globalchange.gov/staff/bradley-akamine) : USGCRP Chief Digital Officer <br>
-[Amrutha Elamparuthy](https://www.globalchange.gov/staff/amrutha-elamparuthy) : GCIS Team Lead  <br>
+[Amrutha Riley](https://www.globalchange.gov/staff/amrutha-elamparuthy) : GCIS Team Lead  <br>
 [Zachary Landes](https://www.globalchange.gov/staff/zach-landes) : Software Engineer <br>
-[Samantha Basile](https://www.globalchange.gov/staff/samantha-basile): NCA-GCIS Liaison <br>
-[Alaina Froh](https://www.globalchange.gov/staff/alaina-froh): Data Management Intern
 
 ### NOAA NCEI Staff
 
@@ -28,6 +26,8 @@ Dexter Tan (Raytheon)
 
 ### USGCRP
 Curt Tilmes : Visionary <br>
+[Samantha Basile](https://www.globalchange.gov/staff/samantha-basile): NCA-GCIS Liaison <br>
+[Alaina Froh](https://www.globalchange.gov/staff/alaina-froh): Data Management Intern
 [Reuben Aniekwu](https://www.globalchange.gov/staff/reuben-aniekwu) : Climate Research Specialist <br>
 Robert Wolfe : Technical Lead<br>
 Brian Duggan : System Engineer<br>
